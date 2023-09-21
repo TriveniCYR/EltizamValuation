@@ -17,7 +17,7 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class MasterPropertySubTypeService: IMasterPropertySubTypeService
+    public class MasterPropertySubTypeService : IMasterPropertySubTypeService
     {
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
@@ -46,7 +46,7 @@ namespace Eltizam.Business.Core.Implementation
         #region API Methods
 
         /// <summary>
-        /// Description - To Login User and return JWT Token String
+        /// Description - To Login PropertyType and return JWT Token String
         /// </summary>
         /// <param name="MasterSubProperty"></param>
         /// <returns></returns>
@@ -62,13 +62,13 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<Master_PropertySubTypeModel> GetMasterSubPropertyByIdAsync(int id)
         {
             // Create a new Master_PropertyTypeModel instance.
-            var _userEntity = new Master_PropertySubTypeModel();
+            var _PropertyTypeEntity = new Master_PropertySubTypeModel();
 
             // Use a mapper to map the data from the repository to the model asynchronously.
-            _userEntity = _mapperFactory.Get<Master_PropertySubType, Master_PropertySubTypeModel>(await _repository.GetAsync(id));
+            _PropertyTypeEntity = _mapperFactory.Get<Master_PropertySubType, Master_PropertySubTypeModel>(await _repository.GetAsync(id));
 
             // Return the mapped entity.
-            return _userEntity;
+            return _PropertyTypeEntity;
         }
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
@@ -79,7 +79,7 @@ namespace Eltizam.Business.Core.Implementation
 
             // Create an array of SQL parameters for a stored procedure call.
             SqlParameter[] osqlParameter = {
-        new SqlParameter("@UserId", 0),
+        new SqlParameter("@PropertyTypeId", 0),
         new SqlParameter("@CurrentPageNumber", model.start),
         new SqlParameter("@PageSize", model.length),
         new SqlParameter("@SortColumn", ColumnName),
@@ -101,29 +101,27 @@ namespace Eltizam.Business.Core.Implementation
             return oDataTableResponseModel;
         }
 
-        public async Task<DBOperation> AddUpdateMasterSubProperty(Master_PropertySubTypeModel entityqualification)
+        public async Task<DBOperation> AddUpdateMasterSubProperty(Master_PropertySubTypeModel entityproperty)
         {
             // Create a Master_PropertyType object.
-            Master_PropertySubType objUser;
+            Master_PropertySubType objPropertyType;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
-            if (entityqualification.Id > 0)
+            if (entityproperty.Id > 0)
             {
                 // Get the existing entity from the repository.
-                objUser = _repository.Get(entityqualification.Id);
+                objPropertyType = _repository.Get(entityproperty.Id);
 
                 // If the entity exists, update its properties.
-                if (objUser != null)
+                if (objPropertyType != null)
                 {
-                    objUser.PropertySubType = entityqualification.PropertySubType;
-                    objUser.IsActive = entityqualification.IsActive;
-                    objUser.CreatedOn = DateTime.Now;
-                    objUser.CreatedBy = entityqualification.CreatedBy;
-                    objUser.ModifiedOn = DateTime.Now;
-                    objUser.ModifiedBy = entityqualification.ModifiedBy;
+                    objPropertyType.PropertySubType = entityproperty.PropertySubType;
+                    objPropertyType.IsActive = entityproperty.IsActive;
+                    objPropertyType.ModifiedOn = DateTime.Now;
+                    objPropertyType.ModifiedBy = entityproperty.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
-                    _repository.UpdateAsync(objUser);
+                    _repository.UpdateAsync(objPropertyType);
                 }
                 else
                 {
@@ -134,18 +132,21 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 // Create a new Master_PropertyType entity from the model for insertion.
-                objUser = _mapperFactory.Get<Master_PropertySubTypeModel, Master_PropertySubType>(entityqualification);
-                objUser.CreatedOn = DateTime.Now;
+                objPropertyType = _mapperFactory.Get<Master_PropertySubTypeModel, Master_PropertySubType>(entityproperty);
+                objPropertyType.CreatedOn = DateTime.Now;
+                objPropertyType.ModifiedOn = DateTime.Now;
+                objPropertyType.ModifiedBy = entityproperty.ModifiedBy;
+                objPropertyType.CreatedBy= entityproperty.CreatedBy;
 
                 // Insert the new entity into the repository asynchronously.
-                _repository.AddAsync(objUser);
+                _repository.AddAsync(objPropertyType);
             }
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
 
             // Return an appropriate operation result.
-            if (objUser.Id == 0)
+            if (objPropertyType.Id == 0)
                 return DBOperation.Error;
 
             return DBOperation.Success;
@@ -154,14 +155,14 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> DeleteSubProperty(int id)
         {
             // Get the entity to be deleted from the repository.
-            var entityUser = _repository.Get(x => x.Id == id);
+            var entityPropertyType = _repository.Get(x => x.Id == id);
 
             // If the entity does not exist, return a not found operation.
-            if (entityUser == null)
+            if (entityPropertyType == null)
                 return DBOperation.NotFound;
 
             // Remove the entity from the repository.
-            _repository.Remove(entityUser);
+            _repository.Remove(entityPropertyType);
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();

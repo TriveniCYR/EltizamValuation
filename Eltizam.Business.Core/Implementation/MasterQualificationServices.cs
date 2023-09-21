@@ -40,7 +40,7 @@ namespace Eltizam.Business.Core.Implementation
         #region API Methods
 
         /// <summary>
-        /// Description - To Login User and return JWT Token String
+        /// Description - To Login Qualification and return JWT Token String
         /// </summary>
         /// <param name="Qualification"></param>
         /// <returns></returns>
@@ -56,13 +56,13 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<Master_QualificationModel> GetMasterQualificationByIdAsync(int id)
         {
             // Create a new Master_QualificationModel instance.
-            var _userEntity = new Master_QualificationModel();
+            var _QualificationEntity = new Master_QualificationModel();
 
             // Use a mapper to map the data from the repository to the model asynchronously.
-            _userEntity = _mapperFactory.Get<Master_Qualification, Master_QualificationModel>(await _repository.GetAsync(id));
+            _QualificationEntity = _mapperFactory.Get<Master_Qualification, Master_QualificationModel>(await _repository.GetAsync(id));
 
             // Return the mapped entity.
-            return _userEntity;
+            return _QualificationEntity;
         }
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
@@ -73,7 +73,7 @@ namespace Eltizam.Business.Core.Implementation
 
             // Create an array of SQL parameters for a stored procedure call.
             SqlParameter[] osqlParameter = {
-        new SqlParameter("@UserId", 0),
+        new SqlParameter("@QualificationId", 0),
         new SqlParameter("@CurrentPageNumber", model.start),
         new SqlParameter("@PageSize", model.length),
         new SqlParameter("@SortColumn", ColumnName),
@@ -98,30 +98,28 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> AddUpdateQualification(Master_QualificationModel entityqualification)
         {
             // Create a Master_Qualification object.
-            Master_Qualification objUser;
+            Master_Qualification objQualification;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (entityqualification.Id > 0)
             {
                 // Get the existing entity from the repository.
-                objUser = _repository.Get(entityqualification.Id);
+                objQualification = _repository.Get(entityqualification.Id);
 
                 // If the entity exists, update its properties.
-                if (objUser != null)
+                if (objQualification != null)
                 {
-                    objUser.Qualification = entityqualification.Qualification;
-                    objUser.Subject = entityqualification.Subject;
-                    objUser.Institute = entityqualification.Institute;
-                    objUser.Grade = entityqualification.Grade;
-                    objUser.YearOfInstitute = entityqualification.YearOfInstitute;
-                    objUser.IsActive = entityqualification.IsActive;
-                    objUser.CreatedOn = DateTime.Now;
-                    objUser.CreatedBy = entityqualification.CreatedBy;
-                    objUser.ModifiedOn = DateTime.Now;
-                    objUser.ModifiedBy = entityqualification.ModifiedBy;
+                    objQualification.Qualification = entityqualification.Qualification;
+                    objQualification.Subject = entityqualification.Subject;
+                    objQualification.Institute = entityqualification.Institute;
+                    objQualification.Grade = entityqualification.Grade;
+                    objQualification.YearOfInstitute = entityqualification.YearOfInstitute;
+                    objQualification.IsActive = entityqualification.IsActive;
+                    objQualification.ModifiedOn = DateTime.Now;
+                    objQualification.ModifiedBy = entityqualification.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
-                    _repository.UpdateAsync(objUser);
+                    _repository.UpdateAsync(objQualification);
                 }
                 else
                 {
@@ -132,19 +130,21 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 // Create a new Master_Qualification entity from the model for insertion.
-                objUser = _mapperFactory.Get<Master_QualificationModel, Master_Qualification>(entityqualification);
-                objUser.CreatedOn = DateTime.Now;
-                objUser.ModifiedOn = DateTime.Now;
+                objQualification = _mapperFactory.Get<Master_QualificationModel, Master_Qualification>(entityqualification);
+                objQualification.CreatedOn = DateTime.Now;
+                objQualification.CreatedBy = entityqualification.CreatedBy;
+                objQualification.ModifiedBy = entityqualification.ModifiedBy;   
+                objQualification.ModifiedOn = DateTime.Now;
 
                 // Insert the new entity into the repository asynchronously.
-                _repository.AddAsync(objUser);
+                _repository.AddAsync(objQualification);
             }
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
 
             // Return an appropriate operation result.
-            if (objUser.Id == 0)
+            if (objQualification.Id == 0)
                 return DBOperation.Error;
 
             return DBOperation.Success;
@@ -153,14 +153,14 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> DeleteQualification(int id)
         {
             // Get the entity to be deleted from the repository.
-            var entityUser = _repository.Get(x => x.Id == id);
+            var entityQualification = _repository.Get(x => x.Id == id);
 
             // If the entity does not exist, return a not found operation.
-            if (entityUser == null)
+            if (entityQualification == null)
                 return DBOperation.NotFound;
 
             // Remove the entity from the repository.
-            _repository.Remove(entityUser);
+            _repository.Remove(entityQualification);
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();

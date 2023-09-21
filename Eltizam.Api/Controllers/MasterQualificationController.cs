@@ -34,21 +34,21 @@ namespace EltizamValuation.Api.Controllers
         #region API Methods
         [HttpPost]
         [Route("Upsert")]
-        public async Task<IActionResult> Upsert(Master_QualificationModel oUser)
+        public async Task<IActionResult> Upsert(Master_QualificationModel oQualification)
         {
             try
             {
-                DBOperation oResponse = await _qualificationServices.AddUpdateQualification(oUser);
+                DBOperation oResponse = await _qualificationServices.AddUpdateQualification(oQualification);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oUser.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oQualification.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
                 }
                 else
                     return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
             }
             catch (Exception ex)
             {
-                await _ExceptionService.LogException(ex);
+               
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
@@ -59,9 +59,9 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                var oUserEntity = await _qualificationServices.GetMasterQualificationByIdAsync(id);
-                if (oUserEntity != null && oUserEntity.Id > 0)
-                    return _ObjectResponse.Create(oUserEntity, (Int32)HttpStatusCode.OK);
+                var oQualificationEntity = await _qualificationServices.GetMasterQualificationByIdAsync(id);
+                if (oQualificationEntity != null && oQualificationEntity.Id > 0)
+                    return _ObjectResponse.Create(oQualificationEntity, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
             }

@@ -30,21 +30,21 @@ namespace EltizamValuation.Api.Controllers
         #region API Methods
         [HttpPost]
         [Route("Upsert")]
-        public async Task<IActionResult> Upsert(Master_PropertyTypeModel oUser)
+        public async Task<IActionResult> Upsert(Master_PropertyTypeModel oPrpoertyType)
         {
             try
             {
-                DBOperation oResponse = await _propertyServices.AddUpdateMasterProperty(oUser);
+                DBOperation oResponse = await _propertyServices.AddUpdateMasterProperty(oPrpoertyType);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oUser.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oPrpoertyType.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
                 }
                 else
                     return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
             }
             catch (Exception ex)
             {
-                await _ExceptionService.LogException(ex);
+
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
@@ -55,9 +55,9 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                var oUserEntity = await _propertyServices.GetMasterPropertyByIdAsync(id);
-                if (oUserEntity != null && oUserEntity.Id > 0)
-                    return _ObjectResponse.Create(oUserEntity, (Int32)HttpStatusCode.OK);
+                var oPrpoertyTypeEntity = await _propertyServices.GetMasterPropertyByIdAsync(id);
+                if (oPrpoertyTypeEntity != null && oPrpoertyTypeEntity.Id > 0)
+                    return _ObjectResponse.Create(oPrpoertyTypeEntity, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
             }
@@ -76,7 +76,6 @@ namespace EltizamValuation.Api.Controllers
             }
             catch (Exception ex)
             {
-                await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
