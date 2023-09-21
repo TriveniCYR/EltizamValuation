@@ -13,6 +13,5 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime CreatedDate { get; set; }
 
         public virtual MasterBusinessUnit BusinessUnit { get; set; }
-        public virtual MasterDepartment Department { get; set; }
     }
 }

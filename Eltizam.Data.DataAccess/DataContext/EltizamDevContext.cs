@@ -24,13 +24,14 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterCountry> MasterCountries { get; set; }
         public virtual DbSet<MasterCurrency> MasterCurrencies { get; set; }
         public virtual DbSet<MasterCurrencyCountryMapping> MasterCurrencyCountryMappings { get; set; }
-        public virtual DbSet<MasterDepartment> MasterDepartments { get; set; }
         public virtual DbSet<MasterDepartmentBusinessUnitMapping> MasterDepartmentBusinessUnitMappings { get; set; }
         public virtual DbSet<MasterException> MasterExceptions { get; set; }
                 
         public virtual DbSet<MasterRole> MasterRoles { get; set; }
      
         public virtual DbSet<MasterUser> MasterUsers { get; set; }
+        public virtual DbSet<Master_Department> Master_Departments { get; set; }
+        public virtual DbSet<Master_Designation> Master_Designations { get; set; }
         
       
        
@@ -202,18 +203,6 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasConstraintName("FK_Master_CurrencyCountryMapping_Master_Currency");
             });
 
-            modelBuilder.Entity<MasterDepartment>(entity =>
-            {
-                entity.HasKey(e => e.DepartmentId);
-
-                entity.ToTable("Master_Department", "dbo");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DepartmentName).HasMaxLength(100);
-
-                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
-            });
 
             modelBuilder.Entity<MasterDepartmentBusinessUnitMapping>(entity =>
             {
@@ -230,11 +219,6 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Master_DepartmentBusinessUnitMapping_Master_BusinessUnit");
 
-                entity.HasOne(d => d.Department)
-                    .WithMany(p => p.MasterDepartmentBusinessUnitMappings)
-                    .HasForeignKey(d => d.DepartmentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Master_DepartmentId");
             });
 
        
@@ -383,6 +367,46 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.FileType).HasMaxLength(500);
 
+            });
+
+            modelBuilder.Entity<Master_Department>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("Master_Department", "dbo");
+
+                entity.Property(e => e.Department).HasMaxLength(250);
+
+                entity.Property(e => e.IsActive)
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(250);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(250);
+            });
+
+            modelBuilder.Entity<Master_Designation>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("Master_Designation", "dbo");
+
+                entity.Property(e => e.Designation).HasMaxLength(250);
+
+                entity.Property(e => e.IsActive)
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(250);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(250);
             });
 
             OnModelCreatingPartial(modelBuilder);

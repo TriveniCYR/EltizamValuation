@@ -22,6 +22,8 @@ namespace Eltizam.Business.Core.Resolver
            // services.AddTransient<IMasterRoleService, MasterRoleService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMasterUserService, MasterUserService>();
+            services.AddTransient<IDepartmentService, DepartmentService>();
+            services.AddTransient<IDesignationService, DesignationService>();
 			services.AddTransient<IMasterModuleService, MasterModuleService>();
 			
             services.AddTransient<IHelper, Helper>();

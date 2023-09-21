@@ -355,7 +355,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             try
             {
-                dbContext.Entry(entity).Property("CreatedDate").CurrentValue = _currentSQLServerDate;
+                dbContext.Entry(entity).Property("CreatedOn").CurrentValue = _currentSQLServerDate;
             }
             catch (Exception ex) { }
             try
