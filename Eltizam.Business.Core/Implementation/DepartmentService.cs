@@ -5,7 +5,7 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Resource;
-using EmcureNPD.Utility.Utility;
+using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
