@@ -81,7 +81,7 @@ namespace Eltizam.Web.Controllers
 
         private void SetUserClaim(UserSessionEntity oUserDetail)
         {
-            HttpContext.Response.Cookies.Append(UserHelper.EmcureNPDToken, oUserDetail.UserToken, new CookieOptions { Expires = oUserDetail.VallidTo });
+            HttpContext.Response.Cookies.Append(UserHelper.EltizamToken, oUserDetail.UserToken, new CookieOptions { Expires = oUserDetail.VallidTo });
 
             var claims = new List<Claim>
                             {

@@ -29,7 +29,7 @@ function getFormData($form) {
 }
 $.ajaxSetup({
     beforeSend: function (xhr) {
-        xhr.setRequestHeader('Authorization', 'Bearer ' + getCookie("EmcureNPDToken"));
+        xhr.setRequestHeader('Authorization', 'Bearer ' + getCookie("EltizamToken"));
     }
 });
 //Attach the event handler to any element

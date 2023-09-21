@@ -1,0 +1,103 @@
+﻿using Eltizam.Api.Helpers.Response;
+using Eltizam.Business.Core.Interface;
+using Eltizam.Business.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using static Eltizam.Utility.Enums.GeneralEnum;
+using System.Net;
+
+namespace EltizamValuation.Api.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MasterPropertyController : ControllerBase
+    {
+        #region Properties
+        private readonly IMasterPropertyService _propertyServices;
+        private readonly IResponseHandler<dynamic> _ObjectResponse;
+        private readonly IExceptionService _ExceptionService;
+        IExceptionService exceptionService;
+        #endregion Properties
+        #region Constructor
+        public MasterPropertyController(IMasterPropertyService propertyServices, IResponseHandler<dynamic> ObjectResponse)
+        {
+            _propertyServices = propertyServices;
+            _ObjectResponse = ObjectResponse;
+            _ExceptionService = exceptionService;
+        }
+        #endregion Constructor
+
+        #region API Methods
+        [HttpPost]
+        [Route("Upsert")]
+        public async Task<IActionResult> Upsert(Master_PropertyTypeModel oUser)
+        {
+            try
+            {
+                DBOperation oResponse = await _propertyServices.AddUpdateMasterProperty(oUser);
+                if (oResponse == DBOperation.Success)
+                {
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oUser.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                }
+                else
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpGet]
+        [Route("getById/{id}")]
+        public async Task<IActionResult> GetMasterPropertyById([FromRoute] int id)
+        {
+            try
+            {
+                var oUserEntity = await _propertyServices.GetMasterPropertyByIdAsync(id);
+                if (oUserEntity != null && oUserEntity.Id > 0)
+                    return _ObjectResponse.Create(oUserEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpPost, Route("GetAllProperty")]
+        public async Task<IActionResult> GetAllProperty([FromForm] DataTableAjaxPostModel model)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _propertyServices.GetAll(model), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpDelete("DeleteProperty/{id}")]
+        public async Task<IActionResult> DeleteProperty([FromRoute] int id)
+        {
+            try
+            {
+                DBOperation oResponse = await _propertyServices.DeleteProperty(id);
+                if (oResponse == DBOperation.Success)
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+        #endregion API Methods
+    }
+}

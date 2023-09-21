@@ -1,8 +1,8 @@
 
 using Serilog;
-using Eltizam.Web;
 
-namespace EmcureNPD.Web
+
+namespace Eltizam.Web
 {
     public class Program
     {

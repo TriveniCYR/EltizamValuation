@@ -40,7 +40,7 @@ namespace Eltizam.Web.Helpers
 
         public string GetToken()
         {
-            _httpContextAccessor.HttpContext.Request.Cookies.TryGetValue(UserHelper.EmcureNPDToken, out string token);
+            _httpContextAccessor.HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
             return token;
         }
 
@@ -48,7 +48,7 @@ namespace Eltizam.Web.Helpers
         {
             try
             {
-                _httpContextAccessor.HttpContext.Request.Cookies.TryGetValue(UserHelper.EmcureNPDToken, out string token);
+                _httpContextAccessor.HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
                 System.Net.Http.HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.LogException, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(ex))).Result;
 

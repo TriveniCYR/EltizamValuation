@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eltizam.Business.Models;
+﻿using Eltizam.Business.Models;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using Eltizam.Data.DataAccess.Entity;
 using Microsoft.Extensions.Localization;
@@ -13,7 +8,7 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Resource;
 using Eltizam.Business.Core.Interface;
 using System.Data.SqlClient;
-using EmcureNPD.Utility.Utility;
+using Eltizam.Utility.Utility;
 
 namespace Eltizam.Business.Core.Implementation
 {

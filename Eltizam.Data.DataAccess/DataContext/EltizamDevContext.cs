@@ -13,6 +13,10 @@ namespace Eltizam.Data.DataAccess.DataContext
             : base(options)
         {
         }
+        public virtual DbSet<Master_Qualification> Master_Qualifications { get; set; }
+        public virtual DbSet<Master_PropertyType> Master_PropertyTypes { get; set; }
+
+        public virtual DbSet<Master_PropertySubType> Master_PropertySubType { get; set; }
         public virtual DbSet<Upload> Uploads { get; set; }
         public virtual DbSet<Tbl_User> TblUsers { get; set; }
        
@@ -31,11 +35,6 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterRole> MasterRoles { get; set; }
      
         public virtual DbSet<MasterUser> MasterUsers { get; set; }
-        
-      
-       
-     
-       
        
         public virtual DbSet<TblSessionManager> TblSessionManagers { get; set; }
         public virtual DbSet<UserSessionLogMaster> UserSessionLogMasters { get; set; }
@@ -53,6 +52,72 @@ namespace Eltizam.Data.DataAccess.DataContext
         {
             modelBuilder.HasDefaultSchema("Eltizamdev_dbUser")
                 .HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<Master_Qualification>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("Master_Qualification", "dbo");
+                entity.Property(e => e.UserId).HasColumnName("UserId");
+
+                entity.Property(e => e.Qualification).HasMaxLength(100);
+
+                entity.Property(e => e.Subject).HasMaxLength(50);
+
+                entity.Property(e => e.Institute).HasMaxLength(100);
+
+                entity.Property(e => e.IsActive)
+                  .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+                entity.Property(e => e.CreatedBy).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(100);
+
+            });
+
+            modelBuilder.Entity<Master_PropertyType>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("Master_PropertyType", "dbo");
+               
+                entity.Property(e => e.PropertyType).HasMaxLength(100);
+
+                entity.Property(e => e.IsActive)
+                  .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+                entity.Property(e => e.CreatedBy).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(100);
+
+            });
+
+            modelBuilder.Entity<Master_PropertySubType>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("Master_PropertySubType", "dbo");
+
+                entity.Property(e => e.PropertySubType).HasMaxLength(100);
+
+                entity.Property(e => e.IsActive)
+                  .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+                entity.Property(e => e.CreatedBy).HasMaxLength(100);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(100);
+
+            });
+
 
             modelBuilder.Entity<Tbl_User>(entity =>
             {
@@ -387,6 +452,8 @@ namespace Eltizam.Data.DataAccess.DataContext
 
             OnModelCreatingPartial(modelBuilder);
         }
+
+
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

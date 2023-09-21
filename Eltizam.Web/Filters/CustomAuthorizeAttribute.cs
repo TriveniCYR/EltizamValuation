@@ -43,7 +43,7 @@ namespace Eltizam.Web.Filters
                     {
                         APIRepository objapi = new APIRepository(APIURLHelper.Configuration);
 
-                        context.HttpContext.Request.Cookies.TryGetValue(UserHelper.EmcureNPDToken, out string token);
+                        context.HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
 
                         HttpResponseMessage resRoles = objapi.APICommunication(APIURLHelper.GetByPermisionRoleUsingRoleId + "/" + oUserLoggedInModel.RoleId, HttpMethod.Get, token).Result;
 

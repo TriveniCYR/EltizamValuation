@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Eltizam.Business.Core.Implementation;
 using Eltizam.Api.Filters;
 
-namespace EmcureNPD.API.Controllers.Masters
+namespace Eltizam.API.Controllers.Masters
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -50,7 +50,7 @@ namespace Eltizam.Web.Controllers
             }
             else
             {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EmcureNPDToken, out string token);
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetTblUserById + "/" + Id, HttpMethod.Get, token).Result;
 
@@ -87,7 +87,7 @@ namespace Eltizam.Web.Controllers
             try
             {
                 masterUser.WebApplicationUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host.Value;
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EmcureNPDToken, out string token);
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.SaveTblUser, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterUser))).Result;

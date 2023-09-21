@@ -5,7 +5,7 @@
         public static string LoggedInUserEmailAddress = "LoggedInUserEmailAddress";
         public static string LoggedInUserName = "LoggedInUserName";
         public static string LoggedInUserId = "LoggedInUserId";
-        public static string EmcureNPDToken = "EmcureNPDToken";
+        public static string EltizamToken = "EltizamToken";
         public static string LoggedInRoleId = "LoggedInRoleId";
         public static string LoggedInBusId = "LoggedInBusId";
         public static string ErrorMessage = "ErrorMessage";

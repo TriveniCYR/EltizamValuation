@@ -118,8 +118,7 @@ namespace Eltizam.API
                 {
                     c.SwaggerEndpoint(Configuration["Swagger:swaggerurl"], Configuration["Swagger:swaggertitle"]);
                 });
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EmcureNPD.API v1"));
+               
             }
             else
             {

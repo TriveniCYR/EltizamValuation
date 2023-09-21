@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Eltizam.Utility\Eltizam.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Uploads\errorlogs\" />
+  </ItemGroup>
+
 </Project>

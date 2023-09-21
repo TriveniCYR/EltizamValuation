@@ -5,7 +5,6 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Resource;
-using EmcureNPD.Utility.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
@@ -17,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using Eltizam.Business.Core;
+using Eltizam.Utility.Utility;
 
 namespace Eltizam.Business.Core.ServiceImplementations
 {

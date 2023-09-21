@@ -14,6 +14,8 @@ namespace Eltizam.Business.Core.Resolver
     {
         public static IServiceCollection ContainerResolver(this IServiceCollection services)
         {
+            services.AddTransient<IMasterQualificationServices, MasterQualificationServices>();
+            services.AddTransient<IMasterPropertyService, MasterPropertyService>();
             services.AddScoped<DbContext, EltizamDevContext>();
             services.AddScoped<IMapperFactory, MapperFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

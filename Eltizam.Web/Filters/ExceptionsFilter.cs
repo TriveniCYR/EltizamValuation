@@ -30,7 +30,7 @@ namespace Eltizam.Web.Filters
             try
             {
                 APIRepository objapi = new APIRepository(APIURLHelper.Configuration);
-                context.HttpContext.Request.Cookies.TryGetValue(UserHelper.EmcureNPDToken, out string token);
+                context.HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.LogException, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(context.Exception))).Result;
             }
             catch (Exception e)

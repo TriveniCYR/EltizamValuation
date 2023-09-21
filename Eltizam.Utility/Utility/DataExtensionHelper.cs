@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Data;
-using System.Linq;
 
-namespace EmcureNPD.Utility.Utility
+
+namespace Eltizam.Utility.Utility
 {
     public static class DataExtensionHelper
     {
