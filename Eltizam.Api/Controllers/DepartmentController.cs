@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
-using Newtonsoft.Json;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -46,9 +45,9 @@ namespace EltizamValuation.Api.Controllers
         #region API Methods
 
         /// <summary>
-        /// Description - To Insert and Update User
+        /// Description - To Insert and Update Department
         /// </summary>
-        /// <param name="oUser"></param>
+        /// <param name="oDepartment"></param>
         /// <returns></returns>
         /// <response code="200">OK</response>
         /// <response code="400">Bad Request</response>
@@ -68,7 +67,6 @@ namespace EltizamValuation.Api.Controllers
             }
             catch (Exception ex)
             {
-                //await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
@@ -79,15 +77,14 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                var oUserEntity = await _DepartmentService.GetById(id);
-                if (oUserEntity != null && oUserEntity.Id > 0)
-                    return _ObjectResponse.Create(oUserEntity, (Int32)HttpStatusCode.OK);
+                var oDepartmentEntity = await _DepartmentService.GetById(id);
+                if (oDepartmentEntity != null && oDepartmentEntity.Id > 0)
+                    return _ObjectResponse.Create(oDepartmentEntity, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
             }
             catch (Exception ex)
             {
-                //await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
@@ -109,7 +106,6 @@ namespace EltizamValuation.Api.Controllers
             }
             catch (Exception ex)
             {
-                //await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
@@ -128,7 +124,6 @@ namespace EltizamValuation.Api.Controllers
             }
             catch (Exception ex)
             {
-                //await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
