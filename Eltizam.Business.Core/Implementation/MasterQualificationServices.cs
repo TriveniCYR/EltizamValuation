@@ -134,6 +134,7 @@ namespace Eltizam.Business.Core.Implementation
                 // Create a new Master_Qualification entity from the model for insertion.
                 objUser = _mapperFactory.Get<Master_QualificationModel, Master_Qualification>(entityqualification);
                 objUser.CreatedOn = DateTime.Now;
+                objUser.ModifiedOn = DateTime.Now;
 
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objUser);
