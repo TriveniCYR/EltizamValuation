@@ -79,7 +79,7 @@ namespace Eltizam.Business.Core.Implementation
 
             // Create an array of SQL parameters for a stored procedure call.
             SqlParameter[] osqlParameter = {
-        new SqlParameter("@PropertyTypeId", 0),
+        new SqlParameter("@Id", 0),
         new SqlParameter("@CurrentPageNumber", model.start),
         new SqlParameter("@PageSize", model.length),
         new SqlParameter("@SortColumn", ColumnName),
@@ -88,7 +88,7 @@ namespace Eltizam.Business.Core.Implementation
     };
 
             // Call a stored procedure to get a list of Master_PropertyType entities.
-            var QualificationList = await _repository.GetBySP("usp_Property__GetMasterPropertyList", System.Data.CommandType.StoredProcedure, osqlParameter);
+            var QualificationList = await _repository.GetBySP("usp_Property__GetMasterSubPropertyList", System.Data.CommandType.StoredProcedure, osqlParameter);
 
             // Extract total record and total count information from the result.
             var TotalRecord = (QualificationList != null && QualificationList.Rows.Count > 0 ? Convert.ToInt32(QualificationList.Rows[0]["TotalRecord"]) : 0);
