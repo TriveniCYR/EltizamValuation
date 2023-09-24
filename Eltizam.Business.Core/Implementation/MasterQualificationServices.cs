@@ -73,7 +73,7 @@ namespace Eltizam.Business.Core.Implementation
 
             // Create an array of SQL parameters for a stored procedure call.
             SqlParameter[] osqlParameter = {
-        new SqlParameter("@QualificationId", 0),
+        new SqlParameter("@Id", 0),
         new SqlParameter("@CurrentPageNumber", model.start),
         new SqlParameter("@PageSize", model.length),
         new SqlParameter("@SortColumn", ColumnName),
