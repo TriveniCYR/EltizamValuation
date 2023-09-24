@@ -36,12 +36,15 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterUser> MasterUsers { get; set; }
         public virtual DbSet<Master_Department> Master_Departments { get; set; }
         public virtual DbSet<Master_Designation> Master_Designations { get; set; }
-        
-      
-       
-     
-       
-       
+        public virtual DbSet<Master_Location> Master_Locations { get; set; }
+        public virtual DbSet<Master_OwnershipType> Master_OwnershipType { get; set; }
+        public virtual DbSet<Master_City> Master_Cities { get; set; }
+
+
+
+
+
+
         public virtual DbSet<TblSessionManager> TblSessionManagers { get; set; }
         public virtual DbSet<UserSessionLogMaster> UserSessionLogMasters { get; set; }
 
@@ -466,6 +469,84 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.ToTable("Master_Designation", "dbo");
 
                 entity.Property(e => e.Designation).HasMaxLength(250);
+
+                entity.Property(e => e.IsActive)
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(250);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(250);
+            });
+
+            modelBuilder.Entity<Master_Location>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("Master_Location", "dbo");
+
+                entity.Property(e => e.LocationName).HasMaxLength(250);
+
+                entity.Property(e => e.CountryId).HasMaxLength(250);
+
+                entity.Property(e => e.StateId).HasMaxLength(250);
+
+                entity.Property(e => e.CityId).HasMaxLength(150);
+
+                entity.Property(e => e.Sector).HasMaxLength(250);
+
+                entity.Property(e => e.Latitude).HasMaxLength(50);
+
+                entity.Property(e => e.Longitude).HasMaxLength(50);
+
+                entity.Property(e => e.Status)
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(250);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(250);
+            });
+
+            modelBuilder.Entity<Master_OwnershipType>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("Master_OwnershipType", "dbo");
+
+                entity.Property(e => e.OwnershipType).HasMaxLength(250);
+
+                entity.Property(e => e.IsActive)
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(250);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedBy).HasMaxLength(250);
+            });
+
+            modelBuilder.Entity<Master_City>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.ToTable("Master_City", "dbo");
+
+                entity.Property(e => e.CityName).HasMaxLength(250);
+
+                entity.Property(e => e.CountryId).HasMaxLength(250);
+
+                entity.Property(e => e.StateId).HasMaxLength(250);
+
+                entity.Property(e => e.STDCode).HasMaxLength(50);
 
                 entity.Property(e => e.IsActive)
                     .HasDefaultValueSql("((1))");
