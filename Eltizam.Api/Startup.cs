@@ -1,0 +1,172 @@
+﻿using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.OpenApi.Models;
+using Eltizam.Api.Helpers.Response;
+using Eltizam.Api.Middlewares;
+using Eltizam.Utility;
+using Eltizam.Business.Core.Resolver;
+using Eltizam.Resource;
+using Eltizam.API.Filter;
+
+namespace Eltizam.API
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            DatabaseConnection.EltizamDatabaseConnection = Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
+
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(ExceptionFilter));
+            }).AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.WriteIndented = true;
+            }).AddNewtonsoftJson();
+
+            services.AddResource();//me
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = Configuration["Swagger:title"], Version = Configuration["Swagger:version"] });
+                c.AddSecurityDefinition(Configuration["Swagger:Bearer"], new OpenApiSecurityScheme()
+                {
+                    Description = Configuration["Swagger:description"],
+                    Name = Configuration["Swagger:name"],
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                   {
+                     new OpenApiSecurityScheme
+                     {
+                       Reference = new OpenApiReference
+                       {
+                         Type = ReferenceType.SecurityScheme,
+                         Id = "Bearer"
+                       }
+                     },
+                      new string[] { }
+                   }
+                });
+            });
+            services.AddOutputCaching();
+            services.AddMvc();
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc(Configuration["Swagger:version"], new OpenApiInfo
+            //    {
+            //        Title = Configuration["Swagger:title"],
+            //        Version = Configuration["Swagger:version"],
+            //    });
+            //});
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(typeof(IResponseHandler<>), typeof(ResponseHandler<>));
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            //--<set upload large files> ---
+            services.Configure<FormOptions>(options =>
+            {
+                options.ValueLengthLimit = int.MaxValue;
+                options.MultipartBodyLengthLimit = int.MaxValue;
+                options.MultipartHeadersLengthLimit = int.MaxValue;
+            });
+            //--</set upload large files> ---
+
+            //File Upload and Download
+            //services.AddSingleton<IFileProvider>(
+            //   new PhysicalFileProvider(
+            //       Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads")));
+
+            services.ContainerResolver();
+
+            services.AddCors();
+            services.AddDistributedMemoryCache();
+
+            services.AddHttpContextAccessor();
+
+            services.AddSignalR();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder => builder.AllowAnyOrigin());
+            });
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint(Configuration["Swagger:swaggerurl"], Configuration["Swagger:swaggertitle"]);
+                });
+               
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            app.UseStaticFiles();
+
+            var allowedOrigins = Configuration.GetSection("AllowedOrigins").Value.Split(",");
+
+            app.UseCors(builder => builder
+                                    .WithOrigins(allowedOrigins)
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader()
+                                    .AllowCredentials()
+            );
+            app.UseOutputCaching();
+            //app.UseMvcWithDefaultRoute();
+            app.UseHttpsRedirection();
+
+            app.UseRequestLocalization();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseFileServer();
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
+            //.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                // endpoints.MapHub<NotificationHub>("/signalR");
+            });
+            //app.Use(async (context, next) =>
+            //{
+            //	var hubContext = context.RequestServices
+            //							.GetRequiredService<IHubContext<NotificationHub>>();
+            //	//...
+
+            //	if (next != null)
+            //	{
+            //		await next.Invoke();
+            //	}
+            //});
+        }
+    }
+}
