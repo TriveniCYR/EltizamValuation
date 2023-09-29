@@ -24,7 +24,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
-        private IRepository<Master_PropertyType> _repository { get; set; }
+        private IRepository<MasterPropertyType> _repository { get; set; }
         private readonly IHelper _helper;
         #endregion Properties
 
@@ -36,7 +36,7 @@ namespace Eltizam.Business.Core.Implementation
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
 
-            _repository = _unitOfWork.GetRepository<Master_PropertyType>();
+            _repository = _unitOfWork.GetRepository<MasterPropertyType>();
             configuration = _configuration;
             _helper = helper;
         }
@@ -48,7 +48,7 @@ namespace Eltizam.Business.Core.Implementation
         /// <summary>
         /// Description - To Login User and return JWT Token String
         /// </summary>
-        /// <param name="User"></param>
+        /// <param name="MasterProperty"></param>
         /// <returns></returns>
         /// <response code="200">OK</response>
         /// <response code="400">Bad Request</response>
@@ -65,7 +65,7 @@ namespace Eltizam.Business.Core.Implementation
             var _userEntity = new Master_PropertyTypeModel();
 
             // Use a mapper to map the data from the repository to the model asynchronously.
-            _userEntity = _mapperFactory.Get<Master_PropertyType, Master_PropertyTypeModel>(await _repository.GetAsync(id));
+            _userEntity = _mapperFactory.Get<MasterPropertyType, Master_PropertyTypeModel>(await _repository.GetAsync(id));
 
             // Return the mapped entity.
             return _userEntity;
@@ -101,24 +101,24 @@ namespace Eltizam.Business.Core.Implementation
             return oDataTableResponseModel;
         }
 
-        public async Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel entityqualification)
+        public async Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel masterproperty)
         {
             // Create a Master_PropertyType object.
-            Master_PropertyType objUser;
+            MasterPropertyType objUser;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
-            if (entityqualification.Id > 0)
+            if (masterproperty.Id > 0)
             {
                 // Get the existing entity from the repository.
-                objUser = _repository.Get(entityqualification.Id);
+                objUser = _repository.Get(masterproperty.Id);
 
                 // If the entity exists, update its properties.
                 if (objUser != null)
                 {
-                    objUser.PropertyType = entityqualification.PropertyType;
-                    objUser.IsActive = entityqualification.IsActive;
-                    objUser.ModifiedOn = DateTime.Now;
-                    objUser.ModifiedBy = entityqualification.ModifiedBy;
+                    objUser.PropertyType = masterproperty.PropertyType;
+                    objUser.IsActive = masterproperty.IsActive;
+                    objUser.ModifiedDate = DateTime.Now;
+                    objUser.ModifiedBy = masterproperty.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objUser);
@@ -132,11 +132,11 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 // Create a new Master_PropertyType entity from the model for insertion.
-                objUser = _mapperFactory.Get<Master_PropertyTypeModel, Master_PropertyType>(entityqualification);
-                objUser.CreatedOn = DateTime.Now;
-                objUser.CreatedBy = entityqualification.CreatedBy;
-                objUser.ModifiedOn = DateTime.Now;
-                objUser.ModifiedBy = entityqualification.ModifiedBy;
+                objUser = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
+                objUser.CreatedDate = DateTime.Now;
+                objUser.CreatedBy = masterproperty.CreatedBy;
+                objUser.ModifiedDate = DateTime.Now;
+                objUser.ModifiedBy = masterproperty.ModifiedBy;
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objUser);
             }

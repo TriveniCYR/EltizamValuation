@@ -93,8 +93,4 @@
 /Eltizam.Business.Core/obj/Eltizam.Business.Core.csproj.nuget.g.props
 /Eltizam.Business.Core/obj/project.assets.json
 /Eltizam.Business.Core/obj/project.nuget.cache
-/Eltizam.Business.Models
-/Eltizam.Data.DataAccess
-/Eltizam.Resource
-/Eltizam.Utility
-/Eltizam.Web
+/Eltizam.Web/obj/Debug/net6.0/ref/EltizamValuation.Web.dll

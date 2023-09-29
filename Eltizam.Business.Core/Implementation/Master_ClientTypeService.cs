@@ -17,26 +17,26 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class MasterPropertySubTypeService : IMasterPropertySubTypeService
+    public class Master_ClientTypeService: IMaster_ClientTypeService
     {
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
-        private IRepository<MasterPropertySubType> _repository { get; set; }
+        private IRepository<MasterClientType> _repository { get; set; }
         private readonly IHelper _helper;
         #endregion Properties
 
         #region Constructor
-        public MasterPropertySubTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public Master_ClientTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
           IHelper helper,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
 
-            _repository = _unitOfWork.GetRepository<MasterPropertySubType>();
+            _repository = _unitOfWork.GetRepository<MasterClientType>();
             configuration = _configuration;
             _helper = helper;
         }
@@ -46,9 +46,9 @@ namespace Eltizam.Business.Core.Implementation
         #region API Methods
 
         /// <summary>
-        /// Description - To Login PropertyType and return JWT Token String
+        /// Description - To Login User and return JWT Token String
         /// </summary>
-        /// <param name="MasterSubProperty"></param>
+        /// <param name="User"></param>
         /// <returns></returns>
         /// <response code="200">OK</response>
         /// <response code="400">Bad Request</response>
@@ -59,18 +59,19 @@ namespace Eltizam.Business.Core.Implementation
         /// <response code="500">Internal Server</response>
         /// 
 
-        public async Task<Master_PropertySubTypeModel> GetMasterSubPropertyByIdAsync(int id)
+        public async Task<Master_ClientTypeModel> GetMasterClientTypeByIdAsync(int id)
         {
             // Create a new Master_PropertyTypeModel instance.
-            var _PropertyTypeEntity = new Master_PropertySubTypeModel();
+            var _clientEntity = new Master_ClientTypeModel();
 
             // Use a mapper to map the data from the repository to the model asynchronously.
-            _PropertyTypeEntity = _mapperFactory.Get<MasterPropertySubType, Master_PropertySubTypeModel>(await _repository.GetAsync(id));
+            _clientEntity = _mapperFactory.Get<MasterClientType, Master_ClientTypeModel>(await _repository.GetAsync(id));
 
             // Return the mapped entity.
-            return _PropertyTypeEntity;
+            return _clientEntity;
         }
 
+        
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
             // Get the column name and sort direction for data table sorting.
@@ -88,40 +89,40 @@ namespace Eltizam.Business.Core.Implementation
     };
 
             // Call a stored procedure to get a list of Master_PropertyType entities.
-            var QualificationList = await _repository.GetBySP("usp_Property_GetMasterPropertySubTypeList", System.Data.CommandType.StoredProcedure, osqlParameter);
+            var QualificationList = await _repository.GetBySP("usp_client_GetMasterClientTypeList", System.Data.CommandType.StoredProcedure, osqlParameter);
 
             // Extract total record and total count information from the result.
             var TotalRecord = (QualificationList != null && QualificationList.Rows.Count > 0 ? Convert.ToInt32(QualificationList.Rows[0]["TotalRecord"]) : 0);
             var TotalCount = (QualificationList != null && QualificationList.Rows.Count > 0 ? Convert.ToInt32(QualificationList.Rows[0]["TotalCount"]) : 0);
 
             // Create a DataTableResponseModel with the extracted data.
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, QualificationList.DataTableToList<Master_PropertySubTypeModel>());
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, QualificationList.DataTableToList<Master_ClientTypeModel>());
 
             // Return the response model.
             return oDataTableResponseModel;
         }
 
-        public async Task<DBOperation> AddUpdateMasterSubProperty(Master_PropertySubTypeModel entityproperty)
+        public async Task<DBOperation> AddUpdateMasterClientType(Master_ClientTypeModel entityqualification)
         {
             // Create a Master_PropertyType object.
-            MasterPropertySubType objPropertyType;
+            MasterClientType objUser;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
-            if (entityproperty.Id > 0)
+            if (entityqualification.Id > 0)
             {
                 // Get the existing entity from the repository.
-                objPropertyType = _repository.Get(entityproperty.Id);
+                objUser = _repository.Get(entityqualification.Id);
 
                 // If the entity exists, update its properties.
-                if (objPropertyType != null)
+                if (objUser != null)
                 {
-                    objPropertyType.PropertySubType = entityproperty.PropertySubType;
-                    objPropertyType.IsActive = entityproperty.IsActive;
-                    objPropertyType.ModifiedDate = DateTime.Now;
-                    objPropertyType.ModifiedBy = entityproperty.ModifiedBy;
+                    objUser.ClientType = entityqualification.ClientType;
+                    objUser.IsActive = entityqualification.IsActive;
+                    //objUser.ModifiedDate = DateTime.Now;
+                    objUser.ModifiedBy = entityqualification.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
-                    _repository.UpdateAsync(objPropertyType);
+                    _repository.UpdateAsync(objUser);
                 }
                 else
                 {
@@ -132,37 +133,36 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 // Create a new Master_PropertyType entity from the model for insertion.
-                objPropertyType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(entityproperty);
-                objPropertyType.CreatedDate = DateTime.Now;
-                objPropertyType.ModifiedDate = DateTime.Now;
-                objPropertyType.ModifiedBy = entityproperty.ModifiedBy;
-                objPropertyType.CreatedBy= entityproperty.CreatedBy;
-
+                objUser = _mapperFactory.Get<Master_ClientTypeModel, MasterClientType>(entityqualification);
+                objUser.CreatedDate = DateTime.Now;
+                objUser.CreatedBy = entityqualification.CreatedBy;
+                objUser.ModifiedDate = DateTime.Now;
+                objUser.ModifiedBy = entityqualification.ModifiedBy;
                 // Insert the new entity into the repository asynchronously.
-                _repository.AddAsync(objPropertyType);
+                _repository.AddAsync(objUser);
             }
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
 
             // Return an appropriate operation result.
-            if (objPropertyType.Id == 0)
+            if (objUser.Id == 0)
                 return DBOperation.Error;
 
             return DBOperation.Success;
         }
 
-        public async Task<DBOperation> DeleteSubProperty(int id)
+        public async Task<DBOperation> DeleteClientType(int id)
         {
             // Get the entity to be deleted from the repository.
-            var entityPropertyType = _repository.Get(x => x.Id == id);
+            var entityUser = _repository.Get(x => x.Id == id);
 
             // If the entity does not exist, return a not found operation.
-            if (entityPropertyType == null)
+            if (entityUser == null)
                 return DBOperation.NotFound;
 
             // Remove the entity from the repository.
-            _repository.Remove(entityPropertyType);
+            _repository.Remove(entityUser);
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
@@ -173,6 +173,5 @@ namespace Eltizam.Business.Core.Implementation
 
 
         #endregion API Methods
-
     }
 }
