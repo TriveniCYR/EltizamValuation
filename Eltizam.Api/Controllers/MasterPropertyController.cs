@@ -18,6 +18,7 @@ namespace EltizamValuation.Api.Controllers
         private readonly IExceptionService _ExceptionService;
         IExceptionService exceptionService;
         #endregion Properties
+
         #region Constructor
         public MasterPropertyController(IMasterPropertyService propertyServices, IResponseHandler<dynamic> ObjectResponse)
         {
