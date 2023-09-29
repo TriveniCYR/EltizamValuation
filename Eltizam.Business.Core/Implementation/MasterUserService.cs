@@ -145,7 +145,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 		public async Task<List<MasterUserEntity>> GetUserForAPIInterested()
 		{
 			var _userEntities = new List<MasterUserEntity>();
-			var _userDBEntity = await _repository.GetAllAsync(x => x.IsActive == true && x.IsDeleted == false && x.ApigroupLeader == true);
+			var _userDBEntity = await _repository.GetAllAsync(x => x.IsActive == true);
 			_userEntities = _mapperFactory.GetList<MasterUser, MasterUserEntity>(_userDBEntity.ToList());
 			return _userEntities;
 		}
@@ -166,11 +166,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
 				var OldObjUser = objUser;
 				if (objUser != null)
 				{
-					objUser.FullName = entityUser.FullName;
-					objUser.MobileNumber = entityUser.MobileNumber;
+					//objUser.FullName = entityUser.FullName;
+					//objUser.MobileNumber = entityUser.MobileNumber;
 					//objUser.MobileCountryId = entityUser.MobileCountryId;
 					//objUser.RoleId = entityUser.RoleId;
-					objUser.Address = entityUser.Address;
+					//objUser.Address = entityUser.Address;
 					//objUser.IsActive = entityUser.IsActive;
 					//objUser.IsManagement = entityUser.IsManagement;
 					//objUser.Apiuser = entityUser.APIUser;
@@ -178,8 +178,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
 					//objUser.ApigroupLeader = entityUser.ApigroupLeader;
 					//objUser.AnalyticalGl = entityUser.AnalyticalGL;
 					//objUser.DesignationName = entityUser.DesignationName;
-					objUser.ModifyBy = LoggedUserId;
-					objUser.ModifyDate = DateTime.Now;
+					//objUser.ModifyBy = LoggedUserId;
+					//objUser.ModifyDate = DateTime.Now;
 
 					SqlParameter[] osqlParameter = {
 				new SqlParameter("@UserId", entityUser.UserId)
@@ -205,7 +205,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 				//SendUserCreateMail(entityUser, LoggedUserId);
 			}
 			await _unitOfWork.SaveChangesAsync();
-			if (objUser.UserId == 0)
+			if (objUser.Id == 0)
 				return DBOperation.Error;
 
 			return DBOperation.Success;
@@ -213,7 +213,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
 		public async Task<DBOperation> DeleteUser(int id)
 		{
-			var entityUser = _repository.Get(x => x.UserId == id);
+			var entityUser = _repository.Get(x => x.Id == id);
 
 			if (entityUser == null)
 				return DBOperation.NotFound;
@@ -228,13 +228,13 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
 		public async Task<bool> CheckEmailAddressExists(string emailAddress)
 		{
-			var isExists = await _repository.GetAllQuery().AnyAsync(x => x.EmailAddress.ToLower() == emailAddress.ToLower());
+			var isExists = false;// await _repository.GetAllQuery().AnyAsync(x => x.Email.ToLower() == emailAddress.ToLower());
 			return isExists;
 		}
 
 		public async Task<bool> IsTokenValid(string token)
 		{
-			var isExists = await _repository.GetAllQuery().AnyAsync(x => x.ForgotPasswordToken == token);
+			var isExists = false;//await _repository.GetAllQuery().AnyAsync(x => x.ForgotPasswordToken == token);
 			return isExists;
 		}
 

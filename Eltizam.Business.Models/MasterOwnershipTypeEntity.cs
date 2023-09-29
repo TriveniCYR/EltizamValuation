@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class MasterDesignationEntity
+    public class MasterOwnershipTypeEntity
     {
         public int Id { get; set; }
-        public string Designation { get; set; }
+        public string OwnershipType { get; set; }
         public int IsActive { get; set; }
         public DateTime CreatedOn { get; set; }
         public int CreatedBy { get; set; }

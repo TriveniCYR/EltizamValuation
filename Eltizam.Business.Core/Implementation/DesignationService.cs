@@ -25,7 +25,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
 
-        private IRepository<Master_Designation> _repository { get; set; }
+        private IRepository<MasterDesignation> _repository { get; set; }
         private readonly IHelper _helper;
         public DesignationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
                                   IHelper helper,
@@ -34,7 +34,7 @@ namespace Eltizam.Business.Core.Implementation
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
 
-            _repository = _unitOfWork.GetRepository<Master_Designation>();
+            _repository = _unitOfWork.GetRepository<MasterDesignation>();
             configuration = _configuration;
             _helper = helper;
         }
@@ -68,7 +68,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<MasterDesignationEntity> GetById(int id)
         {
             var _DesignationEntity = new MasterDesignationEntity();
-            _DesignationEntity = _mapperFactory.Get<Master_Designation, MasterDesignationEntity>(await _repository.GetAsync(id));
+            _DesignationEntity = _mapperFactory.Get<MasterDesignation, MasterDesignationEntity>(await _repository.GetAsync(id));
 
             return _DesignationEntity;
         }
@@ -77,7 +77,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> Upsert(MasterDesignationEntity entityDesignation)
         {
 
-            Master_Designation objDesignation;
+            MasterDesignation objDesignation;
 
             if (entityDesignation.Id > 0)
             {
@@ -87,7 +87,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objDesignation.Designation = entityDesignation.Designation;
                     objDesignation.IsActive = entityDesignation.IsActive;
-                    objDesignation.ModifiedOn = DateTime.Now;
+                    objDesignation.ModifiedDate = DateTime.Now;
                     objDesignation.ModifiedBy = entityDesignation.CreatedBy;
                     _repository.UpdateAsync(objDesignation);
                 }
@@ -98,10 +98,10 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
-                objDesignation = _mapperFactory.Get<MasterDesignationEntity, Master_Designation>(entityDesignation);
-                objDesignation.CreatedOn = DateTime.Now;
+                objDesignation = _mapperFactory.Get<MasterDesignationEntity, MasterDesignation>(entityDesignation);
+                objDesignation.CreatedDate = DateTime.Now;
                 objDesignation.CreatedBy = entityDesignation.CreatedBy;
-                objDesignation.ModifiedOn = DateTime.Now;
+                objDesignation.ModifiedDate = DateTime.Now;
                 objDesignation.ModifiedBy = entityDesignation.CreatedBy;
                 _repository.AddAsync(objDesignation);
             }

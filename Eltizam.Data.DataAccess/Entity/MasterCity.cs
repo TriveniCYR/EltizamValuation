@@ -3,20 +3,20 @@ using System.Collections.Generic;
 
 namespace Eltizam.Data.DataAccess.Entity
 {
-    public partial class MasterCountry
+    public partial class MasterCity
     {
-        public MasterCountry()
+        public MasterCity()
         {
             MasterAddresses = new HashSet<MasterAddress>();
             MasterClients = new HashSet<MasterClient>();
             MasterLocations = new HashSet<MasterLocation>();
-            MasterStates = new HashSet<MasterState>();
         }
 
         public int Id { get; set; }
-        public string CountryName { get; set; } = null!;
-        public string? CoutryCode { get; set; }
-        public string? IsdcountryCode { get; set; }
+        public int CountryId { get; set; }
+        public int StateId { get; set; }
+        public string? CityName { get; set; }
+        public string? Stdcode { get; set; }
         public int? IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
@@ -26,6 +26,5 @@ namespace Eltizam.Data.DataAccess.Entity
         public virtual ICollection<MasterAddress> MasterAddresses { get; set; }
         public virtual ICollection<MasterClient> MasterClients { get; set; }
         public virtual ICollection<MasterLocation> MasterLocations { get; set; }
-        public virtual ICollection<MasterState> MasterStates { get; set; }
     }
 }

@@ -1,45 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#nullable disable
-
 namespace Eltizam.Data.DataAccess.Entity
 {
     public partial class MasterUser
     {
-        public MasterUser()
-        {
-          
-            UserSessionLogMasters = new HashSet<UserSessionLogMaster>();
-        }
-
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
-        public string FullName { get; set; }
-        public string EmailAddress { get; set; }
-        public string MobileNumber { get; set; }
-        public string Password { get; set; }
-        public string Address { get; set; }
+        public int Id { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
+        public string? UserName { get; set; }
+        public string? Gender { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? DesignationId { get; set; }
+        public string? LicenseNo { get; set; }
+        public int CompanyId { get; set; }
+        public int? ResourceId { get; set; }
+        public string Password { get; set; } = null!;
         public bool IsActive { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime? ModifyDate { get; set; }
-        public int? ModifyBy { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public int? DeletedBy { get; set; }
-        public string ForgotPasswordToken { get; set; }
-        public DateTime? ForgotPasswordDateTime { get; set; }
-        public bool? IsManagement { get; set; }
-        public bool? Apiuser { get; set; }
-        public bool? FormulationGl { get; set; }
-        public bool? AnalyticalGl { get; set; }
-        public string DesignationName { get; set; }
-        public int? MobileCountryId { get; set; }
-        public bool? ApigroupLeader { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public int? ModifiedBy { get; set; }
 
-        public virtual MasterRole Role { get; set; }
-       
-        public virtual ICollection<UserSessionLogMaster> UserSessionLogMasters { get; set; }
+        public virtual MasterDepartment? Department { get; set; }
+        public virtual MasterDesignation? Designation { get; set; }
     }
 }

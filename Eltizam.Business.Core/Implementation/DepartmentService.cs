@@ -24,7 +24,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
 
-        private IRepository<Master_Department> _repository { get; set; }
+        private IRepository<MasterDepartment> _repository { get; set; }
         private readonly IHelper _helper;
         public DepartmentService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
                                   IHelper helper,
@@ -33,7 +33,7 @@ namespace Eltizam.Business.Core.Implementation
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
 
-            _repository = _unitOfWork.GetRepository<Master_Department>();
+            _repository = _unitOfWork.GetRepository<MasterDepartment>();
             configuration = _configuration;
             _helper = helper;
         }
@@ -65,14 +65,14 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<MasterDepartmentEntity> GetById(int id)
         {
             var _DepartmentEntity = new MasterDepartmentEntity();
-            _DepartmentEntity = _mapperFactory.Get<Master_Department, MasterDepartmentEntity>(await _repository.GetAsync(id));
+            _DepartmentEntity = _mapperFactory.Get<MasterDepartment, MasterDepartmentEntity>(await _repository.GetAsync(id));
 
             return _DepartmentEntity;
         }
         public async Task<DBOperation> Upsert(MasterDepartmentEntity entityDepartment)
         {
             
-            Master_Department objDepartment;
+            MasterDepartment objDepartment;
 
             if (entityDepartment.Id > 0)
             {
@@ -82,7 +82,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objDepartment.Department = entityDepartment.Department;
                     objDepartment.IsActive = entityDepartment.IsActive;
-                    objDepartment.ModifiedOn = DateTime.Now;
+                    objDepartment.ModifiedDate = DateTime.Now;
                     objDepartment.ModifiedBy = entityDepartment.CreatedBy;
                     _repository.UpdateAsync(objDepartment);
                 }
@@ -93,10 +93,10 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
-                objDepartment = _mapperFactory.Get<MasterDepartmentEntity, Master_Department>(entityDepartment);
-                objDepartment.CreatedOn = DateTime.Now;
+                objDepartment = _mapperFactory.Get<MasterDepartmentEntity, MasterDepartment>(entityDepartment);
+                objDepartment.CreatedDate = DateTime.Now;
                 objDepartment.CreatedBy = entityDepartment.CreatedBy;
-                objDepartment.ModifiedOn = DateTime.Now;
+                objDepartment.ModifiedDate = DateTime.Now;
                 objDepartment.ModifiedBy = entityDepartment.CreatedBy;
                 _repository.AddAsync(objDepartment);
             }

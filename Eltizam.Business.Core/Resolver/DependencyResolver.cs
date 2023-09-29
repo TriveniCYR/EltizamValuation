@@ -17,7 +17,7 @@ namespace Eltizam.Business.Core.Resolver
             services.AddTransient<IMasterQualificationServices, MasterQualificationServices>();
             services.AddTransient<IMasterPropertyService, MasterPropertyService>();
             services.AddTransient<IMasterPropertySubTypeService, MasterPropertySubTypeService>();
-            services.AddScoped<DbContext, EltizamDevContext>();
+            services.AddScoped<DbContext, EltizamContext>();
             services.AddScoped<IMapperFactory, MapperFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -29,7 +29,10 @@ namespace Eltizam.Business.Core.Resolver
             services.AddTransient<IDesignationService, DesignationService>();
 			services.AddTransient<IOwnershipTypeService, OwnershipTypeService>();
 			services.AddTransient<ICityService, CityService>();
+			services.AddTransient<IStateService, StateService>();
 			services.AddTransient<ILocationService, LocationService>();
+			services.AddTransient<IValuationFeeTypeService, ValuationFeeTypeService>();
+			services.AddTransient<IValuationFeesService, ValuationFeesService>();
 			services.AddTransient<IMasterModuleService, MasterModuleService>();
 			
             services.AddTransient<IHelper, Helper>();

@@ -84,7 +84,6 @@ namespace Eltizam.Business.Models
         public int LoggedUserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public string WebApplicationUrl { get; set; }
-        
 
     }
 }

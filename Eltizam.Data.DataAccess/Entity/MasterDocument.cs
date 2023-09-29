@@ -3,11 +3,15 @@ using System.Collections.Generic;
 
 namespace Eltizam.Data.DataAccess.Entity
 {
-    public partial class MasterRole
+    public partial class MasterDocument
     {
         public int Id { get; set; }
-        public string RoleName { get; set; } = null!;
-        public int IsActive { get; set; }
+        public int TableKeyId { get; set; }
+        public string? TableName { get; set; }
+        public string? FileName { get; set; }
+        public string? FileType { get; set; }
+        public string? FilePath { get; set; }
+        public int? IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
