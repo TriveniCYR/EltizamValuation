@@ -4,11 +4,14 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility;
 using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -73,31 +76,23 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            // Get the column name and sort direction for data table sorting.
-            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
-            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+            var _dbParams = new[]
+             {
+                 new DbParameter("PropertySubTypeId", 0,SqlDbType.Int),
+                 new DbParameter("PageSize", model.length, SqlDbType.Int),
+                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
+                 new DbParameter("OrderClause", "PropertySubType", SqlDbType.VarChar),
+                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
+             };
 
-            // Create an array of SQL parameters for a stored procedure call.
-            SqlParameter[] osqlParameter = {
-        new SqlParameter("@Id", 0),
-        new SqlParameter("@CurrentPageNumber", model.start),
-        new SqlParameter("@PageSize", model.length),
-        new SqlParameter("@SortColumn", ColumnName),
-        new SqlParameter("@SortDirection", SortDir),
-        new SqlParameter("@SearchText", model.search.value)
-    };
+            int _count = 0;
+            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<Master_PropertySubTypeModel>("usp_PropertySubType_SearchAllList",
 
-            // Call a stored procedure to get a list of Master_PropertyType entities.
-            var QualificationList = await _repository.GetBySP("usp_Property_GetMasterPropertySubTypeList", System.Data.CommandType.StoredProcedure, osqlParameter);
+             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
-            // Extract total record and total count information from the result.
-            var TotalRecord = (QualificationList != null && QualificationList.Rows.Count > 0 ? Convert.ToInt32(QualificationList.Rows[0]["TotalRecord"]) : 0);
-            var TotalCount = (QualificationList != null && QualificationList.Rows.Count > 0 ? Convert.ToInt32(QualificationList.Rows[0]["TotalCount"]) : 0);
 
-            // Create a DataTableResponseModel with the extracted data.
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, QualificationList.DataTableToList<Master_PropertySubTypeModel>());
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
 
-            // Return the response model.
             return oDataTableResponseModel;
         }
 

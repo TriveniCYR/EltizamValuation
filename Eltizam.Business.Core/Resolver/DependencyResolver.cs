@@ -27,11 +27,14 @@ namespace Eltizam.Business.Core.Resolver
            // services.AddTransient<IMasterRoleService, MasterRoleService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMasterUserService, MasterUserService>();
+            services.AddTransient<ICityService, CityService>();
+            services.AddTransient<IStateService, StateService>();
             services.AddTransient<IDepartmentService, DepartmentService>();
             services.AddTransient<IDesignationService, DesignationService>();
-            //services.AddTransient<IOwnershipTypeService, OwnershipTypeService>();
-            //services.AddTransient<ICityService, CityService>();
-            //services.AddTransient<ILocationService, LocationService>();
+            services.AddTransient<IOwnershipTypeService, OwnershipTypeService>();
+            services.AddTransient<IValuationFeesService, ValuationFeesService>();
+            services.AddTransient<IValuationFeeTypeService, ValuationFeeTypeService>();
+            services.AddTransient<ILocationService, LocationService>();
             services.AddTransient<IMasterModuleService, MasterModuleService>();
             services.AddTransient<IMasterClientService, MasterClientService>();
             services.AddTransient<IMaster_ClientTypeService, Master_ClientTypeService>();
