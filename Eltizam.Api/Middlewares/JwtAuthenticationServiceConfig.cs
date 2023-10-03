@@ -63,9 +63,9 @@ namespace Eltizam.Api.Middlewares
             claims.Add(new Claim("Email", userEntity.Email));
             claims.Add(new Claim("FullName", userEntity.FullName));
             claims.Add(new Claim("UserId", userEntity.UserId.ToString()));
-            claims.Add(new Claim("RoleId", (userEntity.RoleId == null || userEntity.RoleId <= 0 ? String.Empty : userEntity.RoleId.ToString())));
-            claims.Add(new Claim("IsManagement", userEntity.IsManagement.ToString()));
-            claims.Add(new Claim("AssignedBusinessUnit", userEntity.AssignedBusinessUnit));
+            //claims.Add(new Claim("RoleId", (userEntity.RoleId == null || userEntity.RoleId <= 0 ? String.Empty : userEntity.RoleId.ToString())));
+            //claims.Add(new Claim("IsManagement", userEntity.IsManagement.ToString()));
+            //claims.Add(new Claim("AssignedBusinessUnit", userEntity.AssignedBusinessUnit));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

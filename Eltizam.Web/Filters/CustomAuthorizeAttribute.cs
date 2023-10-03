@@ -31,30 +31,30 @@ namespace Eltizam.Web.Filters
                     {
                         context.HttpContext.Session.SetString(UserHelper.LoggedInUserName, oUserLoggedInModel.FullName);
                     }
-                    context.HttpContext.Session.SetInt32(UserHelper.LoggedInRoleId, oUserLoggedInModel.RoleId);
-                    context.HttpContext.Session.SetString(UserHelper.AssignedBusinessUnit, oUserLoggedInModel.AssignedBusinessUnit);
-                    context.HttpContext.Session.SetString(UserHelper.IsManagement, Convert.ToString(oUserLoggedInModel.IsManagement));
+                    //context.HttpContext.Session.SetInt32(UserHelper.LoggedInRoleId, oUserLoggedInModel.RoleId);
+                    //context.HttpContext.Session.SetString(UserHelper.AssignedBusinessUnit, oUserLoggedInModel.AssignedBusinessUnit);
+                    //context.HttpContext.Session.SetString(UserHelper.IsManagement, Convert.ToString(oUserLoggedInModel.IsManagement));
                     if (oUserLoggedInModel.UserId > 0)
                     {
                         context.HttpContext.Session.SetString(UserHelper.LoggedInUserId, oUserLoggedInModel.UserId.ToString());
                     }
-                    var roles = UtilityHelper.GetModuleRole<dynamic>(oUserLoggedInModel.RoleId);
-                    if (roles == null)
-                    {
-                        APIRepository objapi = new APIRepository(APIURLHelper.Configuration);
+                    //var roles = UtilityHelper.GetModuleRole<dynamic>(oUserLoggedInModel.RoleId);
+                    //if (roles == null)
+                    //{
+                    //    APIRepository objapi = new APIRepository(APIURLHelper.Configuration);
 
-                        context.HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                    //    context.HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
 
-                        HttpResponseMessage resRoles = objapi.APICommunication(APIURLHelper.GetByPermisionRoleUsingRoleId + "/" + oUserLoggedInModel.RoleId, HttpMethod.Get, token).Result;
+                    //    HttpResponseMessage resRoles = objapi.APICommunication(APIURLHelper.GetByPermisionRoleUsingRoleId + "/" + oUserLoggedInModel.RoleId, HttpMethod.Get, token).Result;
 
-                        if (resRoles.IsSuccessStatusCode)
-                        {
-                            string rolJson = resRoles.Content.ReadAsStringAsync().Result;
-                            var data = JsonConvert.DeserializeObject<APIResponseEntity<IEnumerable<RolePermissionModel>>>(rolJson);
-                            UtilityHelper.AddModuleRole(oUserLoggedInModel.RoleId, data._object);
-                            roles = data._object;
-                        }
-                    }
+                    //    if (resRoles.IsSuccessStatusCode)
+                    //    {
+                    //        string rolJson = resRoles.Content.ReadAsStringAsync().Result;
+                    //        var data = JsonConvert.DeserializeObject<APIResponseEntity<IEnumerable<RolePermissionModel>>>(rolJson);
+                    //        UtilityHelper.AddModuleRole(oUserLoggedInModel.RoleId, data._object);
+                    //        roles = data._object;
+                    //    }
+                    //}
 
                     oUserLoggedInModel.UserToken = string.Empty;
 

@@ -34,8 +34,9 @@ namespace Eltizam.Web.Controllers
         }
         public IActionResult Login()
         {
-
+            //APIRepository objapi = new APIRepository(_cofiguration);
             LoginViewModel loginViewModel = new LoginViewModel();
+
             return View(loginViewModel);
         }
 
@@ -55,19 +56,21 @@ namespace Eltizam.Web.Controllers
                         string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                         var oUserDetail = JsonConvert.DeserializeObject<APIResponseEntity<UserSessionEntity>>(jsonResponse);
                         SetUserClaim(oUserDetail._object);
-                        HttpContext.Session.SetInt32(UserHelper.LoggedInRoleId, oUserDetail._object.RoleId);
-                        var roles = UtilityHelper.GetModuleRole<dynamic>(oUserDetail._object.RoleId);
-                        return RedirectToAction("Index", "Home");
+
+
+                        return RedirectToAction("Resource", "Resource");
                     }
                     else
                     {
                         ViewBag.errormessage = _stringLocalizer["InvalidUser"].Value;
+                        //loginViewModel.masterBusinessUnitEntities = BindListBusinessUnit();
                         return View(loginViewModel);
                     }
                 }
                 else
                 {
                     ViewBag.errormessage = _stringLocalizer["InvalidUser"].Value;
+                    //loginViewModel.masterBusinessUnitEntities = BindListBusinessUnit();
                     return View(loginViewModel);
                 }
             }
@@ -75,6 +78,7 @@ namespace Eltizam.Web.Controllers
             {
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
+                //loginViewModel.masterBusinessUnitEntities = BindListBusinessUnit();
                 return View(loginViewModel);
             }
         }
@@ -85,12 +89,9 @@ namespace Eltizam.Web.Controllers
 
             var claims = new List<Claim>
                             {
-                                new Claim("FullName", oUserDetail.FullName),
+                                new Claim("UserName", oUserDetail.FullName),
                                 new Claim("Email", oUserDetail.Email),
-                                new Claim("UserId", Convert.ToString(oUserDetail.UserId)),
-                                new Claim("RoleId", Convert.ToString(oUserDetail.RoleId)),
-                                new Claim("IsManagement", Convert.ToString(oUserDetail.IsManagement)),
-                                new Claim("AssignedBusinessUnit", oUserDetail.AssignedBusinessUnit)
+                                new Claim("Id", Convert.ToString(oUserDetail.UserId)),
                             };
 
             var claimsIdentity = new ClaimsIdentity(
@@ -106,6 +107,22 @@ namespace Eltizam.Web.Controllers
 
             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
             HttpContext.Session.SetString(UserHelper.LoggedInUserId, Convert.ToString(oUserDetail.UserId));
+        }
+
+
+        public IActionResult ForGetPassword()
+        {
+            return View();
+        }
+
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        public IActionResult ProfileDetails()
+        {
+            return View();
         }
     }
 }

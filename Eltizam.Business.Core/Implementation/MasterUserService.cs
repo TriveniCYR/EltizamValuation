@@ -53,18 +53,15 @@ namespace Eltizam.Business.Core.ServiceImplementations
 				new SqlParameter("@Password", Utility.Utility.UtilityHelper.GenerateSHA256String(oLogin.Password))
 			};
 
-			var UserList = await _repository.GetBySP("stp_npd_VerifyUserLogin", System.Data.CommandType.StoredProcedure, osqlParameter);
+			var UserList = await _repository.GetBySP("usp_User_VerifyUserLogin", System.Data.CommandType.StoredProcedure, osqlParameter);
 
 			if (UserList != null && UserList.Rows.Count > 0)
 			{
-				oUser = new UserSessionEntity();
-				oUser.FullName = Convert.ToString(UserList.Rows[0]["FullName"]);
-				oUser.UserId = Convert.ToInt32(UserList.Rows[0]["UserId"]);
-				oUser.Email = Convert.ToString(UserList.Rows[0]["EmailAddress"]);
-				oUser.RoleId = Convert.ToInt32(UserList.Rows[0]["RoleId"]);
-				oUser.IsManagement = Convert.ToString(UserList.Rows[0]["IsManagement"]);
-				oUser.AssignedBusinessUnit = Convert.ToString(UserList.Rows[0]["AssignedBusinessUnit"]);
-			}
+                oUser = new UserSessionEntity();
+                oUser.FullName = Convert.ToString(UserList.Rows[0]["FullName"]);
+                oUser.UserId = Convert.ToInt32(UserList.Rows[0]["UserId"]);
+                oUser.Email = Convert.ToString(UserList.Rows[0]["EmailAddress"]);
+            }
 			return oUser;
 		}
 
