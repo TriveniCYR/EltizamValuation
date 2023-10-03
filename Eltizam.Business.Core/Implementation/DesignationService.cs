@@ -55,7 +55,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterDesignationEntity>("usp_Designation_SearchAllList",
+            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterDesignationEntity>(ProcedureNameCall.usp_Designation_SearchAllList,
 
              DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 

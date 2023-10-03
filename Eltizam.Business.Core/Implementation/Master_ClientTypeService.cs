@@ -87,7 +87,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<Master_ClientTypeModel>("usp_ClientType_SearchAllList",
+            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<Master_ClientTypeModel>(ProcedureNameCall.usp_ClientType_SearchAllList,
 
              DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 

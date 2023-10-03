@@ -4,11 +4,14 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility;
 using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -42,24 +45,22 @@ namespace Eltizam.Business.Core.Implementation
         // get all recoreds from OwnershipType list with sorting and pagination
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
-            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+            var _dbParams = new[]
+             {
+                 new DbParameter("OwnershipTypeId", 0,SqlDbType.Int),
+                 new DbParameter("PageSize", model.length, SqlDbType.Int),
+                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
+                 new DbParameter("OrderClause", "OwnershipType", SqlDbType.VarChar),
+                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
+             };
 
-            SqlParameter[] osqlParameter = {
-                new SqlParameter("@OwnershipTypeId", 0),
-                new SqlParameter("@CurrentPageNumber", model.start),
-                new SqlParameter("@PageSize", model.length),
-                new SqlParameter("@SortColumn", ColumnName),
-                new SqlParameter("@SortDirection", SortDir),
-                new SqlParameter("@SearchText", model.search.value)
-            };
+            int _count = 0;
+            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterOwnershipTypeEntity>(ProcedureNameCall.usp_OwnershipType_SearchAllList,
 
-            var ownershipTypeList = await _repository.GetBySP("stp_npd_GetOwnershipTypeList", System.Data.CommandType.StoredProcedure, osqlParameter);
+             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
-            var TotalRecord = (ownershipTypeList != null && ownershipTypeList.Rows.Count > 0 ? Convert.ToInt32(ownershipTypeList.Rows[0]["TotalRecord"]) : 0);
-            var TotalCount = (ownershipTypeList != null && ownershipTypeList.Rows.Count > 0 ? Convert.ToInt32(ownershipTypeList.Rows[0]["TotalCount"]) : 0);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, ownershipTypeList.DataTableToList<MasterOwnershipTypeEntity>());
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf);
 
             return oDataTableResponseModel;
         }

@@ -91,7 +91,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterVendorListModel>("usp_Vendor_SearchAllList",
+            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterVendorListModel>(ProcedureNameCall.usp_Vendor_SearchAllList,
 
              DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 

@@ -56,7 +56,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCityEntity>("usp_City_SearchAllList",
+            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCityEntity>(ProcedureNameCall.usp_City_SearchAllList,
 
              _dbConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
