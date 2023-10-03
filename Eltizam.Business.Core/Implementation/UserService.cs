@@ -47,7 +47,7 @@ namespace Eltizam.Business.Core.Implementation
 		{
             var _dbParams = new[]
              {
-                 new DbParameter("CityId", 0,SqlDbType.Int),
+                 new DbParameter("UserId", 0,SqlDbType.Int),
                  new DbParameter("PageSize", model.length, SqlDbType.Int),
                  new DbParameter("PageNumber", model.start, SqlDbType.Int),
                  new DbParameter("OrderClause", "UserName", SqlDbType.VarChar),
