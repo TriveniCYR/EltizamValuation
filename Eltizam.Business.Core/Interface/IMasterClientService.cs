@@ -10,11 +10,10 @@ namespace Eltizam.Business.Core.Interface
 {
     public interface IMasterClientService
     {
-        Task<Master_ClientModel> GetMasterClientById1Async(int id);
+        Task<Master_ClientModel> GetMasterClientByIdAsync(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> AddUpdateMasterClient(Master_ClientModel master_ClientModel);
         Task<DBOperation> DeleteClient(int id);
-        Task<(Master_ClientModel, Master_ClientContactModel)> GetMasterClientByIdAsync(int id);
 
     }
 }

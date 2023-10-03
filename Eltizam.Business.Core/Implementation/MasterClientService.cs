@@ -28,7 +28,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<MasterClient> _repository { get; set; }
-        private IRepository<MasterClientContact> _repositoryContact { get; set; }
+        private IRepository<MasterContact> _repositoryContact { get; set; }
         private readonly IHelper _helper;
         #endregion Properties
 
@@ -41,7 +41,7 @@ namespace Eltizam.Business.Core.Implementation
             _mapperFactory = mapperFactory;
 
             _repository = _unitOfWork.GetRepository<MasterClient>();
-            _repositoryContact = _unitOfWork.GetRepository<MasterClientContact>();
+            _repositoryContact = _unitOfWork.GetRepository<MasterContact>();
             configuration = _configuration;
             _helper = helper;
         }
@@ -64,31 +64,27 @@ namespace Eltizam.Business.Core.Implementation
         /// <response code="500">Internal Server</response>
         /// 
 
-        public async Task<Master_ClientModel> GetMasterClientById1Async(int id)
+        public async Task<Master_ClientModel> GetMasterClientByIdAsync(int id)
         {
             // Create a new Master_PropertyTypeModel instance.
-            var _userClient = new Master_ClientModel();
-            var _userContact = new Master_ClientContactModel();
+            var _clientEntity = new Master_ClientModel();
+            _clientEntity = _mapperFactory.Get<MasterClient, Master_ClientModel>(await _repository.GetAsync(id));
+            if (_clientEntity != null)
+            {
+                DbParameter[] osqlParameter = {
+                 new DbParameter("TableKeyId", id, SqlDbType.Int),
+                 new DbParameter("TableName", "Master_Client", SqlDbType.VarChar),
+                };
 
+                var clientContact = FJDBHelper.ExecuteSingleMappedReader<Master_ClientContactModel>("usp_User_GetContactByUserId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                if (clientContact != null)
+                {
+                    _clientEntity.Contacts = clientContact;
 
-            // Use a mapper to map the data from the repository to the model asynchronously.
-            _userClient = _mapperFactory.Get<MasterClient, Master_ClientModel>(await _repository.GetAsync(id));
-            _userContact = _mapperFactory.Get<MasterClientContact, Master_ClientContactModel>(await _repositoryContact.GetAsync(id));
-            // Return the mapped entity.
-            return _userClient;
+                }
+            }
+            return _clientEntity;
         }
-
-        public async Task<(Master_ClientModel, Master_ClientContactModel)> GetMasterClientByIdAsync(int id)
-        {
-            // Use a mapper to map the data from the repository to the model asynchronously.
-            var userClient = _mapperFactory.Get<MasterClient, Master_ClientModel>(await _repository.GetAsync(id));
-            var userContact = _mapperFactory.Get<MasterClientContact, Master_ClientContactModel>(await _repositoryContact.GetAsync(id));
-
-            // Return both objects as a tuple.
-            return (userClient, userContact);
-        }
-
-
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
@@ -117,7 +113,7 @@ namespace Eltizam.Business.Core.Implementation
         {
             // Create MasterClient and MasterClientContact objects.
             MasterClient objClient;
-            MasterClientContact objContact;
+            MasterContact objContact;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (master_ClientModel.Id > 0)
@@ -150,14 +146,6 @@ namespace Eltizam.Business.Core.Implementation
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objClient);
-                }
-                else if (objClient != null)
-                {
-                    objContact = _mapperFactory.Get<Master_ClientContactModel, MasterClientContact>(master_ClientModel.Contacts);
-                    objContact.CreateDate = DateTime.Now;
-                    objContact.CreatedBy = master_ClientModel.CreatedBy;
-                    objContact.ModifiedDate = DateTime.Now;
-                    objContact.ModifiedBy = master_ClientModel.ModidiedBy;
                 }
                 else
                 {
@@ -201,14 +189,13 @@ namespace Eltizam.Business.Core.Implementation
                     objContact = _repositoryContact.Get(master_ClientModel.Contacts.Id);
                     if (objContact != null)
                     {
-                        var entityAddress = _mapperFactory.Get<Master_ClientContactModel, MasterClientContact>(master_ClientModel.Contacts);
-                        objContact.ContactPerson = entityAddress.ContactPerson;
+                        var entityAddress = _mapperFactory.Get<Master_ClientContactModel, MasterContact>(master_ClientModel.Contacts);
+                        objContact.ContactPersonName = entityAddress.ContactPersonName;
                         objContact.Department = entityAddress.Department;
                         objContact.Designation = entityAddress.Designation;
                         objContact.Email = entityAddress.Email;
-                        objContact.PhoneNumber = entityAddress.PhoneNumber;
-                        objContact.IsActive = entityAddress.IsActive;
-                        objContact.CreateDate = entityAddress.CreateDate;
+                        objContact.Mobile = entityAddress.Mobile;
+                        objContact.Status = entityAddress.Status;
                         objContact.ModifiedBy = entityAddress.CreatedBy;
                         objContact.ModifiedDate = DateTime.Now;
                         _repositoryContact.UpdateAsync(entityAddress);
@@ -217,9 +204,10 @@ namespace Eltizam.Business.Core.Implementation
                 else
                 {
                     // Create a new MasterClientContact entity from the model for insertion.
-                    objContact = _mapperFactory.Get<Master_ClientContactModel, MasterClientContact>(master_ClientModel.Contacts);
-                    objContact.ClientId = objClient.Id; // Associate with the MasterClient entity.
-                    objContact.CreateDate = DateTime.Now;
+                    objContact = _mapperFactory.Get<Master_ClientContactModel, MasterContact>(master_ClientModel.Contacts);
+                    objContact.TableKeyId = objClient.Id; // Associate with the MasterClient entity.
+                    objContact.TableName = "Master_Client";
+                    objContact.CreatedDate = DateTime.Now;
                     objContact.CreatedBy = master_ClientModel.CreatedBy;
                     objContact.ModifiedDate = DateTime.Now;
                     objContact.ModifiedBy = master_ClientModel.ModidiedBy;
@@ -251,7 +239,19 @@ namespace Eltizam.Business.Core.Implementation
             // If the entity does not exist, return a not found operation.
             if (entityUser == null)
                 return DBOperation.NotFound;
+            else
+            {
+                DbParameter[] osqlParameter = {
+                 new DbParameter("TableKeyId", id, SqlDbType.Int),
+                 new DbParameter("TableName", "Master_User", SqlDbType.VarChar),
+                };
 
+                int result = FJDBHelper.ExecuteSingleMappedReader<int>("usp_Client_DeleteContactByClientId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                if (result > 0)
+                {
+
+                }
+            }
             // Remove the entity from the repository.
             _repository.Remove(entityUser);
 

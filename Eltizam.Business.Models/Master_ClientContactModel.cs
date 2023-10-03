@@ -11,12 +11,12 @@ namespace Eltizam.Business.Models
         
         public int Id { get; set; }
         public int ClientId { get; set; }
-        public string ContactPerson { get; set; }
+        public string ContactPersonName { get; set; }
         public string Department { get; set; }
         public string Designation { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public int IsActive { get; set; }
+        public string Mobile { get; set; }
+        public int Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public int CreatedBy { get; set; }
         public DateTime ModifiedDate { get; set; }

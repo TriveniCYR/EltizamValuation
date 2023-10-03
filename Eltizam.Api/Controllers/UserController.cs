@@ -62,8 +62,8 @@ namespace Eltizam.API.Controllers.Masters
         /// <response code="405">Method Not Allowed</response>
         /// <response code="500">Internal Server</response>
         
-        [HttpPost, Route("GetAllTblUser")]
-        public async Task<IActionResult> GetAllTblUser([FromForm] DataTableAjaxPostModel model)
+        [HttpPost, Route("GetAll")]
+        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
         {
             try
             {

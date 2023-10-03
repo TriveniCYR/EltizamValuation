@@ -50,17 +50,17 @@ namespace EltizamValuation.Api.Controllers
         }
 
         [HttpGet]
-        [Route("getById/{id}")]
+        [Route("GetById/{id}")]
         public async Task<IActionResult> GetMasterPropertyById([FromRoute] int id)
         {
             try
             {
-                var (userClient, userContact) = await _clientServices.GetMasterClientByIdAsync(id);
+                var clientClient = await _clientServices.GetMasterClientByIdAsync(id);
 
-                if (userClient != null && userClient.Id > 0)
+                if (clientClient != null && clientClient.Id > 0)
                 {
                     // Assuming _ObjectResponse.Create takes three parameters: data, status code, and message.
-                    return _ObjectResponse.Create(new { UserClient = userClient, UserContact = userContact }, (int)HttpStatusCode.OK, "Success");
+                    return _ObjectResponse.Create(new { UserClient = clientClient }, (int)HttpStatusCode.OK, "Success");
                 }
                 else
                 {

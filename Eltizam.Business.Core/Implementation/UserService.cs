@@ -55,7 +55,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCityEntity>(ProcedureNameCall.usp_User_SearchAllList,
+            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterUserListModel>(ProcedureNameCall.usp_User_SearchAllList,
 
              DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
@@ -72,9 +72,9 @@ namespace Eltizam.Business.Core.Implementation
             {
                 DbParameter[] osqlParameter = {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", "Master_User", SqlDbType.VarChar),
+                 new DbParameter("TableName", AddressSourceTable.Master_User, SqlDbType.VarChar),
                 };
-				var UserAddress = FJDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>("usp_User_GetAddressByUserId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+				var UserAddress = FJDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>("usp_Address_GetAddressByTableKeyId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
 				if (UserAddress != null)
 				{
 					_userEntity.Address = UserAddress;
@@ -83,9 +83,9 @@ namespace Eltizam.Business.Core.Implementation
 
                 DbParameter[] osqlParameter1 = {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", "Master_User", SqlDbType.VarChar),
+                 new DbParameter("TableName", AddressSourceTable.Master_User, SqlDbType.VarChar),
                 };
-                var UserContact = FJDBHelper.ExecuteSingleMappedReader<MasterUserContactModel>("usp_User_GetContactByUserId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter1);
+                var UserContact = FJDBHelper.ExecuteSingleMappedReader<MasterUserContactModel>("usp_Contact_GetContactByTableKeyId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter1);
 				if (UserContact != null)
 				{
 					_userEntity.Contact = UserContact;

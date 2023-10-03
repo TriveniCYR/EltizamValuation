@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Eltizam.Business.Models
+{
+    public class AddressSourceTable
+    {
+        public static string Master_User = "Master_User";
+        public static string Master_Vendor = "Master_Vendor";
+    }
+}
