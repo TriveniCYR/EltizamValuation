@@ -1,0 +1,85 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using System.Net;
+using Eltizam.Api.Helpers.Response;
+using Eltizam.Api.Middlewares;
+using Eltizam.Business.Core.Interface;
+using Eltizam.Business.Models;
+using Eltizam.Resource;
+
+namespace Eltizam.Api.Controllers
+{
+	[Route("api/[controller]")]
+	[ApiController]
+	public class AccountController : ControllerBase
+	{
+		#region Properties
+
+		private readonly IConfiguration _configuration;
+		private readonly IResponseHandler<dynamic> _ObjectResponse;
+		private readonly IMasterUserService _MasterUserService;
+		private readonly IStringLocalizer<Errors> _stringLocalizerError;
+		private readonly IExceptionService _ExceptionService;
+		
+		#endregion Properties
+
+		#region Constructor
+
+		public AccountController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IMasterUserService MasterUserService, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService)
+		{
+			_configuration = configuration;
+			_ObjectResponse = ObjectResponse;
+			_MasterUserService = MasterUserService;
+			_stringLocalizerError = stringLocalizerError;
+			_ExceptionService = exceptionService;
+		}
+
+		#endregion Constructor
+
+		#region API Methods
+
+		/// <summary>
+		/// Description - To Login User and return JWT Token String
+		/// </summary>
+		/// <param name="User"></param>
+		/// <returns></returns>
+		/// <response code="200">OK</response>
+		/// <response code="400">Bad Request</response>
+		/// <response code="403">Forbidden</response>
+		/// <response code="404">Not Found</response>
+		/// <response code="405">Method Not Allowed</response>
+		/// <response code="415">Unsupported Media Type</response>
+		/// <response code="500">Internal Server</response>
+
+		[AllowAnonymous]
+		[HttpPost, Route("login")]
+		public async Task<IActionResult> Login([FromBody] LoginViewModel oLogin)
+		{
+			try
+			{
+				var _User = await _MasterUserService.Login(oLogin);
+
+				if (_User != null)
+				{
+					int expMinutes = Convert.ToInt32(_configuration["jwt:expiryMinutes"]);
+
+					var userEntity = JwtAuthenticationServiceConfig.ValidateToken(_User, _configuration["jwt:audience"].ToString(),
+						_configuration["jwt:issuer"].ToString(), Guid.NewGuid(), DateTime.Now.AddMinutes(expMinutes), _configuration["jwt:secretKey"]);
+
+					return _ObjectResponse.Create(userEntity, (Int32)HttpStatusCode.OK);
+				}
+				else
+					return _ObjectResponse.Create(string.Empty, (Int32)HttpStatusCode.Unauthorized, _stringLocalizerError["LoinFailed"]);
+			}
+			catch (Exception ex)
+			{
+				await _ExceptionService.LogException(ex);
+				return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+			}
+		}
+		#endregion API Methods
+
+	}
+}
