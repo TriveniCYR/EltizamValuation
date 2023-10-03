@@ -15,9 +15,9 @@ namespace Eltizam.Web.Helpers
 
         public static IConfiguration Configuration;
 
-       
 
-     
+
+
         #region DIA
 
         public static string GetAllDIA = "api/Dashboard/GetAllDIA";
@@ -29,13 +29,12 @@ namespace Eltizam.Web.Helpers
 
         #region User
 
-        public static string GetAllUser = "api/User/GetAllUser";
-        public static string GetAllTblUser = "api/User/GetAllTblUser";
+        public static string GetAll = "api/User/GetAll";
         public static string SaveUser = "api/User/InsertUpdateUser";
         public static string SaveTblUser = "api/User/InsertUpdateTblUser";
         public static string GetUserById = "api/User/GetUserById";
         public static string GetTblUserById = "api/User/GetTblUserById";
-       
+
         // Anonymous_Access API for Forgot Passsword
         public static string Anonymous_CheckEmailAddressExists = "api/Account/CheckEmailAddressExists";
 
@@ -43,7 +42,7 @@ namespace Eltizam.Web.Helpers
 
         #endregion User
 
-      
+
         #region Dashboard
 
         public static string GetAllDashboard = "api/Dashboard/FillDropdown";
@@ -61,13 +60,13 @@ namespace Eltizam.Web.Helpers
 
         #endregion Notification
 
-       
 
-      
+
+
         #region LogExceptionMethod
         public static string LogException = "api/LogException/LogException";
         #endregion
 
-      
+
     }
 }

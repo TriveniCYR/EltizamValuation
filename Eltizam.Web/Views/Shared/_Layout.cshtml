@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Configuration
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -10,6 +17,8 @@
 <body>
     <div>
         @RenderBody()
+        <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
+        <input type="hidden" id="hdnWebBaseURL" />
     </div>
 </body>
 </html>

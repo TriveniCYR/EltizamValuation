@@ -44,6 +44,8 @@ namespace Eltizam.Business.Models
 
         public int CreatedBy { get; set; }
 
+        public List<MasterUserModel> Users { get; set; }
+
         public MasterUserAddressModel Address { get; set; }
         public MasterUserContactModel Contact { get; set; }
     }
