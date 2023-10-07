@@ -16,9 +16,15 @@
 </head>
 <body>
     <div>
+       
         @RenderBody()
+       @*  @Html.Partial("_SideNavPartial") *@
+       
         <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
         <input type="hidden" id="hdnWebBaseURL" />
     </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("MyScripts", required: false)
 </body>
 </html>

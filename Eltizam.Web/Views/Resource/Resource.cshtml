@@ -258,16 +258,14 @@
 
         </div>
     </div>
+    <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
     <script src="~/js/custom.js"></script>
 
     @section MyScripts {
 
         @Html.Partial("_DataTablePartial")
-        @* <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
         <script type="text/javascript" src="~/js/Custom/MasterUser/MasterUser.js?v=@jsVersion"></script>
- *@
-        <script type="text/javascript" src="~/js/custom/masteruser/masteruser.js?v=@jsVersion"></script>
-        <script type="text/javascript" src="~/js/custom/dynamicdatatable.js?v=@jsVersion"></script>
+        <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js"></script>
 
         <script>
             function sideNavToggle() {
@@ -295,7 +293,7 @@
                 toastr.success(successCallBack);
             }
 
-                    //#endregion
+                                //#endregion
 
 
 

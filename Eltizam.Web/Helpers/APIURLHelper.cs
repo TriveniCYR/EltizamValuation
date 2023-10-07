@@ -42,6 +42,13 @@ namespace Eltizam.Web.Helpers
 
         #endregion User
 
+        #region Role Management
+        public static string GetAllRole = "api/Role/GetAllRole";
+        public static string GetAllActiveRole = "api/Role/GetAllActiveRole";
+        public static string GetRoleById = "api/Role/GetRoleById";
+        public static string SaveRole = "api/Role/InsertUpdateRole";
+        public static string DeleteRoleById = "api/Role/DeleteRole";
+        #endregion Role Management
 
         #region Dashboard
 
@@ -66,6 +73,12 @@ namespace Eltizam.Web.Helpers
         #region LogExceptionMethod
         public static string LogException = "api/LogException/LogException";
         #endregion
+
+        #region Module
+
+        public static string GetAllModule = "api/Module/GetAllModule";
+
+        #endregion Module
 
 
     }

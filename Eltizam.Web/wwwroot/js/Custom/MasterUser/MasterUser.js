@@ -1,5 +1,6 @@
 ﻿var tableId = "UserTable";
 $(document).ready(function () {
+    
     InitializeUserList();
 });
 
@@ -31,6 +32,7 @@ function DeleteUserByIdError(x, y, z) {
 function InitializeUserList () {
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
+      
         "url": $('#hdnBaseURL').val() + AllUser,
         "type": "POST",
         "data": function (d) {
@@ -61,21 +63,42 @@ function InitializeUserList () {
                 render: function (data, type, row) {
                     return '<span class="tableStatus ' + (data === 'Active' ? 'green' : 'red') + '">' + data + '</span>';
                 }
-            },
-            {
-                data: null, // Placeholder for action buttons
-                render: function (data, type, row) {
-                    // Add action buttons here
-                    return '<button onclick="edit(' + row.id + ')">Edit</button>' +
-                        '<button onclick="delete(' + row.id + ')">Delete</button>';
+        },
+
+        {
+            "data": "createdDate", "name": "createdDate", "render": function (data, type, row, meta) {
+                if (data != 0) {
+                    return "<span>" + CustomDateFormat(row.createdDate, 2) + "</span>";
+                } else {
+                    return "";
                 }
             }
+        },
+        {
+            "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
+                if (data) {
+                    return "<span class='text-success text-bold'>Yes</span>";
+                } else {
+                    return "<span class='text-danger text-bold'>No</span>";
+                }
+            }
+        },
+        {
+            "data": "userId", "name": "Action", "render": function (data, type, row, meta) {
+                var html = '';
+
+                html += '<a title="Edit" class="large-font" style="' + IsEditAllow + '" href="/User/UserManage?UserId=' + row.userId + '"><i class="fa fa-fw fa-edit mr-1"></i></a>';
+                html += '<a title="Delete" class="large-font text-danger" style="' + IsDeleteAllow + '" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.userId + '); return false;"><i class="fa fa-fw fa-trash mr-1"></i></a>';
+
+                return html;
+            }
+        }
         ]
         
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject, {
-        left: 1,
-        right: 1
+        left: 2,
+        right: 2
     });
 }
 

@@ -24,7 +24,8 @@ namespace Eltizam.Business.Core.Resolver
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
                        
-           // services.AddTransient<IMasterRoleService, MasterRoleService>();
+            services.AddTransient<IMasterRoleService, MasterRoleService>();
+            services.AddTransient<IRoleModulePermission, RoleModulePermissionService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMasterUserService, MasterUserService>();
             services.AddTransient<ICityService, CityService>();

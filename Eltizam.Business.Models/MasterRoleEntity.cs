@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Eltizam.Resource.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eltizam.Resource.Resources;
 
 namespace Eltizam.Business.Models
 {
@@ -36,4 +33,5 @@ namespace Eltizam.Business.Models
         public virtual List<MasterModuleEntity> MasterModules { get; set; }
 
     }
+
 }

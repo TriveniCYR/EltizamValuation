@@ -23,5 +23,6 @@ namespace Eltizam.Business.Models
         public static string usp_User_SearchAllList = "usp_User_SearchAllList";
         public static string usp_ValuationFees_SearchAllList = "usp_ValuationFees_SearchAllList";
         public static string usp_ValuationFeeType_SearchAllList = "usp_ValuationFeeType_SearchAllList";
+        public static string usp_role_GetMasterRoleList = "usp_role_GetMasterRoleList";
     }
 }

@@ -144,7 +144,8 @@ namespace Eltizam.Business.Core.Implementation
                 _repository.AddAsync(objUser);
 			}
 			await _unitOfWork.SaveChangesAsync();
-			if (objUser.Id == 0)
+            // Return an appropriate operation result.
+            if (objUser.Id == 0)
 				return DBOperation.Error;
 			else
 			{
