@@ -1,6 +1,6 @@
 ﻿var tableId = "UserTable";
 $(document).ready(function () {
-    debugger
+    
     InitializeUserList();
 });
 
@@ -30,28 +30,15 @@ function DeleteUserByIdError(x, y, z) {
 }
 
 function InitializeUserList () {
-    var setDefaultOrder = [1, 'asc'];
-    debugger
-    var search = {
-        'userName': 'Pawan',
-        'countryId': 1,
-        'stateId': 1
-    }
-    var paging = {
-        'pageNo': 1,
-        'pageSize': 10,
-        'sortName': 'Id',
-        'sortType': 'ASC'
-    }
-    var data1 = {
-        'paging': paging,
-        'search': search
-    }
-    debugger
+    var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
+      
         "url": $('#hdnBaseURL').val() + AllUser,
         "type": "POST",
-        "data": data1,
+        "data": function (d) {
+            var pageNumber = $('#' + tableId).DataTable().page.info();
+            d.PageNumber = pageNumber.page;
+        },
         "datatype": "json"
     };
 
@@ -69,7 +56,24 @@ function InitializeUserList () {
         { data: 'email' },
         { data: 'mobile' },
         { data: 'contactPersonName' },
+        { data: 'isActive' },
         { data: 'createdBy' },
+            {
+                data: 'status',
+                render: function (data, type, row) {
+                    return '<span class="tableStatus ' + (data === 'Active' ? 'green' : 'red') + '">' + data + '</span>';
+                }
+        },
+
+        {
+            "data": "createdDate", "name": "createdDate", "render": function (data, type, row, meta) {
+                if (data != 0) {
+                    return "<span>" + CustomDateFormat(row.createdDate, 2) + "</span>";
+                } else {
+                    return "";
+                }
+            }
+        },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
                 if (data) {
@@ -80,18 +84,21 @@ function InitializeUserList () {
             }
         },
         {
-            data: "id", "name": "Action", "render": function (data, type, row, meta) {
-                    // Add action buttons here
-                    return '<button onclick="edit(' + row.id + ')">Edit</button>' +
-                        '<button onclick="delete(' + row.id + ')">Delete</button>';
-                }
+            "data": "userId", "name": "Action", "render": function (data, type, row, meta) {
+                var html = '';
+
+                html += '<a title="Edit" class="large-font" style="' + IsEditAllow + '" href="/User/UserManage?UserId=' + row.userId + '"><i class="fa fa-fw fa-edit mr-1"></i></a>';
+                html += '<a title="Delete" class="large-font text-danger" style="' + IsDeleteAllow + '" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.userId + '); return false;"><i class="fa fa-fw fa-trash mr-1"></i></a>';
+
+                return html;
+            }
         }
         ]
         
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject, {
-        left: 1,
-        right: 1
+        left: 2,
+        right: 2
     });
 }
 

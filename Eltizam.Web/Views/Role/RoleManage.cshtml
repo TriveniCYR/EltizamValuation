@@ -1,0 +1,185 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model Eltizam.Business.Models.MasterRoleEntity
+@{
+    ViewData["Title"] = @MasterLocalizer["RoleManage"];
+    string PageHeading = "";
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    string[] Approve_Modules = { "PIDF", "IPD", "Finance", "Management HOD" };
+    string[] Delete_Modules = { "User Management", "Role Management", "Master Management", "Project" };
+}
+<div id="SaveRoleModel">
+    <form asp-action="RoleManage">
+        @if (@ViewBag.IsEdit)
+        {
+            <input type="hidden" asp-for="RoleId" />
+            PageHeading = MasterLocalizer["UpdateRole"].Value;
+        }
+        else
+        {
+            PageHeading = MasterLocalizer["AddRole"].Value;
+        }
+        <div class="content-header">
+            <div class="container-fluid d-flex justify-content-between">
+                <h3>@PageHeading</h3>
+            </div>
+        </div>
+        <div class="container-fluid overflow-auto background-white-card">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group required">
+                        @Html.LabelFor(model => model.RoleName, new { @class = "control-label" })
+                        <span class="text-danger">*</span>
+                        @Html.EditorFor(model => model.RoleName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["RoleName"] } })
+                        @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="required">                        
+                        @if (Model.IsUserAssigned && Model.IsActive)
+                        {
+                            @Html.CheckBoxFor(model => model.IsActive, new { @disabled="true",  @class = "checkbox-checked", @checked = "checked" })
+                            @Html.Label(@SharedLocalizer["IsActive"])
+                            <lable class="text-danger">@MasterLocalizer["CanNotInactiveRole"]</lable>
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
+                            @Html.Label(@SharedLocalizer["IsActive"])
+                        }
+                    </div>
+                   
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Module</th>
+                                <th>Sub Module</th>
+                                <th> <input type="checkbox" id="chkView" class="checkbox-checked" /> View</th>
+                                <th> <input type="checkbox" id="chkAdd" class="checkbox-checked" /> Add</th>
+                                <th><input type="checkbox" id="chkEdit" class="checkbox-checked" /> Edit</th>
+                                <th><input type="checkbox" id="chkDelete" class="checkbox-checked" /> Delete</th>
+                                <th><input type="checkbox" id="chkApprove" class="checkbox-checked" /> Approve</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.MasterModules.Count; i++)
+                            {
+                                @Html.HiddenFor(m => m.MasterModules[i].ModuleName)
+                                @Html.HiddenFor(m => m.MasterModules[i].ModuleId)
+                                @Html.HiddenFor(m => m.MasterModules[i].RoleModulePermission.ModuleId)
+                                @Html.HiddenFor(m => m.MasterModules[i].RoleModulePermission.RoleId)
+
+                                <tr>
+                                    <td>@Model.MasterModules[i].ModuleName</td>
+                                    <td></td>
+                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                    <td>
+                                        @if (   
+                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Auditlogs         &&
+                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.ManagementHOD     &&
+                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.IPD               &&
+                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Commercial        &&
+                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.APIListManagement &&
+                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Finance           &&
+                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.PBF               &&
+                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Medical
+                                            )
+                                        {
+                                            @Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (@Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Auditlogs && @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.ManagementHOD)
+                                        {
+                                            @Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Edit, new { @class = "checkbox-checked", @checked = "checked" })
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (@Model.MasterModules[i].ModuleId == (int)Eltizam.Utility.Enums.ModulePermissionEnum.Project || @Model.MasterModules[i].ModuleId == (int)Eltizam.Utility.Enums.ModulePermissionEnum.UserManagement || @Model.MasterModules[i].ModuleId == (int)Eltizam.Utility.Enums.ModulePermissionEnum.RoleManagement || @Model.MasterModules[i].ModuleId == (int)Eltizam.Utility.Enums.ModulePermissionEnum.MasterManagement)
+                                        {
+                                            @Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Delete, new { @class = "checkbox-checked", @checked = "checked" })
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (@Model.MasterModules[i].ModuleId == (int)Eltizam.Utility.Enums.ModulePermissionEnum.PIDF || @Model.MasterModules[i].ModuleId == (int)Eltizam.Utility.Enums.ModulePermissionEnum.PBF || @Model.MasterModules[i].ModuleId == (int)Eltizam.Utility.Enums.ModulePermissionEnum.IPD || @Model.MasterModules[i].ModuleId == (int)Eltizam.Utility.Enums.ModulePermissionEnum.Finance || @Model.MasterModules[i].ModuleId == (int)Eltizam.Utility.Enums.ModulePermissionEnum.ManagementHOD)
+                                        {
+                                            @Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Approve, new { @class = "checkbox-checked", @checked = "checked" })
+                                        }
+                                    </td>
+                                </tr>
+                                @for (int j = 0; j < Model.MasterModules[i].MasterSubModules.Count; j++)
+                                {
+
+                                    @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].SubModuleName)
+                                    @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].ModuleId)
+                                    @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].SubModuleId)
+                                    @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].RoleModulePermission.SubModuleId)
+                                    @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].RoleModulePermission.ModuleId)
+                                    @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].RoleModulePermission.RoleId)
+                                    <tr>
+                                        <td></td>
+                                        <td>@Model.MasterModules[i].MasterSubModules[j].SubModuleName</td>
+                                        <td> @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                        <td>
+                                            @if (
+                                          Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APICharterSummary &&
+                                           Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APIIPD           &&
+                                            Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APIRnD          &&
+                                             Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APICharter     &&
+                                           Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.RnD              &&
+                                             Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.Clinical       &&
+                                           Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.Analytical 
+                                                )
+                                            {
+                                                @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APICharterSummary)
+                                            {
+                                                @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Edit, new { @class = "checkbox-checked", @checked = "checked" })
+                                            }
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+
+                                    @*-----------*@
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-end">
+                    <div class="form-group">
+                        <button type="submit" id="btnSaveRole" class="btn btn-success me-3 large-button">@SharedLocalizer["Save"]</button>
+                        <a class="btn btn-danger ms-3 large-button" asp-action="Roles">@SharedLocalizer["Cancel"]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section MyScripts {
+
+    <script type="text/javascript" src="~/js/Custom/Role/RoleManage.js?v=@jsVersion"></script>
+}

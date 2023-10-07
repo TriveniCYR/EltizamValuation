@@ -6,6 +6,7 @@ namespace Eltizam.Data.DataAccess.Entity
     public partial class MasterUser
     {
         public int Id { get; set; }
+        public int RoleId { get; set; }
         public string FirstName { get; set; } = null!;
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }

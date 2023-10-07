@@ -28,7 +28,7 @@ namespace Eltizam.Utility.Utility
                         }
                         else if (prop.PropertyType == typeof(System.String))
                         {
-                            prop.SetValue(oUserLoggedInModel, item.Value);
+                           prop.SetValue(oUserLoggedInModel, item.Value);
                         }
                     }
                 }

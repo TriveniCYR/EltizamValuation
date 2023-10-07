@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Eltizam.Business.Core\Eltizam.Business.Core.csproj" />
     <ProjectReference Include="..\Eltizam.Business.Models\Eltizam.Business.Models.csproj" />
     <ProjectReference Include="..\Eltizam.Data.DataAccess\Eltizam.Data.DataAccess.csproj" />
     <ProjectReference Include="..\Eltizam.Resource\Eltizam.Resource.csproj" />
@@ -32,6 +33,11 @@
 
   <ItemGroup>
     <Folder Include="Views\User\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Role\RoleManage.cshtml" />
+    <None Include="Views\Role\Roles.cshtml" />
   </ItemGroup>
 
 </Project>

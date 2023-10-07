@@ -10,8 +10,7 @@ using System.Security.Principal;
 using Eltizam.Business.Models;
 using Eltizam.Resource;
 using Eltizam.Web.Helpers;
-using Eltizam.Utility.Utility;
-using Eltizam.Utility.Models;
+
 
 namespace Eltizam.Web.Controllers
 {
@@ -89,9 +88,10 @@ namespace Eltizam.Web.Controllers
 
             var claims = new List<Claim>
                             {
-                                new Claim("UserName", oUserDetail.FullName),
+                                new Claim("UserName", oUserDetail.UserName),
                                 new Claim("Email", oUserDetail.Email),
-                                new Claim("Id", Convert.ToString(oUserDetail.UserId)),
+								 new Claim("RoleId", Convert.ToString(oUserDetail.RoleId)),
+								new Claim("Id", Convert.ToString(oUserDetail.UserId)),
                             };
 
             var claimsIdentity = new ClaimsIdentity(

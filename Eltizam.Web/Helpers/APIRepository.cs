@@ -43,14 +43,24 @@ namespace Eltizam.Web.Helpers
                         {
                             // file upload logic will go here
                         }
+                        try
+                        {
+                            if (body != null)
+                                body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                        if (body != null)
-                            body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                            return await client.PostAsync(URL, body);
+                        }
+                        catch (Exception ex)
+                        {
 
-                        return await client.PostAsync(URL, body);
+                            throw ex;
+                        }
+
+                       
                     }
                     else if (invokeType.Method == HttpMethod.Put.ToString())
                     {
+
                         if (body != null)
                             body.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 

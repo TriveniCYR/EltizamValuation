@@ -58,10 +58,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
 			if (UserList != null && UserList.Rows.Count > 0)
 			{
                 oUser = new UserSessionEntity();
-                oUser.FullName = Convert.ToString(UserList.Rows[0]["FullName"]);
+                oUser.UserName = Convert.ToString(UserList.Rows[0]["UserName"]);
                 oUser.UserId = Convert.ToInt32(UserList.Rows[0]["UserId"]);
                 oUser.Email = Convert.ToString(UserList.Rows[0]["EmailAddress"]);
-            }
+				oUser.RoleId = Convert.ToInt32(UserList.Rows[0]["RoleId"]);
+			}
 			return oUser;
 		}
 
