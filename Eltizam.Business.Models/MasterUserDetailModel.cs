@@ -29,7 +29,7 @@ namespace Eltizam.Business.Models
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
 
-        public MasterUserAddressModel Address { get; set; }
-        public MasterUserContactModel Contact { get; set; }
+        public List<MasterUserAddressModel> Address { get; set; }
+        public List<Master_QualificationModel> Qualification { get; set; }
     }
 }

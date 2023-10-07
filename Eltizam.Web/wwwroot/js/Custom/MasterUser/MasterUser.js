@@ -1,5 +1,6 @@
 ﻿var tableId = "UserTable";
 $(document).ready(function () {
+    debugger
     InitializeUserList();
 });
 
@@ -29,14 +30,28 @@ function DeleteUserByIdError(x, y, z) {
 }
 
 function InitializeUserList () {
-    var setDefaultOrder = [0, 'asc'];
+    var setDefaultOrder = [1, 'asc'];
+    debugger
+    var search = {
+        'userName': 'Pawan',
+        'countryId': 1,
+        'stateId': 1
+    }
+    var paging = {
+        'pageNo': 1,
+        'pageSize': 10,
+        'sortName': 'Id',
+        'sortType': 'ASC'
+    }
+    var data1 = {
+        'paging': paging,
+        'search': search
+    }
+    debugger
     var ajaxObject = {
         "url": $('#hdnBaseURL').val() + AllUser,
         "type": "POST",
-        "data": function (d) {
-            var pageNumber = $('#' + tableId).DataTable().page.info();
-            d.PageNumber = pageNumber.page;
-        },
+        "data": data1,
         "datatype": "json"
     };
 
@@ -54,22 +69,23 @@ function InitializeUserList () {
         { data: 'email' },
         { data: 'mobile' },
         { data: 'contactPersonName' },
-        { data: 'isActive' },
         { data: 'createdBy' },
-            {
-                data: 'status',
-                render: function (data, type, row) {
-                    return '<span class="tableStatus ' + (data === 'Active' ? 'green' : 'red') + '">' + data + '</span>';
+        {
+            "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
+                if (data) {
+                    return "<span class='text-success text-bold'>Yes</span>";
+                } else {
+                    return "<span class='text-danger text-bold'>No</span>";
                 }
-            },
-            {
-                data: null, // Placeholder for action buttons
-                render: function (data, type, row) {
+            }
+        },
+        {
+            data: "id", "name": "Action", "render": function (data, type, row, meta) {
                     // Add action buttons here
                     return '<button onclick="edit(' + row.id + ')">Edit</button>' +
                         '<button onclick="delete(' + row.id + ')">Delete</button>';
                 }
-            }
+        }
         ]
         
 

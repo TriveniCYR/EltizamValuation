@@ -8,9 +8,9 @@ namespace Eltizam.Data.DataAccess.Entity
         public MasterCountry()
         {
             MasterAddresses = new HashSet<MasterAddress>();
+            MasterClients = new HashSet<MasterClient>();
             MasterLocations = new HashSet<MasterLocation>();
             MasterStates = new HashSet<MasterState>();
-            MasterUserAddresses = new HashSet<MasterUserAddress>();
         }
 
         public int Id { get; set; }
@@ -24,8 +24,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifiedBy { get; set; }
 
         public virtual ICollection<MasterAddress> MasterAddresses { get; set; }
+        public virtual ICollection<MasterClient> MasterClients { get; set; }
         public virtual ICollection<MasterLocation> MasterLocations { get; set; }
         public virtual ICollection<MasterState> MasterStates { get; set; }
-        public virtual ICollection<MasterUserAddress> MasterUserAddresses { get; set; }
     }
 }

@@ -5,12 +5,6 @@ namespace Eltizam.Data.DataAccess.Entity
 {
     public partial class MasterUser
     {
-        public MasterUser()
-        {
-            MasterUserAddresses = new HashSet<MasterUserAddress>();
-            MasterUserContacts = new HashSet<MasterUserContact>();
-        }
-
         public int Id { get; set; }
         public string FirstName { get; set; } = null!;
         public string? MiddleName { get; set; }
@@ -29,9 +23,9 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
+        public string? Email { get; set; }
 
+        public virtual MasterDepartment? Department { get; set; }
         public virtual MasterDesignation? Designation { get; set; }
-        public virtual ICollection<MasterUserAddress> MasterUserAddresses { get; set; }
-        public virtual ICollection<MasterUserContact> MasterUserContacts { get; set; }
     }
 }

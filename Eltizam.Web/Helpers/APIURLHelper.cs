@@ -15,8 +15,14 @@ namespace Eltizam.Web.Helpers
 
         public static IConfiguration Configuration;
 
+        #region CasterCommon
 
+        public static string GetDepartmentList = "api/Department/GetDepartmentList";
+        public static string GetRoleList = "api/User/GetRoleList";
+        public static string GetDesignationList = "api/Designation/GetDesignationList";
+        public static string GetResourceTypeList = "api/User/GetResourceTypeList";
 
+        #endregion CasterCommon
 
         #region DIA
 
@@ -30,9 +36,9 @@ namespace Eltizam.Web.Helpers
         #region User
 
         public static string GetAll = "api/User/GetAll";
-        public static string SaveUser = "api/User/InsertUpdateUser";
+        public static string UpsertUser = "api/User/Upsert";
         public static string SaveTblUser = "api/User/InsertUpdateTblUser";
-        public static string GetUserById = "api/User/GetUserById";
+        public static string GetUserById = "api/User/GetById";
         public static string GetTblUserById = "api/User/GetTblUserById";
 
         // Anonymous_Access API for Forgot Passsword

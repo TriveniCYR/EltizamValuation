@@ -5,6 +5,11 @@ namespace Eltizam.Data.DataAccess.Entity
 {
     public partial class MasterClient
     {
+        public MasterClient()
+        {
+            MasterClientContacts = new HashSet<MasterClientContact>();
+        }
+
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
@@ -26,5 +31,11 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModidiedBy { get; set; }
+
+        public virtual MasterCity? City { get; set; }
+        public virtual MasterClientType? ClientType { get; set; }
+        public virtual MasterCountry? Country { get; set; }
+        public virtual MasterState? State { get; set; }
+        public virtual ICollection<MasterClientContact> MasterClientContacts { get; set; }
     }
 }

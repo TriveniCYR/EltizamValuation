@@ -1,0 +1,756 @@
+﻿@model Eltizam.Business.Models.MasterUserModel;
+
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+
+
+<!-- system user master -->a
+<div class="flex">
+    <div>
+        <aside class="sideNavDashboard visible-in-web" id="sideNav">
+            <div class="text-center">
+                <img src="../assets/logo.svg" alt="logo" class="dashboard-logo">
+            </div>
+            <div class="sideMenu">
+                <p class="position-relative">MENU <button class="close-sideNavMobile visible-in-mobile">Close <span>X</span></button></p>
+                <ul>
+                    <li><div class="flex"><img src="../assets/dashboard.svg" alt="dashboard"><p>Dashboard</p></div></li>
+                </ul>
+                <p>MASTERS</p>
+                <ul>
+                    <li class="activeSideMenu">
+                        <div class="flex align-item-center">
+                            <img src="../assets/user-cog.svg" alt="Resource Master" class="showIcon">
+                            <img src="../assets/user-cog-blue.svg" alt="Resource Master" class="hoverIcon">
+                            <p>Resource Master</p>
+                            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu" />
+                        </div>
+
+                        <div class="showMoreNav">
+                            <ul>
+                                <li onclick="resourceMaster()" class="activeSideMenu">Resource List</li>
+                                <li id="addResourceRedirection">Add New</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li onClick="roleMaster()">
+                        <div class="flex align-item-center">
+                            <img src="../assets/user-star.svg" alt="Role Master" class="showIcon">
+                            <img src="../assets/user-star-blue.svg" alt="Role Master" class="hoverIcon">
+                            <p>Role Master</p>
+                        </div>
+                    </li>
+                    <li onclick="userMaster()">
+                        <div class="flex align-item-center">
+                            <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                            <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                            <p>System User Master</p>
+                        </div>
+                    </li>
+                    <li onclick="designation()">
+                        <div class="flex align-item-center">
+                            <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                            <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                            <p>Designation Master</p>
+                        </div>
+                    </li>
+                    <li onclick="department()">
+                        <div class="flex align-item-center">
+                            <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                            <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                            <p>Department Master</p>
+                        </div>
+                    </li>
+                    <li onclick="locationMaster()">
+                        <div class="flex align-item-center">
+                            <img src="../assets/current-location.svg" class="showIcon" alt="Location Master">
+                            <img src="../assets/current-location-blue.svg" class="hoverIcon" alt="Location Master">
+                            <p>Location Master</p>
+                        </div>
+                    </li>
+                    <li onclick="propTypeMaster()">
+                        <div class="flex align-item-center">
+                            <img src="../assets/building-community.svg" class="showIcon" alt="Property Type Master">
+                            <img src="../assets/building-community-blue.svg" class="hoverIcon" alt="Property Type Master">
+                            <p>Property Type Master</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex align-item-center">
+                            <img src="../assets/building-fortress.svg" class="showIcon" alt="Property Master">
+                            <img src="../assets/building-fortress-blue.svg" class="hoverIcon" alt="Property Master">
+                            <p>Property Master</p>
+                            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu" />
+                        </div>
+                        <div class="showMoreNav">
+                            <ul>
+                                <li>Property Master 1</li>
+                                <li>Property Master 2</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex align-item-center">
+                            <img src="../assets/user-bolt.svg" class="showIcon" alt="Client Master">
+                            <img src="../assets/user-bolt-blue.svg" class="hoverIcon" alt="Client Master">
+                            <p>Client Master</p>
+                            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex align-item-center">
+                            <img src="../assets/user-cog.svg" class="showIcon" alt="Resource Master">
+                            <img src="../assets/user-cog-blue.svg" class="hoverIcon" alt="Resource Master">
+                            <p>Resource Master</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex align-item-center">
+                            <img src="../assets/home-dollar.svg" class="showIcon" alt="Valuation Fees Master">
+                            <img src="../assets/home-dollar-blue.svg" class="hoverIcon" alt="Valuation Fees Master">
+                            <p>Valuation Fees Master</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex align-item-center">
+                            <img src="../assets/users-group.svg" class="showIcon" alt="Vendor Master">
+                            <img src="../assets/users-group-blue.svg" class="hoverIcon" alt="Vendor Master">
+                            <p>Vendor Master</p>
+                        </div>
+                    </li>
+                </ul>
+                <p>MANAGEMENTS</p>
+                <ul>
+                    <li>
+                        <div class="flex align-item-center">
+                            <img src="../assets/file-invoice.svg" class="showIcon" alt="file-invoice">
+                            <img src="../assets/file-invoice-blue.svg" class="hoverIcon" alt="file-invoice">
+                            <p>Audit Log</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <div class="w-100 position-relative">
+        <header class="flex justify-between align-item-center">
+            <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="../assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="../assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
+            <div class="user flex">
+                <div class="position-relative notification">
+                    <img src="../assets/bell.svg" alt="bell" class="cursor-pointer" />
+                    <span>3</span>
+                </div>
+                <div class="flex align-item-center">
+                    <img src="../assets/user-icon.svg" alt="user-icon" class="profile cursor-pointer" />
+                    <p class="visible-in-web">Saeed</p>
+                    <img src="../assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" />
+                </div>
+            </div>
+        </header>
+        <main class="plr-0">
+            <div class="profileHead flex justify-between align-item-center cursor-pointer">
+                <h3 class="dashboardTitle">EDIT RESOURCE MASTER</h3>
+                <div class="hamburger">
+                    <span onclick="resourceMaster()">Resource Master</span>
+                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                    <span>Edit Resource Master</span>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="resourceProfile whiteBoxShadow">
+                    <img src="../assets/img-7.jpg.png" alt="img-7" class="w-100" />
+                    <div class="position-relative">
+                        <div class="upload-profile-pic-btn">
+                            <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
+                            Change photo
+                        </div>
+                        <input type="file" class="uploadPhoto" />
+                    </div>
+                    <div class="nameBox">
+                        <h3>Jhon G Doe</h3>
+                        <small>Head of HR</small>
+                        <p>Human Resource</p>
+                        <h4>Employee ID : FT-0001</h4>
+                    </div>
+                    <div class="resourceAddress">
+                        <small>Address</small>
+                        <p>1861 Bayonne Ave, Manchester Township, NJ, 08759</p>
+                        <small>Phone</small>
+                        <p>92734982739</p>
+                        <small>Email</small>
+                        <p>john@ex.com</p>
+                    </div>
+
+                </div>
+                <div class="profileTabSection">
+                    <div class="tab">
+                        <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Profile Details</button>
+                        <button class="tablinks" onclick="profileTab(event, 'profile2')">Mailing Address</button>
+                        <button class="tablinks" onclick="profileTab(event, 'profile3')">Qualification Details</button>
+                        <button class="tablinks" onclick="profileTab(event, 'profile4')">Upload Supporting Documents</button>
+                    </div>
+                    <div id="profile1" class="tabcontent">
+                        <h3>Profile Details</h3>
+                        <div class="inputSearchs">
+                            <form>
+                                <div class="flex">
+                                    <label for="FirstName">
+                                        <span>First Name</span>
+                                        <input type="text" id="" placeholder="enter first name">
+                                    </label>
+                                    <label for="MiddleName">
+                                        <span>Middle Name</span>
+                                        @Html.TextBoxFor(model => model.MiddleName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Middle Name"] })
+                                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                                    </label>
+                                </div>
+                                <div class="flex">
+                                    <label for="LastName">
+                                        <span>Last Name</span>
+                                        @Html.TextBoxFor(model => model.LastName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                    </label>
+                                    <label for="Role">
+                                        <span>Role</span>
+                                        <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId"></select>
+                                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                                    </label>
+                                </div>
+                                <div class="flex">
+                                    <label for="ResourceId">
+                                        <span class="mandatoryMark">Resource Type</span>
+                                        <select id="ResourceId" name="ResourceId" class="form-control" asp-for="ResourceId"></select>
+                                        @Html.ValidationMessageFor(model => model.ResourceId, "", new { @class = "text-danger" })
+                                    </label>
+                                    <label for="CompanyName">
+                                        Company / Vendor Name
+                                        @Html.TextBoxFor(model => model.CompanyName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Company Name"] })
+                                        @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                                    </label>
+                                </div>
+                                <div class="flex">
+                                    <label for="Gender">
+                                        Gender
+                                        <div class="flex m-0 gender">
+                                            Male : @Html.RadioButtonFor(m => m.Gender, "M")
+                                            Female : @Html.RadioButtonFor(m => m.Gender, "F")
+                                        </div>
+                                    </label>
+                                    <label for="DateOfBirth">
+                                        Date of Birth
+                                        <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control">
+                                        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                                    </label>
+                                </div>
+                                <div class="flex">
+                                    <label for="DepartmentId">
+                                        <span>Department</span>
+                                        <select id="DepartmentId" name="DepartmentId" class="form-control" asp-for="DepartmentId"></select>
+                                        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                                    </label>
+                                    <label for="Designation">
+                                        <span>Designation</span>
+                                        <select id="DesignationId" name="DesignationId" class="form-control" asp-for="DesignationId"></select>
+                                        @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" })
+                                    </label>
+                                </div>
+                                <div class="flex">
+                                    <label for="LicenseNo">
+                                        AD Municipality / License No.
+                                        @Html.TextBoxFor(model => model.LicenseNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["License No"] })
+                                        @Html.ValidationMessageFor(model => model.LicenseNo, "", new { @class = "text-danger" })
+                                    </label>
+                                    <label for="IsActive">
+                                        Status
+                                        <div class="flex m-0 status">
+                                            Active : @Html.RadioButtonFor(m => m.IsActive, true)
+                                            IsActive : @Html.RadioButtonFor(m => m.IsActive, false)
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="flex">
+                                    <label for="Password">
+                                        <label class="mandatoryMark">Password</label>
+                                        @Html.PasswordFor(model => model.Password, new { @autocomplete = "off", @id = "password", @class = "checkbox-checked", @placeholder = @SharedLocalizer["Password"], @required = "" })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    </label>
+                                    <label for="ConfirmPassowrd">
+                                        <label class="mandatoryMark">ConfirmPassowrd</label>
+                                        @Html.PasswordFor(model => model.ConfirmPassowrd, new { @autocomplete = "off", @class = "checkbox-checked", @placeholder = @SharedLocalizer["ConfirmPassword"] })
+                                        
+                                    </label>
+                                </div>
+                                <div class="text-center buttonArea">
+                                    @*<button type="button" class="lineBtn" id="profileDetailsRedirect">Fill All Details</button>*@
+                                    <button type="submit" class="blueBtn">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="profile2" class="tabcontent">
+                        <h3>Mailing Address</h3>
+                        <div class="inputSearchs">
+                            <form>
+                                @if (Model.Address != null)
+                                {
+                                    @foreach (var adddress in Model.Address)
+                                    {
+                                        <div class="addMoreAddress">
+                                            <div class="flex">
+                                                <label for="address1" class="w-100">
+                                                    <span>Address Line 1 </span>
+                                                    @Html.TextBoxFor(model => adddress.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                                </label>
+                                                <label for="address2" class="w-100">
+                                                    Address Line 2
+                                                    @Html.TextBoxFor(model => adddress.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
+                                                </label>
+                                            </div>
+                                            <div class="flex fourBox">
+                                                <label for="CountryId">
+                                                    CountryId
+                                                    <select id="CountryId" name="CountryId" class="form-control" asp-for="@adddress.CountryId"></select>
+                                                </label>
+                                                <label for="StateId">
+                                                    State
+                                                    <select id="StateId" name="StateId" class="form-control" asp-for="@adddress.StateId"></select>
+                                                </label>
+                                            </div>
+                                            <div class="flex">
+                                                <label for="CityId">
+                                                    City
+                                                    <select id="CityId" name="CityId" class="form-control" asp-for="@adddress.CityId"></select>
+                                                </label>
+                                                <label for="PinNo">
+                                                    Pin Code
+                                                    @Html.TextBoxFor(model => adddress.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                                </label>
+                                            </div>
+                                            <div class="flex">
+                                                <label for="Email">
+                                                    Email
+                                                    @Html.TextBoxFor(model => adddress.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                                </label>
+                                                <label for="AlternateEmail">
+                                                    Alternate Email
+                                                    @Html.TextBoxFor(model => adddress.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                                </label>
+                                            </div>
+                                            <div class="flex threeBox">
+                                                <label for="Phone">
+                                                    Phone
+                                                    @Html.TextBoxFor(model => adddress.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                                </label>
+                                                <label for="AlternatePhone">
+                                                    Alternate Phone
+                                                    @Html.TextBoxFor(model => adddress.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                </label>
+                                            </div>
+                                            <div class="flex">
+                                                <label for="">
+                                                    Landline phone
+                                                    @Html.TextBoxFor(model => adddress.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
+                                                </label>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="addMoreAddress">
+                                        <div class="flex">
+                                            <label for="address1" class="w-100">
+                                                <span>Address Line 1 </span>
+                                                @Html.TextBoxFor(model => model.UpsertAddress.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                            </label>
+                                            <label for="address2" class="w-100">
+                                                Address Line 2
+                                                @Html.TextBoxFor(model => model.UpsertAddress.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex fourBox">
+                                            <label for="CountryId">
+                                                CountryId
+                                                <select id="CountryId" name="CountryId" class="form-control" asp-for="UpsertAddress.CountryId"></select>
+                                            </label>
+                                            <label for="StateId">
+                                                State
+                                                <select id="StateId" name="StateId" class="form-control" asp-for="UpsertAddress.StateId"></select>
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="CityId">
+                                                City
+                                                <select id="CityId" name="CityId" class="form-control" asp-for="UpsertAddress.CityId"></select>
+                                            </label>
+                                            <label for="PinNo">
+                                                Pin Code
+                                                @Html.TextBoxFor(model => model.UpsertAddress.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="Email">
+                                                Email
+                                                @Html.TextBoxFor(model => model.UpsertAddress.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                            </label>
+                                            <label for="AlternateEmail">
+                                                Alternate Email
+                                                @Html.TextBoxFor(model => model.UpsertAddress.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex threeBox">
+                                            <label for="Phone">
+                                                Phone
+                                                @Html.TextBoxFor(model => model.UpsertAddress.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                            </label>
+                                            <label for="AlternatePhone">
+                                                Alternate Phone
+                                                @Html.TextBoxFor(model => model.UpsertAddress.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="">
+                                                Landline phone
+                                                @Html.TextBoxFor(model => model.UpsertAddress.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="text-right buttonArea bodyContent plr-0">
+                                    <button type="button" class="lineBtn" onclick="addMoreAddress()">Add More</button>
+                                    <button type="submit" class="blueBtn">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="profile3" class="tabcontent">
+                        <h3>Qualification Details</h3>
+                        <div class="roundBorderBox">
+                            <div class="text-right">
+                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" />
+                            </div>
+                            <div class="inputSearchs p-0">
+                                <form>
+                                    <div class="flex">
+                                        <label for="Qualification">
+                                            Programme of Study/ Qualification
+                                            @Html.TextBoxFor(model => model.UpsertQualification.Qualification, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
+                                        </label>
+                                        <label for="Subject">
+                                            Subject/Stream
+                                            @Html.TextBoxFor(model => model.UpsertQualification.Subject, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
+                                        </label>
+                                    </div>
+                                    <div class="flex">
+                                        <label for="Institute">
+                                            Education Institute
+                                            @Html.TextBoxFor(model => model.UpsertQualification.Institute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
+                                        </label>
+                                        <label for="year">
+                                            Year of Institute
+                                            @Html.TextBoxFor(model => model.UpsertQualification.YearOfInstitute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
+                                        </label>
+                                    </div>
+                                    <div class="flex">
+                                        <label for="grade" class="w-100">
+                                            Grade/Percent/class
+                                            @Html.TextBoxFor(model => model.UpsertQualification.Grade, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="text-right buttonArea bodyContent plr-0">
+                            <button type="button" class="lineBtn" onClick="addRoundBorderBox(this)">Add New</button>
+                            <button type="submit" class="darkBlueBtn">Update</button>
+                        </div>
+                    </div>
+
+                    <div id="profile4" class="tabcontent">
+                        <h3>Upload Supporting Documents</h3>
+                        <div class="inputSearchs uploadDocBox">
+                            <form>
+                                <div class="flex mb-28">
+                                    <label for="document">
+                                        Documents Name
+                                        <input type="text" placeholder="enter Documents Name">
+                                    </label>
+                                    <label for="atach">
+                                        Attach Supporting Documents
+                                        <div class="attachDoc">
+                                            <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
+                                            <input type="file" class="btn" value="Upload Photo" multiple />
+                                            <p>click to upload.</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="W-100">
+                                    <div class="prevUpload roundBorderBox m-0">
+                                        <h3>Previously uploaded</h3>
+                                        <div class="flex">
+                                            @if (Model.Documents != null)
+                                            {
+                                                @foreach(var docs in Model.Documents)
+                                                {   
+                                                    <div class="prevUploadTab">
+                                                        <div class="flex align-item-center m-0">
+                                                            <img src="../assets/file.svg" alt="file" />
+                                                            <span>@docs.FileName</span>
+                                                        </div>
+                                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span>NA</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="text-right buttonArea bodyContent plr-0">
+                            <!-- removing as of not needed uncomment if need to add more uploading file -->
+                            <!-- <button type="button" class="lineBtn" onClick="addNewUploadDoc(this)">Add New</button> -->
+                            <button type="submit" class="darkBlueBtn">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="flex justify-between">
+            <p>2023 © Eltizam.</p>
+            <p>Design & Develop by NeoSoft</p>
+        </footer>
+
+
+    </div>
+</div>
+
+<input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
+<input type="hidden" id="hdnWebBaseURL" />
+<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script src="~/js/custom.js"></script>
+
+@*<script type="text/javascript" src="~/js/Custom/DynamicDataTable.js"></script>
+    <script type="text/javascript" src="~/js/Custom/MasterUser/MasterUser.js"></script>*@
+@*<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>*@
+@*
+    <script type="text/javascript" src="~/js/custom/masteruser/masteruser.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/dynamicdatatable.js?v=@jsVersion"></script>*@
+@*
+    <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+    <script src="~/AdminLTE/plugins/jquery-ui/jquery-ui.min.js"></script>*@
+
+<script>
+
+    debugger
+    //#region Setup API Url
+    var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
+    //#region Static Messae Init
+    var EditLabel = "@SharedLocalizer["Edit"]";
+    var DeleteLabel = "@SharedLocalizer["Delete"]";
+    var ErrorMessage = "@SharedLocalizer["Error"]";
+    var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+    var AddLabel = "@SharedLocalizer["Add"]";
+    var UpdateLabel = "@SharedLocalizer["Update"]";
+    var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
+    if (successCallBack) {
+        toastr.success(successCallBack);
+    }
+
+    //#endregion
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const addResourceRedirection = document.getElementById("addResourceRedirection");
+
+        addResourceRedirection.addEventListener('click', () => {
+            window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
+        });
+    });
+
+
+    $(document).ready(function () {
+        BindDepartment();
+        BindDesignation();
+        BindRole();
+        BindResourceType();
+    });
+
+    function profileTab(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    document.getElementById("defaultOpen").click();
+
+    function sideNavToggle() {
+        var x = document.getElementById("sideNav");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function removeParentDiv(element) {
+        const parentDiv = element.closest('.roundBorderBox');
+        if (parentDiv) {
+            parentDiv.remove();
+        }
+    }
+
+    function addRoundBorderBox() {
+        const roundBorderBox = document.querySelector('.roundBorderBox');
+        const clonedDiv = roundBorderBox.cloneNode(true);
+
+        roundBorderBox.parentElement.insertBefore(clonedDiv, roundBorderBox.nextSibling);
+
+        const inputFields = clonedDiv.querySelectorAll('input');
+        inputFields.forEach((input) => {
+            input.value = '';
+        });
+    }
+
+    // more address field on click
+    function addMoreAddress() {
+        const addMoreAddressBox = document.querySelector('.addMoreAddress');
+        const clonedDiv = addMoreAddressBox.cloneNode(true);
+
+        const minusDiv = document.createElement('div');
+        minusDiv.className = 'text-right';
+        minusDiv.innerHTML = `
+                                    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+                                `;
+        clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
+
+        addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
+
+        const inputFields = clonedDiv.querySelectorAll('input');
+        inputFields.forEach((input) => {
+            input.value = '';
+        });
+    }
+    function removeParentDivAddress(element) {
+        const parentDivAdd = element.closest(".addMoreAddress");
+        if (parentDivAdd) {
+            parentDivAdd.remove()
+        }
+    }
+
+    function BindDepartment() {
+        debugger
+        var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
+        var Department = $("#DepartmentId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + DepartmentList,
+            "datatype": "json",
+            success: function (response) {
+                debugger;
+                Department.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    Department.append($("<option></option>").val(response[i].id).html(response[i].department));
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+    function BindDesignation() {
+        debugger
+        var addrs = @Model.UpsertAddress;
+        var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
+        var Designation = $("#DesignationId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + DesignationList,
+            "datatype": "json",
+            success: function (response) {
+                debugger;
+                Designation.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    Designation.append($("<option></option>").val(response[i].id).html(response[i].designation));
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+
+    function BindRole() {
+        debugger
+        var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
+        var Role = $("#RoleId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + RoleList,
+            "datatype": "json",
+            success: function (response) {
+                debugger;
+                Role.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    Role.append($("<option></option>").val(response[i].id).html(response[i].roleName));
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+
+    function BindResourceType() {
+        debugger
+        var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
+        var ResourceType = $("#ResourceId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + ResourceTypeList,
+            "datatype": "json",
+            success: function (response) {
+                debugger;
+                ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+
+
+</script>

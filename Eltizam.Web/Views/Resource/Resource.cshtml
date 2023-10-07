@@ -12,7 +12,6 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,89 +43,91 @@
             <main>
                 <h3 class="dashboardTitle">RESOURCE MASTER</h3>
                 <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
-
-                    <label class="searchBox position-relative">
-                        <div class="flex align-item-center">
-                            <img src="~/assets/search.svg" alt="search">
-                            <input type="text" placeholder="Search for System" class="searchInput">
+                    <div class="flex">
+                        <label class="searchBox position-relative">
+                            <div class="flex align-item-center">
+                                <img src="~/assets/search.svg" alt="search">
+                                <input type="text" id="txtUserName" placeholder="Search for System" class="searchInput">
+                            </div>
+                            <button class="normalSearch" onclick="UserList()">Search</button>
+                        </label>
+                        <div class="accordion">
+                            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+                            <label for="section1" class="advaceSearhBtn"><img src="~/assets/filter.svg" alt="filterSearch" /></label>
+                            <div class="accordion-content inputSearchs">
+                                <h3 class="text-center">Advanced Search</h3>
+                                <form>
+                                    <div class="flex">
+                                        <label for="userName">
+                                            User Name
+                                            <input type="text" placeholder="enter user id">
+                                        </label>
+                                        <label for="valuatorType">
+                                            Valuator Type
+                                            <select name="Valuator" id="ValuatorType">
+                                                <option value="Valuator1">Valuator type1</option>
+                                                <option value="Valuator2">Valuator type2</option>
+                                                <option value="Valuator3">Valuator type3</option>
+                                            </select>
+                                        </label>
+                                        <label for="resourceType">
+                                            Resource Type
+                                            <select name="Valuator" id="resourceType">
+                                                <option value="resourceType1">Resource type1</option>
+                                                <option value="resourceType2">Resource type2</option>
+                                                <option value="resourceType3">Resource type3</option>
+                                            </select>
+                                        </label>
+                                        <label for="roleName">
+                                            Role Name
+                                            <select name="Valuator" id="roleName">
+                                                <option value="roleName1">Role type1</option>
+                                                <option value="roleName2">Role type2</option>
+                                                <option value="roleName3">Role type3</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="flex">
+                                        <label for="fromDate">
+                                            From Date
+                                            <input type="date">
+                                        </label>
+                                        <label for="toDate">
+                                            To Date
+                                            <input type="date">
+                                        </label>
+                                        <label for="designation">
+                                            Designation
+                                            <select name="Valuator" id="ValuatorType">
+                                                <option value="Valuator1">Designation type1</option>
+                                                <option value="Valuator2">Designation type2</option>
+                                                <option value="Valuator3">Designation type3</option>
+                                            </select>
+                                        </label>
+                                        <label for="designation">
+                                            Department
+                                            <select name="Valuator" id="ValuatorType">
+                                                <option value="Valuator1">Department type1</option>
+                                                <option value="Valuator2">Department type2</option>
+                                                <option value="Valuator3">Department type3</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="blueBtn">Search</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <button class="normalSearch">Search</button>
-                    </label>
-                    <div class="accordion">
-                        <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
-                        <label for="section1" class="advaceSearhBtn"><img src="~/assets/filter.svg" alt="filterSearch" /></label>
-                        <div class="accordion-content inputSearchs">
-                            <h3 class="text-center">Advanced Search</h3>
-                            <form>
-                                <div class="flex">
-                                    <label for="userName">
-                                        User Name
-                                        <input type="text" placeholder="enter user id">
-                                    </label>
-                                    <label for="valuatorType">
-                                        Valuator Type
-                                        <select name="Valuator" id="ValuatorType">
-                                            <option value="Valuator1">Valuator type1</option>
-                                            <option value="Valuator2">Valuator type2</option>
-                                            <option value="Valuator3">Valuator type3</option>
-                                        </select>
-                                    </label>
-                                    <label for="resourceType">
-                                        Resource Type
-                                        <select name="Valuator" id="resourceType">
-                                            <option value="resourceType1">Resource type1</option>
-                                            <option value="resourceType2">Resource type2</option>
-                                            <option value="resourceType3">Resource type3</option>
-                                        </select>
-                                    </label>
-                                    <label for="roleName">
-                                        Role Name
-                                        <select name="Valuator" id="roleName">
-                                            <option value="roleName1">Role type1</option>
-                                            <option value="roleName2">Role type2</option>
-                                            <option value="roleName3">Role type3</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="fromDate">
-                                        From Date
-                                        <input type="date">
-                                    </label>
-                                    <label for="toDate">
-                                        To Date
-                                        <input type="date">
-                                    </label>
-                                    <label for="designation">
-                                        Designation
-                                        <select name="Valuator" id="ValuatorType">
-                                            <option value="Valuator1">Designation type1</option>
-                                            <option value="Valuator2">Designation type2</option>
-                                            <option value="Valuator3">Designation type3</option>
-                                        </select>
-                                    </label>
-                                    <label for="designation">
-                                        Department
-                                        <select name="Valuator" id="ValuatorType">
-                                            <option value="Valuator1">Department type1</option>
-                                            <option value="Valuator2">Department type2</option>
-                                            <option value="Valuator3">Department type3</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="blueBtn">Search</button>
-                                </div>
-                            </form>
-                        </div>
+                        
                     </div>
                     <div class="buttonArea flex align-item-center">
-                        <form action="/Resource/AddResource" method="GET">
-                            <button class="flex align-item-center blueBtn" id="addNew">
+                        <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
+                            <button  class="flex align-item-center blueBtn" id="addNew">
                                 <img src="~/assets/plus.svg" alt="plus"> Add New
                             </button>
                         </form>
-
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button class="flex align-item-center lineBtn" id="importFile">
                             <img src="~/assets/file-import.svg" alt="file-import" />
                             Import
@@ -152,55 +153,25 @@
                             <tr>
                                 <th>@MasterLocalizer["ID"]</th>
                                 <th>@MasterLocalizer["UserName"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                                <th>@MasterLocalizer["ResourceType"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                                <th>@MasterLocalizer["RoleType"]</th>
-                                <th>@MasterLocalizer["Email"]</th>
-                                <th>@MasterLocalizer["Mobile"]</th>
-                                <th>@MasterLocalizer["Status"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                                <th>@MasterLocalizer["Department"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                                <th>@MasterLocalizer["Designation"]</th>
+                                <th>@MasterLocalizer["ResourceType"]</th>
+                                <th>@MasterLocalizer["IsActive"]</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @*   <tr>
-                            <td>1</td>
-                            <td class="userPic"><img src="~/assets/user-icon.svg" alt="user-icon"/> John  G Doe</td>
-                            <td>Internal</td>
-                            <td>Valuator</td>
-                            <td class="text-left">morbi.quis@protonmail.org</td>
-                            <td>309-300-9739</td>
-                            <td><span class="tableStatus green">Active</span></td>
-                            <td class="position-relative">
-                            <img src="~/assets/dots-vertical.svg" alt="dots-vertical" class="activeDots"/>
-                            <div class="actionItem">
-                            <ul>
-                            <li onClick="edit()">
-                            <img src="~/assets/view.svg" alt="view"/>
-                            view
-                            </li>
-                            <li onClick="edit()">
-                            <img src="~/assets/edit.svg" alt="edit"/>
-                            Edit
-                            </li>
-                            <li class="delete">
-                            <img src="~/assets/trash.svg" alt="trash"/>
-                            Delete
-                            </li>
-                            </ul>
-                            </div>
-                            </td>
-                            </tr> *@
-
+                        <tbody class="social-list">
                         </tbody>
                     </table>
                 </div>
                 <div class="flex justify-between align-item-center mobile_flexColumn">
-                    <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
+                    <p>Showing <b>1</b> to <b>10</b> of <b>10</b> results</p>
                     <div class="flex justify-between align-item-center pagination">
                         <p>Previous</p>
                         <ul class="flex justify-between">
                             <li class="active">1</li>
-                            <li>2</li>
-                            <li>3</li>
+                            @*<li>2</li>
+                            <li>3</li>*@
                         </ul>
                         <p>Next</p>
                     </div>
@@ -258,49 +229,109 @@
 
         </div>
     </div>
+
+    <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
+    <input type="hidden" id="hdnWebBaseURL" />
+    <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
     <script src="~/js/custom.js"></script>
 
-    @section MyScripts {
-
-        @Html.Partial("_DataTablePartial")
-        @* <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
-        <script type="text/javascript" src="~/js/Custom/MasterUser/MasterUser.js?v=@jsVersion"></script>
- *@
-        <script type="text/javascript" src="~/js/custom/masteruser/masteruser.js?v=@jsVersion"></script>
-        <script type="text/javascript" src="~/js/custom/dynamicdatatable.js?v=@jsVersion"></script>
-
-        <script>
-            function sideNavToggle() {
-                var x = document.getElementById("sideNav");
-                if (x.style.display === "none") {
-                    x.style.display = "block";
-                } else {
-                    x.style.display = "none";
-                }
+    @Html.Partial("_DataTablePartial")
+    @*<script type="text/javascript" src="~/js/Custom/DynamicDataTable.js"></script>
+    <script type="text/javascript" src="~/js/Custom/MasterUser/MasterUser.js"></script>*@
+    @*<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>*@
+    @*
+    <script type="text/javascript" src="~/js/custom/masteruser/masteruser.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/dynamicdatatable.js?v=@jsVersion"></script>*@
+    @*
+    <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+    <script src="~/AdminLTE/plugins/jquery-ui/jquery-ui.min.js"></script>*@
+    <script>
+        function sideNavToggle() {
+            var x = document.getElementById("sideNav");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
             }
+        }
 
+        debugger
+        //#region Setup API Url
+        var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
+        //#region Static Messae Init
+        var EditLabel = "@SharedLocalizer["Edit"]";
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+        var AddLabel = "@SharedLocalizer["Add"]";
+        var UpdateLabel = "@SharedLocalizer["Update"]";
+        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
+        if (successCallBack) {
+            toastr.success(successCallBack);
+        }
 
-            //#region Setup API Url
+        //#endregion
+
+        $(document).ready(function () {
+            UserList();
+        });
+        function UserList() {
             var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
-
-            //#region Static Messae Init
-            var EditLabel = "@SharedLocalizer["Edit"]";
-            var DeleteLabel = "@SharedLocalizer["Delete"]";
-            var ErrorMessage = "@SharedLocalizer["Error"]";
-            var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-            var AddLabel = "@SharedLocalizer["Add"]";
-            var UpdateLabel = "@SharedLocalizer["Update"]";
-            var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
-            if (successCallBack) {
-                toastr.success(successCallBack);
+            debugger
+            var search = {
+                'userName': $("#txtUserName").val(),
+                'countryId': 1,
+                'stateId': 1
             }
+            var paging = {
+                'pageNo': 1,
+                'pageSize': 10,
+                'sortName': 'Id',
+                'sortType': 'ASC'
+            }
+            var data1 = {
+                'paging': paging,
+                'search': search
+            }
+            debugger
+            $.ajax({
+                "url": $('#hdnBaseURL').val() + AllUser,
+                "type": "POST",
+                "data": data1,
+                "datatype": "json",
+                success: function (response) {
+                    debugger
+                    var dt = response;
+                    $(".social-list").empty();
+                    var r = "";
+                    for (var i = 0; i < dt.data.length; i++) {
+                        r += " <tr>";
+                        r += "     <td>" + dt.data[i].id + "</td>";
+                        r += "      <td class='userPic'><img src='../assets/user-icon.svg' alt='user-icon'/>" + dt.data[i].userName + "</td>";
+                        r += "      <td>" + dt.data[i].departmentName + "</td>";
+                        r += "      <td>" + dt.data[i].designationName + "</td>";
+                        r += "      <td>" + dt.data[i].resourceType + "</td>";
+                        r += "      <td> YES</td>";
+                        r += "      <td class='position-relative'> <img src='../assets/dots-vertical.svg' alt='dots-vertical' class='activeDots' />";
+                        r += "      <div class='actionItem'> <ul>";
+                        //r += "     <li onClick='view('" + dy.data[i].id + "')' ><img src='~/assets/view.svg' alt = 'view' /> view </li> ";
+                        r += "     <li> <a href='/Resource/EditResource/'"+ dt.data[i].id + "><img src='../assets/edit.svg' alt = 'edit' /> Edit </a></li> ";
+                        //r += "      <li class='delete'> <img src='~/assets/trash.svg' alt = 'trash' /> Delete </li> ";
+                        r += "      </ul> </div> </td>";
+                        r += " </tr>";
+                    }
+                    $(".social-list").append(r);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
 
-                    //#endregion
 
-
-
-
-        </script>
-    }
+    </script>
 </body>
 </html>

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Localization;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
 using Eltizam.Api.Filters;
+using Eltizam.Business.Core.Implementation;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -120,6 +121,20 @@ namespace EltizamValuation.Api.Controllers
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+
+        [HttpGet("GetDesignationList")]
+        public async Task<IActionResult> GetDesignationList()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _DesignationService.GetDesignationList(), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

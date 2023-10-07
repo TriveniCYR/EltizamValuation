@@ -128,6 +128,19 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
+        [HttpGet("GetDepartmentList")]
+        public async Task<IActionResult> GetDepartmentList()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _DepartmentService.GetDepartmentList(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         #endregion API Methods
     }
 }

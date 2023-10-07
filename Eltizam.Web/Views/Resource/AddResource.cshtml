@@ -1,270 +1,269 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>add resource</title>
-    <link rel="stylesheet" href="~/css/style.css">
-</head>
-<body>
-    <!-- system user master -->
+﻿@model Eltizam.Business.Models.MasterUserModel;
 
-    <div class="flex">
-        <div>
-            <aside class="sideNavDashboard visible-in-web" id="sideNav">
-                <div class="text-center">
-                    <img src="~/assets/logo.svg" alt="logo" class="dashboard-logo">
-                </div>
-                <div class="sideMenu">
-                    <p class="position-relative">MENU <button class="close-sideNavMobile visible-in-mobile">Close <span>X</span></button></p>
-                    <ul>
-                        <li><div class="flex"><img src="~/assets/dashboard.svg" alt="dashboard"><p>Dashboard</p></div></li>
-                    </ul>
-                    <p>MASTERS</p>
-                    <ul>
-                        <li class="activeSideMenu">
-                            <div class="flex align-item-center">
-                                <img src="~/assets/user-cog.svg" alt="Resource Master" class="showIcon">
-                                <img src="~/assets/user-cog-blue.svg" alt="Resource Master" class="hoverIcon">
-                                <p>Resource Master</p>
-                                <img src="~/assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu" />
-                            </div>
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 
-                            <div class="showMoreNav">
-                                <ul>
-                                    <li id="resourceListRedirection">Resource List</li>
-                                    <li class="activeSideMenu">Add New</li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/user-star.svg" alt="Role Master" class="showIcon">
-                                <img src="~/assets/user-star-blue.svg" alt="Role Master" class="hoverIcon">
-                                <p>Role Master</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/user-shield.svg" class="showIcon" alt="System User Master">
-                                <img src="~/assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
-                                <p>System User Master</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/current-location.svg" class="showIcon" alt="Location Master">
-                                <img src="~/assets/current-location-blue.svg" class="hoverIcon" alt="Location Master">
-                                <p>Location Master</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/building-community.svg" class="showIcon" alt="Property Type Master">
-                                <img src="~/assets/building-community-blue.svg" class="hoverIcon" alt="Property Type Master">
-                                <p>Property Type Master</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/building-fortress.svg" class="showIcon" alt="Property Master">
-                                <img src="~/assets/building-fortress-blue.svg" class="hoverIcon" alt="Property Master">
-                                <p>Property Master</p>
-                                <img src="~/assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu" />
-                            </div>
-                            <div class="showMoreNav">
-                                <ul>
-                                    <li>Property Master 1</li>
-                                    <li>Property Master 2</li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/user-bolt.svg" class="showIcon" alt="Client Master">
-                                <img src="~/assets/user-bolt-blue.svg" class="hoverIcon" alt="Client Master">
-                                <p>Client Master</p>
-                                <img src="~/assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu" />
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/user-cog.svg" class="showIcon" alt="Resource Master">
-                                <img src="~/assets/user-cog-blue.svg" class="hoverIcon" alt="Resource Master">
-                                <p>Resource Master</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/home-dollar.svg" class="showIcon" alt="Valuation Fees Master">
-                                <img src="~/assets/home-dollar-blue.svg" class="hoverIcon" alt="Valuation Fees Master">
-                                <p>Valuation Fees Master</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/users-group.svg" class="showIcon" alt="Vendor Master">
-                                <img src="~/assets/users-group-blue.svg" class="hoverIcon" alt="Vendor Master">
-                                <p>Vendor Master</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <p>MANAGEMENTS</p>
-                    <ul>
-                        <li>
-                            <div class="flex align-item-center">
-                                <img src="~/assets/file-invoice.svg" class="showIcon" alt="file-invoice">
-                                <img src="~/assets/file-invoice-blue.svg" class="hoverIcon" alt="file-invoice">
-                                <p>Audit Log</p>
-                            </div>
-                        </li>
-                    </ul>
+<div class="flex">
+    <div class="w-100 position-relative">
+        <header class="flex justify-between align-item-center">
+            <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="~/assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="~/assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
+            <div class="user flex">
+                <div class="position-relative notification">
+                    <img src="~/assets/bell.svg" alt="bell" class="cursor-pointer" />
+                    <span>3</span>
                 </div>
-            </aside>
-        </div>
-        <div class="w-100 position-relative">
-            <header class="flex justify-between align-item-center">
-                <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="~/assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="~/assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
-                <div class="user flex">
-                    <div class="position-relative notification">
-                        <img src="~/assets/bell.svg" alt="bell" class="cursor-pointer" />
-                        <span>3</span>
-                    </div>
-                    <div class="flex align-item-center">
-                        <img src="~/assets/user-icon.svg" alt="user-icon" class="profile cursor-pointer" />
-                        <p class="visible-in-web">Saeed</p>
-                        <img src="~/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" />
-                    </div>
+                <div class="flex align-item-center">
+                    <img src="~/assets/user-icon.svg" alt="user-icon" class="profile cursor-pointer" />
+                    <p class="visible-in-web">Saeed</p>
+                    <img src="~/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" />
                 </div>
-            </header>
-            <main>
-                <div class="whiteBoxShadow">
-                    <div class="heading position-relative">
-                        <h3 class="dashboardTitle">Add RESOURCE </h3>
-                        <img src="~/assets/x.svg" alt="x" id="closePopup" />
-                    </div>
-                    <div class="bodyContent">
-                        <div class="text-center">
-                            <div class="imgBox">
-                                <img src="~/assets/photo-up.svg" alt="photo-up" />
-                                <input type="file" class="btn" value="Upload Photo" />
-                                <span>Upload Photo</span>
-                            </div>
-                        </div>
-                        <div class="inputSearchs">
-                            <form>
-                                <div class="flex">
-                                    <label for="userName">
-                                        Emp ID
-                                        <input type="number" placeholder="12837187236">
-                                    </label>
-                                    <label for="userName" class="position-relative">
-                                        <span class="mandatoryMark">Full Name</span>
-                                        <input type="text" placeholder="John  G Doe" required>
-                                    </label>
-                                    <label for="roleType">
-                                        Role
-                                        <select name="Valuator" id="ValuatorType">
-                                            <option value="Valuator1">Role type1</option>
-                                            <option value="Valuator2">Role type2</option>
-                                            <option value="Valuator3">Role type3</option>
-                                        </select>
-                                    </label>
-                                    <label for="resourceType">
-                                        Resource Type
-                                        <select name="Valuator" id="resourceType">
-                                            <option value="resourceType1">Internal</option>
-                                            <option value="resourceType2">Resource type2</option>
-                                            <option value="resourceType3">Resource type3</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="userName">
-                                        Company / Vendor Name
-                                        <input type="text" />
-                                    </label>
-                                    <label for="userName">
-                                        Gender
-                                        <div class="flex m-0 gender">
-                                            <input type="radio" value="male" name="gender" />
-                                            <input type="radio" value="femmale" name="gender" />
-                                        </div>
-                                    </label>
-                                    <label for="fromDate">
-                                        Date of Birth
-                                        <input type="date">
-                                    </label>
-                                    <label for="designation">
-                                        Department
-                                        <select name="Valuator" id="ValuatorType">
-                                            <option value="Valuator1">Department type1</option>
-                                            <option value="Valuator2">Department type2</option>
-                                            <option value="Valuator3">Department type3</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="designation">
-                                        Designation
-                                        <select name="Valuator" id="ValuatorType">
-                                            <option value="Valuator1">Designation type1</option>
-                                            <option value="Valuator2">Designation type2</option>
-                                            <option value="Valuator3">Designation type3</option>
-                                        </select>
-                                    </label>
-                                    <label for="userName">
-                                        AD Municipality / License No.
-                                        <input type="text" />
-                                    </label>
-                                    <label for="userName">
-                                        Reporting Person
-                                        <input type="text" placeholder="ABC" />
-                                    </label>
-                                    <label for="userName">
-                                        Status
-                                        <div class="flex m-0 status">
-                                            <input type="radio" value="active" name="status" />
-                                            <input type="radio" value="inactive" name="status" />
-                                        </div>
-                                    </label>
-                                </div>
-                                <div class="text-center buttonArea">
-                                    <button type="button" class="lineBtn" id="profileDetailsRedirect">Fill All Details</button>
-                                    <button type="submit" class="blueBtn">Save</button>
-                                </div>
-                            </form>
+            </div>
+        </header>
+        <main>
+            <div class="whiteBoxShadow">
+                <div class="heading position-relative">
+                    <h3 class="dashboardTitle">Add RESOURCE </h3>
+                    <img src="~/assets/x.svg" alt="x" id="closePopup" />
+                </div>
+                <div class="bodyContent">
+                    <div class="text-center">
+                        <div class="imgBox">
+                            <img src="~/assets/photo-up.svg" alt="photo-up" />
+                            <input type="file" class="btn" value="Upload Photo" />
+                            <span>Upload Photo</span>
                         </div>
                     </div>
+                    <div class="inputSearchs">
+                        <form asp-action="AddResource" autocomplete="off" asp-controller="Resource" method="post">
+                            <div class="flex">
+                                <label for="FirstName" class="position-relative">
+                                    <span class="mandatoryMark">First Name</span>
+                                    @Html.TextBoxFor(model => model.FirstName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["First Name"] })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="MiddleName" class="position-relative">
+                                    <span>Middle Name</span>
+                                    @Html.TextBoxFor(model => model.MiddleName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Middle Name"] })
+                                    @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="LastName" class="position-relative">
+                                    <span class="mandatoryMark">Last Name</span>
+                                    @Html.TextBoxFor(model => model.LastName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Last Name"] })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </label>                                
+                                <label for="Role">
+                                    <span class="mandatoryMark">Role</span>
+                                    <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId"></select>
+                                    @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                                </label>
+                            </div>
+                            <div class="flex">
+                                <label for="ResourceId">
+                                    <span class="mandatoryMark">Resource Type</span>
+                                    <select id="ResourceId" name="ResourceId" class="form-control" asp-for="ResourceId"></select>
+                                    @Html.ValidationMessageFor(model => model.ResourceId, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="CompanyName">
+                                    Company / Vendor Name
+                                    @Html.TextBoxFor(model => model.CompanyName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Company Name"] })
+                                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="Gender">
+                                    Gender
+                                    <select id="Gender" name="Gender" class="form-control" asp-for="Gender"></select>
+                                </label>
+                                <label for="DateOfBirth">
+                                    Date of Birth
+                                    <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control">
+                                    @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                                </label>
+                            </div>
+                            <div class="flex">                                
+                                <label for="DepartmentId">
+                                    <span>Department</span>
+                                    <select id="DepartmentId" name="DepartmentId" class="form-control" asp-for="DepartmentId"></select>
+                                    @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="Designation">
+                                    <span>Designation</span>
+                                    <select id="DesignationId" name="DesignationId" class="form-control" asp-for="DesignationId"></select>
+                                    @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="LicenseNo">
+                                    AD Municipality / License No.
+                                    @Html.TextBoxFor(model => model.LicenseNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["License No"] })
+                                    @Html.ValidationMessageFor(model => model.LicenseNo, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="IsActive">
+                                    Status
+                                    <div class="flex m-0 status">
+                                        Active : @Html.RadioButtonFor(m => m.IsActive, true)
+                                        IsActive : @Html.RadioButtonFor(m => m.IsActive, false)
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="flex">
+                                <label for="Password">
+                                    <label class="mandatoryMark">Password</label>
+                                    @Html.PasswordFor(model => model.Password, new { @autocomplete = "off", @id = "password", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Password"], @required = "" })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="ConfirmPassowrd">
+                                    <label class="mandatoryMark">ConfirmPassowrd</label>
+                                    @Html.PasswordFor(model => model.ConfirmPassowrd, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["ConfirmPassword"] })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassowrd, "", new { @class = "text-danger" })
+                                </label>
+                            </div>
+                            <div class="flex">
+                                &nbsp;
+                            </div>
+                            <div class="flex">
+                                &nbsp;
+                            </div>
+                            <div class="text-center buttonArea">
+                                @*<button type="button" class="lineBtn" id="profileDetailsRedirect">Fill All Details</button>*@
+                                <button type="submit" class="blueBtn">Save</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </main>
-            <footer class="flex justify-between">
-                <p>2023 © Eltizam.</p>
-                <p>Design & Develop by NeoSoft</p>
-            </footer>
-        </div>
+            </div>
+        </main>
+        <footer class="flex justify-between">
+            <p>2023 © Eltizam.</p>
+            <p>Design & Develop by NeoSoft</p>
+        </footer>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const resourceListRedirection = document.getElementById("resourceListRedirection");
-            const profileDetailsRedirect = document.getElementById("profileDetailsRedirect");
+</div>
 
-            resourceListRedirection.addEventListener('click', () => {
-                window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/resource-master.html'
-            });
-            profileDetailsRedirect.addEventListener('click', () => {
-                window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/profile-details.html'
-            });
+<input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
+<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const resourceListRedirection = document.getElementById("resourceListRedirection");
+        const profileDetailsRedirect = document.getElementById("profileDetailsRedirect");
+
+        resourceListRedirection.addEventListener('click', () => {
+            window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/resource-master.html'
         });
+        profileDetailsRedirect.addEventListener('click', () => {
+            window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/profile-details.html'
+        });
+    });
 
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
+    function sideNavToggle() {
+        var x = document.getElementById("sideNav");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
         }
-    </script>
-</body>
-</html>
+    }
+    $(document).ready(function () {
+        BindDepartment();
+        BindDesignation();
+        BindRole();
+        BindResourceType();
+    });
+
+    function BindDepartment() {
+        debugger
+        var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
+        var Department = $("#DepartmentId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + DepartmentList,
+            "datatype": "json",
+            success: function (response) {
+                debugger;
+                Department.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    Department.append($("<option></option>").val(response[i].id).html(response[i].department));
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+    function BindDesignation() {
+        debugger
+        var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
+        var Designation = $("#DesignationId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + DesignationList,
+            "datatype": "json",
+            success: function (response) {
+                debugger;
+                Designation.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    Designation.append($("<option></option>").val(response[i].id).html(response[i].designation));
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+
+    function BindRole() {
+        debugger
+        var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
+        var Role = $("#RoleId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + RoleList,
+            "datatype": "json",
+            success: function (response) {
+                debugger;
+                Role.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    Role.append($("<option></option>").val(response[i].id).html(response[i].roleName));
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+
+    function BindResourceType() {
+        debugger
+        var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
+        var ResourceType = $("#ResourceId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + ResourceTypeList,
+            "datatype": "json",
+            success: function (response) {
+                debugger;
+                ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+</script>

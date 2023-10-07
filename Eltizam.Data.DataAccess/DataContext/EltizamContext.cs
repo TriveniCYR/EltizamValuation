@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Eltizam.Data.DataAccess.Entity;
-using Eltizam.Utility;
 
 namespace Eltizam.Data.DataAccess.DataContext
 {
@@ -19,6 +18,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         }
 
         public virtual DbSet<AuditLog> AuditLogs { get; set; } = null!;
+        public virtual DbSet<Dictionary> Dictionaries { get; set; } = null!;
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; } = null!;
         public virtual DbSet<MasterCity> MasterCities { get; set; } = null!;
         public virtual DbSet<MasterClient> MasterClients { get; set; } = null!;
@@ -35,11 +35,10 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterPropertySubType> MasterPropertySubTypes { get; set; } = null!;
         public virtual DbSet<MasterPropertyType> MasterPropertyTypes { get; set; } = null!;
         public virtual DbSet<MasterQualification> MasterQualifications { get; set; } = null!;
+        public virtual DbSet<MasterResourceType> MasterResourceTypes { get; set; } = null!;
         public virtual DbSet<MasterRole> MasterRoles { get; set; } = null!;
         public virtual DbSet<MasterState> MasterStates { get; set; } = null!;
         public virtual DbSet<MasterUser> MasterUsers { get; set; } = null!;
-        public virtual DbSet<MasterUserAddress> MasterUserAddresses { get; set; } = null!;
-        public virtual DbSet<MasterUserContact> MasterUserContacts { get; set; } = null!;
         public virtual DbSet<MasterValuationFee> MasterValuationFees { get; set; } = null!;
         public virtual DbSet<MasterValuationFeeType> MasterValuationFeeTypes { get; set; } = null!;
         public virtual DbSet<MasterVendor> MasterVendors { get; set; } = null!;
@@ -48,7 +47,8 @@ namespace Eltizam.Data.DataAccess.DataContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(DatabaseConnection.EltizamDatabaseConnection);
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-QICFTII\\MSSQLSERVER01;Initial Catalog=Eltizam;Integrated Security=True;Persist Security Info=True;TrustServerCertificate=True;");
             }
         }
 
@@ -73,6 +73,21 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<Dictionary>(entity =>
+            {
+                entity.ToTable("Dictionary");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<MasterAddress>(entity =>
             {
                 entity.ToTable("Master_Address");
@@ -89,13 +104,33 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
+                entity.Property(e => e.AlternateEmail)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AlternatePhone)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Landlinephone)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Landmark)
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PinNo)
                     .HasMaxLength(20)
@@ -138,8 +173,7 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.Stdcode)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("STDCode");
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<MasterClient>(entity =>
@@ -194,6 +228,26 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("TRNNumber");
+
+                entity.HasOne(d => d.City)
+                    .WithMany(p => p.MasterClients)
+                    .HasForeignKey(d => d.CityId)
+                    .HasConstraintName("FK_Master_Client_Master_City");
+
+                entity.HasOne(d => d.ClientType)
+                    .WithMany(p => p.MasterClients)
+                    .HasForeignKey(d => d.ClientTypeId)
+                    .HasConstraintName("FK_Master_Client_Master_ClientType");
+
+                entity.HasOne(d => d.Country)
+                    .WithMany(p => p.MasterClients)
+                    .HasForeignKey(d => d.CountryId)
+                    .HasConstraintName("FK_Master_Client_Master_Country");
+
+                entity.HasOne(d => d.State)
+                    .WithMany(p => p.MasterClients)
+                    .HasForeignKey(d => d.StateId)
+                    .HasConstraintName("FK_Master_Client_Master_State");
             });
 
             modelBuilder.Entity<MasterClientContact>(entity =>
@@ -223,6 +277,12 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.PhoneNumber)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.MasterClientContacts)
+                    .HasForeignKey(d => d.ClientId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Master_ClientContact_Master_Client");
             });
 
             modelBuilder.Entity<MasterClientType>(entity =>
@@ -461,8 +521,25 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
+                entity.Property(e => e.TableName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.YearOfInstitute)
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<MasterResourceType>(entity =>
+            {
+                entity.ToTable("Master_ResourceType");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResourceType)
+                    .HasMaxLength(250)
                     .IsUnicode(false);
             });
 
@@ -510,6 +587,10 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
 
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.FirstName)
                     .HasMaxLength(250)
                     .IsUnicode(false);
@@ -542,80 +623,15 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false)
                     .HasComputedColumnSql("(((([FirstName]+' ')+[MiddleName])+' ')+[LastName])", false);
 
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.MasterUsers)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .HasConstraintName("FK_Master_User_Master_Department");
+
                 entity.HasOne(d => d.Designation)
                     .WithMany(p => p.MasterUsers)
                     .HasForeignKey(d => d.DesignationId)
                     .HasConstraintName("FK_Master_User_Master_Designation");
-            });
-
-            modelBuilder.Entity<MasterUserAddress>(entity =>
-            {
-                entity.ToTable("Master_UserAddress");
-
-                entity.Property(e => e.Address1)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Address2)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Address3)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PinNo)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.City)
-                    .WithMany(p => p.MasterUserAddresses)
-                    .HasForeignKey(d => d.CityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Master_UserAddress_Master_City");
-
-                entity.HasOne(d => d.Country)
-                    .WithMany(p => p.MasterUserAddresses)
-                    .HasForeignKey(d => d.CountryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Master_UserAddress_Master_Country");
-
-                entity.HasOne(d => d.State)
-                    .WithMany(p => p.MasterUserAddresses)
-                    .HasForeignKey(d => d.StateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Master_UserAddress_Master_State");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.MasterUserAddresses)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_Master_UserAddress_Master_User");
-            });
-
-            modelBuilder.Entity<MasterUserContact>(entity =>
-            {
-                entity.ToTable("Master_UserContact");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Mobile)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.MasterUserContacts)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_Master_UserContact_Master_User");
             });
 
             modelBuilder.Entity<MasterValuationFee>(entity =>

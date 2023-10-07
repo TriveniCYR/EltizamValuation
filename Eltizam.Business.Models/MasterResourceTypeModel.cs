@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class AddressSourceTable
+    public class MasterResourceTypeModel
     {
-        public static string Master_User = "Master_User";
-        public static string Master_Vendor = "Master_Vendor";
+        public int Id { get; set; }
+        public string ResourceType { get; set; }
     }
 }

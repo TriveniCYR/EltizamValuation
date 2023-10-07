@@ -13,7 +13,7 @@ namespace Eltizam.Business.Models
     public class MasterUserModel
     {
         public int Id { get; set; }
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
@@ -24,6 +24,7 @@ namespace Eltizam.Business.Models
 
         public string LicenseNo { get; set; }
 
+        public string CompanyName { get; set; }
         public int CompanyId { get; set; }
         public int ResourceId { get; set; }
         public int RoleId { get; set; }
@@ -43,10 +44,10 @@ namespace Eltizam.Business.Models
         public string ConfirmPassowrd { get; set; }
 
         public int CreatedBy { get; set; }
-
-        public List<MasterUserModel> Users { get; set; }
-
-        public MasterUserAddressModel Address { get; set; }
-        public MasterUserContactModel Contact { get; set; }
+        public List<MasterUserAddressModel>? Address { get; set; }
+        public MasterUserAddressModel UpsertAddress { get; set; }
+        public List<Master_QualificationModel>? Qualification { get; set; }
+        public Master_QualificationModel? UpsertQualification { get; set; }
+        public List<MasterDocumentModel>? Documents { get; set; }
     }
 }

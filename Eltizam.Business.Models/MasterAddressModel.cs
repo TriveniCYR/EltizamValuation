@@ -20,6 +20,11 @@ namespace Eltizam.Business.Models
         public int StateId { get; set; }
         public int CityId { get; set; }
         public bool IsActive { get; set; }
+        public string? AlternatePhone { get; set; }
+        public string? Email { get; set; }
+        public string? AlternateEmail { get; set; }
+        public string? Phone { get; set; }
+        public string? Landlinephone { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }

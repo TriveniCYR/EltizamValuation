@@ -6,7 +6,8 @@ namespace Eltizam.Data.DataAccess.Entity
     public partial class MasterQualification
     {
         public int Id { get; set; }
-        public int? UserId { get; set; }
+        public int TableKeyId { get; set; }
+        public string TableName { get; set; } = null!;
         public string Qualification { get; set; } = null!;
         public string? Subject { get; set; }
         public string? Institute { get; set; }
