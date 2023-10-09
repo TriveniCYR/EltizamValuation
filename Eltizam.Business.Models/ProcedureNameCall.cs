@@ -23,6 +23,7 @@ namespace Eltizam.Business.Models
         public static string usp_User_SearchAllList = "usp_User_SearchAllList";
         public static string usp_ValuationFees_SearchAllList = "usp_ValuationFees_SearchAllList";
         public static string usp_ValuationFeeType_SearchAllList = "usp_ValuationFeeType_SearchAllList";
+        public static string usp_Country_SearchAllList = "usp_Country_SearchAllList";
         // Master Key Id
         public static string usp_Contact_GetContactByTableKeyId = "usp_Contact_GetContactByTableKeyId";
         public static string usp_Address_GetAddressByTableKeyId = "usp_Address_GetAddressByTableKeyId";
@@ -33,5 +34,8 @@ namespace Eltizam.Business.Models
         public static string usp_Role_AllList = "usp_Role_AllList";
         public static string usp_Department_AllList = "usp_Department_AllList";
         public static string usp_Designation_AllList = "usp_Designation_AllList";
+        public static string usp_Country_AllList = "usp_Country_AllList";
+        public static string usp_City_AllList = "usp_City_AllList";
+        public static string usp_State_AllList = "usp_State_AllList";
     }
 }

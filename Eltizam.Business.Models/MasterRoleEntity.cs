@@ -26,11 +26,7 @@ namespace Eltizam.Business.Models
         public bool IsUserAssigned { get; set; }
         public DateTime CreatedDate { get; set; }
 
-
-        public List<MasterRoleEntity> Roles { get; set; }
-
-
-        public virtual List<MasterModuleEntity> MasterModules { get; set; }
+        public virtual List<MasterModuleEntity>? MasterModules { get; set; }
 
     }
 

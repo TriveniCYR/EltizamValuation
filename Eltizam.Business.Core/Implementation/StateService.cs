@@ -129,5 +129,16 @@ namespace Eltizam.Business.Core.Implementation
 
             return DBOperation.Success;
         }
+
+
+        public async Task<List<MasterStateEntity>> GetStateList()
+        {
+
+            var lstStf = FJDBHelper.ExecuteMappedReader<MasterStateEntity>(ProcedureNameCall.usp_State_AllList,
+             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+
+            return lstStf;
+        }
+
     }
 }

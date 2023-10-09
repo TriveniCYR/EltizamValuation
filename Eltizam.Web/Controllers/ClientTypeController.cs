@@ -1,15 +1,13 @@
 ﻿using Eltizam.Business.Models;
-using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Resource;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class ResourceController : Controller
+    public class ClientTypeController : Controller
     {
         #region Properties
 
@@ -19,19 +17,19 @@ namespace EltizamValuation.Web.Controllers
 
         #endregion Properties
 
-        public ResourceController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
+        public ClientTypeController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
         {
             _cofiguration = configuration;
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
-        public IActionResult Resource()
+        public IActionResult ClientType()
         {
             try
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new APIRepository(_cofiguration);
-                MasterUserModel oUserList = new MasterUserModel();
+                Master_ClientTypeModel oUserList = new Master_ClientTypeModel();
                 //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAll, HttpMethod.Post, token).Result;
                 //if (responseMessage.IsSuccessStatusCode)
                 //{
@@ -54,24 +52,24 @@ namespace EltizamValuation.Web.Controllers
 
         }
 
-        public IActionResult ResourceManage(int? id)
+        public IActionResult ClientTypeManage(int? id)
         {
-            MasterUserModel masterUser;
-            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-            APIRepository objapi = new(_cofiguration);
+            Master_ClientTypeModel masterUser;
             if (id == null || id <= 0)
             {
-                masterUser = new MasterUserModel();
+                masterUser = new Master_ClientTypeModel();
                 return View(masterUser);
             }
             else
             {
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetUserById + "/" + id, HttpMethod.Get, token).Result;
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetClientTypeById + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<Master_ClientTypeModel>>(jsonResponse);
                     if (data._object is null)
                         return NotFound();
 
@@ -81,14 +79,10 @@ namespace EltizamValuation.Web.Controllers
             }
         }
         [HttpPost]
-        public IActionResult ResourceManage(int id, MasterUserModel masterUser)
+        public IActionResult ClientTypeManage(int id, Master_ClientTypeModel masterUser)
         {
             try
             {
-                if(masterUser.Document.Files.Count > 0)
-                {
-                    FileUpload(masterUser.Document);
-                }
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
@@ -104,53 +98,14 @@ namespace EltizamValuation.Web.Controllers
                 else
                 {
                     TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
-                    return RedirectToAction("ResourceManage", new { id = masterUser.Id });
+                    return RedirectToAction("ClientTypeManage", new { id = masterUser.Id });
                 }
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-                return RedirectToAction("ResourceManage", new { Id = masterUser.Id });
-            }
-        }
-        private void FileUpload(DocumentFilesModel document)
-        {
-            
-            var savedFileNames = new List<string>();
-
-            foreach (var file in document.Files)
-            {
-                if (file == null || file.Length == 0)
-                {
-                    continue;
-                }
-
-                // Check if the file type is allowed
-                var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
-                if (!allowedFileTypes.Contains(file.ContentType))
-                {
-                    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
-                }
-
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var filePath = Path.Combine("wwwroot/Uploads", fileName);
-
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyToAsync(stream);
-                }
-
-                // Save information about the uploaded file to the database
-                var upload = new Upload
-                {
-                    FileName = fileName,
-                    ContentType = file.ContentType,
-                    CreatedDate = DateTime.Now,
-                    //FileType = GetFileType(file.ContentType)
-                };
-
+                return RedirectToAction("ClientTypeManage", new { Id = masterUser.Id });
             }
         }
     }

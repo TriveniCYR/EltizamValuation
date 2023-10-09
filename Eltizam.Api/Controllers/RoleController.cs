@@ -7,7 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
-namespace EmcureNPD.API.Controllers.Masters
+namespace Eltizam.API.Controllers.Masters
 {
     [Route("api/[controller]")]
     [ApiController]

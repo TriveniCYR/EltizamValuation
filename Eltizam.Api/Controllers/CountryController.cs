@@ -12,8 +12,7 @@ namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
-    public class StateController : ControllerBase
+    public class CountryController : ControllerBase
     {
         #region Properties
 
@@ -22,29 +21,28 @@ namespace EltizamValuation.Api.Controllers
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
-        private readonly IStateService _StateService;
+        private readonly ICountryService _CountryService;
 
         #endregion Properties
 
         #region Constructor
-        public StateController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IStateService StateService)
+        public CountryController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, ICountryService CountryService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
             _stringLocalizerError = stringLocalizerError;
             _ExceptionService = exceptionService;
-            _StateService = StateService;
+            _CountryService = CountryService;
         }
 
         #endregion Constructor
 
-
         #region API Methods
 
         /// <summary>
-        /// Description - To Insert and Update State
+        /// Description - To Insert and Update Country
         /// </summary>
-        /// <param name="oState"></param>
+        /// <param name="oCountry"></param>
         /// <returns></returns>
         /// <response code="200">OK</response>
         /// <response code="400">Bad Request</response>
@@ -53,14 +51,14 @@ namespace EltizamValuation.Api.Controllers
         /// <response code="405">Method Not Allowed</response>
         /// <response code="500">Internal Server</response>
 
-        // get all records from master State with sorting and pagination 
+        // get all records from master Country with sorting and pagination 
 
         [HttpPost, Route("GetAll")]
         public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _StateService.GetAll(model), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _CountryService.GetAll(model), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -68,15 +66,15 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        // get master State detail by id
+        // get master Country detail by id
         [HttpGet, Route("GetById/{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
             {
-                var oStateEntity = await _StateService.GetById(id);
-                if (oStateEntity != null && oStateEntity.Id > 0)
-                    return _ObjectResponse.Create(oStateEntity, (Int32)HttpStatusCode.OK);
+                var oCountryEntity = await _CountryService.GetById(id);
+                if (oCountryEntity != null && oCountryEntity.Id > 0)
+                    return _ObjectResponse.Create(oCountryEntity, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
             }
@@ -86,17 +84,17 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        // this method is called when inserting and updating master State detail
+        // this method is called when inserting and updating master Country detail
         [HttpPost]
         [Route("Upsert")]
-        public async Task<IActionResult> Upsert(MasterStateEntity oState)
+        public async Task<IActionResult> Upsert(MasterCountryModel oCountry)
         {
             try
             {
-                DBOperation oResponse = await _StateService.Upsert(oState);
+                DBOperation oResponse = await _CountryService.Upsert(oCountry);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oState.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oCountry.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
                 }
                 else
                     return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
@@ -113,7 +111,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                DBOperation oResponse = await _StateService.Delete(id);
+                DBOperation oResponse = await _CountryService.Delete(id);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
                 else
@@ -125,12 +123,12 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpGet("GetStateList")]
-        public async Task<IActionResult> GetStateList()
+        [HttpGet("GetCountryList")]
+        public async Task<IActionResult> GetCountryList()
         {
             try
             {
-                return _ObjectResponse.CreateData(await _StateService.GetStateList(), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _CountryService.GetCountryList(), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

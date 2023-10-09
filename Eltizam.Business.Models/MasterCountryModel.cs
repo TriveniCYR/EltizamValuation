@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class Master_ClientTypeModel
+    public class MasterCountryModel
     {
         public int Id { get; set; }
-        public string ClientType { get; set; }
+        public string CountryName { get; set; }
+        public string CountryCode { get; set; }
+        public string ISDCountryCode { get; set; }
         public int IsActive { get; set; }
         public int CreatedBy { get; set; }
-
-
     }
 }

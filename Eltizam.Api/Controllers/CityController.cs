@@ -124,6 +124,19 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
+        [HttpGet("GetCityList")]
+        public async Task<IActionResult> GetCityList()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _CityService.GetCityList(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         #endregion API Methods
     }
 }

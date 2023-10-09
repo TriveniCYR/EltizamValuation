@@ -5,11 +5,6 @@ namespace Eltizam.Data.DataAccess.Entity
 {
     public partial class MasterModule
     {
-        public MasterModule()
-        {
-            MasterSubModules = new HashSet<MasterSubModule>();
-        }
-
         public int ModuleId { get; set; }
         public string? ModuleName { get; set; }
         public bool? IsActive { get; set; }
@@ -19,7 +14,5 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifyDate { get; set; }
         public string? ControlName { get; set; }
         public int? SortOrder { get; set; }
-
-        public virtual ICollection<MasterSubModule> MasterSubModules { get; set; }
     }
 }

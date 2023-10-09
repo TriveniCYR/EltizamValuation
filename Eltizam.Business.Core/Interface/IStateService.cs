@@ -15,5 +15,6 @@ namespace Eltizam.Business.Core.Interface
         Task<MasterStateEntity> GetById(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> Delete(int id);
+        Task<List<MasterStateEntity>> GetStateList();
     }
 }

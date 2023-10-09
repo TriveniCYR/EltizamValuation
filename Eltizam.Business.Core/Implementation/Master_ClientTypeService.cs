@@ -75,15 +75,16 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
+        public async Task<DataTableResponseModel> GetAll(CommonSearchModel model, PaginationModel paging)
         {
             var _dbParams = new[]
              {
-                 new DbParameter("Id", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
+                 new DbParameter("ClientTypeId", 0,SqlDbType.Int),
+                 new DbParameter("PageSize", paging.pageSize, SqlDbType.Int),
+                 new DbParameter("PageNumber", paging.pageNo, SqlDbType.Int),
                  new DbParameter("OrderClause", "ClientType", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
+                 new DbParameter("ReverseSort", 1, SqlDbType.Int),
+                 new DbParameter("Letter",model.SearchText, SqlDbType.VarChar)
              };
 
             int _count = 0;
@@ -92,7 +93,7 @@ namespace Eltizam.Business.Core.Implementation
              DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(0, _count, lstStf.Count, lstStf);
 
             return oDataTableResponseModel;
         }
@@ -114,7 +115,8 @@ namespace Eltizam.Business.Core.Implementation
                     objUser.ClientType = entityqualification.ClientType;
                     objUser.IsActive = entityqualification.IsActive;
                     //objUser.ModifiedDate = DateTime.Now;
-                    objUser.ModifiedBy = entityqualification.ModifiedBy;
+                    objUser.ModifiedBy = entityqualification.CreatedBy;
+                    objUser.ModifiedDate = DateTime.Now;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objUser);
@@ -132,7 +134,7 @@ namespace Eltizam.Business.Core.Implementation
                 objUser.CreatedDate = DateTime.Now;
                 objUser.CreatedBy = entityqualification.CreatedBy;
                 objUser.ModifiedDate = DateTime.Now;
-                objUser.ModifiedBy = entityqualification.ModifiedBy;
+                objUser.ModifiedBy = entityqualification.CreatedBy;
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objUser);
             }

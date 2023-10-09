@@ -13,6 +13,7 @@ namespace Eltizam.Web.Helpers
         public static string ForgotPassword = "api/Account/ForgotPassword";
         public static string ResetPassword = "api/Account/ResetPassword";
 
+
         public static IConfiguration Configuration;
 
         #region CasterCommon
@@ -21,6 +22,9 @@ namespace Eltizam.Web.Helpers
         public static string GetRoleList = "api/User/GetRoleList";
         public static string GetDesignationList = "api/Designation/GetDesignationList";
         public static string GetResourceTypeList = "api/User/GetResourceTypeList";
+        public static string GetCountryList = "api/Country/GetCountryList";
+        public static string GetStateList = "api/State/GetStateList";
+        public static string GetCityList = "api/City/GetCityList";
 
         #endregion CasterCommon
 
@@ -47,6 +51,14 @@ namespace Eltizam.Web.Helpers
         public static string Anonymous_IsTokenValid = "api/Account/IsTokenValid";
 
         #endregion User
+
+        #region ClientType
+
+        public static string GetSearchClientType = "api/MasterClientType/GetAllClientType";
+        public static string GetClientTypeById = "api/MasterClientType/getById";
+        public static string UpsertClientType = "api/MasterClientType/Upsert";
+
+        #endregion ClientType
 
         #region Role Management
         public static string GetAllRole = "api/Role/GetAllRole";

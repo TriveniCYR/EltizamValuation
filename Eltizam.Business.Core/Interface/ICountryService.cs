@@ -8,13 +8,12 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Interface
 {
-    public interface ICityService
+    public interface ICountryService
     {
-
-        Task<DBOperation> Upsert(MasterCityEntity entityUser);
-        Task<MasterCityEntity> GetById(int id);
+        Task<DBOperation> Upsert(MasterCountryModel entityUser);
+        Task<MasterCountryModel> GetById(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> Delete(int id);
-        Task<List<MasterCityEntity>> GetCityList();
+        Task<List<MasterCountryModel>> GetCountryList();
     }
 }

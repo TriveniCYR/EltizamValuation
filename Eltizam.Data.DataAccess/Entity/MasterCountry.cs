@@ -15,7 +15,7 @@ namespace Eltizam.Data.DataAccess.Entity
 
         public int Id { get; set; }
         public string CountryName { get; set; } = null!;
-        public string? CoutryCode { get; set; }
+        public string? CountryCode { get; set; }
         public string? IsdcountryCode { get; set; }
         public int? IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }

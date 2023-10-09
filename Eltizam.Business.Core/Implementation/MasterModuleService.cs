@@ -70,6 +70,7 @@ namespace Eltizam.Business.Core.Implementation
                                             ModuleId = c.ModuleId,
                                             SubModuleId = c.SubModuleId,
                                             SubModuleName = c.SubModuleName,
+                                            ControlName = string.IsNullOrEmpty(c.ControlName)?"": c.ControlName,
                                             RoleModulePermission = o.FirstOrDefault(xx => xx.SubModuleId == c.SubModuleId)
                                         }).ToList();
                 foreach (var item in MasterSubModuleData)
@@ -99,6 +100,7 @@ namespace Eltizam.Business.Core.Implementation
                                    CreatedDate = c.CreatedDate,
                                    IsActive = c.IsActive,
                                    SortOrder = c.SortOrder,
+                                   ControlName = string.IsNullOrEmpty(c.ControlName)?"": c.ControlName,
                                    RoleModulePermission = Permissions.FirstOrDefault(xx => xx.ModuleId == c.ModuleId && xx.SubModuleId == 0),
                                    MasterSubModules = o.ToList()
                                }).ToList();

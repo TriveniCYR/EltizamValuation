@@ -49,5 +49,6 @@ namespace Eltizam.Business.Models
         public List<Master_QualificationModel>? Qualification { get; set; }
         public Master_QualificationModel? UpsertQualification { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
+        public DocumentFilesModel Document { get; set; }
     }
 }

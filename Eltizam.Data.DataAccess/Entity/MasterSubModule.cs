@@ -14,7 +14,5 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifyBy { get; set; }
         public DateTime? ModifyDate { get; set; }
         public string? ControlName { get; set; }
-
-        public virtual MasterModule? Module { get; set; }
     }
 }

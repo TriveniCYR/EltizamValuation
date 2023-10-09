@@ -31,6 +31,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterDocument> MasterDocuments { get; set; } = null!;
         public virtual DbSet<MasterException> MasterExceptions { get; set; } = null!;
         public virtual DbSet<MasterLocation> MasterLocations { get; set; } = null!;
+        public virtual DbSet<MasterModule> MasterModules { get; set; } = null!;
         public virtual DbSet<MasterOwnershipType> MasterOwnershipTypes { get; set; } = null!;
         public virtual DbSet<MasterPropertySubType> MasterPropertySubTypes { get; set; } = null!;
         public virtual DbSet<MasterPropertyType> MasterPropertyTypes { get; set; } = null!;
@@ -38,10 +39,12 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterResourceType> MasterResourceTypes { get; set; } = null!;
         public virtual DbSet<MasterRole> MasterRoles { get; set; } = null!;
         public virtual DbSet<MasterState> MasterStates { get; set; } = null!;
+        public virtual DbSet<MasterSubModule> MasterSubModules { get; set; } = null!;
         public virtual DbSet<MasterUser> MasterUsers { get; set; } = null!;
         public virtual DbSet<MasterValuationFee> MasterValuationFees { get; set; } = null!;
         public virtual DbSet<MasterValuationFeeType> MasterValuationFeeTypes { get; set; } = null!;
         public virtual DbSet<MasterVendor> MasterVendors { get; set; } = null!;
+        public virtual DbSet<RoleModulePermission> RoleModulePermissions { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -335,12 +338,12 @@ namespace Eltizam.Data.DataAccess.DataContext
             {
                 entity.ToTable("Master_Country");
 
-                entity.Property(e => e.CountryName)
-                    .HasMaxLength(250)
+                entity.Property(e => e.CountryCode)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CoutryCode)
-                    .HasMaxLength(20)
+                entity.Property(e => e.CountryName)
+                    .HasMaxLength(250)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
@@ -458,6 +461,21 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasConstraintName("FK_Master_Location_Master_State");
             });
 
+            modelBuilder.Entity<MasterModule>(entity =>
+            {
+                entity.HasKey(e => e.ModuleId);
+
+                entity.ToTable("Master_Module");
+
+                entity.Property(e => e.ControlName).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModuleName).HasMaxLength(250);
+            });
+
             modelBuilder.Entity<MasterOwnershipType>(entity =>
             {
                 entity.ToTable("Master_OwnershipType");
@@ -545,15 +563,17 @@ namespace Eltizam.Data.DataAccess.DataContext
 
             modelBuilder.Entity<MasterRole>(entity =>
             {
+                entity.HasKey(e => e.RoleId);
+
                 entity.ToTable("Master_Role");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+                entity.Property(e => e.DeletedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.RoleName)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.RoleName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<MasterState>(entity =>
@@ -577,6 +597,21 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasForeignKey(d => d.CountryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Master_State_Master_Country");
+            });
+
+            modelBuilder.Entity<MasterSubModule>(entity =>
+            {
+                entity.HasKey(e => e.SubModuleId);
+
+                entity.ToTable("Master_SubModule");
+
+                entity.Property(e => e.ControlName).HasMaxLength(200);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SubModuleName).HasMaxLength(250);
             });
 
             modelBuilder.Entity<MasterUser>(entity =>
@@ -720,6 +755,17 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.VendorName)
                     .HasMaxLength(250)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<RoleModulePermission>(entity =>
+            {
+                entity.HasKey(e => e.RoleModuleId);
+
+                entity.ToTable("RoleModulePermission");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
             });
 
             OnModelCreatingPartial(modelBuilder);

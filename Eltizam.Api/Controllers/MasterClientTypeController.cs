@@ -69,11 +69,11 @@ namespace EltizamValuation.Api.Controllers
         }
 
         [HttpPost, Route("GetAllClientType")]
-        public async Task<IActionResult> GetAllClientType([FromForm] DataTableAjaxPostModel model)
+        public async Task<IActionResult> GetAllClientType([FromForm] SmartTableParam<CommonSearchModel> model)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _clienttypeServices.GetAll(model), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _clienttypeServices.GetAll(model.Search, model.paging), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

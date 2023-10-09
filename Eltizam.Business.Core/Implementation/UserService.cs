@@ -152,8 +152,16 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
             else
             {
-                if (entityUser.UpsertAddress != null)
+                if (entityUser.UpsertAddress != null || entityUser.Address != null)
                 {
+                    if(entityUser.UpsertAddress != null)
+                    {
+                        if(entityUser.Address == null)
+                        {
+                            entityUser.Address = new List<MasterUserAddressModel>();
+                        }
+                        entityUser.Address.Add(entityUser.UpsertAddress);
+                    }
                     foreach (var addres in entityUser.Address)
                     {
                         if (addres.Id > 0)
@@ -199,8 +207,16 @@ namespace Eltizam.Business.Core.Implementation
                     }
 
                 }
-                if (entityUser.Qualification != null)
+                if (entityUser.Qualification != null || entityUser.UpsertQualification != null)
                 {
+                    if(entityUser.UpsertQualification != null)
+                    {
+                        if (entityUser.Qualification == null)
+                        {
+                            entityUser.Qualification = new List<Master_QualificationModel>();
+                        }
+                        entityUser.Qualification.Add(entityUser.UpsertQualification);
+                    }
                     foreach (var qualification in entityUser.Qualification)
                     {
                         if (qualification.Id > 0)

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class MasterRoleModel
+    public class CommonSearchModel
     {
-        public int RoleId { get; set; }
-        public string? RoleName { get; set; }
-        public bool? IsActive { get; set; }
+        public string? SearchText { get; set; }
     }
 }

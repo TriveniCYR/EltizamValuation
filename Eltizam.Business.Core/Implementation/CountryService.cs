@@ -7,12 +7,10 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
-using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +18,7 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class CityService : ICityService
+    public class CountryService : ICountryService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
@@ -28,35 +26,35 @@ namespace Eltizam.Business.Core.Implementation
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private readonly string _dbConnection;
 
-        private IRepository<MasterCity> _repository { get; set; }
+        private IRepository<MasterCountry> _repository { get; set; }
         private readonly IHelper _helper;
-        public CityService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public CountryService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
                                   IHelper helper,
                                  Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
 
-            _repository = _unitOfWork.GetRepository<MasterCity>();
+            _repository = _unitOfWork.GetRepository<MasterCountry>();
             configuration = _configuration;
             _helper = helper;
             _dbConnection = DatabaseConnection.EltizamDatabaseConnection;
         }
 
-        // get all recoreds from City list with sorting and pagination
+        // get all recoreds from Country list with sorting and pagination
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
             var _dbParams = new[]
              {
-                 new DbParameter("CityId", 0,SqlDbType.Int),
+                 new DbParameter("CountryId", 0,SqlDbType.Int),
                  new DbParameter("PageSize", model.length, SqlDbType.Int),
                  new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "CityName", SqlDbType.VarChar),
+                 new DbParameter("OrderClause", "CountryName", SqlDbType.VarChar),
                  new DbParameter("ReverseSort", 1, SqlDbType.Int)
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCityEntity>(ProcedureNameCall.usp_City_SearchAllList,
+            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCountryModel>(ProcedureNameCall.usp_Country_SearchAllList,
 
              _dbConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
@@ -65,32 +63,31 @@ namespace Eltizam.Business.Core.Implementation
 
             return oDataTableResponseModel;
         }
-        public async Task<MasterCityEntity> GetById(int id)
+        public async Task<MasterCountryModel> GetById(int id)
         {
-            var _CityEntity = new MasterCityEntity();
-            _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(await _repository.GetAsync(id));
+            var _CountryEntity = new MasterCountryModel();
+            _CountryEntity = _mapperFactory.Get<MasterCountry, MasterCountryModel>(await _repository.GetAsync(id));
 
-            return _CityEntity;
+            return _CountryEntity;
         }
-        public async Task<DBOperation> Upsert(MasterCityEntity entityCity)
+        public async Task<DBOperation> Upsert(MasterCountryModel entityCountry)
         {
 
-            MasterCity objCity;
+            MasterCountry objCountry;
 
-            if (entityCity.Id > 0)
+            if (entityCountry.Id > 0)
             {
-                objCity = _repository.Get(entityCity.Id);
-                var OldObjCity = objCity;
-                if (objCity != null)
+                objCountry = _repository.Get(entityCountry.Id);
+                var OldObjCountry = objCountry;
+                if (objCountry != null)
                 {
-                    objCity.CityName = entityCity.CityName;
-                    objCity.CountryId = entityCity.CountryId;
-                    objCity.StateId = entityCity.StateId;
-                    objCity.Stdcode = entityCity.STDCode;
-                    objCity.IsActive = entityCity.IsActive;
-                    objCity.ModifiedDate = DateTime.Now;
-                    objCity.ModifiedBy = entityCity.CreatedBy;
-                    _repository.UpdateAsync(objCity);
+                    objCountry.CountryName = entityCountry.CountryName;
+                    objCountry.CountryCode = entityCountry.CountryCode;
+                    objCountry.IsdcountryCode = entityCountry.ISDCountryCode;
+                    objCountry.IsActive = entityCountry.IsActive;
+                    objCountry.ModifiedDate = DateTime.Now;
+                    objCountry.ModifiedBy = entityCountry.CreatedBy;
+                    _repository.UpdateAsync(objCountry);
                 }
                 else
                 {
@@ -99,21 +96,15 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
-                objCity = _mapperFactory.Get<MasterCityEntity, MasterCity>(entityCity);
-
-                objCity.CityName = entityCity.CityName;
-                objCity.CountryId = entityCity.CountryId;
-                objCity.StateId = entityCity.StateId;
-                objCity.Stdcode = entityCity.STDCode;
-                objCity.IsActive = entityCity.IsActive;
-                objCity.CreatedDate = DateTime.Now;
-                objCity.CreatedBy = entityCity.CreatedBy;
-                objCity.ModifiedDate = DateTime.Now;
-                objCity.ModifiedBy = entityCity.CreatedBy;
-                _repository.AddAsync(objCity);
+                objCountry = _mapperFactory.Get<MasterCountryModel, MasterCountry>(entityCountry);
+                objCountry.CreatedDate = DateTime.Now;
+                objCountry.CreatedBy = entityCountry.CreatedBy;
+                objCountry.ModifiedDate = DateTime.Now;
+                objCountry.ModifiedBy = entityCountry.CreatedBy;
+                _repository.AddAsync(objCountry);
             }
             await _unitOfWork.SaveChangesAsync();
-            if (objCity.Id == 0)
+            if (objCountry.Id == 0)
                 return DBOperation.Error;
 
             return DBOperation.Success;
@@ -121,26 +112,26 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> Delete(int id)
         {
-            var entityCity = _repository.Get(x => x.Id == id);
+            var entityCountry = _repository.Get(x => x.Id == id);
 
-            if (entityCity == null)
+            if (entityCountry == null)
                 return DBOperation.NotFound;
 
-            _repository.Remove(entityCity);
+            _repository.Remove(entityCountry);
 
             await _unitOfWork.SaveChangesAsync();
 
             return DBOperation.Success;
         }
 
-
-        public async Task<List<MasterCityEntity>> GetCityList()
+        public async Task<List<MasterCountryModel>> GetCountryList()
         {
 
-            var lstStf = FJDBHelper.ExecuteMappedReader<MasterCityEntity>(ProcedureNameCall.usp_City_AllList,
+            var lstStf = FJDBHelper.ExecuteMappedReader<MasterCountryModel>(ProcedureNameCall.usp_Country_AllList,
              DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
 
             return lstStf;
         }
+
     }
 }

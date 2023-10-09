@@ -6,7 +6,6 @@ namespace Eltizam.Data.DataAccess.Entity
     public partial class MasterUser
     {
         public int Id { get; set; }
-        public int RoleId { get; set; }
         public string FirstName { get; set; } = null!;
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
@@ -25,6 +24,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public string? Email { get; set; }
+        public int? RoleId { get; set; }
 
         public virtual MasterDepartment? Department { get; set; }
         public virtual MasterDesignation? Designation { get; set; }

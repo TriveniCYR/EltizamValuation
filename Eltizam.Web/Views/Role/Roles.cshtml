@@ -8,7 +8,7 @@
 @inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 
-@model Eltizam.Business.Models.MasterRoleEntity
+@model List<Eltizam.Business.Models.MasterRoleEntity>
 @{
     ViewData["Title"] = @MasterLocalizer["RoleList"];
     RolePermissionModel objPermssion = (RolePermissionModel)ViewBag._objPermission;
@@ -38,17 +38,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Roles)
+            @foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(module => item.RoleName)</td>
-                    <td>@Html.LabelFor(model => model.IsActive, item.IsActive ? "Active" : "InActive", new { @style = item.IsActive ? "color:green;" : "color:red;" })</td>
+                    <td>@item.RoleName</td>
+                    <td>@(item.IsActive == true? "Active" : "InActive")</td>
                     <td>
-                        <a title="Edit" style="@IsEditAllow" class="large-font" asp-action="RoleManage" asp-route-roleId="@item.RoleId">
-                            <i class="fa fa-fw fa-edit mr-1"></i>
+                        <a title="Edit" class="large-font" asp-action="RoleManage" asp-route-roleId="@item.RoleId">
+                            Edit
                         </a>
 
-                        <a title="Delete" class="large-font text-danger" style="@IsDeleteAllow" data-toggle="modal" data-target="#DeleteRoleModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationRole(@item.RoleId); return false;"><i class="fa fa-fw fa-trash mr-1"></i></a>
+                        <a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteRoleModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationRole(@item.RoleId); return false;">Del</a>
                     </td>
                 </tr>
             }

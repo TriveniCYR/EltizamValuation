@@ -19,7 +19,7 @@ namespace Eltizam.Business.Models
 
         public DateTime CreatedDate { get; set; }
 
-        public string ControlName { get; set; }
+        public string? ControlName { get; set; }
 
         public virtual RoleModulePermissionEntity RoleModulePermission { get; set; }
     }
