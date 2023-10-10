@@ -50,6 +50,11 @@ namespace Eltizam.Business.Core.Implementation
             var _dbParams = new[]
              {
                  new DbParameter("UserId", 0,SqlDbType.Int),
+                 new DbParameter("UserName", model.UserName, SqlDbType.VarChar),
+                 new DbParameter("DepartmentId", model.DepartmentId, SqlDbType.Int),
+                 new DbParameter("DesignationId", model.DesignationId, SqlDbType.Int),
+                 new DbParameter("RoleId", model.RoleId, SqlDbType.Int),
+                 new DbParameter("ResourceId", model.ResourceId, SqlDbType.Int),
                  new DbParameter("PageSize", paging.pageSize, SqlDbType.Int),
                  new DbParameter("PageNumber", paging.pageNo, SqlDbType.Int),
                  new DbParameter("OrderClause", paging.sortName, SqlDbType.VarChar),
@@ -76,7 +81,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
                  new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
                 };
-                var UserAddress = FJDBHelper.ExecuteMappedReader<MasterUserAddressModel>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                var UserAddress = FJDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (UserAddress != null)
                 {
                     _userEntity.Address = UserAddress;
@@ -87,10 +92,22 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
                  new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
                 };
-                var UserQualification = FJDBHelper.ExecuteMappedReader<Master_QualificationModel>(ProcedureNameCall.usp_Qualification_GetQualificationByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter1);
+                var UserQualification = FJDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureNameCall.usp_Qualification_GetQualificationByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter1);
                 if (UserQualification != null)
                 {
                     _userEntity.Qualification = UserQualification;
+
+                }
+
+
+                DbParameter[] osqlParameter2 = {
+                 new DbParameter("TableKeyId", id, SqlDbType.Int),
+                 new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
+                };
+                var UserDocuments = FJDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureNameCall.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                if (UserDocuments != null)
+                {
+                    _userEntity.Documents = UserDocuments;
 
                 }
             }
@@ -126,6 +143,7 @@ namespace Eltizam.Business.Core.Implementation
                     objUser.DesignationId = entityUser.DesignationId;
                     objUser.LicenseNo = entityUser.LicenseNo;
                     objUser.CompanyId = entityUser.CompanyId;
+                    objUser.CompanyName = entityUser.CompanyName;
                     objUser.ResourceId = entityUser.ResourceId;
                     objUser.IsActive = entityUser.IsActive;
                     objUser.ModifiedBy = entityUser.CreatedBy;
@@ -152,104 +170,104 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
             else
             {
-                if (entityUser.UpsertAddress != null || entityUser.Address != null)
+                if (entityUser.Address != null)
                 {
-                    if(entityUser.UpsertAddress != null)
+
+                    if (entityUser.Address.Id > 0)
                     {
-                        if(entityUser.Address == null)
+                        objUserAddress = _addressRepository.Get(entityUser.Address.Id);
+                        if (objUserAddress != null)
                         {
-                            entityUser.Address = new List<MasterUserAddressModel>();
-                        }
-                        entityUser.Address.Add(entityUser.UpsertAddress);
-                    }
-                    foreach (var addres in entityUser.Address)
-                    {
-                        if (addres.Id > 0)
-                        {
-                            objUserAddress = _addressRepository.Get(addres.Id);
-                            if (objUserAddress != null)
-                            {
-                                var entityAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(addres);
-                                objUserAddress.Address1 = entityAddress.Address1;
-                                objUserAddress.Address1 = entityAddress.Address1;
-                                objUserAddress.Address2 = entityAddress.Address2;
-                                objUserAddress.Address3 = entityAddress.Address3;
-                                objUserAddress.Landmark = entityAddress.Landmark;
-                                objUserAddress.PinNo = entityAddress.PinNo;
-                                objUserAddress.CountryId = entityAddress.CountryId;
-                                objUserAddress.StateId = entityAddress.StateId;
-                                objUserAddress.CityId = entityAddress.CityId;
-                                objUserAddress.PinNo = entityAddress.PinNo;
-                                objUserAddress.Email = entityAddress.Email;
-                                objUserAddress.AlternateEmail = entityAddress.AlternateEmail;
-                                objUserAddress.Phone = entityAddress.Phone;
-                                objUserAddress.AlternatePhone = entityAddress.AlternatePhone;
-                                objUserAddress.Landlinephone = entityAddress.Landlinephone;
-                                objUserAddress.IsActive = entityAddress.IsActive;
-                                objUserAddress.ModifiedBy = entityUser.CreatedBy;
-                                objUserAddress.ModifiedDate = DateTime.Now;
-                                _addressRepository.UpdateAsync(objUserAddress);
-                            }
-                        }
-                        else
-                        {
-                            objUserAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(addres);
-                            objUserAddress.IsActive = entityUser.IsActive;
-                            objUserAddress.TableKeyId = objUser.Id;
-                            objUserAddress.TableName = SourceTableKey.Master_User;
-                            objUserAddress.CreatedBy = entityUser.CreatedBy;
-                            objUserAddress.CreatedDate = DateTime.Now;
+                            var entityAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(entityUser.Address);
+                            objUserAddress.Address1 = entityAddress.Address1;
+                            objUserAddress.Address1 = entityAddress.Address1;
+                            objUserAddress.Address2 = entityAddress.Address2;
+                            objUserAddress.Address3 = entityAddress.Address3;
+                            objUserAddress.Landmark = entityAddress.Landmark;
+                            objUserAddress.PinNo = entityAddress.PinNo;
+                            objUserAddress.CountryId = entityAddress.CountryId;
+                            objUserAddress.StateId = entityAddress.StateId; ;
+                            objUserAddress.CityId = entityAddress.CityId;
+                            objUserAddress.PinNo = entityAddress.PinNo;
+                            objUserAddress.Email = entityAddress.Email;
+                            objUserAddress.AlternateEmail = entityAddress.AlternateEmail;
+                            objUserAddress.Phone = entityAddress.Phone;
+                            objUserAddress.AlternatePhone = entityAddress.AlternatePhone;
+                            objUserAddress.Landlinephone = entityAddress.Landlinephone;
+                            objUserAddress.IsActive = entityAddress.IsActive;
                             objUserAddress.ModifiedBy = entityUser.CreatedBy;
                             objUserAddress.ModifiedDate = DateTime.Now;
-                            _addressRepository.AddAsync(objUserAddress);
+                            _addressRepository.UpdateAsync(objUserAddress);
                         }
-                        await _unitOfWork.SaveChangesAsync();
                     }
+                    else
+                    {
+                        objUserAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(entityUser.Address);
+                        objUserAddress.IsActive = entityUser.IsActive;
+                        objUserAddress.TableKeyId = objUser.Id;
+                        objUserAddress.TableName = SourceTableKey.Master_User;
+                        objUserAddress.CreatedBy = entityUser.CreatedBy;
+                        objUserAddress.CreatedDate = DateTime.Now;
+                        objUserAddress.ModifiedBy = entityUser.CreatedBy;
+                        objUserAddress.ModifiedDate = DateTime.Now;
+                        _addressRepository.AddAsync(objUserAddress);
+                    }
+                    await _unitOfWork.SaveChangesAsync();
 
                 }
-                if (entityUser.Qualification != null || entityUser.UpsertQualification != null)
+                if (entityUser.Qualification != null)
                 {
-                    if(entityUser.UpsertQualification != null)
+
+                    if (entityUser.Qualification.Id > 0)
                     {
-                        if (entityUser.Qualification == null)
+                        objUserQualification = _qualifyRepository.Get(entityUser.Qualification.Id);
+                        if (objUserQualification != null)
                         {
-                            entityUser.Qualification = new List<Master_QualificationModel>();
-                        }
-                        entityUser.Qualification.Add(entityUser.UpsertQualification);
-                    }
-                    foreach (var qualification in entityUser.Qualification)
-                    {
-                        if (qualification.Id > 0)
-                        {
-                            objUserQualification = _qualifyRepository.Get(qualification.Id);
-                            if (objUserQualification != null)
-                            {
-                                var entityContact = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(qualification);
-                                objUserQualification.Qualification = qualification.Qualification;
-                                objUserQualification.Subject = qualification.Subject;
-                                objUserQualification.Institute = qualification.Institute;
-                                objUserQualification.Grade = qualification.Grade;
-                                objUserQualification.YearOfInstitute = qualification.YearOfInstitute;
-                                objUserQualification.IsActive = qualification.IsActive;
-                                objUserQualification.ModifiedBy = entityUser.CreatedBy;
-                                objUserQualification.ModifiedDate = DateTime.Now;
-                                _qualifyRepository.UpdateAsync(objUserQualification);
-                            }
-                        }
-                        else
-                        {
-                            objUserQualification = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(qualification);
-                            qualification.IsActive = qualification.IsActive;
-                            objUserQualification.TableKeyId = objUser.Id;
-                            objUserQualification.TableName = SourceTableKey.Master_User;
-                            objUserQualification.CreatedBy = entityUser.CreatedBy;
-                            objUserQualification.CreatedDate = DateTime.Now;
+                            var entityContact = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(entityUser.Qualification);
+                            objUserQualification.Qualification = entityUser.Qualification.Qualification;
+                            objUserQualification.Subject = entityUser.Qualification.Subject;
+                            objUserQualification.Institute = entityUser.Qualification.Institute;
+                            objUserQualification.Grade = entityUser.Qualification.Grade;
+                            objUserQualification.YearOfInstitute = entityUser.Qualification.YearOfInstitute;
+                            objUserQualification.IsActive = entityUser.Qualification.IsActive;
                             objUserQualification.ModifiedBy = entityUser.CreatedBy;
                             objUserQualification.ModifiedDate = DateTime.Now;
-                            _qualifyRepository.AddAsync(objUserQualification);
+                            _qualifyRepository.UpdateAsync(objUserQualification);
                         }
-                        await _unitOfWork.SaveChangesAsync();
                     }
+                    else
+                    {
+                        objUserQualification = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(entityUser.Qualification);
+                        objUserQualification.IsActive = entityUser.Qualification.IsActive;
+                        objUserQualification.TableKeyId = objUser.Id;
+                        objUserQualification.TableName = SourceTableKey.Master_User;
+                        objUserQualification.CreatedBy = entityUser.CreatedBy;
+                        objUserQualification.CreatedDate = DateTime.Now;
+                        objUserQualification.ModifiedBy = entityUser.CreatedBy;
+                        objUserQualification.ModifiedDate = DateTime.Now;
+                        _qualifyRepository.AddAsync(objUserQualification);
+                    }
+                    await _unitOfWork.SaveChangesAsync();
+                }
+                if (entityUser.uploadDocument != null)
+                {
+                    foreach(var doc in entityUser.uploadDocument)
+                    {
+                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                        objUserDocument.IsActive = doc.IsActive;
+                        objUserDocument.TableKeyId = objUser.Id;
+                        objUserDocument.TableName = SourceTableKey.Master_User;
+                        objUserDocument.DocumentName = doc.DocumentName;
+                        objUserDocument.FileName = doc.FileName;
+                        objUserDocument.FilePath = doc.FilePath;
+                        objUserDocument.FileType = doc.FileType;
+                        objUserDocument.CreatedBy = entityUser.CreatedBy;
+                        objUserDocument.CreatedDate = DateTime.Now;
+                        objUserDocument.ModifiedBy = entityUser.CreatedBy;
+                        objUserDocument.ModifiedDate = DateTime.Now;
+                        _documentRepository.AddAsync(objUserDocument);
+                    }
+                    await _unitOfWork.SaveChangesAsync();
                 }
             }
 

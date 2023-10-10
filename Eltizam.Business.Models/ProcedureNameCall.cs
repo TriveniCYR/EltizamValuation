@@ -28,6 +28,7 @@ namespace Eltizam.Business.Models
         public static string usp_Contact_GetContactByTableKeyId = "usp_Contact_GetContactByTableKeyId";
         public static string usp_Address_GetAddressByTableKeyId = "usp_Address_GetAddressByTableKeyId";
         public static string usp_Qualification_GetQualificationByTableKeyId = "usp_Qualification_GetQualificationByTableKeyId";
+        public static string usp_Document_GetDocumentByTableKeyId = "usp_Document_GetDocumentByTableKeyId";
 
         // common master dropdown call
         public static string usp_ResourceType_AllList = "usp_ResourceType_AllList";

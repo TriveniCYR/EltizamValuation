@@ -49,7 +49,7 @@
                                 <img src="~/assets/search.svg" alt="search">
                                 <input type="text" id="txtUserName" placeholder="Search for System" class="searchInput">
                             </div>
-                            <button class="normalSearch" onclick="UserList()">Search</button>
+                            <button class="normalSearch" onclick="UserList(0)">Search</button>
                         </label>
                         <div class="accordion">
                             <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
@@ -60,70 +60,46 @@
                                     <div class="flex">
                                         <label for="userName">
                                             User Name
-                                            <input type="text" placeholder="enter user id">
-                                        </label>
-                                        <label for="valuatorType">
-                                            Valuator Type
-                                            <select name="Valuator" id="ValuatorType">
-                                                <option value="Valuator1">Valuator type1</option>
-                                                <option value="Valuator2">Valuator type2</option>
-                                                <option value="Valuator3">Valuator type3</option>
-                                            </select>
+                                            <input type="text" id="UserName" placeholder="enter user id">
                                         </label>
                                         <label for="resourceType">
                                             Resource Type
-                                            <select name="Valuator" id="resourceType">
-                                                <option value="resourceType1">Resource type1</option>
-                                                <option value="resourceType2">Resource type2</option>
-                                                <option value="resourceType3">Resource type3</option>
-                                            </select>
+                                            <select id="ResourceId" name="ResourceId" class="form-control"></select>
                                         </label>
                                         <label for="roleName">
-                                            Role Name
-                                            <select name="Valuator" id="roleName">
-                                                <option value="roleName1">Role type1</option>
-                                                <option value="roleName2">Role type2</option>
-                                                <option value="roleName3">Role type3</option>
-                                            </select>
-                                        </label>
-                                    </div>
-                                    <div class="flex">
-                                        <label for="fromDate">
-                                            From Date
-                                            <input type="date">
-                                        </label>
-                                        <label for="toDate">
-                                            To Date
-                                            <input type="date">
+                                            Role
+                                            <select id="RoleId" name="RoleId" class="form-control"></select>
                                         </label>
                                         <label for="designation">
                                             Designation
-                                            <select name="Valuator" id="ValuatorType">
-                                                <option value="Valuator1">Designation type1</option>
-                                                <option value="Valuator2">Designation type2</option>
-                                                <option value="Valuator3">Designation type3</option>
-                                            </select>
-                                        </label>
-                                        <label for="designation">
-                                            Department
-                                            <select name="Valuator" id="ValuatorType">
-                                                <option value="Valuator1">Department type1</option>
-                                                <option value="Valuator2">Department type2</option>
-                                                <option value="Valuator3">Department type3</option>
-                                            </select>
+                                            <select id="DesignationId" name="DesignationId" class="form-control"></select>
                                         </label>
                                     </div>
+                                    <div class="flex">
+                                        <label for="designation">
+                                            Department
+                                            <select id="DepartmentId" name="DepartmentId" class="form-control"></select>
+                                        </label>
+                                       @* <label for="fromDate">
+                                            From Date
+                                            <input type="date" id="from-date" name="from-date" class="form-control" required>
+                                        </label>
+                                        <label for="toDate">
+                                            To Date
+                                            <input type="date" id="to-date" name="to-date" class="form-control" required>
+                                        </label>*@
+                                    </div>
                                     <div class="text-center">
-                                        <button type="submit" class="blueBtn">Search</button>
+                                        <button type="submit" class="blueBtn" onclick="UserList(1)">Search</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="buttonArea flex align-item-center">
                         <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
-                            <button  class="flex align-item-center blueBtn" id="addNew">
+                            <button class="flex align-item-center blueBtn" id="addNew">
                                 <img src="~/assets/plus.svg" alt="plus"> Add New
                             </button>
                         </form>
@@ -148,7 +124,7 @@
                     </div>
                 </div>
                 <div class="scroll-x">
-                    <table id="UserTable">
+                    <table id="UserTable" class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>@MasterLocalizer["ID"]</th>
@@ -164,18 +140,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="flex justify-between align-item-center mobile_flexColumn">
-                    <p>Showing <b>1</b> to <b>10</b> of <b>10</b> results</p>
-                    <div class="flex justify-between align-item-center pagination">
-                        <p>Previous</p>
-                        <ul class="flex justify-between">
-                            <li class="active">1</li>
-                            @*<li>2</li>
-                            <li>3</li>*@
-                        </ul>
-                        <p>Next</p>
-                    </div>
-                </div>
             </main>
             <footer class="flex justify-between">
                 <p>2023 © Eltizam.</p>
@@ -183,15 +147,26 @@
             </footer>
 
             <!-- popup delete model -->
-            <div class="popup-overlay" id="popup-delete-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head">Delete User</div>
-                        <div class="popup-action">
-                            <p>Are you sure you want to delete?</p>
-                            <div class="buttonArea popup-btn">
-                                <button id="cancelDeleteUser">Cancel</button>
-                                <button class="redBtn">Delete</button>
+            <div id="DeleteSourceModel" class="modal themeModal " role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Hidden("RoleID")
+                            <div class="card-footer text-center">
+                                <button type="button" onclick="DeleteReource()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                                <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
                             </div>
                         </div>
                     </div>
@@ -234,6 +209,9 @@
     <input type="hidden" id="hdnWebBaseURL" />
     <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
     <script src="~/js/custom.js"></script>
+    <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
 
     @Html.Partial("_DataTablePartial")
     @*<script type="text/javascript" src="~/js/Custom/DynamicDataTable.js"></script>
@@ -273,15 +251,34 @@
         //#endregion
 
         $(document).ready(function () {
-            UserList();
-        });
-        function UserList() {
-            var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
             debugger
-            var search = {
-                'userName': $("#txtUserName").val(),
-                'countryId': 1,
-                'stateId': 1
+            BindDepartment();
+            BindDesignation();
+            BindRole();
+            BindResourceType();
+            UserList(0);
+        });
+        function UserList(tabId) {
+            var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
+            var search;
+            debugger
+            if (tabId == 0) {
+                search = {
+                    'userName': $("#txtUserName").val(),
+                    'departmentId': 0,
+                    'designationId': 0,
+                    'roleId': 0,
+                    'resourceId': 0
+                }
+            }
+            else {
+                search = {
+                    'userName': $("#UserName").val(),
+                    'departmentId': $("#DepartmentId").val(),
+                    'designationId': $("#DesignationId").val(),
+                    'roleId': $("#RoleId").val(),
+                    'resourceId': $("#ResourceId").val(),
+                }
             }
             var paging = {
                 'pageNo': 1,
@@ -314,13 +311,14 @@
                         r += "      <td> YES</td>";
                         r += "      <td class='position-relative'> <img src='../assets/dots-vertical.svg' alt='dots-vertical' class='activeDots' />";
                         r += "      <div class='actionItem'> <ul>";
-                        //r += "     <li onClick='view('" + dy.data[i].id + "')' ><img src='~/assets/view.svg' alt = 'view' /> view </li> ";
-                        r += "     <li> <a href='/Resource/ResourceManage?id="+ dt.data[i].id + "'><img src='../assets/edit.svg' alt = 'edit' /> Edit </a></li> ";
-                        //r += "      <li class='delete'> <img src='~/assets/trash.svg' alt = 'trash' /> Delete </li> ";
+                        r += "     <li><a title='Delete' data-toggle='modal' data-target='#DeleteResourceModel' data-backdrop='static' data-keyboard='false' onclick='ConfirmationResource('" + dt.data[i].id + "'); return false;> <img src='../assets/view.svg' alt='view'/> View  </a> </li> ";
+                        r += "     <li> <a href='/Resource/ResourceManage?id=" + dt.data[i].id + "'><img src='../assets/edit.svg' alt = 'edit' /> Edit </a></li> ";
+                        r += "      <li class='delete''> <img src='../assets/trash.svg' alt='trash'/> Delete   </li> ";
                         r += "      </ul> </div> </td>";
                         r += " </tr>";
                     }
                     $(".social-list").append(r);
+                    //StaticDataTable("#UserTable");
                 },
                 failure: function (response) {
                     alert(response.responseText);
@@ -331,6 +329,105 @@
             });
         }
 
+
+        function BindDepartment() {
+            debugger
+            var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
+            var Department = $("#DepartmentId");
+            $.ajax({
+                type: "GET",
+                url: $('#hdnBaseURL').val() + DepartmentList,
+                "datatype": "json",
+                success: function (response) {
+                    debugger;
+                    Department.empty().append('<option selected="selected" value="0">Please select</option>');
+                    for (var i = 0; i < response.length; i++) {
+                        Department.append($("<option></option>").val(response[i].id).html(response[i].department));
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
+            });
+        }
+        function BindDesignation() {
+            debugger
+            var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
+            var Designation = $("#DesignationId");
+            $.ajax({
+                type: "GET",
+                url: $('#hdnBaseURL').val() + DesignationList,
+                "datatype": "json",
+                success: function (response) {
+                    debugger;
+                    Designation.empty().append('<option selected="selected" value="0">Please select</option>');
+                    for (var i = 0; i < response.length; i++) {
+                        Designation.append($("<option></option>").val(response[i].id).html(response[i].designation));
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
+            });
+        }
+
+        function BindRole() {
+            debugger
+            var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
+            var Role = $("#RoleId");
+            $.ajax({
+                type: "GET",
+                url: $('#hdnBaseURL').val() + RoleList,
+                "datatype": "json",
+                success: function (response) {
+                    debugger;
+                    Role.empty().append('<option selected="selected" value="0">Please select</option>');
+                    for (var i = 0; i < response.length; i++) {
+                        Role.append($("<option></option>").val(response[i].roleId).html(response[i].roleName));
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
+            });
+        }
+
+        function BindResourceType() {
+            debugger
+            var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
+            var ResourceType = $("#ResourceId");
+            $.ajax({
+                type: "GET",
+                url: $('#hdnBaseURL').val() + ResourceTypeList,
+                "datatype": "json",
+                success: function (response) {
+                    debugger;
+                    ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
+                    for (var i = 0; i < response.length; i++) {
+                        ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
+            });
+        }
 
     </script>
 </body>

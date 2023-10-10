@@ -13,9 +13,9 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? Address3 { get; set; }
         public string? PinNo { get; set; }
         public string? Landmark { get; set; }
-        public int CountryId { get; set; }
-        public int StateId { get; set; }
-        public int CityId { get; set; }
+        public int? CountryId { get; set; }
+        public int? StateId { get; set; }
+        public int? CityId { get; set; }
         public bool IsActive { get; set; }
         public string? AlternatePhone { get; set; }
         public string? Email { get; set; }
@@ -27,8 +27,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
 
-        public virtual MasterCity City { get; set; } = null!;
-        public virtual MasterCountry Country { get; set; } = null!;
-        public virtual MasterState State { get; set; } = null!;
+        public virtual MasterCity? City { get; set; }
+        public virtual MasterCountry? Country { get; set; }
+        public virtual MasterState? State { get; set; }
     }
 }

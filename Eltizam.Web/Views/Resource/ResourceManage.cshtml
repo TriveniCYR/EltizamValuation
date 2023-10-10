@@ -3,7 +3,9 @@
 @inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
-
+@{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
 <!-- system user master -->
 <div class="flex">
     <div class="w-100 position-relative">
@@ -22,140 +24,142 @@
             </div>
         </header>
 
-            <main class="plr-0">
-                <div class="profileHead flex justify-between align-item-center cursor-pointer">
-                    <h3 class="dashboardTitle">EDIT RESOURCE MASTER</h3>
-                    <div class="hamburger">
-                        <span onclick="resourceMaster()">Resource Master</span>
-                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                        <span>Edit Resource Master</span>
-                    </div>
+        <main class="plr-0">
+            <div class="profileHead flex justify-between align-item-center cursor-pointer">
+                <h3 class="dashboardTitle">EDIT RESOURCE MASTER</h3>
+                <div class="hamburger">
+                    <span onclick="resourceMaster()">Resource Master</span>
+                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                    <span>Edit Resource Master</span>
                 </div>
-                <div class="flex">
-                    <div class="resourceProfile whiteBoxShadow">
-                        <img src="../assets/img-7.jpg.png" alt="img-7" class="w-100" />
-                        <div class="position-relative">
-                            <div class="upload-profile-pic-btn">
-                                <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
-                                Change photo
-                            </div>
-                            <input type="file" class="uploadPhoto" />
+            </div>
+            <div class="flex">
+                <div class="resourceProfile whiteBoxShadow">
+                    <img src="../assets/img-7.jpg.png" alt="img-7" class="w-100" />
+                    <div class="position-relative">
+                        <div class="upload-profile-pic-btn">
+                            <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
+                            Change photo
                         </div>
-                        <div class="nameBox">
-                            <h3>Jhon G Doe</h3>
-                            <small>Head of HR</small>
-                            <p>Human Resource</p>
-                            <h4>Employee ID : FT-0001</h4>
-                        </div>
-                        <div class="resourceAddress">
-                            <small>Address</small>
-                            <p>1861 Bayonne Ave, Manchester Township, NJ, 08759</p>
-                            <small>Phone</small>
-                            <p>92734982739</p>
-                            <small>Email</small>
-                            <p>john@ex.com</p>
-                        </div>
-
+                        <input type="file" class="uploadPhoto" />
                     </div>
-                    <div class="profileTabSection">
-                        <div class="tab">
-                            <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Profile Details</button>
-                            <button class="tablinks" onclick="profileTab(event, 'profile2')">Mailing Address</button>
-                            <button class="tablinks" onclick="profileTab(event, 'profile3')">Qualification Details</button>
-                            <button class="tablinks" onclick="profileTab(event, 'profile4')">Upload Supporting Documents</button>
-                        </div>
+                    <div class="nameBox">
+                        <h3>Jhon G Doe</h3>
+                        <small>Head of HR</small>
+                        <p>Human Resource</p>
+                        <h4>Employee ID : FT-0001</h4>
+                    </div>
+                    <div class="resourceAddress">
+                        <small>Address</small>
+                        <p>1861 Bayonne Ave, Manchester Township, NJ, 08759</p>
+                        <small>Phone</small>
+                        <p>92734982739</p>
+                        <small>Email</small>
+                        <p>john@ex.com</p>
+                    </div>
 
-                    <form asp-action="ResourceManage" method="POST">
-                    <input type="hidden" id="hdnDeparment" value="@(Model == null ? 0 : Model.DepartmentId)" />
-                    <input type="hidden" id="hdnDesignation" value="@(Model == null ? 0 : Model.DesignationId)" />
-                    <input type="hidden" id="hdnRole" value="@(Model == null ? 0 : Model.RoleId)" />
-                    <input type="hidden" id="hdnResourceType" value="@(Model == null ? 0 : Model.ResourceId)" />
-                     <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
+                </div>
+                <div class="profileTabSection">
+                    <div class="tab">
+                        <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Profile Details</button>
+                        <button class="tablinks" onclick="profileTab(event, 'profile2')">Mailing Address</button>
+                        <button class="tablinks" onclick="profileTab(event, 'profile3')">Qualification Details</button>
+                        <button class="tablinks" onclick="profileTab(event, 'profile4')">Upload Supporting Documents</button>
+                    </div>
+
+                    <form asp-action="ResourceManage" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="hdnDeparment" value="@(Model == null ? 0 : Model.DepartmentId)" />
+                        <input type="hidden" id="hdnDesignation" value="@(Model == null ? 0 : Model.DesignationId)" />
+                        <input type="hidden" id="hdnRole" value="@(Model == null ? 0 : Model.RoleId)" />
+                        <input type="hidden" id="hdnResourceType" value="@(Model == null ? 0 : Model.ResourceId)" />
+                        <input type="hidden" id="hdnGender" value="@(Model == null ? 0 : Model.Gender)" />
+                        <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
                         <div id="profile1" class="tabcontent">
                             <h3>Profile Details</h3>
                             <div class="inputSearchs">
-                                <div class="flex">
-                                    <label for="FirstName">
-                                        First Name
-                                        @Html.TextBoxFor(model => model.FirstName, new {@class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
-                                    </label>
-                                    <label for="MiddleName">
-                                        Middle Name
-                                        @Html.TextBoxFor(model => model.MiddleName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="LastName">
-                                        Last Name
-                                        @Html.TextBoxFor(model => model.LastName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
-                                    </label>
-                                    <label for="DepartmentId">
-                                        Department
-                                        <select id="DepartmentId" name="DepartmentId" class="form-control" asp-for="DepartmentId"></select>
-
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="DesignationId">
-                                        Designation
-                                        <select id="DesignationId" name="DesignationId" class="form-control" asp-for="DesignationId"></select>
-                                    </label>
-                                    <label for="DateOfBirth">
-                                        Date of Birth
-                                        <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control">
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="Gender">
-                                        Gender
-                                        <div>
-                                            Male : @Html.RadioButtonFor(m => m.Gender, "M")
-                                            Female : @Html.RadioButtonFor(m => m.Gender, "F")
-                                        </div>
-                                    </label>
-                                    <label for="ResourceId">
-                                        Resource Type
-                                        <select id="ResourceId" name="ResourceId" class="form-control" asp-for="ResourceId"></select>
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="RoleId">
-                                        Role
-                                        <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId"></select>
-                                    </label>
-                                    <label for="IsActive">
-                                        Status
-                                        <div>
-                                            Active : @Html.RadioButtonFor(m => m.IsActive, true)
-                                            IsActive : @Html.RadioButtonFor(m => m.IsActive, false)
-                                        </div>
-                                    </label>
-                                </div>
-                                @if (Model.Id <= 0)
-                                {
+                                <div class="tabSection">
                                     <div class="flex">
-                                        <label for="Password">
-                                            <label>Password</label>
-                                            @Html.PasswordFor(model => model.Password, new { @autocomplete = "off", @id = "password", @class = "form-control", @placeholder = @SharedLocalizer["Password"], @required = "" })
-                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        <label for="FirstName">
+                                            First Name
+                                            @Html.TextBoxFor(model => model.FirstName, new {@class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
                                         </label>
-                                        <label for="ConfirmPassowrd">
-                                            Confirm Passowrd
-                                            @Html.PasswordFor(model => model.ConfirmPassowrd, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["ConfirmPassword"] })
-                                            @Html.ValidationMessageFor(model => model.ConfirmPassowrd, "", new { @class = "text-danger" })
+                                        <label for="MiddleName">
+                                            Middle Name
+                                            @Html.TextBoxFor(model => model.MiddleName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
                                         </label>
                                     </div>
-                                }
-                                <div class="flex">
-                                    <label for="CompanyName">
-                                        Company / Vendor Name
-                                        @Html.TextBoxFor(model => model.CompanyName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Company Name"] })
-                                    </label>
-                                    <label for="LicenseNo">
-                                        AD Municipality / License No
-                                        @Html.TextBoxFor(model => model.LicenseNo, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
+                                    <div class="flex">
+                                        <label for="LastName">
+                                            Last Name
+                                            @Html.TextBoxFor(model => model.LastName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        </label>
+                                        <label for="DepartmentId">
+                                            Department
+                                            <select id="DepartmentId" name="DepartmentId" class="form-control" asp-for="DepartmentId"></select>
 
-                                    </label>
+                                        </label>
+                                    </div>
+                                    <div class="flex">
+                                        <label for="DesignationId">
+                                            Designation
+                                            <select id="DesignationId" name="DesignationId" class="form-control" asp-for="DesignationId"></select>
+                                        </label>
+                                        <label for="DateOfBirth">
+                                            Date of Birth
+                                            <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth"  class="form-control">
+                                            @*@Html.TextBoxFor(model => model.DateOfBirth, new { @type ="" ,@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })*@
+                                        </label>
+                                    </div>
+                                    <div class="flex">
+                                        <label for="Gender">
+                                            Gender
+                                            <select id="Gender" name="Gender" class="form-control" asp-for="Gender"></select>
+                                        </label>
+                                        <label for="ResourceId">
+                                            Resource Type
+                                            <select id="ResourceId" name="ResourceId" class="form-control" asp-for="ResourceId"></select>
+                                        </label>
+                                    </div>
+                                    <div class="flex">
+                                        <label for="RoleId">
+                                            Role
+                                            <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId"></select>
+                                        </label>
+                                        <label for="IsActive">
+                                            Status
+                                            <div>
+                                                Active : @Html.RadioButtonFor(m => m.IsActive, true)
+                                                IsActive : @Html.RadioButtonFor(m => m.IsActive, false)
+                                            </div>
+                                        </label>
+                                    </div>
+                                    @if (Model.Id <= 0)
+                                    {
+                                        <div class="flex">
+                                            <label for="Password">
+                                                <label>Password</label>
+                                                @Html.PasswordFor(model => model.Password, new { @autocomplete = "off", @id = "password", @class = "form-control", @placeholder = @SharedLocalizer["Password"], @required = "" })
+                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                            </label>
+                                            <label for="ConfirmPassowrd">
+                                                Confirm Passowrd
+                                                @Html.PasswordFor(model => model.ConfirmPassowrd, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["ConfirmPassword"] })
+                                                @Html.ValidationMessageFor(model => model.ConfirmPassowrd, "", new { @class = "text-danger" })
+                                            </label>
+                                        </div>
+                                    }
+                                    <div class="flex">
+                                        <label for="CompanyName">
+                                            Company / Vendor Name
+                                            @Html.TextBoxFor(model => model.CompanyName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Company Name"] })
+                                        </label>
+                                        <label for="LicenseNo">
+                                            AD Municipality / License No
+                                            @Html.TextBoxFor(model => model.LicenseNo, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
+
+                                        </label>
+                                       
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -163,270 +167,178 @@
                         <div id="profile2" class="tabcontent">
                             <h3>Mailing Address</h3>
                             <div class="inputSearchs">
-                                @if (Model.Address != null)
-                                {
-                                    @foreach (var adddress in Model.Address)
-                                    {
-                                        <input type="hidden" id="hdnCountry" value="@(adddress == null ? 0 : adddress.CountryId)" />
-                                        <input type="hidden" id="hdnState" value="@(adddress == null ? 0 : adddress.StateId)" />
-                                        <input type="hidden" id="hdnCity" value="@(adddress == null ? 0 : adddress.CityId)" />
-                                        <div class="addMoreAddress">
-                                            <div class="flex">
-                                                <label for="address1" class="w-100">
-                                                    <span>Address Line 1 </span>
-                                                    @Html.TextBoxFor(model => adddress.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
-                                                </label>
+                                <div class="tabSection">
+                                            <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
+                                            <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
+                                           <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" />
+                                           @Html.HiddenFor(model => model.Address.Id)
+                                            <div class="addMoreAddress">
+                                                <div class="flex">
+                                                    <label for="address1" class="w-100">
+                                                        <span>Address Line 1 </span>
+                                                        @Html.TextBoxFor(model => model.Address.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                                    </label>
+                                                </div>
+                                                <div class="flex">
+                                                    <label for="address2" class="w-100">
+                                                        Address Line 2
+                                                        @Html.TextBoxFor(model => model.Address.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
+                                                    </label>
+                                                </div>
+                                                <div class="flex fourBox">
+                                                    <label for="CountryId">
+                                                        CountryId
+                                                        @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                    </label>
+                                                    <label for="StateId">
+                                                        State
+                                                        @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                    </label>
+                                                    <label for="CityId">
+                                                        City
+                                                         @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                    </label>
+                                                    <label for="PinNo">
+                                                        Pin Code
+                                                        @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                                    </label>
+                                                </div>
+                                                <div class="flex">
+                                                    <label for="Email">
+                                                        Email
+                                                        @Html.TextBoxFor(model => model.Address.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                                    </label>
+                                                    <label for="AlternateEmail">
+                                                        Alternate Email
+                                                        @Html.TextBoxFor(model => model.Address.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                                    </label>
+                                                </div>
+                                                <div class="flex threeBox">
+                                                    <label for="Phone">
+                                                        Phone
+                                                        @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                                    </label>
+                                                    <label for="AlternatePhone">
+                                                        Alternate Phone
+                                                        @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                    </label>
+                                                    <label for="">
+                                                        Landline phone
+                                                        @Html.TextBoxFor(model => model.Address.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div class="flex">
-                                                <label for="address2" class="w-100">
-                                                    Address Line 2
-                                                    @Html.TextBoxFor(model => adddress.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
-                                                </label>
-                                            </div>
-                                            <div class="flex fourBox">
-                                                <label for="CountryId">
-                                                    CountryId
-                                                    <select id="CountryId" name="CountryId" class="form-control" asp-for="@adddress.CountryId"></select>
-                                                </label>
-                                                <label for="StateId">
-                                                    State
-                                                    <select id="StateId" name="StateId" class="form-control" asp-for="@adddress.StateId"></select>
-                                                </label>
-                                                <label for="CityId">
-                                                    City
-                                                    <select id="CityId" name="CityId" class="form-control" asp-for="@adddress.CityId"></select>
-                                                </label>
-                                                <label for="PinNo">
-                                                    Pin Code
-                                                    @Html.TextBoxFor(model => adddress.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
-                                                </label>
-                                            </div>
-                                            <div class="flex">
-                                                <label for="Email">
-                                                    Email
-                                                    @Html.TextBoxFor(model => adddress.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
-                                                </label>
-                                                <label for="AlternateEmail">
-                                                    Alternate Email
-                                                    @Html.TextBoxFor(model => adddress.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
-                                                </label>
-                                            </div>
-                                            <div class="flex threeBox">
-                                                <label for="Phone">
-                                                    Phone
-                                                    @Html.TextBoxFor(model => adddress.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
-                                                </label>
-                                                <label for="AlternatePhone">
-                                                    Alternate Phone
-                                                    @Html.TextBoxFor(model => adddress.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
-                                                </label>
-                                                <label for="">
-                                                    Landline phone
-                                                    @Html.TextBoxFor(model => adddress.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
-                                                </label>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                                else
-                                {
-                                    <div class="addMoreAddress">
-                                        <div class="flex">
-                                            <label for="address1" class="w-100">
-                                                <span>Address Line 1 </span>
-                                                @Html.TextBoxFor(model => model.UpsertAddress.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
-                                            </label>
-                                        </div>
-                                        <div class="flex">
-                                            <label for="address2" class="w-100">
-                                                Address Line 2
-                                                @Html.TextBoxFor(model => model.UpsertAddress.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
-                                            </label>
-                                        </div>
-                                        <div class="flex fourBox">
-                                            <label for="CountryId">
-                                                CountryId
-                                                <select id="CountryId" name="CountryId" class="form-control" asp-for="UpsertAddress.CountryId"></select>
-                                            </label>
-                                            <label for="StateId">
-                                                State
-                                                <select id="StateId" name="StateId" class="form-control" asp-for="UpsertAddress.StateId"></select>
-                                            </label>
-                                            <label for="CityId">
-                                                City
-                                                <select id="CityId" name="CityId" class="form-control" asp-for="UpsertAddress.CityId"></select>
-                                            </label>
-                                            <label for="PinNo">
-                                                Pin Code
-                                                @Html.TextBoxFor(model => model.UpsertAddress.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
-                                            </label>
-                                        </div>
-                                        <div class="flex">
-                                            <label for="Email">
-                                                Email
-                                                @Html.TextBoxFor(model => model.UpsertAddress.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
-                                            </label>
-                                            <label for="AlternateEmail">
-                                                Alternate Email
-                                                @Html.TextBoxFor(model => model.UpsertAddress.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
-                                            </label>
-                                        </div>
-                                        <div class="flex threeBox">
-                                            <label for="Phone">
-                                                Phone
-                                                @Html.TextBoxFor(model => model.UpsertAddress.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
-                                            </label>
-                                            <label for="AlternatePhone">
-                                                Alternate Phone
-                                                @Html.TextBoxFor(model => model.UpsertAddress.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
-                                            </label>
-                                            <label for="">
-                                                Landline phone
-                                                @Html.TextBoxFor(model => model.UpsertAddress.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
-                                            </label>
-                                        </div>
+
+                                    <div class="text-right buttonArea bodyContent plr-0">
+                                        <button type="button" class="lineBtn" onclick="addMoreAddress()">Add More</button>
                                     </div>
-                                }
+                                </div>
                             </div>
                         </div>
 
                         <div id="profile3" class="tabcontent">
                             <h3>Qualification Details</h3>
                             <div class="roundBorderBox">
-                                
-                                @if (Model.Qualification != null)
-                                {
-                                    @foreach (var qualify in Model.Qualification)
-                                    {
-                                        <div class="text-right">
-                                            <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" />
+                                <div class="text-right">
+                                    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" />
+                                </div>
+                                <div class="inputSearchs p-0">
+
+                                    <div class="tabSection">
+                                        @Html.HiddenFor(model => model.Qualification.Id)
+                                        <div class="flex">
+                                            <label for="Qualification">
+                                                Programme of Study/ Qualification
+                                                @Html.TextBoxFor(model => model.Qualification.Qualification, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
+                                            </label>
+                                            <label for="Subject">
+                                                Subject/Stream
+                                                @Html.TextBoxFor(model => model.Qualification.Subject, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
+                                            </label>
                                         </div>
-                                        <div class="inputSearchs p-0">
-                                            <div class="flex">
-                                                <label for="Qualification">
-                                                    Programme of Study/ Qualification
-                                                    @Html.TextBoxFor(model => qualify.Qualification, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
-                                                </label>
-                                                <label for="Subject">
-                                                    Subject/Stream
-                                                    @Html.TextBoxFor(model => qualify.Subject, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
-                                                </label>
-                                            </div>
-                                            <div class="flex">
-                                                <label for="Institute">
-                                                    Education Institute
-                                                    @Html.TextBoxFor(model => qualify.Institute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
-                                                </label>
-                                                <label for="year">
-                                                    Year of Institute
-                                                    @Html.TextBoxFor(model => qualify.YearOfInstitute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
-                                                </label>
-                                            </div>
-                                            <div class="flex">
-                                                <label for="grade" class="w-100">
-                                                    Grade/Percent/class
-                                                    @Html.TextBoxFor(model => qualify.Grade, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
-                                                </label>
-                                            </div>
+                                        <div class="flex">
+                                            <label for="Institute">
+                                                Education Institute
+                                                @Html.TextBoxFor(model => model.Qualification.Institute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
+                                            </label>
+                                            <label for="year">
+                                                Year of Institute
+                                                @Html.TextBoxFor(model => model.Qualification.YearOfInstitute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
+                                            </label>
                                         </div>
-                                    }
-                                }
-                                else
-                                {
-                                    <div class="text-right">
-                                            <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" />
+                                        <div class="flex">
+                                            <label for="grade" class="w-100">
+                                                Grade/Percent/class
+                                        @Html.TextBoxFor(model => model.Qualification.Grade, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
+                                            </label>
                                         </div>
-                                        <div class="inputSearchs p-0">
-                                            <div class="flex">
-                                                <label for="Qualification">
-                                                    Programme of Study/ Qualification
-                                                    @Html.TextBoxFor(model => model.UpsertQualification.Qualification, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
-                                                </label>
-                                                <label for="Subject">
-                                                    Subject/Stream
-                                                    @Html.TextBoxFor(model => model.UpsertQualification.Subject, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
-                                                </label>
-                                            </div>
-                                            <div class="flex">
-                                                <label for="Institute">
-                                                    Education Institute
-                                                    @Html.TextBoxFor(model => model.UpsertQualification.Institute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
-                                                </label>
-                                                <label for="year">
-                                                    Year of Institute
-                                                    @Html.TextBoxFor(model => model.UpsertQualification.YearOfInstitute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
-                                                </label>
-                                            </div>
-                                            <div class="flex">
-                                                <label for="grade" class="w-100">
-                                                    Grade/Percent/class
-                                                    @Html.TextBoxFor(model => model.UpsertQualification.Grade, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
-                                                </label>
-                                            </div>
-                                        </div>
-                                }
+                                    </div>
+                                </div>
+                                <div class="text-right buttonArea bodyContent plr-0">
+                                    <button type="button" class="lineBtn" onClick="addRoundBorderBox(this)">Add New</button>
+                                </div>
                             </div>
                         </div>
 
                         <div id="profile4" class="tabcontent">
                             <h3>Upload Supporting Documents</h3>
                             <div class="inputSearchs uploadDocBox">
-                                <div class="flex mb-28">
-                                    <label for="document">
-                                        Documents Name
-                                        @Html.TextBoxFor(model => model.Document.DocumentName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Document"] })
-                                    </label>
-                                    <label for="atach">
-                                        Attach Supporting Documents
-                                        <div class="attachDoc">
-                                            <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
-                                            @*<input type="file" class="btn" value="Upload Photo" multiple />*@
-                                            @Html.TextBoxFor(model => model.Document.Files, "", new { @type = "file", @multiple = "multiple" })
-                                            <p>click to upload.</p>
-                                        </div>
-                                    </label>
-                                </div>
-                                <div class="W-100">
-                                    <div class="prevUpload roundBorderBox m-0">
-                                        <h3>Previously uploaded</h3>
-                                        <div class="flex">
-                                            @if (Model.Documents != null)
-                                            {
-                                                @foreach (var docs in Model.Documents)
+
+                                <div class="tabSection">
+                                    <div class="flex mb-28">
+                                        <label for="document">
+                                            Documents Name
+                                            @Html.TextBoxFor(model => model.Document.DocumentName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Document"] })
+                                        </label>                                             
+                                        <label for="atach">
+                                            Attach Supporting Documents
+                                            <div class="attachDoc">
+                                                <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
+                                                <input type="file" asp-for="Document.Files" multiple />
+                                                <p>click to upload.</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="W-100">
+                                        <div class="prevUpload roundBorderBox m-0">
+                                            <h3>Previously uploaded</h3>
+                                            <div class="flex">
+                                                @if (Model.Documents != null)
                                                 {
-                                                    <div class="prevUploadTab">
-                                                        <div class="flex align-item-center m-0">
-                                                            <img src="../assets/file.svg" alt="file" />
-                                                            <span>@docs.FileName</span>
+                                                    @foreach (var docs in Model.Documents)
+                                                    {
+                                                        <div class="prevUploadTab">
+                                                            <div class="flex align-item-center m-0">
+                                                                <img src="../assets/file.svg" alt="file" />
+                                                                <span>@docs.DocumentName</span>
+                                                            </div>
+                                                            <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
                                                         </div>
-                                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
+                                                    }
                                                 }
-                                            }
-                                            else
-                                            {
-                                                <label>NA</label>
-                                            }
+                                                else
+                                                {
+                                                    <label>NA</label>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-right buttonArea bodyContent plr-0">
-                                <!-- removing as of not needed uncomment if need to add more uploading file -->
-                                <!-- <button type="button" class="lineBtn" onClick="addNewUploadDoc(this)">Add New</button> -->
-                                <button type="submit" class="darkBlueBtn">Update</button>
-                            </div>
+                            @*<div class="text-right buttonArea bodyContent plr-0">
+                            <button type="submit" class="darkBlueBtn">Update</button>
+                            </div>*@
                         </div>
 
                         <div class="text-right buttonArea bodyContent plr-0">
-                            <button type="button" class="lineBtn">Cancel</button>
+                           <a href='/Resource/Resource'> <button type="button" class="lineBtn">Cancel</button></a>
                             <button type="submit" class="blueBtn">Update</button>
                         </div>
-        </form>
-                    </div>
+                    </form>
                 </div>
+            </div>
 
-            </main>
+        </main>
         <footer class="flex justify-between">
             <p>2023 © Eltizam.</p>
             <p>Design & Develop by NeoSoft</p>
@@ -439,6 +351,10 @@
 
 <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
 <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+
+<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
+<script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
+<script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
 <script>
 
 
@@ -493,8 +409,8 @@
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
         minusDiv.innerHTML = `
-                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
-                            `;
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+                                            `;
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
 
         addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
@@ -520,6 +436,7 @@
         BindCountry();
         BindState();
         BindCity();
+        BindGender();
     });
 
     function BindDepartment() {
@@ -636,7 +553,7 @@
     function BindCountry() {
         debugger
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
-        var Country = $("#CountryId");
+        var Country = $("#Address_CountryId");
         $.ajax({
             type: "GET",
             url: $('#hdnBaseURL').val() + CountryList,
@@ -664,7 +581,7 @@
     function BindState() {
         debugger
         var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
-        var State = $("#StateId");
+        var State = $("#Address_StateId");
         $.ajax({
             type: "GET",
             url: $('#hdnBaseURL').val() + StateList,
@@ -692,7 +609,7 @@
     function BindCity() {
         debugger
         var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
-        var City = $("#CityId");
+        var City = $("#Address_CityId");
         $.ajax({
             type: "GET",
             url: $('#hdnBaseURL').val() + CityList,
@@ -715,6 +632,15 @@
                 $("#loader").hide();
             }
         });
+    }
+    function BindGender(){
+        var Gender = $("#Gender");
+        Gender.empty().append('<option selected="selected" value="0">Please select</option>');
+        Gender.append($("<option></option>").val('M').html('Male'));
+        Gender.append($("<option></option>").val('F').html('Female'));
+        if ($('#hdnGender').val() != 0) {
+            Gender.val($('#hdnGender').val());
+        }
     }
 
 </script>

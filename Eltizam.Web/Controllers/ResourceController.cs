@@ -57,8 +57,6 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult ResourceManage(int? id)
         {
             MasterUserModel masterUser;
-            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-            APIRepository objapi = new(_cofiguration);
             if (id == null || id <= 0)
             {
                 masterUser = new MasterUserModel();
@@ -66,6 +64,8 @@ namespace EltizamValuation.Web.Controllers
             }
             else
             {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetUserById + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
@@ -85,9 +85,11 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
-                if(masterUser.Document.Files.Count > 0)
+                if (masterUser.Document.Files != null)
                 {
-                    FileUpload(masterUser.Document);
+                    List<MasterDocumentModel> docs =  FileUpload(masterUser.Document);
+                    masterUser.uploadDocument = docs;
+                    masterUser.Document = null;
                 }
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
@@ -99,7 +101,7 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
-                    return RedirectToAction(nameof(User));
+                    return RedirectToAction(nameof(Resource));
                 }
                 else
                 {
@@ -114,9 +116,14 @@ namespace EltizamValuation.Web.Controllers
                 return RedirectToAction("ResourceManage", new { Id = masterUser.Id });
             }
         }
-        private void FileUpload(DocumentFilesModel document)
+        private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
         {
-            
+            List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();
+            if (document.Files == null || document.Files.Count == 0)
+            {
+                throw new ArgumentException("No files were uploaded.");
+            }
+
             var savedFileNames = new List<string>();
 
             foreach (var file in document.Files)
@@ -143,15 +150,34 @@ namespace EltizamValuation.Web.Controllers
                 }
 
                 // Save information about the uploaded file to the database
-                var upload = new Upload
+                var upload = new MasterDocumentModel
                 {
                     FileName = fileName,
-                    ContentType = file.ContentType,
-                    CreatedDate = DateTime.Now,
-                    //FileType = GetFileType(file.ContentType)
+                    FilePath = filePath,
+                    DocumentName = document.DocumentName,
+                    IsActive = 1,
+                    FileType = GetFileType(file.ContentType)
                 };
 
+                uploadFils.Add(upload);
+            }
+            return uploadFils;
+        }
+        private string GetFileType(string contentType)
+        {
+            switch (contentType)
+            {
+                case "image/jpeg":
+                case "image/png":
+                    return "Image";
+                case "application/msword":
+                    return "Word";
+                case "application/pdf":
+                    return "PDF";
+                default:
+                    return "Unknown";
             }
         }
+
     }
 }

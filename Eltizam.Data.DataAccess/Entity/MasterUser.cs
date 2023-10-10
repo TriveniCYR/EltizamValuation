@@ -16,6 +16,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? DesignationId { get; set; }
         public string? LicenseNo { get; set; }
         public int CompanyId { get; set; }
+        public string? CompanyName { get; set; }
         public int? ResourceId { get; set; }
         public string Password { get; set; } = null!;
         public bool IsActive { get; set; }

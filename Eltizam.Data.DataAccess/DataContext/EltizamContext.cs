@@ -146,19 +146,16 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.MasterAddresses)
                     .HasForeignKey(d => d.CityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Master_Address_Master_City");
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.MasterAddresses)
                     .HasForeignKey(d => d.CountryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Master_Address_Master_Country");
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.MasterAddresses)
                     .HasForeignKey(d => d.StateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Master_Address_Master_State");
             });
 
@@ -387,6 +384,10 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.ToTable("Master_Document");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DocumentName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.FileName)
                     .HasMaxLength(250)
@@ -618,6 +619,10 @@ namespace Eltizam.Data.DataAccess.DataContext
             {
                 entity.ToTable("Master_User");
 
+                entity.Property(e => e.CompanyName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
@@ -631,7 +636,7 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.Gender)
-                    .HasMaxLength(10)
+                    .HasMaxLength(1)
                     .IsUnicode(false)
                     .IsFixedLength();
 

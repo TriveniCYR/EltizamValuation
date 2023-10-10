@@ -7,6 +7,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace Eltizam.Business.Models
 {
@@ -15,16 +16,16 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public string? UserName { get; set; }
         public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
+        public string? MiddleName { get; set; }
+        public string? LastName { get; set; }
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int DesignationId { get; set; }
         public int DepartmentId { get; set; }
 
-        public string LicenseNo { get; set; }
+        public string? LicenseNo { get; set; }
 
-        public string CompanyName { get; set; }
+        public string? CompanyName { get; set; }
         public int CompanyId { get; set; }
         public int ResourceId { get; set; }
         public int RoleId { get; set; }
@@ -36,19 +37,20 @@ namespace Eltizam.Business.Models
             "Maximum 16 characters,at least one number,at least one upper case,at least one lower case," +
             "at least one special character e.g. @$!%*?&")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string? Password { get; set; }
         [NotMapped]
         //[Required(ErrorMessage = "Confirm Password required")]
         [CompareAttribute("Password", ErrorMessage = "Password and Confirm Password doesn't match.")]
         [DataType(DataType.Password)]
-        public string ConfirmPassowrd { get; set; }
+        public string? ConfirmPassowrd { get; set; }
 
         public int CreatedBy { get; set; }
-        public List<MasterUserAddressModel>? Address { get; set; }
-        public MasterUserAddressModel UpsertAddress { get; set; }
-        public List<Master_QualificationModel>? Qualification { get; set; }
+        public MasterUserAddressModel? Address { get; set; }
+        public MasterUserAddressModel? UpsertAddress { get; set; }
+        public Master_QualificationModel? Qualification { get; set; }
         public Master_QualificationModel? UpsertQualification { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
-        public DocumentFilesModel Document { get; set; }
+        public List<MasterDocumentModel>? uploadDocument { get; set; }
+        public DocumentFilesModel? Document { get; set; }
     }
 }
