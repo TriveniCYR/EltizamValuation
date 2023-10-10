@@ -8,30 +8,28 @@
 }
 <!-- system user master -->
 <div class="flex">
-    <div class="w-100 position-relative">
-        <header class="flex justify-between align-item-center">
-            <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="../assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="../assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
-            <div class="user flex">
-                <div class="position-relative notification">
-                    <img src="../assets/bell.svg" alt="bell" class="cursor-pointer" />
-                    <span>3</span>
-                </div>
-                <div class="flex align-item-center">
-                    <img src="../assets/user-icon.svg" alt="user-icon" class="profile cursor-pointer" />
-                    <p class="visible-in-web">Saeed</p>
-                    <img src="../assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" />
-                </div>
-            </div>
-        </header>
-
+    <div class="w-100 position-relative">        
         <main class="plr-0">
             <div class="profileHead flex justify-between align-item-center cursor-pointer">
-                <h3 class="dashboardTitle">EDIT RESOURCE MASTER</h3>
-                <div class="hamburger">
+                @if (Model.Id > 0)
+                {
+                    <h3 class="dashboardTitle">EDIT RESOURCE MASTER</h3>
+                    <div class="hamburger">
                     <span onclick="resourceMaster()">Resource Master</span>
                     <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                     <span>Edit Resource Master</span>
                 </div>
+                }
+                else
+                {
+                    <h3 class="dashboardTitle">ADD RESOURCE MASTER</h3>
+                    <div class="hamburger">
+                        <span onclick="resourceMaster()">Resource Master</span>
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                        <span>Add Resource Master</span>
+                    </div>
+                }
+                
             </div>
             <div class="flex">
                 <div class="resourceProfile whiteBoxShadow">
