@@ -33,8 +33,8 @@
             </div>
         </div>
         <div class="container-fluid overflow-auto background-white-card">
-            <div class="row">
-                <div class="col-md-12">
+            <div class="flex">
+                <div class="w-50">
                     <div class="form-group required">
                         @Html.LabelFor(model => model.RoleName, new { @class = "control-label" })
                         <span class="text-danger">*</span>
@@ -42,8 +42,8 @@
                         @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="required">                        
+                <div >
+                    <div class="required isActive">
                         @if (Model.IsUserAssigned && Model.IsActive)
                         {
                             @Html.CheckBoxFor(model => model.IsActive, new { @disabled="true",  @class = "checkbox-checked", @checked = "checked" })
@@ -55,6 +55,12 @@
                             @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
                             @Html.Label(@SharedLocalizer["IsActive"])
                         }
+                       @*  <label for="resourceType" class="roleswitch">
+                            Status
+                            <input class='input-switch' type="checkbox" id="editRole" />
+                            <label class="label-switch" for="editRole"></label>
+                            <span class="info-text"></span>
+                        </label> *@
                     </div>
                    
                 </div>
@@ -170,9 +176,9 @@
 
             <div class="row">
                 <div class="col-12 text-end">
-                    <div class="form-group">
-                        <button type="submit" id="btnSaveRole" class="btn btn-success me-3 large-button">@SharedLocalizer["Save"]</button>
-                        <a class="btn btn-danger ms-3 large-button" asp-action="Roles">@SharedLocalizer["Cancel"]</a>
+                    <div class="buttonArea">
+                        <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
+                        <a class="greyBtn lineBtn formAbtn" asp-action="Roles">@SharedLocalizer["Cancel"]</a>
                     </div>
                 </div>
             </div>

@@ -19,5 +19,7 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> DeleteRole(int id);
 
         Task<List<MasterRoleEntity>> GetActiveRole();
+
+        Task<List<MasterRoleEntity>> RoleSearch(string searchQuery);
     }
 }

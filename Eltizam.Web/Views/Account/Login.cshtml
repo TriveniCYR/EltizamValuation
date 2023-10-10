@@ -55,5 +55,17 @@
         </div>
     </div>
 
+    <script>
+        document.querySelector('.showPassword').addEventListener('click', function () {
+            if (document.getElementById('password').type == 'password') {
+                document.getElementById('password').type = "text";
+                document.querySelector('.forgetPassword').classList.add('showPassEyeCross');
+            } else {
+                document.getElementById('password').type = "password";
+                document.querySelector('.forgetPassword').classList.remove('showPassEyeCross');
+            }
+        })
+    </script>
+
 </body>
 </html>
