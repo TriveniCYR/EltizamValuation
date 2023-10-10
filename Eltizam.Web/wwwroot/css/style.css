@@ -39,6 +39,10 @@ footer {
     margin: 0 !important;
 }
 
+.mr-12 {
+    margin-right: 12px !important;
+}
+
 .p-0 {
     padding: 0 !important;
 }
@@ -87,7 +91,7 @@ footer {
 }
 
 .text-center {
-    text-align: center;
+    text-align: center !important;
 }
 
 .text-right {
@@ -129,7 +133,7 @@ footer {
 }
 /* login page css starts here */
 .loginContainer {
-    background: url(.../assets/login-frame.png) no-repeat bottom;
+    background: url(../assets/login-frame.png) no-repeat bottom;
     width: 100%;
     text-align: center;
     background-size: contain;
@@ -202,46 +206,59 @@ footer {
             cursor: pointer;
         }
 
-        .loginContainer form .forgetPassword {
-            color: var(--blue);
-            position: absolute;
-            right: 0;
-            top: -16px;
-            cursor: pointer;
-        }
+.showPassEyeCross::after {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    background: grey;
+    height: 1px;
+    width: 25px;
+    right: 17px;
+    top: 49px;
+    transform: rotate(145deg);
+}
 
-        .loginContainer form .checkbox {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            cursor: pointer;
-        }
+.loginContainer form .forgetPassword {
+    color: var(--blue);
+    position: absolute;
+    right: 0;
+    top: -16px;
+    cursor: pointer;
+}
 
-            .loginContainer form .checkbox input {
-                width: auto;
-                margin: 0 5px 0 0;
-                cursor: pointer;
-            }
+.loginContainer form .checkbox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
 
-        .loginContainer form button {
-            padding: 10.39px 0 12.21px 0;
-            border-radius: 8px;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 120%;
-            border: none;
-            cursor: pointer;
-            margin-top: 16px;
-            background: transparent;
-            color: var(--black);
-        }
+    .loginContainer form .checkbox input {
+        width: auto;
+        margin: 0 5px 0 0;
+        cursor: pointer;
+    }
 
-            .loginContainer form button.blueBtn {
-                background-color: var(--blue);
-                color: var(--white);
-                width: 100%;
-            }
+.loginContainer form button {
+    padding: 10.39px 0 12.21px 0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    border: none;
+    cursor: pointer;
+    margin-top: 16px;
+    background: transparent;
+    color: var(--black);
+}
+
+    .loginContainer form button.blueBtn {
+        background-color: var(--blue);
+        color: var(--white);
+        width: 100%;
+    }
 
 .greenToaste {
     padding: 16px;
@@ -286,6 +303,7 @@ footer {
 .sideMenu {
     background-color: var(--blue);
     height: 100%;
+    padding-top: 8px;
 }
 
 .sideNavDashboard .sideMenu p {
@@ -312,6 +330,16 @@ footer {
         color: var(--white);
         position: relative;
     }
+
+        .sideNavDashboard .sideMenu ul li a {
+            color: var(--white);
+            text-decoration: none;
+        }
+            /* menue css*/
+            .sideNavDashboard .sideMenu ul li a:hover, .sideNavDashboard .sideMenu ul li.activeSideMenu a {
+                color: var(--blue);
+                text-decoration: none;
+            }
 
         .sideNavDashboard .sideMenu ul li div p {
             font-size: 16px;
@@ -373,7 +401,7 @@ footer {
     }
 
     .showMoreNav li {
-        background-color: var(--white);
+        background-color: var(--grey);
         color: var(--blue) !important;
         padding-left: 37px !important;
     }
@@ -389,7 +417,7 @@ footer {
 .sideNavDashboard .sideMenu li.activeSideMenu p {
     color: var(--blue);
     font-weight: 700;
-    background: var(--white, linear-gradient(90deg, rgba(29, 63, 138, 0.10) 72.1%, rgba(29, 63, 138, 0.00) 138.85%));
+    background: var(--grey, linear-gradient(90deg, rgba(29, 63, 138, 0.10) 72.1%, rgba(29, 63, 138, 0.00) 138.85%));
 }
 
     .sideNavDashboard .sideMenu ul li:hover .showIcon,
@@ -413,7 +441,7 @@ footer {
 }
 
 header {
-    padding: 19px 24px 19px 29px;
+    padding: 0.6em 2em;
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.07);
     background-color: var(--white);
 }
@@ -512,7 +540,7 @@ main {
         margin-left: 20px;
     }
 
-.buttonArea button {
+.buttonArea button, .buttonArea .formAbtn {
     border: none;
     background: none;
     border-radius: 4px;
@@ -686,10 +714,13 @@ table .userPic {
     background: white;
     box-shadow: 0px 0px 12px 0px #00000012;
     z-index: 1;
-    right: 5px;
+    right: 0;
     top: 30px;
     border-radius: 5px;
     display: none;
+    left: 0;
+    margin: auto;
+    width: 103px;
 }
 
     .activeDots:hover + .actionItem, .actionItem:hover {
@@ -768,13 +799,15 @@ table .userPic {
         justify-content: space-between;
     }
 
-    .inputSearchs form .flex label {
+    .inputSearchs form .flex label,
+    .inputSearchs .tabSection .flex label {
         display: flex;
         flex-direction: column;
         width: 24%;
     }
 
-        .inputSearchs form .flex label + label {
+        .inputSearchs form .flex label + label,
+        .inputSearchs .tabSection .flex label + label {
             margin-left: 10px;
         }
 
@@ -792,7 +825,9 @@ table .userPic {
 }
 
 .inputSearchs form input,
-.inputSearchs form select {
+.inputSearchs form select,
+.inputSearchs .tabSection input,
+.inputSearchs .tabSection select {
     border: 1px solid var(--grey);
     border-radius: 4px;
     padding: 8px 10px;
@@ -801,7 +836,8 @@ table .userPic {
 }
 
 .inputSearchs button.blueBtn {
-    padding: 10.4px 79px;
+    padding: 10.4px;
+    width: 200px;
     border-radius: 8px;
     font-size: 16px;
     font-style: normal;
@@ -870,11 +906,15 @@ table .userPic {
         padding: 11px 0;
     }
 
-    .popup-btn .redBtn {
-        background-color: var(--error);
-        border: 1px solid var(--error);
-        color: var(--white);
-    }
+.greyBtn {
+    background-color: var(--grey) !important;
+}
+
+.popup-btn .redBtn {
+    background-color: var(--error);
+    border: 1px solid var(--error);
+    color: var(--white);
+}
 /* popup model for import file  */
 .importBox .file {
     display: none;
@@ -950,6 +990,7 @@ img#closePopup {
     right: 20px;
     top: 12px;
     cursor: pointer;
+    background-color: var(--grey);
 }
 
 /* add resource css  */
@@ -1040,7 +1081,7 @@ img#closePopup {
         content: 'Inactive';
     }
 
-    .bodyContent button {
+    .bodyContent button, .bodyContent a {
         width: 200px;
     }
 
@@ -1142,7 +1183,7 @@ img#closePopup {
 }
 
     .profileHead .dashboardTitle {
-        padding: 17.5px 37px 18.06px 19px;
+        padding: 17.5px 37px 18.06px 33px;
     }
 
 .profileTabSection {
@@ -1187,15 +1228,18 @@ img#closePopup {
     background-color: white;
 }
 
-    .tabcontent .inputSearchs form .flex label {
+    .tabcontent .inputSearchs form .flex label,
+    .tabcontent .inputSearchs .tabSection .flex label {
         width: 48.5%;
     }
 
-    .tabcontent .inputSearchs form .flex.threeBox label {
+    .tabcontent .inputSearchs form .flex.threeBox label,
+    .tabcontent .inputSearchs .tabSection .flex.flex.threeBox label {
         width: 31.5%;
     }
 
-    .tabcontent .inputSearchs form .flex.fourBox label {
+    .tabcontent .inputSearchs form .flex.fourBox label,
+    .tabcontent .inputSearchs .tabSection .flex.fourBox label {
         width: 23.5%;
     }
 
@@ -1362,6 +1406,143 @@ table.popupTable {
         text-align: left;
     }
 
+.profileTabSection.addProperty {
+    margin-left: 33px;
+}
+
+.blueHeading {
+    background-color: #EBF5FF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+    padding: 15px 12px;
+}
+
+.addProperty .tabcontent {
+    padding: 0;
+}
+
+.checkboxBtn {
+    border: 1px solid var(--grey);
+    border-radius: 4px;
+    padding: 15px 10px;
+    outline: none;
+    flex-direction: initial !important;
+    justify-content: flex-start !important;
+    align-items: center;
+}
+
+.inputSearchs form .checkboxBtn p {
+    font-size: 14px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 4px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    padding-left: 35px;
+}
+
+.inputSearchs form .checkboxBtn input {
+    border: 1px solid var(--title);
+}
+
+    .inputSearchs form .checkboxBtn input:checked + p {
+        background-color: var(--blue);
+        color: white;
+    }
+
+.checkboxBtn input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    background-color: var(--white);
+    border: 1px solid var(--white);
+    margin: 0;
+    cursor: pointer;
+    z-index: 1;
+    padding: 0;
+}
+
+    .checkboxBtn input[type="checkbox"]:checked {
+        background-color: #fff;
+    }
+
+        .checkboxBtn input[type="checkbox"]:checked::before {
+            content: "✔";
+            display: inline-block;
+            font-size: 12px;
+            line-height: 16px;
+            color: var(--blue);
+            margin-left: 3px;
+            font-weight: bold;
+        }
+
+
+.blueBtn .whiteAtag {
+    color: white;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+/*css for rolemaster*/
+
+label.roleswitch .label-switch {
+    position: relative;
+    left: -41px;
+    top: 41px;
+}
+
+
+label.roleswitch {
+    display: flex;
+    margin-left: 20px;
+}
+
+.isActive input {
+    margin-right: 8px;
+}
+
+.isActive {
+    position: relative;
+    top: 40px;
+    left: 30px;
+}
+
+
+.roleswitch .info-text:before {
+    left: -105px;
+    position: absolute;
+    top: 42px;
+}
+
+.page-item.active .page-link {
+    background-color: var(--blue);
+    border-color: var(--blue);
+}
+
+.page-link {
+    color: var(--black);
+    border-color: var(--blue);
+}
+
+.page-item.disabled .page-link {
+    border-color: var(--blue);
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    padding: 0;
+    position: relative;
+    top: 33px;
+}
+
 
 @media screen and (max-width: 768px) {
     table {
@@ -1411,17 +1592,19 @@ table.popupTable {
         position: absolute;
     }
 
+
     footer {
         width: 100%;
         position: relative;
         margin-top: 20px;
     }
 
-    .buttonArea button {
+    .buttonArea button, .buttonArea .formAbtn {
         width: 100%;
         text-align: center;
         display: initial;
         position: relative;
+        text-decoration: none;
     }
 
         .buttonArea button img {

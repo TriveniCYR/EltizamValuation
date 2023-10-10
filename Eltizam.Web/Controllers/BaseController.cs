@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Eltizam.Web.Filters;
 
-namespace EmcureNPD.Web.Controllers
+namespace Eltizam.Web.Controllers
 {
     [CustomAuthorizeAttribute]
     //[ExceptionsFilter]

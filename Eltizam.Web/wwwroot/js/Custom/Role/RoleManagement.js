@@ -20,9 +20,11 @@ function CleareRoleFields() {
 
 //#region Delete Role
 function ConfirmationRole(id) {
+    alert("hi");
     $('#DeleteRoleModel #RoleID').val(id);
 }
 function DeleteRole() {
+    alert("hi");
     var tempInAtiveID = $('#DeleteRoleModel #RoleID').val();
     ajaxServiceMethod($('#hdnBaseURL').val() + DeleteRoleByIdUrl + "/" + tempInAtiveID, 'POST', DeleteRoleByIdSuccess, DeleteRoleByIdError);
 }

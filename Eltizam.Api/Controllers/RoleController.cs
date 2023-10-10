@@ -130,6 +130,24 @@ namespace Eltizam.API.Controllers.Masters
             }
         }
 
+        [HttpGet, Route("RoleSearch")]
+        public async Task<IActionResult> RoleSearch(string searchQuery)
+        {
+            try
+            {
+                var oRoleList = await _MasterRoleService.RoleSearch(searchQuery);
+                if (oRoleList != null)
+                    return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         [HttpGet, Route("GetAllActiveRole")]
         public async Task<IActionResult> GetAllActiveRole()
         {

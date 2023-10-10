@@ -111,11 +111,30 @@ namespace Eltizam.Business.Core.Implementation
             return _mapperFactory.GetList<MasterRole, MasterRoleEntity>(await _repository.GetAllAsync());
         }
 
+
+
         public async Task<List<MasterRoleEntity>> GetActiveRole()
         {
             var ActiveRole = await _repository.GetAllAsync(x => x.IsActive == true && x.IsDeleted == false);
             return _mapperFactory.GetList<MasterRole, MasterRoleEntity>(ActiveRole.ToList());
         }
+
+        public async Task<List<MasterRoleEntity>> RoleSearch(string searchQuery)
+        {
+            // Get all roles from the repository
+            var allRoles = await _repository.GetAllAsync();
+
+            // Apply the search filter if a searchQuery is provided
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                searchQuery = searchQuery.Trim().ToLower(); // Convert the search query to lowercase for case-insensitive search
+                allRoles = allRoles.Where(role => role.RoleName.ToLower().Contains(searchQuery)).ToList();
+            }
+
+            // Map the filtered roles to MasterRoleEntity and return the result
+            return _mapperFactory.GetList<MasterRole, MasterRoleEntity>(allRoles);
+        }
+
 
         public async Task<MasterRoleEntity> GetById(int id)
         {
