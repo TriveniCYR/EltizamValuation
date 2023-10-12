@@ -27,7 +27,7 @@
 
         @if (isEdit)
         {
-            <input type = "hidden" asp -for= "RoleId" />
+            <input type="hidden" asp -for="RoleId" />
             PageHeading = MasterLocalizer["Update Department"].Value;
         }
         else
@@ -40,51 +40,32 @@
             </div>
             <div class="bodyContent">
                 <div class="inputSearchs">
-                  @*   <form>
-                        
-                            @Html.LabelFor(model => model.Department, new { @class = "control-label" })
-                            <span class="text-danger">*</span>
-                            @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Department Name"] } })
-                            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
-                            @{
-                                bool isActive = Model.IsActive == 1; // Convert 1 to true, any other value to false
-                            }
+                    <form>
+                        <div class="flex mb-28">
+                            <label for="" class="w-50">
+                                @Html.LabelFor(model => model.Department, new { @class = "control-label" })
+                                <span class="text-danger">*</span>
+                                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Department Name"] } })
+                                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                            </label>
+                            <label for="" class="w-50 roleswitch">
+                                Status
+                                @{
+                                    bool isActive = Model.IsActive == 1; // Convert 1 to true, any other value to false
+                                }
 
-                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required />
-                            <label class="label-switch" for="addLocation"></label>
-                       
+                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text"></span>
+                            </label>
+
+                        </div>
+
                         <div class="text-center buttonArea">
-                          
+
                             <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
                             <a class="greyBtn lineBtn formAbtn" asp-action="Department">@SharedLocalizer["Cancel"]</a>
                         </div>
-                    </form> *@
-                    <form>
-                    <div class="flex mb-28">
-                        <label for="" class="w-50">
-                            @Html.LabelFor(model => model.Department, new { @class = "control-label" })
-                            <span class="text-danger">*</span>
-                            @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Department Name"] } })
-                            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
-                        </label>
-                        <label for="" class="w-50 roleswitch">
-                            Status
-                            @{
-                                bool isActive = Model.IsActive == 1; // Convert 1 to true, any other value to false
-                            }
-
-                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required />
-                            <label class="label-switch" for="addLocation"></label>
-                            <span class="info-text"></span>
-                        </label>
-                                              
-                    </div>
-
-                    <div class="text-center buttonArea">
-
-                        <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
-                        <a class="greyBtn lineBtn formAbtn" asp-action="Department">@SharedLocalizer["Cancel"]</a>
-                    </div>
                     </form>
 
                 </div>
