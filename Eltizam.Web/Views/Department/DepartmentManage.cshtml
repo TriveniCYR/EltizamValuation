@@ -42,6 +42,7 @@
                 <div class="inputSearchs">
                     <form>
                         <div class="flex mb-28">
+                            @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                             <label for="" class="w-50">
                                 @Html.LabelFor(model => model.Department, new { @class = "control-label" })
                                 <span class="text-danger">*</span>

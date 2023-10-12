@@ -39,7 +39,7 @@
             <div class="bodyContent">
                 <div class="inputSearchs">
                     <form>
-
+                        @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                         <div class="flex mb-28">
                             <label for="" class="w-50">
                             @Html.LabelFor(model => model.Designation, new { @class = "control-label" })

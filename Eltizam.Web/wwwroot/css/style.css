@@ -70,6 +70,10 @@ footer {
     justify-content: center;
 }
 
+.justify-end {
+    justify-content: end !important;
+}
+
 .flex-start {
     justify-content: flex-start !important;
 }
