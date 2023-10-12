@@ -13,7 +13,9 @@ namespace Eltizam.Business.Core.Interface
     {
         Task<DBOperation> Upsert(MasterDepartmentEntity entityUser);
         Task<MasterDepartmentEntity> GetById(int id);
-        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
+        //Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
+        Task<List<MasterDepartmentEntity>> GetAll();
+
         Task<DBOperation> Delete(int id);
         Task<List<MasterDepartmentEntity>> GetDepartmentList();
     }

@@ -52,6 +52,21 @@ namespace Eltizam.Web.Helpers
 
         #endregion User
 
+        #region Designation
+        public static string UpsertDesignation = "api/Designation/Upsert";
+        public static string GetAllDesignation = "api/Designation/GetAll";
+        public static string GetesignationById = "api/Designation/GetById";
+        public static string DeleteesignationById = "api/Designation/Delete";
+        #endregion Designation
+
+        #region Department
+        public static string UpsertDepartment = "api/Department/Upsert";
+        public static string GetAllDepartment = "api/Department/GetAll";
+        public static string GetDepartmentById = "api/Department/GetById";
+        public static string DeleteDepartmentById = "api/Department/Delete";
+
+        #endregion Department
+
         #region ClientType
 
         public static string GetSearchClientType = "api/MasterClientType/GetAllClientType";

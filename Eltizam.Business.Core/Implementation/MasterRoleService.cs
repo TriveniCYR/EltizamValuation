@@ -4,8 +4,11 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Utility;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
@@ -111,6 +114,35 @@ namespace Eltizam.Business.Core.Implementation
             return _mapperFactory.GetList<MasterRole, MasterRoleEntity>(await _repository.GetAllAsync());
         }
 
+        //public async Task<DataTableResponseModel> GetAll(RoleSearchModel model, PaginationModel paging)
+        //{
+        //    var _dbParams = new[]
+        //     {
+
+        //         //new DbParameter("RoleName", model.RoleName, SqlDbType.VarChar),
+        //         //  new DbParameter("PageSize", paging.pageSize, SqlDbType.Int),
+        //         // new DbParameter("PageNumber", paging.pageNo, SqlDbType.Int),
+        //         // new DbParameter("OrderClause", paging.sortName, SqlDbType.VarChar),
+        //         //new DbParameter("ReverseSort", 1, SqlDbType.Int)
+
+        //         new DbParameter("RoleName", "master", SqlDbType.VarChar),
+        //           new DbParameter("PageSize",1, SqlDbType.Int),
+        //          new DbParameter("PageNumber",1, SqlDbType.Int),
+        //          new DbParameter("OrderClause", "Id", SqlDbType.VarChar),
+        //         new DbParameter("ReverseSort", 1, SqlDbType.Int)
+        //     };
+
+        //    int _count = 0;
+        //    var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterRoleEntity>(ProcedureNameCall.usp_Role_SearchAllList,
+
+        //     DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+
+
+        //    DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(0, _count, lstStf.Count, lstStf);
+
+        //    return oDataTableResponseModel;
+        //}
+
 
 
         public async Task<List<MasterRoleEntity>> GetActiveRole()
@@ -138,13 +170,22 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<MasterRoleEntity> GetById(int id)
         {
-            MasterRoleEntity _roleEntity = _mapperFactory.Get<MasterRole, MasterRoleEntity>(await _repository.GetAsync(id));
-            
+            try
+            {
+                MasterRoleEntity _roleEntity = _mapperFactory.Get<MasterRole, MasterRoleEntity>(await _repository.GetAsync(id));
+
                 var IsUserExist = _Userrepository.GetAllQuery().Where(x => x.RoleId == _roleEntity.RoleId).ToList();
-                if (IsUserExist !=null && IsUserExist.Count > 0)
-                _roleEntity.IsUserAssigned = true;
-           
-            return _roleEntity;
+                if (IsUserExist != null && IsUserExist.Count > 0)
+                    _roleEntity.IsUserAssigned = true;
+
+                return _roleEntity;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
     }
 }

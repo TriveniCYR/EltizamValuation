@@ -56,15 +56,32 @@ namespace EltizamValuation.Api.Controllers
         /// <response code="500">Internal Server</response>
 
         // get all records from master designation with sorting and pagination 
-        [HttpPost, Route("GetAll")]
-        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
+        //[HttpPost, Route("GetAll")]
+        //public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
+        //{
+        //    try
+        //    {
+        //        return _ObjectResponse.CreateData(await _DesignationService.GetAll(model), (Int32)HttpStatusCode.OK);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
+        [HttpGet, Route("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                return _ObjectResponse.CreateData(await _DesignationService.GetAll(model), (Int32)HttpStatusCode.OK);
+                var oRoleList = await _DesignationService.GetAll();
+                if (oRoleList != null)
+                    return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
             }
             catch (Exception ex)
             {
+                await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }

@@ -11,28 +11,28 @@
     }
 });
 function SetupRoleTable() {
-    StaticDataTable("#RoleTable");
+    StaticDataTable("#DepartmentTable");
 }
 
 function CleareRoleFields() {
-    $('#DeleteRoleModel #RoleID').val("0");
+    $('#DeleteDepartmentModel #ID').val("0");
 }
 
 //#region Delete Role
 function ConfirmationRole(id) {
-  
-    $('#DeleteRoleModel #RoleID').val(id);
+   
+    $('#DeleteDepartmentModel #ID').val(id);
 }
 function DeleteRole() {
-  
-    var tempInAtiveID = $('#DeleteRoleModel #RoleID').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteRoleByIdUrl + "/" + tempInAtiveID, 'POST', DeleteRoleByIdSuccess, DeleteRoleByIdError);
+   
+    var tempInAtiveID = $('#DeleteDepartmentModel #ID').val();
+    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteDepartmenteByIdUrl + "/" + tempInAtiveID, 'POST', DeleteRoleByIdSuccess, DeleteRoleByIdError);
 }
 function DeleteRoleByIdSuccess(data) {
     try {
         if (data._Success === true) {
             if (data._Message == "UserAssigned") {
-                toastr.error("Can not Delete Role, User assigned to this Role");
+                toastr.error("Can not Delete Department, User assigned to this Department");
             }
             else {
             CleareRoleFields();

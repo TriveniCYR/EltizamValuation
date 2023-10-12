@@ -58,15 +58,32 @@ namespace EltizamValuation.Api.Controllers
         
         // get all records from master department with sorting and pagination 
 
-        [HttpPost, Route("GetAll")]
-        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
+        //[HttpPost, Route("GetAll")]
+        //public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
+        //{
+        //    try
+        //    {
+        //        return _ObjectResponse.CreateData(await _DepartmentService.GetAll(model), (Int32)HttpStatusCode.OK);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
+        [HttpGet, Route("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                return _ObjectResponse.CreateData(await _DepartmentService.GetAll(model), (Int32)HttpStatusCode.OK);
+                var oRoleList = await _DepartmentService.GetAll();
+                if (oRoleList != null)
+                    return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
             }
             catch (Exception ex)
             {
+                await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
