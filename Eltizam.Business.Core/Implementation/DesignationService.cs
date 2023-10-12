@@ -42,28 +42,33 @@ namespace Eltizam.Business.Core.Implementation
             _helper = helper;
         }
 
-        // get all recoreds from Designation list with sorting and pagination
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
+        public async Task<List<MasterDesignationEntity>> GetAll()
         {
-            var _dbParams = new[]
-             {
-                 new DbParameter("DesignationId", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "CityName", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
-
-            int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterDesignationEntity>(ProcedureNameCall.usp_Designation_SearchAllList,
-
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
-
-
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf);
-
-            return oDataTableResponseModel;
+            return _mapperFactory.GetList<MasterDesignation, MasterDesignationEntity>(await _repository.GetAllAsync());
         }
+
+        // get all recoreds from Designation list with sorting and pagination
+        //public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
+        //{
+        //    var _dbParams = new[]
+        //     {
+        //         new DbParameter("DesignationId", 0,SqlDbType.Int),
+        //         new DbParameter("PageSize", model.length, SqlDbType.Int),
+        //         new DbParameter("PageNumber", model.start, SqlDbType.Int),
+        //         new DbParameter("OrderClause", "CityName", SqlDbType.VarChar),
+        //         new DbParameter("ReverseSort", 1, SqlDbType.Int)
+        //     };
+
+        //    int _count = 0;
+        //    var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterDesignationEntity>(ProcedureNameCall.usp_Designation_SearchAllList,
+
+        //     DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+
+
+        //    DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf);
+
+        //    return oDataTableResponseModel;
+        //}
 
         // get master designation detail by id
         public async Task<MasterDesignationEntity> GetById(int id)

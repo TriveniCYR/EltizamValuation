@@ -1362,7 +1362,7 @@ img#closePopup {
     .label-switch::after {
         position: absolute;
         left: 0;
-        top: -20%;
+        top: -4px;
         width: 1.5em !important;
         height: 1.5em;
         border: 1px solid #757575;
@@ -1503,7 +1503,7 @@ label.roleswitch .label-switch {
 
 label.roleswitch {
     display: flex;
-    margin-left: 20px;
+   
 }
 
 .isActive input {

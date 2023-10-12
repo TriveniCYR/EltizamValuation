@@ -42,26 +42,31 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         // get all recoreds from Department list with sorting and pagination
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
+        //public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
+        //{
+        //    var _dbParams = new[]
+        //     {
+        //         new DbParameter("DepartmentId", 0,SqlDbType.Int),
+        //         new DbParameter("PageSize", model.length, SqlDbType.Int),
+        //         new DbParameter("PageNumber", model.start, SqlDbType.Int),
+        //         new DbParameter("OrderClause", "CityName", SqlDbType.VarChar),
+        //         new DbParameter("ReverseSort", 1, SqlDbType.Int)
+        //     };
+
+        //    int _count = 0;
+        //    var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterDepartmentEntity>(ProcedureNameCall.usp_Department_SearchAllList,
+
+        //     DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+
+
+        //    DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf);
+
+        //    return oDataTableResponseModel;
+        //}
+
+        public async Task<List<MasterDepartmentEntity>> GetAll()
         {
-            var _dbParams = new[]
-             {
-                 new DbParameter("DepartmentId", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "CityName", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
-
-            int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterDepartmentEntity>(ProcedureNameCall.usp_Department_SearchAllList,
-
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
-
-
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf);
-
-            return oDataTableResponseModel;
+            return _mapperFactory.GetList<MasterDepartment, MasterDepartmentEntity>(await _repository.GetAllAsync());
         }
         public async Task<MasterDepartmentEntity> GetById(int id)
         {

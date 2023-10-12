@@ -11,21 +11,21 @@
     }
 });
 function SetupRoleTable() {
-    StaticDataTable("#RoleTable");
+    StaticDataTable("#DesignationTable");
 }
 
 function CleareRoleFields() {
-    $('#DeleteRoleModel #RoleID').val("0");
+    $('#DeleteDesignationModel #ID').val("0");
 }
 
 //#region Delete Role
 function ConfirmationRole(id) {
-  
-    $('#DeleteRoleModel #RoleID').val(id);
+   
+    $('#DeleteDesignationModel #ID').val(id);
 }
 function DeleteRole() {
-  
-    var tempInAtiveID = $('#DeleteRoleModel #RoleID').val();
+   
+    var tempInAtiveID = $('#DeleteRoleModel #ID').val();
     ajaxServiceMethod($('#hdnBaseURL').val() + DeleteRoleByIdUrl + "/" + tempInAtiveID, 'POST', DeleteRoleByIdSuccess, DeleteRoleByIdError);
 }
 function DeleteRoleByIdSuccess(data) {
