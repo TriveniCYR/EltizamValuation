@@ -11,7 +11,7 @@ namespace Eltizam.Business.Core.Interface
     public interface IMaster_ClientTypeService
     {
         Task<Master_ClientTypeModel> GetMasterClientTypeByIdAsync(int id);
-        Task<DataTableResponseModel> GetAll(CommonSearchModel model, PaginationModel paging);
+        Task<List<Master_ClientTypeModel>> GetAll();
         Task<DBOperation> AddUpdateMasterClientType(Master_ClientTypeModel entityqualification);
         Task<DBOperation> DeleteClientType(int id);
     }

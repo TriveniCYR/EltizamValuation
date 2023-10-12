@@ -169,7 +169,7 @@
     });
 
     function BindDepartment() {
-        debugger
+         
         var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
         var Department = $("#DepartmentId");
         $.ajax({
@@ -177,7 +177,7 @@
             url: $('#hdnBaseURL').val() + DepartmentList,
             "datatype": "json",
             success: function (response) {
-                debugger;
+                 ;
                 Department.empty().append('<option selected="selected" value="0">Please select</option>');
                 for (var i = 0; i < response.length; i++) {
                     Department.append($("<option></option>").val(response[i].id).html(response[i].department));
@@ -193,7 +193,7 @@
         });
     }
     function BindDesignation() {
-        debugger
+         
         var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
         var Designation = $("#DesignationId");
         $.ajax({
@@ -201,7 +201,7 @@
             url: $('#hdnBaseURL').val() + DesignationList,
             "datatype": "json",
             success: function (response) {
-                debugger;
+                 ;
                 Designation.empty().append('<option selected="selected" value="0">Please select</option>');
                 for (var i = 0; i < response.length; i++) {
                     Designation.append($("<option></option>").val(response[i].id).html(response[i].designation));
@@ -218,7 +218,7 @@
     }
 
     function BindRole() {
-        debugger
+         
         var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
         var Role = $("#RoleId");
         $.ajax({
@@ -226,7 +226,7 @@
             url: $('#hdnBaseURL').val() + RoleList,
             "datatype": "json",
             success: function (response) {
-                debugger;
+                 ;
                 Role.empty().append('<option selected="selected" value="0">Please select</option>');
                 for (var i = 0; i < response.length; i++) {
                     Role.append($("<option></option>").val(response[i].id).html(response[i].roleName));
@@ -243,7 +243,7 @@
     }
 
     function BindResourceType() {
-        debugger
+         
         var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
         var ResourceType = $("#ResourceId");
         $.ajax({
@@ -251,7 +251,7 @@
             url: $('#hdnBaseURL').val() + ResourceTypeList,
             "datatype": "json",
             success: function (response) {
-                debugger;
+                 ;
                 ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
                 for (var i = 0; i < response.length; i++) {
                     ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));

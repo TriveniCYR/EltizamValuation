@@ -13,7 +13,7 @@ namespace Eltizam.Data.DataAccess.Entity
 
         public int Id { get; set; }
         public string ClientType { get; set; } = null!;
-        public int? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }

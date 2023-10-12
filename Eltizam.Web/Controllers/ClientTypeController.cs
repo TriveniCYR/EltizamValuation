@@ -78,7 +78,7 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
-        [HttpPost]
+        [HttpPost,Route("ClientTypeManage")]
         public IActionResult ClientTypeManage(int id, Master_ClientTypeModel masterUser)
         {
             try
@@ -86,26 +86,26 @@ namespace EltizamValuation.Web.Controllers
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertUser, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterUser))).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertClientType, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterUser))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
-                    return RedirectToAction(nameof(User));
+                    return RedirectToAction(nameof(ClientType));
                 }
                 else
                 {
                     TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
-                    return RedirectToAction("ClientTypeManage", new { id = masterUser.Id });
+                    return RedirectToAction("ClientType");
                 }
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-                return RedirectToAction("ClientTypeManage", new { Id = masterUser.Id });
+                return RedirectToAction("ClientType");
             }
         }
     }

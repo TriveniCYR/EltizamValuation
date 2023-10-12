@@ -36,7 +36,7 @@
                                 <img src="~/assets/search.svg" alt="search">
                                 <input type="text" id="txtUserName" placeholder="Search for System" class="searchInput">
                             </div>
-                            <button class="normalSearch" onclick="UserList(0)">Search</button>
+                            <button class="normalSearch" onclick="UserList(1,0)">Search</button>
                         </label>
                         <div class="accordion">
                             <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
@@ -77,7 +77,7 @@
                                         </label>*@
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="blueBtn" onclick="UserList(1)">Search</button>
+                                        <button type="submit" class="blueBtn" onclick="UserList(1,1)">Search</button>
                                     </div>
                                 </form>
                             </div>
@@ -127,6 +127,18 @@
                         </tbody>
                     </table>
                 </div>
+            <div class="flex justify-between align-item-center mobile_flexColumn">
+                <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
+                <div class="flex justify-between align-item-center pagination">
+                    <p>Previous</p>
+                    <ul class="flex justify-between">
+                        <li class="active">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                    </ul>
+                    <p>Next</p>
+                </div>
+            </div>
             </main>
             <footer class="flex justify-between">
                 <p>2023 © Eltizam.</p>
@@ -134,31 +146,20 @@
             </footer>
 
             <!-- popup delete model -->
-        <div id="DeleteResourceModel" class="modal themeModal " role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.Label(@SharedLocalizer["DeleteConfirm"])
-                                    </div>
-                                </div>
-                            </div>
-                            @Html.Hidden("RoleID")
-                            <div class="card-footer text-center">
-                                <button type="button" onclick="DeleteReource()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
-                                <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
-                            </div>
+        <div class="popup-overlay" id="popup-delete-overlay">
+            <div class="popup">
+                <div class="content text-center">
+                    <div class="popup-head">Delete User</div>
+                    <div class="popup-action">
+                        <p>Are you sure you want to delete?</p>
+                        <div class="buttonArea popup-btn">
+                            <button id="cancelDeleteUser">Cancel</button>
+                            <button class="redBtn">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
             <!-- popup import model -->
             <div class="popup-overlay" id="popup-import-overlay">
@@ -195,7 +196,6 @@
     <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
     <input type="hidden" id="hdnWebBaseURL" />
     <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-    <script src="~/js/custom.js"></script>
     <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
@@ -220,7 +220,7 @@
             }
         }
 
-        debugger
+         
         //#region Setup API Url
         var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
         //#region Static Messae Init
@@ -238,17 +238,19 @@
         //#endregion
 
         $(document).ready(function () {
-            debugger
+             
             BindDepartment();
             BindDesignation();
             BindRole();
             BindResourceType();
-            UserList(0);
+            UserList(1,0);
         });
-        function UserList(tabId) {
+        function UserList(pageNo,tabId) {
             var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
             var search;
-            debugger
+            var pageSize = 8;
+            var pageNo = 1;
+             
             if (tabId == 0) {
                 search = {
                     'userName': $("#txtUserName").val(),
@@ -268,8 +270,8 @@
                 }
             }
             var paging = {
-                'pageNo': 1,
-                'pageSize': 10,
+                'pageNo': pageNo,
+                'pageSize': pageSize,
                 'sortName': 'Id',
                 'sortType': 'ASC'
             }
@@ -277,14 +279,14 @@
                 'paging': paging,
                 'search': search
             }
-            debugger
+
             $.ajax({
                 "url": $('#hdnBaseURL').val() + AllUser,
                 "type": "POST",
                 "data": data1,
                 "datatype": "json",
                 success: function (response) {
-                    debugger
+                     
                     var dt = response;
                     $(".social-list").empty();
                     var r = "";
@@ -298,13 +300,61 @@
                         r += "      <td> YES</td>";
                         r += "      <td class='position-relative'> <img src='../assets/dots-vertical.svg' alt='dots-vertical' class='activeDots' />";
                         r += "      <div class='actionItem'> <ul>";
-                        r += "     <li><a title='Delete' data-toggle='modal' data-target='#DeleteResourceModel' data-backdrop='static' data-keyboard='false' onclick='ConfirmationResource('" + dt.data[i].id + "'); return false;> <img src='../assets/view.svg' alt='view'/> View  </a> </li> ";
                         r += "     <li> <a href='/Resource/ResourceManage?id=" + dt.data[i].id + "'><img src='../assets/edit.svg' alt = 'edit' /> Edit </a></li> ";
-                        r += "      <li class='delete''> <img src='../assets/trash.svg' alt='trash'/> Delete   </li> ";
+                        r += "      <li title='View' class='view'> <a href='/Resource/ResourceManage?id=" + dt.data[i].id + "'><img src='../assets/view.svg' alt='trash'/> View  </a> </li> ";
+                        r += "     <li><a  data-toggle='modal' data-target='#DeleteResourceModel' data-backdrop='static' data-keyboard='false' onclick='ConfirmationResource('" + dt.data[i].id + "'); return false;> <img src='../assets/trash.svg' alt='Delete'/> Delete  </a> </li> ";
                         r += "      </ul> </div> </td>";
                         r += " </tr>";
                     }
                     $(".social-list").append(r);
+                     
+                    var total = dt.recordsTotal;
+                    var pages;
+                    if(total < pageSize)
+                    {
+                        pages = 1;
+                    }
+                    else{
+                        pages = Math.floor(total / pageSize);
+                        pages = ((total % pageSize) > 0) ? pages + 1 : pages;
+                    }
+
+                    var searchCount = ((pageNo - 1) * pageSize) + dt.data.length;
+                    
+                    var pg = "";
+                    //pg += " <div class='flex justify-between align-item-center pagination'> "
+                    //pg += " <p>Showing <b> " + (searchCount - (dt.data.length - 1)) + "</b> to <b>" + searchCount + "</b> of <b>" + total + "</b> results</p> ";
+                        if(pageNo == 1)
+                        {
+                            pg += " <p>Previous</p>";
+                        }
+                        else{
+                        pg += " <button type='button'  onclick='UserList(" + (pageNo - 1) + "," + tabId + ")'> <p>Previous</p> </button> ";
+                        }
+                        pg += " <ul class='flex justify-between'> "
+                        if(pages >= 5)
+                        {
+                            for(var i=1; i <= 5; i++)
+                            {                            
+                                pg += " <li><button type='button'  onclick='UserList("+ i +","+ tabId +")'><p>"+i+"<p> </button></li> "
+                            }                                                    
+                        }
+                        else{
+                            for(var i=1; i <= pages; i++)
+                            {                            
+                                pg += " <li><button type='button'  onclick='UserList("+ i +","+ tabId +")'><p>"+i+"<p> </button></li> "
+                            } 
+                        }
+                        pg += " </ul> "
+                        if (pageNo == pages) {
+                            pg += " <p>Next</p> "
+                        }
+                        else
+                        {
+                        pg += " <button type='button' onclick='UserList(" + (pageNo + 1) + "," + tabId + ")'> <p>Next</p> </button> ";
+                        }
+                        // pg += " </div> "
+                    $(".bind-resource-paging").append(pg);
                     //StaticDataTable("#UserTable");
                 },
                 failure: function (response) {
@@ -318,7 +368,6 @@
 
 
         function BindDepartment() {
-            debugger
             var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
             var Department = $("#DepartmentId");
             $.ajax({
@@ -326,7 +375,6 @@
                 url: $('#hdnBaseURL').val() + DepartmentList,
                 "datatype": "json",
                 success: function (response) {
-                    debugger;
                     Department.empty().append('<option selected="selected" value="0">Please select</option>');
                     for (var i = 0; i < response.length; i++) {
                         Department.append($("<option></option>").val(response[i].id).html(response[i].department));
@@ -342,7 +390,6 @@
             });
         }
         function BindDesignation() {
-            debugger
             var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
             var Designation = $("#DesignationId");
             $.ajax({
@@ -350,7 +397,6 @@
                 url: $('#hdnBaseURL').val() + DesignationList,
                 "datatype": "json",
                 success: function (response) {
-                    debugger;
                     Designation.empty().append('<option selected="selected" value="0">Please select</option>');
                     for (var i = 0; i < response.length; i++) {
                         Designation.append($("<option></option>").val(response[i].id).html(response[i].designation));
@@ -367,7 +413,6 @@
         }
 
         function BindRole() {
-            debugger
             var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
             var Role = $("#RoleId");
             $.ajax({
@@ -375,7 +420,6 @@
                 url: $('#hdnBaseURL').val() + RoleList,
                 "datatype": "json",
                 success: function (response) {
-                    debugger;
                     Role.empty().append('<option selected="selected" value="0">Please select</option>');
                     for (var i = 0; i < response.length; i++) {
                         Role.append($("<option></option>").val(response[i].roleId).html(response[i].roleName));
@@ -392,7 +436,6 @@
         }
 
         function BindResourceType() {
-            debugger
             var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
             var ResourceType = $("#ResourceId");
             $.ajax({
@@ -400,7 +443,6 @@
                 url: $('#hdnBaseURL').val() + ResourceTypeList,
                 "datatype": "json",
                 success: function (response) {
-                    debugger;
                     ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
                     for (var i = 0; i < response.length; i++) {
                         ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));
@@ -417,5 +459,7 @@
         }
 
     </script>
+
+    @*<script src="~/js/custom.js"></script>*@
 </body>
 </html>

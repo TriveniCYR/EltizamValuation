@@ -57,6 +57,7 @@ namespace Eltizam.Web.Helpers
         public static string GetSearchClientType = "api/MasterClientType/GetAllClientType";
         public static string GetClientTypeById = "api/MasterClientType/getById";
         public static string UpsertClientType = "api/MasterClientType/Upsert";
+        public static string DeleteClientType = "api/MasterClientType/DeleteClientType";
 
         #endregion ClientType
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
+using Eltizam.Business.Core.Implementation;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -68,12 +69,16 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpPost, Route("GetAllClientType")]
-        public async Task<IActionResult> GetAllClientType([FromForm] SmartTableParam<CommonSearchModel> model)
+        [HttpGet, Route("GetAllClientType")]
+        public async Task<IActionResult> GetAllClientType()
         {
             try
             {
-                return _ObjectResponse.CreateData(await _clienttypeServices.GetAll(model.Search, model.paging), (Int32)HttpStatusCode.OK);
+                var oRoleList = await _clienttypeServices.GetAll();
+                if (oRoleList != null)
+                    return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
             }
             catch (Exception ex)
             {

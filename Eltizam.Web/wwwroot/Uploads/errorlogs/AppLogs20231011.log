@@ -1,0 +1,1224 @@
+[2023-10-11 15:09:55.094 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at AspNetCoreGeneratedDocument.Views_ClientType_ClientType.ExecuteAsync() in C:\Eltizam\Eltizam.Web\Views\ClientType\ClientType.cshtml:line 67
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 15:16:02.987 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 15:16:03.434 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 15:16:34.343 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 15:16:34.403 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 15:24:23.771 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 15:24:23.852 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 15:24:37.065 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 15:24:37.195 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 15:27:30.228 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 15:27:30.545 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 15:51:54.064 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 15:51:54.984 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 15:53:33.347 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 15:53:33.421 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 15:55:49.106 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 15:55:49.212 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 16:00:59.041 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 16:00:59.157 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 16:02:18.456 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 16:03:39.066 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 16:04:35.119 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 16:04:39.645 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 16:08:16.342 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 16:08:16.447 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 16:10:58.853 +05:30  WRN]  Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.
+[2023-10-11 16:24:38.394 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 16:24:38.862 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 16:26:13.294 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 16:26:13.387 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 16:28:45.346 +05:30  ERR]  The view 'Login' was not found. Searched locations: ["/Views/ClientType/Login.en-US.en-US.cshtml","/Views/ClientType/Login.en.en-US.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en-US.en.cshtml","/Views/ClientType/Login.en.en.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.en-US.cshtml","/Views/ClientType/Login.en.cshtml","/Views/ClientType/Login.cshtml","/Views/Shared/Login.en-US.en-US.cshtml","/Views/Shared/Login.en.en-US.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en-US.en.cshtml","/Views/Shared/Login.en.en.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.en-US.cshtml","/Views/Shared/Login.en.cshtml","/Views/Shared/Login.cshtml","/Pages/Shared/Login.en-US.en-US.cshtml","/Pages/Shared/Login.en.en-US.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en-US.en.cshtml","/Pages/Shared/Login.en.en.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.en-US.cshtml","/Pages/Shared/Login.en.cshtml","/Pages/Shared/Login.cshtml"]
+[2023-10-11 16:28:45.487 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'Login' was not found. The following locations were searched:
+/Views/ClientType/Login.en-US.en-US.cshtml
+/Views/ClientType/Login.en.en-US.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en-US.en.cshtml
+/Views/ClientType/Login.en.en.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.en-US.cshtml
+/Views/ClientType/Login.en.cshtml
+/Views/ClientType/Login.cshtml
+/Views/Shared/Login.en-US.en-US.cshtml
+/Views/Shared/Login.en.en-US.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en-US.en.cshtml
+/Views/Shared/Login.en.en.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.en-US.cshtml
+/Views/Shared/Login.en.cshtml
+/Views/Shared/Login.cshtml
+/Pages/Shared/Login.en-US.en-US.cshtml
+/Pages/Shared/Login.en.en-US.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en-US.en.cshtml
+/Pages/Shared/Login.en.en.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.en-US.cshtml
+/Pages/Shared/Login.en.cshtml
+/Pages/Shared/Login.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 16:48:03.911 +05:30  ERR]  The view 'ClientTypeManage' was not found. Searched locations: ["/Views/ClientType/ClientTypeManage.en-US.en-US.cshtml","/Views/ClientType/ClientTypeManage.en.en-US.cshtml","/Views/ClientType/ClientTypeManage.en-US.cshtml","/Views/ClientType/ClientTypeManage.en-US.en.cshtml","/Views/ClientType/ClientTypeManage.en.en.cshtml","/Views/ClientType/ClientTypeManage.en.cshtml","/Views/ClientType/ClientTypeManage.en-US.cshtml","/Views/ClientType/ClientTypeManage.en.cshtml","/Views/ClientType/ClientTypeManage.cshtml","/Views/Shared/ClientTypeManage.en-US.en-US.cshtml","/Views/Shared/ClientTypeManage.en.en-US.cshtml","/Views/Shared/ClientTypeManage.en-US.cshtml","/Views/Shared/ClientTypeManage.en-US.en.cshtml","/Views/Shared/ClientTypeManage.en.en.cshtml","/Views/Shared/ClientTypeManage.en.cshtml","/Views/Shared/ClientTypeManage.en-US.cshtml","/Views/Shared/ClientTypeManage.en.cshtml","/Views/Shared/ClientTypeManage.cshtml","/Pages/Shared/ClientTypeManage.en-US.en-US.cshtml","/Pages/Shared/ClientTypeManage.en.en-US.cshtml","/Pages/Shared/ClientTypeManage.en-US.cshtml","/Pages/Shared/ClientTypeManage.en-US.en.cshtml","/Pages/Shared/ClientTypeManage.en.en.cshtml","/Pages/Shared/ClientTypeManage.en.cshtml","/Pages/Shared/ClientTypeManage.en-US.cshtml","/Pages/Shared/ClientTypeManage.en.cshtml","/Pages/Shared/ClientTypeManage.cshtml"]
+[2023-10-11 16:48:05.835 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'ClientTypeManage' was not found. The following locations were searched:
+/Views/ClientType/ClientTypeManage.en-US.en-US.cshtml
+/Views/ClientType/ClientTypeManage.en.en-US.cshtml
+/Views/ClientType/ClientTypeManage.en-US.cshtml
+/Views/ClientType/ClientTypeManage.en-US.en.cshtml
+/Views/ClientType/ClientTypeManage.en.en.cshtml
+/Views/ClientType/ClientTypeManage.en.cshtml
+/Views/ClientType/ClientTypeManage.en-US.cshtml
+/Views/ClientType/ClientTypeManage.en.cshtml
+/Views/ClientType/ClientTypeManage.cshtml
+/Views/Shared/ClientTypeManage.en-US.en-US.cshtml
+/Views/Shared/ClientTypeManage.en.en-US.cshtml
+/Views/Shared/ClientTypeManage.en-US.cshtml
+/Views/Shared/ClientTypeManage.en-US.en.cshtml
+/Views/Shared/ClientTypeManage.en.en.cshtml
+/Views/Shared/ClientTypeManage.en.cshtml
+/Views/Shared/ClientTypeManage.en-US.cshtml
+/Views/Shared/ClientTypeManage.en.cshtml
+/Views/Shared/ClientTypeManage.cshtml
+/Pages/Shared/ClientTypeManage.en-US.en-US.cshtml
+/Pages/Shared/ClientTypeManage.en.en-US.cshtml
+/Pages/Shared/ClientTypeManage.en-US.cshtml
+/Pages/Shared/ClientTypeManage.en-US.en.cshtml
+/Pages/Shared/ClientTypeManage.en.en.cshtml
+/Pages/Shared/ClientTypeManage.en.cshtml
+/Pages/Shared/ClientTypeManage.en-US.cshtml
+/Pages/Shared/ClientTypeManage.en.cshtml
+/Pages/Shared/ClientTypeManage.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 16:49:57.145 +05:30  ERR]  The view 'ClientTypeManage' was not found. Searched locations: ["/Views/ClientType/ClientTypeManage.en-US.en-US.cshtml","/Views/ClientType/ClientTypeManage.en.en-US.cshtml","/Views/ClientType/ClientTypeManage.en-US.cshtml","/Views/ClientType/ClientTypeManage.en-US.en.cshtml","/Views/ClientType/ClientTypeManage.en.en.cshtml","/Views/ClientType/ClientTypeManage.en.cshtml","/Views/ClientType/ClientTypeManage.en-US.cshtml","/Views/ClientType/ClientTypeManage.en.cshtml","/Views/ClientType/ClientTypeManage.cshtml","/Views/Shared/ClientTypeManage.en-US.en-US.cshtml","/Views/Shared/ClientTypeManage.en.en-US.cshtml","/Views/Shared/ClientTypeManage.en-US.cshtml","/Views/Shared/ClientTypeManage.en-US.en.cshtml","/Views/Shared/ClientTypeManage.en.en.cshtml","/Views/Shared/ClientTypeManage.en.cshtml","/Views/Shared/ClientTypeManage.en-US.cshtml","/Views/Shared/ClientTypeManage.en.cshtml","/Views/Shared/ClientTypeManage.cshtml","/Pages/Shared/ClientTypeManage.en-US.en-US.cshtml","/Pages/Shared/ClientTypeManage.en.en-US.cshtml","/Pages/Shared/ClientTypeManage.en-US.cshtml","/Pages/Shared/ClientTypeManage.en-US.en.cshtml","/Pages/Shared/ClientTypeManage.en.en.cshtml","/Pages/Shared/ClientTypeManage.en.cshtml","/Pages/Shared/ClientTypeManage.en-US.cshtml","/Pages/Shared/ClientTypeManage.en.cshtml","/Pages/Shared/ClientTypeManage.cshtml"]
+[2023-10-11 16:49:57.251 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'ClientTypeManage' was not found. The following locations were searched:
+/Views/ClientType/ClientTypeManage.en-US.en-US.cshtml
+/Views/ClientType/ClientTypeManage.en.en-US.cshtml
+/Views/ClientType/ClientTypeManage.en-US.cshtml
+/Views/ClientType/ClientTypeManage.en-US.en.cshtml
+/Views/ClientType/ClientTypeManage.en.en.cshtml
+/Views/ClientType/ClientTypeManage.en.cshtml
+/Views/ClientType/ClientTypeManage.en-US.cshtml
+/Views/ClientType/ClientTypeManage.en.cshtml
+/Views/ClientType/ClientTypeManage.cshtml
+/Views/Shared/ClientTypeManage.en-US.en-US.cshtml
+/Views/Shared/ClientTypeManage.en.en-US.cshtml
+/Views/Shared/ClientTypeManage.en-US.cshtml
+/Views/Shared/ClientTypeManage.en-US.en.cshtml
+/Views/Shared/ClientTypeManage.en.en.cshtml
+/Views/Shared/ClientTypeManage.en.cshtml
+/Views/Shared/ClientTypeManage.en-US.cshtml
+/Views/Shared/ClientTypeManage.en.cshtml
+/Views/Shared/ClientTypeManage.cshtml
+/Pages/Shared/ClientTypeManage.en-US.en-US.cshtml
+/Pages/Shared/ClientTypeManage.en.en-US.cshtml
+/Pages/Shared/ClientTypeManage.en-US.cshtml
+/Pages/Shared/ClientTypeManage.en-US.en.cshtml
+/Pages/Shared/ClientTypeManage.en.en.cshtml
+/Pages/Shared/ClientTypeManage.en.cshtml
+/Pages/Shared/ClientTypeManage.en-US.cshtml
+/Pages/Shared/ClientTypeManage.en.cshtml
+/Pages/Shared/ClientTypeManage.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 17:38:06.880 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The model item passed into the ViewDataDictionary is of type 'System.Collections.Generic.List`1[Eltizam.Business.Models.Master_ClientTypeModel]', but this ViewDataDictionary instance requires a model item of type 'Eltizam.Business.Models.Master_ClientTypeModel'.
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary.EnsureCompatible(Object value)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary..ctor(ViewDataDictionary source, Object model, Type declaredModelType)
+   at lambda_method79(Closure , ViewDataDictionary )
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.CreateViewDataDictionary(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.Activate(Object page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPageActivator.Activate(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 17:42:14.145 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The model item passed into the ViewDataDictionary is of type 'System.Collections.Generic.List`1[Eltizam.Business.Models.Master_ClientTypeModel]', but this ViewDataDictionary instance requires a model item of type 'Eltizam.Business.Models.Master_ClientTypeModel'.
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary.EnsureCompatible(Object value)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary..ctor(ViewDataDictionary source, Object model, Type declaredModelType)
+   at lambda_method79(Closure , ViewDataDictionary )
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.CreateViewDataDictionary(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.Activate(Object page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPageActivator.Activate(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 17:43:18.340 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The model item passed into the ViewDataDictionary is of type 'System.Collections.Generic.List`1[Eltizam.Business.Models.Master_ClientTypeModel]', but this ViewDataDictionary instance requires a model item of type 'Eltizam.Business.Models.Master_ClientTypeModel'.
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary.EnsureCompatible(Object value)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary..ctor(ViewDataDictionary source, Object model, Type declaredModelType)
+   at lambda_method79(Closure , ViewDataDictionary )
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.CreateViewDataDictionary(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.Activate(Object page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPageActivator.Activate(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 17:45:59.021 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The model item passed into the ViewDataDictionary is of type 'System.Collections.Generic.List`1[Eltizam.Business.Models.Master_ClientTypeModel]', but this ViewDataDictionary instance requires a model item of type 'Eltizam.Business.Models.Master_ClientTypeModel'.
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary.EnsureCompatible(Object value)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary..ctor(ViewDataDictionary source, Object model, Type declaredModelType)
+   at lambda_method79(Closure , ViewDataDictionary )
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.CreateViewDataDictionary(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.Activate(Object page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPageActivator.Activate(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 17:46:21.724 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The model item passed into the ViewDataDictionary is of type 'System.Collections.Generic.List`1[Eltizam.Business.Models.Master_ClientTypeModel]', but this ViewDataDictionary instance requires a model item of type 'Eltizam.Business.Models.Master_ClientTypeModel'.
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary.EnsureCompatible(Object value)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary..ctor(ViewDataDictionary source, Object model, Type declaredModelType)
+   at lambda_method79(Closure , ViewDataDictionary )
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.CreateViewDataDictionary(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.Activate(Object page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPageActivator.Activate(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 17:48:17.201 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The model item passed into the ViewDataDictionary is of type 'System.Collections.Generic.List`1[Eltizam.Business.Models.Master_ClientTypeModel]', but this ViewDataDictionary instance requires a model item of type 'Eltizam.Business.Models.Master_ClientTypeModel'.
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary.EnsureCompatible(Object value)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary..ctor(ViewDataDictionary source, Object model, Type declaredModelType)
+   at lambda_method79(Closure , ViewDataDictionary )
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.CreateViewDataDictionary(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPagePropertyActivator.Activate(Object page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorPageActivator.Activate(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 18:13:47.083 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+[2023-10-11 18:13:55.269 +05:30  ERR]  An exception was thrown attempting to display the error page.
+System.TypeLoadException: Could not load type 'AspNetCoreGeneratedDocument.Views_ClientType_ClientType+<ExecuteAsync>d__20#4' from assembly 'EltizamValuation.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.CustomAttribute._CreateCaObject(RuntimeModule pModule, RuntimeType type, IRuntimeMethodInfo pCtor, Byte** ppBlob, Byte* pEndBlob, Int32* pcNamedArgs)
+   at System.Reflection.CustomAttribute.CreateCaObject(RuntimeModule module, RuntimeType type, IRuntimeMethodInfo ctor, IntPtr& blob, IntPtr blobEnd, Int32& namedArgs)
+   at System.Reflection.CustomAttribute.AddCustomAttributes(ListBuilder`1& attributes, RuntimeModule decoratedModule, Int32 decoratedMetadataToken, RuntimeType attributeFilterType, Boolean mustBeInheritable, ListBuilder`1 derivedAttributes)
+   at System.Reflection.CustomAttribute.GetCustomAttributes(RuntimeMethodInfo method, RuntimeType caType, Boolean inherit)
+   at System.Reflection.RuntimeMethodInfo.GetCustomAttributes(Type attributeType, Boolean inherit)
+   at System.Attribute.GetCustomAttributes(MemberInfo element, Type attributeType, Boolean inherit)
+   at System.Reflection.CustomAttributeExtensions.GetCustomAttributes[T](MemberInfo element)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.TryResolveStateMachineMethod(MethodBase& method, Type& declaringType)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetMethodDisplayString(MethodBase method)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetFrames(Exception exception, AggregateException& error)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetStackFrames(Exception original)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetDetails(Exception exception)+MoveNext()
+   at Microsoft.AspNetCore.Diagnostics.RazorViews.ErrorPage.ExecuteAsync()
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 18:13:59.933 +05:30  ERR]  Connection id "0HMUAAMICFROU", Request id "0HMUAAMICFROU:00000001": An unhandled exception was thrown by the application.
+[2023-10-11 18:17:14.195 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+[2023-10-11 18:17:14.274 +05:30  ERR]  An exception was thrown attempting to display the error page.
+System.TypeLoadException: Could not load type 'AspNetCoreGeneratedDocument.Views_ClientType_ClientType+<ExecuteAsync>d__23#6' from assembly 'EltizamValuation.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.CustomAttribute._CreateCaObject(RuntimeModule pModule, RuntimeType type, IRuntimeMethodInfo pCtor, Byte** ppBlob, Byte* pEndBlob, Int32* pcNamedArgs)
+   at System.Reflection.CustomAttribute.CreateCaObject(RuntimeModule module, RuntimeType type, IRuntimeMethodInfo ctor, IntPtr& blob, IntPtr blobEnd, Int32& namedArgs)
+   at System.Reflection.CustomAttribute.AddCustomAttributes(ListBuilder`1& attributes, RuntimeModule decoratedModule, Int32 decoratedMetadataToken, RuntimeType attributeFilterType, Boolean mustBeInheritable, ListBuilder`1 derivedAttributes)
+   at System.Reflection.CustomAttribute.GetCustomAttributes(RuntimeMethodInfo method, RuntimeType caType, Boolean inherit)
+   at System.Reflection.RuntimeMethodInfo.GetCustomAttributes(Type attributeType, Boolean inherit)
+   at System.Attribute.GetCustomAttributes(MemberInfo element, Type attributeType, Boolean inherit)
+   at System.Reflection.CustomAttributeExtensions.GetCustomAttributes[T](MemberInfo element)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.TryResolveStateMachineMethod(MethodBase& method, Type& declaringType)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetMethodDisplayString(MethodBase method)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetFrames(Exception exception, AggregateException& error)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetStackFrames(Exception original)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetDetails(Exception exception)+MoveNext()
+   at Microsoft.AspNetCore.Diagnostics.RazorViews.ErrorPage.ExecuteAsync()
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 18:17:14.741 +05:30  ERR]  Connection id "0HMUAAMICFRP0", Request id "0HMUAAMICFRP0:00000001": An unhandled exception was thrown by the application.
+[2023-10-11 18:17:39.766 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+[2023-10-11 18:17:39.846 +05:30  ERR]  An exception was thrown attempting to display the error page.
+System.TypeLoadException: Could not load type 'AspNetCoreGeneratedDocument.Views_ClientType_ClientType+<ExecuteAsync>d__23#6' from assembly 'EltizamValuation.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.CustomAttribute._CreateCaObject(RuntimeModule pModule, RuntimeType type, IRuntimeMethodInfo pCtor, Byte** ppBlob, Byte* pEndBlob, Int32* pcNamedArgs)
+   at System.Reflection.CustomAttribute.CreateCaObject(RuntimeModule module, RuntimeType type, IRuntimeMethodInfo ctor, IntPtr& blob, IntPtr blobEnd, Int32& namedArgs)
+   at System.Reflection.CustomAttribute.AddCustomAttributes(ListBuilder`1& attributes, RuntimeModule decoratedModule, Int32 decoratedMetadataToken, RuntimeType attributeFilterType, Boolean mustBeInheritable, ListBuilder`1 derivedAttributes)
+   at System.Reflection.CustomAttribute.GetCustomAttributes(RuntimeMethodInfo method, RuntimeType caType, Boolean inherit)
+   at System.Reflection.RuntimeMethodInfo.GetCustomAttributes(Type attributeType, Boolean inherit)
+   at System.Attribute.GetCustomAttributes(MemberInfo element, Type attributeType, Boolean inherit)
+   at System.Reflection.CustomAttributeExtensions.GetCustomAttributes[T](MemberInfo element)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.TryResolveStateMachineMethod(MethodBase& method, Type& declaringType)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetMethodDisplayString(MethodBase method)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetFrames(Exception exception, AggregateException& error)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetStackFrames(Exception original)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetDetails(Exception exception)+MoveNext()
+   at Microsoft.AspNetCore.Diagnostics.RazorViews.ErrorPage.ExecuteAsync()
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-11 18:17:39.999 +05:30  ERR]  Connection id "0HMUAAMICFRP5", Request id "0HMUAAMICFRP5:0000000B": An unhandled exception was thrown by the application.
+[2023-10-11 18:19:00.998 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+[2023-10-11 18:19:01.050 +05:30  ERR]  An exception was thrown attempting to display the error page.
+System.TypeLoadException: Could not load type 'AspNetCoreGeneratedDocument.Views_ClientType_ClientType+<ExecuteAsync>d__23#6' from assembly 'EltizamValuation.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.CustomAttribute._CreateCaObject(RuntimeModule pModule, RuntimeType type, IRuntimeMethodInfo pCtor, Byte** ppBlob, Byte* pEndBlob, Int32* pcNamedArgs)
+   at System.Reflection.CustomAttribute.CreateCaObject(RuntimeModule module, RuntimeType type, IRuntimeMethodInfo ctor, IntPtr& blob, IntPtr blobEnd, Int32& namedArgs)
+   at System.Reflection.CustomAttribute.AddCustomAttributes(ListBuilder`1& attributes, RuntimeModule decoratedModule, Int32 decoratedMetadataToken, RuntimeType attributeFilterType, Boolean mustBeInheritable, ListBuilder`1 derivedAttributes)
+   at System.Reflection.CustomAttribute.GetCustomAttributes(RuntimeMethodInfo method, RuntimeType caType, Boolean inherit)
+   at System.Reflection.RuntimeMethodInfo.GetCustomAttributes(Type attributeType, Boolean inherit)
+   at System.Attribute.GetCustomAttributes(MemberInfo element, Type attributeType, Boolean inherit)
+   at System.Reflection.CustomAttributeExtensions.GetCustomAttributes[T](MemberInfo element)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.TryResolveStateMachineMethod(MethodBase& method, Type& declaringType)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetMethodDisplayString(MethodBase method)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetFrames(Exception exception, AggregateException& error)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetStackFrames(Exception original)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetDetails(Exception exception)+MoveNext()
+   at Microsoft.AspNetCore.Diagnostics.RazorViews.ErrorPage.ExecuteAsync()
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)

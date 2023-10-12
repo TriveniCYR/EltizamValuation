@@ -75,27 +75,9 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         
-        public async Task<DataTableResponseModel> GetAll(CommonSearchModel model, PaginationModel paging)
+        public async Task<List<Master_ClientTypeModel>> GetAll()
         {
-            var _dbParams = new[]
-             {
-                 new DbParameter("ClientTypeId", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", paging.pageSize, SqlDbType.Int),
-                 new DbParameter("PageNumber", paging.pageNo, SqlDbType.Int),
-                 new DbParameter("OrderClause", "ClientType", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int),
-                 new DbParameter("Letter",model.SearchText, SqlDbType.VarChar)
-             };
-
-            int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<Master_ClientTypeModel>(ProcedureNameCall.usp_ClientType_SearchAllList,
-
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
-
-
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(0, _count, lstStf.Count, lstStf);
-
-            return oDataTableResponseModel;
+            return _mapperFactory.GetList<MasterClientType, Master_ClientTypeModel>(await _repository.GetAllAsync());
         }
 
         public async Task<DBOperation> AddUpdateMasterClientType(Master_ClientTypeModel entityqualification)

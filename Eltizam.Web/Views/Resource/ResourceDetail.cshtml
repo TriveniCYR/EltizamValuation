@@ -10,26 +10,12 @@
 <div class="flex">
     <div class="w-100 position-relative">        
         <main class="plr-0">
-            <div class="profileHead flex justify-between align-item-center cursor-pointer">
-                @if (Model.Id > 0)
-                {
-                    <h3 class="dashboardTitle">EDIT RESOURCE MASTER</h3>
-                    <div class="hamburger">
-                    <span onclick="resourceMaster()">Resource Master</span>
-                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                    <span>Edit Resource Master</span>
-                </div>
-                }
-                else
-                {
-                    <h3 class="dashboardTitle">ADD RESOURCE MASTER</h3>
-                    <div class="hamburger">
-                        <span onclick="resourceMaster()">Resource Master</span>
-                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                        <span>Add Resource Master</span>
-                    </div>
-                }
-                
+            <div class="profileHead flex justify-between align-item-center cursor-pointer">               
+                <h3 class="dashboardTitle">DETAIL RESOURCE MASTER</h3>
+                <div class="hamburger">
+                <span onclick="resourceMaster()">Resource Master</span>
+                <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                <span>Detail Resource Master</span>                
             </div>
             <div class="flex">
                 <div class="resourceProfile whiteBoxShadow">
@@ -65,7 +51,7 @@
                         <button class="tablinks" onclick="profileTab(event, 'profile4')">Upload Supporting Documents</button>
                     </div>
 
-                    <form asp-action="ResourceManage" method="POST" enctype="multipart/form-data">
+                    <form>
                         <input type="hidden" id="hdnDeparment" value="@(Model == null ? 0 : Model.DepartmentId)" />
                         <input type="hidden" id="hdnDesignation" value="@(Model == null ? 0 : Model.DesignationId)" />
                         <input type="hidden" id="hdnRole" value="@(Model == null ? 0 : Model.RoleId)" />
@@ -79,49 +65,49 @@
                                     <div class="flex">
                                         <label for="FirstName">
                                             First Name
-                                            @Html.TextBoxFor(model => model.FirstName, new {@class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
+                                            @Html.DisplayFor(model => model.FirstName, new {@class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
                                         </label>
                                         <label for="MiddleName">
                                             Middle Name
-                                            @Html.TextBoxFor(model => model.MiddleName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
+                                            @Html.DisplayFor(model => model.MiddleName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
                                         </label>
                                     </div>
                                     <div class="flex">
                                         <label for="LastName">
                                             Last Name
-                                            @Html.TextBoxFor(model => model.LastName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                            @Html.DisplayFor(model => model.LastName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
                                         </label>
                                         <label for="DepartmentId">
                                             Department
-                                            <select id="DepartmentId" name="DepartmentId" class="form-control" asp-for="DepartmentId"></select>
+                                            <select id="DepartmentId" name="DepartmentId" class="form-control" asp-for="DepartmentId" readonly></select>
 
                                         </label>
                                     </div>
                                     <div class="flex">
                                         <label for="DesignationId">
                                             Designation
-                                            <select id="DesignationId" name="DesignationId" class="form-control" asp-for="DesignationId"></select>
+                                            <select id="DesignationId" name="DesignationId" class="form-control" asp-for="DesignationId" readonly></select>
                                         </label>
                                         <label for="DateOfBirth">
                                             Date of Birth
-                                            <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth"  class="form-control">
-                                            @*@Html.TextBoxFor(model => model.DateOfBirth, new { @type ="" ,@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })*@
+                                            <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth"  class="form-control" disabled >
+                                            @*@Html.DisplayFor(model => model.DateOfBirth, new { @type ="" ,@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })*@
                                         </label>
                                     </div>
                                     <div class="flex">
                                         <label for="Gender">
                                             Gender
-                                            <select id="Gender" name="Gender" class="form-control" asp-for="Gender"></select>
+                                            <select id="Gender" name="Gender" class="form-control" asp-for="Gender" readonly></select>
                                         </label>
                                         <label for="ResourceId">
                                             Resource Type
-                                            <select id="ResourceId" name="ResourceId" class="form-control" asp-for="ResourceId"></select>
+                                            <select id="ResourceId" name="ResourceId" class="form-control" asp-for="ResourceId" readonly></select>
                                         </label>
                                     </div>
                                     <div class="flex">
                                         <label for="RoleId">
                                             Role
-                                            <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId"></select>
+                                                <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId" readonly></select>
                                         </label>
                                         <label for="IsActive">
                                             Status
@@ -149,11 +135,11 @@
                                     <div class="flex">
                                         <label for="CompanyName">
                                             Company / Vendor Name
-                                            @Html.TextBoxFor(model => model.CompanyName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Company Name"] })
+                                            @Html.DisplayFor(model => model.CompanyName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Company Name"] })
                                         </label>
                                         <label for="LicenseNo">
                                             AD Municipality / License No
-                                            @Html.TextBoxFor(model => model.LicenseNo, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
+                                            @Html.DisplayFor(model => model.LicenseNo, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
 
                                         </label>
                                        
@@ -174,13 +160,13 @@
                                                 <div class="flex">
                                                     <label for="address1" class="w-100">
                                                         <span>Address Line 1 </span>
-                                                        @Html.TextBoxFor(model => model.Address.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                                        @Html.DisplayFor(model => model.Address.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
                                                     </label>
                                                 </div>
                                                 <div class="flex">
                                                     <label for="address2" class="w-100">
                                                         Address Line 2
-                                                        @Html.TextBoxFor(model => model.Address.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
+                                                        @Html.DisplayFor(model => model.Address.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
                                                     </label>
                                                 </div>
                                                 <div class="flex fourBox">
@@ -198,38 +184,38 @@
                                                     </label>
                                                     <label for="PinNo">
                                                         Pin Code
-                                                        @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                                        @Html.DisplayFor(model => model.Address.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
                                                     </label>
                                                 </div>
                                                 <div class="flex">
                                                     <label for="Email">
                                                         Email
-                                                        @Html.TextBoxFor(model => model.Address.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                                        @Html.DisplayFor(model => model.Address.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
                                                     </label>
                                                     <label for="AlternateEmail">
                                                         Alternate Email
-                                                        @Html.TextBoxFor(model => model.Address.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                                        @Html.DisplayFor(model => model.Address.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
                                                     </label>
                                                 </div>
                                                 <div class="flex threeBox">
                                                     <label for="Phone">
                                                         Phone
-                                                        @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                                        @Html.DisplayFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
                                                     </label>
                                                     <label for="AlternatePhone">
                                                         Alternate Phone
-                                                        @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                        @Html.DisplayFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
                                                     </label>
                                                     <label for="">
                                                         Landline phone
-                                                        @Html.TextBoxFor(model => model.Address.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
+                                                        @Html.DisplayFor(model => model.Address.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
                                                     </label>
                                                 </div>
                                             </div>
 
-                                    <div class="text-right buttonArea bodyContent plr-0">
+                                    @*<div class="text-right buttonArea bodyContent plr-0">
                                         <button type="button" class="lineBtn" onclick="addMoreAddress()">Add More</button>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
@@ -247,34 +233,34 @@
                                         <div class="flex">
                                             <label for="Qualification">
                                                 Programme of Study/ Qualification
-                                                @Html.TextBoxFor(model => model.Qualification.Qualification, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
+                                                @Html.DisplayFor(model => model.Qualification.Qualification, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
                                             </label>
                                             <label for="Subject">
                                                 Subject/Stream
-                                                @Html.TextBoxFor(model => model.Qualification.Subject, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
+                                                @Html.DisplayFor(model => model.Qualification.Subject, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Institute">
                                                 Education Institute
-                                                @Html.TextBoxFor(model => model.Qualification.Institute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
+                                                @Html.DisplayFor(model => model.Qualification.Institute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
                                             </label>
                                             <label for="year">
                                                 Year of Institute
-                                                @Html.TextBoxFor(model => model.Qualification.YearOfInstitute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
+                                                @Html.DisplayFor(model => model.Qualification.YearOfInstitute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="grade" class="w-100">
                                                 Grade/Percent/class
-                                        @Html.TextBoxFor(model => model.Qualification.Grade, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
+                                        @Html.DisplayFor(model => model.Qualification.Grade, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-right buttonArea bodyContent plr-0">
+                                @*<div class="text-right buttonArea bodyContent plr-0">
                                     <button type="button" class="lineBtn" onClick="addRoundBorderBox(this)">Add New</button>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
 
@@ -283,10 +269,12 @@
                             <div class="inputSearchs uploadDocBox">
 
                                 <div class="tabSection">
+                                    @if(Model.Id>0)
+                                    {
                                     <div class="flex mb-28">
                                         <label for="document">
                                             Documents Name
-                                            @Html.TextBoxFor(model => model.Document.DocumentName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Document"] })
+                                            @Html.DisplayFor(model => model.Document.DocumentName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Document"] })
                                         </label>                                             
                                         <label for="atach">
                                             Attach Supporting Documents
@@ -297,6 +285,7 @@
                                             </div>
                                         </label>
                                     </div>
+                                    }
                                     <div class="W-100">
                                         <div class="prevUpload roundBorderBox m-0">
                                             <h3>Previously uploaded</h3>
@@ -328,10 +317,10 @@
                             </div>*@
                         </div>
 
-                        <div class="text-right buttonArea bodyContent plr-0">
+                        @*<div class="text-right buttonArea bodyContent plr-0">
                            <a href='/Resource/Resource'> <button type="button" class="lineBtn">Cancel</button></a>
                             <button type="submit" class="blueBtn">Update</button>
-                        </div>
+                        </div>*@
                     </form>
                 </div>
             </div>
