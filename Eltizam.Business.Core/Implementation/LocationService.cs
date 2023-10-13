@@ -55,7 +55,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterLocationEntity>(ProcedureNameCall.usp_Location_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterLocationEntity>(ProcedureNameCall.usp_Location_SearchAllList,
 
              DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 

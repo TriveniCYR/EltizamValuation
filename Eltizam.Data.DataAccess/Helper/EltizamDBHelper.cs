@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Linq;
 using System.Reflection;
 
 namespace Eltizam.Data.DataAccess.Helper
 {
 
-    /// <summary>
-    /// Added by YReddy on 08/11/2022  
-    /// Used to implement DB related transaction for entire application
-    /// </summary>
-    public class FJDBHelper
+	/// <summary>
+	/// Added by YReddy on 08/11/2022  
+	/// Used to implement DB related transaction for entire application
+	/// </summary>
+	public class EltizamDBHelper
     {
         public static int timeout = 30;
         public static string TotalRecords = "TotalRecords";

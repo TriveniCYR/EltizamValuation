@@ -76,7 +76,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableName", "Master_Client", SqlDbType.VarChar),
                 };
 
-                var clientContact = FJDBHelper.ExecuteSingleMappedReader<Master_ClientContactModel>("usp_User_GetContactByUserId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                var clientContact = EltizamDBHelper.ExecuteSingleMappedReader<Master_ClientContactModel>("usp_User_GetContactByUserId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (clientContact != null)
                 {
                     _clientEntity.Contacts = clientContact;
@@ -99,7 +99,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<Master_ClientModel>(ProcedureNameCall.usp_Client_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<Master_ClientModel>(ProcedureNameCall.usp_Client_SearchAllList,
 
              DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
@@ -246,7 +246,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableName", "Master_User", SqlDbType.VarChar),
                 };
 
-                int result = FJDBHelper.ExecuteSingleMappedReader<int>("usp_Client_DeleteContactByClientId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                int result = EltizamDBHelper.ExecuteSingleMappedReader<int>("usp_Client_DeleteContactByClientId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (result > 0)
                 {
 

@@ -56,7 +56,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCityEntity>(ProcedureNameCall.usp_City_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCityEntity>(ProcedureNameCall.usp_City_SearchAllList,
 
              _dbConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
@@ -137,7 +137,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterCityEntity>> GetCityList()
         {
 
-            var lstStf = FJDBHelper.ExecuteMappedReader<MasterCityEntity>(ProcedureNameCall.usp_City_AllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterCityEntity>(ProcedureNameCall.usp_City_AllList,
              DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
 
             return lstStf;
