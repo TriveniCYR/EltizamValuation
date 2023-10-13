@@ -13,7 +13,7 @@ namespace Eltizam.Business.Core.Interface
 
         Task<DBOperation> Upsert(MasterLocationEntity entityUser);
         Task<MasterLocationEntity> GetById(int id);
-        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
+        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel? model);
         Task<DBOperation> Delete(int id);
     }
 }
