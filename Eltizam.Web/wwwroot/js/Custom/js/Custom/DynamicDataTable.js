@@ -15,7 +15,7 @@
             "bLengthChange": true,
             'bSortable': true,
             fixedHeader: true,
-            pageLength: 5,
+            pageLength: 10,
             bPaginate: false,
             paging: true,
             //lengthMenu: [
