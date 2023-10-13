@@ -12,6 +12,8 @@ namespace Eltizam.Data.DataAccess.Helper
 	public class EltizamDBHelper
     {
         public static int timeout = 30;
+        public static int DefaultPageNumber = 1;
+        public static int DefaultPageSize = 1000;
         public static string TotalRecords = "TotalRecords";
 
 
@@ -262,8 +264,7 @@ namespace Eltizam.Data.DataAccess.Helper
         }
 
         public static IDataParameter AddParameter(IDbCommand Command, string ParmName, object ParmValue, SqlDbType ParmFieldType)
-        {
-
+        { 
             SqlParameter p;
             switch (ParmFieldType)
             {

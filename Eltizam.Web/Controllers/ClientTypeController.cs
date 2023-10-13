@@ -23,6 +23,7 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
+
         public IActionResult ClientType()
         {
             try
