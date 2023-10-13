@@ -125,18 +125,33 @@ function StaticDataTable(selector, dom, buttons) {
     //    Column visibility
     //}
     if (dom == null || dom == undefined) {
-        dom = "Bfrtip"
-    }
-
+        dom = '<"top"i>rt<"bottom"flp><"clear">'; // "Bfrtip"
+    } 
+     
     var _datatableInstance = $(selector).DataTable({
         responsive: true,
         ordering: true,
         lengthChange: true,
         autoWidth: true,
         retrieve: true,
-        dom: 'Bfrtip',
+        "aLengthMenu": [[10, 25, 50, 75, 100, -1], [10, 25, 50, 75, 100, "All"]],
+        "iDisplayLength": 10,
+        //dom: '<"top"i>rt<"bottom"flp><"clear">', //'Bfrtip',
         processing: true,
-        buttons: buttons,
+        stateSaveCallback: function (settings, data) {
+            localStorage.setItem('DataTables_' + settings.sInstance, JSON.stringify(data));
+        },
+        stateLoadCallback: function (settings, data) {
+            return JSON.parse(localStorage.getItem('DataTables_' + settings.sInstance));
+        },
+        buttons: [
+            {
+                extend: 'excel', text: '<i class="far fa-file-excel"></i> Export In Excel ', className: "btn-primary", exportOptions: {
+                    columns: ':not(.notexport)'
+                }
+            },
+            { extend: 'colvis', className: "btn-primary", columns: ':not(.notexport)' }
+        ],
         language: {
             'loadingRecords': '&nbsp;',
             'processing': '<div class="spinner"></div>'
