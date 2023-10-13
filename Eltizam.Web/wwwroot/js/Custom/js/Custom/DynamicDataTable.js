@@ -18,11 +18,15 @@
             pageLength: 10,
             bPaginate: false,
             paging: true,
-            lengthMenu: [
-                [10, 25, 50, -1],
-                [10, 25, 50, 'All'],
-            ],
-            dom: 'Bfrtip',
+            //lengthMenu: [
+            //    [10, 25, 50, -1],
+            //    [10, 25, 50, 'All'],
+            //],
+            "aLengthMenu": [[10, 25, 50, 75, 100, -1], [10, 25, 50, 75, 100, "All"]],
+            "iDisplayLength": 10,
+            // "dom": '<"top"i>rt<"bottom"flp><"clear">',
+            // "dom": '<"pull-left"B><"pull-right"f>rt<"row"<"col-sm-4"l><"col-sm-4"i><"col-sm-4"p>>', //'<"top"i>rt<"bottom"flp><"clear">',
+            //  dom: 'Bfrtip',
             stateSaveCallback: function (settings, data) {
                 localStorage.setItem('DataTables_' + settings.sInstance, JSON.stringify(data));
             },
