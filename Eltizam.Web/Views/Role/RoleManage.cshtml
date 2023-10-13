@@ -54,13 +54,7 @@
                         {
                             @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
                             @Html.Label(@SharedLocalizer["IsActive"])
-                        }
-                       @*  <label for="resourceType" class="roleswitch">
-                            Status
-                            <input class='input-switch' type="checkbox" id="editRole" />
-                            <label class="label-switch" for="editRole"></label>
-                            <span class="info-text"></span>
-                        </label> *@
+                        } 
                     </div>
                    
                 </div>
@@ -94,19 +88,7 @@
                                     <td></td>
                                     <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
                                     <td>
-                                        @if (   
-                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Auditlogs         &&
-                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.ManagementHOD     &&
-                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.IPD               &&
-                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Commercial        &&
-                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.APIListManagement &&
-                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Finance           &&
-                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.PBF               &&
-                                                 @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Medical
-                                            )
-                                        {
-                                            @Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })
-                                        }
+                                        @Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })
                                     </td>
                                     <td>
                                         @if (@Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.Auditlogs && @Model.MasterModules[i].ModuleId != (int)Eltizam.Utility.Enums.ModulePermissionEnum.ManagementHOD)
@@ -141,18 +123,7 @@
                                         <td>@Model.MasterModules[i].MasterSubModules[j].SubModuleName</td>
                                         <td> @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
                                         <td>
-                                            @if (
-                                          Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APICharterSummary &&
-                                           Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APIIPD           &&
-                                            Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APIRnD          &&
-                                             Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APICharter     &&
-                                           Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.RnD              &&
-                                             Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.Clinical       &&
-                                           Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.Analytical 
-                                                )
-                                            {
-                                                @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })
-                                            }
+                                            @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })
                                         </td>
                                         <td>
                                             @if (Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModulePermissionEnum.APICharterSummary)
@@ -164,9 +135,7 @@
                                         </td>
                                         <td>
                                         </td>
-                                    </tr>
-
-                                    @*-----------*@
+                                    </tr> 
                                 }
                             }
                         </tbody>

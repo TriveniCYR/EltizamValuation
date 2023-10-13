@@ -48,8 +48,7 @@ namespace Eltizam.Utility.Enums
         Commercial = 15,
         ManagementHOD = 16,
         Project = 17,
-      [Description("Wish List")]
-
+        [Description("Wish List")] 
 		WishList = 18,
 
 		[Description("TblUser Management")]
