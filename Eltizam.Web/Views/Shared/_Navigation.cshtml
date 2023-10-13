@@ -57,18 +57,7 @@
 								<i class="right fas fa-angle-left"></i>
 							</p>
 						</a>
-						<ul class="nav nav-treeview">
-							@if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.PIDF, _roleId))
-							{
-								<li class="nav-item">
-									<a id="PIDF" href="@Url.Action("PIDFList","PIDF", new { ScreenId = Convert.ToString((int)Eltizam.Utility.Enums.PIDFScreen.PIDF)})" class="nav-link">
-										<i class="nav-icon fas fa-th"></i>
-										<p>
-											@MasterLocalizer["PIDFManagement"]
-										</p>
-									</a>
-								</li>
-							}
+						<ul class="nav nav-treeview"> 
 							@if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.IPD, _roleId))
 							{
 								<li class="nav-item">
