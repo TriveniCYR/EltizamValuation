@@ -11,7 +11,6 @@ using Eltizam.Business.Models;
 using Eltizam.Resource;
 using Eltizam.Web.Helpers;
 
-
 namespace Eltizam.Web.Controllers
 {
     public class AccountController : Controller
@@ -115,6 +114,55 @@ namespace Eltizam.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
+        {
+            if (CheckEmailAddressExists(forgotPasswordViewModel.Email))
+            {
+                forgotPasswordViewModel.WebApplicationUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host.Value;
+                APIRepository objapi = new APIRepository(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ForgotPassword, HttpMethod.Post, string.Empty, new StringContent(JsonConvert.SerializeObject(forgotPasswordViewModel))).Result;
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    ViewBag.Message = Customs.msgLinkToResetpasswordSentOnEmail;
+                }
+                else // if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    ViewBag.Message = Customs.SomeErrorOccurred;
+                }
+            }
+            else
+            {
+                ViewBag.errormessage = Customs.msgEmailAddressNotExistIndatabase;
+            }
+            return View(forgotPasswordViewModel);
+        }
+
+        // if CheckEmailAddressExists() is false then Email Id Exist in Db
+        [NonAction]
+        public bool CheckEmailAddressExists(string EmailAddress)
+        {
+            bool EmailExist = true;
+            try
+            {
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.Anonymous_CheckEmailAddressExists + "/" + EmailAddress, HttpMethod.Get, string.Empty).Result;
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    EmailExist = JsonConvert.DeserializeObject<bool>(jsonResponse);
+
+                    return EmailExist;
+                }
+                return EmailExist;
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                throw e;
+            }
+        }
+
         public IActionResult ResetPassword()
         {
             return View();
@@ -123,6 +171,15 @@ namespace Eltizam.Web.Controllers
         public IActionResult ProfileDetails()
         {
             return View();
+        }
+
+        public class Customs
+        {
+            public static string msgLinkToResetpasswordSentOnEmail = "We have send an email successfully to entered email address, please go to your mail box and follow further steps";
+
+            public static string SomeErrorOccurred = "Some error occurred";
+
+            public static string msgEmailAddressNotExistIndatabase = "Entered email address is not found";
         }
     }
 }

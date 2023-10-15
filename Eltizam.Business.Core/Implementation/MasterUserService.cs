@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using Eltizam.Business.Core;
 using Eltizam.Utility.Utility;
+using Eltizam.Utility.Helpers;
 
 namespace Eltizam.Business.Core.ServiceImplementations
 {
@@ -226,11 +227,44 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
 		public async Task<bool> CheckEmailAddressExists(string emailAddress)
 		{
-			var isExists = false; //await _repository.GetAllQuery().AnyAsync(x => x.EmailAddress.ToLower() == emailAddress.ToLower());
+			var isExists = await _repository.GetAllQuery().AnyAsync(x => x.Email.ToLower() == emailAddress.ToLower());
 			return isExists;
-		}
+        }
 
-		public async Task<bool> IsTokenValid(string token)
+        public async Task<DBOperation> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
+        {
+            EmailHelper email = new EmailHelper();
+            string baseURL = forgotPasswordViewModel.WebApplicationUrl;
+            var entityUser = _repository.Get(x => x.Email == forgotPasswordViewModel.Email);
+            if (entityUser == null)
+                return DBOperation.NotFound;
+
+            entityUser.ForgotPasswordToken = UtilityHelper.GenerateSHA256String(entityUser.Id.ToString());
+            entityUser.ForgotPasswordDateTime = DateTime.Now;
+            _repository.UpdateAsync(entityUser);
+            await _unitOfWork.SaveChangesAsync();
+
+            string strURL = baseURL + @"/Account/ResetPassword?userToken=" + entityUser.ForgotPasswordToken;
+            string strHtml = System.IO.File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ForgotPassword.html");
+            strHtml = strHtml.Replace("ValidateURL", strURL);
+            strHtml = strHtml.Replace("ValidDateTime", entityUser.ForgotPasswordDateTime.Value.AddHours(1).ToString());
+            strHtml = strHtml.Replace("Name", entityUser.FirstName + entityUser.LastName);
+            email.SendMail(entityUser.Email, string.Empty, "Emcure NPD - Forgot Password", strHtml, GetSMTPConfiguration());
+            return DBOperation.Success;
+        }
+
+        public SMTPEntityViewModel GetSMTPConfiguration()
+        {
+            SMTPEntityViewModel _smtp = new SMTPEntityViewModel();
+            _smtp.Host = configuration.GetSection("SMTPDetails").GetSection("Host").Value;
+            _smtp.Port = configuration.GetSection("SMTPDetails").GetSection("Port").Value;
+            _smtp.EnableSsl = configuration.GetSection("SMTPDetails").GetSection("Enable_SSL").Value;
+            _smtp.FromEmail = configuration.GetSection("SMTPDetails").GetSection("FromEmail").Value;
+            _smtp.UserName = configuration.GetSection("SMTPDetails").GetSection("UserName").Value;
+            _smtp.Password = configuration.GetSection("SMTPDetails").GetSection("Password").Value;
+            return _smtp;
+        }
+        public async Task<bool> IsTokenValid(string token)
 		{
 			var isExists = false;//await _repository.GetAllQuery().AnyAsync(x => x.ForgotPasswordToken == token);
 			return isExists;

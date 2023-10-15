@@ -26,6 +26,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifiedBy { get; set; }
         public string? Email { get; set; }
         public int? RoleId { get; set; }
+        public string ForgotPasswordToken { get; set; }
+        public DateTime? ForgotPasswordDateTime { get; set; }
 
         public virtual MasterDepartment? Department { get; set; }
         public virtual MasterDesignation? Designation { get; set; }
