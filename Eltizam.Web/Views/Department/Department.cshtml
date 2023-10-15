@@ -21,28 +21,10 @@
 <main>
     <h3 class="dashboardTitle">Department Master</h3>
     <div class="flex justify-end mb-28 mobile_flexColumn position-relative">
-        @* <div class="flex">
-            <label class="searchBox position-relative">
-                <div class="flex align-item-center">
-                    
-                    <form asp-action="SearchRoles" method="get">
-                        <!-- Step 1 & 2 -->
-                        <div class="flex align-item-center">
-                            <img src="~/assets/search.svg" alt="search">
-                            <input type="text" name="searchQuery" placeholder="Search for System" class="searchInput" /> <!-- Step 4 -->
-                            <button type="submit" class="normalSearch">Search</button> <!-- Step 3 -->
-                        </div>
-                    </form>
-                </div>
-                
-            </label>
-
-        </div> *@
-        <div class="buttonArea flex align-item-center">
+            <div class="buttonArea flex align-item-center">
             <button class="flex align-item-center blueBtn" id="addRole">
-                <a class="whiteAtag" asp-action="DepartmentManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
+                <a class="whiteAtag" style="@IsAddAllow" asp-action="DepartmentManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
             </button>
-
 
             <button class="flex align-item-center lineBtn" id="importFile">
                 <img src="~/assets/file-import.svg" alt="file-import" />
@@ -97,7 +79,7 @@
 
 </main>
 
-@*DeleteFormulationModel*@
+
 <div id="DeleteDepartmentModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -132,24 +114,12 @@
 
     <script>
 
-
-
-
-        //#region Setup API Url
-
         var DeleteDepartmenteByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDepartmentById";
-        // #endregion
-
-        //#region Static Label Init
-
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-
         var StatusMessage = '@TempData["StatusMessage"]';
 
-
-                                                //#endregion
     </script>
 
 }

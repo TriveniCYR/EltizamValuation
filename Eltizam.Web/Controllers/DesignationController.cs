@@ -34,7 +34,7 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 int rolId = _helper.GetLoggedInRoleId();
-                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleManagement, rolId);
+                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
                 ViewBag._objPermission = objPermssion;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new APIRepository(_cofiguration);

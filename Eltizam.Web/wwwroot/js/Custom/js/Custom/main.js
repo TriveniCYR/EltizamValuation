@@ -125,18 +125,27 @@ function StaticDataTable(selector, dom, buttons) {
     //    Column visibility
     //}
     if (dom == null || dom == undefined) {
-        dom = "Bfrtip"
+        dom = '<"top"i>rt<"bottom"flp><"clear">'; // "Bfrtip"
     }
-
+     
     var _datatableInstance = $(selector).DataTable({
         responsive: true,
         ordering: true,
         lengthChange: true,
         autoWidth: true,
         retrieve: true,
-        dom: 'Bfrtip',
+        "aLengthMenu": [[5, 10, 15, 25, 50, 100, -1], [5, 10, 15, 25, 50, 100, "All"]],
+        "iDisplayLength": 5,
+        dom: '<"top"i>rt<"bottom"flp><"clear">', //'Bfrtip',
         processing: true,
-        buttons: buttons,
+        buttons: [
+            {
+                extend: 'excel', text: '<i class="far fa-file-excel"></i> Export In Excel ', className: "btn-primary", exportOptions: {
+                    columns: ':not(.notexport)'
+                }
+            },
+            { extend: 'colvis', className: "btn-primary", columns: ':not(.notexport)' }
+        ],
         language: {
             'loadingRecords': '&nbsp;',
             'processing': '<div class="spinner"></div>'
