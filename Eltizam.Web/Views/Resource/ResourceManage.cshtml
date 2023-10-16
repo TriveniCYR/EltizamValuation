@@ -123,12 +123,11 @@
                                             Role
                                             <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId"></select>
                                         </label>
-                                        <label for="IsActive">
+                                        <label for="IsActive" class="w-50">
                                             Status
-                                            <div>
-                                                Active : @Html.RadioButtonFor(m => m.IsActive, true)
-                                                IsActive : @Html.RadioButtonFor(m => m.IsActive, false)
-                                            </div>
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                            <label class="label-switch" for="IsActive"></label>
+                                            <span class="info-text"></span>
                                         </label>
                                     </div>
                                     @if (Model.Id <= 0)

@@ -15,10 +15,10 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public string? UserName { get; set; }
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int DesignationId { get; set; }
         public int DepartmentId { get; set; }
@@ -45,10 +45,10 @@ namespace Eltizam.Business.Models
         public string? ConfirmPassowrd { get; set; }
 
         public int CreatedBy { get; set; }
-        public MasterUserAddressModel? Address { get; set; }
-        public MasterUserAddressModel? UpsertAddress { get; set; }
-        public Master_QualificationModel? Qualification { get; set; }
-        public Master_QualificationModel? UpsertQualification { get; set; }
+        public MasterUserAddressModel? Address { get; set; } = null;
+        public MasterUserAddressModel? UpsertAddress { get; set; } = null;
+        public Master_QualificationModel? Qualification { get; set; } = null;
+        public Master_QualificationModel? UpsertQualification { get; set; } = null;
         public List<MasterDocumentModel>? Documents { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
         public DocumentFilesModel? Document { get; set; }

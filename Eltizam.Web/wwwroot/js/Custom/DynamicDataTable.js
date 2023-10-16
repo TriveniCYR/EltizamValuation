@@ -1,12 +1,12 @@
 ﻿function IntializingDataTable(id, setDefaultOrder, ajaxObject, columnObject, fixedCols) {
     var dataTableInst =
-        $('#' + id + '').removeAttr('width').DataTable({
+        $('#' + id).removeAttr('width').DataTable({
             order: setDefaultOrder,
             scrollX: true,
             scrollCollapse: true,
             fixedColumns: fixedCols,
             autoWidth: false,
-            processing: true,
+            processing: false,
             serverSide: true,
             //stateSave: true,
             orderMulti: false,
