@@ -10,7 +10,8 @@ using System.Security.Principal;
 using Eltizam.Business.Models;
 using Eltizam.Resource;
 using Eltizam.Web.Helpers;
-
+using Eltizam.Utility.Utility;
+using Eltizam.Utility.Models;
 
 namespace Eltizam.Web.Controllers
 {
@@ -55,7 +56,20 @@ namespace Eltizam.Web.Controllers
                         string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                         var oUserDetail = JsonConvert.DeserializeObject<APIResponseEntity<UserSessionEntity>>(jsonResponse);
                         SetUserClaim(oUserDetail._object);
-
+                        HttpContext.Session.SetInt32(UserHelper.LoggedInRoleId, oUserDetail._object.RoleId);
+                        var roles = UtilityHelper.GetModuleRole<dynamic>(oUserDetail._object.RoleId);
+                        if (roles == null)
+                        {
+                            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                            HttpResponseMessage resRoles = objapi.APICommunication(APIURLHelper.GetByPermisionRoleUsingRoleId + "/" + oUserDetail._object.RoleId, HttpMethod.Get, oUserDetail._object.UserToken).Result;
+                            if (resRoles.IsSuccessStatusCode)
+                            {
+                                string rolJson = resRoles.Content.ReadAsStringAsync().Result;
+                                var data = JsonConvert.DeserializeObject<APIResponseEntity<IEnumerable<RolePermissionModel>>>(rolJson);
+                                UtilityHelper.AddModuleRole(oUserDetail._object.RoleId, data._object);
+                                roles = data._object;
+                            }
+                        }
 
                         return RedirectToAction("Resource", "Resource");
                     }

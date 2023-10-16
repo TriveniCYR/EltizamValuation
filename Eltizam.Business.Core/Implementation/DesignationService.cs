@@ -136,7 +136,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterDesignationEntity>> GetDesignationList()
         {
 
-            var lstStf = FJDBHelper.ExecuteMappedReader<MasterDesignationEntity>(ProcedureNameCall.usp_Designation_AllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterDesignationEntity>(ProcedureNameCall.usp_Designation_AllList,
              DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
 
             return lstStf;

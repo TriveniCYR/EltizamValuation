@@ -55,7 +55,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterOwnershipTypeEntity>(ProcedureNameCall.usp_OwnershipType_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterOwnershipTypeEntity>(ProcedureNameCall.usp_OwnershipType_SearchAllList,
 
              DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
 

@@ -1,7 +1,7 @@
 ﻿namespace Eltizam.Utility.Enums
 {
-    public enum Master_PIDFStatus
-    {
+    public enum Master_ApplicationStatus
+	{
         PIDFInProgress = 1,
         PIDFSubmitted = 2,
         PIDFApproved = 3,

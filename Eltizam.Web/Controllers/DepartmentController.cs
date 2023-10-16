@@ -35,7 +35,7 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 int rolId = _helper.GetLoggedInRoleId();
-                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleManagement, rolId);
+                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
                 ViewBag._objPermission = objPermssion;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new APIRepository(_cofiguration);
@@ -95,11 +95,16 @@ namespace EltizamValuation.Web.Controllers
         }
 
        
-        public IActionResult DepartmentManage(int? id)
+        public IActionResult DepartmentManage(int? id ,string view)
         {
             if (id != null)
             {
                 ViewData["IsEdit"] = true;
+            }
+
+            if (view != null)
+            {
+                ViewData["IsView"] = true;
             }
             MasterDepartmentEntity masterDepartment;
             if (id == null || id <= 0)

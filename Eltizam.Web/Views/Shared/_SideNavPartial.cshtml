@@ -1,5 +1,14 @@
-﻿
+﻿@using Eltizam.Web.Controllers;
+@using Microsoft.AspNetCore.Http;
+@using Eltizam.Web.Helpers;
+@using Eltizam.Utility.Utility;
+@using Eltizam.Utility.Enums;
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@inject IHelper Helper
 <div>
+
     <aside class="sideNavDashboard visible-in-web" id="sideNav">
         <div class="text-center">
             <img src="../assets/logo.svg" alt="logo" class="dashboard-logo">
@@ -12,86 +21,136 @@
             </ul>
             <p>MASTERS</p>
             <ul>
-                <li class="activeSideMenu">
-                    <div class="flex align-item-center">
-                        <img src="../assets/user-cog.svg" alt="Resource Master" class="showIcon">
-                        <img src="../assets/user-cog-blue.svg" alt="Resource Master" class="hoverIcon">
-                        <p>Resource Master</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex align-item-center">
-                        <img src="../assets/user-star.svg" alt="Role Master" class="showIcon">
-                        <img src="../assets/user-star-blue.svg" alt="Role Master" class="hoverIcon">
-                       @*  <p>Role Master</p> *@
-                        <a href="@Url.Action("Roles", "Role")" class="nav-link">Role Master</a>
-                    </div>
-                </li>
-                <li onclick="userMaster()">
-                    <div class="flex align-item-center">
-                        <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
-                        <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
-                        @* <p>System User Master</p> *@
-                        <a href="@Url.Action("ClientType", "ClientType")" class="nav-link">Client Type</a>
-                    </div>
-                </li>
-                <li onclick="designation()">
-                    <div class="flex align-item-center">
-                        <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
-                        <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
-                        <a href="@Url.Action("Designation", "Designation")" class="nav-link">Designation Master</a>
-                    </div>
-                </li>
-                <li onclick="department()">
-                    <div class="flex align-item-center">
-                        <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
-                        <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
-                        <a href="@Url.Action("Department", "Department")" class="nav-link">Department Master</a>
-                    </div>
-                </li>
-                <li onclick="locationMaster()">
-                    <div class="flex align-item-center">
-                        <img src="../assets/current-location.svg" class="showIcon" alt="Location Master">
-                        <img src="../assets/current-location-blue.svg" class="hoverIcon" alt="Location Master">
-                        <p>Location Master</p>
-                    </div>
-                </li>
-                <li onclick="propTypeMaster()">
-                    <div class="flex align-item-center">
-                        <img src="../assets/building-community.svg" class="showIcon" alt="Property Type Master">
-                        <img src="../assets/building-community-blue.svg" class="hoverIcon" alt="Property Type Master">
-                        <p>Property Type Master</p>
-                    </div>
-                </li>
-                <li onclick="propMaster()">
-                    <div class="flex align-item-center">
-                        <img src="../assets/building-fortress.svg" class="showIcon" alt="Property Master">
-                        <img src="../assets/building-fortress-blue.svg" class="hoverIcon" alt="Property Master">
-                        <p>Property Master</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex align-item-center">
-                        <img src="../assets/user-bolt.svg" class="showIcon" alt="Client Master">
-                        <img src="../assets/user-bolt-blue.svg" class="hoverIcon" alt="Client Master">
-                        <a href="@Url.Action("Client", "Client")" class="nav-link">Client Master</a>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex align-item-center">
-                        <img src="../assets/home-dollar.svg" class="showIcon" alt="Valuation Fees Master">
-                        <img src="../assets/home-dollar-blue.svg" class="hoverIcon" alt="Valuation Fees Master">
-                        <p>Valuation Fees Master</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex align-item-center">
-                        <img src="../assets/users-group.svg" class="showIcon" alt="Vendor Master">
-                        <img src="../assets/users-group-blue.svg" class="hoverIcon" alt="Vendor Master">
-                        <p>Vendor Master</p>
-                    </div>
-                </li>
+                @if (Helper.GetLoggedInRoleId() != 0)
+                {
+                    int _roleId = Helper.GetLoggedInRoleId();
+                   @*  var menuItems = UtilityHelper.GetMenu(_roleId); *@
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ResourceMaster, _roleId))
+                    {
+                        <li onclick="resourceMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-cog.svg" alt="Resource Master" class="showIcon">
+                                <img src="../assets/user-cog-blue.svg" alt="Resource Master" class="hoverIcon">
+                                <p>Resource Master</p>
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu" />
+                            </div>
+
+                            <div class="showMoreNav">
+                                <ul>
+                                    <li class="activeSideMenu">Resource List</li>
+                                    <li>Add New</li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.RoleMaster, _roleId))
+                    {
+                        <li class="activeSideMenu">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-star.svg" alt="Role Master" class="showIcon">
+                                <img src="../assets/user-star-blue.svg" alt="Role Master" class="hoverIcon">
+                                @*  <p>Role Master</p> *@
+                                <a href="@Url.Action("Roles", "Role")" class="nav-link">Role Master</a>
+                            </div>
+                        </li>
+                    }
+
+                    <li onclick="userMaster()">
+                        <div class="flex align-item-center">
+                            <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                            <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                            @* <p>System User Master</p> *@
+                            <a href="@Url.Action("ClientType", "ClientType")" class="nav-link">Client Type</a>
+                        </div>
+                    </li>
+
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.DesignationMaster, _roleId))
+                    {
+
+                        <li onclick="designation()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                                <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                                <a href="@Url.Action("Designation", "Designation")" class="nav-link">Designation Master</a>
+                            </div>
+                        </li>
+                    }
+
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.DepartmentMaster, _roleId))
+                    {
+
+                        <li onclick="department()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                                <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                                <a href="@Url.Action("Department", "Department")" class="nav-link">Department Master</a>
+                            </div>
+                        </li>
+                    }
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.LocationMaster, _roleId))
+                    {
+                        <li onclick="locationMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/current-location.svg" class="showIcon" alt="Location Master">
+                                <img src="../assets/current-location-blue.svg" class="hoverIcon" alt="Location Master">
+                                <p>Location Master</p>
+                            </div>
+                        </li>
+                    }
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.LocationMaster, _roleId))
+                    {
+                        <li onclick="propTypeMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/building-community.svg" class="showIcon" alt="Property Type Master">
+                                <img src="../assets/building-community-blue.svg" class="hoverIcon" alt="Property Type Master">
+                                <p>Property Type Master</p>
+                            </div>
+                        </li>
+                    }
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.PropertyMaster, _roleId))
+                    {
+                        <li onclick="propMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/building-fortress.svg" class="showIcon" alt="Property Master">
+                                <img src="../assets/building-fortress-blue.svg" class="hoverIcon" alt="Property Master">
+                                <p>Property Master</p>
+                            </div>
+                        </li>
+                    }
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ClientMaster, _roleId))
+                    {
+                        <li>
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-bolt.svg" class="showIcon" alt="Client Master">
+                                <img src="../assets/user-bolt-blue.svg" class="hoverIcon" alt="Client Master">
+                                <p>Client Master</p>
+                            </div>
+                        </li>
+                    }
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ValutionFessMaster, _roleId))
+                    {
+                        <li>
+                            <div class="flex align-item-center">
+                                <img src="../assets/home-dollar.svg" class="showIcon" alt="Valuation Fees Master">
+                                <img src="../assets/home-dollar-blue.svg" class="hoverIcon" alt="Valuation Fees Master">
+                                <p>Valuation Fees Master</p>
+                            </div>
+                        </li>
+                    }
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.VendorMaster, _roleId))
+                    {
+                        <li>
+                            <div class="flex align-item-center">
+                                <img src="../assets/users-group.svg" class="showIcon" alt="Vendor Master">
+                                <img src="../assets/users-group-blue.svg" class="hoverIcon" alt="Vendor Master">
+                                <p>Vendor Master</p>
+                            </div>
+                        </li>
+                    }
+                }
             </ul>
+
             <p>MANAGEMENTS</p>
             <ul>
                 <li>

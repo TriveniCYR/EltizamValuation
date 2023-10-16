@@ -79,7 +79,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
                  new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
                 };
-                var UserAddress = FJDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (UserAddress != null)
                 {
                     _userEntity.Address = UserAddress;
@@ -90,7 +90,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
                  new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
                 };
-                var UserQualification = FJDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureNameCall.usp_Qualification_GetQualificationByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter1);
+                var UserQualification = EltizamDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureNameCall.usp_Qualification_GetQualificationByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter1);
                 if (UserQualification != null)
                 {
                     _userEntity.Qualification = UserQualification;
@@ -102,7 +102,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
                  new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
                 };
-                var UserDocuments = FJDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureNameCall.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureNameCall.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
                 if (UserDocuments != null)
                 {
                     _userEntity.Documents = UserDocuments;
@@ -275,7 +275,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterResourceTypeModel>> GetResourceTypeList()
         {
 
-            var lstStf = FJDBHelper.ExecuteMappedReader<MasterResourceTypeModel>(ProcedureNameCall.usp_ResourceType_AllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterResourceTypeModel>(ProcedureNameCall.usp_ResourceType_AllList,
              DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
 
             return lstStf;
@@ -283,7 +283,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterRoleModel>> GetRoleList()
         {
 
-            var lstStf = FJDBHelper.ExecuteMappedReader<MasterRoleModel>(ProcedureNameCall.usp_Role_AllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterRoleModel>(ProcedureNameCall.usp_Role_AllList,
              DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
 
             return lstStf;

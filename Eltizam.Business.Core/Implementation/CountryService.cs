@@ -54,7 +54,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCountryModel>(ProcedureNameCall.usp_Country_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCountryModel>(ProcedureNameCall.usp_Country_SearchAllList,
 
              _dbConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
@@ -127,7 +127,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterCountryModel>> GetCountryList()
         {
 
-            var lstStf = FJDBHelper.ExecuteMappedReader<MasterCountryModel>(ProcedureNameCall.usp_Country_AllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterCountryModel>(ProcedureNameCall.usp_Country_AllList,
              DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
 
             return lstStf;

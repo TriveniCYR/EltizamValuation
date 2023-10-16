@@ -42,7 +42,7 @@ $(document)
     .ajaxStart(function () {
         //ajax request went so show the loading image
         /*$('#mainLoader').height("100vh").find("img").show();*/
-       
+
         $('#loading-wrapper').show();
     })
     .ajaxStop(function () {
@@ -119,7 +119,44 @@ function RemoveDataTable(selector) {
     $(selector).dataTable().fnClearTable();
     $(selector).dataTable().fnDestroy();
 }
+/*Pagination Code*/
+//function StaticDataTable(selector, dom, buttons) {
+//    if (dom == null || dom == undefined) {
+//        dom = '<"top"i>rt<"bottom"flp><"clear">'; // "Bfrtip"
+//    }
 
+//    var _datatableInstance = $(selector).DataTable({
+//        responsive: true,
+//        ordering: true,
+//        lengthChange: true,
+//        autoWidth: true,
+//        retrieve: true,
+//        "aLengthMenu": [[10, 25, 50, 75, 100, -1], [10, 25, 50, 75, 100, "All"]],
+//        "iDisplayLength": 10,
+//        processing: true,
+//        stateSaveCallback: function (settings, data) {
+//            localStorage.setItem('DataTables_' + settings.sInstance, JSON.stringify(data));
+//        },
+//        stateLoadCallback: function (settings, data) {
+//            return JSON.parse(localStorage.getItem('DataTables_' + settings.sInstance));
+//        },
+//        buttons: [
+//            {
+//                extend: 'excel', text: '<i class="far fa-file-excel"></i> Export In Excel ', className: "btn-primary", exportOptions: {
+//                    columns: ':not(.notexport)'
+//                }
+//            },
+//            { extend: 'colvis', className: "btn-primary", columns: ':not(.notexport)' }
+//        ],
+//        language: {
+//            'loadingRecords': '&nbsp;',
+//            'processing': '<div class="spinner"></div>'
+//        }
+//    });
+//    return _datatableInstance;
+//}
+
+/*with excel function*/
 function StaticDataTable(selector, dom, buttons) {
     //if (buttons == null || buttons == undefined) {
     //    Column visibility
@@ -201,31 +238,31 @@ $(document).ready(function () {
     $('input[type=number]').each(function (index, element) {
         /*if ($(this).attr('type') == 'number') {*/
 
-            //console.log($(this).val(), index)
-            //if ((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
-                $(this).attr('pattern', '[0-9]')
-                $(this).attr('onkeypress', 'preventCharacters(event)');
-            //}
-            //else if (navigator.userAgent.indexOf("Chrome") != -1) {
-            //    //alert('Chrome');
-            //}
-            //else if (navigator.userAgent.indexOf("Safari") != -1) {
-            //    //alert('Safari');
-            //}
-            //else if (navigator.userAgent.indexOf("Firefox") != -1) {
-            //    //alert('Firefox');
-            //    $(this).attr('pattern', '[0-9]')
-            //    $(this).attr('onkeypress','preventCharacters(event)');
+        //console.log($(this).val(), index)
+        //if ((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
+        $(this).attr('pattern', '[0-9]')
+        $(this).attr('onkeypress', 'preventCharacters(event)');
+        //}
+        //else if (navigator.userAgent.indexOf("Chrome") != -1) {
+        //    //alert('Chrome');
+        //}
+        //else if (navigator.userAgent.indexOf("Safari") != -1) {
+        //    //alert('Safari');
+        //}
+        //else if (navigator.userAgent.indexOf("Firefox") != -1) {
+        //    //alert('Firefox');
+        //    $(this).attr('pattern', '[0-9]')
+        //    $(this).attr('onkeypress','preventCharacters(event)');
 
-            //}
-            //else if ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) {
-            //    //alert('IE');
-            //}
-            //else {
-            //    //alert('unknown');
-            //}
-       // }
-       
+        //}
+        //else if ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) {
+        //    //alert('IE');
+        //}
+        //else {
+        //    //alert('unknown');
+        //}
+        // }
+
     })
     //$('select.select2-hidden-accessible').each(function (index, element) {
 
@@ -445,7 +482,7 @@ $('.form-control').keyup(function () {
 
         $(this).val(newValue);
     }
-  
+
 })
 function updateTextView(_obj) {
     var num = getNumber(_obj.val());
@@ -476,12 +513,12 @@ function checkDuplicateLogin() {
         url: $('#hdnWebBaseURL').val() + "Home/IsDuplidateLogin",
         type: 'GET',
         success: function (res) {
-           // console.log(res._object);
-            
+            // console.log(res._object);
+
         }
     });
 }
-function DispalyStatusOfBUByInterested(data,BUTabData_Div, NonIntNote_Div, NonIntNote_HeadingNote) {
+function DispalyStatusOfBUByInterested(data, BUTabData_Div, NonIntNote_Div, NonIntNote_HeadingNote) {
     var IsINterestedBU = true;
     if (true) {
         if (data != null || data != undefined) {

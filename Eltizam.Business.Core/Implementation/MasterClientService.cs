@@ -302,7 +302,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableName", "Master_User", SqlDbType.VarChar),
                 };
 
-                int result = FJDBHelper.ExecuteSingleMappedReader<int>("usp_Client_DeleteContactByClientId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                int result = EltizamDBHelper.ExecuteSingleMappedReader<int>("usp_Client_DeleteContactByClientId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (result > 0)
                 {
 
