@@ -1,12 +1,12 @@
 ﻿function IntializingDataTable(id, setDefaultOrder, ajaxObject, columnObject, fixedCols) {
     var dataTableInst =
-        $('#' + id + '').removeAttr('width').DataTable({
+        $('#' + id).removeAttr('width').DataTable({
             order: setDefaultOrder,
             scrollX: true,
             scrollCollapse: true,
             fixedColumns: fixedCols,
             autoWidth: false,
-            processing: true,
+            processing: false,
             serverSide: true,
             //stateSave: true,
             orderMulti: false,
@@ -29,14 +29,14 @@
             stateLoadCallback: function (settings, data) {
                 return JSON.parse(localStorage.getItem('DataTables_' + settings.sInstance));
             },
-            //buttons: [
-            //    {
-            //        extend: 'excel', text: '<i class="far fa-file-excel"></i> Export In Excel ', className: "btn-primary", exportOptions: {
-            //            columns: ':not(.notexport)'
-            //        }
-            //    },
-            //    { extend: 'colvis', className: "btn-primary", columns: ':not(.notexport)' }
-            //],
+            buttons: [
+                {
+                    extend: 'excel', text: '<i class="far fa-file-excel"></i> Export In Excel ', className: "btn-primary", exportOptions: {
+                        columns: ':not(.notexport)'
+                    }
+                },
+                { extend: 'colvis', className: "btn-primary", columns: ':not(.notexport)' }
+            ],
             "ajax": ajaxObject,
             //"fnRowCallback": rowCallBack,
             "columns": columnObject,

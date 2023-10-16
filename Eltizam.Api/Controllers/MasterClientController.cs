@@ -31,7 +31,7 @@ namespace EltizamValuation.Api.Controllers
         #region API Methods
         [HttpPost]
         [Route("Upsert")]
-        public async Task<IActionResult> Upsert(Master_ClientModel client)
+        public async Task<IActionResult> Upsert(MasterClientModel client)
         {
             try
             {

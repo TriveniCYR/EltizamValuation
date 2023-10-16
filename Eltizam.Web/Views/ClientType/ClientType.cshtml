@@ -13,234 +13,225 @@
 }
 @model Eltizam.Business.Models.Master_ClientTypeModel
 
-    <!-- system user master -->
-    <div class="flex">
-       
-       
-            
-            <main>
-                <h3 class="dashboardTitle">CLIENT TYPE MASTER</h3>
-        <div class="flex justify-end mb-28 mobile_flexColumn position-relative">
-                    @*<div class="flex">
-                        <label class="searchBox position-relative">
-                            <div class="flex align-item-center">
-                                <img src="../assets/search.svg" alt="search">
-                            <input type="text" id="txtClientType" placeholder="Search for System" class="searchInput">
-                            </div>
-                        <button class="normalSearch" onclick="ClientTypeList()">Search</button>
-                        </label>
-                    </div>*@
-                    <div class="buttonArea flex align-item-center">
-                        <button class="flex align-item-center blueBtn" id="addRole">
-                            <img src="../assets/plus.svg" alt="plus"> Add New
-                        </button>
-                        
-                        
-                        <button class="flex align-item-center lineBtn" id="importFile">
-                            <img src="../assets/file-import.svg" alt="file-import"/>
-                            Import
-                        </button>
+<!-- system user master -->
+<div class="flex">
 
-                        <button class="flex align-item-center lineBtn exportFile">
-                            <img src="../assets/file-export.svg" alt="file-export"> Export
-                            <div class="actionItem">
-                                <ul>
-                                    <li>
-                                        Excel XML
-                                    </li>
-                                    <li>
-                                        CSV
-                                    </li>
-                                </ul>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-                <div class="scroll-x">
-            <table id="ClientTypeTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Client Type</th>
-                                <th>IsActive</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                <tbody>
 
-                        </tbody>
-                    </table>
-                </div>
-                @*<div class="flex justify-between align-item-center mobile_flexColumn">
-                    <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
-                    <div class="flex justify-between align-item-center pagination">
-                        <p>Previous</p>
-                        <ul class="flex justify-between">
-                            <li class="active">1</li>
-                            <li>2</li>
-                            <li>3</li>
+
+    <main>
+        <div class="flex justify-between mobile_flexColumn position-relative mt-20">
+            <h3 class="dashboardTitle">CLIENT TYPE MASTER</h3>
+            @*<div class="flex">
+            <label class="searchBox position-relative">
+            <div class="flex align-item-center">
+            <img src="../assets/search.svg" alt="search">
+            <input type="text" id="txtClientType" placeholder="Search for System" class="searchInput">
+            </div>
+            <button class="normalSearch" onclick="ClientTypeList()">Search</button>
+            </label>
+            </div>*@
+            <div class="buttonArea flex align-item-center">
+                <button class="flex align-item-center blueBtn" id="addRole">
+                    <img src="../assets/plus.svg" alt="plus"> Add New
+                </button>
+
+
+                <button class="flex align-item-center lineBtn" id="importFile">
+                    <img src="../assets/file-import.svg" alt="file-import" />
+                    Import
+                </button>
+
+                <button class="flex align-item-center lineBtn exportFile">
+                    <img src="../assets/file-export.svg" alt="file-export"> Export
+                    <div class="actionItem">
+                        <ul>
+                            <li>
+                                Excel XML
+                            </li>
+                            <li>
+                                CSV
+                            </li>
                         </ul>
-                        <p>Next</p>
                     </div>
-                </div>*@
-            </main>
-            <footer class="flex justify-between">
-                <p>2023 © Eltizam.</p>
-                <p>Design & Develop by NeoSoft</p>
-            </footer>
-           
-
-            <!-- popup import model -->
-            <div class="popup-overlay" id="popup-import-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">Import Client Type
-                            <img src="../assets/x.svg" alt="x" id="closePopup">
-                        </div>
-                        <div class="popup-action importBox">
-                            <p class="text-left">Browse File</p>
-                            <div class="inputBox">
-                                <input type="file" name="file" id="file" class="file"/>
-                                <div class="flex">
-                                    <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name"/>
-                                    <div class="uploadFileBtn flex">
-                                        <img src="../assets/files.svg" alt="file">
-                                        <input type="button" class="btn" value="Browse"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="buttonArea popup-btn">
-                                <button class="bgBlue">Submit</button>
-                                <button class="lineBtn">Download Template</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </button>
             </div>
-
-            <!-- popup add property type model -->
-            <div class="popup-overlay w-800Popup" id="popup-addRole-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">Add Client Type
-                            <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
-                        </div>
-                        <div class="popup-action inputSearchs">
-                            <form  method="post" onsubmit="return SaveClientTypeForm(this)">
-                                @Html.HiddenFor(m => m.Id);
-                                <div class="flex">
-                                    <label for="ClientType">
-                                    ClientType
-                                        @Html.TextBoxFor(m => m.ClientType, new {@class = "form-control",  @placeholder = @SharedLocalizer["Client Type"] })
-                                    </label>
-                                <label for="" class="w-50">
-                                    Status
-                                    <input class='input-switch' type="checkbox" asp-for="IsActive"/>
-                                <label class="label-switch" for="IsActive"></label>
-                                    <span class="info-text"></span>
-                                </label>
-                                </div>
-                            <div class="buttonArea centerBtn">
-                                <button class="bgBlue">Submit</button>
-                            </div>
-
-                        </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-             <!-- popup delete model -->
-             <div class="popup-overlay" id="popup-delete-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head">Delete Client Type</div>
-                        <div class="popup-action">
-                            <p>Are you sure you want to delete?</p>
-                            <div class="buttonArea popup-btn">
-                                <button id="cancelDeleteUser">Cancel</button>
-                                <button class="redBtn">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             
-            
-            <!-- popup edit property type model -->
-            <div class="popup-overlay w-800Popup" id="popup-editProp-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">Edit Property Type
-                            <img src="../assets/x.svg" alt="x" id="closePopup" onclick="closePropType()">
-                        </div>
-                        <div class="popup-action inputSearchs">
-                            <form method="post" onsubmit="return SaveClientTypeForm(this)">
-                                @Html.HiddenFor(m => m.Id);
-                                <div class="flex">
-                                    <label for="ClientType">
-                                        ClientType
-                                        @Html.TextBoxFor(m => m.ClientType, new {@class = "form-control",  @placeholder = @SharedLocalizer["Client Type"] })
-                                    </label>
-                                    <label for="" class="w-50">
-                                        Status
-                                        <input class='input-switch' type="checkbox" asp-for="IsActive" />
-                                        <label class="label-switch" for="IsActive"></label>
-                                        <span class="info-text"></span>
-                                    </label>
-                                </div>
-                                <div class="buttonArea centerBtn">
-                                    <button class="bgBlue">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- popup view property type model -->
-            <div class="popup-overlay w-800Popup" id="popup-viewProp-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">View Property Type
-                            <img src="../assets/x.svg" alt="x" id="closePopup" onclick="closeviewPropType()">
-                        </div>
-                        <div class="popup-action inputSearchs">
-                            <form>
-                                <div class="flex">
-                                    <label for="">
-                                        Property Type Namee
-                                        <select name="propertyTypeName" id="propertyTypeName">
-                                            <option value="countryName1">Property Type Name</option>
-                                            <option value="countryName2">Property Type Name</option>
-                                            <option value="countryName3">Property Type Name</option>
-                                        </select>
-                                    </label>
-                                    <label for="regionMaster">
-                                        Property Sub-Type Name
-                                        <select name="propertySubTypeName" id="propertySubTypeName">
-                                            <option value="propertySubTypeName">Property SUb Type Name</option>
-                                            <option value="propertySubTypeName">Property Sub Type Name</option>
-                                            <option value="propertySubTypeName">Property Sub Type Name</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="resourceType">
-                                        Status
-                                        <input class='input-switch' type="checkbox" id="addLocation"/>
-                                        <label class="label-switch" for="addLocation"></label>
-                                        <span class="info-text"></span>
-                                    </label>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-
         </div>
+        <div class="scroll-x">
+            <table id="ClientTypeTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Client Type</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        @*<div class="flex justify-between align-item-center mobile_flexColumn">
+        <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
+        <div class="flex justify-between align-item-center pagination">
+        <p>Previous</p>
+        <ul class="flex justify-between">
+        <li class="active">1</li>
+        <li>2</li>
+        <li>3</li>
+        </ul>
+        <p>Next</p>
+        </div>
+        </div>*@
+    </main>
+    <footer class="flex justify-between">
+        <p>2023 © Eltizam.</p>
+        <p>Design & Develop by NeoSoft</p>
+    </footer>
+
+
+    <!-- popup import model -->
+    <div class="popup-overlay" id="popup-import-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Import Client Type
+                    <img src="../assets/x.svg" alt="x" id="closePopup">
+                </div>
+                <div class="popup-action importBox">
+                    <p class="text-left">Browse File</p>
+                    <div class="inputBox">
+                        <input type="file" name="file" id="file" class="file" />
+                        <div class="flex">
+                            <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                            <div class="uploadFileBtn flex">
+                                <img src="../assets/files.svg" alt="file">
+                                <input type="button" class="btn" value="Browse" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonArea popup-btn">
+                        <button class="bgBlue">Submit</button>
+                        <button class="lineBtn">Download Template</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup add property type model -->
+    <div class="popup-overlay w-800Popup" id="popup-addRole-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Add Client Type
+                    <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
+                </div>
+                <div class="popup-action inputSearchs">
+                    <form method="post" onsubmit="return SaveClientTypeForm(this)">
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="flex">
+                            <label for="ClientType">
+                                ClientType
+                                @Html.TextBoxFor(m => m.ClientType, new {@class = "form-control",  @placeholder = @SharedLocalizer["Client Type"] })
+                            </label>
+                            <label for="" class="w-50">
+                                Status
+                                <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                <label class="label-switch" for="IsActive"></label>
+                                <span class="info-text"></span>
+                            </label>
+                        </div>
+                        <div class="buttonArea centerBtn">
+                            <button class="bgBlue">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup delete model -->
+    <div class="popup-overlay" id="popup-delete-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head">
+                    Delete Client Type
+                    @Html.Hidden("ClientTypeID")
+                    <p>Are you sure you want to delete?</p>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser" onclick="closePropType()">Cancel</button>
+                        <button class="redBtn" onlclick="DeleteClientType()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- popup edit property type model -->
+    <div class="popup-overlay w-800Popup" id="popup-editProp-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Edit Property Type
+                    <img src="../assets/x.svg" alt="x" id="closePopup" onclick="closePropType()">
+                </div>
+                <div class="popup-action inputSearchs">
+                    <form method="post" onsubmit="return SaveClientTypeForm(this)">
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="flex">
+                            <label for="ClientType">
+                                ClientType
+                                @Html.TextBoxFor(m => m.ClientType, new {@class = "form-control",  @placeholder = @SharedLocalizer["Client Type"] })
+                            </label>
+                            <label for="" class="w-50">
+                                Status
+                                <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                <label class="label-switch" for="IsActive"></label>
+                                <span class="info-text"></span>
+                            </label>
+                        </div>
+                        <div class="buttonArea centerBtn">
+                            <button class="bgBlue">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup view property type model -->
+    <div class="popup-overlay w-800Popup" id="popup-viewProp-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    View Property Type
+                    <img src="../assets/x.svg" alt="x" id="closePopup" onclick="closeviewPropType()">
+                </div>
+                <div class="popup-action inputSearchs">
+                    <form>
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="flex">
+                            <label for="ClientType">
+                                ClientType
+                                @Html.DisplayFor(m => m.ClientType, new {@class = "form-control",  @placeholder = @SharedLocalizer["Client Type"] })
+                            </label>
+                            <label for="" class="w-50">
+                                Status
+                                <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                <label class="label-switch" for="IsActive"></label>
+                                <span class="info-text"></span>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 @section MyScripts {
 
     @Html.Partial("_DataTablePartial")
@@ -295,7 +286,21 @@
             closePopup.addEventListener("click", () => addRolePopup.classList.remove("display-block"));
         });
 
-        
+
+        // delete js function for delete user popup
+        document.addEventListener("DOMContentLoaded", () => {
+            const deleteUser = document.querySelectorAll(".delete");
+            const deletePopup = document.getElementById("popup-delete-overlay");
+            const cancelDeleteUser = document.getElementById("cancelDeleteUser");
+
+            deleteUser.forEach((li) => {
+                li.addEventListener("click", () => deletePopup.classList.add("display-block"));
+                cancelDeleteUser.addEventListener("click", () => deletePopup.classList.remove("display-block"));
+            });
+        });
+                // ends
+
+
     </script>
 }
 

@@ -12,7 +12,7 @@ function GetClientTypeListSuccess(data) {
         destoryStaticDataTable('#ClientTypeTable');
         $('#ClientTypeTable tbody').html('');
         $.each(data._object, function (index, object) { //  <td>' + object.ClientTypeCode + '</td>  <td>' + object.isdClientTypeCode + '</td>  
-            $('#ClientTypeTable tbody').append(' <tr><td>' + object.id + '</td><td>' + object.clientType + '</td><td>' + (object.isActive = 1 ? "YES" : "NO") + '</td><td class="position-relative"> <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"> <ul> <li onClick="view(' + object.id + ')" ><img src="../assets/view.svg" alt = "view" /> view </li>  <li onclick="GetClientTypeById(' + object.id + ')"><div onclick="edit()"><img src="../assets/edit.svg" alt = "edit" /> Edit </div></li>    <li class="delete"> <img src="../assets/trash.svg" alt = "trash" /> Delete </li>  </ul> </div> </td> </tr>');
+            $('#ClientTypeTable tbody').append(' <tr><td>' + object.id + '</td><td>' + object.clientType + '</td><td>' + (object.isActive == true ? '<span class="tableStatus green">Active</span>' : '<span class="tableStatus red">Inactive</span>') + '</td><td class="position-relative"> <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"> <ul> <li onClick="view(' + object.id + ')" ><img src="../assets/view.svg" alt = "view" /> view </li>  <li onclick="GetClientTypeById(' + object.id + ')"><div onclick="edit()"><img src="../assets/edit.svg" alt = "edit" /> Edit </div></li>    <li onclick="deleteClient()" class="delete"><div onclick="ConfirmationDeleteClientType(' + object.id + '); return false;"> <img src="../assets/trash.svg" alt = "trash" /> Delete </div></li>  </ul> </div> </td> </tr>');
         });
         StaticDataTable("#ClientTypeTable");
     } catch (e) {
@@ -106,10 +106,12 @@ function CleareClientTypeFields() {
 
 //#region Delete ClientType
 function ConfirmationDeleteClientType(id) {
-    $('#DeleteClientTypeModel #ClientTypeID').val(id);
+    debugger
+    $('#popup-delete-overlay #ClientTypeID').val(id);
 }
 function DeleteClientType() {
-    var tempInAtiveID = $('#DeleteClientTypeModel #ClientTypeID').val();
+    debugger
+    var tempInAtiveID = $('#popup-delete-overlay #ClientTypeID').val();
     ajaxServiceMethod($('#hdnBaseURL').val() + DeleteClientTypeByIdUrl + "/" + tempInAtiveID, 'POST', DeleteClientTypeByIdSuccess, DeleteClientTypeByIdError);
 }
 function DeleteClientTypeByIdSuccess(data) {
@@ -129,3 +131,10 @@ function DeleteClientTypeByIdSuccess(data) {
 function DeleteClientTypeByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
+
+const deletePopup = document.getElementById("popup-delete-overlay");
+
+function deleteClient() {
+    deletePopup.classList.add("display-block");
+}
+
