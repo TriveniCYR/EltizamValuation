@@ -139,16 +139,19 @@ namespace Eltizam.Web.Controllers
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ForgotPassword, HttpMethod.Post, string.Empty, new StringContent(JsonConvert.SerializeObject(forgotPasswordViewModel))).Result;
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    ViewBag.Message = Customs.msgLinkToResetpasswordSentOnEmail;
+                    ViewBag.SuccessMessage = Customs.msgLinkToResetpasswordSentOnEmail;
+                    return View("ForgetPassword");
+
                 }
                 else // if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    ViewBag.Message = Customs.SomeErrorOccurred;
+                    ViewBag.ErrorMessage = Customs.SomeErrorOccurred;
                 }
             }
             else
             {
-                ViewBag.errormessage = Customs.msgEmailAddressNotExistIndatabase;
+                ViewBag.ErrorMessage = Customs.msgEmailAddressNotExistIndatabase;
+                return View("ForgetPassword");
             }
             return View(forgotPasswordViewModel);
         }
