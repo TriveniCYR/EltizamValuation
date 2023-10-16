@@ -28,6 +28,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 		private readonly IStringLocalizer<Errors> _stringLocalizerError;
 		private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
 		private IRepository<MasterUser> _repository { get; set; }
+		private IRepository<EmailLogHistory> _emailLog { get; set; }
 
 		private IRepository<MasterBusinessUnit> _businessUnitRepository { get; set; }
 
@@ -38,7 +39,9 @@ namespace Eltizam.Business.Core.ServiceImplementations
 		{
 			_unitOfWork = unitOfWork;
 			_mapperFactory = mapperFactory;
+			
 			_repository = _unitOfWork.GetRepository<MasterUser>();
+			_emailLog = _unitOfWork.GetRepository<EmailLogHistory>();
 			_businessUnitRepository = _unitOfWork.GetRepository<MasterBusinessUnit>();
 			configuration = _configuration;
 			_helper = helper;
@@ -234,6 +237,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         public async Task<DBOperation> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
         {
             EmailHelper email = new EmailHelper();
+			bool IsSuccess = false;
             string baseURL = forgotPasswordViewModel.WebApplicationUrl;
             var entityUser = _repository.Get(x => x.Email == forgotPasswordViewModel.Email);
             if (entityUser == null)
@@ -249,7 +253,19 @@ namespace Eltizam.Business.Core.ServiceImplementations
             strHtml = strHtml.Replace("ValidateURL", strURL);
             strHtml = strHtml.Replace("ValidDateTime", entityUser.ForgotPasswordDateTime.Value.AddHours(1).ToString());
             strHtml = strHtml.Replace("Name", entityUser.FirstName + entityUser.LastName);
-            email.SendMail(entityUser.Email, string.Empty, "Emcure NPD - Forgot Password", strHtml, GetSMTPConfiguration());
+            IsSuccess = email.SendMail(entityUser.Email, string.Empty, "Eltizam - Forgot Password", strHtml, GetSMTPConfiguration());
+            EmailLogHistory  emailLogHistory = new EmailLogHistory();
+			emailLogHistory.FromAddress = entityUser.Email;
+			emailLogHistory.ToAddress = entityUser.Email;
+			emailLogHistory.Subject = "Eltizam - Forgot Password";
+			emailLogHistory.EmailResponse = "";
+			emailLogHistory.CreatedBy = null;
+			emailLogHistory.CreatedDate = DateTime.Now;
+			emailLogHistory.Body = strHtml;
+			emailLogHistory.IsSent = IsSuccess;
+			_emailLog.Add(emailLogHistory);
+            await _unitOfWork.SaveChangesAsync();
+            //if (IsSuccess)
             return DBOperation.Success;
         }
 

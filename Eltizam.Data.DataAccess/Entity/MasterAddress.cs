@@ -28,7 +28,5 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifiedBy { get; set; }
 
         public virtual MasterCity? City { get; set; }
-        public virtual MasterCountry? Country { get; set; }
-        public virtual MasterState? State { get; set; }
     }
 }

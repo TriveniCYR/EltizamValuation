@@ -143,9 +143,10 @@ namespace Eltizam.Web.Controllers
                     return View("ForgetPassword");
 
                 }
-                else // if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
+                else //if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
                 {
                     ViewBag.ErrorMessage = Customs.SomeErrorOccurred;
+                    //return View("ForgetPassword");
                 }
             }
             else
@@ -153,7 +154,7 @@ namespace Eltizam.Web.Controllers
                 ViewBag.ErrorMessage = Customs.msgEmailAddressNotExistIndatabase;
                 return View("ForgetPassword");
             }
-            return View(forgotPasswordViewModel);
+            return View("ForgetPassword");
         }
 
         // if CheckEmailAddressExists() is false then Email Id Exist in Db

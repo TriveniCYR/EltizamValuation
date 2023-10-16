@@ -10,12 +10,14 @@ namespace Eltizam.Utility.Helpers
 {
     public class EmailHelper
     {
-        public void SendMail(string toList, string ccList, string subject, string body, SMTPEntityViewModel _smtpEntity)
+        public bool SendMail(string toList, string ccList, string subject, string body, SMTPEntityViewModel _smtpEntity)
         {
+            bool IsSuccess = false;
             try
             {
                 string msg = string.Empty;
-
+                var err = string.Empty;
+                
                 MailMessage message = new MailMessage();
                 MailAddress fromAddress = new MailAddress(_smtpEntity.FromEmail);
                 message.From = fromAddress;
@@ -35,12 +37,17 @@ namespace Eltizam.Utility.Helpers
                     smtpClient.UseDefaultCredentials = true;
                     smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                     string fileName = @"C:\Log\logger.txt";
+                    EmailLogHistoryModel emailLogHistory = new EmailLogHistoryModel();
                     try
                     {
                         smtpClient.Send(message);
+                        IsSuccess = true;
+
                     }
                     catch (Exception e)
                     {
+                        err = e.InnerException.Message;
+                        IsSuccess = false;
                         using (FileStream fs = File.Create(fileName))
                         {
                             // Add some text to file
@@ -48,12 +55,14 @@ namespace Eltizam.Utility.Helpers
                             fs.Write(title, 0, title.Length);
                         }
                     }
+                    
                 }
             }
             catch (Exception ex)
             {
                 LogData(ex.Message);
             }
+            return IsSuccess;
         }
 
         //FOLLOWING CODE ADDED BY YOGESH B ON DATE 06/02/2020
@@ -61,7 +70,7 @@ namespace Eltizam.Utility.Helpers
         {
             using (MailMessage mm = new MailMessage())
             {
-                string DisplayName = String.IsNullOrEmpty(mailModel.DispalyName) ? "Emcure Project Management" : mailModel.DispalyName;
+                string DisplayName = String.IsNullOrEmpty(mailModel.DispalyName) ? "Eltizam Valuation" : mailModel.DispalyName;
                 mm.From = new MailAddress(objSMTPDetailsVM.FromMail, DisplayName);
                 //mm.From = new MailAddress(objSMTPDetailsVM.FromMail, "Web");
                 if (mailModel.ToMail.Contains(";"))
@@ -164,7 +173,7 @@ namespace Eltizam.Utility.Helpers
         {
             using (MailMessage mm = new MailMessage())
             {
-                string DisplayName = String.IsNullOrEmpty(mailModel.DispalyName) ? "Emcure Project Management" : mailModel.DispalyName;
+                string DisplayName = String.IsNullOrEmpty(mailModel.DispalyName) ? "Eltizam Valuation" : mailModel.DispalyName;
                 mm.From = new MailAddress(objSMTPDetailsVM.FromMail, DisplayName);
                 string tempEmail = "";
                 //mm.From = new MailAddress(objSMTPDetailsVM.FromMail, "Web");
