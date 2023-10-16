@@ -77,7 +77,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
                  new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
                 };
-                    var UserAddress = FJDBHelper.ExecuteSingleMappedReader<MasterAddressEntity>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                    var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterAddressEntity>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                     if (UserAddress != null)
                     {
                     _clientEntity.Address = UserAddress;
@@ -89,7 +89,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
                  new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
                 };
-                    var UserDocuments = FJDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureNameCall.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                    var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureNameCall.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
                     if (UserDocuments != null)
                     {
                     _clientEntity.Documents = UserDocuments;
