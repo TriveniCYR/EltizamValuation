@@ -1,0 +1,616 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@model Eltizam.Business.Models.MasterLocationEntity; 
+@{
+    List<Eltizam.Business.Models.MasterLocationEntity> objList = new List<Eltizam.Business.Models.MasterLocationEntity>();
+    objList = ViewData["locationList"] as List<Eltizam.Business.Models.MasterLocationEntity>;
+}
+
+@{
+    ViewData["Title"] = @MasterLocalizer["LocationList"];
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+
+
+<main>
+    <h3 class="dashboardTitle">LOCATION MASTER</h3>
+    <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
+        <div class="flex">
+            <label class="searchBox position-relative">
+                <div class="flex align-item-center">
+                    <img src="../assets/search.svg" alt="search">
+                    <input type="text" placeholder="Search for System" class="searchInput">
+                </div>
+                <button class="normalSearch">Search</button>
+            </label>
+            <div class="accordion">
+                <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+                <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
+                <div class="accordion-content inputSearchs">
+                    <h3 class="text-center">Advanced Search</h3>
+                    <form>
+                        <div class="flex">
+                            <label for="userName">
+                                User Name
+                                <input type="text" placeholder="enter user id">
+                            </label>
+                            <label for="valuatorType">
+                                Valuator Type
+                                <select name="Valuator" id="ValuatorType">
+                                    <option value="Valuator1">Valuator type1</option>
+                                    <option value="Valuator2">Valuator type2</option>
+                                    <option value="Valuator3">Valuator type3</option>
+                                </select>
+                            </label>
+                            <label for="resourceType">
+                                Resource Type
+                                <select name="Valuator" id="resourceType">
+                                    <option value="resourceType1">Resource type1</option>
+                                    <option value="resourceType2">Resource type2</option>
+                                    <option value="resourceType3">Resource type3</option>
+                                </select>
+                            </label>
+                            <label for="roleName">
+                                Role Name
+                                <select name="Valuator" id="roleName">
+                                    <option value="roleName1">Role type1</option>
+                                    <option value="roleName2">Role type2</option>
+                                    <option value="roleName3">Role type3</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="flex">
+                            <label for="fromDate">
+                                From Date
+                                <input type="date">
+                            </label>
+                            <label for="toDate">
+                                To Date
+                                <input type="date">
+                            </label>
+                            <label for="designation">
+                                Designation
+                                <select name="Valuator" id="ValuatorType">
+                                    <option value="Valuator1">Designation type1</option>
+                                    <option value="Valuator2">Designation type2</option>
+                                    <option value="Valuator3">Designation type3</option>
+                                </select>
+                            </label>
+                            <label for="designation">
+                                Department
+                                <select name="Valuator" id="ValuatorType">
+                                    <option value="Valuator1">Department type1</option>
+                                    <option value="Valuator2">Department type2</option>
+                                    <option value="Valuator3">Department type3</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="blueBtn">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="buttonArea flex align-item-center">
+         @*    <form asp-action="LocationManage" asp-controller="Location" method="GET"> *@
+            <button class="flex align-item-center blueBtn" id="addRole">
+                <img src="../assets/plus.svg" alt="plus"> Add New
+            </button>
+            @* </form> *@
+
+
+            <button class="flex align-item-center lineBtn" id="importFile">
+                <img src="../assets/file-import.svg" alt="file-import" />
+                Import
+            </button>
+
+            <button class="flex align-item-center lineBtn exportFile">
+                <img src="../assets/file-export.svg" alt="file-export"> Export
+                <div class="actionItem">
+                    <ul>
+                        <li>
+                            Excel XML
+                        </li>
+                        <li>
+                            cSV
+                        </li>
+                    </ul>
+                </div>
+            </button>
+        </div>
+    </div>
+    <div class="scroll-x">
+       
+
+        <table id="LocationTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Country Name</th>
+                    <th>Region Name <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>States / Emirates</th>
+                    <th>Sector / Zone</th>
+                    <th>Home Currency</th>
+                    <th>Foreign Currency</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in objList)
+                {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.CountryName</td>
+                   @*  <td class="userPic editLocation">@item.CountryName</td> *@
+                    <td>@item.LocationName</td>
+                    <td>@item.StateName</td>
+                    <td>@item.Sector</td>
+                    <td>@item.HomeCurrency</td>
+                    <td>@item.ForeignCurrency</td>
+                    <td class="position-relative">
+                        <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                        <div class="actionItem">
+                            <ul>
+                                <li class="viewLocation">
+                                    <img src="../assets/view.svg" alt="view" />
+                                    view
+                                </li>
+                                <li class="editLocation">
+                                    <img src="../assets/edit.svg" alt="edit" />
+                                        <a title="Edit" onclick="GetLocationById(@item.Id);"><span>Edit</span></a>
+                                    Edit
+                                </li>
+                                <li class="delete">
+                                    <img src="../assets/trash.svg" alt="trash" />
+                                    Delete
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+             
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- popup import model -->
+<div class="popup-overlay" id="popup-import-overlay">
+    <div class="popup">
+        <div class="content text-center">
+            <div class="popup-head position-relative">
+                Import Location
+                <img src="../assets/x.svg" alt="x" id="closePopup">
+            </div>
+            <div class="popup-action importBox">
+                <p class="text-left">Browse File</p>
+                <div class="inputBox">
+                    <input type="file" name="file" id="file" class="file" />
+                    <div class="flex">
+                        <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                        <div class="uploadFileBtn flex">
+                            <img src="../assets/files.svg" alt="file">
+                            <input type="button" class="btn" value="Browse" />
+                        </div>
+                    </div>
+                </div>
+                <div class="buttonArea popup-btn">
+                    <button id="cancelDeleteUser" class="bgBlue">Submit</button>
+                    <button class="lineBtn">Download Template</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- popup add location model -->
+<div class="popup-overlay w-800Popup" id="popup-addRole-overlay">
+    <div class="popup">
+        <div class="content text-center">
+            <div class="popup-head position-relative">
+                Add Location
+                <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
+            </div>
+            <div class="popup-action inputSearchs">
+             @*    <form id="locationForm"> *@
+                <form asp-action="LocationManage" method="POST" enctype="multipart/form-data">
+                    <div class="flex">
+                        <label for="CountryId">
+                            Country Name
+                            @Html.DropDownListFor(model=>model.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
+                          @*   <select name="countryName" id="countryName" required>
+                                <option value="countryName1">Country Name1</option>
+                                <option value="countryName2">Country Name2</option>
+                                <option value="countryName3">Country Name3</option>
+                            </select> *@
+                        </label>
+                        <label for="StateId">
+                            State Name
+                            @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
+                           @*  <select name="regionMaster" id="regionMaster" required>
+                                <option value="regionMaster1">regionMaster1</option>
+                                <option value="regionMaster2">regionMaster2</option>
+                                <option value="regionMaster3">regionMaster3</option>
+                            </select> *@
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label for="CityId">
+                            City / Emirates
+                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+
+                            @*  <select name="States" id="States" required>
+                                <option value="States1">States / Emirates 1</option>
+                                <option value="States2">States / Emirates 2</option>
+                                <option value="States3">States / Emirates 3</option>
+                            </select> *@
+                        </label>
+                        <label for="resourceType">
+                            Sector / Zone
+                            @Html.TextBoxFor(model => model.Sector, new {@class = "form-control" })
+
+                            @*   <select name="zone" id="zone" required>
+                                <option value="zone1">zone 1</option>
+                                <option value="zone2">zone 2</option>
+                                <option value="zone3">zone 3</option>
+                            </select> *@
+                        </label>
+                    </div>
+                    <div class="flex">
+               
+                        <label for="Geo-coordinates">
+                            Latitude
+                            @Html.TextBoxFor(model => model.Latitude, new {@class = "form-control" })
+
+                        </label>
+                        <label for="">
+                            Longitude
+                            @Html.TextBoxFor(model => model.Longitude, new {@class = "form-control" })
+
+                        </label>
+                    </div>
+                    <div class="flex">
+
+                        <label for="Geo-coordinates">
+                            Home Currency
+                            @Html.TextBoxFor(model => model.HomeCurrencyId, new {@class = "form-control" })
+
+                        </label>
+                        <label for="Geo-coordinates">
+                            Foreign Currency
+                            @Html.TextBoxFor(model => model.ForeignCurrencyId, new {@class = "form-control" })
+
+                        </label>
+                   
+                      @*   <label for="resourceType">
+                            Status
+                            Active : @Html.RadioButtonFor(m => m.Status, true)
+                            IsActive : @Html.RadioButtonFor(m => m.Status, false)
+                            <span class="info-text"></span>
+                          </label> *@
+                    </div>
+                
+                <div class="buttonArea centerBtn">
+                    <button type="submit" class="lineBtn" id="resetLocation">Reset</button>
+                    <button type="submit" class="bgBlue">Submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- popup edit model -->
+<div class="popup-overlay w-800Popup" id="popup-editRole-overlay">
+    <div class="popup">
+        <div class="content text-center">
+            <div class="popup-head position-relative">
+                Edit Location
+                <img src="../assets/x.svg" alt="x" id="closePopup" class="closeEditRolePopup">
+            </div>
+            <div class="popup-action inputSearchs">
+                <form asp-action="LocationManage" method="POST" enctype="multipart/form-data">
+                    @Html.HiddenFor(m => m.Id);
+                    <div class="flex">
+                        <label for="CountryId">
+                            Country Name
+                            @Html.DropDownListFor(model=>model.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
+                            @*   <select name="countryName" id="countryName" required>
+                            <option value="countryName1">Country Name1</option>
+                            <option value="countryName2">Country Name2</option>
+                            <option value="countryName3">Country Name3</option>
+                            </select> *@
+                        </label>
+                        <label for="StateId">
+                            State Name
+                            @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
+                            @*  <select name="regionMaster" id="regionMaster" required>
+                            <option value="regionMaster1">regionMaster1</option>
+                            <option value="regionMaster2">regionMaster2</option>
+                            <option value="regionMaster3">regionMaster3</option>
+                            </select> *@
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label for="CityId">
+                            City / Emirates
+                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+
+                            @*  <select name="States" id="States" required>
+                            <option value="States1">States / Emirates 1</option>
+                            <option value="States2">States / Emirates 2</option>
+                            <option value="States3">States / Emirates 3</option>
+                            </select> *@
+                        </label>
+                        <label for="resourceType">
+                            Sector / Zone
+                            @Html.TextBoxFor(model => model.Sector, new {@class = "form-control" })
+
+                            @*   <select name="zone" id="zone" required>
+                            <option value="zone1">zone 1</option>
+                            <option value="zone2">zone 2</option>
+                            <option value="zone3">zone 3</option>
+                            </select> *@
+                        </label>
+                    </div>
+                    <div class="flex">
+
+                        <label for="Geo-coordinates">
+                            Latitude
+                            @Html.TextBoxFor(model => model.Latitude, new {@class = "form-control" })
+
+                        </label>
+                        <label for="">
+                            Longitude
+                            @Html.TextBoxFor(model => model.Longitude, new {@class = "form-control" })
+
+                        </label>
+                    </div>
+                    <div class="flex">
+
+                        <label for="Geo-coordinates">
+                            Home Currency
+                            @Html.TextBoxFor(model => model.HomeCurrencyId, new {@class = "form-control" })
+
+                        </label>
+                        <label for="Geo-coordinates">
+                            Foreign Currency
+                            @Html.TextBoxFor(model => model.ForeignCurrencyId, new {@class = "form-control" })
+
+                        </label>
+
+                        @*   <label for="resourceType">
+                        Status
+                        Active : @Html.RadioButtonFor(m => m.Status, true)
+                        IsActive : @Html.RadioButtonFor(m => m.Status, false)
+                        <span class="info-text"></span>
+                        </label> *@
+                    </div>
+
+                    <div class="buttonArea centerBtn">
+                        <button type="button" class="lineBtn" id="resetLocation">Reset</button>
+                        <button type="submit" class="bgBlue">Submit</button>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- popup view model -->
+<div class="popup-overlay w-800Popup" id="popup-viewLocation-overlay">
+    <div class="popup">
+        <div class="content text-center">
+            <div class="popup-head position-relative">
+                View Location
+                <img src="../assets/x.svg" alt="x" id="closePopup" class="closeViewLocationPopup">
+            </div>
+            <div class="popup-action inputSearchs">
+                <form>
+                    <div class="flex">
+                        <label for="countryName">
+                            country Name
+                            <select name="countryName" id="countryName">
+                                <option value="countryName1">Country Name1</option>
+                                <option value="countryName2">Country Name2</option>
+                                <option value="countryName3">Country Name3</option>
+                            </select>
+                        </label>
+                        <label for="regionMaster">
+                            Region Master
+                            <select name="regionMaster" id="regionMaster">
+                                <option value="regionMaster1">regionMaster1</option>
+                                <option value="regionMaster2">regionMaster2</option>
+                                <option value="regionMaster3">regionMaster3</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label for="roleType">
+                            States / Emirates
+                            <select name="States" id="States">
+                                <option value="States1">States / Emirates 1</option>
+                                <option value="States2">States / Emirates 2</option>
+                                <option value="States3">States / Emirates 3</option>
+                            </select>
+                        </label>
+                        <label for="resourceType">
+                            Sector / Zone
+                            <select name="zone" id="zone">
+                                <option value="zone1">zone 1</option>
+                                <option value="zone2">zone 2</option>
+                                <option value="zone3">zone 3</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label for="">
+                            Building Projects
+                            <input type="text" placeholder="Enter Building Projects">
+                        </label>
+                        <label for="">
+                            Geo-cordinates
+                            <input type="text" placeholder="enter Geo-cordinates">
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label for="resourceType">
+                            Status
+                            <input class='input-switch' type="checkbox" id="addLocation" />
+                            <label class="label-switch" for="addLocation"></label>
+                            <span class="info-text"></span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- popup delete model -->
+<div class="popup-overlay" id="popup-delete-overlay">
+    <div class="popup">
+        <div class="content text-center">
+            <div class="popup-head">Delete Location</div>
+            <div class="popup-action">
+                <p>Are you sure you want to delete?</p>
+                <div class="buttonArea popup-btn">
+                    <button id="cancelDeletLocation" class="greyBtn">Cancel</button>
+                    <button class="redBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section MyScripts {
+
+    @Html.Partial("_DataTablePartial")
+    <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
+    <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/Custom/Location/LocationManagement.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
+    <script>
+
+
+
+
+        //#region Setup API Url
+
+        var DeleteRoleByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteRoleById";
+        var GetLocationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetLocationById";
+        // #endregion
+
+        //#region Static Label Init
+
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+
+        var StatusMessage = '@TempData["StatusMessage"]';
+
+
+                                        //#endregion
+    </script>
+    <script>
+        $(document).ready(function () {
+            BindCountry();
+            BindState();
+            BindCity();
+          
+        });
+        function BindCountry() {
+            var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
+            var Country = $("#CountryId");
+            $.ajax({
+                type: "GET",
+                url: $('#hdnBaseURL').val() + CountryList,
+                "datatype": "json",
+                success: function (response) {
+                    ;
+                    Country.empty().append('<option selected="selected" value="0">Please select</option>');
+                    for (var i = 0; i < response.length; i++) {
+                        Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
+                     }
+                    if ($('#hdnCountry').val() != 0) {
+                        Country.val($('#hdnCountry').val());
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
+            });
+        }
+
+        function BindState() {
+
+            var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
+            var State = $("#StateId");
+            $.ajax({
+                type: "GET",
+                url: $('#hdnBaseURL').val() + StateList,
+                "datatype": "json",
+                success: function (response) {
+                    ;
+                    State.empty().append('<option selected="selected" value="0">Please select</option>');
+                    for (var i = 0; i < response.length; i++) {
+                        State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
+                    }
+                    if ($('#hdnState').val() != 0) {
+                        State.val($('#hdnState').val());
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
+            });
+        }
+
+        function BindCity() {
+
+            var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
+            var City = $("#CityId");
+            $.ajax({
+                type: "GET",
+                url: $('#hdnBaseURL').val() + CityList,
+                "datatype": "json",
+                success: function (response) {
+                    ;
+                    City.empty().append('<option selected="selected" value="0">Please select</option>');
+                    for (var i = 0; i < response.length; i++) {
+                        City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
+                    }
+                    if ($('#hdnCity').val() != 0) {
+                        City.val($('#hdnCity').val());
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
+            });
+        }</script>
+    <script src="~/js/custom/location/locationmaster.js"></script>
+    }

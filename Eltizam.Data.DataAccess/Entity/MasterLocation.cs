@@ -14,11 +14,12 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? Status { get; set; }
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }
+        public int HomeCurrencyId { get; set; }
+        public int ForeignCurrencyId { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-
+        public int? ModifiedBy { get; set; }           
         public virtual MasterCity City { get; set; } = null!;
         public virtual MasterCountry Country { get; set; } = null!;
         public virtual MasterState State { get; set; } = null!;

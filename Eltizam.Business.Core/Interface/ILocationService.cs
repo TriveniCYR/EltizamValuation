@@ -11,9 +11,10 @@ namespace Eltizam.Business.Core.Interface
     public interface ILocationService
     {
 
-        Task<DBOperation> Upsert(MasterLocationEntity entityUser);
+        Task<DBOperation> AddUpdateLocationClient(MasterLocationEntity entityUser);
         Task<MasterLocationEntity> GetById(int id);
-        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
+        //Task<List<MasterLocationEntity>> GetAll();
+            Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel? model);
         Task<DBOperation> Delete(int id);
     }
 }
