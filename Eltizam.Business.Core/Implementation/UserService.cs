@@ -15,6 +15,7 @@ using System.Data;
 using DbParameter = Eltizam.Data.DataAccess.Helper.DbParameter;
 using Eltizam.Utility;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Data.SqlClient;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -45,29 +46,26 @@ namespace Eltizam.Business.Core.Implementation
             _helper = helper;
         }
 
-        public async Task<DataTableResponseModel> GetAll(UserSearchModel model, PaginationModel paging)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            var _dbParams = new[]
-             {
-                 new DbParameter("UserId", 0,SqlDbType.Int),
-                 new DbParameter("UserName", model.UserName, SqlDbType.VarChar),
-                 new DbParameter("DepartmentId", model.DepartmentId, SqlDbType.Int),
-                 new DbParameter("DesignationId", model.DesignationId, SqlDbType.Int),
-                 new DbParameter("RoleId", model.RoleId, SqlDbType.Int),
-                 new DbParameter("ResourceId", model.ResourceId, SqlDbType.Int),
-                 new DbParameter("PageSize", paging.pageSize, SqlDbType.Int),
-                 new DbParameter("PageNumber", paging.pageNo, SqlDbType.Int),
-                 new DbParameter("OrderClause", paging.sortName, SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
+            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
+            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
-            int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterUserListModel>(ProcedureNameCall.usp_User_SearchAllList,
+            SqlParameter[] osqlParameter = {
+                new SqlParameter("@UserId", 0),
+                new SqlParameter("@CurrentPageNumber", model.start),
+                    new SqlParameter("@PageSize", model.length),
+                    new SqlParameter("@SortColumn", ColumnName),
+                    new SqlParameter("@SortDirection", SortDir),
+                    new SqlParameter("@SearchText", model.search.value)
+            };
 
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+            var UserList = await _repository.GetBySP("usp_User_Search_GetUserList", System.Data.CommandType.StoredProcedure, osqlParameter);
 
+            var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
+            var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(0, _count, lstStf.Count, lstStf);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, UserList.DataTableToList<MasterUserListModel>());
 
             return oDataTableResponseModel;
         }

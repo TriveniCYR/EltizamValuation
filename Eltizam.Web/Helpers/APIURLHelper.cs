@@ -84,6 +84,15 @@ namespace Eltizam.Web.Helpers
 
         #endregion ClientType
 
+        #region Client
+
+        public static string GetSearchClient = "api/MasterClient/GetAllClient";
+        public static string GetClientById = "api/MasterClient/getById";
+        public static string UpsertClient = "api/MasterClient/Upsert";
+        public static string DeleteClient = "api/MasterClient/DeleteClient";
+
+        #endregion Client
+
         #region Role Management
         public static string GetAllRole = "api/Role/GetAllRole";
         public static string GetAllActiveRole = "api/Role/GetAllActiveRole";

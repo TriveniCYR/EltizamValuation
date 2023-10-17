@@ -19,7 +19,7 @@ namespace Eltizam.Business.Core.Resolver
             services.AddTransient<IMasterPropertyService, MasterPropertyService>();
             services.AddTransient<IMasterPropertySubTypeService, MasterPropertySubTypeService>();
             services.AddTransient<IMasterVendorService, MasterVendorService>();
-            services.AddScoped<DbContext, EltizamContext>();
+            services.AddScoped<DbContext, EltizamDB_DevContext>();
             services.AddScoped<IMapperFactory, MapperFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
