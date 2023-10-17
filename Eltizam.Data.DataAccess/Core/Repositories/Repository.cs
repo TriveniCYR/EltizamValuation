@@ -1022,7 +1022,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             try
             {
-                return SqlHelper.ExecuteDataTable(DatabaseConnection.EltizamDatabaseConnection, CommandText, commandType, sqlParameters);
+                return SqlHelper.ExecuteDataTable(DatabaseConnection.ConnString, CommandText, commandType, sqlParameters);
             }
             catch (Exception ex)
             {
@@ -1034,7 +1034,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             try
             {
-                return SqlHelper.ExecuteDataset(DatabaseConnection.EltizamDatabaseConnection, CommandText, commandType, sqlParameters);
+                return SqlHelper.ExecuteDataset(DatabaseConnection.ConnString, CommandText, commandType, sqlParameters);
             }
             catch (Exception ex)
             {

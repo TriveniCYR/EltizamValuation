@@ -12,6 +12,7 @@ using Eltizam.Resource;
 using Eltizam.Web.Helpers;
 using Eltizam.Utility.Utility;
 using Eltizam.Utility.Models;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace Eltizam.Web.Controllers
 {
@@ -141,19 +142,19 @@ namespace Eltizam.Web.Controllers
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ForgotPassword, HttpMethod.Post, string.Empty, new StringContent(JsonConvert.SerializeObject(forgotPasswordViewModel))).Result;
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    ViewBag.SuccessMessage = Customs.msgLinkToResetpasswordSentOnEmail;
+                    ViewBag.SuccessMessage = AppConstants.msgLinkToResetpasswordSentOnEmail;
                     return View("ForgetPassword");
 
                 }
                 else //if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    ViewBag.ErrorMessage = Customs.SomeErrorOccurred;
+                    ViewBag.ErrorMessage = AppConstants.SomeErrorOccurred;
                     //return View("ForgetPassword");
                 }
             }
             else
             {
-                ViewBag.ErrorMessage = Customs.msgEmailAddressNotExistIndatabase;
+                ViewBag.ErrorMessage = AppConstants.msgEmailAddressNotExistIndatabase;
                 return View("ForgetPassword");
             }
             return View("ForgetPassword");
@@ -250,17 +251,17 @@ namespace Eltizam.Web.Controllers
                 var data = JsonConvert.DeserializeObject<APIResponseEntity<string>>(jsonResponse);
                 if (data._object == "ResetSuccessfully")
                 {
-                    ViewBag.SuccessMessage = Customs.msgPasswordResetSuccessfully;//_stringLocalizer["msgPasswordResetSuccessfully"].Value;
+                    ViewBag.SuccessMessage = AppConstants.msgPasswordResetSuccessfully;//_stringLocalizer["msgPasswordResetSuccessfully"].Value;
                     return View("ResetPassword", masterUserresetpassword);
                 }
                 else if (data._object == "TokenExpired")
                 {
-                    ViewBag.ErrorMessage = Customs.msgResetPasswordTokenExpired;//_stringLocalizer["msgResetPasswordTokenExpired"].Value;
+                    ViewBag.ErrorMessage = AppConstants.msgResetPasswordTokenExpired;//_stringLocalizer["msgResetPasswordTokenExpired"].Value;
                     return View("ResetPassword", masterUserresetpassword);
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = Customs.msgInvalidLink; //_stringLocalizer["msgInvalidLink"].Value;
+                    ViewBag.ErrorMessage = AppConstants.msgInvalidLink; //_stringLocalizer["msgInvalidLink"].Value;
                     
                 }
                 return View("ResetPassword", masterUserresetpassword);
@@ -276,21 +277,6 @@ namespace Eltizam.Web.Controllers
         public IActionResult ProfileDetails()
         {
             return View();
-        }
-
-        public class Customs
-        {
-            public static string msgLinkToResetpasswordSentOnEmail = "We have send an email successfully to entered email address, please go to your mail box and follow further steps";
-
-            public static string SomeErrorOccurred = "Some error occurred";
-
-            public static string msgEmailAddressNotExistIndatabase = "Entered email address is not found";
-
-            public static string msgPasswordResetSuccessfully = "Password Reset successfully";
-
-            public static string msgResetPasswordTokenExpired = "You link has been expired please go to forgot password page to reset your password again";
-
-            public static string msgInvalidLink = "Invalid Link";
-        }
+        } 
     }
 }

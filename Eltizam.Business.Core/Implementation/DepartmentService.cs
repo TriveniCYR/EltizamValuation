@@ -129,8 +129,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterDepartmentEntity>> GetDepartmentList()
         {
 
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterDepartmentEntity>(ProcedureNameCall.usp_Department_AllList,
-             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterDepartmentEntity>(ProcedureMetastore.usp_Department_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }
