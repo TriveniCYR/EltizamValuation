@@ -6,12 +6,16 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace Eltizam.Utility.Helpers
 {
     public class EmailHelper
     {
+
         public bool SendMail(string toList, string ccList, string subject, string body, SMTPEntityViewModel _smtpEntity)
         {
+
             bool IsSuccess = false;
             try
             {
@@ -36,7 +40,7 @@ namespace Eltizam.Utility.Helpers
                     smtpClient.EnableSsl = bool.Parse(_smtpEntity.EnableSsl);
                     smtpClient.UseDefaultCredentials = true;
                     smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    string fileName = @"C:\Log\logger.txt";
+                    //string fileName = @"C:\Log\logger.txt";
                     EmailLogHistoryModel emailLogHistory = new EmailLogHistoryModel();
                     try
                     {
@@ -48,13 +52,15 @@ namespace Eltizam.Utility.Helpers
                     {
                         err = e.InnerException.Message;
                         IsSuccess = false;
-                        using (FileStream fs = File.Create(fileName))
-                        {
-                            // Add some text to file
-                            Byte[] title = new UTF8Encoding(true).GetBytes(e.ToString());
-                            fs.Write(title, 0, title.Length);
-                        }
+                        //using (FileStream fs = File.Create(fileName))
+                        //{
+                        //    // Add some text to file
+                        //    Byte[] title = new UTF8Encoding(true).GetBytes(e.ToString());
+                        //    fs.Write(title, 0, title.Length);
+                        //}
                     }
+                    
+
                     
                 }
             }

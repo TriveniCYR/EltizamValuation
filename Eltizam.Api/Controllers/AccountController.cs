@@ -105,12 +105,50 @@ namespace Eltizam.Api.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost, Route("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] MasterUserResetPasswordEntity ResetPasswordViewModel)
+        {
+            try
+            {
+                var resetOperation = await _MasterUserService.ResetPassword(ResetPasswordViewModel);
+                if (resetOperation == "ResetSuccessfully")
+                    return _ObjectResponse.Create(resetOperation, (Int32)HttpStatusCode.OK);
+                else if (resetOperation == "TokenExpired")
+                {
+                    return _ObjectResponse.Create(resetOperation, (Int32)HttpStatusCode.NotExtended, "TokenExpired");
+                }
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [AllowAnonymous]
         [HttpGet, Route("CheckEmailAddressExists/{emailAddress}")]
         public async Task<bool> CheckEmailAddressExists([FromRoute] string emailAddress)
         {
             try
             {
                 return await _MasterUserService.CheckEmailAddressExists(emailAddress);
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return false;
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet, Route("IsTokenValid/{token}")]
+        public async Task<bool> IsTokenValid([FromRoute] string token)
+        {
+            try
+            {
+                return await _MasterUserService.IsTokenValid(token);
             }
             catch (Exception ex)
             {

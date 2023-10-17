@@ -253,10 +253,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
             strHtml = strHtml.Replace("ValidateURL", strURL);
             strHtml = strHtml.Replace("ValidDateTime", entityUser.ForgotPasswordDateTime.Value.AddHours(1).ToString());
             strHtml = strHtml.Replace("Name", entityUser.FirstName + entityUser.LastName);
-            IsSuccess = email.SendMail(entityUser.Email, string.Empty, "Eltizam - Forgot Password", strHtml, GetSMTPConfiguration());
-            EmailLogHistory  emailLogHistory = new EmailLogHistory();
-			emailLogHistory.FromAddress = entityUser.Email;
-			emailLogHistory.ToAddress = entityUser.Email;
+            IsSuccess =	email.SendMail(entityUser.Email, string.Empty, "Eltizam - Forgot Password", strHtml, GetSMTPConfiguration());
+			EmailLogHistory emailLogHistory = new EmailLogHistory();
+			emailLogHistory.FromAddress = configuration.GetSection("SMTPDetails").GetSection("FromEmail").Value;//entityUser.Email;
+
+            emailLogHistory.ToAddress = entityUser.Email;
 			emailLogHistory.Subject = "Eltizam - Forgot Password";
 			emailLogHistory.EmailResponse = "";
 			emailLogHistory.CreatedBy = null;
@@ -264,9 +265,26 @@ namespace Eltizam.Business.Core.ServiceImplementations
 			emailLogHistory.Body = strHtml;
 			emailLogHistory.IsSent = IsSuccess;
 			_emailLog.Add(emailLogHistory);
+			await _unitOfWork.SaveChangesAsync();
+			//if (IsSuccess)
+			return DBOperation.Success;
+        }
+        public async Task<string> ResetPassword(MasterUserResetPasswordEntity resetPasswordentity)
+        {
+            var entityUser = _repository.Get(x => x.ForgotPasswordToken == resetPasswordentity.ForgotPasswordToken);
+            if (entityUser == null)
+                return "TokenNotFound";
+
+            if (entityUser.ForgotPasswordDateTime.Value.AddHours(1) < DateTime.Now)
+            {
+                return "TokenExpired";
+            }
+            entityUser.Password = UtilityHelper.GenerateSHA256String(resetPasswordentity.Password);
+            entityUser.ForgotPasswordToken = string.Empty;
+            entityUser.ForgotPasswordDateTime = null;
+            _repository.UpdateAsync(entityUser);
             await _unitOfWork.SaveChangesAsync();
-            //if (IsSuccess)
-            return DBOperation.Success;
+            return "ResetSuccessfully";
         }
 
         public SMTPEntityViewModel GetSMTPConfiguration()
@@ -282,7 +300,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
         public async Task<bool> IsTokenValid(string token)
 		{
-			var isExists = false;//await _repository.GetAllQuery().AnyAsync(x => x.ForgotPasswordToken == token);
+			var isExists = await _repository.GetAllQuery().AnyAsync(x => x.ForgotPasswordToken == token);
 			return isExists;
 		}
 
