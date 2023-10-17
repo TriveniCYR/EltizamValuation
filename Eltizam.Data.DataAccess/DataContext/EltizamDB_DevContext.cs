@@ -555,6 +555,11 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.PropertySubType)
                     .HasMaxLength(250)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.PropertyType)
+                    .WithMany(p => p.MasterPropertySubTypes)
+                    .HasForeignKey(d => d.PropertyTypeId)
+                    .HasConstraintName("FK__Master_Pr__Prope__05A3D694");
             });
 
             modelBuilder.Entity<MasterPropertyType>(entity =>

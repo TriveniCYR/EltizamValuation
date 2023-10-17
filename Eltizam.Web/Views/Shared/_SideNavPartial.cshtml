@@ -24,7 +24,7 @@
                 @if (Helper.GetLoggedInRoleId() != 0)
                 {
                     int _roleId = Helper.GetLoggedInRoleId();
-                   @*  var menuItems = UtilityHelper.GetMenu(_roleId); *@
+                    @*  var menuItems = UtilityHelper.GetMenu(_roleId); *@
                     @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ResourceMaster, _roleId))
                     {
                         <li onclick="resourceMaster()">
@@ -104,7 +104,7 @@
                             <div class="flex align-item-center">
                                 <img src="../assets/building-community.svg" class="showIcon" alt="Property Type Master">
                                 <img src="../assets/building-community-blue.svg" class="hoverIcon" alt="Property Type Master">
-                                <p>Property Type Master</p>
+                                <a href="@Url.Action("PropertyType", "PropertyType")" class="nav-link">Property Type Master</a>
                             </div>
                         </li>
                     }

@@ -1,0 +1,114 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model Eltizam.Business.Models.Master_PropertyTypeModel
+@{
+    ViewData["Title"] = @MasterLocalizer["PropertyTypeManage"];
+    string PageHeading = "";
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+
+}
+
+
+
+<form asp-action="PropertyTypeManage">
+    <main>
+
+      @*   @{
+            bool isEdit = ViewData["IsEdit"] as bool? ?? false;
+        }
+
+        @if (isEdit)
+        {
+            <input type="hidden" asp -for="RoleId" />
+            PageHeading = MasterLocalizer["Update Department"].Value;
+        }
+        else
+        {
+            PageHeading = MasterLocalizer["Add Department"].Value;
+        } *@
+        <div class="whiteBoxShadow">
+            <div class="heading position-relative">
+                <h3 class="dashboardTitle">PropertyType</h3>
+            </div>
+            <div class="bodyContent">
+                <div class="inputSearchs">
+                    <form>
+                        <div class="flex mb-28">
+                            @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                            <label for="" class="w-50">
+                                @Html.LabelFor(model => model.PropertyType, new { @class = "control-label" })
+                                <span class="text-danger">*</span>
+                                @Html.EditorFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Department Name"] } })
+                                @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
+                            </label>
+
+                           @*  @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                            <label for="" class="w-50">
+                                @Html.LabelFor(model => model.PropertyType, new { @class = "control-label" })
+                                <span class="text-danger">*</span>
+                                @Html.EditorFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Department Name"] } })
+                                @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
+                            </label> *@
+                            <label for="" class="w-50 roleswitch">
+                                @* Status
+                                @{
+                                    bool isActive = Model.IsActive == 1; // Convert 1 to true, any other value to false
+                                } *@
+
+                                @* <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required /> *@
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text"></span>
+                            </label>
+
+                        </div>
+
+                        <div class="text-center buttonArea">
+                            <button type="button" id="addTextBox" class="bgBlue mr-12">Add Text Box</button>
+                            <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
+                            <a class="greyBtn lineBtn formAbtn" asp-action="Department">@SharedLocalizer["Cancel"]</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</form>
+
+@* @section MyScripts {
+
+    <script type="text/javascript" src="~/js/Custom/Department/DepartmentManagement.js?v=@jsVersion"></script>
+}   *@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Counter to keep track of the number of text boxes added
+        var textBoxCounter = 0;
+
+        // Function to create a new text box
+        function createTextBox() {
+            textBoxCounter++;
+            var textBoxHtml = '<label for="DynamicTextBox' + textBoxCounter + '" class="w-50">' +
+                '<input type="text" name="DynamicTextBox' + textBoxCounter + '" class="form-control" placeholder="Dynamic Text Box">' +
+                '</label>';
+            $('.flex').append(textBoxHtml);
+        }
+
+        // Event handler for the "Add Text Box" button click
+        $('#addTextBox').click(function () {
+            createTextBox();
+        });
+    });
+</script>
+
+
+
+
