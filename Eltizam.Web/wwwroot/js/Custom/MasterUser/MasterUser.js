@@ -29,8 +29,7 @@ function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function InitializeUserList () { 
-    debugger
+function InitializeUserList() {
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
         "url": $('#hdnBaseURL').val() + AllUser,
@@ -56,17 +55,12 @@ function InitializeUserList () {
         },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
-                if (data) {
-                    return "<span class='text-success text-bold'>Yes</span>";
-                } else {
-                    return "<span class='text-danger text-bold'>No</span>";
-                }
+                return GetActiveFlagCss(data);
             }
         },
         {
             "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
-
                 html += '<a title="Edit" class="large-font"  href="/Resource/ResourceManage?UserId=' + row.id + '"><img src="../assets/edit.svg" alt = "edit" />';
                 html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.userId + '); return false;"><i class="fa fa-fw fa-trash mr-1"></i></a>';
 
@@ -76,7 +70,7 @@ function InitializeUserList () {
     ];
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
-}
+} 
 
 
 //#endregion

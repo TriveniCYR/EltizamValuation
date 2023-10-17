@@ -63,3 +63,13 @@
     $('body').find('.dataTables_scrollBody').addClass("scrollbar");
     return dataTableInst;
 }
+
+function GetActiveFlagCss(data) {
+    var dd = "";
+    if (data === 1 || data === true) {
+        dd = "<span class='tableStatus green'>Yes</span>";
+    } else {
+        dd = "<span class='tableStatus red'>No</span>";
+    }
+    return dd;
+}
