@@ -31,9 +31,9 @@ namespace Eltizam.Business.Core.Interface
 
         Task<dynamic> GetCountryByRegion(string RegionIds);
 
-        //Task<DBOperation> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel);
+        Task<DBOperation> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel);
 
-        //Task<string> ResetPassword(MasterUserResetPasswordEntity entity);
+        Task<string> ResetPassword(MasterUserResetPasswordEntity entity);
 
         //Task<List<MasterBusinessUnitEntity>> GetBusinessUNitByUserId(int userid);
 

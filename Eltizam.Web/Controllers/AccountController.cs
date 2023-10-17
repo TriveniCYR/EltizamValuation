@@ -131,14 +131,166 @@ namespace Eltizam.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
+        {
+            if (CheckEmailAddressExists(forgotPasswordViewModel.Email))
+            {
+                forgotPasswordViewModel.WebApplicationUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host.Value;
+                APIRepository objapi = new APIRepository(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ForgotPassword, HttpMethod.Post, string.Empty, new StringContent(JsonConvert.SerializeObject(forgotPasswordViewModel))).Result;
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    ViewBag.SuccessMessage = Customs.msgLinkToResetpasswordSentOnEmail;
+                    return View("ForgetPassword");
+
+                }
+                else //if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    ViewBag.ErrorMessage = Customs.SomeErrorOccurred;
+                    //return View("ForgetPassword");
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = Customs.msgEmailAddressNotExistIndatabase;
+                return View("ForgetPassword");
+            }
+            return View("ForgetPassword");
+        }
+
+        // if CheckEmailAddressExists() is false then Email Id Exist in Db
+        [NonAction]
+        public bool CheckEmailAddressExists(string EmailAddress)
+        {
+            bool EmailExist = true;
+            try
+            {
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.Anonymous_CheckEmailAddressExists + "/" + EmailAddress, HttpMethod.Get, string.Empty).Result;
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    EmailExist = JsonConvert.DeserializeObject<bool>(jsonResponse);
+
+                    return EmailExist;
+                }
+                return EmailExist;
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                throw e;
+            }
+        }
+
         public IActionResult ResetPassword()
         {
             return View();
         }
 
+        // if CheckEmailAddressExists() is false then Email Id Exist in Db
+        [NonAction]
+        public bool CheckResetPasswordTokenExists(string token)
+        {
+            bool TokenExist = false;
+            try
+            {
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.Anonymous_IsTokenValid + "/" + token, HttpMethod.Get, string.Empty).Result;
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TokenExist = JsonConvert.DeserializeObject<bool>(jsonResponse);
+
+                    return TokenExist;
+                }
+                return TokenExist;
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                throw e;
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword([FromQuery] string userToken)
+        {
+            MasterUserResetPasswordEntity resetPasswordEntity = new MasterUserResetPasswordEntity();
+            try
+            {
+                if (CheckResetPasswordTokenExists(userToken))
+                {
+                    string strValue = HttpContext.Request.Query["userToken"].ToString();
+                    resetPasswordEntity.ForgotPasswordToken = strValue;
+                    return View("ResetPassword", resetPasswordEntity);
+                }
+                else
+                {
+                    return RedirectToAction("Login");
+                }
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                ViewBag.Message = Convert.ToString(e.StackTrace);
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword(MasterUserResetPasswordEntity masterUserresetpassword)
+        {
+            try
+            {
+                APIRepository objapi = new APIRepository(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ResetPassword, HttpMethod.Post, string.Empty, new StringContent(JsonConvert.SerializeObject(masterUserresetpassword))).Result;
+                string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                var data = JsonConvert.DeserializeObject<APIResponseEntity<string>>(jsonResponse);
+                if (data._object == "ResetSuccessfully")
+                {
+                    ViewBag.SuccessMessage = Customs.msgPasswordResetSuccessfully;//_stringLocalizer["msgPasswordResetSuccessfully"].Value;
+                    return View("ResetPassword", masterUserresetpassword);
+                }
+                else if (data._object == "TokenExpired")
+                {
+                    ViewBag.ErrorMessage = Customs.msgResetPasswordTokenExpired;//_stringLocalizer["msgResetPasswordTokenExpired"].Value;
+                    return View("ResetPassword", masterUserresetpassword);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = Customs.msgInvalidLink; //_stringLocalizer["msgInvalidLink"].Value;
+                    
+                }
+                return View("ResetPassword", masterUserresetpassword);
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                ViewBag.Message = Convert.ToString(e.StackTrace);
+                return View("ResetPassword", masterUserresetpassword);
+            }
+        }
+
         public IActionResult ProfileDetails()
         {
             return View();
+        }
+
+        public class Customs
+        {
+            public static string msgLinkToResetpasswordSentOnEmail = "We have send an email successfully to entered email address, please go to your mail box and follow further steps";
+
+            public static string SomeErrorOccurred = "Some error occurred";
+
+            public static string msgEmailAddressNotExistIndatabase = "Entered email address is not found";
+
+            public static string msgPasswordResetSuccessfully = "Password Reset successfully";
+
+            public static string msgResetPasswordTokenExpired = "You link has been expired please go to forgot password page to reset your password again";
+
+            public static string msgInvalidLink = "Invalid Link";
         }
     }
 }

@@ -50,8 +50,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(module => item.RoleName)</td>
-                    @*  <td>@Html.DisplayFor(model => item.IsActive)</td> *@
+                    <td>@Html.DisplayFor(module => item.RoleName)</td> 
                     <td>@Html.LabelFor(model => item.IsActive, item.IsActive ? "Active" : "InActive", new { @style = item.IsActive ? "color:green;" : "color:red;" })</td>
                     <td class="position-relative">
                         <img src="~/assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
@@ -73,8 +72,7 @@
                         </div>
                     </td>
                 </tr>
-            }
-
+            } 
         </tbody>
     </table>
 </div>
