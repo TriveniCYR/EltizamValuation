@@ -11,8 +11,8 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public string UserName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string DepartmentName { get; set; }
-        public string DesignationName { get; set; }
+        public string Department { get; set; }
+        public string Designation { get; set; }
         public string ResourceType { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }

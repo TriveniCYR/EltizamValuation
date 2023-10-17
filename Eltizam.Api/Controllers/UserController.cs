@@ -63,11 +63,11 @@ namespace Eltizam.API.Controllers.Masters
         /// <response code="500">Internal Server</response>
         
         [HttpPost, Route("GetAll")]
-        public async Task<IActionResult> GetAll([FromForm] SmartTableParam<UserSearchModel> model)
+        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _UserService.GetAll(model.Search, model.paging), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _UserService.GetAll(model), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

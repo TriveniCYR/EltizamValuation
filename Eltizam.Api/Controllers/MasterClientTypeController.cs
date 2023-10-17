@@ -86,8 +86,8 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpDelete("DeleteProperty/{id}")]
-        public async Task<IActionResult> DeleteProperty([FromRoute] int id)
+        [HttpPost("DeleteClientType/{id}")]
+        public async Task<IActionResult> DeleteClientType([FromRoute] int id)
         {
             try
             {
