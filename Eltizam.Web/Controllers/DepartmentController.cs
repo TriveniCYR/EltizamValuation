@@ -131,12 +131,35 @@ namespace EltizamValuation.Web.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Department/DepartmentView")]
+        public IActionResult DepartmentView(int? id)
+        {
+          
+            MasterDepartmentEntity masterDepartment;
+            if (id == null || id <= 0)
+            {
+                masterDepartment = new MasterDepartmentEntity();
+                return View(masterDepartment);
+            }
+            else
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetDepartmentById + "/" + id, HttpMethod.Get, token).Result;
 
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterDepartmentEntity>>(jsonResponse);
+                    if (data._object is null)
+                        return NotFound();
 
-        //public IActionResult DepartmentAdd()
-        //{
-        //    return View();
-        //}
+                    return View(data._object);
+                }
+                return NotFound();
+            }
+        }
     }
 }
 

@@ -798,9 +798,9 @@ var _excelSpecials = [
 DataTable.ext.buttons.copyHtml5 = {
 	className: 'buttons-copy buttons-html5',
 
-	//text: function ( dt ) {
-	//	return dt.i18n( 'buttons.copy', 'Copy' );
-	//},
+	text: function ( dt ) {
+		return dt.i18n( 'buttons.copy', 'Copy' );
+	},
 
 	action: function ( e, dt, button, config ) {
 		this.processing( true );
@@ -932,9 +932,9 @@ DataTable.ext.buttons.csvHtml5 = {
 		return window.FileReader !== undefined && window.Blob;
 	},
 
-	//text: function ( dt ) {
-	//	return dt.i18n( 'buttons.csv', 'CSV' );
-	//},
+	text: function ( dt ) {
+		return dt.i18n( 'buttons.csv', 'CSV' );
+	},
 
 	action: function ( e, dt, button, config ) {
 		this.processing( true );
@@ -1310,9 +1310,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 		return window.FileReader !== undefined && _pdfMake();
 	},
 
-	//text: function ( dt ) {
-	//	return dt.i18n( 'buttons.pdf', 'PDF' );
-	//},
+	text: function ( dt ) {
+		return dt.i18n( 'buttons.pdf', 'PDF' );
+	},
 
 	action: function ( e, dt, button, config ) {
 		this.processing( true );

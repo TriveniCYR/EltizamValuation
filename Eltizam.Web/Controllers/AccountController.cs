@@ -57,6 +57,8 @@ namespace Eltizam.Web.Controllers
                         var oUserDetail = JsonConvert.DeserializeObject<APIResponseEntity<UserSessionEntity>>(jsonResponse);
                         SetUserClaim(oUserDetail._object);
                         HttpContext.Session.SetInt32(UserHelper.LoggedInRoleId, oUserDetail._object.RoleId);
+
+                       
                         var roles = UtilityHelper.GetModuleRole<dynamic>(oUserDetail._object.RoleId);
                         if (roles == null)
                         {
