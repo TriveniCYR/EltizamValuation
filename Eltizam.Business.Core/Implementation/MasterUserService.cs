@@ -35,7 +35,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 		private readonly IHelper _helper;
 		public MasterUserService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
 								  IHelper helper,
-								 Microsoft.Extensions.Configuration.IConfiguration _configuration)
+								  Microsoft.Extensions.Configuration.IConfiguration _configuration)
 		{
 			_unitOfWork = unitOfWork;
 			_mapperFactory = mapperFactory;
@@ -52,9 +52,10 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
 			UserSessionEntity oUser = null;
 
-			SqlParameter[] osqlParameter = {
+			SqlParameter[] osqlParameter = 
+			{
 		        new SqlParameter("@Email", oLogin.Email),
-				new SqlParameter("@Password", Utility.Utility.UtilityHelper.GenerateSHA256String(oLogin.Password))
+				new SqlParameter("@Password", UtilityHelper.GenerateSHA256String(oLogin.Password))
 			};
 
 			var UserList = await _repository.GetBySP("usp_User_VerifyUserLogin", System.Data.CommandType.StoredProcedure, osqlParameter);
@@ -75,13 +76,14 @@ namespace Eltizam.Business.Core.ServiceImplementations
 			string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
 			string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
-			SqlParameter[] osqlParameter = {
+			SqlParameter[] osqlParameter = 
+			{
 				new SqlParameter("@UserId", 0),
 				new SqlParameter("@CurrentPageNumber", model.start),
-					new SqlParameter("@PageSize", model.length),
-					new SqlParameter("@SortColumn", ColumnName),
-					new SqlParameter("@SortDirection", SortDir),
-					new SqlParameter("@SearchText", model.search.value)
+				new SqlParameter("@PageSize", model.length),
+				new SqlParameter("@SortColumn", ColumnName),
+				new SqlParameter("@SortDirection", SortDir),
+				new SqlParameter("@SearchText", model.search.value)
 			};
 
 			var UserList = await _repository.GetBySP("stp_npd_GetUserList", System.Data.CommandType.StoredProcedure, osqlParameter);
@@ -92,50 +94,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 			DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, UserList.DataTableToList<MasterUserEntity>());
 
 			return oDataTableResponseModel;
-		}
-
-		public async Task<dynamic> GetRegionByBusinessUnit(string BusinessUnitIds)
-		{
-			SqlParameter[] osqlParameter = {
-				new SqlParameter("@UserId", 0),
-				new SqlParameter("@BusinessUnitIds", BusinessUnitIds)
-			};
-
-			var UserRegionDropdown = await _repository.GetDataSetBySP("stp_npd_GetRegionByBusinessUnit", System.Data.CommandType.StoredProcedure, osqlParameter);
-
-			dynamic DropdownObjects = new ExpandoObject();
-			if (UserRegionDropdown != null)
-			{
-				if (UserRegionDropdown.Tables[0] != null && UserRegionDropdown.Tables[0].Rows.Count > 0)
-				{
-					//DropdownObjects.Region = UserRegionDropdown.Tables[0].DataTableToList<MasterRegion>();
-				}
-			}
-
-			return DropdownObjects;
-		}
-
-		public async Task<dynamic> GetCountryByRegion(string RegionIds)
-		{
-			SqlParameter[] osqlParameter = {
-				new SqlParameter("@UserId", 0),
-				new SqlParameter("@RegionIds", RegionIds)
-			};
-
-			var UserCountryDropdown = await _repository.GetDataSetBySP("stp_npd_GetCountryByRegion", System.Data.CommandType.StoredProcedure, osqlParameter);
-
-			dynamic DropdownObjects = new ExpandoObject();
-			if (UserCountryDropdown != null)
-			{
-				if (UserCountryDropdown.Tables[0] != null && UserCountryDropdown.Tables[0].Rows.Count > 0)
-				{
-					DropdownObjects.Country = UserCountryDropdown.Tables[0].DataTableToList<MasterCountry>();
-				}
-			}
-
-			return DropdownObjects;
-		}
-
+		} 
 
 		public async Task<MasterUserEntity> GetById(int id)
 		{
@@ -144,74 +103,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
 			return _userEntity;
 		}
-		public async Task<List<MasterUserEntity>> GetUserForAPIInterested()
-		{
-			var _userEntities = new List<MasterUserEntity>();
-			var _userDBEntity = await _repository.GetAllAsync(x => x.IsActive == true );
-			_userEntities = _mapperFactory.GetList<MasterUser, MasterUserEntity>(_userDBEntity.ToList());
-			return _userEntities;
-		}
-
-
-		public async Task<DBOperation> AddUpdateUser(MasterUserEntity entityUser)
-		{
-			if (!string.IsNullOrEmpty(entityUser.Password) && entityUser.UserId <= 0)
-			{
-				entityUser.Password = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.Password);
-				entityUser.ConfirmPassowrd = entityUser.Password;
-			}
-			MasterUser objUser;
-			var LoggedUserId = entityUser.LoggedUserId;
-			if (entityUser.UserId > 0)
-			{
-				objUser = _repository.Get(entityUser.UserId);
-				var OldObjUser = objUser;
-				if (objUser != null)
-				{
-					//objUser.FullName = entityUser.FullName;
-					//objUser.MobileNumber = entityUser.MobileNumber;
-					//objUser.MobileCountryId = entityUser.MobileCountryId;
-					//objUser.RoleId = entityUser.RoleId;
-					//objUser.Address = entityUser.Address;
-					//objUser.IsActive = entityUser.IsActive;
-					//objUser.IsManagement = entityUser.IsManagement;
-					//objUser.Apiuser = entityUser.APIUser;
-					//objUser.FormulationGl = entityUser.FormulationGL;
-					//objUser.ApigroupLeader = entityUser.ApigroupLeader;
-					//objUser.AnalyticalGl = entityUser.AnalyticalGL;
-					//objUser.DesignationName = entityUser.DesignationName;
-					//objUser.ModifyBy = LoggedUserId;
-					//objUser.ModifyDate = DateTime.Now;
-
-					SqlParameter[] osqlParameter = {
-				new SqlParameter("@UserId", entityUser.UserId)
-			};
-					var result = await _repository.GetDataSetBySP("stp_npd_RemoveAllMultipleMappingofMasterUser", System.Data.CommandType.StoredProcedure, osqlParameter);
-					//objUser = FillMappingData(entityUser, objUser);
-					_repository.UpdateAsync(objUser);
-					//  var isSuccess = await _auditLogService.CreateAuditLog<MasterUser>(Utility.Audit.AuditActionType.Update,
-					//Utility.Enums.ModuleEnum.UserManagement, OldObjUser, objUser, 0);
-				}
-				else
-				{
-					return DBOperation.NotFound;
-				}
-			}
-			else
-			{
-				objUser = _mapperFactory.Get<MasterUserEntity, MasterUser>(entityUser);
-				//objUser = FillMappingData(entityUser, objUser);
-				objUser.CreatedBy = LoggedUserId;
-				objUser.CreatedDate = DateTime.Now;
-				_repository.AddAsync(objUser);
-				//SendUserCreateMail(entityUser, LoggedUserId);
-			}
-			await _unitOfWork.SaveChangesAsync();
-			if (objUser.Id == 0)
-				return DBOperation.Error;
-
-			return DBOperation.Success;
-		}
+		 
 
 		public async Task<DBOperation> DeleteUser(int id)
 		{
@@ -254,6 +146,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
             strHtml = strHtml.Replace("ValidDateTime", entityUser.ForgotPasswordDateTime.Value.AddHours(1).ToString());
             strHtml = strHtml.Replace("Name", entityUser.FirstName + entityUser.LastName);
             IsSuccess =	email.SendMail(entityUser.Email, string.Empty, "Eltizam - Forgot Password", strHtml, GetSMTPConfiguration());
+			
+			
 			EmailLogHistory emailLogHistory = new EmailLogHistory();
 			emailLogHistory.FromAddress = configuration.GetSection("SMTPDetails").GetSection("FromEmail").Value;//entityUser.Email;
 
@@ -266,6 +160,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 			emailLogHistory.IsSent = IsSuccess;
 			_emailLog.Add(emailLogHistory);
 			await _unitOfWork.SaveChangesAsync();
+
 			//if (IsSuccess)
 			return DBOperation.Success;
         }

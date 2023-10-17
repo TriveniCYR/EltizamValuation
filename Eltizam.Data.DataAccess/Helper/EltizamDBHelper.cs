@@ -9,7 +9,7 @@ namespace Eltizam.Data.DataAccess.Helper
 	/// Added by YReddy on 08/11/2022  
 	/// Used to implement DB related transaction for entire application
 	/// </summary>
-	public class EltizamDBHelper
+	public class EltizamDBHelper 
     {
         public static int timeout = 30;
         public static int DefaultPageNumber = 1;

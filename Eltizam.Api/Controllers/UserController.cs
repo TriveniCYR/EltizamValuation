@@ -14,6 +14,7 @@ using Eltizam.Api.Helpers.Response;
 using Microsoft.AspNetCore.Hosting;
 using Eltizam.Business.Core.Implementation;
 using Eltizam.Api.Filters;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace Eltizam.API.Controllers.Masters
 {
@@ -86,7 +87,7 @@ namespace Eltizam.API.Controllers.Masters
                 if (oUserEntity != null && oUserEntity.Id > 0)
                     return _ObjectResponse.Create(oUserEntity, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -104,10 +105,10 @@ namespace Eltizam.API.Controllers.Masters
                 DBOperation oResponse = await _UserService.Upsert(oUser);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oUser.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oUser.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
                 else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
             catch (Exception ex)
             {

@@ -9,6 +9,7 @@ using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Core.ServiceImplementations;
 using Eltizam.Business.Models;
 using static Eltizam.Utility.Enums.GeneralEnum;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace Eltizam.Api.Controllers
 {
@@ -55,10 +56,10 @@ namespace Eltizam.Api.Controllers
 				DBOperation oResponse = await _UploadService.SaveFilesAsync(files);
 				if (oResponse == DBOperation.Success)
 				{
-					return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, ("Inserted Successfully"));
+					return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
 				}
 				else
-					return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "File Not Uploded" : "Bad request"));
+					return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "File Not Uploded" : AppConstants.BadRequest));
 			}
 			catch (ArgumentException ex)
 			{
@@ -98,7 +99,7 @@ namespace Eltizam.Api.Controllers
 				if (oResponse == DBOperation.Success)
 					return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Get Successfully");
 				else
-					return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+					return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
 			}
 			catch (Exception ex)
 			{

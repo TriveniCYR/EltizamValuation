@@ -23,6 +23,13 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string TableName = "TableName"; 
         public static string TableId = "TableId";
         public static string TableKeyId = "TableKeyId";
+
+        public static string NoRecordFound = "No Record Found";
+        public static string InsertSuccess = "Data inserted successfully";
+        public static string UpdateSuccess = "Data updated successfully";
+        public static string DeleteSuccess = "Data deleted successfully";
+        public static string BadRequest =  AppConstants.BadRequest;
+        public static string ActionSuccess = "Action performed successfully";
     }
 
     public class TableName

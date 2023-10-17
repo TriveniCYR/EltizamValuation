@@ -9,6 +9,7 @@ using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
 using Eltizam.Resource;
 using static Eltizam.Utility.Enums.GeneralEnum;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace Eltizam.Api.Controllers
 {
@@ -93,7 +94,7 @@ namespace Eltizam.Api.Controllers
                     return _ObjectResponse.Create(_forgotPasswordOperation, (Int32)HttpStatusCode.OK);
                 else if (_forgotPasswordOperation == DBOperation.NotFound)
                 {
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
                 }
                 return _ObjectResponse.Create(null, (Int32)HttpStatusCode.InternalServerError, "Internal Server Error");
             }
@@ -118,7 +119,7 @@ namespace Eltizam.Api.Controllers
                     return _ObjectResponse.Create(resetOperation, (Int32)HttpStatusCode.NotExtended, "TokenExpired");
                 }
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {

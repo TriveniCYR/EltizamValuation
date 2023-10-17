@@ -41,5 +41,7 @@ namespace Eltizam.Business.Models
         public static string usp_State_AllList = "usp_State_AllList";
         public static string usp_Role_SearchAllList = "usp_Role_SearchAllList";
         public static string usp_Role_GetByRoleName = "usp_Role_GetByRoleName";
+
+        public static string stp_InsertException = "stp_InsertException";
     }
 }
