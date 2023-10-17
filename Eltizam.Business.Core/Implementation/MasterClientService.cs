@@ -75,7 +75,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     DbParameter[] osqlParameter = {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
+                 new DbParameter("TableName", SourceTableKey.Master_Client, SqlDbType.VarChar),
                 };
                     var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterAddressEntity>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                     if (UserAddress != null)
@@ -87,7 +87,7 @@ namespace Eltizam.Business.Core.Implementation
 
                     DbParameter[] osqlParameter2 = {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
+                 new DbParameter("TableName", SourceTableKey.Master_Client, SqlDbType.VarChar),
                 };
                     var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureNameCall.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
                     if (UserDocuments != null)

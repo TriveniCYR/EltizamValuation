@@ -1,0 +1,85 @@
+var tableId = "VendorTable";
+$(document).ready(function () {
+    InitializeVendorList();
+});
+
+function ConfirmationDeleteVendor(id) {
+     
+    $('#DeleteVendorModel #Id').val(id);
+}
+function DeleteVendor() {
+     
+    var tempInAtiveID = $('#DeleteVendorModel #Id').val();
+    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteVendors + "/" + tempInAtiveID, 'POST', DeleteVendorByIdSuccess, DeleteVendorByIdError);
+}
+function DeleteVendorByIdSuccess(data) {
+    try {
+         
+        if (data._Success === true) {
+            toastr.success(RecordDelete);
+            $('#' + tableId).DataTable().draw();
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+function DeleteVendorByIdError(x, y, z) {
+    toastr.error(ErrorMessage);
+}
+
+function InitializeVendorList() {
+     
+    var setDefaultOrder = [0, 'asc'];
+    var ajaxObject = {
+        "url": $('#hdnBaseURL').val() + AllVendor,
+        "type": "POST",
+        "data": function (d) {
+            var pageNumber = $('#' + tableId).DataTable().page.info();
+            d.PageNumber = pageNumber.page;
+        },
+        "datatype": "json"
+    };
+    var columnObject = [
+        {
+            "data": "id", "name": "Id"
+        },
+        {
+            "data": "companyName", "name": "Company Name"
+        },
+        {
+            "data": "estimattionDate", "name": "Estimation Date"
+        },
+        {
+            "data": "resourceType", "name": "Resource Type"
+        },
+        {
+            "data": "companyDescription", "name": "Company Description"
+        },
+        {
+            "data": "status", "name": "Active", "render": function (data, type, row, meta) {
+                if (row.status) {
+                    return "<span class='tableStatus green'>Active</span>";
+                } else {
+                    return "<span class='tableStatus red'>Inactive</span>";
+                }
+            }
+        },
+        {
+            "data": "id", "name": "Action", "render": function (data, type, row, meta) {
+                var html = '';
+
+                html += '<a title="Edit" class="large-font"  href="/Vendor/VendorManage?id=' + row.id + '"><img src="../assets/edit.svg" alt = "edit" />';
+                html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteVendorModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteVendor(' + row.id + ');"><i class="fa fa-fw fa-trash mr-1"></i></a>';
+
+                return html;
+            }
+        }
+    ];
+
+    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
+}
+
+//#endregion

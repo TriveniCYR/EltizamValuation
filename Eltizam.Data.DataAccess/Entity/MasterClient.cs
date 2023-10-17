@@ -20,7 +20,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? Trnnumber { get; set; }
         public DateTime? TrnexpiryDate { get; set; }
         public string? LicenseNumber { get; set; }
-        public int? IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public string? Logo { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }

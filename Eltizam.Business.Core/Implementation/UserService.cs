@@ -288,5 +288,18 @@ namespace Eltizam.Business.Core.Implementation
 
             return lstStf;
         }
+        public async Task<DBOperation> Delete(int id)
+        {
+            var entityDepartment = _repository.Get(x => x.Id == id);
+
+            if (entityDepartment == null)
+                return DBOperation.NotFound;
+
+            _repository.Remove(entityDepartment);
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return DBOperation.Success;
+        }
     }
 }
