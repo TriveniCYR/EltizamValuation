@@ -27,19 +27,11 @@
                    @*  var menuItems = UtilityHelper.GetMenu(_roleId); *@
                     @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ResourceMaster, _roleId))
                     {
-                        <li onclick="resourceMaster()">
+                        <li class="activeSideMenu">
                             <div class="flex align-item-center">
                                 <img src="../assets/user-cog.svg" alt="Resource Master" class="showIcon">
                                 <img src="../assets/user-cog-blue.svg" alt="Resource Master" class="hoverIcon">
-                                <p>Resource Master</p>
-                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu" />
-                            </div>
-
-                            <div class="showMoreNav">
-                                <ul>
-                                    <li class="activeSideMenu">Resource List</li>
-                                    <li>Add New</li>
-                                </ul>
+                                <a href="@Url.Action("Resource", "Resource")" class="nav-link">Resource Master</a>
                             </div>
                         </li>
                     }
@@ -49,8 +41,7 @@
                         <li class="activeSideMenu">
                             <div class="flex align-item-center">
                                 <img src="../assets/user-star.svg" alt="Role Master" class="showIcon">
-                                <img src="../assets/user-star-blue.svg" alt="Role Master" class="hoverIcon">
-                                @*  <p>Role Master</p> *@
+                                <img src="../assets/user-star-blue.svg" alt="Role Master" class="hoverIcon"> 
                                 <a href="@Url.Action("Roles", "Role")" class="nav-link">Role Master</a>
                             </div>
                         </li>
