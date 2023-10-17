@@ -64,7 +64,7 @@ function InitializeUserList () {
             }
         },
         {
-            "data": "id", "name": "Action", "render": function (data, type, row, meta) {
+            "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
 
                 html += '<a title="Edit" class="large-font"  href="/Resource/ResourceManage?UserId=' + row.id + '"><img src="../assets/edit.svg" alt = "edit" />';
