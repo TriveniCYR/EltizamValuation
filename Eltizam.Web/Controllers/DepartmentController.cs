@@ -66,8 +66,7 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult DepartmentManage(int id, MasterDepartmentEntity masterDepartment)
         {
             try
-            {
-
+            { 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

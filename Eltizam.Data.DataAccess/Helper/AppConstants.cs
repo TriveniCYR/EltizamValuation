@@ -8,16 +8,11 @@ namespace Eltizam.Data.DataAccess.Helper
 {
     public class AppConstants
     {
-        public static string msgLinkToResetpasswordSentOnEmail = "We have send an email successfully to entered email address, please go to your mail box and follow further steps";
-
-        public static string SomeErrorOccurred = "Some error occurred";
-
-        public static string msgEmailAddressNotExistIndatabase = "Entered email address is not found";
-
-        public static string msgPasswordResetSuccessfully = "Password Reset successfully";
-
-        public static string msgResetPasswordTokenExpired = "You link has been expired please go to forgot password page to reset your password again";
-
+        public static string msgLinkToResetpasswordSentOnEmail = "Forgot password link sent to the given email successfully."; 
+        public static string SomeErrorOccurred = "Some error occurred"; 
+        public static string msgEmailAddressNotExistIndatabase = "Entered email address is not found"; 
+        public static string msgPasswordResetSuccessfully = "Password Reset successfully"; 
+        public static string msgResetPasswordTokenExpired = "You link has been expired please go to forgot password page to reset your password again"; 
         public static string msgInvalidLink = "Invalid Link";
 
         public static string TableName = "TableName"; 
@@ -28,7 +23,7 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string InsertSuccess = "Data inserted successfully";
         public static string UpdateSuccess = "Data updated successfully";
         public static string DeleteSuccess = "Data deleted successfully";
-        public static string BadRequest =  AppConstants.BadRequest;
+        public static string BadRequest = "Bad Reques";
         public static string ActionSuccess = "Action performed successfully";
     }
 
