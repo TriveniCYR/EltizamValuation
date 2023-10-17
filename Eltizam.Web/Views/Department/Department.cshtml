@@ -19,8 +19,9 @@
 }
 <div id="PlaceHolderHere"></div>
 <main>
-    <h3 class="dashboardTitle">Department Master</h3>
-    <div class="flex justify-end mb-28 mobile_flexColumn position-relative">
+    
+    <div class="flex  mt-20 mobile_flexColumn position-relative justify-between">
+        <h3 class="dashboardTitle">Department Master</h3>
             <div class="buttonArea flex align-item-center">
             <button class="flex align-item-center blueBtn" id="addRole">
                 <a class="whiteAtag" style="@IsAddAllow" asp-action="DepartmentManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
@@ -57,7 +58,7 @@
                                 <ul>
                                     <li class="viewRole">
                                         <img src="~/assets/view.svg" alt="view" />
-                                        <a title="View" asp-action="RoleView" asp-route-roleId="@item.Id" asp-route-flag1="value2">View</a>
+                                        <a title="View" asp-action="DepartmentView" asp-route-Id="@item.Id">View</a>
                                     </li>
                                     <li class="editRole">
                                         <img src="~/assets/edit.svg" alt="edit" />
@@ -65,7 +66,7 @@
                                     </li>
                                     <li class="delete">
                                         <img src="~/assets/trash.svg" alt="trash" />
-                                        <a title="Delete" data-toggle="modal" data-target="#DeleteDepartmentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationRole(@item.Id); return false;"><span>Delete</span></a>
+                                        <a title="Delete" data-toggle="modal" data-target="#DeleteDepartmentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDepartment(@item.Id); return false;"><span>Delete</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -96,9 +97,9 @@
                         </div>
                     </div>
                 </div>
-                @Html.Hidden("Id")
+                @Html.Hidden("ID")
                 <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteRole()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <button type="button" onclick="DeleteDepartment()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
                     <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
                 </div>
             </div>

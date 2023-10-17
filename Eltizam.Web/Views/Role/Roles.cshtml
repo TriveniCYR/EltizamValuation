@@ -21,25 +21,9 @@
 <div id="PlaceHolderHere"></div>
 
 <main>
-<h3 class="dashboardTitle">ROLE MASTER</h3>
-<div class="flex justify-between mb-28 mobile_flexColumn position-relative">
-    <div class="flex">
-        @* <label class="searchBox position-relative">
-            <div class="flex align-item-center">
-               
-                    <form asp-action="SearchRoles" method="get">
-                        <!-- Step 1 & 2 -->
-                        <div class="flex align-item-center">
-                            <img src="~/assets/search.svg" alt="search">
-                            <input type="text" name="searchQuery" placeholder="Search for System" class="searchInput" /> <!-- Step 4 -->
-                            <button type="submit" class="normalSearch">Search</button> <!-- Step 3 -->
-                        </div>
-                    </form>
-            </div>
-          
-        </label> *@
 
-    </div>
+<div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+        <h3 class="dashboardTitle">ROLE MASTER</h3>
     <div class="buttonArea flex align-item-center">
         <button class="flex align-item-center blueBtn" id="addRole">
             <a class="whiteAtag" style="@IsAddAllow" asp-action="RoleManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>

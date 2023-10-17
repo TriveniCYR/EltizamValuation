@@ -14,31 +14,26 @@ function SetupRoleTable() {
     StaticDataTable("#DesignationTable");
 }
 
-function CleareRoleFields() {
+function ClearDesignationFields() {
     $('#DeleteDesignationModel #ID').val("0");
 }
 
 //#region Delete Role
-function ConfirmationRole(id) {
-   
+function ConfirmationDesignation(id) {
+    
     $('#DeleteDesignationModel #ID').val(id);
 }
-function DeleteRole() {
-   
-    var tempInAtiveID = $('#DeleteRoleModel #ID').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteRoleByIdUrl + "/" + tempInAtiveID, 'POST', DeleteRoleByIdSuccess, DeleteRoleByIdError);
+function DeleteDesignation() {
+  
+    var tempInAtiveID = $('#DeleteDesignationModel #ID').val();
+    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteDesignationByIdUrl + "/" + tempInAtiveID, 'POST', DeleteDesignationByIdSuccess, DeleteDesignationByIdError);
 }
-function DeleteRoleByIdSuccess(data) {
+function DeleteDesignationByIdSuccess(data) {
     try {
         if (data._Success === true) {
-            if (data._Message == "UserAssigned") {
-                toastr.error("Can not Delete Role, User assigned to this Role");
-            }
-            else {
-            CleareRoleFields();
-                toastr.success(RecordDelete);
-                location.reload(true);
-            }
+            ClearDesignationFields();
+            toastr.success(RecordDelete);
+            location.reload(true);
         }
         else {
             toastr.error(data._Message);
@@ -47,9 +42,9 @@ function DeleteRoleByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
-function DeleteRoleByIdError(x, y, z) {
+function DeleteDesignationByIdError(x, y, z) {
     if (x.get)
-    toastr.error(ErrorMessage);
+        toastr.error(ErrorMessage);
     location.reload(true);
 }
 //#endregion
