@@ -77,7 +77,10 @@ function InitializeClientList() {
         }
     ];
 
-    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
+    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject, {
+        left: 2,
+        right: 2
+    });
 }
 
 //#endregion
