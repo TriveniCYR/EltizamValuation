@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     SetupRoleTable();
+   /* $('#LocationTable').DataTable();*/
 
     if (StatusMessage != '') {
         if (StatusMessage.includes('Successful')) {
@@ -23,10 +24,11 @@ function GetLocationById(id) {
     ajaxServiceMethod($('#hdnBaseURL').val() + GetLocationByIdUrl + "/" + id, 'GET', GetLocationByIdSuccess, GetLocationByIdError);
 }
 function GetLocationByIdSuccess(data) {
-    try {
+    
+    try {       
         debugger
         //CleareClientTypeFields();
-        $('#popup-editRole-overlay #Id').val(data._object.id);
+        $('#popup-editRole-overlay #Id').val(data._object.id); 
         $('#popup-editRole-overlay #CountryId').val(data._object.countryId);
         $('#popup-editRole-overlay #StateId').val(data._object.stateId);
         $('#popup-editRole-overlay #CityId').val(data._object.cityId);
@@ -132,4 +134,38 @@ function BindCity() {
             $("#loader").hide();
         }
     })
+}
+function CleareRoleFields() {
+    $('#DeleteLocationModel #ID').val("0");
+}
+function ConfirmationDelete(id) {
+    $('#DeleteLocationModel #ID').val(id);
+}
+function DeleteRole() {
+    debugger;
+    var tempInAtiveID = $('#DeleteLocationModel #ID').val();
+    var url = DeletLocationByIdUrl + "/" + tempInAtiveID;
+    ajaxServiceMethod($('#hdnBaseURL').val() + url, 'POST', DeleteRoleByIdSuccess);
+    debugger;
+}
+function DeleteRoleByIdSuccess(data) {
+    try {
+        if (data._Success === true) {
+         
+                CleareRoleFields();
+                toastr.success(RecordDelete);
+                location.reload(true);
+            
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+    function DeleteRoleByIdError(x, y, z) {
+        if (x.get)
+            toastr.error(ErrorMessage);
+        location.reload(true);
+    }
 }

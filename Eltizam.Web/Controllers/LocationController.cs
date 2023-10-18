@@ -55,63 +55,65 @@ namespace EltizamValuation.Web.Controllers
             }
             return View();
         }
-        //public IActionResult LocationManage(int? id)
-        //{
-        //    MasterLocationEntity masterlocation;
-        //    if (id == null || id <= 0)
-        //    {
-        //        masterlocation = new MasterLocationEntity();
-        //        return View(masterlocation);
-        //    }
-        //    else
-        //    {
-        //        HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-        //        APIRepository objapi = new(_cofiguration);
-        //        HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetUserById + "/" + id, HttpMethod.Get, token).Result;
 
-        //        if (responseMessage.IsSuccessStatusCode)
-        //        {
-        //            string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-        //            var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
-        //            if (data._object is null)
-        //                return NotFound();
 
-        //            return View(data._object);
-        //        }
-        //        return NotFound();
-        //    }
-        //}
 
-        
-        //    public IActionResult LocationById(int id)
-        //{
+        public IActionResult LocationById(int id)
+        {
 
-        //    MasterLocationEntity masterlocation;
-        //    if (id == null || id <= 0)
-        //    {
-        //        masterlocation = new MasterLocationEntity();
-        //        return View(masterlocation);
-        //    }
-        //    else
-        //    {
-        //        HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-        //        APIRepository objapi = new(_cofiguration);
-        //        HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetLocationById + "/" + id, HttpMethod.Get, token).Result;
+            MasterLocationEntity masterlocation;
+            if (id == null || id <= 0)
+            {
+                masterlocation = new MasterLocationEntity();
+                return View(masterlocation);
+            }
+            else
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetLocationById + "/" + id, HttpMethod.Get, token).Result;
 
-        //        if (responseMessage.IsSuccessStatusCode)
-        //        {
-        //            string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-        //            var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
-        //            if (data._object is null)
-        //                return NotFound();
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
+                    if (data._object is null)
+                        return NotFound();
 
-        //            return View(data._object);
-        //        }
-        //        return NotFound();
-        //    }
-        //}
-            
-                [HttpPost]
+                    return View(data._object);
+                }
+                return NotFound();
+            }
+        }
+
+        public IActionResult LocationManage(int? id,int Isview = 0)
+        {
+            MasterLocationEntity masterlocation;
+            if (id == null || id <= 0)
+            {
+                masterlocation = new MasterLocationEntity();
+                ViewBag.IsView = Isview;
+                return View(masterlocation);
+            }
+            else
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetLocationById + "/" + id, HttpMethod.Get, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
+                    if (data._object is null)
+                        return NotFound();
+                    ViewBag.IsView = Isview;
+                    return View(data._object);
+                }
+                return NotFound();
+            }
+        }
+        [HttpPost]
         public IActionResult LocationManage(int id, MasterLocationEntity masterlocation)
         {
             try

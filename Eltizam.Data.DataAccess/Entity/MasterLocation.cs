@@ -6,12 +6,12 @@ namespace Eltizam.Data.DataAccess.Entity
     public partial class MasterLocation
     {
         public int Id { get; set; }
-        public string LocationName { get; set; } = null!;
+        public string? LocationName { get; set; }
         public int CountryId { get; set; }
         public int StateId { get; set; }
         public int CityId { get; set; }
         public string? Sector { get; set; }
-        public int? Status { get; set; }
+        public int Status { get; set; }
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }
         public int HomeCurrencyId { get; set; }

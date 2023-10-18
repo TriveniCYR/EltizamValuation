@@ -126,7 +126,7 @@ namespace EltizamValuation.Api.Controllers
         }
 
         // this is for delete master Designation detail by id
-        [HttpDelete("Delete/{id}")]
+        [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try

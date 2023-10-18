@@ -90,7 +90,7 @@ namespace Eltizam.Business.Core.Implementation
                 var OldObjLocation = objLocation;
                 if (objLocation != null)
                 {
-                    objLocation.LocationName = entityLocation.LocationName;
+                 //   objLocation.LocationName = entityLocation.LocationName;
                     objLocation.CountryId = entityLocation.CountryId;
                     objLocation.StateId = entityLocation.StateId;
                     objLocation.CityId = entityLocation.CityId;
@@ -98,6 +98,7 @@ namespace Eltizam.Business.Core.Implementation
                     objLocation.Latitude = entityLocation.Latitude;
                     objLocation.Longitude = entityLocation.Longitude;
                     objLocation.Status = entityLocation.Status;
+                    objLocation.LocationName = entityLocation.LocationName;
                     objLocation.ModifiedDate = DateTime.Now;
                     objLocation.ModifiedBy = entityLocation.CreatedBy;
                   
