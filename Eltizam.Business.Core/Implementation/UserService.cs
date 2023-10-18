@@ -60,7 +60,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter("@SearchText", model.search.value)
             };
 
-            var UserList = await _repository.GetBySP("usp_User_Search_GetUserList", System.Data.CommandType.StoredProcedure, osqlParameter);
+            var UserList = await _repository.GetBySP(ProcedureMetastore.usp_User_Search_GetUserList, System.Data.CommandType.StoredProcedure, osqlParameter);
 
             var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
             var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);

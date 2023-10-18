@@ -291,7 +291,7 @@ footer {
 
 /* system user master css here */
 .sideNavDashboard {
-    width: 290px;
+    width: 16em;
     background-color: var(--white);
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.07);
     z-index: 1;
@@ -334,7 +334,7 @@ footer {
         font-style: normal;
         font-weight: 400;
         line-height: 120%;
-        padding: 11px 20px;
+        padding: 9px 20px;
         cursor: pointer;
         color: var(--white);
         position: relative;
@@ -374,12 +374,12 @@ footer {
         .sideNavDashboard .sideMenu ul li:hover::after, .sideNavDashboard .activeSideMenu:after {
             content: '';
             width: 3px;
-            height: 30px;
+            height: 25px;
             background: var(--blue);
             position: absolute;
             left: 0;
             border-radius: 0 2px 2px 0;
-            top: 10px;
+            top: 9px;
         }
 
         .sideNavDashboard .sideMenu ul li:hover img.right-arrow-menu, .sideNavDashboard .sideMenu ul li.activeSideMenu img.right-arrow-menu {
@@ -589,10 +589,11 @@ main {
     font-size: 14px;
     text-decoration: none;
     display: flex;
+    color: var(--black);
 }
 
 .actionItem ul li:hover a {
-    color: var(--white);
+    color: var(--white) !important;
 }
 
 ::-webkit-scrollbar {
@@ -1187,7 +1188,6 @@ img#closePopup {
 
 .profileHead {
     padding-bottom: 35.5px;
-    border-bottom: 1px solid var(--blue);
     background-color: var(--white);
 }
 
@@ -1549,7 +1549,8 @@ label.roleswitch {
 div.dataTables_wrapper div.dataTables_info {
     padding: 0;
     position: relative;
-    /*top: 33px;*/
+    top: 33px;
+    padding-top: 0 !important;
 }
 
 
@@ -1685,3 +1686,67 @@ div.dataTables_wrapper div.dataTables_filter {
         color:var(--blue);
         border
     }
+
+.whiteWithPadding {
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.07);
+    border-radius: 5px;
+}
+
+.dataTables_scrollHeadInner{
+    width:100% !important;
+}
+
+.dataTable
+{
+    width:100% !important;
+}
+
+.profileHead .dashboardTitle {
+    padding: 17.5px 37px 18.06px 33px;
+}
+
+.profileTabSection {
+    position: relative;
+    top: -31px;
+    width: 100%;
+    margin-right: 40px;
+}
+
+.profileTabSection.addProperty {
+    margin-left: 33px;
+}
+
+.clientImg {
+    width: 170px;
+    margin: 0;
+}
+
+.profileTabSection:after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: var(--blue);
+    position: absolute;
+    top: 34px;
+    left: -95%;
+    margin: auto;
+    z-index: 1;
+}
+
+.profileTabSection:before {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: var(--blue);
+    position: absolute;
+    top: 34px;
+    right: -5%;
+    margin: auto;
+    z-index: 1;
+}
+
+.ptrl-20 {
+    padding: 20px 20px 0;
+}

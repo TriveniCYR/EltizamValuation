@@ -74,29 +74,34 @@ namespace Eltizam.Business.Core.Implementation
             return _PropertyTypeEntity;
         }
 
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
-        {
-            var _dbParams = new[]
-             {
-                 new DbParameter("PropertySubTypeId", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "PropertySubType", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
+		//public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
+		//{
+		//    var _dbParams = new[]
+		//     {
+		//         new DbParameter("PropertySubTypeId", 0,SqlDbType.Int),
+		//         new DbParameter("PageSize", model.length, SqlDbType.Int),
+		//         new DbParameter("PageNumber", model.start, SqlDbType.Int),
+		//         new DbParameter("OrderClause", "PropertySubType", SqlDbType.VarChar),
+		//         new DbParameter("ReverseSort", 1, SqlDbType.Int)
+		//     };
 
-            int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<Master_PropertySubTypeModel>(ProcedureMetastore.usp_PropertySubType_SearchAllList,
+		//    int _count = 0;
+		//    var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<Master_PropertySubTypeModel>(ProcedureMetastore.usp_PropertySubType_SearchAllList,
 
-             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
+		//     DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
 
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
+		//    DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
 
-            return oDataTableResponseModel;
-        }
+		//    return oDataTableResponseModel;
+		//}
 
-        public async Task<DBOperation> AddUpdateMasterSubProperty(Master_PropertySubTypeModel entityproperty)
+		public async Task<List<Master_PropertySubTypeModel>> GetAll()
+		{
+			return _mapperFactory.GetList<MasterPropertySubType, Master_PropertySubTypeModel>(await _repository.GetAllAsync());
+		}
+
+		public async Task<DBOperation> AddUpdateMasterSubProperty(Master_PropertySubTypeModel entityproperty)
         {
             // Create a Master_PropertyType object.
             MasterPropertySubType objPropertyType;
