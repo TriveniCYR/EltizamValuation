@@ -75,6 +75,14 @@ namespace Eltizam.Web.Helpers
 
         #endregion MasterPropertyType
 
+        #region Valuation Fees
+        public static string UpsertValuation = "api/ValuationFees/Upsert";
+        public static string GetAllValuation = "api/ValuationFees/GetAll";
+        public static string GetValuationById = "api/ValuationFees/GetById";
+        public static string DeleteValuationById = "api/ValuationFees/Delete";
+
+        #endregion Valuation Fees
+
         #region ClientType
 
         public static string GetSearchClientType = "api/MasterClientType/GetAllClientType";

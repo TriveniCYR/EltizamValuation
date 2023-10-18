@@ -119,16 +119,16 @@
                             </div>
                         </li>
                     }
-                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ValutionFessMaster, _roleId))
-                    {
+                    //@if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ValutionFessMaster, _roleId))
+                    //{
                         <li>
                             <div class="flex align-item-center">
                                 <img src="../assets/home-dollar.svg" class="showIcon" alt="Valuation Fees Master">
                                 <img src="../assets/home-dollar-blue.svg" class="hoverIcon" alt="Valuation Fees Master">
-                                <p>Valuation Fees Master</p>
+                                <a href="@Url.Action("ValuationFees", "ValuationFees")" class="nav-link">Valuation Fees Master</a>
                             </div>
                         </li>
-                    }
+                   // }
                     @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.VendorMaster, _roleId))
                     {
                         <li>

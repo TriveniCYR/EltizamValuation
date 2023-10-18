@@ -23,6 +23,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
 
+
         public virtual MasterClientType? ClientType { get; set; }
         public virtual MasterOwnershipType? OwnershipType { get; set; }
         public virtual MasterPropertySubType? PropertySubType { get; set; }
