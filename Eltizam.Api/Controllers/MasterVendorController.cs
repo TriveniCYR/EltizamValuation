@@ -51,17 +51,17 @@ namespace EltizamValuation.Api.Controllers
         }
 
         [HttpGet]
-        [Route("getById/{id}")]
+        [Route("GetById/{id}")]
         public async Task<IActionResult> GetMasterVendorById([FromRoute] int id)
         {
             try
             {
-                var (masterVendor, masterContact, masterAdress) = await _vendorServices.GetMasterVendorByIdAsync(id);
+                var masterVendor = await _vendorServices.GetMasterVendorByIdAsync(id);
 
                 if (masterVendor != null && masterVendor.Id > 0)
                 {
                     // Assuming _ObjectResponse.Create takes three parameters: data, status code, and message.
-                    return _ObjectResponse.Create(new { MasterVendor = masterVendor, MasterContact = masterContact,MasterAdress= masterAdress }, (int)HttpStatusCode.OK, "Success");
+                    return _ObjectResponse.Create(masterVendor, (int)HttpStatusCode.OK);
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpDelete("Delete/{id}")]
+        [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try

@@ -16,8 +16,8 @@
         <div class="w-100 position-relative">            
             <main>
                 <h3 class="dashboardTitle">CLIENT MASTER</h3>
-                <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
-                    <div class="flex">
+                <div class="flex justify-end mb-28 mobile_flexColumn position-relative">
+                    @*<div class="flex">
                         <label class="searchBox position-relative">
                             <div class="flex align-item-center">
                                 <img src="../assets/search.svg" alt="search">
@@ -93,7 +93,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="buttonArea flex align-item-center">
                     <form asp-action="ClientManage" asp-controller="Client" method="GET">
                         <button class="flex align-item-center blueBtn">
@@ -185,6 +185,32 @@
 
         </div>
     </div>
+    
+<div id="DeleteClientModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("Id")
+                <div class="card-footer text-center">
+                    <button type="button" onclick="DeleteClient()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
@@ -200,6 +226,7 @@
     <script>
         //#region Setup API Url
         var AllClient = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClient";
+        var DeleteClient = "@Eltizam.Web.Helpers.APIURLHelper.DeleteClient";
 
         function sideNavToggle() {
             var x = document.getElementById("sideNav");

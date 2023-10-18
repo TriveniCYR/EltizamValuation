@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class ClientController : Controller
+    public class VendorController : Controller
     {
         #region Properties
 
@@ -17,16 +17,28 @@ namespace EltizamValuation.Web.Controllers
 
         #endregion Properties
 
-        public ClientController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
+        public VendorController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
         {
             _cofiguration = configuration;
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
-        public IActionResult Client()
+        public IActionResult Vendors()
         {
             try
-            {                
+            {
+                //HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                //APIRepository objapi = new APIRepository(_cofiguration);
+                //MasterUserModel oUserList = new MasterUserModel();
+                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAll, HttpMethod.Post, token).Result;
+                //if (responseMessage.IsSuccessStatusCode)
+                //{
+                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                //    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterUserModel>>>(jsonResponse);
+                //    oUserList.Users = data._object;
+
+                //    return View();
+                //}
                 return View();
             }
             catch (Exception e)
@@ -40,24 +52,24 @@ namespace EltizamValuation.Web.Controllers
 
         }
 
-        public IActionResult ClientManage(int? id)
+        public IActionResult VendorManage(int? id)
         {
-            MasterClientModel masterUser;
+            MasterVendorModel masterUser;
             if (id == null || id <= 0)
             {
-                masterUser = new MasterClientModel();
+                masterUser = new MasterVendorModel();
                 return View(masterUser);
             }
             else
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetClientById + "/" + id, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetVendorById + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterClientModel>>(jsonResponse);
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterVendorModel>>(jsonResponse);
                     if (data._object is null)
                         return NotFound();
 
@@ -67,55 +79,49 @@ namespace EltizamValuation.Web.Controllers
             }
         }
         [HttpPost]
-        public IActionResult ClientManage(int id, MasterClientModel masterUser)
+        public IActionResult VendorManage(int id, MasterVendorModel masterUser)
         {
             try
             {
-                if (masterUser.Document.Files != null)
-                {
-                    List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
-                    masterUser.uploadDocument = docs;
-                    masterUser.Document = null;
-                }
                 if (masterUser != null)
                 {
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
-                    //masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
+                    masterUser.Contact = (masterUser.Contact == null) ? null : masterUser.Contact;
                 }
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertClient, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterUser))).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertVendor, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterUser))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
-                    return RedirectToAction("Client");
+                    return RedirectToAction("Vendors");
                 }
                 else
                 {
                     TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
-                    return RedirectToAction("ClientManage", new { id = masterUser.Id });
+                    return RedirectToAction("VendorManage", new { id = masterUser.Id });
                 }
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-                return RedirectToAction("ClientManage", new { Id = masterUser.Id });
+                return RedirectToAction("VendorManage", new { Id = masterUser.Id });
             }
         }
 
         [HttpGet]
-        [Route("Client/ClientDetail")]
-        public IActionResult ClientDetail(int? id)
+        [Route("Vendor/VendorsDetail")]
+        public IActionResult VendorDetail(int? id)
         {
-            MasterClientModel masterUser;
+            MasterUserModel masterUser;
             if (id == null || id <= 0)
             {
-                masterUser = new MasterClientModel();
+                masterUser = new MasterUserModel();
                 return View(masterUser);
             }
             else
@@ -127,7 +133,7 @@ namespace EltizamValuation.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterClientModel>>(jsonResponse);
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
                     if (data._object is null)
                         return NotFound();
 
@@ -199,5 +205,6 @@ namespace EltizamValuation.Web.Controllers
                     return "Unknown";
             }
         }
+
     }
 }

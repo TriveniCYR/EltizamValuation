@@ -3,6 +3,30 @@ $(document).ready(function () {
     InitializeClientList();
 });
 
+function ConfirmationDeleteClient(id) {
+    $('#DeleteClientModel #Id').val(id);
+}
+function DeleteClient() {
+    var tempInAtiveID = $('#DeleteClientModel #Id').val();
+    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteClient + "/" + tempInAtiveID, 'POST', DeleteClientByIdSuccess, DeleteClientByIdError);
+}
+function DeleteClientByIdSuccess(data) {
+    try {
+        if (data._Success === true) {
+            toastr.success(RecordDelete);
+            $('#' + tableId).DataTable().draw();
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+function DeleteClientByIdError(x, y, z) {
+    toastr.error(ErrorMessage);
+}
+
 function InitializeClientList() {
     debugger
     var setDefaultOrder = [0, 'asc'];
@@ -33,10 +57,10 @@ function InitializeClientList() {
         },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
-                if (data) {
-                    return "<span class='text-success text-bold'>Yes</span>";
+                if (data.isActive) {
+                    return "<span class='tableStatus green'>Active</span>";
                 } else {
-                    return "<span class='text-danger text-bold'>No</span>";
+                    return "<span class='tableStatus red'>Inactive</span>";
                 }
             }
         },
@@ -44,8 +68,8 @@ function InitializeClientList() {
             "data": "id", "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
 
-                html += '<a title="Edit" class="large-font"  href="/Client/ClientManage?UserId=' + row.id + '"><img src="../assets/edit.svg" alt = "edit" />';
-                html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteClient(' + row.userId + '); return false;"><i class="fa fa-fw fa-trash mr-1"></i></a>';
+                html += '<a title="Edit" class="large-font"  href="/Client/ClientManage?id=' + row.id + '"><img src="../assets/edit.svg" alt = "edit" />';
+                html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteClientModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteClient(' + row.id + ');"><i class="fa fa-fw fa-trash mr-1"></i></a>';
 
                 return html;
             }

@@ -150,6 +150,14 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
+        public async Task<List<Master_ClientTypeModel>> GetClientTypeList()
+        {
+
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_ClientTypeModel>(ProcedureMetastore.usp_ClientType_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+
+            return lstStf;
+        }
 
         #endregion API Methods
     }

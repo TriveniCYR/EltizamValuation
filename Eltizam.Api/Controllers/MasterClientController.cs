@@ -61,7 +61,7 @@ namespace EltizamValuation.Api.Controllers
                 if (clientClient != null && clientClient.Id > 0)
                 {
                     // Assuming _ObjectResponse.Create takes three parameters: data, status code, and message.
-                    return _ObjectResponse.Create(new { UserClient = clientClient }, (int)HttpStatusCode.OK, "Success");
+                    return _ObjectResponse.Create(clientClient, (int)HttpStatusCode.OK);
                 }
                 else
                 {
@@ -88,8 +88,8 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpDelete("DeleteClient/{id}")]
-        public async Task<IActionResult> DeleteProperty([FromRoute] int id)
+        [HttpPost("DeleteClient/{id}")]
+        public async Task<IActionResult> Deletey([FromRoute] int id)
         {
             try
             {

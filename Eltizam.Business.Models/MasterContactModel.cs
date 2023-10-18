@@ -9,8 +9,6 @@ namespace Eltizam.Business.Models
     public class MasterContactModel
     {
         public int Id { get; set; }
-        public int? TableKeyId { get; set; }
-        public string? TableName { get; set; }
         public string? ContactPersonName { get; set; }
         public string? Department { get; set; }
         public string? Designation { get; set; }

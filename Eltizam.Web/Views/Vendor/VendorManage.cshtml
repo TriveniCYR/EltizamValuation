@@ -1,0 +1,411 @@
+﻿@model Eltizam.Business.Models.MasterVendorModel;
+
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+<!-- system user master -->
+<div class="flex">
+    <div class="w-100 position-relative">
+        <main class="plr-0">
+            <div class="profileHead flex justify-between align-item-center cursor-pointer">
+                <h3 class="dashboardTitle">EDIT VENDOR MASTER</h3>
+                <div class="hamburger">
+                    <span onclick="VendorMaster()">Vendor Master</span>
+                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                    <span>Edit Client Master</span>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="profileTabSection addProperty">
+                    <div class="tab">
+                        <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Vendor Details</button>
+                        <button class="tablinks" onclick="profileTab(event, 'profile2')">Mailing Address</button>
+                        <button class="tablinks" onclick="profileTab(event, 'profile3')">Contact Details</button>
+                    </div>
+
+                    <form asp-action="VendorManage" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
+                        <div id="profile1" class="tabcontent">
+                            <h3 class="ptrl-20">Clinet Details</h3>
+                            <div class="inputSearchs">
+                                <div class="tabSection">
+                                    <div class="flex fourBox">
+                                        <div class="flex justify-center mb-28">
+                                            <div class="resourceProfile clientImg text-center">
+                                                <img src="../assets/client1.png" alt="img-7" />
+                                                <div class="position-relative">
+                                                    <div class="upload-profile-pic-btn">
+                                                        <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
+                                                        Change photo
+                                                    </div>
+                                                    <input type="file" class="uploadPhoto" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label for="VendorName">
+                                            Vendor Name
+                                            @Html.TextBoxFor(model => model.VendorName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Vendor Name"] })
+                                        
+                                        </label>
+                                        <label for="CompanyName">
+                                            Company Name
+                                            @Html.TextBoxFor(model => model.CompanyName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Company Name"] })
+                                        </label>
+                                        <label for="EstimattionDate">
+                                            Estimation Date
+                                            <input type="date" id="EstimattionDate" name="EstimattionDate" asp-for="EstimattionDate">
+                                        </label>
+                                    </div>
+                                    <div class="flex">
+                                        <label for="BusinessTypeId">
+                                            Business Type
+                                            @Html.TextBoxFor(model => model.BusinessTypeId, new {@class = "form-control",  @placeholder = @SharedLocalizer["Business Type"] })
+                                        </label>                                    
+                                        <label for="CompanyDescription">
+                                            Company Description
+                                            @Html.TextBoxFor(model => model.CompanyDescription, new {@class = "form-control",  @placeholder = @SharedLocalizer["Company Description"] })
+                                        </label>
+                                        @*<label for="Status" class="w-50">
+                                            Status
+                                            <input class='input-switch' type="checkbox" asp-for="Status" />
+                                            <label class="label-switch" for="Status"></label>
+                                            <span class="info-text"></span>
+                                        </label>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="profile2" class="tabcontent">
+                            <h3 class="ptrl-20">Mailing Address</h3>
+                            <div class="inputSearchs">
+                                <div class="tabSection">
+                                    <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
+                                    <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
+                                    <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" />
+                                    @Html.HiddenFor(model => model.Address.Id)
+                                    <div class="addMoreAddress">
+                                        <div class="flex">
+                                            <label for="address1" class="w-100">
+                                                <span>Address Line 1 </span>
+                                                @Html.TextBoxFor(model => model.Address.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="address2" class="w-100">
+                                                Address Line 2
+                                                @Html.TextBoxFor(model => model.Address.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex fourBox">
+                                            <label for="CountryId">
+                                                CountryId
+                                                @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                            </label>
+                                            <label for="StateId">
+                                                State
+                                                @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                            </label>
+                                            <label for="CityId">
+                                                City
+                                                @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                            </label>
+                                            <label for="PinNo">
+                                                Pin Code
+                                                @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="Email">
+                                                Email
+                                                @Html.TextBoxFor(model => model.Address.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                            </label>
+                                            <label for="AlternateEmail">
+                                                Alternate Email
+                                                @Html.TextBoxFor(model => model.Address.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex threeBox">
+                                            <label for="Phone">
+                                                Phone
+                                                @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                            </label>
+                                            <label for="AlternatePhone">
+                                                Alternate Phone
+                                                @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                            </label>
+                                            <label for="">
+                                                Landline phone
+                                                @Html.TextBoxFor(model => model.Address.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="text-right buttonArea bodyContent plr-0">
+                                        <button type="button" class="lineBtn" onclick="addMoreAddress()">Add More</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="profile3" class="tabcontent">
+                            <h3 class="ptrl-20">Contact Details</h3>
+                            <div class="roundBorderBox">
+                                <div class="text-right">
+                                    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" />
+                                </div>
+                                <div class="inputSearchs p-0">
+
+                                    <div class="tabSection">
+                                        @Html.HiddenFor(model => model.Contact.Id)
+                                        <div class="flex">
+                                            <label for="Qualification">
+                                                Contact Person Name
+                                                @Html.TextBoxFor(model => model.Contact.ContactPersonName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
+                                            </label>
+                                            <label for="Subject">
+                                                Department
+                                                @Html.TextBoxFor(model => model.Contact.Department, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Department"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="Institute">
+                                                Designation
+                                                @Html.TextBoxFor(model => model.Contact.Designation, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Designation"] })
+                                            </label>
+                                            <label for="year">
+                                                Email
+                                                @Html.TextBoxFor(model => model.Contact.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="grade" class="w-100">
+                                                Phone Number
+                                                @Html.TextBoxFor(model => model.Contact.Mobile, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone Number"] })
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right buttonArea bodyContent plr-0">
+                                    <button type="button" class="lineBtn" onClick="addRoundBorderBox(this)">Add New</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right buttonArea bodyContent plr-0">
+                            <a href='/Vendor/Vendors'> <button type="button" class="lineBtn">Cancel</button></a>
+                            <button type="submit" class="blueBtn">Update</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </main>
+        <footer class="flex justify-between">
+            <p>2023 © Eltizam.</p>
+            <p>Design & Develop by NeoSoft</p>
+        </footer>
+
+
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const addResourceRedirection = document.getElementById("addResourceRedirection");
+
+        addResourceRedirection.addEventListener('click', () => {
+            window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
+        });
+    });
+
+    $(document).ready(function () {
+        BindCountry();
+        BindState();
+        BindCity();
+    });
+
+    function profileTab(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    document.getElementById("defaultOpen").click();
+
+    function sideNavToggle() {
+        var x = document.getElementById("sideNav");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function removeParentDiv(element) {
+        const parentDiv = element.closest('.roundBorderBox');
+        if (parentDiv) {
+            parentDiv.remove();
+        }
+    }
+
+    function addRoundBorderBox() {
+        const roundBorderBox = document.querySelector('.roundBorderBox');
+        const clonedDiv = roundBorderBox.cloneNode(true);
+
+        roundBorderBox.parentElement.insertBefore(clonedDiv, roundBorderBox.nextSibling);
+
+        const inputFields = clonedDiv.querySelectorAll('input');
+        inputFields.forEach((input) => {
+            input.value = '';
+        });
+    }
+
+    // more address field on click
+    function addMoreAddress() {
+        const addMoreAddressBox = document.querySelector('.addMoreAddress');
+        const clonedDiv = addMoreAddressBox.cloneNode(true);
+
+        const minusDiv = document.createElement('div');
+        minusDiv.className = 'text-right';
+        minusDiv.innerHTML = `
+                            <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+                        `;
+        clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
+
+        addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
+
+        const inputFields = clonedDiv.querySelectorAll('input');
+        inputFields.forEach((input) => {
+            input.value = '';
+        });
+    }
+    function removeParentDivAddress(element) {
+        const parentDivAdd = element.closest(".addMoreAddress");
+        if (parentDivAdd) {
+            parentDivAdd.remove()
+        }
+    }
+
+
+
+    function BindCountry() {
+
+        var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
+        var Country = $("#Address_CountryId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + CountryList,
+            "datatype": "json",
+            success: function (response) {
+                ;
+                Country.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
+                }
+                if ($('#hdnCountry').val() != 0) {
+                    Country.val($('#hdnCountry').val());
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+
+    function BindState() {
+
+        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
+        var State = $("#Address_StateId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + StateList,
+            "datatype": "json",
+            success: function (response) {
+                ;
+                State.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
+                }
+                if ($('#hdnState').val() != 0) {
+                    State.val($('#hdnState').val());
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+
+    function BindCity() {
+
+        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
+        var City = $("#Address_CityId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + CityList,
+            "datatype": "json",
+            success: function (response) {
+                ;
+                City.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
+                }
+                if ($('#hdnCity').val() != 0) {
+                    City.val($('#hdnCity').val());
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+    function resourceMaster() {
+        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/resource-master.html'
+    }
+    function userMaster() {
+        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_User/user-master.html'
+    }
+    function roleMaster() {
+        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Role/role-master.html'
+    }
+
+    function locationMaster() {
+        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_location-master.html'
+    }
+    function propTypeMaster() {
+        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Property_Type/property-type-master.html'
+    }
+    function designation() {
+        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Designation/designation-master.html'
+    }
+    function department() {
+        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Department/department-master.html'
+    }
+    function propMaster() {
+        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Property/property-master.html'
+    }
+    function clientMaster() {
+        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Client/client-master.html'
+    }
+</script>

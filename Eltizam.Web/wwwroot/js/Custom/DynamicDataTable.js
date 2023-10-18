@@ -63,3 +63,4 @@
     $('body').find('.dataTables_scrollBody').addClass("scrollbar");
     return dataTableInst;
 }
+

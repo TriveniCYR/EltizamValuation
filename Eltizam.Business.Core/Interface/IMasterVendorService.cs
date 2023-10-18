@@ -10,7 +10,7 @@ namespace Eltizam.Business.Core.Interface
 {
     public interface IMasterVendorService
     {
-        Task<(MasterVendorModel, MasterContactModel, MasterAddressModel)> GetMasterVendorByIdAsync(int id);
+        Task<MasterVendorModel> GetMasterVendorByIdAsync(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> AddUpdateMasterVendor(MasterVendorModel masterVendortModel);
         Task<DBOperation> DeleteVendor(int id);
