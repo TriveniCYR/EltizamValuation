@@ -11,53 +11,27 @@
     <div class="w-100 position-relative">        
         <main class="plr-0">
             <div class="profileHead flex justify-between align-item-center cursor-pointer">
-                @if (Model.Id > 0)
+                @if(Model.Id > 0)
                 {
                     <h3 class="dashboardTitle">EDIT RESOURCE MASTER</h3>
                     <div class="hamburger">
-                    <span onclick="resourceMaster()">Resource Master</span>
-                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                        <span onclick="clientMaster()">Resource Master</span>
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon"/>
                     <span>Edit Resource Master</span>
-                </div>
+                    </div>
                 }
                 else
-                {
+                {  
                     <h3 class="dashboardTitle">ADD RESOURCE MASTER</h3>
                     <div class="hamburger">
-                        <span onclick="resourceMaster()">Resource Master</span>
-                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                        <span>Add Resource Master</span>
+                        <span onclick="clientMaster()">Resource Master</span>
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon"/>
+                    <span>Add Resource Master</span>
                     </div>
                 }
-                
             </div>
             <div class="flex">
-                <div class="resourceProfile whiteBoxShadow">
-                    <img src="../assets/img-7.jpg.png" alt="img-7" class="w-100" />
-                    <div class="position-relative">
-                        <div class="upload-profile-pic-btn">
-                            <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
-                            Change photo
-                        </div>
-                        <input type="file" class="uploadPhoto" />
-                    </div>
-                    <div class="nameBox">
-                        <h3>Jhon G Doe</h3>
-                        <small>Head of HR</small>
-                        <p>Human Resource</p>
-                        <h4>Employee ID : FT-0001</h4>
-                    </div>
-                    <div class="resourceAddress">
-                        <small>Address</small>
-                        <p>1861 Bayonne Ave, Manchester Township, NJ, 08759</p>
-                        <small>Phone</small>
-                        <p>92734982739</p>
-                        <small>Email</small>
-                        <p>john@ex.com</p>
-                    </div>
-
-                </div>
-                <div class="profileTabSection">
+                <div class="profileTabSection addProperty">
                     <div class="tab">
                         <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Profile Details</button>
                         <button class="tablinks" onclick="profileTab(event, 'profile2')">Mailing Address</button>
@@ -97,49 +71,41 @@
                                             Middle Name
                                             @Html.TextBoxFor(model => model.MiddleName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
                                         </label>
-                                    </div>
-                                    <div class="flex">
                                         <label for="LastName">
                                             Last Name
                                             @Html.TextBoxFor(model => model.LastName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
                                         </label>
+                                    </div>
+                                    <div class="flex">
                                         <label for="DepartmentId">
                                             Department
                                             <select id="DepartmentId" name="DepartmentId" class="form-control" asp-for="DepartmentId"></select>
 
                                         </label>
-                                    </div>
-                                    <div class="flex">
                                         <label for="DesignationId">
                                             Designation
                                             <select id="DesignationId" name="DesignationId" class="form-control" asp-for="DesignationId"></select>
                                         </label>
+                                    </div>
+                                    <div class="flex">
                                         <label for="DateOfBirth">
                                             Date of Birth
                                             <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth"  class="form-control">
                                             @*@Html.TextBoxFor(model => model.DateOfBirth, new { @type ="" ,@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })*@
                                         </label>
-                                    </div>
-                                    <div class="flex">
                                         <label for="Gender">
                                             Gender
                                             <select id="Gender" name="Gender" class="form-control" asp-for="Gender"></select>
                                         </label>
+                                    </div>
+                                    <div class="flex">
                                         <label for="ResourceId">
                                             Resource Type
                                             <select id="ResourceId" name="ResourceId" class="form-control" asp-for="ResourceId"></select>
                                         </label>
-                                    </div>
-                                    <div class="flex">
                                         <label for="RoleId">
                                             Role
                                             <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId"></select>
-                                        </label>
-                                        <label for="IsActive" class="w-50">
-                                            Status
-                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
-                                            <label class="label-switch" for="IsActive"></label>
-                                            <span class="info-text"></span>
                                         </label>
                                     </div>
                                     @if (Model.Id <= 0)
@@ -166,8 +132,15 @@
                                             AD Municipality / License No
                                             @Html.TextBoxFor(model => model.LicenseNo, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
 
+                                        </label>                                       
+                                    </div>                                    
+                                    <div class="flex">
+                                        <label for="IsActive" class="w-50">
+                                            Status
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                            <label class="label-switch" for="IsActive"></label>
+                                            <span class="info-text"></span>
                                         </label>
-                                       
                                     </div>
                                 </div>
                             </div>
@@ -364,9 +337,7 @@
 <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
 <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
 <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-<script>
-
-
+<script> 
     function profileTab(evt, cityName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -417,8 +388,7 @@
 
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
-        minusDiv.innerHTML = `
-                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+        minusDiv.innerHTML = `<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
                                             `;
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
 
@@ -429,13 +399,13 @@
             input.value = '';
         });
     }
+
     function removeParentDivAddress(element) {
         const parentDivAdd = element.closest(".addMoreAddress");
         if (parentDivAdd) {
             parentDivAdd.remove()
         }
-    }
-
+    } 
 
     $(document).ready(function () {
         BindDepartment();
@@ -448,8 +418,7 @@
         BindGender();
     });
 
-    function BindDepartment() {
-         
+    function BindDepartment() { 
         var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
         var Department = $("#DepartmentId");
         var _val = $('#hdnDeparment').val();
@@ -515,140 +484,156 @@
          
         var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
         var Role = $("#RoleId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + RoleList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                Role.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    Role.append($("<option></option>").val(response[i].roleId).html(response[i].roleName));
-                }
-                if ($('#hdnRole').val() != 0) {
-                    Role.val($('#hdnRole').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnRole').val();
+        var _rpname = "roleName";
+
+        BindDropdowns(RoleList, Role, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + RoleList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        Role.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            Role.append($("<option></option>").val(response[i].roleId).html(response[i].roleName));
+        //        }
+        //        if ($('#hdnRole').val() != 0) {
+        //            Role.val($('#hdnRole').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
 
     function BindResourceType() {
          
         var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
         var ResourceType = $("#ResourceId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + ResourceTypeList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));
-                }
-                if ($('#hdnResourceType').val() != 0) {
-                    ResourceType.val($('#hdnResourceType').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnResourceType').val();
+        var _rpname = "resourceType";
+        BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + ResourceTypeList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));
+        //        }
+        //        if ($('#hdnResourceType').val() != 0) {
+        //            ResourceType.val($('#hdnResourceType').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
 
     function BindCountry() {
          
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
         var Country = $("#Address_CountryId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + CountryList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                Country.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
-                }
-                if ($('#hdnCountry').val() != 0) {
-                    Country.val($('#hdnCountry').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnCountry').val();
+        var _rpname = "countryName";
+        BindDropdowns(CountryList, Country, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + CountryList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        Country.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
+        //        }
+        //        if ($('#hdnCountry').val() != 0) {
+        //            Country.val($('#hdnCountry').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
 
     function BindState() {
          
         var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
         var State = $("#Address_StateId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + StateList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                State.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
-                }
-                if ($('#hdnState').val() != 0) {
-                    State.val($('#hdnState').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnState').val();
+        var _rpname = "stateName";
+        BindDropdowns(StateList, State, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + StateList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        State.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
+        //        }
+        //        if ($('#hdnState').val() != 0) {
+        //            State.val($('#hdnState').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
 
     function BindCity() {
          
         var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
         var City = $("#Address_CityId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + CityList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                City.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
-                }
-                if ($('#hdnCity').val() != 0) {
-                    City.val($('#hdnCity').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnCity').val();
+        var _rpname = "cityName";
+        BindDropdowns(CityList, City, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + CityList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        City.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
+        //        }
+        //        if ($('#hdnCity').val() != 0) {
+        //            City.val($('#hdnCity').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
     function BindGender(){
         var Gender = $("#Gender");

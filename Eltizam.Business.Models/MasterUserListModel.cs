@@ -21,7 +21,8 @@ namespace Eltizam.Business.Models
         public string StateName { get; set; }
         public string CityName { get; set; }
         public string Email { get; set; }
-        public string Mobile { get; set; }
+        public string RoleName { get; set; }
+        public string Phone { get; set; }
         public string ContactPersonName { get; set; }
         public int IsActive { get; set; }
         public int CreatedBy { get; set; }

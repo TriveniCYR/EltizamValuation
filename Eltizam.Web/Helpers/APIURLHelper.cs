@@ -109,6 +109,14 @@ namespace Eltizam.Web.Helpers
         public static string DeleteRoleById = "api/Role/DeleteRole";
         #endregion Role Management
 
+        #region Location Management
+        public static string GetAllLocations = "api/Location/GetAll";
+        public static string UpsertLocation = "api/Location/Upsert";
+        public static string GetLocationById = "api/Location/GetById";
+        public static string DeleteLocationById = "api/Location/Delete";
+        
+        #endregion Location Management
+
         #region Dashboard
 
         public static string GetAllDashboard = "api/Dashboard/FillDropdown";

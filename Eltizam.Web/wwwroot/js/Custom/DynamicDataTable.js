@@ -47,8 +47,8 @@
                     {
                         columns: ':not(.notexport)'
                     }
-                },
-                { extend: 'colvis', className: "btn-primary", columns: ':not(.notexport)' }
+                }
+                /*{ extend: 'colvis', className: "btn-primary", columns: ':not(.notexport)' }*/
             ],
             "ajax": ajaxObject,
             //"fnRowCallback": rowCallBack,

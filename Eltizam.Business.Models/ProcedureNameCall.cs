@@ -24,6 +24,7 @@ namespace Eltizam.Business.Models
         public static string usp_ValuationFees_SearchAllList = "usp_ValuationFees_SearchAllList";
         public static string usp_ValuationFeeType_SearchAllList = "usp_ValuationFeeType_SearchAllList";
         public static string usp_Country_SearchAllList = "usp_Country_SearchAllList";
+        public static string usp_User_Search_GetUserList = "usp_User_Search_GetUserList";
         // Master Key Id
         public static string usp_Contact_GetContactByTableKeyId = "usp_Contact_GetContactByTableKeyId";
         public static string usp_Address_GetAddressByTableKeyId = "usp_Address_GetAddressByTableKeyId";

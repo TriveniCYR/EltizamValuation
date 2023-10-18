@@ -67,10 +67,11 @@ function InitializeClientList() {
         {
             "data": "id", "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
-
-                html += '<a title="Edit" class="large-font"  href="/Client/ClientManage?id=' + row.id + '"><img src="../assets/edit.svg" alt = "edit" />';
-                html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteClientModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteClient(' + row.id + ');"><i class="fa fa-fw fa-trash mr-1"></i></a>';
-
+                html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+                html += '<li><a title="View" href="/Client/ClientManage?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                html += '<li><a title="Edit" href="/Client/ClientManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
+                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteClientModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteClient(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                html += '</ul></div>';
                 return html;
             }
         }
