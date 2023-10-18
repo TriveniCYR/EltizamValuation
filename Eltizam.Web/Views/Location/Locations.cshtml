@@ -183,107 +183,6 @@
         </table>
     </div>
 </main>
-
-<!-- popup import model -->
-<div class="popup-overlay" id="popup-import-overlay">
-    <div class="popup">
-        <div class="content text-center">
-            <div class="popup-head position-relative">
-                Import Location
-                <img src="../assets/x.svg" alt="x" id="closePopup">
-            </div>
-            <div class="popup-action importBox">
-                <p class="text-left">Browse File</p>
-                <div class="inputBox">
-                    <input type="file" name="file" id="file" class="file" />
-                    <div class="flex">
-                        <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
-                        <div class="uploadFileBtn flex">
-                            <img src="../assets/files.svg" alt="file">
-                            <input type="button" class="btn" value="Browse" />
-                        </div>
-                    </div>
-                </div>
-                <div class="buttonArea popup-btn">
-                    <button id="cancelDeleteUser" class="bgBlue">Submit</button>
-                    <button class="lineBtn">Download Template</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- popup add location model -->
-<div class="popup-overlay w-800Popup" id="popup-addRole-overlay">
-    <div class="popup">
-        <div class="content text-center">
-            <div class="popup-head position-relative">
-                Add Location
-                <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
-            </div>
-            <div class="popup-action inputSearchs">
-             @*    <form id="locationForm"> *@
-                <form asp-action="LocationManage" method="POST" enctype="multipart/form-data">
-                    <div class="flex">
-                        <label for="CountryId">
-                            Country Name                        
-                        </label>
-                        <label for="StateId">
-                            State Name
-                            @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control"})                          
-                        </label>
-                    </div>
-                    <div class="flex">
-                        <label for="CityId">
-                            City / Emirates
-                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
-                        </label>
-                        <label for="resourceType">
-                            Sector / Zone
-                            @Html.TextBoxFor(model => model.Sector, new {@class = "form-control" })
-                        </label>
-                    </div>
-                    <div class="flex">
-               
-                        <label for="Geo-coordinates">
-                            Latitude
-                            @Html.TextBoxFor(model => model.Latitude, new {@class = "form-control" })
-
-                        </label>
-                        <label for="">
-                            Longitude
-                            @Html.TextBoxFor(model => model.Longitude, new {@class = "form-control" })
-
-                        </label>
-                    </div>
-                    <div class="flex">
-
-                        <label for="Geo-coordinates">
-                            Home Currency
-                            @Html.TextBoxFor(model => model.HomeCurrencyId, new {@class = "form-control" })
-
-                        </label>
-                        <label for="Geo-coordinates">
-                            Foreign Currency
-                            @Html.TextBoxFor(model => model.ForeignCurrencyId, new {@class = "form-control" })
-
-                        </label>                   
-                    </div>
-                
-                <div class="buttonArea centerBtn">
-                    <button type="submit" class="lineBtn" id="resetLocation">Reset</button>
-                    <button type="submit" class="bgBlue">Submit</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- popup edit model -->
-
-
-
 <div id="DeleteLocationModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -309,12 +208,12 @@
         </div>
     </div>
 </div>
-
 @section MyScripts {
 
     @Html.Partial("_DataTablePartial")
-    <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
     <script type="text/javascript" src="~/js/Custom/Location/LocationManagement.js?v=@jsVersion"></script>
+ @*    <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" /> *@
+    
     <script>
         //#region Setup API Url
 
@@ -334,94 +233,4 @@
 
                                         //#endregion
     </script>
-    <script>
-        $(document).ready(function () {
-            BindCountry();
-            BindState();
-            BindCity();
-          
-        });
-        function BindCountry() {
-            var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
-            var Country = $("#CountryId");
-            $.ajax({
-                type: "GET",
-                url: $('#hdnBaseURL').val() + CountryList,
-                "datatype": "json",
-                success: function (response) {
-                    ;
-                    Country.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.length; i++) {
-                        Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
-                     }
-                    if ($('#hdnCountry').val() != 0) {
-                        Country.val($('#hdnCountry').val());
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-
-        function BindState() {
-
-            var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
-            var State = $("#StateId");
-            $.ajax({
-                type: "GET",
-                url: $('#hdnBaseURL').val() + StateList,
-                "datatype": "json",
-                success: function (response) {
-                    ;
-                    State.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.length; i++) {
-                        State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
-                    }
-                    if ($('#hdnState').val() != 0) {
-                        State.val($('#hdnState').val());
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-
-        function BindCity() {
-
-            var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
-            var City = $("#CityId");
-            $.ajax({
-                type: "GET",
-                url: $('#hdnBaseURL').val() + CityList,
-                "datatype": "json",
-                success: function (response) {
-                    ;
-                    City.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.length; i++) {
-                        City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
-                    }
-                    if ($('#hdnCity').val() != 0) {
-                        City.val($('#hdnCity').val());
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }</script>
-   @*  <script src="~/js/custom/location/locationmaster.js"></script> *@
     }
