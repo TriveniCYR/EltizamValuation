@@ -116,7 +116,10 @@ namespace Eltizam.Business.Core.Implementation
                     new SqlParameter("@SearchText", model.search.value)
             };
 
-            var UserList = await _repository.GetBySP("usp_Vendor_Search_GetVendorList", System.Data.CommandType.StoredProcedure, osqlParameter);
+            int _count = 0;
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterVendorListModel>(ProcedureMetastore.usp_Vendor_SearchAllList,
+
+             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
 
             var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
             var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);

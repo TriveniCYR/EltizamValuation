@@ -31,6 +31,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterAddress> _repositoryAddress { get; set; }
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
         private readonly IHelper _helper;
+        private readonly string _dbConnection;
         #endregion Properties
 
         #region Constructor
@@ -46,6 +47,8 @@ namespace Eltizam.Business.Core.Implementation
             _repositoryDocument = _unitOfWork.GetRepository<MasterDocument>();
             configuration = _configuration;
             _helper = helper;
+
+            _dbConnection = DatabaseConnection.ConnString;
         }
         #endregion Constructor
 
@@ -71,31 +74,30 @@ namespace Eltizam.Business.Core.Implementation
             // Create a new Master_PropertyTypeModel instance.
             var _clientEntity = new MasterClientModel();
             _clientEntity = _mapperFactory.Get<MasterClient, MasterClientModel>(await _repository.GetAsync(id));
+           
             if (_clientEntity != null)
+            {
+                DbParameter[] osqlParameter =
                 {
-                    DbParameter[] osqlParameter = {
-                 new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_Client, SqlDbType.VarChar),
+                     new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                     new DbParameter(AppConstants.TableName,  TableName.Master_User, SqlDbType.VarChar),
                 };
-                    var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterAddressEntity>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
-                    if (UserAddress != null)
-                    {
-                    _clientEntity.Address = UserAddress;
+                var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterAddressEntity>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                
+                if (UserAddress != null) 
+                    _clientEntity.Address = UserAddress;   
 
-                    }
-
-
-                    DbParameter[] osqlParameter2 = {
-                 new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_Client, SqlDbType.VarChar),
+                DbParameter[] osqlParameter2 = 
+                {
+                 new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                 new DbParameter(AppConstants.TableName, TableName.Master_User, SqlDbType.VarChar),
                 };
-                    var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureNameCall.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
-                    if (UserDocuments != null)
-                    {
-                    _clientEntity.Documents = UserDocuments;
 
-                    }
-                }
+                var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                if (UserDocuments != null) 
+                    _clientEntity.Documents = UserDocuments;  
+            }
+
             return _clientEntity;
         }
 
@@ -104,7 +106,8 @@ namespace Eltizam.Business.Core.Implementation
             string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
             string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
-            SqlParameter[] osqlParameter = {
+            SqlParameter[] osqlParameter = 
+            {
                 new SqlParameter("@ClientId", 0),
                 new SqlParameter("@CurrentPageNumber", model.start),
                 new SqlParameter("@PageSize", model.length),
@@ -167,7 +170,7 @@ namespace Eltizam.Business.Core.Implementation
                     objClient.TrnexpiryDate = master_ClientModel.TrnexpiryDate;
                     objClient.LicenseNumber = master_ClientModel.LicenseNumber;
                     objClient.IsActive = master_ClientModel.IsActive;
-                    objClient.Logo = master_ClientModel.Logo;             
+                    objClient.Logo = master_ClientModel.Logo;
                     objClient.ModifiedDate = DateTime.Now;
                     objClient.ModidiedBy = master_ClientModel.CreatedBy;
 
@@ -242,7 +245,7 @@ namespace Eltizam.Business.Core.Implementation
                     // Create a new MasterClientContact entity from the model for insertion.
                     objAddress = _mapperFactory.Get<MasterAddressEntity, MasterAddress>(master_ClientModel.Address);
                     objAddress.TableKeyId = objClient.Id; // Associate with the MasterClient entity.
-                    objAddress.TableName = SourceTableKey.Master_Client;
+                    objAddress.TableName = TableName.Master_Client;
                     objAddress.CreatedDate = DateTime.Now;
                     objAddress.CreatedBy = master_ClientModel.CreatedBy;
                     objAddress.ModifiedDate = DateTime.Now;
@@ -259,7 +262,7 @@ namespace Eltizam.Business.Core.Implementation
                         objDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
                         objDocument.IsActive = doc.IsActive;
                         objDocument.TableKeyId = master_ClientModel.Id;
-                        objDocument.TableName = SourceTableKey.Master_Client;
+                        objDocument.TableName = TableName.Master_Client;
                         objDocument.DocumentName = doc.DocumentName;
                         objDocument.FileName = doc.FileName;
                         objDocument.FilePath = doc.FilePath;
@@ -297,12 +300,13 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.NotFound;
             else
             {
-                DbParameter[] osqlParameter = {
-                 new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", "Master_User", SqlDbType.VarChar),
+                DbParameter[] osqlParameter = 
+                {
+                 new DbParameter(AppConstants.TableKeyId, id,                      SqlDbType.Int),
+                 new DbParameter(AppConstants.TableName,  TableName.Master_Client, SqlDbType.VarChar),
                 };
 
-                int result = EltizamDBHelper.ExecuteSingleMappedReader<int>("usp_Client_DeleteContactByClientId", DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                int result = EltizamDBHelper.ExecuteSingleMappedReader<int>(ProcedureMetastore.usp_Client_DeleteContactByClientId, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (result > 0)
                 {
 

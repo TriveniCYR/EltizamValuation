@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
 using Eltizam.Business.Core.Implementation;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -39,10 +40,10 @@ namespace EltizamValuation.Api.Controllers
                 DBOperation oResponse = await _clienttypeServices.AddUpdateMasterClientType(clientType);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (clientType.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (clientType.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
                 else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
             catch (Exception ex)
             {
@@ -61,7 +62,7 @@ namespace EltizamValuation.Api.Controllers
                 if (oClientTypeEntity != null && oClientTypeEntity.Id > 0)
                     return _ObjectResponse.Create(oClientTypeEntity, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -78,7 +79,7 @@ namespace EltizamValuation.Api.Controllers
                 if (oRoleList != null)
                     return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -95,7 +96,7 @@ namespace EltizamValuation.Api.Controllers
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {

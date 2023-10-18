@@ -17,7 +17,9 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
+        public int? PropertyTypeId { get; set; }
 
+        public virtual MasterPropertyType? PropertyType { get; set; }
         public virtual ICollection<MasterValuationFee> MasterValuationFees { get; set; }
     }
 }

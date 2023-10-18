@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -77,7 +78,7 @@ namespace EltizamValuation.Api.Controllers
                 if (oCityEntity != null && oCityEntity.Id > 0)
                     return _ObjectResponse.Create(oCityEntity, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -95,10 +96,10 @@ namespace EltizamValuation.Api.Controllers
                 DBOperation oResponse = await _CityService.Upsert(oCity);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oCity.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oCity.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
                 else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
             catch (Exception ex)
             {
@@ -116,7 +117,7 @@ namespace EltizamValuation.Api.Controllers
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {

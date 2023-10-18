@@ -22,7 +22,7 @@ namespace Eltizam.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            DatabaseConnection.EltizamDatabaseConnection = Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
+            DatabaseConnection.ConnString = Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
 
             services.AddControllers(options =>
             {

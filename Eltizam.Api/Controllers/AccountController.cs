@@ -8,6 +8,8 @@ using Eltizam.Api.Middlewares;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
 using Eltizam.Resource;
+using static Eltizam.Utility.Enums.GeneralEnum;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace Eltizam.Api.Controllers
 {
@@ -79,7 +81,83 @@ namespace Eltizam.Api.Controllers
 				return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
 			}
 		}
-		#endregion API Methods
 
-	}
+        [AllowAnonymous]
+        [HttpPost, Route("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel forgotPasswordViewModel)
+        {
+            try
+            {
+                var _forgotPasswordOperation = await _MasterUserService.ForgotPassword(forgotPasswordViewModel);
+
+                if (_forgotPasswordOperation == DBOperation.Success)
+                    return _ObjectResponse.Create(_forgotPasswordOperation, (Int32)HttpStatusCode.OK);
+                else if (_forgotPasswordOperation == DBOperation.NotFound)
+                {
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+                }
+                return _ObjectResponse.Create(null, (Int32)HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost, Route("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] MasterUserResetPasswordEntity ResetPasswordViewModel)
+        {
+            try
+            {
+                var resetOperation = await _MasterUserService.ResetPassword(ResetPasswordViewModel);
+                if (resetOperation == "ResetSuccessfully")
+                    return _ObjectResponse.Create(resetOperation, (Int32)HttpStatusCode.OK);
+                else if (resetOperation == "TokenExpired")
+                {
+                    return _ObjectResponse.Create(resetOperation, (Int32)HttpStatusCode.NotExtended, "TokenExpired");
+                }
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet, Route("CheckEmailAddressExists/{emailAddress}")]
+        public async Task<bool> CheckEmailAddressExists([FromRoute] string emailAddress)
+        {
+            try
+            {
+                return await _MasterUserService.CheckEmailAddressExists(emailAddress);
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return false;
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet, Route("IsTokenValid/{token}")]
+        public async Task<bool> IsTokenValid([FromRoute] string token)
+        {
+            try
+            {
+                return await _MasterUserService.IsTokenValid(token);
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return false;
+            }
+        }
+        #endregion API Methods
+
+    }
 }

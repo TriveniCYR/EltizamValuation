@@ -6,7 +6,7 @@ namespace Eltizam.Data.DataAccess.Entity
     public partial class MasterLocation
     {
         public int Id { get; set; }
-        public string LocationName { get; set; } = null!;
+        public string? LocationName { get; set; }
         public int CountryId { get; set; }
         public int StateId { get; set; }
         public int CityId { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
@@ -56,9 +57,9 @@ namespace Eltizam.API.Controllers.Masters
             {
                 DBOperation oResponse = await _MasterRoleService.AddUpdateRole(oRole);
                 if (oResponse == DBOperation.Success)
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oRole.RoleId > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oRole.RoleId > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
             catch (Exception ex)
             {
@@ -90,7 +91,7 @@ namespace Eltizam.API.Controllers.Masters
                 if (oRoleEntity is not null && oRoleEntity.RoleId > 0)
                     return _ObjectResponse.Create(oRoleEntity, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -121,7 +122,7 @@ namespace Eltizam.API.Controllers.Masters
                 if (oRoleList != null)
                     return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -139,7 +140,7 @@ namespace Eltizam.API.Controllers.Masters
                 if (oRoleList != null)
                     return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -157,7 +158,7 @@ namespace Eltizam.API.Controllers.Masters
                 if (oRoleList != null)
                     return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -189,7 +190,7 @@ namespace Eltizam.API.Controllers.Masters
                 else if (oResponse == DBOperation.NotFound)
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.OK, "UserAssigned");
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -220,7 +221,7 @@ namespace Eltizam.API.Controllers.Masters
                 if (oRoleEntity is not null)
                     return _ObjectResponse.Create(oRoleEntity, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {

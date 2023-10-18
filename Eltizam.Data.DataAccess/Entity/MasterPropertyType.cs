@@ -7,6 +7,7 @@ namespace Eltizam.Data.DataAccess.Entity
     {
         public MasterPropertyType()
         {
+            MasterPropertySubTypes = new HashSet<MasterPropertySubType>();
             MasterValuationFees = new HashSet<MasterValuationFee>();
         }
 
@@ -18,6 +19,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
 
+        public virtual ICollection<MasterPropertySubType> MasterPropertySubTypes { get; set; }
         public virtual ICollection<MasterValuationFee> MasterValuationFees { get; set; }
     }
 }

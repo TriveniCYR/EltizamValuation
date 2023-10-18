@@ -22,6 +22,7 @@ function CleareRoleFields() {
 function ConfirmationRole(id) {
   
     $('#DeleteRoleModel #RoleID').val(id);
+    alert(id);
 }
 function DeleteRole() {
   

@@ -54,10 +54,10 @@ namespace Eltizam.Business.Core.Implementation
             SqlParameter[] osqlParameter = {
                 new SqlParameter("@UserId", 0),
                 new SqlParameter("@CurrentPageNumber", model.start),
-                    new SqlParameter("@PageSize", model.length),
-                    new SqlParameter("@SortColumn", ColumnName),
-                    new SqlParameter("@SortDirection", SortDir),
-                    new SqlParameter("@SearchText", model.search.value)
+                new SqlParameter("@PageSize", model.length),
+                new SqlParameter("@SortColumn", ColumnName),
+                new SqlParameter("@SortDirection", SortDir),
+                new SqlParameter("@SearchText", model.search.value)
             };
 
             var UserList = await _repository.GetBySP("usp_User_Search_GetUserList", System.Data.CommandType.StoredProcedure, osqlParameter);
@@ -75,11 +75,12 @@ namespace Eltizam.Business.Core.Implementation
             _userEntity = _mapperFactory.Get<MasterUser, MasterUserDetailModel>(await _repository.GetAsync(id));
             if (_userEntity != null)
             {
-                DbParameter[] osqlParameter = {
+                DbParameter[] osqlParameter = 
+                {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
+                 new DbParameter("TableName", TableName.Master_User, SqlDbType.VarChar),
                 };
-                var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (UserAddress != null)
                 {
                     _userEntity.Address = UserAddress;
@@ -88,9 +89,9 @@ namespace Eltizam.Business.Core.Implementation
 
                 DbParameter[] osqlParameter1 = {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
+                 new DbParameter("TableName", TableName.Master_User, SqlDbType.VarChar),
                 };
-                var UserQualification = EltizamDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureNameCall.usp_Qualification_GetQualificationByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter1);
+                var UserQualification = EltizamDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureMetastore.usp_Qualification_GetQualificationByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
                 if (UserQualification != null)
                 {
                     _userEntity.Qualification = UserQualification;
@@ -100,9 +101,9 @@ namespace Eltizam.Business.Core.Implementation
 
                 DbParameter[] osqlParameter2 = {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
+                 new DbParameter("TableName",  TableName.Master_User, SqlDbType.VarChar),
                 };
-                var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureNameCall.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
                 if (UserDocuments != null)
                 {
                     _userEntity.Documents = UserDocuments;
@@ -203,7 +204,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(entityUser.Address);
                         objUserAddress.IsActive = entityUser.IsActive;
                         objUserAddress.TableKeyId = objUser.Id;
-                        objUserAddress.TableName = SourceTableKey.Master_User;
+                        objUserAddress.TableName = TableName.Master_User;
                         objUserAddress.CreatedBy = entityUser.CreatedBy;
                         objUserAddress.CreatedDate = DateTime.Now;
                         objUserAddress.ModifiedBy = entityUser.CreatedBy;
@@ -238,7 +239,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserQualification = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(entityUser.Qualification);
                         objUserQualification.IsActive = entityUser.Qualification.IsActive;
                         objUserQualification.TableKeyId = objUser.Id;
-                        objUserQualification.TableName = SourceTableKey.Master_User;
+                        objUserQualification.TableName = TableName.Master_User;
                         objUserQualification.CreatedBy = entityUser.CreatedBy;
                         objUserQualification.CreatedDate = DateTime.Now;
                         objUserQualification.ModifiedBy = entityUser.CreatedBy;
@@ -254,7 +255,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
                         objUserDocument.IsActive = doc.IsActive;
                         objUserDocument.TableKeyId = objUser.Id;
-                        objUserDocument.TableName = SourceTableKey.Master_User;
+                        objUserDocument.TableName = TableName.Master_User;
                         objUserDocument.DocumentName = doc.DocumentName;
                         objUserDocument.FileName = doc.FileName;
                         objUserDocument.FilePath = doc.FilePath;
@@ -275,16 +276,16 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterResourceTypeModel>> GetResourceTypeList()
         {
 
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterResourceTypeModel>(ProcedureNameCall.usp_ResourceType_AllList,
-             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterResourceTypeModel>(ProcedureMetastore.usp_ResourceType_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }
         public async Task<List<MasterRoleModel>> GetRoleList()
         {
 
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterRoleModel>(ProcedureNameCall.usp_Role_AllList,
-             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterRoleModel>(ProcedureMetastore.usp_Role_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }

@@ -56,7 +56,7 @@ namespace Eltizam.Web.Helpers
         public static string UpsertDesignation = "api/Designation/Upsert";
         public static string GetAllDesignation = "api/Designation/GetAll";
         public static string GetesignationById = "api/Designation/GetById";
-        public static string DeleteesignationById = "api/Designation/Delete";
+        public static string DeleteDesignationById = "api/Designation/Delete";
         #endregion Designation
 
         #region Department
@@ -66,6 +66,14 @@ namespace Eltizam.Web.Helpers
         public static string DeleteDepartmentById = "api/Department/Delete";
 
         #endregion Department
+
+        #region MasterPropertyType
+        public static string UpsertProperty = "api/Property/Upsert";
+        public static string GetAllProperty = "api/Property/GetAllSubProperty";
+        public static string GetPropertyById = "api/Property/GetById";
+        public static string DeletePropertytById = "api/Property/Delete";
+
+        #endregion MasterPropertyType
 
         #region ClientType
 
