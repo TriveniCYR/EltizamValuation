@@ -95,17 +95,15 @@
                             </label>
                         </div>
                         <div class="flex">
-                          
-
-                            <label for="" class="">
+                        <label for="" class="">
                                 Status
                                 @{
                                     bool isActive = Model.Status == 1; // Convert 1 to true, any other value to false
                                 }
-                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required />
-                            <label class="label-switch" for="addLocation"></label>
-                            <span class="info-text"></span>
-                        </label>
+
+                                <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text"></span>
                     </div>
                         <div class="buttonArea centerBtn">
                             @if (ViewBag.IsView!=1)
@@ -114,11 +112,7 @@
                                 <button type="submit" class="bgBlue">Submit</button>
                                
                             }
-                           @*  <button type="submit" class="lineBtn" id="resetLocation" disabled=disabledAttribute>Reset</button> *@
-                           
-
-                      @*   <button type="submit" class="bgBlue">Submit</button> *@
-                           @*  <button type="submit" class="bgBlue" @disabledAttribute>Submit</button> *@
+              
                     </div>
                 </form>
                 </div>

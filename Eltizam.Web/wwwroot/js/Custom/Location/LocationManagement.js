@@ -3,7 +3,7 @@
    /* $('#LocationTable').DataTable();*/
 
     if (StatusMessage != '') {
-        if (StatusMessage.includes('Successful')) {
+        if (StatusMessage.includes('uccessful')) {
             toastr.success(StatusMessage);
         }
         else {
@@ -21,7 +21,7 @@ function GetLocationById(id) {
     BindCountry();
     BindState();
     BindCity();
-    ajaxServiceMethod($('#hdnBaseURL').val() + GetLocationByIdUrl + "/" + id, 'GET', GetLocationByIdSuccess, GetLocationByIdError);
+    ajaxServiceMethod($('#hdnBaseURL').val() + GetLocationByIdUrl + "/" + id, 'GET', GetLocationByIdSuccess);
 }
 function GetLocationByIdSuccess(data) {
     
