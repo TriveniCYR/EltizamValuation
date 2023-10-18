@@ -1,11 +1,11 @@
 ﻿//Use this for entire project to bind the data 
-function BindDropdowns(_url, _controlID, _retrunPropertyId, _val) { 
+function BindDropdowns(_url, _controlID, _retrunProperty, _val) { 
     $.ajax({
         type: "GET",
         url: $('#hdnBaseURL').val() + _url,
         "datatype": "json",
         success: function (response) {
-            var _dd = _retrunPropertyId;
+            var _dd = _retrunProperty;
             _controlID.empty().append('<option selected="selected" value="0">Please select</option>');
             for (var i = 0; i < response.length; i++) {
                 _controlID.append($("<option></option>").val(response[i].id).html(response[i][_dd]));

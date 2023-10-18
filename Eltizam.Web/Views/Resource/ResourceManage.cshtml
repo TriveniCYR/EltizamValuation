@@ -364,9 +364,7 @@
 <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
 <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
 <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-<script>
-
-
+<script> 
     function profileTab(evt, cityName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -417,8 +415,7 @@
 
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
-        minusDiv.innerHTML = `
-                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+        minusDiv.innerHTML = `<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
                                             `;
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
 
@@ -429,13 +426,13 @@
             input.value = '';
         });
     }
+
     function removeParentDivAddress(element) {
         const parentDivAdd = element.closest(".addMoreAddress");
         if (parentDivAdd) {
             parentDivAdd.remove()
         }
-    }
-
+    } 
 
     $(document).ready(function () {
         BindDepartment();
@@ -448,8 +445,7 @@
         BindGender();
     });
 
-    function BindDepartment() {
-         
+    function BindDepartment() { 
         var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
         var Department = $("#DepartmentId");
         var _val = $('#hdnDeparment').val();
