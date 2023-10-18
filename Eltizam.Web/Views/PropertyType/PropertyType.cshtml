@@ -9,569 +9,122 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 
 @model List<Eltizam.Business.Models.Master_PropertyTypeModel>
-    <!-- system user master -->
-    <div class="flex">
-       
-        <div class="w-100 position-relative">
-                      <main>
-                <h3 class="dashboardTitle">LOCATION MASTER</h3>
-                <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
-                    <div class="flex">
-                        <label class="searchBox position-relative">
-                            <div class="flex align-item-center">
-                                <img src="../assets/search.svg" alt="search">
-                                <input type="text" placeholder="Search for System" class="searchInput">
-                            </div>
-                            <button class="normalSearch">Search</button>
-                        </label>
-                        <div class="accordion">
-                            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
-                            <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
-                            <div class="accordion-content inputSearchs">
-                                <h3 class="text-center">Advanced Search</h3>
-                                <form>
-                                    <div class="flex">
-                                        <label for="userName">
-                                            User Name
-                                            <input type="text" placeholder="enter user id">
-                                        </label>
-                                        <label for="valuatorType">
-                                            Valuator Type
-                                            <select name="Valuator" id="ValuatorType">
-                                                <option value="Valuator1">Valuator type1</option>
-                                                <option value="Valuator2">Valuator type2</option>
-                                                <option value="Valuator3">Valuator type3</option>
-                                            </select>
-                                        </label>
-                                        <label for="resourceType">
-                                            Resource Type
-                                            <select name="Valuator" id="resourceType">
-                                                <option value="resourceType1">Resource type1</option>
-                                                <option value="resourceType2">Resource type2</option>
-                                                <option value="resourceType3">Resource type3</option>
-                                            </select>
-                                        </label>
-                                        <label for="roleName">
-                                            Role Name
-                                            <select name="Valuator" id="roleName">
-                                                <option value="roleName1">Role type1</option>
-                                                <option value="roleName2">Role type2</option>
-                                                <option value="roleName3">Role type3</option>
-                                            </select>
-                                        </label>
-                                    </div>
-                                    <div class="flex">
-                                        <label for="fromDate">
-                                            From Date
-                                            <input type="date">
-                                        </label>
-                                        <label for="toDate">
-                                            To Date
-                                            <input type="date">
-                                        </label>
-                                        <label for="designation">
-                                            Designation
-                                            <select name="Valuator" id="ValuatorType">
-                                                <option value="Valuator1">Designation type1</option>
-                                                <option value="Valuator2">Designation type2</option>
-                                                <option value="Valuator3">Designation type3</option>
-                                            </select>
-                                        </label>
-                                        <label for="designation">
-                                            Department
-                                            <select name="Valuator" id="ValuatorType">
-                                                <option value="Valuator1">Department type1</option>
-                                                <option value="Valuator2">Department type2</option>
-                                                <option value="Valuator3">Department type3</option>
-                                            </select>
-                                        </label>
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="blueBtn">Search</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="buttonArea flex align-item-center">
-                        <button class="flex align-item-center blueBtn" id="addRole">
-                           @*  <img src="../assets/plus.svg" alt="plus"> Add New *@
-                        <a class="whiteAtag" asp-action="PropertyTypeManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
-                        </button>
+@{
+    ViewData["Title"] = @MasterLocalizer["Property Type List"];
+    RolePermissionModel objPermssion = (RolePermissionModel)ViewBag._objPermission;
+    string IsAddAllow = (objPermssion.Add) ? "" : "display: none";
+    string IsEditAllow = (objPermssion.Edit) ? "" : "display: none";
+    string IsDeleteAllow = (objPermssion.Delete) ? "" : "display: none";
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+<div id="PlaceHolderHere"></div>
+<main>
 
+    <div class="flex  mt-20 mobile_flexColumn position-relative justify-between">
+        <h3 class="dashboardTitle">Property Type Master</h3>
+        <div class="buttonArea flex align-item-center">
+            <button class="flex align-item-center blueBtn" id="addRole">
+                <a class="whiteAtag" style="@IsAddAllow" asp-action="PropertyTypeManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
+            </button>
 
-                        <button class="flex align-item-center lineBtn" id="importFile">
-                            <img src="../assets/file-import.svg" alt="file-import" />
-                            Import
-                        </button>
+            <button class="flex align-item-center lineBtn" id="importFile">
+                <img src="~/assets/file-import.svg" alt="file-import" />
+                Import
+            </button>
+        </div>
+    </div>
 
-                        <button class="flex align-item-center lineBtn exportFile">
-                            <img src="../assets/file-export.svg" alt="file-export"> Export
+    <div class="scroll-x">
+        <table id="PropertyTypeTable">
+            <thead>
+                <tr>
+                    <th>@MasterLocalizer["Id"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@MasterLocalizer["Property Type Name"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@MasterLocalizer["PropertySub Type Name"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@SharedLocalizer["Status"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@SharedLocalizer["Action"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(module => item.Id)</td>
+                        <td>@Html.DisplayFor(module => item.PropertyType)</td>
+                        @* <td>@Html.DisplayFor(module => item.SubTypes)</td> *@
+
+                        <td>@Html.LabelFor(model => item.IsActive, (item.IsActive == 1) ? "Active" : "InActive", new { @style = (item.IsActive == 1) ? "color:green;" : "color:red;" })</td>
+
+                        <td class="position-relative">
+                            <img src="~/assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
                             <div class="actionItem">
                                 <ul>
-                                    <li>
-                                        Excel XML
+                                    <li class="viewRole">
+                                        <img src="~/assets/view.svg" alt="view" />
+                                        <a title="View" asp-action="DepartmentView" asp-route-Id="@item.Id">View</a>
                                     </li>
-                                    <li>
-                                        CSV
+                                    <li class="editRole">
+                                        <img src="~/assets/edit.svg" alt="edit" />
+                                        <a title="Edit" asp-action="DepartmentManage" asp-route-Id="@item.Id"><span>Edit</span></a>
+                                    </li>
+                                    <li class="delete">
+                                        <img src="~/assets/trash.svg" alt="trash" />
+                                        <a title="Delete" data-toggle="modal" data-target="#DeleteDepartmentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDepartment(@item.Id); return false;"><span>Delete</span></a>
                                     </li>
                                 </ul>
                             </div>
-                        </button>
-                    </div>
-                </div>
-                <div class="scroll-x">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Property Type</th>
-                                <th>Property Sub Type</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td>Residential</td>
-                                <td>Villa</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onclick="viewProp()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onclick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="flex justify-between align-item-center mobile_flexColumn">
-                    <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
-                    <div class="flex justify-between align-item-center pagination">
-                        <p>Previous</p>
-                        <ul class="flex justify-between">
-                            <li class="active">1</li>
-                            <li>2</li>
-                            <li>3</li>
-                        </ul>
-                        <p>Next</p>
-                    </div>
-                </div>
-            </main>
-            <footer class="flex justify-between">
-                <p>2023 © Eltizam.</p>
-                <p>Design & Develop by NeoSoft</p>
-            </footer>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</main>
 
 
-            <!-- popup import model -->
-            <div class="popup-overlay" id="popup-import-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">
-                            Import Property Type
-                            <img src="../assets/x.svg" alt="x" id="closePopup">
-                        </div>
-                        <div class="popup-action importBox">
-                            <p class="text-left">Browse File</p>
-                            <div class="inputBox">
-                                <input type="file" name="file" id="file" class="file" />
-                                <div class="flex">
-                                    <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
-                                    <div class="uploadFileBtn flex">
-                                        <img src="../assets/files.svg" alt="file">
-                                        <input type="button" class="btn" value="Browse" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="buttonArea popup-btn">
-                                <button class="bgBlue">Submit</button>
-                                <button class="lineBtn">Download Template</button>
-                            </div>
+<div id="DeleteDepartmentModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
                         </div>
                     </div>
+                </div>
+                @Html.Hidden("ID")
+                <div class="card-footer text-center">
+                    <button type="button" onclick="DeleteDepartment()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
                 </div>
             </div>
-
-            <!-- popup add property type model -->
-            <div class="popup-overlay w-800Popup" id="popup-addRole-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">
-                            Add Property Type
-                            <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
-                        </div>
-                        <div class="popup-action inputSearchs">
-                            <form>
-                                <div class="flex">
-                                    <label for="">
-                                        Property Type Namee
-                                        <select name="propertyTypeName" id="propertyTypeName">
-                                            <option value="countryName1">Property Type Name</option>
-                                            <option value="countryName2">Property Type Name</option>
-                                            <option value="countryName3">Property Type Name</option>
-                                        </select>
-                                    </label>
-                                    <label for="regionMaster">
-                                        Property Sub-Type Name
-                                        <select name="propertySubTypeName" id="propertySubTypeName">
-                                            <option value="propertySubTypeName">Property SUb Type Name</option>
-                                            <option value="propertySubTypeName">Property Sub Type Name</option>
-                                            <option value="propertySubTypeName">Property Sub Type Name</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="resourceType">
-                                        Status
-                                        <input class='input-switch' type="checkbox" id="addLocation" />
-                                        <label class="label-switch" for="addLocation"></label>
-                                        <span class="info-text"></span>
-                                    </label>
-                                </div>
-                            </form>
-                            <div class="buttonArea centerBtn">
-                                <button class="bgBlue">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- popup delete model -->
-            <div class="popup-overlay" id="popup-delete-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head">Delete User</div>
-                        <div class="popup-action">
-                            <p>Are you sure you want to delete?</p>
-                            <div class="buttonArea popup-btn">
-                                <button id="cancelDeleteUser" class="greyBtn">Cancel</button>
-                                <button class="redBtn">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- popup edit property type model -->
-           @*  <div class="popup-overlay w-800Popup" id="popup-editProp-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">
-                            Edit Property Type
-                            <img src="../assets/x.svg" alt="x" id="closePopup" onclick="closePropType()">
-                        </div>
-                        <div class="popup-action inputSearchs">
-                            <form>
-                                <div class="flex">
-                                    <label for="">
-                                        Property Type Namee
-                                        <select name="propertyTypeName" id="propertyTypeName">
-                                            <option value="countryName1">Property Type Name</option>
-                                            <option value="countryName2">Property Type Name</option>
-                                            <option value="countryName3">Property Type Name</option>
-                                        </select>
-                                    </label>
-                                    <label for="regionMaster">
-                                        Property Sub-Type Name
-                                        <select name="propertySubTypeName" id="propertySubTypeName">
-                                            <option value="propertySubTypeName">Property SUb Type Name</option>
-                                            <option value="propertySubTypeName">Property Sub Type Name</option>
-                                            <option value="propertySubTypeName">Property Sub Type Name</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="resourceType">
-                                        Status
-                                        <input class='input-switch' type="checkbox" id="addLocation" />
-                                        <label class="label-switch" for="addLocation"></label>
-                                        <span class="info-text"></span>
-                                    </label>
-                                </div>
-                            </form>
-                            <div class="buttonArea centerBtn">
-                                <button class="bgBlue">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> *@
-@* 
-            <!-- popup view property type model -->
-            <div class="popup-overlay w-800Popup" id="popup-viewProp-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">
-                            View Property Type
-                            <img src="../assets/x.svg" alt="x" id="closePopup" onclick="closeviewPropType()">
-                        </div>
-                        <div class="popup-action inputSearchs">
-                            <form>
-                                <div class="flex">
-                                    <label for="">
-                                        Property Type Namee
-                                        <select name="propertyTypeName" id="propertyTypeName">
-                                            <option value="countryName1">Property Type Name</option>
-                                            <option value="countryName2">Property Type Name</option>
-                                            <option value="countryName3">Property Type Name</option>
-                                        </select>
-                                    </label>
-                                    <label for="regionMaster">
-                                        Property Sub-Type Name
-                                        <select name="propertySubTypeName" id="propertySubTypeName">
-                                            <option value="propertySubTypeName">Property SUb Type Name</option>
-                                            <option value="propertySubTypeName">Property Sub Type Name</option>
-                                            <option value="propertySubTypeName">Property Sub Type Name</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="flex">
-                                    <label for="resourceType">
-                                        Status
-                                        <input class='input-switch' type="checkbox" id="addLocation" />
-                                        <label class="label-switch" for="addLocation"></label>
-                                        <span class="info-text"></span>
-                                    </label>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div> *@
-
-
         </div>
     </div>
-  
+</div>
+
+@section MyScripts {
+
+    @Html.Partial("_DataTablePartial")
+
+    <script type="text/javascript" src="~/js/Custom/PropertyType/PropertyTypeManagement.js?v=@jsVersion"></script>
+
+    <script>
+
+        var DeleteDepartmenteByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDepartmentById";
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+        var StatusMessage = '@TempData["StatusMessage"]';
+
+    </script>
+
+}
