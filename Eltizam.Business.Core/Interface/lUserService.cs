@@ -12,8 +12,9 @@ namespace Eltizam.Business.Core.Interface
     {
         Task<DBOperation> Upsert(MasterUserModel entityUser);
         Task<MasterUserDetailModel> GetById(int id);
-        Task<DataTableResponseModel> GetAll(UserSearchModel model, PaginationModel paging);
+        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<List<MasterResourceTypeModel>> GetResourceTypeList();
         Task<List<MasterRoleModel>> GetRoleList();
+        Task<DBOperation> Delete(int id);
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -31,17 +32,17 @@ namespace EltizamValuation.Api.Controllers
         #region API Methods
         [HttpPost]
         [Route("Upsert")]
-        public async Task<IActionResult> Upsert(Master_ClientModel client)
+        public async Task<IActionResult> Upsert(MasterClientModel client)
         {
             try
             {
                 DBOperation oResponse = await _clientServices.AddUpdateMasterClient(client);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (client.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (client.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
                 else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
             catch (Exception ex)
             {
@@ -60,11 +61,11 @@ namespace EltizamValuation.Api.Controllers
                 if (clientClient != null && clientClient.Id > 0)
                 {
                     // Assuming _ObjectResponse.Create takes three parameters: data, status code, and message.
-                    return _ObjectResponse.Create(new { UserClient = clientClient }, (int)HttpStatusCode.OK, "Success");
+                    return _ObjectResponse.Create(clientClient, (int)HttpStatusCode.OK);
                 }
                 else
                 {
-                    return _ObjectResponse.Create(null, (int)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (int)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
                 }
             }
             catch (Exception ex)
@@ -87,8 +88,8 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpDelete("DeleteClient/{id}")]
-        public async Task<IActionResult> DeleteProperty([FromRoute] int id)
+        [HttpPost("DeleteClient/{id}")]
+        public async Task<IActionResult> Deletey([FromRoute] int id)
         {
             try
             {
@@ -96,7 +97,7 @@ namespace EltizamValuation.Api.Controllers
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {

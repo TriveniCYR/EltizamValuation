@@ -40,7 +40,7 @@ namespace Eltizam.Business.Core.Implementation
             _repository = _unitOfWork.GetRepository<MasterValuationFeeType>();
             configuration = _configuration;
             _helper = helper;
-            _dbConnection = DatabaseConnection.EltizamDatabaseConnection;
+            _dbConnection = DatabaseConnection.ConnString;
         }
 
         // get all recoreds from ValuationFeeType list with sorting and pagination
@@ -56,9 +56,9 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterValuationFeeTypeModel>(ProcedureNameCall.usp_ValuationFeeType_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterValuationFeeTypeModel>(ProcedureMetastore.usp_ValuationFeeType_SearchAllList,
 
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
 
 
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);

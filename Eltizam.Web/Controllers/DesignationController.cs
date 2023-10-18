@@ -34,7 +34,7 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 int rolId = _helper.GetLoggedInRoleId();
-                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleManagement, rolId);
+                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
                 ViewBag._objPermission = objPermssion;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new APIRepository(_cofiguration);
@@ -58,10 +58,6 @@ namespace EltizamValuation.Web.Controllers
             return View();
         }
 
-       
-      
-
-       
         [HttpPost]
         [Route("Designation/DesignationManage")]
         public IActionResult DesignationManage(int id, MasterDesignationEntity masterDesignation)
@@ -96,6 +92,39 @@ namespace EltizamValuation.Web.Controllers
         }
 
         public IActionResult DesignationManage(int? id)
+        {
+            if (id != null)
+            {
+                ViewData["IsEdit"] = true;
+            }
+            MasterDesignationEntity masterDesignation;
+            if (id == null || id <= 0)
+            {
+                masterDesignation = new MasterDesignationEntity();
+                return View(masterDesignation);
+            }
+            else
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetesignationById + "/" + id, HttpMethod.Get, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterDesignationEntity>>(jsonResponse);
+                    if (data._object is null)
+                        return NotFound();
+
+                    return View(data._object);
+                }
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        [Route("Designation/DesignationView")]
+        public IActionResult DesignationView(int? id)
         {
             if (id != null)
             {

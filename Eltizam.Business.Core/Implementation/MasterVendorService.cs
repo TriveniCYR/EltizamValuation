@@ -67,36 +67,64 @@ namespace Eltizam.Business.Core.Implementation
         /// 
 
 
-        public async Task<(MasterVendorModel, MasterContactModel, MasterAddressModel)> GetMasterVendorByIdAsync(int id)
+        public async Task<MasterVendorModel> GetMasterVendorByIdAsync(int id)
         {
             // Use a mapper to map the data from the repository to the model asynchronously.
-            var masterVendor = _mapperFactory.Get<MasterVendor, MasterVendorModel>(await _repository.GetAsync(id));
-            var masterContact = _mapperFactory.Get<MasterContact, MasterContactModel>(await _repositoryContact.GetAsync(id));
-            var masterAdress= _mapperFactory.Get<MasterAddress, MasterAddressModel>(await _repositoryAddress.GetAsync(id));
+            var masterVendor = new MasterVendorModel();
+            masterVendor = _mapperFactory.Get<MasterVendor, MasterVendorModel>(await _repository.GetAsync(id));
+            if (masterVendor != null)
+            {
+                DbParameter[] osqlParameter = {
+                 new DbParameter("TableKeyId", id, SqlDbType.Int),
+                 new DbParameter("TableName", TableName.Master_Vendor, SqlDbType.VarChar),
+                };
+                var Address = EltizamDBHelper.ExecuteSingleMappedReader<MasterAddressEntity>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
+                if (Address != null)
+                {
+                    masterVendor.Address = Address;
+
+                }
+
+                DbParameter[] osqlParameter1 = {
+                 new DbParameter("TableKeyId", id, SqlDbType.Int),
+                 new DbParameter("TableName", TableName.Master_Vendor, SqlDbType.VarChar),
+                };
+                var contacts = EltizamDBHelper.ExecuteSingleMappedReader<MasterContactModel>(ProcedureMetastore.usp_Contact_GetContactByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
+                if (contacts != null)
+                {
+                    masterVendor.Contact = contacts;
+
+                }
+            }
             // Return all objects as a tuple.
-            return (masterVendor, masterContact, masterAdress);
+            return masterVendor;
         }
 
 
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            var _dbParams = new[]
-             {
-                 new DbParameter("VendorId", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "CityName", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
+            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
+            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+
+            SqlParameter[] osqlParameter = {
+                new SqlParameter("@VendorId", 0),
+                new SqlParameter("@CurrentPageNumber", model.start),
+                    new SqlParameter("@PageSize", model.length),
+                    new SqlParameter("@SortColumn", ColumnName),
+                    new SqlParameter("@SortDirection", SortDir),
+                    new SqlParameter("@SearchText", model.search.value)
+            };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterVendorListModel>(ProcedureNameCall.usp_Vendor_SearchAllList,
+            var UserList = await _repository.GetBySP("usp_Vendor_Search_GetVendorList", System.Data.CommandType.StoredProcedure, osqlParameter);
 
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+            //DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, osqlParameter);
 
+            var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
+            var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, UserList.DataTableToList<VendorListModel>());
 
             return oDataTableResponseModel;
         }
@@ -125,7 +153,7 @@ namespace Eltizam.Business.Core.Implementation
                     objVendor.CompanyDescription = masterVendortModel.CompanyDescription;
                     objVendor.Status = masterVendortModel.Status;
                     objVendor.ModifiedDate = DateTime.Now;
-                    objVendor.ModifiedBy = masterVendortModel.ModifiedBy;
+                    objVendor.ModifiedBy = masterVendortModel.CreatedBy;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objVendor);
@@ -151,7 +179,7 @@ namespace Eltizam.Business.Core.Implementation
                 objVendor.CreatedDate = DateTime.Now;
                 objVendor.CreatedBy = masterVendortModel.CreatedBy;
                 objVendor.ModifiedDate = DateTime.Now;
-                objVendor.ModifiedBy = masterVendortModel.ModifiedBy;
+                objVendor.ModifiedBy = masterVendortModel.CreatedBy;
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objVendor);
             }
@@ -164,12 +192,12 @@ namespace Eltizam.Business.Core.Implementation
 
             else
             {
-                if (masterVendortModel.masterAddress.Id > 0)
+                if (masterVendortModel.Address.Id > 0)
                 {
-                    objAddress = _repositoryAddress.Get(masterVendortModel.masterAddress.Id);
+                    objAddress = _repositoryAddress.Get(masterVendortModel.Address.Id);
                     if (objAddress != null)
                     {
-                        var entityAddress = _mapperFactory.Get<MasterAddressModel, MasterAddress>(masterVendortModel.masterAddress);
+                        var entityAddress = _mapperFactory.Get<MasterAddressEntity, MasterAddress>(masterVendortModel.Address);
                         objAddress.Address1 = entityAddress.Address1;
                         objAddress.Address1 = entityAddress.Address1;
                         objAddress.Address2 = entityAddress.Address2;
@@ -188,7 +216,7 @@ namespace Eltizam.Business.Core.Implementation
                 }
                 else
                 {
-                    objAddress = _mapperFactory.Get<MasterAddressModel, MasterAddress>(masterVendortModel.masterAddress);
+                    objAddress = _mapperFactory.Get<MasterAddressEntity, MasterAddress>(masterVendortModel.Address);
                     //objAddress.IsActive = masterVendortModel.IsActive;
                     objAddress.TableKeyId = objVendor.Id;
                     objAddress.TableName = "Master_Vendor";
@@ -200,21 +228,19 @@ namespace Eltizam.Business.Core.Implementation
                 }
                 await _unitOfWork.SaveChangesAsync();
 
-                if (masterVendortModel.masterContact.Id > 0)
+                if (masterVendortModel.Contact.Id > 0)
                 {
-                    objContact = _repositoryContact.Get(masterVendortModel.masterContact.Id);
+                    objContact = _repositoryContact.Get(masterVendortModel.Contact.Id);
                     if (objContact != null)
                     {
-                        var entityAddress = _mapperFactory.Get<MasterContactModel, MasterContact>(masterVendortModel.masterContact);
-                        
-                        objContact.ContactPersonName = entityAddress.ContactPersonName;
+                        var entityAddress = _mapperFactory.Get<MasterContactModel, MasterContact>(masterVendortModel.Contact);
 
+                        objContact.ContactPersonName = entityAddress.ContactPersonName;
                         objContact.Department = entityAddress.Department;
                         objContact.Designation = entityAddress.Designation;
                         objContact.Email = entityAddress.Email;
                         objContact.Mobile = entityAddress.Mobile;
                         objContact.Status = entityAddress.Status;
-                        objContact.CreatedDate = entityAddress.CreatedDate;
                         objContact.ModifiedBy = entityAddress.CreatedBy;
                         objContact.ModifiedDate = DateTime.Now;
                         _repositoryContact.UpdateAsync(entityAddress);
@@ -223,13 +249,14 @@ namespace Eltizam.Business.Core.Implementation
                 else
                 {
                     // Create a new MasterClientContact entity from the model for insertion.
-                    objContact = _mapperFactory.Get<MasterContactModel, MasterContact>(masterVendortModel.masterContact);
+                    objContact = _mapperFactory.Get<MasterContactModel, MasterContact>(masterVendortModel.Contact);
                     objContact.CreatedDate = DateTime.Now;
                     objContact.TableKeyId = objVendor.Id;
                     objContact.TableName = "Master_Vendor";
                     objContact.CreatedBy = masterVendortModel.CreatedBy;
+                    objContact.CreatedDate = DateTime.Now;
                     objContact.ModifiedDate = DateTime.Now;
-                    objContact.ModifiedBy = masterVendortModel.ModifiedBy;
+                    objContact.ModifiedBy = masterVendortModel.CreatedBy;
                     _repositoryContact.AddAsync(objContact);
                 }
                 // Insert the new entity into the repository asynchronously.

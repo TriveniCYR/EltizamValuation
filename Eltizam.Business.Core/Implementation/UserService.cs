@@ -15,6 +15,7 @@ using System.Data;
 using DbParameter = Eltizam.Data.DataAccess.Helper.DbParameter;
 using Eltizam.Utility;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Data.SqlClient;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -45,29 +46,26 @@ namespace Eltizam.Business.Core.Implementation
             _helper = helper;
         }
 
-        public async Task<DataTableResponseModel> GetAll(UserSearchModel model, PaginationModel paging)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            var _dbParams = new[]
-             {
-                 new DbParameter("UserId", 0,SqlDbType.Int),
-                 new DbParameter("UserName", model.UserName, SqlDbType.VarChar),
-                 new DbParameter("DepartmentId", model.DepartmentId, SqlDbType.Int),
-                 new DbParameter("DesignationId", model.DesignationId, SqlDbType.Int),
-                 new DbParameter("RoleId", model.RoleId, SqlDbType.Int),
-                 new DbParameter("ResourceId", model.ResourceId, SqlDbType.Int),
-                 new DbParameter("PageSize", paging.pageSize, SqlDbType.Int),
-                 new DbParameter("PageNumber", paging.pageNo, SqlDbType.Int),
-                 new DbParameter("OrderClause", paging.sortName, SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
+            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
+            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
-            int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterUserListModel>(ProcedureNameCall.usp_User_SearchAllList,
+            SqlParameter[] osqlParameter = {
+                new SqlParameter("@UserId", 0),
+                new SqlParameter("@CurrentPageNumber", model.start),
+                new SqlParameter("@PageSize", model.length),
+                new SqlParameter("@SortColumn", ColumnName),
+                new SqlParameter("@SortDirection", SortDir),
+                new SqlParameter("@SearchText", model.search.value)
+            };
 
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+            var UserList = await _repository.GetBySP("usp_User_Search_GetUserList", System.Data.CommandType.StoredProcedure, osqlParameter);
 
+            var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
+            var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(0, _count, lstStf.Count, lstStf);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, UserList.DataTableToList<MasterUserListModel>());
 
             return oDataTableResponseModel;
         }
@@ -77,11 +75,12 @@ namespace Eltizam.Business.Core.Implementation
             _userEntity = _mapperFactory.Get<MasterUser, MasterUserDetailModel>(await _repository.GetAsync(id));
             if (_userEntity != null)
             {
-                DbParameter[] osqlParameter = {
+                DbParameter[] osqlParameter = 
+                {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
+                 new DbParameter("TableName", TableName.Master_User, SqlDbType.VarChar),
                 };
-                var UserAddress = FJDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureNameCall.usp_Address_GetAddressByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (UserAddress != null)
                 {
                     _userEntity.Address = UserAddress;
@@ -90,9 +89,9 @@ namespace Eltizam.Business.Core.Implementation
 
                 DbParameter[] osqlParameter1 = {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
+                 new DbParameter("TableName", TableName.Master_User, SqlDbType.VarChar),
                 };
-                var UserQualification = FJDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureNameCall.usp_Qualification_GetQualificationByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter1);
+                var UserQualification = EltizamDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureMetastore.usp_Qualification_GetQualificationByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
                 if (UserQualification != null)
                 {
                     _userEntity.Qualification = UserQualification;
@@ -102,9 +101,9 @@ namespace Eltizam.Business.Core.Implementation
 
                 DbParameter[] osqlParameter2 = {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", SourceTableKey.Master_User, SqlDbType.VarChar),
+                 new DbParameter("TableName",  TableName.Master_User, SqlDbType.VarChar),
                 };
-                var UserDocuments = FJDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureNameCall.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.EltizamDatabaseConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
                 if (UserDocuments != null)
                 {
                     _userEntity.Documents = UserDocuments;
@@ -205,7 +204,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(entityUser.Address);
                         objUserAddress.IsActive = entityUser.IsActive;
                         objUserAddress.TableKeyId = objUser.Id;
-                        objUserAddress.TableName = SourceTableKey.Master_User;
+                        objUserAddress.TableName = TableName.Master_User;
                         objUserAddress.CreatedBy = entityUser.CreatedBy;
                         objUserAddress.CreatedDate = DateTime.Now;
                         objUserAddress.ModifiedBy = entityUser.CreatedBy;
@@ -240,7 +239,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserQualification = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(entityUser.Qualification);
                         objUserQualification.IsActive = entityUser.Qualification.IsActive;
                         objUserQualification.TableKeyId = objUser.Id;
-                        objUserQualification.TableName = SourceTableKey.Master_User;
+                        objUserQualification.TableName = TableName.Master_User;
                         objUserQualification.CreatedBy = entityUser.CreatedBy;
                         objUserQualification.CreatedDate = DateTime.Now;
                         objUserQualification.ModifiedBy = entityUser.CreatedBy;
@@ -256,7 +255,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
                         objUserDocument.IsActive = doc.IsActive;
                         objUserDocument.TableKeyId = objUser.Id;
-                        objUserDocument.TableName = SourceTableKey.Master_User;
+                        objUserDocument.TableName = TableName.Master_User;
                         objUserDocument.DocumentName = doc.DocumentName;
                         objUserDocument.FileName = doc.FileName;
                         objUserDocument.FilePath = doc.FilePath;
@@ -277,18 +276,31 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterResourceTypeModel>> GetResourceTypeList()
         {
 
-            var lstStf = FJDBHelper.ExecuteMappedReader<MasterResourceTypeModel>(ProcedureNameCall.usp_ResourceType_AllList,
-             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterResourceTypeModel>(ProcedureMetastore.usp_ResourceType_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }
         public async Task<List<MasterRoleModel>> GetRoleList()
         {
 
-            var lstStf = FJDBHelper.ExecuteMappedReader<MasterRoleModel>(ProcedureNameCall.usp_Role_AllList,
-             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterRoleModel>(ProcedureMetastore.usp_Role_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
+        }
+        public async Task<DBOperation> Delete(int id)
+        {
+            var entityDepartment = _repository.Get(x => x.Id == id);
+
+            if (entityDepartment == null)
+                return DBOperation.NotFound;
+
+            _repository.Remove(entityDepartment);
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return DBOperation.Success;
         }
     }
 }

@@ -55,9 +55,9 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterStateListModel>(ProcedureNameCall.usp_State_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterStateListModel>(ProcedureMetastore.usp_State_SearchAllList,
 
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
 
 
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
@@ -134,8 +134,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterStateEntity>> GetStateList()
         {
 
-            var lstStf = FJDBHelper.ExecuteMappedReader<MasterStateEntity>(ProcedureNameCall.usp_State_AllList,
-             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterStateEntity>(ProcedureMetastore.usp_State_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }

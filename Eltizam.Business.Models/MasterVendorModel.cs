@@ -15,12 +15,8 @@ namespace Eltizam.Business.Models
         public int? BusinessTypeId { get; set; }
         public string? CompanyDescription { get; set; }
         public int? Status { get; set; }
-        public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-
-        public MasterContactModel masterContact { get; set; }
-        public MasterAddressModel masterAddress { get; set; }
+        public MasterAddressEntity? Address { get; set; }
+        public MasterContactModel? Contact { get; set; }
     }
 }

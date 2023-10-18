@@ -1,0 +1,316 @@
+[2023-10-13 16:46:10.643 +05:30  ERR]  The view 'ForgotPassword' was not found. Searched locations: ["/Views/Account/ForgotPassword.en-US.en-US.cshtml","/Views/Account/ForgotPassword.en.en-US.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en-US.en.cshtml","/Views/Account/ForgotPassword.en.en.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.cshtml","/Views/Shared/ForgotPassword.en-US.en-US.cshtml","/Views/Shared/ForgotPassword.en.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.en.cshtml","/Views/Shared/ForgotPassword.en.en.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.cshtml","/Pages/Shared/ForgotPassword.en-US.en-US.cshtml","/Pages/Shared/ForgotPassword.en.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.en.cshtml","/Pages/Shared/ForgotPassword.en.en.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.cshtml"]
+[2023-10-13 16:46:10.643 +05:30  ERR]  The view 'ForgotPassword' was not found. Searched locations: ["/Views/Account/ForgotPassword.en-US.en-US.cshtml","/Views/Account/ForgotPassword.en.en-US.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en-US.en.cshtml","/Views/Account/ForgotPassword.en.en.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.cshtml","/Views/Shared/ForgotPassword.en-US.en-US.cshtml","/Views/Shared/ForgotPassword.en.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.en.cshtml","/Views/Shared/ForgotPassword.en.en.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.cshtml","/Pages/Shared/ForgotPassword.en-US.en-US.cshtml","/Pages/Shared/ForgotPassword.en.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.en.cshtml","/Pages/Shared/ForgotPassword.en.en.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.cshtml"]
+[2023-10-13 16:46:10.764 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'ForgotPassword' was not found. The following locations were searched:
+/Views/Account/ForgotPassword.en-US.en-US.cshtml
+/Views/Account/ForgotPassword.en.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.en.cshtml
+/Views/Account/ForgotPassword.en.en.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.cshtml
+/Views/Shared/ForgotPassword.en-US.en-US.cshtml
+/Views/Shared/ForgotPassword.en.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.en.cshtml
+/Views/Shared/ForgotPassword.en.en.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.cshtml
+/Pages/Shared/ForgotPassword.en-US.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.en.cshtml
+/Pages/Shared/ForgotPassword.en.en.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-13 16:46:10.764 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'ForgotPassword' was not found. The following locations were searched:
+/Views/Account/ForgotPassword.en-US.en-US.cshtml
+/Views/Account/ForgotPassword.en.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.en.cshtml
+/Views/Account/ForgotPassword.en.en.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.cshtml
+/Views/Shared/ForgotPassword.en-US.en-US.cshtml
+/Views/Shared/ForgotPassword.en.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.en.cshtml
+/Views/Shared/ForgotPassword.en.en.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.cshtml
+/Pages/Shared/ForgotPassword.en-US.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.en.cshtml
+/Pages/Shared/ForgotPassword.en.en.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-13 17:28:14.431 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Both ErrorMessageResourceType and ErrorMessageResourceName need to be set on this attribute.
+   at System.ComponentModel.DataAnnotations.ValidationAttribute.SetupResourceAccessor()
+   at System.ComponentModel.DataAnnotations.ValidationAttribute.FormatErrorMessage(String name)
+   at Microsoft.AspNetCore.Mvc.DataAnnotations.ValidationAttributeAdapter`1.GetErrorMessage(ModelMetadata modelMetadata, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.DataAnnotations.DataTypeAttributeAdapter.GetErrorMessage(ModelValidationContextBase validationContext)
+   at Microsoft.AspNetCore.Mvc.DataAnnotations.DataTypeAttributeAdapter.AddValidation(ClientModelValidationContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.DefaultValidationHtmlAttributeProvider.AddValidationAttributes(ViewContext viewContext, ModelExplorer modelExplorer, IDictionary`2 attributes)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ValidationHtmlAttributeProvider.AddAndTrackValidationAttributes(ViewContext viewContext, ModelExplorer modelExplorer, String expression, IDictionary`2 attributes)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.DefaultHtmlGenerator.AddValidationAttributes(ViewContext viewContext, TagBuilder tagBuilder, ModelExplorer modelExplorer, String expression)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.DefaultHtmlGenerator.GenerateInput(ViewContext viewContext, InputType inputType, ModelExplorer modelExplorer, String expression, Object value, Boolean useViewData, Boolean isChecked, Boolean setId, Boolean isExplicitValue, String format, IDictionary`2 htmlAttributes)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.DefaultHtmlGenerator.GenerateTextBox(ViewContext viewContext, ModelExplorer modelExplorer, String expression, Object value, String format, Object htmlAttributes)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.HtmlHelper.GenerateTextBox(ModelExplorer modelExplorer, String expression, Object value, String format, Object htmlAttributes)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.HtmlHelper.TextBox(String expression, Object value, String format, Object htmlAttributes)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.DefaultEditorTemplates.GenerateTextBox(IHtmlHelper htmlHelper, String inputType)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.DefaultEditorTemplates.EmailAddressInputTemplate(IHtmlHelper htmlHelper)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.TemplateRenderer.Render()
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.TemplateBuilder.Build()
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.HtmlHelper.GenerateEditor(ModelExplorer modelExplorer, String htmlFieldName, String templateName, Object additionalViewData)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.HtmlHelper`1.EditorFor[TResult](Expression`1 expression, String templateName, String htmlFieldName, Object additionalViewData)
+   at Microsoft.AspNetCore.Mvc.Rendering.HtmlHelperEditorExtensions.EditorFor[TModel,TResult](IHtmlHelper`1 htmlHelper, Expression`1 expression, Object additionalViewData)
+   at AspNetCoreGeneratedDocument.Views_Account_ForgetPassword.<ExecuteAsync>b__19_3() in C:\EltizamValuation\Eltizam.Web\Views\Account\ForgetPassword.cshtml:line 36
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext.GetChildContentAsync(Boolean useCachedResult, HtmlEncoder encoder)
+   at Microsoft.AspNetCore.Mvc.TagHelpers.RenderAtEndOfFormTagHelper.ProcessAsync(TagHelperContext context, TagHelperOutput output)
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperRunner.<RunAsync>g__Awaited|0_0(Task task, TagHelperExecutionContext executionContext, Int32 i, Int32 count)
+   at AspNetCoreGeneratedDocument.Views_Account_ForgetPassword.<ExecuteAsync>b__19_1()
+   at Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext.SetOutputContentAsync()
+   at AspNetCoreGeneratedDocument.Views_Account_ForgetPassword.ExecuteAsync() in C:\EltizamValuation\Eltizam.Web\Views\Account\ForgetPassword.cshtml:line 11
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageCoreAsync(IRazorPage page, ViewContext context)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderPageAsync(IRazorPage page, ViewContext context, Boolean invokeViewStarts)
+   at Microsoft.AspNetCore.Mvc.Razor.RazorView.RenderAsync(ViewContext context)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ViewContext viewContext, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewExecutor.ExecuteAsync(ActionContext actionContext, IView view, ViewDataDictionary viewData, ITempDataDictionary tempData, String contentType, Nullable`1 statusCode)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.ServeFromMvcAndCacheAsync(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-13 17:30:19.566 +05:30  ERR]  The view 'ForgotPassword' was not found. Searched locations: ["/Views/Account/ForgotPassword.en-US.en-US.cshtml","/Views/Account/ForgotPassword.en.en-US.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en-US.en.cshtml","/Views/Account/ForgotPassword.en.en.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.cshtml","/Views/Shared/ForgotPassword.en-US.en-US.cshtml","/Views/Shared/ForgotPassword.en.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.en.cshtml","/Views/Shared/ForgotPassword.en.en.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.cshtml","/Pages/Shared/ForgotPassword.en-US.en-US.cshtml","/Pages/Shared/ForgotPassword.en.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.en.cshtml","/Pages/Shared/ForgotPassword.en.en.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.cshtml"]
+[2023-10-13 17:30:19.725 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'ForgotPassword' was not found. The following locations were searched:
+/Views/Account/ForgotPassword.en-US.en-US.cshtml
+/Views/Account/ForgotPassword.en.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.en.cshtml
+/Views/Account/ForgotPassword.en.en.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.cshtml
+/Views/Shared/ForgotPassword.en-US.en-US.cshtml
+/Views/Shared/ForgotPassword.en.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.en.cshtml
+/Views/Shared/ForgotPassword.en.en.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.cshtml
+/Pages/Shared/ForgotPassword.en-US.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.en.cshtml
+/Pages/Shared/ForgotPassword.en.en.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-13 17:31:37.839 +05:30  ERR]  The view 'ForgotPassword' was not found. Searched locations: ["/Views/Account/ForgotPassword.en-US.en-US.cshtml","/Views/Account/ForgotPassword.en.en-US.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en-US.en.cshtml","/Views/Account/ForgotPassword.en.en.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.cshtml","/Views/Shared/ForgotPassword.en-US.en-US.cshtml","/Views/Shared/ForgotPassword.en.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.en.cshtml","/Views/Shared/ForgotPassword.en.en.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.cshtml","/Pages/Shared/ForgotPassword.en-US.en-US.cshtml","/Pages/Shared/ForgotPassword.en.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.en.cshtml","/Pages/Shared/ForgotPassword.en.en.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.cshtml"]
+[2023-10-13 17:31:37.873 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'ForgotPassword' was not found. The following locations were searched:
+/Views/Account/ForgotPassword.en-US.en-US.cshtml
+/Views/Account/ForgotPassword.en.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.en.cshtml
+/Views/Account/ForgotPassword.en.en.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.cshtml
+/Views/Shared/ForgotPassword.en-US.en-US.cshtml
+/Views/Shared/ForgotPassword.en.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.en.cshtml
+/Views/Shared/ForgotPassword.en.en.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.cshtml
+/Pages/Shared/ForgotPassword.en-US.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.en.cshtml
+/Pages/Shared/ForgotPassword.en.en.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[2023-10-13 17:49:45.162 +05:30  ERR]  The view 'ForgotPassword' was not found. Searched locations: ["/Views/Account/ForgotPassword.en-US.en-US.cshtml","/Views/Account/ForgotPassword.en.en-US.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en-US.en.cshtml","/Views/Account/ForgotPassword.en.en.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.en-US.cshtml","/Views/Account/ForgotPassword.en.cshtml","/Views/Account/ForgotPassword.cshtml","/Views/Shared/ForgotPassword.en-US.en-US.cshtml","/Views/Shared/ForgotPassword.en.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en-US.en.cshtml","/Views/Shared/ForgotPassword.en.en.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.en-US.cshtml","/Views/Shared/ForgotPassword.en.cshtml","/Views/Shared/ForgotPassword.cshtml","/Pages/Shared/ForgotPassword.en-US.en-US.cshtml","/Pages/Shared/ForgotPassword.en.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en-US.en.cshtml","/Pages/Shared/ForgotPassword.en.en.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.en-US.cshtml","/Pages/Shared/ForgotPassword.en.cshtml","/Pages/Shared/ForgotPassword.cshtml"]
+[2023-10-13 17:49:45.452 +05:30  ERR]  An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The view 'ForgotPassword' was not found. The following locations were searched:
+/Views/Account/ForgotPassword.en-US.en-US.cshtml
+/Views/Account/ForgotPassword.en.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en-US.en.cshtml
+/Views/Account/ForgotPassword.en.en.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.en-US.cshtml
+/Views/Account/ForgotPassword.en.cshtml
+/Views/Account/ForgotPassword.cshtml
+/Views/Shared/ForgotPassword.en-US.en-US.cshtml
+/Views/Shared/ForgotPassword.en.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en-US.en.cshtml
+/Views/Shared/ForgotPassword.en.en.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.en-US.cshtml
+/Views/Shared/ForgotPassword.en.cshtml
+/Views/Shared/ForgotPassword.cshtml
+/Pages/Shared/ForgotPassword.en-US.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en-US.en.cshtml
+/Pages/Shared/ForgotPassword.en.en.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.en-US.cshtml
+/Pages/Shared/ForgotPassword.en.cshtml
+/Pages/Shared/ForgotPassword.cshtml
+   at Microsoft.AspNetCore.Mvc.ViewEngines.ViewEngineResult.EnsureSuccessful(IEnumerable`1 originalLocations)
+   at Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor.ExecuteAsync(ActionContext context, ViewResult result)
+   at Microsoft.AspNetCore.Mvc.ViewResult.ExecuteResultAsync(ActionContext context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at WebEssentials.AspNetCore.OutputCaching.OutputCacheMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)

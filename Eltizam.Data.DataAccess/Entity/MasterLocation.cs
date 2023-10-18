@@ -19,7 +19,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int? ModifiedBy { get; set; }           
+        public int? ModifiedBy { get; set; }
+
         public virtual MasterCity City { get; set; } = null!;
         public virtual MasterCountry Country { get; set; } = null!;
         public virtual MasterState State { get; set; } = null!;

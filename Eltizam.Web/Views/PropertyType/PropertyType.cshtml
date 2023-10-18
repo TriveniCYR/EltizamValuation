@@ -1,0 +1,130 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+
+@model List<Eltizam.Business.Models.Master_PropertyTypeModel>
+@{
+    ViewData["Title"] = @MasterLocalizer["Property Type List"];
+    RolePermissionModel objPermssion = (RolePermissionModel)ViewBag._objPermission;
+    string IsAddAllow = (objPermssion.Add) ? "" : "display: none";
+    string IsEditAllow = (objPermssion.Edit) ? "" : "display: none";
+    string IsDeleteAllow = (objPermssion.Delete) ? "" : "display: none";
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+<div id="PlaceHolderHere"></div>
+<main>
+
+    <div class="flex  mt-20 mobile_flexColumn position-relative justify-between">
+        <h3 class="dashboardTitle">Property Type Master</h3>
+        <div class="buttonArea flex align-item-center">
+            <button class="flex align-item-center blueBtn" id="addRole">
+                <a class="whiteAtag" style="@IsAddAllow" asp-action="PropertyTypeManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
+            </button>
+
+            <button class="flex align-item-center lineBtn" id="importFile">
+                <img src="~/assets/file-import.svg" alt="file-import" />
+                Import
+            </button>
+        </div>
+    </div>
+
+    <div class="scroll-x">
+        <table id="PropertyTypeTable">
+            <thead>
+                <tr>
+                    <th>@MasterLocalizer["Id"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@MasterLocalizer["Property Type Name"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@MasterLocalizer["PropertySub Type Name"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@SharedLocalizer["Status"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@SharedLocalizer["Action"]</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(module => item.Id)</td>
+                        <td>@Html.DisplayFor(module => item.PropertyType)</td>
+                        @* <td>@Html.DisplayFor(module => item.SubTypes)</td> *@
+
+                        <td>@Html.LabelFor(model => item.IsActive, (item.IsActive == 1) ? "Active" : "InActive", new { @style = (item.IsActive == 1) ? "color:green;" : "color:red;" })</td>
+
+                        <td class="position-relative">
+                            <img src="~/assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                            <div class="actionItem">
+                                <ul>
+                                    <li class="viewRole">
+                                        <img src="~/assets/view.svg" alt="view" />
+                                        <a title="View" asp-action="DepartmentView" asp-route-Id="@item.Id">View</a>
+                                    </li>
+                                    <li class="editRole">
+                                        <img src="~/assets/edit.svg" alt="edit" />
+                                        <a title="Edit" asp-action="DepartmentManage" asp-route-Id="@item.Id"><span>Edit</span></a>
+                                    </li>
+                                    <li class="delete">
+                                        <img src="~/assets/trash.svg" alt="trash" />
+                                        <a title="Delete" data-toggle="modal" data-target="#DeleteDepartmentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDepartment(@item.Id); return false;"><span>Delete</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+
+<div id="DeleteDepartmentModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("ID")
+                <div class="card-footer text-center">
+                    <button type="button" onclick="DeleteDepartment()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section MyScripts {
+
+    @Html.Partial("_DataTablePartial")
+
+    <script type="text/javascript" src="~/js/Custom/PropertyType/PropertyTypeManagement.js?v=@jsVersion"></script>
+
+    <script>
+
+        var DeleteDepartmenteByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDepartmentById";
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+        var StatusMessage = '@TempData["StatusMessage"]';
+
+    </script>
+
+}

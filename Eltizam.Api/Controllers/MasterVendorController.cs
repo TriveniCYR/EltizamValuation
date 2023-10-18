@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -38,10 +39,10 @@ namespace EltizamValuation.Api.Controllers
                 DBOperation oResponse = await _vendorServices.AddUpdateMasterVendor(vendor);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (vendor.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (vendor.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
                 else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
             catch (Exception ex)
             {
@@ -50,21 +51,21 @@ namespace EltizamValuation.Api.Controllers
         }
 
         [HttpGet]
-        [Route("getById/{id}")]
+        [Route("GetById/{id}")]
         public async Task<IActionResult> GetMasterVendorById([FromRoute] int id)
         {
             try
             {
-                var (masterVendor, masterContact, masterAdress) = await _vendorServices.GetMasterVendorByIdAsync(id);
+                var masterVendor = await _vendorServices.GetMasterVendorByIdAsync(id);
 
                 if (masterVendor != null && masterVendor.Id > 0)
                 {
                     // Assuming _ObjectResponse.Create takes three parameters: data, status code, and message.
-                    return _ObjectResponse.Create(new { MasterVendor = masterVendor, MasterContact = masterContact,MasterAdress= masterAdress }, (int)HttpStatusCode.OK, "Success");
+                    return _ObjectResponse.Create(masterVendor, (int)HttpStatusCode.OK);
                 }
                 else
                 {
-                    return _ObjectResponse.Create(null, (int)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (int)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
                 }
             }
             catch (Exception ex)
@@ -87,7 +88,7 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpDelete("Delete/{id}")]
+        [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try
@@ -96,7 +97,7 @@ namespace EltizamValuation.Api.Controllers
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {

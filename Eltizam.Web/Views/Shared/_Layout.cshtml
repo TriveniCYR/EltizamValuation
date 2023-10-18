@@ -104,15 +104,11 @@
 	<script src="~/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 
-	<script src="~/AdminLTE/plugins/toastr/toastr.min.js"></script>
-
-	@*<script src="~/lib/signalr/signalr.js"></script>
-	<script src="~/js/notification.js"></script>*@
-
+	<script src="~/AdminLTE/plugins/toastr/toastr.min.js"></script> 
 	<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
 	<script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
 	<script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-
+	<script type="text/javascript" Src="~/js/custom/commonscript.js?v=@jsVersion"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("MyScripts", required: false)

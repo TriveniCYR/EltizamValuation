@@ -5,6 +5,7 @@ using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
+using Microsoft.Owin.BuilderProperties;
 using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
@@ -29,9 +30,9 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new APIRepository(_cofiguration);
-                MasterUserModel oUserList = new MasterUserModel();
+                //HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                //APIRepository objapi = new APIRepository(_cofiguration);
+                //MasterUserModel oUserList = new MasterUserModel();
                 //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAll, HttpMethod.Post, token).Result;
                 //if (responseMessage.IsSuccessStatusCode)
                 //{
@@ -91,6 +92,11 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.uploadDocument = docs;
                     masterUser.Document = null;
                 }
+                if (masterUser != null)
+                {
+                    masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
+                    masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
+                }
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
@@ -101,7 +107,7 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
-                    return RedirectToAction(nameof(Resource));
+                    return RedirectToAction("Resource");
                 }
                 else
                 {
@@ -118,7 +124,7 @@ namespace EltizamValuation.Web.Controllers
         }
 
         [HttpGet]
-        [Route("ResourceDetail")]
+        [Route("Resource/ResourceDetail")]
         public IActionResult ResourceDetail(int? id)
         {
             MasterUserModel masterUser;

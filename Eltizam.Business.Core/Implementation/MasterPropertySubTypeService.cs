@@ -86,9 +86,9 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<Master_PropertySubTypeModel>(ProcedureNameCall.usp_PropertySubType_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<Master_PropertySubTypeModel>(ProcedureMetastore.usp_PropertySubType_SearchAllList,
 
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
 
 
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
@@ -110,7 +110,7 @@ namespace Eltizam.Business.Core.Implementation
                 // If the entity exists, update its properties.
                 if (objPropertyType != null)
                 {
-                    objPropertyType.PropertySubType = entityproperty.PropertySubType;
+                    objPropertyType.PropertySubType = Convert.ToString(entityproperty.PropertySubType);
                     objPropertyType.IsActive = entityproperty.IsActive;
                     objPropertyType.ModifiedDate = DateTime.Now;
                     objPropertyType.ModifiedBy = entityproperty.ModifiedBy;

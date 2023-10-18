@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -79,7 +80,7 @@ namespace EltizamValuation.Api.Controllers
                 if (oRoleList != null)
                     return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -119,7 +120,7 @@ namespace EltizamValuation.Api.Controllers
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oDepartment.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
                 }
                 else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : AppConstants.BadRequest));
             }
             catch (Exception ex)
             {
@@ -128,7 +129,7 @@ namespace EltizamValuation.Api.Controllers
         }
 
         // this is for delete master Designation detail by id
-        [HttpDelete("Delete/{id}")]
+        [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try

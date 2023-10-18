@@ -44,32 +44,23 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         // get all recoreds from Location list with sorting and pagination
-        //public async Task<List<MasterLocationEntity>> GetAll()
-        //{
-        //     return _mapperFactory.GetList<MasterLocation, MasterLocationEntity>(await _repository.GetAllAsync());
-        //}
-
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel? model)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            
             var _dbParams = new[]
              {
                  new DbParameter("Id", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model?.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model?.start, SqlDbType.Int),
+                 new DbParameter("PageSize", model.length, SqlDbType.Int),
+                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
                  new DbParameter("OrderClause", "LocationName", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int),
-                 new DbParameter("Letter",null,SqlDbType.VarChar)
+                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
              };
 
             int _count = 0;
-            var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterLocationEntity>(ProcedureNameCall.usp_Location_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterLocationEntity>(ProcedureMetastore.usp_Location_SearchAllList,
 
-             DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
+             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams); 
 
-
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf);
-
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf); 
             return oDataTableResponseModel;
             }
             public async Task<MasterLocationEntity> GetById(int id)

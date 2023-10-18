@@ -14,6 +14,7 @@ using Eltizam.Api.Helpers.Response;
 using Microsoft.AspNetCore.Hosting;
 using Eltizam.Business.Core.Implementation;
 using Eltizam.Api.Filters;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace Eltizam.API.Controllers.Masters
 {
@@ -63,11 +64,11 @@ namespace Eltizam.API.Controllers.Masters
         /// <response code="500">Internal Server</response>
         
         [HttpPost, Route("GetAll")]
-        public async Task<IActionResult> GetAll([FromForm] SmartTableParam<UserSearchModel> model)
+        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _UserService.GetAll(model.Search, model.paging), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _UserService.GetAll(model), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -86,7 +87,7 @@ namespace Eltizam.API.Controllers.Masters
                 if (oUserEntity != null && oUserEntity.Id > 0)
                     return _ObjectResponse.Create(oUserEntity, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
@@ -104,10 +105,10 @@ namespace Eltizam.API.Controllers.Masters
                 DBOperation oResponse = await _UserService.Upsert(oUser);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oUser.Id > 0 ? "Updated Successfully" : "Inserted Successfully"));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oUser.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
                 else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Record not found" : "Bad request"));
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
             catch (Exception ex)
             {
@@ -143,6 +144,23 @@ namespace Eltizam.API.Controllers.Masters
             }
         }
 
+        // this is for delete master Designation detail by id
+        [HttpPost("Delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            try
+            {
+                DBOperation oResponse = await _UserService.Delete(id);
+                if (oResponse == DBOperation.Success)
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "Record not found");
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
     }
 }

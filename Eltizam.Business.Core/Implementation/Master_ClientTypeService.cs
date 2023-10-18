@@ -134,14 +134,14 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> DeleteClientType(int id)
         {
             // Get the entity to be deleted from the repository.
-            var entityUser = _repository.Get(x => x.Id == id);
+            var entityClientType = _repository.Get(x => x.Id == id);
 
             // If the entity does not exist, return a not found operation.
-            if (entityUser == null)
+            if (entityClientType == null)
                 return DBOperation.NotFound;
 
             // Remove the entity from the repository.
-            _repository.Remove(entityUser);
+            _repository.Remove(entityClientType);
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
@@ -150,6 +150,14 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
+        public async Task<List<Master_ClientTypeModel>> GetClientTypeList()
+        {
+
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_ClientTypeModel>(ProcedureMetastore.usp_ClientType_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+
+            return lstStf;
+        }
 
         #endregion API Methods
     }

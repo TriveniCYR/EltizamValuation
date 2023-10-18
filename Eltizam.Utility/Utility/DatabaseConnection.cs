@@ -2,6 +2,6 @@
 {
     public class DatabaseConnection
     {
-        public static string EltizamDatabaseConnection { get; set; }
+        public static string ConnString { get; set; }
     }
 }

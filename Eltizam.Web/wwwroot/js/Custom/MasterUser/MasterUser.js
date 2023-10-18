@@ -1,15 +1,15 @@
-﻿var tableId = "UserTable";
+﻿var tableId = "ResourceUserTable";
 $(document).ready(function () {
-    
     InitializeUserList();
 });
 
+
 //#region Delete User
 function ConfirmationDeleteUser(id) {
-    $('#DeleteUserModel #UserID').val(id);
+    $('#DeleteUserModel #Id').val(id);
 }
 function DeleteUser() {
-    var tempInAtiveID = $('#DeleteUserModel #UserID').val();
+    var tempInAtiveID = $('#DeleteUserModel #Id').val();
     ajaxServiceMethod($('#hdnBaseURL').val() + DeleteUserByIdUrl + "/" + tempInAtiveID, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
 }
 function DeleteUserByIdSuccess(data) {
@@ -29,10 +29,9 @@ function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function InitializeUserList () {
+function InitializeUserList() {
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-      
         "url": $('#hdnBaseURL').val() + AllUser,
         "type": "POST",
         "data": function (d) {
@@ -41,65 +40,38 @@ function InitializeUserList () {
         },
         "datatype": "json"
     };
-
     var columnObject = [
-      
-            
-        { data: 'userName' },
-        { data: 'dateOfBirth' },
-        { data: 'address1' },
-        { data: 'address2' },
-        { data: 'address3' },
-        { data: 'countryName' },
-        { data: 'stateName' },
-        { data: 'cityName' },
-        { data: 'email' },
-        { data: 'mobile' },
-        { data: 'contactPersonName' },
-        { data: 'isActive' },
-        { data: 'createdBy' },
-            {
-                data: 'status',
-                render: function (data, type, row) {
-                    return '<span class="tableStatus ' + (data === 'Active' ? 'green' : 'red') + '">' + data + '</span>';
-                }
-        },
-
         {
-            "data": "createdDate", "name": "createdDate", "render": function (data, type, row, meta) {
-                if (data != 0) {
-                    return "<span>" + CustomDateFormat(row.createdDate, 2) + "</span>";
-                } else {
-                    return "";
-                }
-            }
+            "data": "userName", "name": "User Name"
+        },
+        {
+            "data": "department", "name": "Department"
+        },
+        {
+            "data": "designation", "name": "Designation"
+        },
+        {
+            "data": "resourceType", "name": "ResourceType"
         },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
-                if (data) {
-                    return "<span class='text-success text-bold'>Yes</span>";
-                } else {
-                    return "<span class='text-danger text-bold'>No</span>";
-                }
+                return GetActiveFlagCss(data);
             }
         },
         {
-            "data": "userId", "name": "Action", "render": function (data, type, row, meta) {
+            "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
-
-                html += '<a title="Edit" class="large-font" style="' + IsEditAllow + '" href="/User/UserManage?UserId=' + row.userId + '"><i class="fa fa-fw fa-edit mr-1"></i></a>';
-                html += '<a title="Delete" class="large-font text-danger" style="' + IsDeleteAllow + '" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.userId + '); return false;"><i class="fa fa-fw fa-trash mr-1"></i></a>';
+                html += '<a title="Edit" class="large-font"  href="/Resource/ResourceManage?id=' + row.id + '"><img src="../assets/edit.svg" alt = "edit" />';
+                html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.id + ');"><i class="fa fa-fw fa-trash mr-1"></i></a>';
+                html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.userId + '); return false;"><i class="fa fa-fw fa-trash mr-1"></i></a>';
 
                 return html;
             }
         }
-        ]
-        
+    ];
 
-    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject, {
-        left: 2,
-        right: 2
-    });
-}
+    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
+} 
+
 
 //#endregion

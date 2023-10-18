@@ -76,7 +76,19 @@
                             <h3>Profile Details</h3>
                             <div class="inputSearchs">
                                 <div class="tabSection">
-                                    <div class="flex">
+                                    <div class="flex fourBox">
+                                        <div class="flex justify-center mb-28">
+                                            <div class="resourceProfile clientImg text-center">
+                                                <img src="../assets/client1.png" alt="img-7" />
+                                                <div class="position-relative">
+                                                    <div class="upload-profile-pic-btn">
+                                                        <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
+                                                        Change photo
+                                                    </div>
+                                                    <input type="file" class="uploadPhoto" />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <label for="FirstName">
                                             First Name
                                             @Html.TextBoxFor(model => model.FirstName, new {@class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
@@ -123,12 +135,11 @@
                                             Role
                                             <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId"></select>
                                         </label>
-                                        <label for="IsActive">
+                                        <label for="IsActive" class="w-50">
                                             Status
-                                            <div>
-                                                Active : @Html.RadioButtonFor(m => m.IsActive, true)
-                                                IsActive : @Html.RadioButtonFor(m => m.IsActive, false)
-                                            </div>
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                            <label class="label-switch" for="IsActive"></label>
+                                            <span class="info-text"></span>
                                         </label>
                                     </div>
                                     @if (Model.Id <= 0)
@@ -353,9 +364,7 @@
 <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
 <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
 <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-<script>
-
-
+<script> 
     function profileTab(evt, cityName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -406,8 +415,7 @@
 
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
-        minusDiv.innerHTML = `
-                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+        minusDiv.innerHTML = `<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
                                             `;
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
 
@@ -418,13 +426,13 @@
             input.value = '';
         });
     }
+
     function removeParentDivAddress(element) {
         const parentDivAdd = element.closest(".addMoreAddress");
         if (parentDivAdd) {
             parentDivAdd.remove()
         }
-    }
-
+    } 
 
     $(document).ready(function () {
         BindDepartment();
@@ -437,59 +445,66 @@
         BindGender();
     });
 
-    function BindDepartment() {
-         
+    function BindDepartment() { 
         var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
         var Department = $("#DepartmentId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + DepartmentList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                Department.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    Department.append($("<option></option>").val(response[i].id).html(response[i].department));
-                }
-                if ($('#hdnDeparment').val() != 0) {
-                    Department.val($('#hdnDeparment').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnDeparment').val();
+        var _rpname = "department";
+
+        BindDropdowns(DepartmentList, Department, _rpname, _val);        
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + DepartmentList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        Department.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            Department.append($("<option></option>").val(response[i].id).html(response[i].department));
+        //        }
+        //        if ($('#hdnDeparment').val() != 0) {
+        //            Department.val($('#hdnDeparment').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
-    function BindDesignation() {
-         
+    function BindDesignation() { 
         var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
         var Designation = $("#DesignationId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + DesignationList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                Designation.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    Designation.append($("<option></option>").val(response[i].id).html(response[i].designation));
-                }
-                if ($('#hdnDesignation').val() != 0) {
-                    Designation.val($('#hdnDesignation').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnDesignation').val();
+        var _rpname = "designation";
+
+        BindDropdowns(DesignationList, Designation, _rpname, _val);
+
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + DesignationList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        Designation.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            Designation.append($("<option></option>").val(response[i].id).html(response[i].designation));
+        //        }
+        //        if ($('#hdnDesignation').val() != 0) {
+        //            Designation.val($('#hdnDesignation').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
 
     function BindRole() {

@@ -12,140 +12,100 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>resource master</title>
-    <link rel="stylesheet" href="~/css/style.css">
-</head>
-<body>
     <!-- system user master -->
     <div class="flex">
-     
-
-        
-          
-            <main>
-                <h3 class="dashboardTitle">RESOURCE MASTER</h3>
-                <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
-                    <div class="flex">
-                        <label class="searchBox position-relative">
-                            <div class="flex align-item-center">
-                                <img src="~/assets/search.svg" alt="search">
-                                <input type="text" id="txtUserName" placeholder="Search for System" class="searchInput">
-                            </div>
-                            <button class="normalSearch" onclick="UserList(1,0)">Search</button>
-                        </label>
-                        <div class="accordion">
-                            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
-                            <label for="section1" class="advaceSearhBtn"><img src="~/assets/filter.svg" alt="filterSearch" /></label>
-                            <div class="accordion-content inputSearchs">
-                                <h3 class="text-center">Advanced Search</h3>
-                                <form>
-                                    <div class="flex">
-                                        <label for="userName">
-                                            User Name
-                                            <input type="text" id="UserName" placeholder="enter user id">
-                                        </label>
-                                        <label for="resourceType">
-                                            Resource Type
-                                            <select id="ResourceId" name="ResourceId" class="form-control"></select>
-                                        </label>
-                                        <label for="roleName">
-                                            Role
-                                            <select id="RoleId" name="RoleId" class="form-control"></select>
-                                        </label>
-                                        <label for="designation">
-                                            Designation
-                                            <select id="DesignationId" name="DesignationId" class="form-control"></select>
-                                        </label>
-                                    </div>
-                                    <div class="flex">
-                                        <label for="designation">
-                                            Department
-                                            <select id="DepartmentId" name="DepartmentId" class="form-control"></select>
-                                        </label>
-                                       @* <label for="fromDate">
-                                            From Date
-                                            <input type="date" id="from-date" name="from-date" class="form-control" required>
-                                        </label>
-                                        <label for="toDate">
-                                            To Date
-                                            <input type="date" id="to-date" name="to-date" class="form-control" required>
-                                        </label>*@
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="blueBtn" onclick="UserList(1,1)">Search</button>
-                                    </div>
-                                </form>
-                            </div>
+        <main>
+            <h3 class="dashboardTitle">RESOURCE MASTER</h3>
+            <div class="flex justify-end mb-28 mobile_flexColumn position-relative">
+                @*<div class="flex">
+                    <label class="searchBox position-relative">
+                        <div class="flex align-item-center">
+                            <img src="~/assets/search.svg" alt="search">
+                            <input type="text" id="txtUserName" placeholder="Search for System" class="searchInput">
                         </div>
+                        <button class="normalSearch" onclick="UserList(1,0)">Search</button>
+                    </label>
+                    <div class="accordion">
+                        <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+                        <label for="section1" class="advaceSearhBtn"><img src="~/assets/filter.svg" alt="filterSearch" /></label>
+                        <div class="accordion-content inputSearchs">
+                            <h3 class="text-center">Advanced Search</h3>
+                            <form>
+                                <div class="flex">
+                                    <label for="userName">
+                                        User Name
+                                        <input type="text" id="UserName" placeholder="enter user id">
+                                    </label>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="blueBtn" onclick="UserList(1,1)">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
-                    </div>
-                    <div class="buttonArea flex align-item-center">
-                        <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
-                            <button class="flex align-item-center blueBtn" id="addNew">
-                                <img src="~/assets/plus.svg" alt="plus"> Add New
-                            </button>
-                        </form>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="flex align-item-center lineBtn" id="importFile">
-                            <img src="~/assets/file-import.svg" alt="file-import" />
-                            Import
+                </div>*@
+                <div class="buttonArea flex align-item-center">
+                    <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
+                        <button class="flex align-item-center blueBtn" id="addNew">
+                            <img src="~/assets/plus.svg" alt="plus"> Add New
                         </button>
-                        <button class="flex align-item-center lineBtn exportFile">
-                            <img src="~/assets/file-export.svg" alt="file-export"> Export
-                            <div class="actionItem">
-                                <ul>
-                                    <li>
-                                        Excel XML
-                                    </li>
-                                    <li>
-                                        CSV
-                                    </li>
-                                </ul>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-                <div class="scroll-x">
-                    <table id="UserTable" class="table table-bordered table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>@MasterLocalizer["ID"]</th>
-                                <th>@MasterLocalizer["UserName"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                                <th>@MasterLocalizer["Department"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                                <th>@MasterLocalizer["Designation"]</th>
-                                <th>@MasterLocalizer["ResourceType"]</th>
-                                <th>@MasterLocalizer["IsActive"]</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="social-list">
-                        </tbody>
-                    </table>
-                </div>
-            <div class="flex justify-between align-item-center mobile_flexColumn">
-                <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
-                <div class="flex justify-between align-item-center pagination">
-                    <p>Previous</p>
-                    <ul class="flex justify-between">
-                        <li class="active">1</li>
-                        <li>2</li>
-                        <li>3</li>
-                    </ul>
-                    <p>Next</p>
+                    </form>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="flex align-item-center lineBtn" id="importFile">
+                        <img src="~/assets/file-import.svg" alt="file-import" />
+                        Import
+                    </button>
+                    <button class="flex align-item-center lineBtn exportFile">
+                        <img src="~/assets/file-export.svg" alt="file-export"> Export
+                        <div class="actionItem">
+                            <ul>
+                                <li>
+                                    Excel XML
+                                </li>
+                                <li>
+                                    CSV
+                                </li>
+                            </ul>
+                        </div>
+                    </button>
                 </div>
             </div>
-            </main>
-            <footer class="flex justify-between">
-                <p>2023 © Eltizam.</p>
-                <p>Design & Develop by NeoSoft</p>
-            </footer>
+            <div class="scroll-x">
+                <table id="ResourceUserTable" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>@MasterLocalizer["UserName"] </th>
+                            <th>@MasterLocalizer["Department"]</th>
+                            <th>@MasterLocalizer["Designation"]</th>
+                            <th>@MasterLocalizer["ResourceType"]</th>
+                            <th>@MasterLocalizer["IsActive"]</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            @*<div class="flex justify-between align-item-center mobile_flexColumn">
+            <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
+            <div class="flex justify-between align-item-center pagination">
+            <p>Previous</p>
+            <ul class="flex justify-between">
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            </ul>
+            <p>Next</p>
+            </div>
+            </div>*@
+        </main>
+        <footer class="flex justify-between">
+            <p>2023 © Eltizam.</p>
+            <p>Design & Develop by NeoSoft</p>
+        </footer>
 
-            <!-- popup delete model -->
+        <!-- popup delete model -->
         <div class="popup-overlay" id="popup-delete-overlay">
             <div class="popup">
                 <div class="content text-center">
@@ -161,46 +121,69 @@
             </div>
         </div>
 
-            <!-- popup import model -->
-            <div class="popup-overlay" id="popup-import-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">
-                            Import Resource
-                            <img src="~/assets/x.svg" alt="x" id="closePopup">
-                        </div>
-                        <div class="popup-action importBox">
-                            <p class="text-left">Browse File</p>
-                            <div class="inputBox">
-                                <input type="file" name="file" id="file" class="file" />
-                                <div class="flex">
-                                    <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
-                                    <div class="uploadFileBtn flex">
-                                        <img src="~/assets/files.svg" alt="file">
-                                        <input type="button" class="btn" value="Browse" />
-                                    </div>
+        <!-- popup import model -->
+        <div class="popup-overlay" id="popup-import-overlay">
+            <div class="popup">
+                <div class="content text-center">
+                    <div class="popup-head position-relative">
+                        Import Resource
+                        <img src="~/assets/x.svg" alt="x" id="closePopup">
+                    </div>
+                    <div class="popup-action importBox">
+                        <p class="text-left">Browse File</p>
+                        <div class="inputBox">
+                            <input type="file" name="file" id="file" class="file" />
+                            <div class="flex">
+                                <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                                <div class="uploadFileBtn flex">
+                                    <img src="~/assets/files.svg" alt="file">
+                                    <input type="button" class="btn" value="Browse" />
                                 </div>
                             </div>
-                            <div class="buttonArea popup-btn">
-                                <button id="cancelDeleteUser" class="bgBlue">Submit</button>
-                                <button class="lineBtn">Download Template</button>
-                            </div>
+                        </div>
+                        <div class="buttonArea popup-btn">
+                            <button id="cancelDeleteUser" class="bgBlue">Submit</button>
+                            <button class="lineBtn">Download Template</button>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    
 
-    <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
-    <input type="hidden" id="hdnWebBaseURL" />
+    </div>
+
+
+<div id="DeleteUserModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("Id")
+                <div class="card-footer text-center">
+                    <button type="button" onclick="DeleteUser()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
 
-    @Html.Partial("_DataTablePartial")
     @*<script type="text/javascript" src="~/js/Custom/DynamicDataTable.js"></script>
     <script type="text/javascript" src="~/js/Custom/MasterUser/MasterUser.js"></script>*@
     @*<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>*@
@@ -210,256 +193,45 @@
     @*
     <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
     <script src="~/AdminLTE/plugins/jquery-ui/jquery-ui.min.js"></script>*@
-    <script>
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
+    @section MyScripts {
 
-         
-        //#region Setup API Url
-        var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
-        //#region Static Messae Init
-        var EditLabel = "@SharedLocalizer["Edit"]";
-        var DeleteLabel = "@SharedLocalizer["Delete"]";
-        var ErrorMessage = "@SharedLocalizer["Error"]";
-        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-        var AddLabel = "@SharedLocalizer["Add"]";
-        var UpdateLabel = "@SharedLocalizer["Update"]";
-        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
-        if (successCallBack) {
-            toastr.success(successCallBack);
-        }
+        @Html.Partial("_DataTablePartial")
+        <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+        <script type="text/javascript" src="~/js/Custom/MasterUser/MasterUser.js?v=@jsVersion"></script>
+        <script>
 
-        //#endregion
-
-        $(document).ready(function () {
-             
-            BindDepartment();
-            BindDesignation();
-            BindRole();
-            BindResourceType();
-            UserList(1,0);
-        });
-        function UserList(pageNo,tabId) {
+            //#region Setup API Url
             var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
-            var search;
-            var pageSize = 8;
-            var pageNo = 1;
-             
-            if (tabId == 0) {
-                search = {
-                    'userName': $("#txtUserName").val(),
-                    'departmentId': 0,
-                    'designationId': 0,
-                    'roleId': 0,
-                    'resourceId': 0
-                }
-            }
-            else {
-                search = {
-                    'userName': $("#UserName").val(),
-                    'departmentId': $("#DepartmentId").val(),
-                    'designationId': $("#DesignationId").val(),
-                    'roleId': $("#RoleId").val(),
-                    'resourceId': $("#ResourceId").val(),
-                }
-            }
-            var paging = {
-                'pageNo': pageNo,
-                'pageSize': pageSize,
-                'sortName': 'Id',
-                'sortType': 'ASC'
-            }
-            var data1 = {
-                'paging': paging,
-                'search': search
-            }
-
-            $.ajax({
-                "url": $('#hdnBaseURL').val() + AllUser,
-                "type": "POST",
-                "data": data1,
-                "datatype": "json",
-                success: function (response) {
-                     
-                    var dt = response;
-                    $(".social-list").empty();
-                    var r = "";
-                    for (var i = 0; i < dt.data.length; i++) {
-                        r += " <tr>";
-                        r += "     <td>" + dt.data[i].id + "</td>";
-                        r += "      <td class='userPic'><img src='../assets/user-icon.svg' alt='user-icon'/>" + dt.data[i].userName + "</td>";
-                        r += "      <td>" + dt.data[i].departmentName + "</td>";
-                        r += "      <td>" + dt.data[i].designationName + "</td>";
-                        r += "      <td>" + dt.data[i].resourceType + "</td>";
-                        r += "      <td> YES</td>";
-                        r += "      <td class='position-relative'> <img src='../assets/dots-vertical.svg' alt='dots-vertical' class='activeDots' />";
-                        r += "      <div class='actionItem'> <ul>";
-                        r += "     <li> <a href='/Resource/ResourceManage?id=" + dt.data[i].id + "'><img src='../assets/edit.svg' alt = 'edit' /> Edit </a></li> ";
-                        r += "      <li title='View' class='view'> <a href='/Resource/ResourceManage?id=" + dt.data[i].id + "'><img src='../assets/view.svg' alt='trash'/> View  </a> </li> ";
-                        r += "     <li><a  data-toggle='modal' data-target='#DeleteResourceModel' data-backdrop='static' data-keyboard='false' onclick='ConfirmationResource('" + dt.data[i].id + "'); return false;> <img src='../assets/trash.svg' alt='Delete'/> Delete  </a> </li> ";
-                        r += "      </ul> </div> </td>";
-                        r += " </tr>";
-                    }
-                    $(".social-list").append(r);
-                     
-                    var total = dt.recordsTotal;
-                    var pages;
-                    if(total < pageSize)
-                    {
-                        pages = 1;
-                    }
-                    else{
-                        pages = Math.floor(total / pageSize);
-                        pages = ((total % pageSize) > 0) ? pages + 1 : pages;
-                    }
-
-                    var searchCount = ((pageNo - 1) * pageSize) + dt.data.length;
-                    
-                    var pg = "";
-                    //pg += " <div class='flex justify-between align-item-center pagination'> "
-                    //pg += " <p>Showing <b> " + (searchCount - (dt.data.length - 1)) + "</b> to <b>" + searchCount + "</b> of <b>" + total + "</b> results</p> ";
-                        if(pageNo == 1)
-                        {
-                            pg += " <p>Previous</p>";
-                        }
-                        else{
-                        pg += " <button type='button'  onclick='UserList(" + (pageNo - 1) + "," + tabId + ")'> <p>Previous</p> </button> ";
-                        }
-                        pg += " <ul class='flex justify-between'> "
-                        if(pages >= 5)
-                        {
-                            for(var i=1; i <= 5; i++)
-                            {                            
-                                pg += " <li><button type='button'  onclick='UserList("+ i +","+ tabId +")'><p>"+i+"<p> </button></li> "
-                            }                                                    
-                        }
-                        else{
-                            for(var i=1; i <= pages; i++)
-                            {                            
-                                pg += " <li><button type='button'  onclick='UserList("+ i +","+ tabId +")'><p>"+i+"<p> </button></li> "
-                            } 
-                        }
-                        pg += " </ul> "
-                        if (pageNo == pages) {
-                            pg += " <p>Next</p> "
-                        }
-                        else
-                        {
-                        pg += " <button type='button' onclick='UserList(" + (pageNo + 1) + "," + tabId + ")'> <p>Next</p> </button> ";
-                        }
-                        // pg += " </div> "
-                    $(".bind-resource-paging").append(pg);
-                    //StaticDataTable("#UserTable");
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                }
-            });
-        }
-
-
-        function BindDepartment() {
-            var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
-            var Department = $("#DepartmentId");
-            $.ajax({
-                type: "GET",
-                url: $('#hdnBaseURL').val() + DepartmentList,
-                "datatype": "json",
-                success: function (response) {
-                    Department.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.length; i++) {
-                        Department.append($("<option></option>").val(response[i].id).html(response[i].department));
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-        function BindDesignation() {
-            var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
-            var Designation = $("#DesignationId");
-            $.ajax({
-                type: "GET",
-                url: $('#hdnBaseURL').val() + DesignationList,
-                "datatype": "json",
-                success: function (response) {
-                    Designation.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.length; i++) {
-                        Designation.append($("<option></option>").val(response[i].id).html(response[i].designation));
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-
-        function BindRole() {
-            var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
-            var Role = $("#RoleId");
-            $.ajax({
-                type: "GET",
-                url: $('#hdnBaseURL').val() + RoleList,
-                "datatype": "json",
-                success: function (response) {
-                    Role.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.length; i++) {
-                        Role.append($("<option></option>").val(response[i].roleId).html(response[i].roleName));
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-
-        function BindResourceType() {
+        var DeleteUserByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteUserById";
             var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
-            var ResourceType = $("#ResourceId");
-            $.ajax({
-                type: "GET",
-                url: $('#hdnBaseURL').val() + ResourceTypeList,
-                "datatype": "json",
-                success: function (response) {
-                    ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.length; i++) {
-                        ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
+            var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
+            var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
+            var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
+            //#region Static Messae Init
+            var EditLabel = "@SharedLocalizer["Edit"]";
+            var DeleteLabel = "@SharedLocalizer["Delete"]";
+            var ErrorMessage = "@SharedLocalizer["Error"]";
+            var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+            var AddLabel = "@SharedLocalizer["Add"]";
+            var UpdateLabel = "@SharedLocalizer["Update"]";
+            var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
+            if (successCallBack) {
+                toastr.success(successCallBack);
+            }
+
+
+            function sideNavToggle() {
+                var x = document.getElementById("sideNav");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
                 }
-            });
-        }
+            }
 
-    </script>
 
+                                //#endregion
+
+        </script>
+    }
     @*<script src="~/js/custom.js"></script>*@
-</body>
-</html>

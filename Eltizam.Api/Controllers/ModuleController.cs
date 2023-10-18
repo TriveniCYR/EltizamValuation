@@ -1,5 +1,6 @@
 ﻿using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
+using Eltizam.Data.DataAccess.Helper;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
@@ -47,7 +48,7 @@ namespace Eltizam.API.Controllers.Masters
                 if (oModuleList != null)
                     return _ObjectResponse.Create(oModuleList, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
