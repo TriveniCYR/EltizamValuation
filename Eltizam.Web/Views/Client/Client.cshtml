@@ -13,10 +13,10 @@
 }
     <!-- system user master -->
     <div class="flex">
-        <div class="w-100 position-relative">            
-            <main>
+        <div class="w-100 position-relative">
+        <main class="w-100">
+            <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
                 <h3 class="dashboardTitle">CLIENT MASTER</h3>
-                <div class="flex justify-end mb-28 mobile_flexColumn position-relative">
                     @*<div class="flex">
                         <label class="searchBox position-relative">
                             <div class="flex align-item-center">
@@ -101,7 +101,7 @@
                         </button>
                         </form>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="flex align-item-center lineBtn exportFile">
+                        @*<button class="flex align-item-center lineBtn exportFile">
                             <img src="../assets/file-export.svg" alt="file-export"> Export
                             <div class="actionItem">
                                 <ul>
@@ -113,10 +113,10 @@
                                     </li>
                                 </ul>
                             </div>
-                        </button>
+                        </button>*@
                     </div>
                 </div>
-                <div class="scroll-x">
+            <div class="scroll-x whiteWithPadding">
                 <table id="ClientTable">
                         <thead>
                             <tr>
@@ -203,9 +203,9 @@
                     </div>
                 </div>
                 @Html.Hidden("Id")
-                <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteClient()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
-                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteClient()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
                 </div>
             </div>
         </div>

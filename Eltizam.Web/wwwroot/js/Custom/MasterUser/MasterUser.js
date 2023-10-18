@@ -54,6 +54,15 @@ function InitializeUserList() {
             "data": "resourceType", "name": "ResourceType"
         },
         {
+            "data": "roleName", "name": "RoleName"
+        },
+        {
+            "data": "phone", "name": "Phone"
+        },
+        {
+            "data": "email", "name": "Email"
+        },
+        {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
                 return GetActiveFlagCss(data);
             }
@@ -61,9 +70,11 @@ function InitializeUserList() {
         {
             "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
-                html += '<a title="Edit" class="large-font"  href="/Resource/ResourceManage?id=' + row.id + '"><img src="../assets/edit.svg" alt = "edit" />';
-                html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.id + ');"><i class="fa fa-fw fa-trash mr-1"></i></a>';
-                html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.userId + '); return false;"><i class="fa fa-fw fa-trash mr-1"></i></a>';
+                html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+                html += '<li><a title="View" href="/Resource/ResourceManage?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                html += '<li><a title="Edit" href="/Resource/ResourceManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
+                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                html += '</ul></div>';
 
                 return html;
             }
