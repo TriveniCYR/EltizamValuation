@@ -33,28 +33,14 @@
                             @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
                         </label>
                         <label for="" class="w-50">
-                            @Html.LabelFor(model => model.subType.PropertySubType, new { @class = "control-label" })
+                          
+                            @Html.LabelFor(model => model.subType.PropertySubType,"Property SubType", new { @class = "control-label" })
                             <span class="text-danger">*</span>
-                            @Html.EditorFor(model => model.subType.PropertySubType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
-                            @Html.ValidationMessageFor(model => model.subType.PropertySubType, "", new { @class = "text-danger" })
+                            @Html.DropDownListFor(model => model.Id, new List<SelectListItem> { }, new { @class = "form-control", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
                         </label>
                     </div>
-                    <div class="propertySubTypeContainer">
-                        @for (var i = 0; i < Model.subType.PropertySubType.Count; i++)
-                        {
-                            <div class="flex mb-28">
-                                <label for="" class="w-50">
-                                    <input type="text" asp-for="subType.PropertySubType[i]" class="form-control checkbox-checked" placeholder="Property SubType Name" />
-                                </label>
-                                @if (i > 0)
-                                {
-                                    <button type="button" class="btn btn-danger removeSubType" data-row="@i">Remove</button>
-                                }
-                            </div>
-                        }
-
-                    </div>
-                    <button type="button" id="addSubTypeButton" class="btn btn-secondary">Add Property SubType</button>
+                                   
                     <div class="text-center buttonArea">
                         <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
                         <a class="greyBtn lineBtn formAbtn" asp-action="Designation">@SharedLocalizer["Cancel"]</a>
@@ -65,35 +51,29 @@
     </main>
 </form>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var subTypeCounter = @Model.subType.PropertySubType.Count;
+@section MyScripts {
 
-        // Function to add a new PropertySubType input
-        function addSubTypeInput() {
-            subTypeCounter++;
-            var subTypeHtml = '<div class="flex mb-28" id="subTypeRow' + subTypeCounter + '">' +
-                '<label for="" class="w-50">' +
-                '<input type="text" asp-for="subType.PropertySubType[' + subTypeCounter + ']" class="form-control checkbox-checked" placeholder="Property SubType Name" />' +
-                '</label>' +
-                '<button type="button" class="btn btn-danger removeSubType" data-row="' + subTypeCounter + '">Remove</button>' +
-                '</div>';
-            $('.propertySubTypeContainer').append(subTypeHtml);
-        }
+    @Html.Partial("_DataTablePartial")
+    <link rel="stylesheet" href="~/AdminLTE/plugins/select2/css/select2.min.css" />
+    <script type="text/javascript" src="~/js/Custom/PropertyType/PropertyType.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="~/js/Custom/SelectAllAdaptor.js?v=@jsVersion"></script>
+    <script>
 
-        // Event handler for the plus button
-        $('#addSubTypeButton').click(function () {
-            addSubTypeInput();
-        });
-
-        // Event handler to remove a PropertySubType field
-        $(document).on('click', '.removeSubType', function () {
-            var rowToRemove = $(this).data('row');
-            $('#subTypeRow' + rowToRemove).remove();
-        });
-    });
-
-</script>
+        //#region Setup API Url
+        var AllSubPropertyType = "@Eltizam.Web.Helpers.APIURLHelper.GetAllSubProperty";
+     
+        
+        //#region Static Messae Init
+        var EditLabel = "@SharedLocalizer["Edit"]";
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordInsertUpdate = "@SharedLocalizer["RecordInsertUpdate"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+        var AddLabel = "@SharedLocalizer["Add Region"]";
+        var UpdateLabel = "@SharedLocalizer["Edit Region"]";
+                        //#endregion
+    </script>
+}
 
 
