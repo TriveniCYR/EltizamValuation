@@ -153,8 +153,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<Master_ClientTypeModel>> GetClientTypeList()
         {
 
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_ClientTypeModel>(ProcedureNameCall.usp_ClientType_AllList,
-             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_ClientTypeModel>(ProcedureMetastore.usp_ClientType_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }
