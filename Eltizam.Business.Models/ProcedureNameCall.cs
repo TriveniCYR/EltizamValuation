@@ -44,5 +44,7 @@ namespace Eltizam.Business.Models
         public static string usp_Role_GetByRoleName = "usp_Role_GetByRoleName";
 
         public static string stp_InsertException = "stp_InsertException";
+        public static string stp_PropertyType_GetAll = "stp_PropertyType_GetAll";
+       
     }
 }

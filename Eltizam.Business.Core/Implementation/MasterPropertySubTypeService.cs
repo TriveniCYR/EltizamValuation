@@ -110,7 +110,7 @@ namespace Eltizam.Business.Core.Implementation
                 // If the entity exists, update its properties.
                 if (objPropertyType != null)
                 {
-                    objPropertyType.PropertySubType = entityproperty.PropertySubType;
+                    objPropertyType.PropertySubType = Convert.ToString(entityproperty.PropertySubType);
                     objPropertyType.IsActive = entityproperty.IsActive;
                     objPropertyType.ModifiedDate = DateTime.Now;
                     objPropertyType.ModifiedBy = entityproperty.ModifiedBy;
