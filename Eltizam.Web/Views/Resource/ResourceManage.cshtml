@@ -76,7 +76,19 @@
                             <h3>Profile Details</h3>
                             <div class="inputSearchs">
                                 <div class="tabSection">
-                                    <div class="flex">
+                                    <div class="flex fourBox">
+                                        <div class="flex justify-center mb-28">
+                                            <div class="resourceProfile clientImg text-center">
+                                                <img src="../assets/client1.png" alt="img-7" />
+                                                <div class="position-relative">
+                                                    <div class="upload-profile-pic-btn">
+                                                        <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
+                                                        Change photo
+                                                    </div>
+                                                    <input type="file" class="uploadPhoto" />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <label for="FirstName">
                                             First Name
                                             @Html.TextBoxFor(model => model.FirstName, new {@class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })

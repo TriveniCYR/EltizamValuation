@@ -26,7 +26,9 @@
                             <button class="tablinks" onclick="profileTab(event, 'profile3')">Upload Supporting Documents</button>
                         </div>
 
-                        <form action="">
+                    <form asp-action="ClientManage" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="hdnClientType" value="@(Model == null ? 0 : Model.ClientTypeId)" />
+                        <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
                             <div id="profile1" class="tabcontent">
                                 <h3 class="ptrl-20">Clinet Details</h3>
                                 <div class="inputSearchs">
@@ -45,79 +47,47 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <label for="">
-                                            <label for="DepartmentId">
+                                        <label for="ClientTypeId">
                                                 Client Type
-                                                <select id="DepartmentId" name="DepartmentId" class="form-control" asp-for="ClientTypeId"></select>
+                                                <select id="ClientTypeId" name="ClientTypeId" class="form-control" asp-for="ClientTypeId"></select>
                                             </label>
-                                            </label>
-                                            <label for="">
-                                                Sub Client Type
-                                                <select>
-                                                    <option value="">sub client type1</option>
-                                                    <option value="">sub client type2</option>
-                                                    <option value="">sub client type3</option>
-                                                </select>
-                                            </label>
-                                            <label for="">
-                                                Client Full Name
-                                                <input type="text" placeholder="enter client full name" />
-                                            </label>
+                                        <label for="FirstName">
+                                            First Name
+                                            @Html.TextBoxFor(model => model.FirstName, new {@class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
+                                        </label>
+                                        <label for="MiddleName">
+                                            Middle Name
+                                            @Html.TextBoxFor(model => model.MiddleName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
+                                        </label>
                                         </div>
                                         <div class="flex">
-                                            <label for="">
-                                                Pin Code
-                                                <input type="number" placeholder="enter pin code" />
-                                            </label>
-                                            <label for="">
-                                                City
-                                                <select>
-                                                    <option value="">city1</option>
-                                                    <option value="">city2</option>
-                                                    <option value="">city3</option>
-                                                </select>
-                                            </label>
+                                           <label for="LastName">
+                                            Middle Name
+                                            @Html.TextBoxFor(model => model.LastName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        </label>                                            
                                         </div>
                                         <div class="flex">
-                                            <label for="">
-                                                State
-                                                <select>
-                                                    <option value="">city1</option>
-                                                    <option value="">city2</option>
-                                                    <option value="">city3</option>
-                                                </select>
-                                            </label>
-                                            <label for="">
-                                                Country
-                                                <input type="number" placeholder="enter country" />
-                                            </label>
-                                        </div>
-                                        <div class="flex">
-                                            <label for="">
+                                        <label for="Trnnumber">
                                                 TRN Number
-                                                <input type="number" placeholder="enter TRN number" />
+                                            @Html.TextBoxFor(model => model.Trnnumber, new {@class = "form-control",  @placeholder = @SharedLocalizer["TRN Number"] })
                                             </label>
-                                            <label for="">
+                                            <label for="TrnexpiryDate">
                                                 TRN Expire Date
-                                                <input type="date">
+                                            <input type="date" id="TrnexpiryDate" name="TrnexpiryDate" asp-for="TrnexpiryDate">
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="">
                                                 License Number
-                                                <input type="number" placeholder="enter license number" />
+                                                @Html.TextBoxFor(model => model.LicenseNumber, new {@class = "form-control",  @placeholder = @SharedLocalizer["License Number"] })
+                                            
                                             </label>
-                                            <label for="">
-                                                Status
-                                                <input class='input-switch' type="checkbox" id="addLocation" required />
-                                                <label class="label-switch" for="addLocation"></label>
-                                                <span class="info-text"></span>
-                                            </label>
-                                        </div>
-
-                                        <div class="text-right buttonArea bodyContent plr-0">
-                                            <button type="button" class="lineBtn greyBtn">Cancel</button>
-                                            <button type="submit" class="blueBtn">Update</button>
+                                        <label for="IsActive" class="w-50">
+                                            Status
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                            <label class="label-switch" for="IsActive"></label>
+                                            <span class="info-text"></span>
+                                        </label>
                                         </div>
                                     </div>
                                 </div>
@@ -126,70 +96,90 @@
                             <div id="profile2" class="tabcontent">
                                 <h3 class="ptrl-20">Mailing Address</h3>
                                 <div class="inputSearchs">
-                                    <div class="tabSection">
-                                        <div class="addMoreAddress">
-                                            <div class="flex threeBox">
-                                                <label for="">
-                                                    Company Name
-                                                    <input type="text" placeholder="enter Company name">
-                                                </label>
-                                                <label for="">
-                                                    Company Phone
-                                                    <input type="number" placeholder="enter Company phone" />
-                                                </label>
-                                                <label for="userName">
-                                                    Company Email
-                                                    <input type="email" placeholder="enter company email">
-                                                </label>
-                                            </div>
-                                            <div class="flex">
-                                                <label for="email">
-                                                    Email
-                                                    <input type="email" placeholder="enter email">
-                                                </label>
-                                                <label for="altEmail">
-                                                    Alternate Email
-                                                    <input type="email" placeholder="enter alternate email">
-                                                </label>
-                                            </div>
-                                            <div class="flex threeBox">
-                                                <label for="phone">
-                                                    Phone
-                                                    <input type="number" placeholder="enter phone number">
-                                                </label>
-                                                <label for="altPhone">
-                                                    Alternate Phone
-                                                    <input type="number" placeholder="enter alternate phone number">
-                                                </label>
-                                                <label for="">
-                                                    Landline phone
-                                                    <input type="number" placeholder="enter landline phone number">
-                                                </label>
-                                            </div>
+                                <div class="tabSection">
+                                    <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
+                                    <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
+                                    <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" />
+                                    @Html.HiddenFor(model => model.Address.Id)
+                                    <div class="addMoreAddress">
+                                        <div class="flex">
+                                            <label for="address1" class="w-100">
+                                                <span>Address Line 1 </span>
+                                                @Html.TextBoxFor(model => model.Address.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                            </label>
                                         </div>
-                                        <div class="text-right buttonArea bodyContent plr-0">
-                                            <button type="button" class="lineBtn" onclick="addMoreAddress()">Add More</button>
-                                            <button type="submit" class="blueBtn">Update</button>
+                                        <div class="flex">
+                                            <label for="address2" class="w-100">
+                                                Address Line 2
+                                                @Html.TextBoxFor(model => model.Address.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex fourBox">
+                                            <label for="CountryId">
+                                                CountryId
+                                                @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                            </label>
+                                            <label for="StateId">
+                                                State
+                                                @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                            </label>
+                                            <label for="CityId">
+                                                City
+                                                @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                            </label>
+                                            <label for="PinNo">
+                                                Pin Code
+                                                @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="Email">
+                                                Email
+                                                @Html.TextBoxFor(model => model.Address.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                            </label>
+                                            <label for="AlternateEmail">
+                                                Alternate Email
+                                                @Html.TextBoxFor(model => model.Address.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex threeBox">
+                                            <label for="Phone">
+                                                Phone
+                                                @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                            </label>
+                                            <label for="AlternatePhone">
+                                                Alternate Phone
+                                                @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                            </label>
+                                            <label for="">
+                                                Landline phone
+                                                @Html.TextBoxFor(model => model.Address.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
+                                            </label>
                                         </div>
                                     </div>
+                                    <div class="text-right buttonArea bodyContent plr-0">
+                                        <button type="button" class="lineBtn" onclick="addMoreAddress()">Add More</button>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
 
 
                             <div id="profile3" class="tabcontent">
                                 <h3 class="ptrl-20">Upload Supporting Documents</h3>
-                                <div class="inputSearchs uploadDocBox">
+                                <<div class="inputSearchs uploadDocBox">
+
                                     <div class="tabSection">
                                         <div class="flex mb-28">
                                             <label for="document">
                                                 Documents Name
-                                                <input type="text" placeholder="enter Documents Name">
+                                                @Html.TextBoxFor(model => model.Document.DocumentName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Document"] })
                                             </label>
                                             <label for="atach">
                                                 Attach Supporting Documents
                                                 <div class="attachDoc">
                                                     <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
-                                                    <input type="file" class="btn" value="Upload Photo" multiple />
+                                                    <input type="file" asp-for="Document.Files" multiple />
                                                     <p>click to upload.</p>
                                                 </div>
                                             </label>
@@ -197,45 +187,33 @@
                                         <div class="W-100">
                                             <div class="prevUpload roundBorderBox m-0">
                                                 <h3>Previously uploaded</h3>
-                                                <div class="flex justify-start">
-                                                    <div class="prevUploadTab">
-                                                        <div class="flex align-item-center m-0">
-                                                            <img src="../assets/file.svg" alt="file" />
-                                                            ABC
-                                                        </div>
-                                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                        <div class="flex align-item-center m-0">
-                                                            <img src="../assets/file.svg" alt="file" />
-                                                            ABC
-                                                        </div>
-                                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                        <div class="flex align-item-center m-0">
-                                                            <img src="../assets/file.svg" alt="file" />
-                                                            ABC
-                                                        </div>
-                                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                        <div class="flex align-item-center m-0">
-                                                            <img src="../assets/file.svg" alt="file" />
-                                                            ABC
-                                                        </div>
-                                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
+                                                <div class="flex">
+                                                    @if (Model.Documents != null)
+                                                    {
+                                                        @foreach (var docs in Model.Documents)
+                                                        {
+                                                            <div class="prevUploadTab">
+                                                                <div class="flex align-item-center m-0">
+                                                                    <img src="../assets/file.svg" alt="file" />
+                                                                    <span>@docs.DocumentName</span>
+                                                                </div>
+                                                                <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>NA</label>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-right buttonArea bodyContent">
-                                    <!-- removing as of not needed uncomment if need to add more uploading file -->
-                                    <!-- <button type="button" class="lineBtn" onClick="addNewUploadDoc(this)">Add New</button> -->
-                                    <button type="submit" class="darkBlueBtn">Update</button>
-                                </div>
+                            </div>
+                            <div class="text-right buttonArea bodyContent plr-0">
+                            <a href='/Client/Client'> <button type="button" class="lineBtn">Cancel</button></a>
+                                <button type="submit" class="blueBtn">Update</button>
                             </div>
                         </form>
 
@@ -257,6 +235,14 @@
             addResourceRedirection.addEventListener('click', () => {
                 window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
             });
+        });
+        
+        $(document).ready(function () {
+            BindClientType();
+            BindCountry();
+            BindState();
+            BindCity();
+            BindGender();
         });
 
         function profileTab(evt, cityName) {
@@ -328,18 +314,119 @@
             }
         }
 
-        // function addNewUploadDoc() {
-        //     const uploadDocBox = document.querySelector('.uploadDocBox');
-        //     const clonedDocBox = uploadDocBox.cloneNode(true);
+        
 
-        //     uploadDocBox.parentElement.insertBefore(clonedDocBox, uploadDocBox.nextSibling);
+    function BindClientType() {
 
-        //     const inputUploadBox = clonedDocBox.querySelectorAll('input');
-        //     inputUploadBox.forEach((input) => {
-        //         input.value = '';
-        //     });
-        // }
+        var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetClientTypeList";
+        var ClientType = $("#ClientTypeId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + ClientTypeList,
+            "datatype": "json",
+            success: function (response) {
+                ;
+                ClientType.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    ClientType.append($("<option></option>").val(response[i].id).html(response[i].clientType));
+                }
+                if ($('#hdnClientType').val() != 0) {
+                    ClientType.val($('#hdnClientType').val());
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
 
+    function BindCountry() {
+
+        var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
+        var Country = $("#Address_CountryId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + CountryList,
+            "datatype": "json",
+            success: function (response) {
+                ;
+                Country.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
+                }
+                if ($('#hdnCountry').val() != 0) {
+                    Country.val($('#hdnCountry').val());
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+
+    function BindState() {
+
+        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
+        var State = $("#Address_StateId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + StateList,
+            "datatype": "json",
+            success: function (response) {
+                ;
+                State.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
+                }
+                if ($('#hdnState').val() != 0) {
+                    State.val($('#hdnState').val());
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
+
+    function BindCity() {
+
+        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
+        var City = $("#Address_CityId");
+        $.ajax({
+            type: "GET",
+            url: $('#hdnBaseURL').val() + CityList,
+            "datatype": "json",
+            success: function (response) {
+                ;
+                City.empty().append('<option selected="selected" value="0">Please select</option>');
+                for (var i = 0; i < response.length; i++) {
+                    City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
+                }
+                if ($('#hdnCity').val() != 0) {
+                    City.val($('#hdnCity').val());
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        });
+    }
         function resourceMaster() {
             window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/resource-master.html'
         }

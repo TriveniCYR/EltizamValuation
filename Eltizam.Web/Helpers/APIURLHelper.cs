@@ -25,6 +25,7 @@ namespace Eltizam.Web.Helpers
         public static string GetCountryList = "api/Country/GetCountryList";
         public static string GetStateList = "api/State/GetStateList";
         public static string GetCityList = "api/City/GetCityList";
+        public static string GetClientTypeList = "api/MasterClientType/GetClientTypeList";
 
         #endregion CasterCommon
 
@@ -41,9 +42,8 @@ namespace Eltizam.Web.Helpers
 
         public static string GetAll = "api/User/GetAll";
         public static string UpsertUser = "api/User/Upsert";
-        public static string SaveTblUser = "api/User/InsertUpdateTblUser";
         public static string GetUserById = "api/User/GetById";
-        public static string GetTblUserById = "api/User/GetTblUserById";
+        public static string DeleteUserById = "api/User/Delete";
 
         // Anonymous_Access API for Forgot Passsword
         public static string Anonymous_CheckEmailAddressExists = "api/Account/CheckEmailAddressExists";
@@ -68,17 +68,17 @@ namespace Eltizam.Web.Helpers
         #endregion Department
 
         #region MasterPropertyType
-        public static string UpsertProperty = "api/Property/Upsert";
-        public static string GetAllProperty = "api/Property/GetAllSubProperty";
-        public static string GetPropertyById = "api/Property/GetById";
-        public static string DeletePropertytById = "api/Property/Delete";
+        public static string UpsertProperty = "api/MasterProperty/Upsert";
+        public static string GetAllProperty = "api/MasterProperty/GetAllProperty";
+        public static string GetPropertyById = "api/MasterProperty/GetById";
+        public static string DeletePropertytById = "api/MasterProperty/Delete";
 
         #endregion MasterPropertyType
 
         #region ClientType
 
         public static string GetSearchClientType = "api/MasterClientType/GetAllClientType";
-        public static string GetClientTypeById = "api/MasterClientType/getById";
+        public static string GetClientTypeById = "api/MasterClientType/GetById";
         public static string UpsertClientType = "api/MasterClientType/Upsert";
         public static string DeleteClientType = "api/MasterClientType/DeleteClientType";
 
@@ -87,7 +87,7 @@ namespace Eltizam.Web.Helpers
         #region Client
 
         public static string GetSearchClient = "api/MasterClient/GetAllClient";
-        public static string GetClientById = "api/MasterClient/getById";
+        public static string GetClientById = "api/MasterClient/GetById";
         public static string UpsertClient = "api/MasterClient/Upsert";
         public static string DeleteClient = "api/MasterClient/DeleteClient";
 
@@ -118,7 +118,14 @@ namespace Eltizam.Web.Helpers
 
         #endregion Notification
 
+        #region Vendor
 
+        public static string GetSearchVendor = "api/MasterVendor/GetAll";
+        public static string GetVendorById = "api/MasterVendor/GetById";
+        public static string UpsertVendor = "api/MasterVendor/Upsert";
+        public static string DeleteVendor = "api/MasterVendor/Delete";
+
+        #endregion Vendor
 
 
         #region LogExceptionMethod

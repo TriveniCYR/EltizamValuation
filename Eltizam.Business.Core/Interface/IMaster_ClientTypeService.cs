@@ -14,5 +14,6 @@ namespace Eltizam.Business.Core.Interface
         Task<List<Master_ClientTypeModel>> GetAll();
         Task<DBOperation> AddUpdateMasterClientType(Master_ClientTypeModel entityqualification);
         Task<DBOperation> DeleteClientType(int id);
+        Task<List<Master_ClientTypeModel>> GetClientTypeList();
     }
 }

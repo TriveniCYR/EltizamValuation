@@ -16,8 +16,8 @@
     <div class="flex">
         <main>
             <h3 class="dashboardTitle">RESOURCE MASTER</h3>
-            <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
-                <div class="flex">
+            <div class="flex justify-end mb-28 mobile_flexColumn position-relative">
+                @*<div class="flex">
                     <label class="searchBox position-relative">
                         <div class="flex align-item-center">
                             <img src="~/assets/search.svg" alt="search">
@@ -36,14 +36,6 @@
                                         User Name
                                         <input type="text" id="UserName" placeholder="enter user id">
                                     </label>
-                                    @* <label for="fromDate">
-                                    From Date
-                                    <input type="date" id="from-date" name="from-date" class="form-control" required>
-                                    </label>
-                                    <label for="toDate">
-                                    To Date
-                                    <input type="date" id="to-date" name="to-date" class="form-control" required>
-                                    </label>*@
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="blueBtn" onclick="UserList(1,1)">Search</button>
@@ -52,7 +44,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div>*@
                 <div class="buttonArea flex align-item-center">
                     <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
                         <button class="flex align-item-center blueBtn" id="addNew">
@@ -161,6 +153,32 @@
     </div>
 
 
+<div id="DeleteUserModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("Id")
+                <div class="card-footer text-center">
+                    <button type="button" onclick="DeleteUser()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
@@ -184,6 +202,7 @@
 
             //#region Setup API Url
             var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
+        var DeleteUserByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteUserById";
             var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
             var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
             var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
