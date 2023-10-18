@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public static class ProcedureNameCall
+    public static class ProcedureMetastore
     {
         // Master SP Call
         public static string usp_City_SearchAllList = "usp_City_SearchAllList";
@@ -37,9 +37,12 @@ namespace Eltizam.Business.Models
         public static string usp_Designation_AllList = "usp_Designation_AllList";
         public static string usp_Country_AllList = "usp_Country_AllList";
         public static string usp_City_AllList = "usp_City_AllList";
+        public static string usp_Client_DeleteContactByClientId = "usp_Client_DeleteContactByClientId";
         public static string usp_State_AllList = "usp_State_AllList";
         public static string usp_Role_SearchAllList = "usp_Role_SearchAllList";
         public static string usp_Role_GetByRoleName = "usp_Role_GetByRoleName";
+
+        public static string stp_InsertException = "stp_InsertException";
         public static string stp_PropertyType_GetAll = "stp_PropertyType_GetAll";
        
     }

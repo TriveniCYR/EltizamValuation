@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Eltizam.Utility;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace Eltizam.Data.DataAccess.Core.Repositories
 {
@@ -93,7 +94,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             TEntity o = dbContext.Set<TEntity>().Find(id);
             if (o == null)
             {
-                throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
             }
             try
             {
@@ -105,7 +106,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     if ((bool)isDeleted)
                     {
                         o = null;
-                        throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                        throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
                     }
                 }
             }
@@ -121,7 +122,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
 
             if (o == null)
             {
-                throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
             }
             try
             {
@@ -133,7 +134,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     if ((bool)isDeleted)
                     {
                         o = null;
-                        throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                        throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
                     }
                 }
             }
@@ -148,7 +149,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             TEntity o = await dbContext.Set<TEntity>().FindAsync(id);
             if (o == null)
             {
-                throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
             }
             try
             {
@@ -159,7 +160,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     if ((bool)isDeleted)
                     {
                         o = null;
-                        throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                        throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
                     }
                 }
             }
@@ -175,7 +176,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             TEntity o = dbContext.Set<TEntity>().Find(id);
             if (o == null)
             {
-                throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
             }
             try
             {
@@ -186,7 +187,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     if ((bool)isDeleted)
                     {
                         o = null;
-                        throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                        throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
                     }
                 }
             }
@@ -202,7 +203,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             TEntity o = dbContext.Set<TEntity>().Find(id);
             if (o == null)
             {
-                throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
             }
             try
             {
@@ -213,7 +214,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     if ((bool)isDeleted)
                     {
                         o = null;
-                        throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                        throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
                     }
                 }
             }
@@ -969,7 +970,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
 
             if (o == null)
             {
-                throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
             }
             try
             {
@@ -979,7 +980,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     if ((bool)isDeleted)
                     {
                         o = null;
-                        throw new Exception("Record Not Found", new KeyNotFoundException("Record Not Found"));
+                        throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
                     }
                 }
             }
@@ -1022,7 +1023,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             try
             {
-                return SqlHelper.ExecuteDataTable(DatabaseConnection.EltizamDatabaseConnection, CommandText, commandType, sqlParameters);
+                return SqlHelper.ExecuteDataTable(DatabaseConnection.ConnString, CommandText, commandType, sqlParameters);
             }
             catch (Exception ex)
             {
@@ -1034,7 +1035,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             try
             {
-                return SqlHelper.ExecuteDataset(DatabaseConnection.EltizamDatabaseConnection, CommandText, commandType, sqlParameters);
+                return SqlHelper.ExecuteDataset(DatabaseConnection.ConnString, CommandText, commandType, sqlParameters);
             }
             catch (Exception ex)
             {

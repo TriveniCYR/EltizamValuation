@@ -31,7 +31,20 @@
             },
             buttons: [
                 {
-                    extend: 'excel', text: '<i class="far fa-file-excel"></i> Export In Excel ', className: "btn-primary", exportOptions: {
+                    extend: 'excel', text: '<i class="far fa-file-excel"></i> Excel', className: "btn-primary", exportOptions:
+                    {
+                        columns: ':not(.notexport)'
+                    }
+                },
+                {
+                    extend: 'pdf', text: '<i class="far fa-file-pdf"></i> PDF', className: "btn-primary", exportOptions:
+                    {
+                        columns: ':not(.notexport)'
+                    }
+                },
+                {
+                    extend: 'csv', text: '<i class="far fa-file-csv"></i> CSV', className: "btn-primary", exportOptions:
+                    {
                         columns: ':not(.notexport)'
                     }
                 },
@@ -49,4 +62,14 @@
         });
     $('body').find('.dataTables_scrollBody').addClass("scrollbar");
     return dataTableInst;
+}
+
+function GetActiveFlagCss(data) {
+    var dd = "";
+    if (data === 1 || data === true) {
+        dd = "<span class='tableStatus green'>Yes</span>";
+    } else {
+        dd = "<span class='tableStatus red'>No</span>";
+    }
+    return dd;
 }

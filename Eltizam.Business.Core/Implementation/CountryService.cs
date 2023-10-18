@@ -38,7 +38,7 @@ namespace Eltizam.Business.Core.Implementation
             _repository = _unitOfWork.GetRepository<MasterCountry>();
             configuration = _configuration;
             _helper = helper;
-            _dbConnection = DatabaseConnection.EltizamDatabaseConnection;
+            _dbConnection = DatabaseConnection.ConnString;
         }
 
         // get all recoreds from Country list with sorting and pagination
@@ -54,7 +54,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCountryModel>(ProcedureNameCall.usp_Country_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCountryModel>(ProcedureMetastore.usp_Country_SearchAllList,
 
              _dbConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
@@ -127,8 +127,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterCountryModel>> GetCountryList()
         {
 
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterCountryModel>(ProcedureNameCall.usp_Country_AllList,
-             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterCountryModel>(ProcedureMetastore.usp_Country_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }

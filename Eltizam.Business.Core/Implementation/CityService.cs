@@ -40,7 +40,7 @@ namespace Eltizam.Business.Core.Implementation
             _repository = _unitOfWork.GetRepository<MasterCity>();
             configuration = _configuration;
             _helper = helper;
-            _dbConnection = DatabaseConnection.EltizamDatabaseConnection;
+            _dbConnection = DatabaseConnection.ConnString;
         }
 
         // get all recoreds from City list with sorting and pagination
@@ -56,7 +56,7 @@ namespace Eltizam.Business.Core.Implementation
              };
 
             int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCityEntity>(ProcedureNameCall.usp_City_SearchAllList,
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCityEntity>(ProcedureMetastore.usp_City_SearchAllList,
 
              _dbConnection, out _count, CommandType.StoredProcedure, _dbParams);
 
@@ -137,8 +137,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<MasterCityEntity>> GetCityList()
         {
 
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterCityEntity>(ProcedureNameCall.usp_City_AllList,
-             DatabaseConnection.EltizamDatabaseConnection, CommandType.StoredProcedure, null);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterCityEntity>(ProcedureMetastore.usp_City_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }

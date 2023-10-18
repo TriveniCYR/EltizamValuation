@@ -8,6 +8,7 @@ using Eltizam.Resource;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Localization;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Business.Models;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -34,20 +35,20 @@ namespace Eltizam.Business.Core.Implementation
         {
             try
             {
+                SqlParameter[] osqlParameter =
+                {
+                    new SqlParameter("@Message", exception.Message),
+                    new SqlParameter("@Source",  exception.Source),
+                    new SqlParameter("@InnerException", Convert.ToString(exception.InnerException)),
+                    new SqlParameter("@StackTrace", Convert.ToString(exception.StackTrace)),
+                    new SqlParameter("@CreatedBy", _helper.GetLoggedInUser().UserId)
+                };
 
-                SqlParameter[] osqlParameter = {
-                new SqlParameter("@Message", exception.Message),
-                new SqlParameter("@Source", exception.Source),
-                new SqlParameter("@InnerException", Convert.ToString(exception.InnerException)),
-                new SqlParameter("@StackTrace", Convert.ToString(exception.StackTrace)),
-                new SqlParameter("@CreatedBy", _helper.GetLoggedInUser().UserId)
-            };
-                DataTable dtOptions = await _repository.GetBySP("stp_npd_InsertException", System.Data.CommandType.StoredProcedure, osqlParameter);
+                await _repository.GetBySP(ProcedureMetastore.stp_InsertException, System.Data.CommandType.StoredProcedure, osqlParameter);
 
-                var result = Convert.ToBoolean(dtOptions.Rows[0][0]);
-                if (result)
-                    return DBOperation.Success;
-                return DBOperation.Error;
+                //var result = Convert.ToBoolean(dtOptions.Rows[0][0]);
+                //if (result)
+                return DBOperation.Success;
             }
             catch (Exception ex)
             {
