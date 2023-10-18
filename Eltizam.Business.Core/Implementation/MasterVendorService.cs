@@ -107,24 +107,24 @@ namespace Eltizam.Business.Core.Implementation
             string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
             string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
-            DbParameter[] osqlParameter = {
-                new DbParameter("VendorId", 0, SqlDbType.Int),
-                new DbParameter("CurrentPageNumber", model.start, SqlDbType.Int),
-                    new DbParameter("PageSize", model.length, SqlDbType.Int),
-                    new DbParameter("SortColumn", ColumnName, SqlDbType.VarChar),
-                    new DbParameter("SortDirection", SortDir, SqlDbType.VarChar),
-                    new DbParameter("SearchText", model.search.value, SqlDbType.VarChar)
+            SqlParameter[] osqlParameter = {
+                new SqlParameter("@VendorId", 0),
+                new SqlParameter("@CurrentPageNumber", model.start),
+                    new SqlParameter("@PageSize", model.length),
+                    new SqlParameter("@SortColumn", ColumnName),
+                    new SqlParameter("@SortDirection", SortDir),
+                    new SqlParameter("@SearchText", model.search.value)
             };
 
             int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterVendorListModel>(ProcedureMetastore.usp_Vendor_SearchAllList,
+            var UserList = await _repository.GetBySP("usp_Vendor_Search_GetVendorList", System.Data.CommandType.StoredProcedure, osqlParameter);
 
-             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, osqlParameter);
+            //DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, osqlParameter);
 
-            //var TotalRecord = (lstStf != null && lstStf.Rows.Count > 0 ? Convert.ToInt32(lstStf.Rows[0]["TotalRecord"]) : 0);
-            //var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
+            var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
+            var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, UserList.DataTableToList<VendorListModel>());
 
             return oDataTableResponseModel;
         }
