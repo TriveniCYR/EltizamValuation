@@ -47,7 +47,7 @@
                         <input type="hidden" id="hdnGender" value="@(Model == null ? 0 : Model.Gender)" />
                         <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
                         <div id="profile1" class="tabcontent">
-                            <h3>Profile Details</h3>
+                            <h3 class="ptrl-20">Profile Details</h3>
                             <div class="inputSearchs">
                                 <div class="tabSection">
                                     <div class="flex fourBox">
@@ -146,7 +146,7 @@
                         </div>
 
                         <div id="profile2" class="tabcontent">
-                            <h3>Mailing Address</h3>
+                            <h3 class="ptrl-20">Mailing Address</h3>
                             <div class="inputSearchs">
                                 <div class="tabSection">
                                             <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
@@ -194,7 +194,7 @@
                                                         @Html.TextBoxFor(model => model.Address.AlternateEmail, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
                                                     </label>
                                                 </div>
-                                                <div class="flex threeBox">
+                                                <div class="flex">
                                                     <label for="Phone">
                                                         Phone
                                                         @Html.TextBoxFor(model => model.Address.Phone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
@@ -220,7 +220,7 @@
                         </div>
 
                         <div id="profile3" class="tabcontent">
-                            <h3>Qualification Details</h3>
+                            <h3 class="ptrl-20">Qualification Details</h3>
                             <div class="roundBorderBox">
                                 <div class="text-right">
                                     <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" />
@@ -264,7 +264,7 @@
                         </div>
 
                         <div id="profile4" class="tabcontent">
-                            <h3>Upload Supporting Documents</h3>
+                            <h3 class="ptrl-20">Upload Supporting Documents</h3>
                             <div class="inputSearchs uploadDocBox">
 
                                 <div class="tabSection">
