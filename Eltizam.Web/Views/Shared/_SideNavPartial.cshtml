@@ -109,8 +109,8 @@
                             </div>
                         </li>
                     }
-                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ClientMaster, _roleId))
-                    {
+                   @* @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ClientMaster, _roleId))
+                    {*@
                         <li>
                             <div class="flex align-item-center">
                                 <img src="../assets/user-bolt.svg" class="showIcon" alt="Client Master">
@@ -119,7 +119,7 @@
                                 <a href="@Url.Action("Client", "Client")" class="nav-link">Client Master</a>
                             </div>
                         </li>
-                    }
+                    @*}*@
                     //@if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ValutionFessMaster, _roleId))
                     //{
                         <li>
@@ -130,8 +130,8 @@
                             </div>
                         </li>
                    // }
-                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.VendorMaster, _roleId))
-                    {
+                   @* @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.VendorMaster, _roleId))
+                    {*@
                         <li>
                             <div class="flex align-item-center">
                                 <img src="../assets/users-group.svg" class="showIcon" alt="Vendor Master">
@@ -139,7 +139,7 @@
                                 <a href="@Url.Action("Vendors", "Vendor")" class="nav-link">Vendor Master</a>
                             </div>
                         </li>
-                    }
+                    @*}*@
                 }
             </ul>
 
