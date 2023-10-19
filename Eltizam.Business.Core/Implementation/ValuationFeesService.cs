@@ -45,6 +45,7 @@ namespace Eltizam.Business.Core.Implementation
 
         // get all recoreds from ValuationFees list with sorting and pagination
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
+        
         {
             var _dbParams = new[]
              {

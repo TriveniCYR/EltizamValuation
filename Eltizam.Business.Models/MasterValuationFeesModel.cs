@@ -21,6 +21,13 @@ namespace Eltizam.Business.Models
         public decimal? Vat { get; set; }
         public decimal? OtherCharges { get; set; }
         public decimal? TotalValuationFees { get; set; }
+        public string? ValuationFeeType { get; set; }
+        public string? PropertyType { get; set; }
+        public string? ClientType { get; set; }
         public int? CreatedBy { get; set; }
+        public List<MasterPropertyTypeViewModel>? propertyTypeViewModels { get; set; }
+        public List<Master_ClientTypeModel>? master_ClientTypeModels { get; set; }
+        public List<MasterOwnershipTypeEntity>? masterOwnershipTypeEntities { get; set; }
+        public List<MasterValuationFeeTypeModel>? masterValuationFeeTypeModels { get; set; }
     }
 }

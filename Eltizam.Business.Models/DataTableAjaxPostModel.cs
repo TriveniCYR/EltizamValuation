@@ -9,8 +9,8 @@ namespace Eltizam.Business.Models
     public class DataTableAjaxPostModel
     {
         // properties are not capital due to json mapping
-        public int draw { get; set; }
-        public int start { get; set; }
+        public int draw { get; set; } = 1;
+        public int start { get; set; } = 1;
         public int length { get; set; } = 10000;
         public int page { get; set; }
         public int pages { get; set; }
