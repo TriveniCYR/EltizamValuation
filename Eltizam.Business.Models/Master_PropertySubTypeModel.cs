@@ -9,8 +9,8 @@ namespace Eltizam.Business.Models
     public class Master_PropertySubTypeModel
     {
         public int Id { get; set; }
-        //public string PropertySubType { get; set; }
-        public List<string> PropertySubType { get; set; } = new List<string>();
+        public string PropertySubType { get; set; }
+        //public List<string> PropertySubType { get; set; } = new List<string>();
         public int IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public int CreatedBy { get; set; }

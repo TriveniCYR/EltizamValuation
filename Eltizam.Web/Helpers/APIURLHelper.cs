@@ -76,12 +76,37 @@ namespace Eltizam.Web.Helpers
         #endregion MasterPropertyType
 
         #region MasterPropertySubType
-        public static string UpsertSubProperty = "api/MasterPropertySubType/Upsert";
-        public static string GetAllSubProperty = "api/MasterPropertySubType/GetAllSubProperty";
-        public static string GetSubPropertyById = "api/MasterPropertySubType/GetById";
-        public static string DeletesubPropertytById = "api/MasterPropertySubType/Delete";
+        public static string UpsertPropertySubType = "api/MasterPropertySubType/Upsert";
+        public static string GetAllPropertySubType = "api/MasterPropertySubType/GetAllProperty";
+        public static string GetPropertyByIdSubType = "api/MasterPropertySubType/GetById";
+        public static string GetPropertyByPropertyTypeId = "api/MasterPropertySubType/GetByPropertyTypeId";
+        public static string DeletePropertytByIdSubType = "api/MasterPropertySubType/Delete";
 
         #endregion MasterPropertyType
+
+        #region MasterOwnershipType
+        public static string UpsertOwnershipType = "api/OwnershipType/Upsert";
+        public static string GetAllOwnershipType = "api/OwnershipType/GetAll";
+        public static string GetOwnershipType = "api/OwnershipType/GetById";
+        public static string DeleteOwnershipType = "api/OwnershipType/Delete";
+
+        #endregion MasterOwnershipType
+
+        #region Valuation Fees
+        public static string UpsertValuation = "api/ValuationFees/Upsert";
+        public static string GetAllValuation = "api/ValuationFees/GetAll";
+        public static string GetValuationById = "api/ValuationFees/GetById";
+        public static string DeleteValuationById = "api/ValuationFees/Delete";
+
+        #endregion Valuation Fees
+
+        #region Valuation Fees Type
+        public static string UpsertValuationFeeType = "api/ValuationFeeType/Upsert";
+        public static string GetAllValuationFeeType = "api/ValuationFeeType/GetAll";
+        public static string GetValuationFeeTypeById = "api/ValuationFeeType/GetById";
+        public static string DeleteValuationFeeTypeById = "api/ValuationFeeType/Delete";
+
+        #endregion Valuation Fees Type
 
         #region ClientType
 

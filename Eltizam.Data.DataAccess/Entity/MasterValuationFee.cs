@@ -22,11 +22,13 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
+        public int? ValuationTypeId { get; set; }
 
         public virtual MasterClientType? ClientType { get; set; }
         public virtual MasterOwnershipType? OwnershipType { get; set; }
         public virtual MasterPropertySubType? PropertySubType { get; set; }
         public virtual MasterPropertyType? PropertyType { get; set; }
         public virtual MasterValuationFeeType? ValuationFeeType { get; set; }
+        public virtual MasterValuationType? ValuationTypeNavigation { get; set; }
     }
 }

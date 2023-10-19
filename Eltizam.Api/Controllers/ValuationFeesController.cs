@@ -8,6 +8,7 @@ using Microsoft.Extensions.Localization;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
 using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Business.Core.Implementation;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -66,6 +67,24 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+        //[HttpGet, Route("GetAll")]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    try
+        //    {
+        //        var oRoleList = await _ValuationFeesService.GetAll();
+        //        if (oRoleList != null)
+        //            return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
+        //        else
+        //            return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await _ExceptionService.LogException(ex);
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
 
         // get master ValuationFees detail by id
         [HttpGet, Route("GetById/{id}")]
