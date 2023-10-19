@@ -69,18 +69,18 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        //[HttpPost, Route("GetAllProperty")]
-        //public async Task<IActionResult> GetAllProperty([FromForm] DataTableAjaxPostModel model)
-        //{
-        //    try
-        //    {
-        //        return _ObjectResponse.CreateData(await _propertyServices.GetAll(model), (Int32)HttpStatusCode.OK);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-        //    }
-        //}
+        [HttpPost, Route("GetAllProperty")]
+        public async Task<IActionResult> GetAllProperty([FromForm] DataTableAjaxPostModel model)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _propertyServices.GetAll(model), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
 
 
         [HttpGet, Route("GetAllProperty")]

@@ -39,7 +39,7 @@
                             @Html.ValidationMessageFor(model => model.subType.PropertySubType, "", new { @class = "text-danger" })
                         </label>
                     </div>
-                    <div class="propertySubTypeContainer">
+                   @*  <div class="propertySubTypeContainer">
                         @for (var i = 0; i < Model.subType.PropertySubType.Count; i++)
                         {
                             <div class="flex mb-28">
@@ -53,7 +53,7 @@
                             </div>
                         }
 
-                    </div>
+                    </div> *@
                     <button type="button" id="addSubTypeButton" class="btn btn-secondary">Add Property SubType</button>
                     <div class="text-center buttonArea">
                         <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
@@ -66,7 +66,7 @@
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+@* <script>
     $(document).ready(function () {
         var subTypeCounter = @Model.subType.PropertySubType.Count;
 
@@ -95,5 +95,5 @@
     });
 
 </script>
-
+ *@
 

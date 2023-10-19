@@ -9,7 +9,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string VendorName { get; set; } = null!;
         public string? CompanyName { get; set; }
         public DateTime? EstimattionDate { get; set; }
-        public int? BusinessTypeId { get; set; }
+        public string? BusinessType { get; set; }
         public string? CompanyDescription { get; set; }
         public int? Status { get; set; }
         public DateTime? CreatedDate { get; set; }

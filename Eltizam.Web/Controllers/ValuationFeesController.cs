@@ -34,21 +34,22 @@ namespace EltizamValuation.Web.Controllers
             ModelState.Clear();
             try
             {
-                int rolId = _helper.GetLoggedInRoleId();
-                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
-                ViewBag._objPermission = objPermssion;
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new APIRepository(_cofiguration);
-                List<MasterValuationFeesModel> oRoleList = new List<MasterValuationFeesModel>();
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllValuation, HttpMethod.Get, token).Result;
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterValuationFeesModel>>>(jsonResponse);
-                    oRoleList = data._object;
+                //int rolId = _helper.GetLoggedInRoleId();
+                //RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
+                //ViewBag._objPermission = objPermssion;
+                //HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                //APIRepository objapi = new APIRepository(_cofiguration);
+                //List<MasterValuationFeesModel> oRoleList = new List<MasterValuationFeesModel>();
+                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllValuation, HttpMethod.Post, token).Result;
+                //if (responseMessage.IsSuccessStatusCode)
+                //{
+                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                //    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterValuationFeesModel>>>(jsonResponse);
+                //    oRoleList = data._object;
 
-                    return View(oRoleList);
-                }
+                //    return View(oRoleList);
+                //}
+                return View();
             }
             catch (Exception e)
             {
@@ -94,7 +95,7 @@ namespace EltizamValuation.Web.Controllers
         }
 
 
-        public IActionResult DepartmentManage(int? id, string view)
+        public IActionResult ValuationFeesManage(int? id, string view)
         {
             if (id != null)
             {
@@ -105,22 +106,22 @@ namespace EltizamValuation.Web.Controllers
             {
                 ViewData["IsView"] = true;
             }
-            MasterDepartmentEntity masterDepartment;
+            MasterValuationFeesModel masterValuationFeesModel;
             if (id == null || id <= 0)
             {
-                masterDepartment = new MasterDepartmentEntity();
-                return View(masterDepartment);
+				masterValuationFeesModel = new MasterValuationFeesModel();
+                return View(masterValuationFeesModel);
             }
             else
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetDepartmentById + "/" + id, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetValuationById + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterDepartmentEntity>>(jsonResponse);
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
                     if (data._object is null)
                         return NotFound();
 

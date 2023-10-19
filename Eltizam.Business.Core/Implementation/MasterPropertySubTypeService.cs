@@ -74,6 +74,18 @@ namespace Eltizam.Business.Core.Implementation
             return _PropertyTypeEntity;
         }
 
+        public async Task<Master_PropertySubTypeModel> GetMasterSubPropertyByPropertyTypeIdAsync(int id)
+        {
+            // Create a new Master_PropertyTypeModel instance.
+            var _PropertyTypeEntity = new Master_PropertySubTypeModel();
+
+            // Use a mapper to map the data from the repository to the model asynchronously.
+            _PropertyTypeEntity = _mapperFactory.Get<MasterPropertySubType, Master_PropertySubTypeModel>(await _repository.GetAsync(x => x.PropertyTypeId == id));
+
+            // Return the mapped entity.
+            return _PropertyTypeEntity;
+        }
+
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
             var _dbParams = new[]

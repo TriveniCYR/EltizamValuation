@@ -18,6 +18,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         }
 
         public virtual DbSet<AuditLog> AuditLogs { get; set; } = null!;
+        public virtual DbSet<DboMasterValuationType> DboMasterValuationTypes { get; set; } = null!;
         public virtual DbSet<Dictionary> Dictionaries { get; set; } = null!;
         public virtual DbSet<EmailLogHistory> EmailLogHistories { get; set; } = null!;
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; } = null!;
@@ -32,6 +33,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterDepartment> MasterDepartments { get; set; } = null!;
         public virtual DbSet<MasterDesignation> MasterDesignations { get; set; } = null!;
         public virtual DbSet<MasterDictionary> MasterDictionaries { get; set; } = null!;
+        public virtual DbSet<MasterDictionaryDetial> MasterDictionaryDetials { get; set; } = null!;
         public virtual DbSet<MasterDocument> MasterDocuments { get; set; } = null!;
         public virtual DbSet<MasterException> MasterExceptions { get; set; } = null!;
         public virtual DbSet<MasterLocation> MasterLocations { get; set; } = null!;
@@ -49,6 +51,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterUserContact> MasterUserContacts { get; set; } = null!;
         public virtual DbSet<MasterValuationFee> MasterValuationFees { get; set; } = null!;
         public virtual DbSet<MasterValuationFeeType> MasterValuationFeeTypes { get; set; } = null!;
+        public virtual DbSet<MasterValuationType> MasterValuationTypes { get; set; } = null!;
         public virtual DbSet<MasterVendor> MasterVendors { get; set; } = null!;
         public virtual DbSet<RoleModulePermission> RoleModulePermissions { get; set; } = null!;
 
@@ -80,6 +83,21 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserId)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<DboMasterValuationType>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("dbo.Master_ValuationType");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ValuationType)
                     .HasMaxLength(250)
                     .IsUnicode(false);
             });
@@ -425,12 +443,32 @@ namespace Eltizam.Data.DataAccess.DataContext
             {
                 entity.ToTable("Master_Dictionary", "dbo");
 
-                entity.HasIndex(e => new { e.Type, e.Description }, "uq_Master_Dictionary")
-                    .IsUnique();
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MasterDictionaryDetial>(entity =>
+            {
+                entity.ToTable("Master_DictionaryDetial", "dbo");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Description)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Dictionary)
+                    .WithMany(p => p.MasterDictionaryDetials)
+                    .HasForeignKey(d => d.DictionaryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Master_Di__Dicti__12FDD1B2");
             });
 
             modelBuilder.Entity<MasterDocument>(entity =>
@@ -859,6 +897,11 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .WithMany(p => p.MasterValuationFees)
                     .HasForeignKey(d => d.ValuationFeeTypeId)
                     .HasConstraintName("FK_Master_ValuationFees_Master_ValuationFeeType");
+
+                entity.HasOne(d => d.ValuationTypeNavigation)
+                    .WithMany(p => p.MasterValuationFees)
+                    .HasForeignKey(d => d.ValuationTypeId)
+                    .HasConstraintName("FK_Master_ValuationFees_Master_ValuationType");
             });
 
             modelBuilder.Entity<MasterValuationFeeType>(entity =>
@@ -874,9 +917,26 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<MasterValuationType>(entity =>
+            {
+                entity.ToTable("Master_ValuationType");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ValuationType)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<MasterVendor>(entity =>
             {
                 entity.ToTable("Master_Vendor", "dbo");
+
+                entity.Property(e => e.BusinessType)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CompanyDescription)
                     .HasMaxLength(500)

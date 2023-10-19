@@ -67,6 +67,24 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+        
+        [HttpGet]
+        [Route("getByPropertyTypeId/{id}")]
+        public async Task<IActionResult> GetMasterSubPropertyByPropertyTypeId([FromRoute] int id)
+        {
+            try
+            {
+                var oPrpoertyTypeEntity = await _subpropertyServices.GetMasterSubPropertyByPropertyTypeIdAsync(id);
+                if (oPrpoertyTypeEntity != null && oPrpoertyTypeEntity.Id > 0)
+                    return _ObjectResponse.Create(oPrpoertyTypeEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
 
         [HttpPost, Route("GetAllSubProperty")]
         public async Task<IActionResult> GetAllSubProperty([FromForm] DataTableAjaxPostModel model)
