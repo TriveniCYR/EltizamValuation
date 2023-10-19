@@ -149,11 +149,11 @@
                                     @Html.HiddenFor(model => model.Address.Id)
                                     <div class="addMoreAddress">
                                         <div class="flex">
-                                            <label for="address1" class="w-100">
+                                            <label for="address1">
                                                 <span>Address Line 1 </span>
                                                 @Html.TextBoxFor(model => model.Address.Address1, new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
                                             </label>
-                                            <label for="address2" class="w-100">
+                                            <label for="address2">
                                                 Address Line 2
                                                 @Html.TextBoxFor(model => model.Address.Address2, new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
                                             </label>
