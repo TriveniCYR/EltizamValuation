@@ -1092,7 +1092,7 @@ img#closePopup {
     }
 
     .bodyContent button, .bodyContent a {
-        width: 200px;
+        width: auto;
     }
 
 /* profile tab css here */
