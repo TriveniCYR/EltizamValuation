@@ -75,12 +75,12 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
                     if (data._object is null)
                         return NotFound();
-
                     return View(data._object);
                 }
                 return NotFound();
             }
         }
+
         [HttpPost]
         public IActionResult ResourceManage(int id, MasterUserModel masterUser)
         {
@@ -131,7 +131,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
                 masterUser = new MasterUserModel();
-                return View(masterUser);
+                return RedirectToAction("Resource");
             }
             else
             {

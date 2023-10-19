@@ -53,7 +53,7 @@ function InitializeVendorList() {
             "data": "estimattionDate", "name": "Estimation Date"
         },
         {
-            "data": "resourceType", "name": "Resource Type"
+            "data": "businessType", "name": "Resource Type"
         },
         {
             "data": "companyDescription", "name": "Company Description"

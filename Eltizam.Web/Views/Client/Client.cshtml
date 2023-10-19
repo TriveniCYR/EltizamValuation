@@ -120,8 +120,8 @@
                 <table id="ClientTable">
                         <thead>
                             <tr>
-                                <th>Client Name <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow"/></th>
-                                <th>Client Type <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow"/></th>
+                                <th>Client Name</th>
+                                <th>Client Type</th>
                                 <th>TRN Number</th>
                                 <th>TRN Expiry</th>
                                 <th>License Number</th>
@@ -212,11 +212,6 @@
     </div>
 </div>
 
-<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-
     @section MyScripts {
 
         @Html.Partial("_DataTablePartial")
@@ -227,7 +222,11 @@
         //#region Setup API Url
         var AllClient = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClient";
         var DeleteClient = "@Eltizam.Web.Helpers.APIURLHelper.DeleteClient";
-
+        
+        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
+        if (successCallBack) {
+            toastr.success(successCallBack);
+        }
         function sideNavToggle() {
             var x = document.getElementById("sideNav");
             if (x.style.display === "none") {

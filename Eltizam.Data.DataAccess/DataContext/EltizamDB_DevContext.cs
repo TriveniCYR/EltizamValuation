@@ -32,6 +32,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterDepartment> MasterDepartments { get; set; } = null!;
         public virtual DbSet<MasterDesignation> MasterDesignations { get; set; } = null!;
         public virtual DbSet<MasterDictionary> MasterDictionaries { get; set; } = null!;
+        public virtual DbSet<MasterDictionaryDetial> MasterDictionaryDetials { get; set; } = null!;
         public virtual DbSet<MasterDocument> MasterDocuments { get; set; } = null!;
         public virtual DbSet<MasterException> MasterExceptions { get; set; } = null!;
         public virtual DbSet<MasterLocation> MasterLocations { get; set; } = null!;
@@ -425,12 +426,32 @@ namespace Eltizam.Data.DataAccess.DataContext
             {
                 entity.ToTable("Master_Dictionary", "dbo");
 
-                entity.HasIndex(e => new { e.Type, e.Description }, "uq_Master_Dictionary")
-                    .IsUnique();
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MasterDictionaryDetial>(entity =>
+            {
+                entity.ToTable("Master_DictionaryDetial", "dbo");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.Description)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Dictionary)
+                    .WithMany(p => p.MasterDictionaryDetials)
+                    .HasForeignKey(d => d.DictionaryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Master_Di__Dicti__12FDD1B2");
             });
 
             modelBuilder.Entity<MasterDocument>(entity =>
@@ -877,6 +898,10 @@ namespace Eltizam.Data.DataAccess.DataContext
             modelBuilder.Entity<MasterVendor>(entity =>
             {
                 entity.ToTable("Master_Vendor", "dbo");
+
+                entity.Property(e => e.BusinessType)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CompanyDescription)
                     .HasMaxLength(500)
