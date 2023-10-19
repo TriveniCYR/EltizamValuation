@@ -107,8 +107,8 @@
                             </div>
                         </li>
                     }
-                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ClientMaster, _roleId))
-                    {
+                   @* @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ClientMaster, _roleId))
+                    {*@
                         <li>
                             <div class="flex align-item-center">
                                 <img src="../assets/user-bolt.svg" class="showIcon" alt="Client Master">
@@ -137,7 +137,7 @@
                                 <a href="@Url.Action("Vendors", "Vendor")" class="nav-link">Vendor Master</a>
                             </div>
                         </li>
-                    }
+                    @*}*@
                 }
             </ul>
 
