@@ -183,7 +183,7 @@ namespace Eltizam.Utility.Utility
 			IEnumerable<RolePermissionModel> objVal = GetModuleRole<IEnumerable<RolePermissionModel>>(RoleId);
 			if (objVal != null)
 			{
-				var _permissionObject = objVal.Where(o => o.MainModuleId == ModuleId).FirstOrDefault();
+				var _permissionObject = objVal.Where(o => o.ModuleId == ModuleId).FirstOrDefault();
 				if (_permissionObject != null && _permissionObject.RoleId > 0)
 				{
 					if (_permissionObject.View || _permissionObject.Edit || _permissionObject.Delete || _permissionObject.Add || _permissionObject.Approve)
@@ -201,9 +201,16 @@ namespace Eltizam.Utility.Utility
 			IEnumerable<RolePermissionModel> obj = UtilityHelper.GetModuleRole<dynamic>(loginRoleId);
 			if (obj != null)
 			{
-				objList = obj.Where(o => o.ControlName != null && o.MainModuleId == ModuleId && (o.SubModuleId == SubModuleId || SubModuleId == 0)).FirstOrDefault();
+				objList = obj.Where(o => o.ControlName != null && o.ModuleId == ModuleId && (o.SubModuleId == SubModuleId || SubModuleId == 0)).FirstOrDefault();
 			}
 			return objList;
 		}
-	}
+
+        public static RolePermissionModel GetMenusByRole(int loginRoleId)
+        { 
+            IEnumerable<RolePermissionModel> objList = UtilityHelper.GetModuleRole<dynamic>(loginRoleId);
+             
+            return objList.First();
+        }
+    }
 }

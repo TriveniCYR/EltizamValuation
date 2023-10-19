@@ -1,12 +1,20 @@
-﻿@using Eltizam.Web.Controllers;
+﻿@using Eltizam.Business.Core.Interface;
+@using Eltizam.Web.Controllers;
 @using Microsoft.AspNetCore.Http;
 @using Eltizam.Web.Helpers;
 @using Eltizam.Utility.Utility;
 @using Eltizam.Utility.Enums;
 @using Microsoft.AspNetCore.Mvc.Localization;
-@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
-@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
-@inject IHelper Helper
+
+@*@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer*@
+
+@inject IHelper Helper 
+
+@{
+    var _curRoleId = Helper.GetLoggedInRoleId();
+    var menus = Helper.GetMenusByRole(_curRoleId); 
+}
 <div>
 
     <aside class="sideNavDashboard visible-in-web" id="sideNav">
