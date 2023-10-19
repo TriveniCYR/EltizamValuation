@@ -46,16 +46,17 @@
 
                 </div>*@
                 <div class="buttonArea flex align-item-center">
-                    <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
-                        <button class="flex align-item-center blueBtn" id="addNew">
-                            <img src="~/assets/plus.svg" alt="plus"> Add New
-                        </button>
-                    </form>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class="flex align-item-center lineBtn" id="importFile">
+
+                <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
+                    <button class="flex align-item-center blueBtn" id="addNew">
+                        <img src="~/assets/plus.svg" alt="plus"> Add New
+                    </button>
+                </form>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @*<button class="flex align-item-center lineBtn" id="importFile">
                         <img src="~/assets/file-import.svg" alt="file-import" />
                         Import
-                    </button>
+                    </button>*@
                     @*<button class="flex align-item-center lineBtn exportFile">
                         <img src="~/assets/file-export.svg" alt="file-export"> Export
                         <div class="actionItem">
@@ -79,10 +80,10 @@
                             <th>@MasterLocalizer["Department"]</th>
                             <th>@MasterLocalizer["Designation"]</th>
                             <th>@MasterLocalizer["ResourceType"]</th>
-                            <th>@MasterLocalizer["RoleName"]</th>
+                            <th>@MasterLocalizer["Role"]</th>
                             <th>@MasterLocalizer["Phone"]</th>
                             <th>@MasterLocalizer["Email"]</th>
-                            <th>@MasterLocalizer["IsActive"]</th>
+                            <th>@MasterLocalizer["Active"]</th>
                             <th>Action</th>
                         </tr>
                     </thead>

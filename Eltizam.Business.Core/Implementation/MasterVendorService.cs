@@ -149,7 +149,7 @@ namespace Eltizam.Business.Core.Implementation
                     objVendor.VendorName = masterVendortModel.VendorName;
                     objVendor.CompanyName = masterVendortModel.CompanyName;
                     objVendor.EstimattionDate = masterVendortModel.EstimattionDate;
-                    objVendor.BusinessTypeId = masterVendortModel.BusinessTypeId;
+                    objVendor.BusinessType = masterVendortModel.BusinessType;
                     objVendor.CompanyDescription = masterVendortModel.CompanyDescription;
                     objVendor.Status = masterVendortModel.Status;
                     objVendor.ModifiedDate = DateTime.Now;

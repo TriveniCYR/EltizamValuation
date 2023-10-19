@@ -116,7 +116,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
                 masterUser = new MasterClientModel();
-                return View(masterUser);
+                return RedirectToAction("Client");
             }
             else
             {
