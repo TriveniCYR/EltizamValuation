@@ -21,7 +21,7 @@
             <ul>
                 @if (Helper.GetLoggedInRoleId() != 0)
                 {
-                    int _roleId = Helper.GetLoggedInRoleId(); 
+                    int _roleId = Helper.GetLoggedInRoleId();
 
                     @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ResourceMaster, _roleId))
                     {
@@ -45,14 +45,17 @@
                         </li>
                     }
 
-                    <li onclick="userMaster()">
-                        <div class="flex align-item-center">
-                            <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
-                            <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
-                            @* <p>System User Master</p> *@
-                            <a href="@Url.Action("ClientType", "ClientType")" class="nav-link">Client Type</a>
-                        </div>
-                    </li>
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.RoleMaster, _roleId))
+                    {
+                        <li onclick="userMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                                <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                                @* <p>System User Master</p> *@
+                                <a href="@Url.Action("ClientType", "ClientType")" class="nav-link">Client Type</a>
+                            </div>
+                        </li>
+                    }
 
                     @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.DesignationMaster, _roleId))
                     {
@@ -107,8 +110,8 @@
                             </div>
                         </li>
                     }
-                   @* @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ClientMaster, _roleId))
-                    {*@
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ClientMaster, _roleId))
+                    {
                         <li>
                             <div class="flex align-item-center">
                                 <img src="../assets/user-bolt.svg" class="showIcon" alt="Client Master">
@@ -137,7 +140,7 @@
                                 <a href="@Url.Action("Vendors", "Vendor")" class="nav-link">Vendor Master</a>
                             </div>
                         </li>
-                    @*}*@
+                    }
                 }
             </ul>
 
