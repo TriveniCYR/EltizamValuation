@@ -120,8 +120,8 @@
                 <table id="VendorTable">
                     <thead>
                         <tr>
-                            <th>Id <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                            <th>Company Name <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                            <th>Id </th>
+                            <th>Company Name</th>
                             <th>Estimation Date</th>
                             <th>Business Type</th>
                             <th>Company Description</th>
@@ -213,11 +213,6 @@
     </div>
 </div>
 
-<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-
 @section MyScripts {
 
     @Html.Partial("_DataTablePartial")
@@ -229,6 +224,10 @@
         var AllVendor = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchVendor";
         var DeleteVendors = "@Eltizam.Web.Helpers.APIURLHelper.DeleteVendor";
 
+        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
+        if (successCallBack) {
+            toastr.success(successCallBack);
+        }
         function sideNavToggle() {
             var x = document.getElementById("sideNav");
             if (x.style.display === "none") {
