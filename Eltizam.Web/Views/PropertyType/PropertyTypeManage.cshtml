@@ -33,10 +33,11 @@
                             @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
                         </label>
                         <label for="" class="w-50">
-                            @Html.LabelFor(model => model.subType.PropertySubType, new { @class = "control-label" })
+                          
+                            @Html.LabelFor(model => model.subType.PropertySubType,"Property SubType", new { @class = "control-label" })
                             <span class="text-danger">*</span>
-                            @Html.EditorFor(model => model.subType.PropertySubType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
-                            @Html.ValidationMessageFor(model => model.subType.PropertySubType, "", new { @class = "text-danger" })
+                            @Html.DropDownListFor(model => model.Id, new List<SelectListItem> { }, new { @class = "form-control", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
                         </label>
                     </div>
                    @*  <div class="propertySubTypeContainer">

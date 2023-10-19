@@ -14,9 +14,9 @@
 
     <!-- system user master -->
     <div class="flex">
-        <main>
+        <main class="w-100">
+            <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
             <h3 class="dashboardTitle">RESOURCE MASTER</h3>
-            <div class="flex justify-end mb-28 mobile_flexColumn position-relative">
                 @*<div class="flex">
                     <label class="searchBox position-relative">
                         <div class="flex align-item-center">
@@ -46,17 +46,18 @@
 
                 </div>*@
                 <div class="buttonArea flex align-item-center">
-                    <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
-                        <button class="flex align-item-center blueBtn" id="addNew">
-                            <img src="~/assets/plus.svg" alt="plus"> Add New
-                        </button>
-                    </form>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class="flex align-item-center lineBtn" id="importFile">
+
+                <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
+                    <button class="flex align-item-center blueBtn" id="addNew">
+                        <img src="~/assets/plus.svg" alt="plus"> Add New
+                    </button>
+                </form>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    @*<button class="flex align-item-center lineBtn" id="importFile">
                         <img src="~/assets/file-import.svg" alt="file-import" />
                         Import
-                    </button>
-                    <button class="flex align-item-center lineBtn exportFile">
+                    </button>*@
+                    @*<button class="flex align-item-center lineBtn exportFile">
                         <img src="~/assets/file-export.svg" alt="file-export"> Export
                         <div class="actionItem">
                             <ul>
@@ -68,18 +69,21 @@
                                 </li>
                             </ul>
                         </div>
-                    </button>
+                    </button>*@
                 </div>
             </div>
-            <div class="scroll-x">
-                <table id="ResourceUserTable" class="table table-bordered table-striped table-hover">
+        <div class="scroll-x whiteWithPadding">
+            <table id="ResourceUserTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>@MasterLocalizer["UserName"] </th>
                             <th>@MasterLocalizer["Department"]</th>
                             <th>@MasterLocalizer["Designation"]</th>
                             <th>@MasterLocalizer["ResourceType"]</th>
-                            <th>@MasterLocalizer["IsActive"]</th>
+                            <th>@MasterLocalizer["Role"]</th>
+                            <th>@MasterLocalizer["Phone"]</th>
+                            <th>@MasterLocalizer["Email"]</th>
+                            <th>@MasterLocalizer["Active"]</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -170,19 +174,14 @@
                     </div>
                 </div>
                 @Html.Hidden("Id")
-                <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteUser()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
-                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteUser()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-    <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
 
     @*<script type="text/javascript" src="~/js/Custom/DynamicDataTable.js"></script>
     <script type="text/javascript" src="~/js/Custom/MasterUser/MasterUser.js"></script>*@

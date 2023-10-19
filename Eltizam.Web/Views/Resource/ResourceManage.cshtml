@@ -11,53 +11,27 @@
     <div class="w-100 position-relative">        
         <main class="plr-0">
             <div class="profileHead flex justify-between align-item-center cursor-pointer">
-                @if (Model.Id > 0)
+                @if(Model.Id > 0)
                 {
                     <h3 class="dashboardTitle">EDIT RESOURCE MASTER</h3>
                     <div class="hamburger">
-                    <span onclick="resourceMaster()">Resource Master</span>
-                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                        <span onclick="clientMaster()">Resource Master</span>
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon"/>
                     <span>Edit Resource Master</span>
-                </div>
+                    </div>
                 }
                 else
-                {
+                {  
                     <h3 class="dashboardTitle">ADD RESOURCE MASTER</h3>
                     <div class="hamburger">
-                        <span onclick="resourceMaster()">Resource Master</span>
-                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                        <span>Add Resource Master</span>
+                        <span onclick="clientMaster()">Resource Master</span>
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon"/>
+                    <span>Add Resource Master</span>
                     </div>
                 }
-                
             </div>
             <div class="flex">
-                <div class="resourceProfile whiteBoxShadow">
-                    <img src="../assets/img-7.jpg.png" alt="img-7" class="w-100" />
-                    <div class="position-relative">
-                        <div class="upload-profile-pic-btn">
-                            <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
-                            Change photo
-                        </div>
-                        <input type="file" class="uploadPhoto" />
-                    </div>
-                    <div class="nameBox">
-                        <h3>Jhon G Doe</h3>
-                        <small>Head of HR</small>
-                        <p>Human Resource</p>
-                        <h4>Employee ID : FT-0001</h4>
-                    </div>
-                    <div class="resourceAddress">
-                        <small>Address</small>
-                        <p>1861 Bayonne Ave, Manchester Township, NJ, 08759</p>
-                        <small>Phone</small>
-                        <p>92734982739</p>
-                        <small>Email</small>
-                        <p>john@ex.com</p>
-                    </div>
-
-                </div>
-                <div class="profileTabSection">
+                <div class="profileTabSection addProperty">
                     <div class="tab">
                         <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Profile Details</button>
                         <button class="tablinks" onclick="profileTab(event, 'profile2')">Mailing Address</button>
@@ -91,55 +65,46 @@
                                         </div>
                                         <label for="FirstName">
                                             First Name
-                                            @Html.TextBoxFor(model => model.FirstName, new {@class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
+                                            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
                                         </label>
                                         <label for="MiddleName">
                                             Middle Name
-                                            @Html.TextBoxFor(model => model.MiddleName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
+                                            @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
                                         </label>
-                                    </div>
-                                    <div class="flex">
                                         <label for="LastName">
                                             Last Name
-                                            @Html.TextBoxFor(model => model.LastName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
                                         </label>
+                                    </div>
+                                    <div class="flex">
                                         <label for="DepartmentId">
                                             Department
-                                            <select id="DepartmentId" name="DepartmentId" class="form-control" asp-for="DepartmentId"></select>
+                                            @Html.DropDownListFor(model => model.DepartmentId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Department"] })
 
                                         </label>
-                                    </div>
-                                    <div class="flex">
                                         <label for="DesignationId">
                                             Designation
-                                            <select id="DesignationId" name="DesignationId" class="form-control" asp-for="DesignationId"></select>
+                                            @Html.DropDownListFor(model => model.DesignationId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Designation"] })
                                         </label>
+                                    </div>
+                                    <div class="flex">
                                         <label for="DateOfBirth">
                                             Date of Birth
-                                            <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth"  class="form-control">
-                                            @*@Html.TextBoxFor(model => model.DateOfBirth, new { @type ="" ,@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })*@
+                                                <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth" class="form-control">
                                         </label>
-                                    </div>
-                                    <div class="flex">
                                         <label for="Gender">
                                             Gender
-                                            <select id="Gender" name="Gender" class="form-control" asp-for="Gender"></select>
-                                        </label>
-                                        <label for="ResourceId">
-                                            Resource Type
-                                            <select id="ResourceId" name="ResourceId" class="form-control" asp-for="ResourceId"></select>
+                                             @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Select Gender"] })
                                         </label>
                                     </div>
                                     <div class="flex">
+                                        <label for="ResourceId">
+                                            Resource Type
+                                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                                        </label>
                                         <label for="RoleId">
                                             Role
-                                            <select id="RoleId" name="RoleId" class="form-control" asp-for="RoleId"></select>
-                                        </label>
-                                        <label for="IsActive" class="w-50">
-                                            Status
-                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
-                                            <label class="label-switch" for="IsActive"></label>
-                                            <span class="info-text"></span>
+                                            @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select Role"] })
                                         </label>
                                     </div>
                                     @if (Model.Id <= 0)
@@ -160,14 +125,21 @@
                                     <div class="flex">
                                         <label for="CompanyName">
                                             Company / Vendor Name
-                                            @Html.TextBoxFor(model => model.CompanyName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Company Name"] })
+                                            @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
                                         </label>
                                         <label for="LicenseNo">
                                             AD Municipality / License No
-                                            @Html.TextBoxFor(model => model.LicenseNo, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
+                                            @Html.TextBoxFor(model => model.LicenseNo, new {  @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
 
+                                        </label>                                       
+                                    </div>                                    
+                                    <div class="flex">
+                                        <label for="IsActive" class="w-50">
+                                            Status
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                            <label class="label-switch" for="IsActive"></label>
+                                            <span class="info-text"></span>
                                         </label>
-                                       
                                     </div>
                                 </div>
                             </div>
@@ -185,62 +157,63 @@
                                                 <div class="flex">
                                                     <label for="address1" class="w-100">
                                                         <span>Address Line 1 </span>
-                                                        @Html.TextBoxFor(model => model.Address.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                                        @Html.TextBoxFor(model => model.Address.Address1, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                                    </label>
+                                                    <label for="address2" class="w-100">
+                                                        Address Line 2
+                                                        @Html.TextBoxFor(model => model.Address.Address2, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
                                                     </label>
                                                 </div>
                                                 <div class="flex">
-                                                    <label for="address2" class="w-100">
-                                                        Address Line 2
-                                                        @Html.TextBoxFor(model => model.Address.Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
-                                                    </label>
-                                                </div>
-                                                <div class="flex fourBox">
                                                     <label for="CountryId">
                                                         CountryId
-                                                        @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                        @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new {  @class = "form-control"})
                                                     </label>
                                                     <label for="StateId">
                                                         State
-                                                        @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                        @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new {  @class = "form-control"})
                                                     </label>
+                                                </div>
+                                                <div class="flex">
                                                     <label for="CityId">
                                                         City
-                                                         @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                         @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new {  @class = "form-control"})
                                                     </label>
                                                     <label for="PinNo">
                                                         Pin Code
-                                                        @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                                        @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
                                                     </label>
                                                 </div>
                                                 <div class="flex">
                                                     <label for="Email">
                                                         Email
-                                                        @Html.TextBoxFor(model => model.Address.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                                        @Html.TextBoxFor(model => model.Address.Email, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
                                                     </label>
                                                     <label for="AlternateEmail">
                                                         Alternate Email
-                                                        @Html.TextBoxFor(model => model.Address.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                                        @Html.TextBoxFor(model => model.Address.AlternateEmail, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
                                                     </label>
                                                 </div>
                                                 <div class="flex threeBox">
                                                     <label for="Phone">
                                                         Phone
-                                                        @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                                        @Html.TextBoxFor(model => model.Address.Phone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
                                                     </label>
                                                     <label for="AlternatePhone">
                                                         Alternate Phone
-                                                        @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
-                                                    </label>
+                                                        @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                </label>
+                                            </div>
+                                            <div class="flex">
                                                     <label for="">
                                                         Landline phone
-                                                        @Html.TextBoxFor(model => model.Address.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
+                                                        @Html.TextBoxFor(model => model.Address.Landlinephone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
                                                     </label>
                                                 </div>
                                             </div>
-
-                                    <div class="text-right buttonArea bodyContent plr-0">
-                                        <button type="button" class="lineBtn" onclick="addMoreAddress()">Add More</button>
-                                    </div>
+                                                <div class="text-right buttonArea bodyContent plr-0">
+                                                    <button type="button" class="lineBtn" onclick="addMoreAddress()">Add More</button>
+                                                </div>
                                 </div>
                             </div>
                         </div>
@@ -258,27 +231,27 @@
                                         <div class="flex">
                                             <label for="Qualification">
                                                 Programme of Study/ Qualification
-                                                @Html.TextBoxFor(model => model.Qualification.Qualification, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
+                                                @Html.TextBoxFor(model => model.Qualification.Qualification, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
                                             </label>
                                             <label for="Subject">
                                                 Subject/Stream
-                                                @Html.TextBoxFor(model => model.Qualification.Subject, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
+                                                @Html.TextBoxFor(model => model.Qualification.Subject, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Institute">
                                                 Education Institute
-                                                @Html.TextBoxFor(model => model.Qualification.Institute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
+                                                @Html.TextBoxFor(model => model.Qualification.Institute, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
                                             </label>
                                             <label for="year">
                                                 Year of Institute
-                                                @Html.TextBoxFor(model => model.Qualification.YearOfInstitute, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
+                                                @Html.TextBoxFor(model => model.Qualification.YearOfInstitute, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="grade" class="w-100">
                                                 Grade/Percent/class
-                                        @Html.TextBoxFor(model => model.Qualification.Grade, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
+                                        @Html.TextBoxFor(model => model.Qualification.Grade, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
                                             </label>
                                         </div>
                                     </div>
@@ -294,20 +267,20 @@
                             <div class="inputSearchs uploadDocBox">
 
                                 <div class="tabSection">
-                                    <div class="flex mb-28">
-                                        <label for="document">
-                                            Documents Name
-                                            @Html.TextBoxFor(model => model.Document.DocumentName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Document"] })
-                                        </label>                                             
-                                        <label for="atach">
-                                            Attach Supporting Documents
-                                            <div class="attachDoc">
-                                                <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
-                                                <input type="file" asp-for="Document.Files" multiple />
-                                                <p>click to upload.</p>
-                                            </div>
-                                        </label>
-                                    </div>
+                                        <div class="flex mb-28">
+                                            <label for="document">
+                                                Documents Name
+                                                @Html.TextBoxFor(model => model.Document.DocumentName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Document"] })
+                                            </label>                                             
+                                            <label for="atach">
+                                                Attach Supporting Documents
+                                                <div class="attachDoc">
+                                                    <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
+                                                    <input type="file" asp-for="Document.Files" multiple />
+                                                    <p>click to upload.</p>
+                                                </div>
+                                            </label>
+                                        </div>
                                     <div class="W-100">
                                         <div class="prevUpload roundBorderBox m-0">
                                             <h3>Previously uploaded</h3>
@@ -322,6 +295,7 @@
                                                                 <span>@docs.DocumentName</span>
                                                             </div>
                                                             <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                            
                                                         </div>
                                                     }
                                                 }
@@ -333,15 +307,14 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>                            
+                            <div class="text-right buttonArea bodyContent plr-0">
+                               <a href='/Resource/Resource'> <button type="button" class="lineBtn">Cancel</button></a>
+                                <button type="submit" class="blueBtn">Update</button>
                             </div>
                             @*<div class="text-right buttonArea bodyContent plr-0">
                             <button type="submit" class="darkBlueBtn">Update</button>
                             </div>*@
-                        </div>
-
-                        <div class="text-right buttonArea bodyContent plr-0">
-                           <a href='/Resource/Resource'> <button type="button" class="lineBtn">Cancel</button></a>
-                            <button type="submit" class="blueBtn">Update</button>
                         </div>
                     </form>
                 </div>
@@ -511,140 +484,156 @@
          
         var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
         var Role = $("#RoleId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + RoleList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                Role.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    Role.append($("<option></option>").val(response[i].roleId).html(response[i].roleName));
-                }
-                if ($('#hdnRole').val() != 0) {
-                    Role.val($('#hdnRole').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnRole').val();
+        var _rpname = "roleName";
+
+        BindDropdowns(RoleList, Role, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + RoleList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        Role.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            Role.append($("<option></option>").val(response[i].roleId).html(response[i].roleName));
+        //        }
+        //        if ($('#hdnRole').val() != 0) {
+        //            Role.val($('#hdnRole').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
 
     function BindResourceType() {
          
         var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
         var ResourceType = $("#ResourceId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + ResourceTypeList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));
-                }
-                if ($('#hdnResourceType').val() != 0) {
-                    ResourceType.val($('#hdnResourceType').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnResourceType').val();
+        var _rpname = "resourceType";
+        BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + ResourceTypeList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        ResourceType.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            ResourceType.append($("<option></option>").val(response[i].id).html(response[i].resourceType));
+        //        }
+        //        if ($('#hdnResourceType').val() != 0) {
+        //            ResourceType.val($('#hdnResourceType').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
 
     function BindCountry() {
          
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
         var Country = $("#Address_CountryId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + CountryList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                Country.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
-                }
-                if ($('#hdnCountry').val() != 0) {
-                    Country.val($('#hdnCountry').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnCountry').val();
+        var _rpname = "countryName";
+        BindDropdowns(CountryList, Country, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + CountryList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        Country.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
+        //        }
+        //        if ($('#hdnCountry').val() != 0) {
+        //            Country.val($('#hdnCountry').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
 
     function BindState() {
          
         var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
         var State = $("#Address_StateId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + StateList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                State.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
-                }
-                if ($('#hdnState').val() != 0) {
-                    State.val($('#hdnState').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnState').val();
+        var _rpname = "stateName";
+        BindDropdowns(StateList, State, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + StateList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        State.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
+        //        }
+        //        if ($('#hdnState').val() != 0) {
+        //            State.val($('#hdnState').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
 
     function BindCity() {
          
         var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
         var City = $("#Address_CityId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + CityList,
-            "datatype": "json",
-            success: function (response) {
-                 ;
-                City.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
-                }
-                if ($('#hdnCity').val() != 0) {
-                    City.val($('#hdnCity').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        var _val = $('#hdnCity').val();
+        var _rpname = "cityName";
+        BindDropdowns(CityList, City, _rpname, _val);
+        //$.ajax({
+        //    type: "GET",
+        //    url: $('#hdnBaseURL').val() + CityList,
+        //    "datatype": "json",
+        //    success: function (response) {
+        //         ;
+        //        City.empty().append('<option selected="selected" value="0">Please select</option>');
+        //        for (var i = 0; i < response.length; i++) {
+        //            City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
+        //        }
+        //        if ($('#hdnCity').val() != 0) {
+        //            City.val($('#hdnCity').val());
+        //        }
+        //    },
+        //    failure: function (response) {
+        //        alert(response.responseText);
+        //    },
+        //    error: function (response) {
+        //        alert(response.responseText);
+        //        $("#loader").hide();
+        //    }
+        //});
     }
     function BindGender(){
         var Gender = $("#Gender");

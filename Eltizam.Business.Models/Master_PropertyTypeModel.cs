@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +16,8 @@ namespace Eltizam.Business.Models
         public int CreatedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
         public int ModifiedBy { get; set; }
-
-        //public string SubTypes { get; set; }
-        //public List<string> PropertySubTypes { get; set; } = new List<string>();
-        public Master_PropertySubTypeModel subType { get; set; } = new Master_PropertySubTypeModel();
-        //public Master_PropertySubTypeModel subType { get; set;}
+        public Master_PropertySubTypeModel subType { get; set;}
     }
+
+	
 }

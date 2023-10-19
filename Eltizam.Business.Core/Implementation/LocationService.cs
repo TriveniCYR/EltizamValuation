@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,14 +44,15 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         // get all recoreds from Location list with sorting and pagination
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel? model)
-        { 
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
+        {
             var _dbParams = new[]
-             { 
-                 new DbParameter("PageSize",    model?.length, SqlDbType.Int),
-                 new DbParameter("PageNumber",  model?.start, SqlDbType.Int),
+             {
+                 new DbParameter("Id", 0,SqlDbType.Int),
+                 new DbParameter("PageSize", model.length, SqlDbType.Int),
+                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
                  new DbParameter("OrderClause", "LocationName", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 0, SqlDbType.Int)
+                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
              };
 
             int _count = 0;
@@ -60,15 +62,15 @@ namespace Eltizam.Business.Core.Implementation
 
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf); 
             return oDataTableResponseModel;
-        }
-        public async Task<MasterLocationEntity> GetById(int id)
+            }
+            public async Task<MasterLocationEntity> GetById(int id)
         {
             var _LocationEntity = new MasterLocationEntity();
             _LocationEntity = _mapperFactory.Get<MasterLocation, MasterLocationEntity>(await _repository.GetAsync(id));
 
             return _LocationEntity;
         }
-        public async Task<DBOperation> Upsert(MasterLocationEntity entityLocation)
+        public async Task<DBOperation> AddUpdateLocationClient(MasterLocationEntity entityLocation)
         {
 
             MasterLocation objLocation;
@@ -79,7 +81,7 @@ namespace Eltizam.Business.Core.Implementation
                 var OldObjLocation = objLocation;
                 if (objLocation != null)
                 {
-                    objLocation.LocationName = entityLocation.LocationName;
+                 //   objLocation.LocationName = entityLocation.LocationName;
                     objLocation.CountryId = entityLocation.CountryId;
                     objLocation.StateId = entityLocation.StateId;
                     objLocation.CityId = entityLocation.CityId;
@@ -87,8 +89,10 @@ namespace Eltizam.Business.Core.Implementation
                     objLocation.Latitude = entityLocation.Latitude;
                     objLocation.Longitude = entityLocation.Longitude;
                     objLocation.Status = entityLocation.Status;
+                    objLocation.LocationName = entityLocation.LocationName;
                     objLocation.ModifiedDate = DateTime.Now;
                     objLocation.ModifiedBy = entityLocation.CreatedBy;
+                  
                     _repository.UpdateAsync(objLocation);
                 }
                 else
@@ -106,6 +110,8 @@ namespace Eltizam.Business.Core.Implementation
                 objLocation.Sector = entityLocation.Sector;
                 objLocation.Latitude = entityLocation.Latitude;
                 objLocation.Longitude = entityLocation.Longitude;
+                objLocation.HomeCurrencyId = entityLocation.HomeCurrencyId;
+                objLocation.ForeignCurrencyId = entityLocation.ForeignCurrencyId;
                 objLocation.Status = entityLocation.Status;
                 objLocation.CreatedDate = DateTime.Now;
                 objLocation.CreatedBy = entityLocation.CreatedBy;

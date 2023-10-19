@@ -57,7 +57,7 @@ namespace EltizamValuation.Api.Controllers
         // get all records from master Location with sorting and pagination 
 
         [HttpPost, Route("GetAll")]
-        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
+        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel? model)
         {
             try
             {
@@ -68,6 +68,23 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+      //  [HttpGet, Route("GetAll")]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    try
+        //    {
+        //        var oRoleList = await _LocationService.GetAll();
+        //        if (oRoleList != null)
+        //            return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
+        //        else
+        //            return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await _ExceptionService.LogException(ex);
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
 
         // get master Location detail by id
         [HttpGet, Route("GetById/{id}")]
@@ -94,7 +111,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                DBOperation oResponse = await _LocationService.Upsert(oLocation);
+                DBOperation oResponse = await _LocationService.AddUpdateLocationClient(oLocation);
                 if (oResponse == DBOperation.Success)
                 {
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oLocation.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
@@ -109,7 +126,7 @@ namespace EltizamValuation.Api.Controllers
         }
 
         // this is for delete master Designation detail by id
-        [HttpDelete("Delete/{id}")]
+        [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try

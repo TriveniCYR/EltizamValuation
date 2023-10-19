@@ -13,10 +13,10 @@
 }
     <!-- system user master -->
     <div class="flex">
-        <div class="w-100 position-relative">            
-            <main>
+        <div class="w-100 position-relative">
+        <main class="w-100">
+            <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
                 <h3 class="dashboardTitle">CLIENT MASTER</h3>
-                <div class="flex justify-end mb-28 mobile_flexColumn position-relative">
                     @*<div class="flex">
                         <label class="searchBox position-relative">
                             <div class="flex align-item-center">
@@ -101,7 +101,7 @@
                         </button>
                         </form>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="flex align-item-center lineBtn exportFile">
+                        @*<button class="flex align-item-center lineBtn exportFile">
                             <img src="../assets/file-export.svg" alt="file-export"> Export
                             <div class="actionItem">
                                 <ul>
@@ -113,15 +113,15 @@
                                     </li>
                                 </ul>
                             </div>
-                        </button>
+                        </button>*@
                     </div>
                 </div>
-                <div class="scroll-x">
+            <div class="scroll-x whiteWithPadding">
                 <table id="ClientTable">
                         <thead>
                             <tr>
-                                <th>Client Name <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow"/></th>
-                                <th>Client Type <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow"/></th>
+                                <th>Client Name</th>
+                                <th>Client Type</th>
                                 <th>TRN Number</th>
                                 <th>TRN Expiry</th>
                                 <th>License Number</th>
@@ -203,19 +203,14 @@
                     </div>
                 </div>
                 @Html.Hidden("Id")
-                <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteClient()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
-                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteClient()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
 
     @section MyScripts {
 
@@ -227,7 +222,11 @@
         //#region Setup API Url
         var AllClient = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClient";
         var DeleteClient = "@Eltizam.Web.Helpers.APIURLHelper.DeleteClient";
-
+        
+        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
+        if (successCallBack) {
+            toastr.success(successCallBack);
+        }
         function sideNavToggle() {
             var x = document.getElementById("sideNav");
             if (x.style.display === "none") {
