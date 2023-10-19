@@ -13,9 +13,7 @@
         <div class="text-center">
             <img src="../assets/logo.svg" alt="logo" class="dashboard-logo">
         </div>
-        <div class="sideMenu">
-            <!-- <p class="position-relative">MENU <button class="close-sideNavMobile visible-in-mobile">Close <span>X</span></button></p> -->
-
+        <div class="sideMenu">  
             <ul>
                 <li><div class="flex"><img src="../assets/dashboard.svg" alt="dashboard"><p>Dashboard</p></div></li>
             </ul>
@@ -23,8 +21,8 @@
             <ul>
                 @if (Helper.GetLoggedInRoleId() != 0)
                 {
-                    int _roleId = Helper.GetLoggedInRoleId();
-                    @*  var menuItems = UtilityHelper.GetMenu(_roleId); *@
+                    int _roleId = Helper.GetLoggedInRoleId(); 
+
                     @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ResourceMaster, _roleId))
                     {
                         <li class="activeSideMenu">
@@ -34,7 +32,7 @@
                                 <a href="@Url.Action("Resource", "Resource")" class="nav-link">Resource Master</a>
                             </div>
                         </li>
-                    }
+                    } 
 
                     @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.RoleMaster, _roleId))
                     {
@@ -105,7 +103,7 @@
                             <div class="flex align-item-center">
                                 <img src="../assets/building-fortress.svg" class="showIcon" alt="Property Master">
                                 <img src="../assets/building-fortress-blue.svg" class="hoverIcon" alt="Property Master">
-                                <p>Property Master</p>
+                                <a href="@Url.Action("PropertyMaster", "PropertyMaster")" class="nav-link">Property Master</a>
                             </div>
                         </li>
                     }
@@ -120,8 +118,8 @@
                             </div>
                         </li>
                     }
-                    //@if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ValutionFessMaster, _roleId))
-                    //{
+                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ValutionFessMaster, _roleId))
+                    {
                         <li>
                             <div class="flex align-item-center">
                                 <img src="../assets/home-dollar.svg" class="showIcon" alt="Valuation Fees Master">
@@ -129,7 +127,7 @@
                                 <a href="@Url.Action("ValuationFees", "ValuationFees")" class="nav-link">Valuation Fees Master</a>
                             </div>
                         </li>
-                   // }
+                    }
                     @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.VendorMaster, _roleId))
                     {
                         <li>

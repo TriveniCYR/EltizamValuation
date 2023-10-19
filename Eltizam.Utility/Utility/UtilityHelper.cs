@@ -156,6 +156,16 @@ namespace Eltizam.Utility.Utility
             return null as T;
         }
 
+        //public static List<T> GetModulesRole<T>() where T : class
+        //{
+        //    if (_dict != null)
+        //    {
+        //        object val;
+        //        _dict.TryGetValue( out val);
+        //        return val as T;
+        //    } 
+        //}
+
         public static bool RemoveModuleRole(int key)
         {
             if (_dict != null)

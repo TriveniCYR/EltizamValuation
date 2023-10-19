@@ -24,38 +24,23 @@ namespace Eltizam.Utility.Enums
     {
         [Description("Resourc Master")]
         ResourceMaster = 1,
-
 		[Description("RoleMaster")]
         RoleMaster = 2,
-
         ClientType = 3,
-
         [Description("Designation Master")]
         DesignationMaster = 4,
-
         DepartmentMaster = 5,
         LocationMaster = 6,
         PropertyTypeMaster = 7,
         ClientTypeManagement = 8,
         PropertyMaster = 9,
-
-
-        ClientMaster = 13,
-
-       
+        ClientMaster = 13,       
         ValutionFessMaster = 14,
         VendorMaster = 15,
-
         //      Commercial = 15,
         //      ManagementHOD = 16,
         //      Project = 17,
-        //    [Description("Wish List")]
-
-        //WishList = 18,
-
-        //[Description("TblUser Management")]
-        //TblUserManagement = 19,
-
+        //    [Description("Wish List")] 
     }
 
 	public enum SubModulePermissionEnum
