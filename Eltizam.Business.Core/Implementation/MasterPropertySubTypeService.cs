@@ -96,16 +96,17 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("OrderClause", "PropertySubType", SqlDbType.VarChar),
                  new DbParameter("ReverseSort", 1, SqlDbType.Int)
              };
+            int _count = 0;
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCountryModel>(ProcedureMetastore.usp_Country_SearchAllList,
+            DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
 
-		//     DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
 
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
 
-		//    DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
+            return oDataTableResponseModel;
+        }
 
-		//    return oDataTableResponseModel;
-		//}
-
-		public async Task<List<Master_PropertySubTypeModel>> GetAll()
+        public async Task<List<Master_PropertySubTypeModel>> GetAll()
 		{
 			return _mapperFactory.GetList<MasterPropertySubType, Master_PropertySubTypeModel>(await _repository.GetAllAsync());
 		}
