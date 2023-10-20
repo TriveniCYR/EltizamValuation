@@ -18,7 +18,7 @@ namespace Eltizam.Business.Models
         public string? Trnnumber { get; set; }
         public DateTime TrnexpiryDate { get; set; }
         public bool IsActive { get; set; }
-        public string Logo { get; set; }
+        public string? Logo { get; set; }
         public int CreatedBy { get; set; }
         public MasterAddressEntity? Address { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
