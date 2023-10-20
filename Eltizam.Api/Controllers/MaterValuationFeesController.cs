@@ -23,12 +23,12 @@ namespace EltizamValuation.Api.Controllers
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
-        private readonly IValuationFeesService _ValuationFeesService;
+        private readonly IMasterValuationFeesService _ValuationFeesService;
 
         #endregion Properties
 
         #region Constructor
-        public MaterValuationFeesController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IValuationFeesService ValuationFeesService)
+        public MaterValuationFeesController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IMasterValuationFeesService ValuationFeesService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;

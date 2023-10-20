@@ -20,7 +20,7 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class ValuationFeesService : IValuationFeesService
+    public class MasterValuationFeesService : IMasterValuationFeesService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
@@ -30,7 +30,7 @@ namespace Eltizam.Business.Core.Implementation
 
         private IRepository<MasterValuationFee> _repository { get; set; }
         private readonly IHelper _helper;
-        public ValuationFeesService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterValuationFeesService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
                                   IHelper helper,
                                  Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
