@@ -9,42 +9,36 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 
 @model Eltizam.Business.Models.MasterValuationFeesModel
-@{ 
+@{
+    // ViewData["Title"] = @MasterLocalizer["ValuationFees"];
+    // RolePermissionModel objPermssion = (RolePermissionModel)ViewBag._objPermission;
+    // string IsAddAllow = (objPermssion.Add) ? "" : "display: none";
+    // string IsEditAllow = (objPermssion.Edit) ? "" : "display: none";
+    // string IsDeleteAllow = (objPermssion.Delete) ? "" : "display: none";
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
 @{
-    var valuationType = "General";
+    var htmlAttributes = true;
 }
 <div id="PlaceHolderHere"></div>
 <main>
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between ">
-            @if (Model.Id > 0)
-            {
-                <h3 class="dashboardTitle">EDIT VALUATION FEES MASTER</h3>
+          
+                <h3 class="dashboardTitle">VIEW VALUATION FEES MASTER</h3>
                 <div class="hamburger">
                     <span onclick="resourceMaster()">Valuation Master</span>
                     <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                     <span>Edit Resource Master</span>
                 </div>
-            }
-            else
-            {
-                <h3 class="dashboardTitle">ADD VALUATION FEES MASTER</h3>
-                <div class="hamburger">
-                    <span onclick="resourceMaster()">Valuation Master</span>
-                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                    <span>Add Resource Master</span>
-                </div>
-            }
         </div>
         <div class="bodyContent">
             <div class="inputSearchs">
-                <form asp-action="ValuationFeesManage" autocomplete="off" asp-controller="ValuationFees" method="post">
+                <form>
 
-                     <input type="hidden" id="hdnProperty" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
+                    <input type="hidden" id="hdnProperty" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
                     @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
-                   @*  @Html.HiddenFor(model => model.PropertyTypeId, new { @class = "control-label" })
+                    @*  @Html.HiddenFor(model => model.PropertyTypeId, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.PropertySubTypeId, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.ClientTypeId, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.OwnershipTypeId, new { @class = "control-label" })
@@ -54,66 +48,65 @@
                     <input type="hidden" id="hdnPropertySub" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
                     <input type="hidden" id="hdnClientType" value="@(Model == null ? 0 : Model.ClientTypeId)" />
                     <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
-                    <input type="hidden" id="hdnValuationFeeType" value="@(Model == null ? 0 : Model.ValuationFeeTypeId)" /> 
+                    <input type="hidden" id="hdnValuationFeeType" value="@(Model == null ? 0 : Model.ValuationFeeTypeId)" />
                     @* <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" /> *@
                     <div class="roundBorderBox">
                         <h3 class="mb-28">Property Details</h3>
                         <div class="flex">
                             <label for="PropertyTypeId" class="w-50">
                                 Property Type Name
-                               @*  <select id="PropertyTypeId" name="PropertyTypeId" class="form-control" asp-for="PropertyTypeId"></select> *@
-                                @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)"})
+                                @*  <select id="PropertyTypeId" name="PropertyTypeId" class="form-control" asp-for="PropertyTypeId"></select> *@
+                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @disabled= htmlAttributes, @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)",htmlAttributes})
 
                             </label>
-                           @*  <label for="">
-                                Property Type Name
-                                <input type="text" placeholder="enter Property Type Name">
+                            @*  <label for="">
+                            Property Type Name
+                            <input type="text" placeholder="enter Property Type Name">
                             </label> *@
                             <label for="" class="w-50">
                                 Property SubType Name
-                               @*  <input type="text" placeholder="enter Property SubType Name"> *@
-                                @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
+                                @*  <input type="text" placeholder="enter Property SubType Name"> *@
+                            @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes/*  @disabled = "disabled" */})
                             </label>
-                         </div>
-                         <div class="flex">
+                            </div>
+                        <div class="flex">
                             <label for="" class="w-50">
                                 Type of Ownership
                                 @* <input type="text" placeholder="enter Type of Ownership"> *@
-                                @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
+                            @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
                             <label for="" class="w-50">
                                 Client Type
                                 @* <input type="text" placeholder="enter Client Type" /> *@
-                                @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
+                            @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
                         </div>
                         <div class="flex">
                             <label for="CarpetAreaInSqFt" class="w-50">
                                 Carpet Area (Sq.Ft)
                                 @* <input type="text" placeholder="enter Carpet Area (Sq.Ft)" /> *@
-                                @Html.EditorFor(model => model.CarpetAreaInSqFt, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" } })
+                            @Html.EditorFor(model => model.CarpetAreaInSqFt, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control",htmlAttributes } })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqFt, "", new { @class = "text-danger" })
                             </label>
 
                             <label for="CarpetAreaInSqMtr" class="w-50">
                                 Carpet Area (Sq.Meter)
                                 @* <input type="text" placeholder="enter Carpet Area (Sq.Meter)"> *@
-                                @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" } })
+                            @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control" ,htmlAttributes} })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqMtr, "", new { @class = "text-danger" })
                             </label>
                             </div>
                         <div class="flex">
-                            <label for="" class="w-50">
+                            <label for="" <div class="flex">>
                                 Valuation Fee Type
                                 @* <input type="text" placeholder="enter Valuation Fee Type"> *@
-                                @Html.DropDownListFor(model => model.ValuationFeeTypeId, new List<SelectListItem> { }, new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.ValuationFeeTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
-                            <label for="" class="w-50">
+                            <label for="" <div class="flex">>
                                 Valuation Type
                                 <div class="flex m-0 valuationType">
-                                   
-                                    <input type="radio" value="Fixed" name="valuationType" id="valuationType1" class="cursor-pointer" onclick="alertmsg(valuationType)" />
-                                    <input type="radio" value="General" name="valuationType" id="valuationType2" class="cursor-pointer" onclick="alertmsg(valuationType)" />
+                                    <input type="radio" value="Fixed" name="valuationType" class="cursor-pointer" />
+                                    <input type="radio" value="General" name="valuationType" class="cursor-pointer" />
                                 </div>
                             </label>
                         </div>
@@ -126,59 +119,40 @@
                             </label>
                         </div>
                     </div>
-                    
-                        <div class="roundBorderBox" id="general">
-                            <h3 class="mb-28">Valuation Charges - General Valuation Fees</h3>
-                            <div class="flex">
-                            <label for="" class="w-50">
-                                    Valuation Fees (AED)
-                                    @* <input type="text" placeholder="enter Valuation Fees (AED)"> *@
-                                    @Html.EditorFor(model => model.ValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" ,@placeholder="enter Valuation Fees (AED)"} })
-                                    @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" })
-                                </label>
-                            <label for="" class="w-50">
-                                    VAT (Percent)
-                                    @* <input type="text" placeholder="enter VAT (Percent)"> *@
-                                    @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control", @placeholder="enter VAT (Percent)"} })
-                                    @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
-                                </label>
-                                </div>
+                    <div class="roundBorderBox">
+                        <h3 class="mb-28">Valuation Charges - General Valuation Fees</h3>
                         <div class="flex">
                             <label for="" class="w-50">
-                                    Other Charges
-                                    @* <input type="text" placeholder="ente other chargesr"> *@
-                                    @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",placeholder="enter other chargesr" } })
-                                    @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
-                                </label>
+                                Valuation Fees (AED)
+                                @* <input type="text" placeholder="enter Valuation Fees (AED)"> *@
+                            @Html.EditorFor(model => model.ValuationFees, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control" ,@placeholder="enter Valuation Fees (AED)",htmlAttributes} })
+                                @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" })
+                            </label>
                             <label for="" class="w-50">
-                                    Total evaluation Fees
-                                    @* <input type="text" placeholder="enter Total evaluation Fees"> *@
-                                    @Html.EditorFor(model => model.TotalValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",@placeholder="enter Total evaluation Fees" } })
-                                    @Html.ValidationMessageFor(model => model.TotalValuationFees, "", new { @class = "text-danger" })
-                                </label>
+                                VAT (Percent)
+                                @* <input type="text" placeholder="enter VAT (Percent)"> *@
+                            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control", @placeholder="enter VAT (Percent)",htmlAttributes} })
+                                @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
+                            </label>
                             </div>
-                        </div>
-                    
-                    
-                        <div class="roundBorderBox" id="fixed">
-                            <h3 class="mb-28">Valuation Charges - Fixed Valuation Fees</h3>
-                            <div class="flex">
-
+                        <div class="flex">
                             <label for="" class="w-50">
-                                    Fixed valuation Fees
-                                    @* <input type="text" placeholder="enter Total evaluation Fees"> *@
-                                @Html.EditorFor(model => model.FixedvaluationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",@placeholder="enter Fixed evaluation Fees" } })
-                                @Html.ValidationMessageFor(model => model.FixedvaluationFees, "", new { @class = "text-danger" })
-                                </label>
-                            </div>
+                                Other Charges
+                                @* <input type="text" placeholder="ente other chargesr"> *@
+                            @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control",placeholder="enter other chargesr",htmlAttributes } })
+                                @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
+                            </label>
+                            <label for="" class="w-50">
+                                Total evaluation Fees
+                                @* <input type="text" placeholder="enter Total evaluation Fees"> *@
+                            @Html.EditorFor(model => model.TotalValuationFees, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control",@placeholder="enter Total evaluation Fees" ,htmlAttributes} })
+                                @Html.ValidationMessageFor(model => model.TotalValuationFees, "", new { @class = "text-danger" })
+                            </label>
                         </div>
-                    
-                   
-
-
+                    </div>
                     <div class="text-right buttonArea bodyContent plr-0">
                         <a href='/ValuationFees/ValuationFees'> <button type="button" class="lineBtn">Cancel</button></a>
-                        <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
+                      @*   <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button> *@
                     </div>
                 </form>
             </div>
@@ -262,45 +236,16 @@
                 x.style.display = "none";
             }
         }
-        function alertmsg(id) {
-            debugger;
-            // var s = $('input[name="valuationType"]:checked').val();
-            // var d1 =  document.getElementById("valuationType1").value;
-            // var d2 = document.getElementById("valuationType1").value;
-            // alert(id,s, "d1"+d1,"d2"+ d2);
-        
-            var valuationType = document.querySelector('input[name = "valuationType"]:checked').value;
-           var general =  document.getElementById("general");
-            var fixed = document.getElementById("fixed");
-            //alert("You entered " + valuationType + " for your gender<br>");
-            if (valuationType === "Fixed") {
-                general.style.display = "none";
-                fixed.style.display = "block";
-            } else if(valuationType === "General") {
-                fixed.style.display = "none";
-                general.style.display = "block";
-            }
-           
-        }
+
         $(document).ready(function () {
             BindProperty();
             BindClient();
             BindOwnership();
             BindValuationFeeType();
-            var general = document.getElementById("general");
-            var fixed = document.getElementById("fixed");
-            fixed.style.display = "none";
-            general.style.display = "block";
-            // $('input[name=valuationType]:radio').click(function () {
-            //     // Will get the newly selected value
-            //     var g = $('input[name=valuationType]:radio').val();
-            //     alert(g);
-            // });
             var HdnId = $('#hdnProperty').val();
             if (HdnId) {
                 BindPropertySub(HdnId);
             }
-
             // BindDesignation();
             // BindRole();
             // BindResourceType();
@@ -353,26 +298,26 @@
 
             //BindDropdowns(PropertyList, Property, _rpname, _val);
             $.ajax({
-               type: "GET",
-                url: $('#hdnBaseURL').val() + PropertyByIdSubType +'/'+id,
-               "datatype": "json",
-               success: function (response) {
+                type: "GET",
+                url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
+                "datatype": "json",
+                success: function (response) {
                     debugger;
                     //PropertySubType.empty().append('<option selected="selected" value="0">Please select</option>');
-                  // for (var i = 0; i < response.data.length; i++) {
+                    // for (var i = 0; i < response.data.length; i++) {
                     PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
-                   //}
-                   //  if ($('#hdnPropertySub').val() != 0) {
-                   //      PropertySubType.val($('#hdnPropertySub').val());
-                   // }
-               },
-               failure: function (response) {
-                   alert(response.responseText);
-               },
-               error: function (response) {
-                   alert(response.responseText);
-                   $("#loader").hide();
-               }
+                    //}
+                    //  if ($('#hdnPropertySub').val() != 0) {
+                    //      PropertySubType.val($('#hdnPropertySub').val());
+                    // }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
             });
         }
 
@@ -475,7 +420,7 @@
             });
         }
 
-        //#endregion
+                //#endregion
     </script>
 
 }

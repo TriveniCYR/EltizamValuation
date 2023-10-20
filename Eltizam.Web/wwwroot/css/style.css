@@ -1750,3 +1750,15 @@ div.dataTables_wrapper div.dataTables_filter {
 .ptrl-20 {
     padding: 20px 20px 0;
 }
+
+.bodyContent .valuationType input[type="radio"]:first-child::after {
+    content: 'Fixed';
+    top: -4px;
+    position: relative;
+}
+
+.bodyContent .valuationType input[type="radio"]:last-child::after {
+    content: "General";
+    top: -4px;
+    position: relative;
+}

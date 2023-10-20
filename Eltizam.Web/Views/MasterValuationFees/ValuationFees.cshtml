@@ -18,25 +18,69 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
 
-<!-- system user master -->
 <div class="flex">
     <main class="w-100">
         <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
             <h3 class="dashboardTitle">VALUATION FEES MASTER</h3>
+            @*<div class="flex">
+            <label class="searchBox position-relative">
+            <div class="flex align-item-center">
+            <img src="~/assets/search.svg" alt="search">
+            <input type="text" id="txtUserName" placeholder="Search for System" class="searchInput">
+            </div>
+            <button class="normalSearch" onclick="UserList(1,0)">Search</button>
+            </label>
+            <div class="accordion">
+            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+            <label for="section1" class="advaceSearhBtn"><img src="~/assets/filter.svg" alt="filterSearch" /></label>
+            <div class="accordion-content inputSearchs">
+            <h3 class="text-center">Advanced Search</h3>
+            <form>
+            <div class="flex">
+            <label for="userName">
+            User Name
+            <input type="text" id="UserName" placeholder="enter user id">
+            </label>
+            </div>
+            <div class="text-center">
+            <button type="submit" class="blueBtn" onclick="UserList(1,1)">Search</button>
+            </div>
+            </form>
+            </div>
+            </div>
+
+            </div>*@
             <div class="buttonArea flex align-item-center">
 
-                <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
+                <form asp-action="ValuationFeesManage" asp-controller="ValuationFees" method="GET">
                     <button class="flex align-item-center blueBtn" id="addNew">
                         <img src="~/assets/plus.svg" alt="plus"> Add New
                     </button>
                 </form>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                @*<button class="flex align-item-center lineBtn" id="importFile">
+                <img src="~/assets/file-import.svg" alt="file-import" />
+                Import
+                </button>*@
+                @*<button class="flex align-item-center lineBtn exportFile">
+                <img src="~/assets/file-export.svg" alt="file-export"> Export
+                <div class="actionItem">
+                <ul>
+                <li>
+                Excel XML
+                </li>
+                <li>
+                CSV
+                </li>
+                </ul>
+                </div>
+                </button>*@
             </div>
         </div>
         <div class="scroll-x whiteWithPadding">
-            <table id="ResourceUserTable" class="table table-bordered table-striped table-hover">
+            <table id="ValuationFeesTable" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>@MasterLocalizer["Id"] </th>
                         <th>@MasterLocalizer["ValuationType"] </th>
                         <th>@MasterLocalizer["PropertyType"]</th>
                         <th>@MasterLocalizer["ClientType"]</th>
@@ -50,7 +94,23 @@
                 </tbody>
             </table>
         </div>
+        @*<div class="flex justify-between align-item-center mobile_flexColumn">
+        <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
+        <div class="flex justify-between align-item-center pagination">
+        <p>Previous</p>
+        <ul class="flex justify-between">
+        <li class="active">1</li>
+        <li>2</li>
+        <li>3</li>
+        </ul>
+        <p>Next</p>
+        </div>
+        </div>*@
     </main>
+    <footer class="flex justify-between">
+        <p>2023 © Eltizam.</p>
+        <p>Design & Develop by NeoSoft</p>
+    </footer>
 
     <!-- popup delete model -->
     <div class="popup-overlay" id="popup-delete-overlay">
@@ -70,7 +130,34 @@
 
     <!-- popup import model -->
     <div class="popup-overlay" id="popup-import-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Import Resource
+                    <img src="~/assets/x.svg" alt="x" id="closePopup">
+                </div>
+                <div class="popup-action importBox">
+                    <p class="text-left">Browse File</p>
+                    <div class="inputBox">
+                        <input type="file" name="file" id="file" class="file" />
+                        <div class="flex">
+                            <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                            <div class="uploadFileBtn flex">
+                                <img src="~/assets/files.svg" alt="file">
+                                <input type="button" class="btn" value="Browse" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser" class="bgBlue">Submit</button>
+                        <button class="lineBtn">Download Template</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+</div>
 
 
     <div id="DeleteValuationFeesModel" class="modal themeModal " role="dialog">
