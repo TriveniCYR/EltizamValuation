@@ -25,6 +25,9 @@ namespace Eltizam.Business.Models
         public string? PropertyType { get; set; }
         public string? ClientType { get; set; }
         public int? CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public int? ModifiedBy { get; set; }
         public List<MasterPropertyTypeViewModel>? propertyTypeViewModels { get; set; }
         public List<Master_ClientTypeModel>? master_ClientTypeModels { get; set; }
         public List<MasterOwnershipTypeEntity>? masterOwnershipTypeEntities { get; set; }

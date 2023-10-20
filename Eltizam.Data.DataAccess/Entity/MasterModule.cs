@@ -14,5 +14,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifyDate { get; set; }
         public string? ControlName { get; set; }
         public int? SortOrder { get; set; }
+        public string? Icon { get; set; }
+        public string? ViewName { get; set; }
+        public string? HoverIcon { get; set; }
     }
 }

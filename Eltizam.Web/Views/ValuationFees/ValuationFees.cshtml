@@ -17,138 +17,147 @@
     // string IsDeleteAllow = (objPermssion.Delete) ? "" : "display: none";
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
-<div id="PlaceHolderHere"></div>
-<main>
-    <h3 class="dashboardTitle">VALUATION FEES MASTER</h3>
-    <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
-        <div class="flex">
+
+<div class="flex">
+    <main class="w-100">
+        <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+            <h3 class="dashboardTitle">VALUATION FEES MASTER</h3>
+            @*<div class="flex">
             <label class="searchBox position-relative">
-                <div class="flex align-item-center">
-                    <img src="../assets/search.svg" alt="search">
-                    <input type="text" placeholder="Search for System" class="searchInput">
-                </div>
-                <button class="normalSearch">Search</button>
+            <div class="flex align-item-center">
+            <img src="~/assets/search.svg" alt="search">
+            <input type="text" id="txtUserName" placeholder="Search for System" class="searchInput">
+            </div>
+            <button class="normalSearch" onclick="UserList(1,0)">Search</button>
             </label>
             <div class="accordion">
-                <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
-                <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
-                <div class="accordion-content inputSearchs">
-                    <h3 class="text-center">Advanced Search</h3>
-                  @*   <form>
-                        <div class="flex">
-                            <label for="userName">
-                                User Name
-                                <input type="text" placeholder="enter user id">
-                            </label>
-                            <label for="valuatorType">
-                                Valuator Type
-                                <select name="Valuator" id="ValuatorType">
-                                    <option value="Valuator1">Valuator type1</option>
-                                    <option value="Valuator2">Valuator type2</option>
-                                    <option value="Valuator3">Valuator type3</option>
-                                </select>
-                            </label>
-                            <label for="resourceType">
-                                Resource Type
-                                <select name="Valuator" id="resourceType">
-                                    <option value="resourceType1">Resource type1</option>
-                                    <option value="resourceType2">Resource type2</option>
-                                    <option value="resourceType3">Resource type3</option>
-                                </select>
-                            </label>
-                            <label for="roleName">
-                                Role Name
-                                <select name="Valuator" id="roleName">
-                                    <option value="roleName1">Role type1</option>
-                                    <option value="roleName2">Role type2</option>
-                                    <option value="roleName3">Role type3</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="flex">
-                            <label for="fromDate">
-                                From Date
-                                <input type="date">
-                            </label>
-                            <label for="toDate">
-                                To Date
-                                <input type="date">
-                            </label>
-                            <label for="designation">
-                                Designation
-                                <select name="Valuator" id="ValuatorType">
-                                    <option value="Valuator1">Designation type1</option>
-                                    <option value="Valuator2">Designation type2</option>
-                                    <option value="Valuator3">Designation type3</option>
-                                </select>
-                            </label>
-                            <label for="designation">
-                                Department
-                                <select name="Valuator" id="ValuatorType">
-                                    <option value="Valuator1">Department type1</option>
-                                    <option value="Valuator2">Department type2</option>
-                                    <option value="Valuator3">Department type3</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="blueBtn">Search</button>
-                        </div>
-                    </form> *@
+            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+            <label for="section1" class="advaceSearhBtn"><img src="~/assets/filter.svg" alt="filterSearch" /></label>
+            <div class="accordion-content inputSearchs">
+            <h3 class="text-center">Advanced Search</h3>
+            <form>
+            <div class="flex">
+            <label for="userName">
+            User Name
+            <input type="text" id="UserName" placeholder="enter user id">
+            </label>
+            </div>
+            <div class="text-center">
+            <button type="submit" class="blueBtn" onclick="UserList(1,1)">Search</button>
+            </div>
+            </form>
+            </div>
+            </div>
+
+            </div>*@
+            <div class="buttonArea flex align-item-center">
+
+                <form asp-action="ValuationFeesManage" asp-controller="ValuationFees" method="GET">
+                    <button class="flex align-item-center blueBtn" id="addNew">
+                        <img src="~/assets/plus.svg" alt="plus"> Add New
+                    </button>
+                </form>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                @*<button class="flex align-item-center lineBtn" id="importFile">
+                <img src="~/assets/file-import.svg" alt="file-import" />
+                Import
+                </button>*@
+                @*<button class="flex align-item-center lineBtn exportFile">
+                <img src="~/assets/file-export.svg" alt="file-export"> Export
+                <div class="actionItem">
+                <ul>
+                <li>
+                Excel XML
+                </li>
+                <li>
+                CSV
+                </li>
+                </ul>
+                </div>
+                </button>*@
+            </div>
+        </div>
+        <div class="scroll-x whiteWithPadding">
+            <table id="ValuationFeesTable" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>@MasterLocalizer["ValuationType"] </th>
+                        <th>@MasterLocalizer["PropertyType"]</th>
+                        <th>@MasterLocalizer["ClientType"]</th>
+                        <th>@MasterLocalizer["ValuationFeeType"]</th>
+                        <th>@MasterLocalizer["TotalValuationFees"]</th>
+                        <th>@MasterLocalizer["IsActive"]</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        @*<div class="flex justify-between align-item-center mobile_flexColumn">
+        <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
+        <div class="flex justify-between align-item-center pagination">
+        <p>Previous</p>
+        <ul class="flex justify-between">
+        <li class="active">1</li>
+        <li>2</li>
+        <li>3</li>
+        </ul>
+        <p>Next</p>
+        </div>
+        </div>*@
+    </main>
+    <footer class="flex justify-between">
+        <p>2023 © Eltizam.</p>
+        <p>Design & Develop by NeoSoft</p>
+    </footer>
+
+    <!-- popup delete model -->
+    <div class="popup-overlay" id="popup-delete-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head">Delete User</div>
+                <div class="popup-action">
+                    <p>Are you sure you want to delete?</p>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser">Cancel</button>
+                        <button class="redBtn">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="buttonArea flex align-item-center">
-            <button class="flex align-item-center blueBtn" onclick="valuationFeestView()">
-                <a class="whiteAtag" asp-action="ValuationFeesManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
-            </button>
+    </div>
 
-           @*  <button class="flex align-item-center lineBtn exportFile">
-                <img src="../assets/file-export.svg" alt="file-export"> Export
-                <div class="actionItem">
-                    <ul>
-                        <li>
-                            Excel XML
-                        </li>
-                        <li>
-                            cSV
-                        </li>
-                    </ul>
+    <!-- popup import model -->
+    <div class="popup-overlay" id="popup-import-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Import Resource
+                    <img src="~/assets/x.svg" alt="x" id="closePopup">
                 </div>
-            </button> *@
+                <div class="popup-action importBox">
+                    <p class="text-left">Browse File</p>
+                    <div class="inputBox">
+                        <input type="file" name="file" id="file" class="file" />
+                        <div class="flex">
+                            <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                            <div class="uploadFileBtn flex">
+                                <img src="~/assets/files.svg" alt="file">
+                                <input type="button" class="btn" value="Browse" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser" class="bgBlue">Submit</button>
+                        <button class="lineBtn">Download Template</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="scroll-x">
-        <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
-        <table id="ValuationFeesTable" class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>@MasterLocalizer["ValuationType"] </th> 
-                    <th>@MasterLocalizer["PropertyType"]</th>
-                    <th>@MasterLocalizer["ClientType"]</th>
-                    <th>@MasterLocalizer["ValuationFeeType"]</th> 
-                    <th>@MasterLocalizer["TotalValuationFees"]</th>
-                    <th>@MasterLocalizer["IsActive"]</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-   @*  <div class="flex justify-between align-item-center mobile_flexColumn">
-        <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
-        <div class="flex justify-between align-item-center pagination">
-            <p>Previous</p>
-            <ul class="flex justify-between">
-                <li class="active">1</li>
-                <li>2</li>
-                <li>3</li>
-            </ul>
-            <p>Next</p>
-        </div>
-    </div> *@
-</main>
+
+</div>
 
 
 <div id="DeleteValuationModel" class="modal themeModal " role="dialog">

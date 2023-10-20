@@ -7,7 +7,7 @@ namespace Eltizam.Data.DataAccess.Entity
     {
         public MasterDictionary()
         {
-            MasterDictionaryDetials = new HashSet<MasterDictionaryDetial>();
+            MasterDictionaryDetails = new HashSet<MasterDictionaryDetail>();
         }
 
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
 
-        public virtual ICollection<MasterDictionaryDetial> MasterDictionaryDetials { get; set; }
+        public virtual ICollection<MasterDictionaryDetail> MasterDictionaryDetails { get; set; }
     }
 }
