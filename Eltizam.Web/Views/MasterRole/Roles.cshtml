@@ -20,64 +20,66 @@
 
 <div id="PlaceHolderHere"></div>
 
-<main>
+<!-- system user master -->
+<div class="flex">
+    <main class="w-100">
 
-<div class="flex justify-between mt-20 mobile_flexColumn position-relative">
-        <h3 class="dashboardTitle">ROLE MASTER</h3>
-    <div class="buttonArea flex align-item-center">
-        <button class="flex align-item-center blueBtn" id="addRole">
-            <a class="whiteAtag" style="@IsAddAllow" asp-action="RoleManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
-        </button>
+        <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+            <h3 class="dashboardTitle">ROLES MASTER</h3>
+            <div class="buttonArea flex align-item-center">
+
+                <form asp-action="RoleManage" asp-controller="MasterRole" method="GET">
+                    <button class="flex align-item-center blueBtn" id="addNew">
+                        <img src="~/assets/plus.svg" alt="plus"> Add New
+                    </button>
+                </form>
+            </div>
+        </div>
 
 
-        <button class="flex align-item-center lineBtn" id="importFile">
-            <img src="~/assets/file-import.svg" alt="file-import" />
-            Import
-        </button>
-    </div>
+        <div class="scroll-x whiteWithPadding">
+            <table id="RoleTable" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>@MasterLocalizer["RoleName"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                        <th>@SharedLocalizer["Status"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                        <th>@SharedLocalizer["Action"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(module => item.RoleName)</td>
+                            <td>@Html.LabelFor(model => item.IsActive, item.IsActive ? "Active" : "InActive", new { @style = item.IsActive ? "color:green;" : "color:red;" })</td>
+                            <td class="position-relative">
+                                <img src="~/assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                                <div class="actionItem">
+                                    <ul>
+                                        <li class="viewRole">
+                                            <img src="~/assets/view.svg" alt="view" />
+                                            <a title="View" asp-action="RoleView" asp-route-roleId="@item.RoleId" asp-route-flag1="value2">View</a>
+                                        </li>
+                                        <li class="editRole">
+                                            <img src="~/assets/edit.svg" alt="edit" />
+                                            <a title="Edit" asp-action="RoleManage" asp-route-roleId="@item.RoleId"><span>Edit</span></a>
+                                        </li>
+                                        <li class="delete">
+                                            <img src="~/assets/trash.svg" alt="trash" />
+                                            <a title="Delete" style="@IsDeleteAllow" data-toggle="modal" data-target="#DeleteRoleModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationRole(@item.RoleId); return false;"><span>Delete</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </main>
 </div>
-<div class="scroll-x">
-    <table id="RoleTable">
-        <thead>
-            <tr>
-                <th>@MasterLocalizer["RoleName"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                <th>@SharedLocalizer["Status"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                <th>@SharedLocalizer["Action"]</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(module => item.RoleName)</td> 
-                    <td>@Html.LabelFor(model => item.IsActive, item.IsActive ? "Active" : "InActive", new { @style = item.IsActive ? "color:green;" : "color:red;" })</td>
-                    <td class="position-relative">
-                        <img src="~/assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                        <div class="actionItem">
-                            <ul>
-                                <li class="viewRole">
-                                    <img src="~/assets/view.svg" alt="view" />
-                                    <a title="View" asp-action="RoleView" asp-route-roleId="@item.RoleId" asp-route-flag1="value2">View</a>
-                                </li>
-                                <li class="editRole">
-                                    <img src="~/assets/edit.svg" alt="edit" />
-                                    <a title="Edit" asp-action="RoleManage" asp-route-roleId="@item.RoleId"><span>Edit</span></a>
-                                </li>
-                                <li class="delete">
-                                    <img src="~/assets/trash.svg" alt="trash" />
-                                    <a title="Delete" style="@IsDeleteAllow" data-toggle="modal" data-target="#DeleteRoleModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationRole(@item.RoleId); return false;"><span>Delete</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            } 
-        </tbody>
-    </table>
-</div>
-
-</main>
 
 @*DeleteFormulationModel*@
 <div id="DeleteRoleModel" class="modal themeModal " role="dialog">
@@ -131,7 +133,7 @@
         var StatusMessage = '@TempData["StatusMessage"]';
 
 
-                                        //#endregion
+                                                                //#endregion
     </script>
 
 }

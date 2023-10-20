@@ -53,4 +53,6 @@ function DeleteRoleByIdError(x, y, z) {
     toastr.error(ErrorMessage);
     location.reload(true);
 }
+
+ 
 //#endregion

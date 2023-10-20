@@ -46,13 +46,14 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                         var props = getAllField.GetType().GetProperties();
                         if (props.Any(p => p.Name is "IsDeleted"))
                         {
-                            return getAll.Where(o => (bool)o.GetType().GetProperty("IsDeleted").GetValue(o) is false).ToList();
+                            return getAll.Where(o => (o.GetType().GetProperty("IsDeleted") == null || (bool)o.GetType().GetProperty("IsDeleted").GetValue(o) is false)).ToList();
                         }
                     }
                 }
             }
             catch (Exception exx)
-            { }
+            { 
+            }
             return getAll;
         }
 
