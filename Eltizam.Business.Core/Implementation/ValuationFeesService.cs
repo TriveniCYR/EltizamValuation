@@ -97,6 +97,7 @@ namespace Eltizam.Business.Core.Implementation
                     objValuationFees.Vat = entityValuationFees.Vat;
                     objValuationFees.OtherCharges = entityValuationFees.OtherCharges;
                     objValuationFees.TotalValuationFees = entityValuationFees.TotalValuationFees;
+                    objValuationFees.FixedvaluationFees = entityValuationFees.FixedvaluationFees;
                     objValuationFees.ModifiedDate = DateTime.Now;
                     objValuationFees.ModifiedBy = entityValuationFees.CreatedBy;
                     _repository.UpdateAsync(objValuationFees);

@@ -856,6 +856,8 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.FixedvaluationFees).HasColumnType("decimal(18, 6)");
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OtherCharges).HasColumnType("decimal(18, 6)");

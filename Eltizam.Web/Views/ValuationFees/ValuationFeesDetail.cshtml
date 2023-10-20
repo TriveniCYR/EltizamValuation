@@ -34,7 +34,7 @@
         </div>
         <div class="bodyContent">
             <div class="inputSearchs">
-                
+                <form>
 
                     <input type="hidden" id="hdnProperty" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
                     @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
@@ -53,7 +53,7 @@
                     <div class="roundBorderBox">
                         <h3 class="mb-28">Property Details</h3>
                         <div class="flex">
-                            <label for="PropertyTypeId">
+                            <label for="PropertyTypeId" class="w-50">
                                 Property Type Name
                                 @*  <select id="PropertyTypeId" name="PropertyTypeId" class="form-control" asp-for="PropertyTypeId"></select> *@
                             @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @disabled= htmlAttributes, @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)",htmlAttributes})
@@ -63,42 +63,46 @@
                             Property Type Name
                             <input type="text" placeholder="enter Property Type Name">
                             </label> *@
-                            <label for="">
+                            <label for="" class="w-50">
                                 Property SubType Name
                                 @*  <input type="text" placeholder="enter Property SubType Name"> *@
                             @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes/*  @disabled = "disabled" */})
                             </label>
-                            <label for="">
+                            </div>
+                        <div class="flex">
+                            <label for="" class="w-50">
                                 Type of Ownership
                                 @* <input type="text" placeholder="enter Type of Ownership"> *@
                             @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 Client Type
                                 @* <input type="text" placeholder="enter Client Type" /> *@
                             @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
                         </div>
                         <div class="flex">
-                            <label for="CarpetAreaInSqFt">
+                            <label for="CarpetAreaInSqFt" class="w-50">
                                 Carpet Area (Sq.Ft)
                                 @* <input type="text" placeholder="enter Carpet Area (Sq.Ft)" /> *@
                             @Html.EditorFor(model => model.CarpetAreaInSqFt, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control",htmlAttributes } })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqFt, "", new { @class = "text-danger" })
                             </label>
 
-                            <label for="CarpetAreaInSqMtr">
+                            <label for="CarpetAreaInSqMtr" class="w-50">
                                 Carpet Area (Sq.Meter)
                                 @* <input type="text" placeholder="enter Carpet Area (Sq.Meter)"> *@
                             @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control" ,htmlAttributes} })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqMtr, "", new { @class = "text-danger" })
                             </label>
-                            <label for="">
+                            </div>
+                        <div class="flex">
+                            <label for="" <div class="flex">>
                                 Valuation Fee Type
                                 @* <input type="text" placeholder="enter Valuation Fee Type"> *@
                             @Html.DropDownListFor(model => model.ValuationFeeTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
-                            <label for="">
+                            <label for="" <div class="flex">>
                                 Valuation Type
                                 <div class="flex m-0 valuationType">
                                     <input type="radio" value="Fixed" name="valuationType" class="cursor-pointer" />
@@ -118,25 +122,27 @@
                     <div class="roundBorderBox">
                         <h3 class="mb-28">Valuation Charges - General Valuation Fees</h3>
                         <div class="flex">
-                            <label for="">
+                            <label for="" class="w-50">
                                 Valuation Fees (AED)
                                 @* <input type="text" placeholder="enter Valuation Fees (AED)"> *@
                             @Html.EditorFor(model => model.ValuationFees, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control" ,@placeholder="enter Valuation Fees (AED)",htmlAttributes} })
                                 @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" })
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 VAT (Percent)
                                 @* <input type="text" placeholder="enter VAT (Percent)"> *@
                             @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control", @placeholder="enter VAT (Percent)",htmlAttributes} })
                                 @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
                             </label>
-                            <label for="">
+                            </div>
+                        <div class="flex">
+                            <label for="" class="w-50">
                                 Other Charges
                                 @* <input type="text" placeholder="ente other chargesr"> *@
                             @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control",placeholder="enter other chargesr",htmlAttributes } })
                                 @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 Total evaluation Fees
                                 @* <input type="text" placeholder="enter Total evaluation Fees"> *@
                             @Html.EditorFor(model => model.TotalValuationFees, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control",@placeholder="enter Total evaluation Fees" ,htmlAttributes} })
@@ -144,11 +150,11 @@
                             </label>
                         </div>
                     </div>
-                    <div class="text-center buttonArea">
-                        <button type="button" class="lineBtn greyBtn" id="profileDetailsRedirect">Cancel</button>
+                    <div class="text-right buttonArea bodyContent plr-0">
+                        <a href='/ValuationFees/ValuationFees'> <button type="button" class="lineBtn">Cancel</button></a>
                       @*   <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button> *@
                     </div>
-                
+                </form>
             </div>
         </div>
     </div>
