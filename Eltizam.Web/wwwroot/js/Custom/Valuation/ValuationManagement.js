@@ -34,7 +34,7 @@ function DeleteUserByIdError(x, y, z) {
 }
 
 function InitializeUserList() {
-   debugger
+    debugger;
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
         "url": $('#hdnBaseURL').val() + ValuationFees,
@@ -81,8 +81,8 @@ function InitializeUserList() {
             "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                html += '<li><a title="View" href="/ValuationFees/ValuationFeesDetail?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
-                html += '<li><a title="Edit" href="/ValuationFees/ValuationFeesManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
+                html += '<li><a title="View" href="/MasterValuationFees/ValuationFeesDetail?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                html += '<li><a title="Edit" href="/MasterValuationFees/ValuationFeesManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
                 html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                 html += '</ul></div>';
 
