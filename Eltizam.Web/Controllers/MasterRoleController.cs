@@ -4,16 +4,10 @@ using Eltizam.Utility.Enums;
 using Eltizam.Utility.Models;
 using Eltizam.Utility.Utility;
 using Eltizam.Web.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Net.Http;
 
 namespace Eltizam.Web.Controllers
 {
@@ -164,12 +158,11 @@ namespace Eltizam.Web.Controllers
                 masterRole.LoggedUserId = _helper.GetLoggedInUserId();
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                
+
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.SaveRole, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterRole))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
-                {
-                    TempData["StatusMessage"] = "Saved Successfully";
+                { 
                     if (masterRole.RoleId > 0)
                     {
                         UtilityHelper.RemoveModuleRole(masterRole.RoleId);
@@ -183,24 +176,27 @@ namespace Eltizam.Web.Controllers
                         }
                     }
 
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    ModelState.Clear();
-                    return RedirectToAction(nameof(Roles));
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                        TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+
+                        return RedirectToAction("ManageRole", new { id = masterRole.RoleId });
+                    }
+                    else
+                    {
+                        TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+                        return RedirectToAction("ManageRole", new { id = masterRole.RoleId });
+                    }
                 }
-                else
-                    TempData["StatusMessage"] = "Some Eror Occured";
-            }
+                return RedirectToAction("ManageRole", new { id = masterRole.RoleId });
+            } 
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                ViewBag.errormessage = Convert.ToString(e.StackTrace);
-                ModelState.Clear();
-                return View(nameof(Roles));
-            }
-            ModelState.Clear();
-            return RedirectToAction(nameof(Roles));
-        }
-
-
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+                return RedirectToAction("ManageRole", new { Id = masterRole.RoleId });
+            } 
+        }  
     }
 }

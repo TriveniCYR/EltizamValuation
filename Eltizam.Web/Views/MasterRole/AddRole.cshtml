@@ -12,9 +12,7 @@
 @{
     ViewData["Title"] = @MasterLocalizer["RoleManage"];
     string PageHeading = "";
-    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    string[] Approve_Modules = { "PIDF", "IPD", "Finance", "Management HOD" };
-    string[] Delete_Modules = { "User Management", "Role Management", "Master Management", "Project" };
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"]; 
 }
  <form asp-action="RoleManage">
 

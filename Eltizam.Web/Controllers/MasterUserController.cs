@@ -93,19 +93,19 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
-                    return RedirectToAction("UserManage", new { id = masterUser.Id });
+                    return RedirectToAction("UserManage", new { Id = masterUser.Id, ddd=1 });
                 }
                 else
                 {
                     TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
-                    return RedirectToAction("UserManage", new { id = masterUser.Id });
+                    return RedirectToAction("UserManage", new { Id = masterUser.Id, ddd = 1 });
                 }
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-                return RedirectToAction("UserManage", new { Id = masterUser.Id });
+                return RedirectToAction("UserManage", new { Id = masterUser.Id, ddd = 1 });
             }
         }
 
