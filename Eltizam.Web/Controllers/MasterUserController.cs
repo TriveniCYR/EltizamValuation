@@ -93,7 +93,7 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
-                    return RedirectToAction("UserManage", new { id = masterUser.Id });
+                    return RedirectToAction("Users");
                 }
                 else
                 {
