@@ -99,7 +99,6 @@ namespace Eltizam.Business.Core.Implementation
 
                 }
 
-
                 DbParameter[] osqlParameter2 = {
                  new DbParameter("TableKeyId", id, SqlDbType.Int),
                  new DbParameter("TableName",  TableName.Master_User, SqlDbType.VarChar),
