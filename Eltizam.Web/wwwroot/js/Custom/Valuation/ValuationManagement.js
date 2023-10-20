@@ -6,12 +6,14 @@ $(document).ready(function () {
 
 //#region Delete User
 function ConfirmationDeleteUser(id) {
-    $('#DeleteUserModel #Id').val(id);
+    $('#DeleteValuationFeesModel #Id').val(id);
 }
 function DeleteUser() {
-    var tempInAtiveID = $('#DeleteUserModel #Id').val();
+    debugger
+    var tempInAtiveID = $('#DeleteValuationFeesModel #Id').val();
     ajaxServiceMethod($('#hdnBaseURL').val() + DeleteUserByIdUrl + "/" + tempInAtiveID, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
 }
+
 function DeleteUserByIdSuccess(data) {
     try {
         if (data._Success === true) {
@@ -25,6 +27,7 @@ function DeleteUserByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
+
 function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
@@ -42,6 +45,9 @@ function InitializeUserList() {
         "datatype": "json"
     };
     var columnObject = [
+        {
+            "data": "id", "name": "Id"
+        },
         {
             "data": "valuationType", "name": "Valuation Type"
         },
