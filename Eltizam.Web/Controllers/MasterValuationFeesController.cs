@@ -63,7 +63,7 @@ namespace EltizamValuation.Web.Controllers
 
 
         [HttpPost]
-        [Route("ValuationFees/ValuationFeesManage")]
+        [Route("MasterValuationFees/ValuationFeesManage")]
         public IActionResult ValuationFeesManage(int id, MasterValuationFeesModel masterValuationFeesModel)
         {
             try
@@ -132,14 +132,14 @@ namespace EltizamValuation.Web.Controllers
         }
 
 		[HttpGet]
-		[Route("ValuationFees/ValuationFeesDetail")]
+		[Route("MasterValuationFees/ValuationFeesDetail")]
 		public IActionResult ValuationFeesDetail(int? id)
 		{
 			MasterValuationFeesModel masterValuationFeesModel;
 			if (id == null || id <= 0)
 			{
 				masterValuationFeesModel = new MasterValuationFeesModel();
-				return RedirectToAction("ValuationFees");
+				return RedirectToAction("MasterValuationFees");
 			}
 			else
 			{

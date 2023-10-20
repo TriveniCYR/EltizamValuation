@@ -40,7 +40,7 @@
         </div>
         <div class="bodyContent">
             <div class="inputSearchs">
-                <form asp-action="ValuationFeesManage" autocomplete="off" asp-controller="ValuationFees" method="post">
+                <form asp-action="ValuationFeesManage" autocomplete="off" asp-controller="MasterValuationFees" method="post">
 
                      <input type="hidden" id="hdnProperty" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
                     @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
