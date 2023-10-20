@@ -212,5 +212,13 @@ namespace Eltizam.Utility.Utility
              
             return objList.First();
         }
+
+        public static Tuple<int, int> GetPaginationInfo(DataTable? dataTable)
+        {
+            var TotalRecord = (dataTable != null && dataTable.Rows.Count > 0 ? Convert.ToInt32(dataTable.Rows[0]["TotalRecord"]) : 0);
+            var TotalFilterCount = (dataTable != null && dataTable.Rows.Count > 0 ? Convert.ToInt32(dataTable.Rows[0]["TotalFilterCount"]) : 0);
+            
+            return Tuple.Create(TotalRecord, TotalFilterCount);
+        }
     }
 }

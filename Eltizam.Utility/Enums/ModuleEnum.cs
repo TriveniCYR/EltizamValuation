@@ -35,7 +35,7 @@ namespace Eltizam.Utility.Enums
         ClientTypeManagement = 8,
         PropertyMaster = 9,
         ClientMaster = 13,       
-        ValutionFessMaster = 14,
+        ValutionFeesMaster = 14,
         VendorMaster = 15,
         //      Commercial = 15,
         //      ManagementHOD = 16,

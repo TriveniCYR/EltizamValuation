@@ -44,25 +44,26 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         // get all recoreds from ValuationFees list with sorting and pagination
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
-        
-        {
-            var _dbParams = new[]
-             {
-                 new DbParameter("Id", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "ValuationFeeType", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model) 
+        { 
+            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
+            string SortDir = model.order[0]?.dir;  
 
-            int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterValuationFeesListModel>(ProcedureMetastore.usp_ValuationFees_SearchAllList,
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
+            }; 
 
-             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
+            var ListRes = await _repository.GetBySP(ProcedureMetastore.usp_ValuationFees_SearchAllList, System.Data.CommandType.StoredProcedure, osqlParameter);
 
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(ListRes);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, ListRes);
 
             return oDataTableResponseModel;
         }

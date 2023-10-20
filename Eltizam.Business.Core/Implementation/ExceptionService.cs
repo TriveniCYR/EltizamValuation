@@ -44,7 +44,7 @@ namespace Eltizam.Business.Core.Implementation
                     new SqlParameter("@CreatedBy", _helper.GetLoggedInUser().UserId)
                 };
 
-                await _repository.GetBySP(ProcedureMetastore.stp_InsertException, System.Data.CommandType.StoredProcedure, osqlParameter);
+                await _repository.GetBySP(ProcedureMetastore.usp_InsertException, System.Data.CommandType.StoredProcedure, osqlParameter);
 
                 //var result = Convert.ToBoolean(dtOptions.Rows[0][0]);
                 //if (result)

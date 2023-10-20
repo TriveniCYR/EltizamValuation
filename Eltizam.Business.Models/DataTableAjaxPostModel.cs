@@ -41,7 +41,7 @@ namespace Eltizam.Business.Models
 
     public class DataTableResponseModel
     {
-        public DataTableResponseModel(int _draw, int _recordsTotal, int _recordsFiltered, dynamic _data)
+        public DataTableResponseModel(int _draw, int _recordsTotal, int _recordsFiltered, dynamic? _data)
         {
             this.draw = _draw;
             this.recordsTotal = _recordsTotal;
