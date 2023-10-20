@@ -106,22 +106,19 @@ namespace Eltizam.Business.Core.Implementation
             string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
             string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
-            SqlParameter[] osqlParameter = 
+            SqlParameter[] osqlParameter =
             {
-                new SqlParameter("@ClientId", 0),
-                new SqlParameter("@CurrentPageNumber", model.start),
-                new SqlParameter("@PageSize", model.length),
-                new SqlParameter("@SortColumn", ColumnName),
-                new SqlParameter("@SortDirection", SortDir),
-                new SqlParameter("@SearchText", model.search.value)
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
             };
 
-            var ClientList = await _repository.GetBySP("usp_Client_Search_GetClientList", System.Data.CommandType.StoredProcedure, osqlParameter);
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Client_Search_GetClientList, System.Data.CommandType.StoredProcedure, osqlParameter);
 
-            var TotalRecord = (ClientList != null && ClientList.Rows.Count > 0 ? Convert.ToInt32(ClientList.Rows[0]["TotalRecord"]) : 0);
-            var TotalCount = (ClientList != null && ClientList.Rows.Count > 0 ? Convert.ToInt32(ClientList.Rows[0]["TotalCount"]) : 0);
-
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, ClientList.DataTableToList<MasterClientListModel>());
+            var res = UtilityHelper.GetPaginationInfo(Results);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterClientListModel>());
 
             return oDataTableResponseModel;
             // Get the column name and sort direction for data table sorting.
