@@ -105,26 +105,32 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
             string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
-            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty); 
 
-            SqlParameter[] osqlParameter = {
-                new SqlParameter("@VendorId", 0),
-                new SqlParameter("@CurrentPageNumber", model.start),
-                    new SqlParameter("@PageSize", model.length),
-                    new SqlParameter("@SortColumn", ColumnName),
-                    new SqlParameter("@SortDirection", SortDir),
-                    new SqlParameter("@SearchText", model.search.value)
+            //int _count = 0;
+            //var UserList = await _repository.GetBySP("usp_Vendor_Search_GetVendorList", System.Data.CommandType.StoredProcedure, osqlParameter); 
+            //DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, osqlParameter); 
+            //var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
+            //var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
+
+
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
             };
 
-            int _count = 0;
-            var UserList = await _repository.GetBySP("usp_Vendor_Search_GetVendorList", System.Data.CommandType.StoredProcedure, osqlParameter);
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Vendor_Search_GetVendorList, CommandType.StoredProcedure, osqlParameter);
+            //var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
+            //var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
 
-            //DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, osqlParameter);
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(Results); 
 
-            var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
-            var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
-
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, UserList.DataTableToList<VendorListModel>());
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<VendorListModel>());
 
             return oDataTableResponseModel;
         }

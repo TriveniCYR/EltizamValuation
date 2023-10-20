@@ -76,6 +76,7 @@
             <table id="ResourceUserTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
+                            <th>@MasterLocalizer["Id"] </th>
                             <th>@MasterLocalizer["UserName"] </th>
                             <th>@MasterLocalizer["Department"]</th>
                             <th>@MasterLocalizer["Designation"]</th>
@@ -201,7 +202,7 @@
 
             //#region Setup API Url
             var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
-        var DeleteUserByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteUserById";
+            var DeleteUserByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteUserById";
             var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
             var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
             var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";

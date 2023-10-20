@@ -42,6 +42,9 @@ function InitializeUserList() {
     };
     var columnObject = [
         {
+            "data": "id", "name": "Id"
+        },
+        {
             "data": "userName", "name": "User Name"
         },
         {
@@ -51,7 +54,7 @@ function InitializeUserList() {
             "data": "designation", "name": "Designation"
         },
         {
-            "data": "resourceType", "name": "ResourceType"
+            "data": "resourceType", "name": "Resource Type"
         },
         {
             "data": "roleName", "name": "Role"
@@ -82,7 +85,4 @@ function InitializeUserList() {
     ];
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
-} 
-
-
-//#endregion
+}  

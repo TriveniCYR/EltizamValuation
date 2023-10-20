@@ -32,8 +32,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterDocument> _documentRepository { get; set; }
         private readonly IHelper _helper;
         public UserService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
-                                  IHelper helper,
-                                 Microsoft.Extensions.Configuration.IConfiguration _configuration)
+                           IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -48,24 +47,26 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
-            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+            string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
+            string SortDir = model.order[0]?.dir;   
 
-            SqlParameter[] osqlParameter = {
-                new SqlParameter("@UserId", 0),
-                new SqlParameter("@CurrentPageNumber", model.start),
-                new SqlParameter("@PageSize", model.length),
-                new SqlParameter("@SortColumn", ColumnName),
-                new SqlParameter("@SortDirection", SortDir),
-                new SqlParameter("@SearchText", model.search.value)
+            SqlParameter[] osqlParameter = 
+            { 
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
             };
 
-            var UserList = await _repository.GetBySP(ProcedureMetastore.usp_User_Search_GetUserList, System.Data.CommandType.StoredProcedure, osqlParameter);
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_User_SearchAllList, CommandType.StoredProcedure, osqlParameter);
+            //var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
+            //var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
 
-            var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
-            var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(Results); 
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, TotalRecord, TotalCount, UserList.DataTableToList<MasterUserListModel>());
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterUserListModel>());
 
             return oDataTableResponseModel;
         }
