@@ -11,10 +11,6 @@
 @* @model List<Eltizam.Business.Models.MasterValuationFeesModel> *@
 @{
     ViewData["Title"] = @MasterLocalizer["ValuationFeesList"];
-    // RolePermissionModel objPermssion = (RolePermissionModel)ViewBag._objPermission;
-    // string IsAddAllow = (objPermssion.Add) ? "" : "display: none";
-    // string IsEditAllow = (objPermssion.Edit) ? "" : "display: none";
-    // string IsDeleteAllow = (objPermssion.Delete) ? "" : "display: none";
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
 
@@ -22,65 +18,19 @@
     <main class="w-100">
         <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
             <h3 class="dashboardTitle">VALUATION FEES MASTER</h3>
-            @*<div class="flex">
-            <label class="searchBox position-relative">
-            <div class="flex align-item-center">
-            <img src="~/assets/search.svg" alt="search">
-            <input type="text" id="txtUserName" placeholder="Search for System" class="searchInput">
-            </div>
-            <button class="normalSearch" onclick="UserList(1,0)">Search</button>
-            </label>
-            <div class="accordion">
-            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
-            <label for="section1" class="advaceSearhBtn"><img src="~/assets/filter.svg" alt="filterSearch" /></label>
-            <div class="accordion-content inputSearchs">
-            <h3 class="text-center">Advanced Search</h3>
-            <form>
-            <div class="flex">
-            <label for="userName">
-            User Name
-            <input type="text" id="UserName" placeholder="enter user id">
-            </label>
-            </div>
-            <div class="text-center">
-            <button type="submit" class="blueBtn" onclick="UserList(1,1)">Search</button>
-            </div>
-            </form>
-            </div>
-            </div>
-
-            </div>*@
             <div class="buttonArea flex align-item-center">
-
                 <form asp-action="ValuationFeesManage" asp-controller="MasterValuationFees" method="GET">
                     <button class="flex align-item-center blueBtn" id="addNew">
                         <img src="~/assets/plus.svg" alt="plus"> Add New
                     </button>
                 </form>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                @*<button class="flex align-item-center lineBtn" id="importFile">
-                <img src="~/assets/file-import.svg" alt="file-import" />
-                Import
-                </button>*@
-                @*<button class="flex align-item-center lineBtn exportFile">
-                <img src="~/assets/file-export.svg" alt="file-export"> Export
-                <div class="actionItem">
-                <ul>
-                <li>
-                Excel XML
-                </li>
-                <li>
-                CSV
-                </li>
-                </ul>
-                </div>
-                </button>*@
             </div>
         </div>
         <div class="scroll-x whiteWithPadding">
             <table id="ValuationFeesTable" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
+                        <th>@MasterLocalizer["Id"] </th>
                         <th>@MasterLocalizer["ValuationType"] </th>
                         <th>@MasterLocalizer["PropertyType"]</th>
                         <th>@MasterLocalizer["ClientType"]</th>
@@ -94,23 +44,7 @@
                 </tbody>
             </table>
         </div>
-        @*<div class="flex justify-between align-item-center mobile_flexColumn">
-        <p>Showing <b>1</b> to <b>10</b> of <b>20</b> results</p>
-        <div class="flex justify-between align-item-center pagination">
-        <p>Previous</p>
-        <ul class="flex justify-between">
-        <li class="active">1</li>
-        <li>2</li>
-        <li>3</li>
-        </ul>
-        <p>Next</p>
-        </div>
-        </div>*@
     </main>
-    <footer class="flex justify-between">
-        <p>2023 © Eltizam.</p>
-        <p>Design & Develop by NeoSoft</p>
-    </footer>
 
     <!-- popup delete model -->
     <div class="popup-overlay" id="popup-delete-overlay">
@@ -160,64 +94,64 @@
 </div>
 
 
-    <div id="DeleteValuationFeesModel" class="modal themeModal " role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.Label(@SharedLocalizer["DeleteConfirm"])
-                            </div>
+<div id="DeleteValuationFeesModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
                         </div>
                     </div>
-                    @Html.Hidden("Id")
-                    <div class="buttonArea popup-btn">
-                        <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
-                        <button type="button" onclick="DeleteUser()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
-                    </div>
+                </div>
+                @Html.Hidden("Id")
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteValuationFees()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+</div>
 
- @section MyScripts {
-        @Html.Partial("_DataTablePartial")
-         
-        <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
-        <script type="text/javascript" src="~/js/custom/valuation/valuationmanagement.js?v=@jsVersion"></script>
-        <script> 
-            var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
-            var DeleteLabel = "@SharedLocalizer["Delete"]";
-            var ErrorMessage = "@SharedLocalizer["Error"]";
-            var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-            var StatusMessage = '@TempData["StatusMessage"]'; 
-            var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation"; 
-            //#region Static Messae Init
-            var EditLabel = "@SharedLocalizer["Edit"]";
+@section MyScripts {
+    @Html.Partial("_DataTablePartial")
+
+    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/valuation/valuationfees.js?v=@jsVersion"></script>
+    <script>
+        var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+        var StatusMessage = '@TempData["StatusMessage"]';
+        var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
+        //#region Static Messae Init
+        var EditLabel = "@SharedLocalizer["Edit"]";
 
 
-            var AddLabel = "@SharedLocalizer["Add"]";
-            var UpdateLabel = "@SharedLocalizer["Update"]";
-            var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
-            if (successCallBack) {
-                toastr.success(successCallBack);
+        var AddLabel = "@SharedLocalizer["Add"]";
+        var UpdateLabel = "@SharedLocalizer["Update"]";
+        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
+        if (successCallBack) {
+            toastr.success(successCallBack);
+        }
+
+
+        function sideNavToggle() {
+            var x = document.getElementById("sideNav");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
             }
-
-
-            function sideNavToggle() {
-                var x = document.getElementById("sideNav");
-                if (x.style.display === "none") {
-                    x.style.display = "block";
-                } else {
-                    x.style.display = "none";
-                }
-            } 
-        </script> 
+        }
+    </script>
     }
- 
+

@@ -13,87 +13,87 @@
 }
 
 <!-- system user master -->
- <div class="flex">
-        <main class="w-100">
-            <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
-            <h3 class="dashboardTitle">RESOURCE MASTER</h3> 
-                <div class="buttonArea flex align-item-center">
+<div class="flex">
+    <main class="w-100">
+        <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+            <h3 class="dashboardTitle">RESOURCE MASTER</h3>
+            <div class="buttonArea flex align-item-center">
 
                 <form asp-action="ResourceManage" asp-controller="Resource" method="GET">
                     <button class="flex align-item-center blueBtn" id="addNew">
                         <img src="~/assets/plus.svg" alt="plus"> Add New
                     </button>
-                </form> 
-                </div>
+                </form>
             </div>
+        </div>
         <div class="scroll-x whiteWithPadding">
             <table id="ResourceUserTable" class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>@MasterLocalizer["Id"] </th>
-                            <th>@MasterLocalizer["UserName"] </th>
-                            <th>@MasterLocalizer["Department"]</th>
-                            <th>@MasterLocalizer["Designation"]</th>
-                            <th>@MasterLocalizer["ResourceType"]</th>
-                            <th>@MasterLocalizer["Role"]</th>
-                            <th>@MasterLocalizer["Phone"]</th>
-                            <th>@MasterLocalizer["Email"]</th>
-                            <th>@MasterLocalizer["Active"]</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div> 
-        </main> 
+                <thead>
+                    <tr>
+                        <th>@MasterLocalizer["Id"] </th>
+                        <th>@MasterLocalizer["UserName"] </th>
+                        <th>@MasterLocalizer["Department"]</th>
+                        <th>@MasterLocalizer["Designation"]</th>
+                        <th>@MasterLocalizer["ResourceType"]</th>
+                        <th>@MasterLocalizer["Role"]</th>
+                        <th>@MasterLocalizer["Phone"]</th>
+                        <th>@MasterLocalizer["Email"]</th>
+                        <th>@MasterLocalizer["Active"]</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
-        <!-- popup delete model -->
-        <div class="popup-overlay" id="popup-delete-overlay">
-            <div class="popup">
-                <div class="content text-center">
-                    <div class="popup-head">Delete User</div>
-                    <div class="popup-action">
-                        <p>Are you sure you want to delete?</p>
-                        <div class="buttonArea popup-btn">
-                            <button id="cancelDeleteUser">Cancel</button>
-                            <button class="redBtn">Delete</button>
-                        </div>
+    <!-- popup delete model -->
+    <div class="popup-overlay" id="popup-delete-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head">Delete User</div>
+                <div class="popup-action">
+                    <p>Are you sure you want to delete?</p>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser">Cancel</button>
+                        <button class="redBtn">Delete</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- popup import model -->
-        <div class="popup-overlay" id="popup-import-overlay">
-            <div class="popup">
-                <div class="content text-center">
-                    <div class="popup-head position-relative">
-                        Import Resource
-                        <img src="~/assets/x.svg" alt="x" id="closePopup">
-                    </div>
-                    <div class="popup-action importBox">
-                        <p class="text-left">Browse File</p>
-                        <div class="inputBox">
-                            <input type="file" name="file" id="file" class="file" />
-                            <div class="flex">
-                                <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
-                                <div class="uploadFileBtn flex">
-                                    <img src="~/assets/files.svg" alt="file">
-                                    <input type="button" class="btn" value="Browse" />
-                                </div>
+    <!-- popup import model -->
+    <div class="popup-overlay" id="popup-import-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Import Resource
+                    <img src="~/assets/x.svg" alt="x" id="closePopup">
+                </div>
+                <div class="popup-action importBox">
+                    <p class="text-left">Browse File</p>
+                    <div class="inputBox">
+                        <input type="file" name="file" id="file" class="file" />
+                        <div class="flex">
+                            <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                            <div class="uploadFileBtn flex">
+                                <img src="~/assets/files.svg" alt="file">
+                                <input type="button" class="btn" value="Browse" />
                             </div>
                         </div>
-                        <div class="buttonArea popup-btn">
-                            <button id="cancelDeleteUser" class="bgBlue">Submit</button>
-                            <button class="lineBtn">Download Template</button>
-                        </div>
+                    </div>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser" class="bgBlue">Submit</button>
+                        <button class="lineBtn">Download Template</button>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
+</div>
 
 
 <div id="DeleteUserModel" class="modal themeModal " role="dialog">
@@ -121,41 +121,42 @@
         </div>
     </div>
 </div>
- 
-    @section MyScripts {
 
-        @Html.Partial("_DataTablePartial")
-        <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
-        <script type="text/javascript" src="~/js/Custom/MasterUser/MasterUser.js?v=@jsVersion"></script>
-        <script>
+@section MyScripts 
+{ 
+    @Html.Partial("_DataTablePartial")
 
-            //#region Setup API Url
-            var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
-            var DeleteUserByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteUserById";
-            var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
-            var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
-            var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
-            var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
-            //#region Static Messae Init
-            var EditLabel = "@SharedLocalizer["Edit"]";
-            var DeleteLabel = "@SharedLocalizer["Delete"]";
-            var ErrorMessage = "@SharedLocalizer["Error"]";
-            var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-            var AddLabel = "@SharedLocalizer["Add"]";
-            var UpdateLabel = "@SharedLocalizer["Update"]";
-            var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
-            if (successCallBack) {
-                toastr.success(successCallBack);
-            }
+    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/Custom/MasterUser/MasterUser.js?v=@jsVersion"></script>
+    <script>
+
+        //#region Setup API Url
+        var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
+        var DeleteUserByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteUserById";
+        var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
+        var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
+        var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
+        var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
+        //#region Static Messae Init
+        var EditLabel = "@SharedLocalizer["Edit"]";
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+        var AddLabel = "@SharedLocalizer["Add"]";
+        var UpdateLabel = "@SharedLocalizer["Update"]";
+        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
+        if (successCallBack) {
+            toastr.success(successCallBack);
+        }
 
 
-            function sideNavToggle() {
-                var x = document.getElementById("sideNav");
-                if (x.style.display === "none") {
-                    x.style.display = "block";
-                } else {
-                    x.style.display = "none";
-                }
-            } 
-        </script>
-    } 
+        //function sideNavToggle() {
+        //    var x = document.getElementById("sideNav");
+        //    if (x.style.display === "none") {
+        //        x.style.display = "block";
+        //    } else {
+        //        x.style.display = "none";
+        //    }
+        //}
+    </script>
+} 
