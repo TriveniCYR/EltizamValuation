@@ -74,7 +74,7 @@ namespace Eltizam.Web.Controllers
                             }
                         }
 
-                        return RedirectToAction("Resource", "Resource");
+                        return RedirectToAction("Users", "MasterUser");
                     }
                     else
                     {
