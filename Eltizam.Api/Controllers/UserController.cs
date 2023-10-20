@@ -1,20 +1,12 @@
-﻿using Eltizam.Business.Core.Interface;
+﻿using Eltizam.Api.Helpers.Response;
+using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
-using Eltizam.Resource;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-using static Eltizam.Utility.Enums.GeneralEnum;
-using Eltizam.Api.Helpers.Response;
-using Microsoft.AspNetCore.Hosting;
-using Eltizam.Business.Core.Implementation;
-using Eltizam.Api.Filters;
 using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Resource;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using System.Net;
+using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.API.Controllers.Masters
 {

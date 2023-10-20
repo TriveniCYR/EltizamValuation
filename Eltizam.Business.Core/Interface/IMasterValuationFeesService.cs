@@ -8,7 +8,7 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Interface
 {
-    public interface IValuationFeesService
+    public interface IMasterValuationFeesService
     {
         Task<DBOperation> Upsert(MasterValuationFeesModel entityUser);
         Task<MasterValuationFeesModel> GetById(int id);

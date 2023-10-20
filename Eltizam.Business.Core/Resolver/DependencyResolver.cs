@@ -35,7 +35,7 @@ namespace Eltizam.Business.Core.Resolver
             services.AddTransient<IDepartmentService, DepartmentService>();
             services.AddTransient<IDesignationService, DesignationService>();
             services.AddTransient<IOwnershipTypeService, OwnershipTypeService>();
-            services.AddTransient<IValuationFeesService, ValuationFeesService>();
+            services.AddTransient<IMasterValuationFeesService, MasterValuationFeesService>();
             services.AddTransient<IValuationFeeTypeService, ValuationFeeTypeService>();
             services.AddTransient<ILocationService, LocationService>();
             services.AddTransient<IMasterModuleService, MasterModuleService>();

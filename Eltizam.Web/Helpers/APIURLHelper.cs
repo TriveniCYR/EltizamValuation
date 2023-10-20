@@ -93,10 +93,10 @@ namespace Eltizam.Web.Helpers
         #endregion MasterOwnershipType
 
         #region Valuation Fees
-        public static string UpsertValuation = "api/ValuationFees/Upsert";
-        public static string GetAllValuation = "api/ValuationFees/GetAll";
-        public static string GetValuationById = "api/ValuationFees/GetById";
-        public static string DeleteValuationById = "api/ValuationFees/Delete";
+        public static string UpsertValuation = "api/MasterValuationFees/Upsert";
+        public static string GetAllValuation = "api/MasterValuationFees/GetAll";
+        public static string GetValuationById = "api/MasterValuationFees/GetById";
+        public static string DeleteValuationById = "api/MasterValuationFees/Delete";
 
         #endregion Valuation Fees
 

@@ -14,6 +14,7 @@ function DeleteValuation() {
     var tempInAtiveID = $('#DeleteValuationModel #Id').val();
     ajaxServiceMethod($('#hdnBaseURL').val() + DeleteValuationByIdUrl + "/" + tempInAtiveID, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
 }
+
 function DeleteUserByIdSuccess(data) {
     try {
         if (data._Success === true) {
@@ -27,6 +28,7 @@ function DeleteUserByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
+
 function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
@@ -44,6 +46,9 @@ function InitializeUserList() {
         "datatype": "json"
     };
     var columnObject = [
+        {
+            "data": "id", "name": "Id"
+        },
         {
             "data": "valuationType", "name": "Valuation Type"
         },

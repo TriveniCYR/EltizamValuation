@@ -160,77 +160,63 @@
 </div>
 
 
-<div id="DeleteValuationModel" class="modal themeModal " role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+    <div id="DeleteValuationFeesModel" class="modal themeModal " role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                            </div>
                         </div>
                     </div>
-                </div>
-                @Html.Hidden("ID")
-                <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteValuation()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
-                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                    @Html.Hidden("Id")
+                    <div class="buttonArea popup-btn">
+                        <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                        <button type="button" onclick="DeleteUser()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div> 
 
-@section MyScripts {
-
-    @Html.Partial("_DataTablePartial")
-
-    @* <script type="text/javascript" src="~/js/Custom/Department/DepartmentManagement.js?v=@jsVersion"></script> *@
-    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/custom/valuation/valuationmanagement.js?v=@jsVersion"></script>
-    <script>
-
-        var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
-        var DeleteLabel = "@SharedLocalizer["Delete"]";
-        var ErrorMessage = "@SharedLocalizer["Error"]";
-        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-        var StatusMessage = '@TempData["StatusMessage"]';
-
-
-        //#region Setup API Url
-        var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
-       // var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
-       // var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
-       // var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
-       // var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
-        //#region Static Messae Init
-        var EditLabel = "@SharedLocalizer["Edit"]";
-       
-        
-        var AddLabel = "@SharedLocalizer["Add"]";
-        var UpdateLabel = "@SharedLocalizer["Update"]";
-        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
-        if (successCallBack) {
-            toastr.success(successCallBack);
-        }
+ @section MyScripts {
+        @Html.Partial("_DataTablePartial")
+         
+        <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+        <script type="text/javascript" src="~/js/custom/valuation/valuationmanagement.js?v=@jsVersion"></script>
+        <script> 
+            var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
+            var DeleteLabel = "@SharedLocalizer["Delete"]";
+            var ErrorMessage = "@SharedLocalizer["Error"]";
+            var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+            var StatusMessage = '@TempData["StatusMessage"]'; 
+            var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation"; 
+            //#region Static Messae Init
+            var EditLabel = "@SharedLocalizer["Edit"]";
 
 
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
+            var AddLabel = "@SharedLocalizer["Add"]";
+            var UpdateLabel = "@SharedLocalizer["Update"]";
+            var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
+            if (successCallBack) {
+                toastr.success(successCallBack);
             }
-        }
 
 
-                                        //#endregion
-    </script>
-
-}
+            function sideNavToggle() {
+                var x = document.getElementById("sideNav");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            } 
+        </script> 
+    }
