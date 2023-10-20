@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
-using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Api.Filters;
 using Eltizam.Business.Core.Implementation;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MaterValuationFeesController : ControllerBase
+    //[AuthorizeAttribute]
+    public class MasterDesignationController : ControllerBase
     {
         #region Properties
 
@@ -23,28 +25,29 @@ namespace EltizamValuation.Api.Controllers
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
-        private readonly IMasterValuationFeesService _ValuationFeesService;
+        private readonly IMasterDesignationService _DesignationService;
 
         #endregion Properties
 
         #region Constructor
-        public MaterValuationFeesController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IMasterValuationFeesService ValuationFeesService)
+        public MasterDesignationController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IMasterDesignationService DesignationService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
             _stringLocalizerError = stringLocalizerError;
             _ExceptionService = exceptionService;
-            _ValuationFeesService = ValuationFeesService;
+            _DesignationService = DesignationService;
         }
 
         #endregion Constructor
 
+
         #region API Methods
 
         /// <summary>
-        /// Description - To Insert and Update ValuationFees
+        /// Description - To Insert and Update Designation
         /// </summary>
-        /// <param name="oValuationFees"></param>
+        /// <param name="oDesignation"></param>
         /// <returns></returns>
         /// <response code="200">OK</response>
         /// <response code="400">Bad Request</response>
@@ -53,48 +56,47 @@ namespace EltizamValuation.Api.Controllers
         /// <response code="405">Method Not Allowed</response>
         /// <response code="500">Internal Server</response>
 
-        // get all records from master ValuationFees with sorting and pagination 
-
-        [HttpPost, Route("GetAll")]
-        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
+        // get all records from master designation with sorting and pagination 
+        //[HttpPost, Route("GetAll")]
+        //public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
+        //{
+        //    try
+        //    {
+        //        return _ObjectResponse.CreateData(await _DesignationService.GetAll(model), (Int32)HttpStatusCode.OK);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
+        [HttpGet, Route("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                return _ObjectResponse.CreateData(await _ValuationFeesService.GetAll(model), (Int32)HttpStatusCode.OK);
+                var oRoleList = await _DesignationService.GetAll();
+                if (oRoleList != null)
+                    return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
+                await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
 
-        //[HttpGet, Route("GetAll")]
-        //public async Task<IActionResult> GetAll()
-        //{
-        //    try
-        //    {
-        //        var oRoleList = await _ValuationFeesService.GetAll();
-        //        if (oRoleList != null)
-        //            return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
-        //        else
-        //            return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        await _ExceptionService.LogException(ex);
-        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-        //    }
-        //}
+        // get master designation detail by id
 
-        // get master ValuationFees detail by id
         [HttpGet, Route("GetById/{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
             {
-                var oValuationFeesEntity = await _ValuationFeesService.GetById(id);
-                if (oValuationFeesEntity != null && oValuationFeesEntity.Id > 0)
-                    return _ObjectResponse.Create(oValuationFeesEntity, (Int32)HttpStatusCode.OK);
+                var oDesignationEntity = await _DesignationService.GetById(id);
+                if (oDesignationEntity != null && oDesignationEntity.Id > 0)
+                    return _ObjectResponse.Create(oDesignationEntity, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
@@ -104,17 +106,17 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        // this method is called when inserting and updating master ValuationFees detail
+        // this method is called when inserting and updating master Designation detail
         [HttpPost]
         [Route("Upsert")]
-        public async Task<IActionResult> Upsert(MasterValuationFeesModel oValuationFees)
+        public async Task<IActionResult> Upsert(MasterDesignationEntity oDepartment)
         {
             try
             {
-                DBOperation oResponse = await _ValuationFeesService.Upsert(oValuationFees);
+                DBOperation oResponse = await _DesignationService.Upsert(oDepartment);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oValuationFees.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oDepartment.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
                 else
                     return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
@@ -126,16 +128,31 @@ namespace EltizamValuation.Api.Controllers
         }
 
         // this is for delete master Designation detail by id
-        [HttpDelete("Delete/{id}")]
+
+        [HttpPost("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try
             {
-                DBOperation oResponse = await _ValuationFeesService.Delete(id);
+                DBOperation oResponse = await _DesignationService.Delete(id);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+
+        [HttpGet("GetDesignationList")]
+        public async Task<IActionResult> GetDesignationList()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _DesignationService.GetDesignationList(), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

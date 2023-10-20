@@ -25,22 +25,22 @@ namespace Eltizam.Business.Core.Resolver
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
                        
             services.AddTransient<IMasterRoleService, MasterRoleService>();
-            services.AddTransient<IRoleModulePermission, RoleModulePermissionService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMasterRoleModulePermission, MasterRoleModulePermissionService>();
+            //services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMasterRoleService, MasterRoleService>();
             services.AddTransient<IMasterUserService, MasterUserService>();
-            services.AddTransient<ICityService, CityService>();
-            services.AddTransient<IStateService, StateService>();
-            services.AddTransient<ICountryService, CountryService>();
-            services.AddTransient<IDepartmentService, DepartmentService>();
-            services.AddTransient<IDesignationService, DesignationService>();
-            services.AddTransient<IOwnershipTypeService, OwnershipTypeService>();
+            services.AddTransient<IMasterCityService, MasterCityService>();
+            services.AddTransient<IMasterStateService, MasterStateService>();
+            services.AddTransient<IMasterCountryService, MasterCountryService>();
+            services.AddTransient<IMasterDepartmentService, MasterDepartmentService>();
+            services.AddTransient<IMasterDesignationService, MasterDesignationService>();
+            services.AddTransient<IMasterOwnershipTypeService, MasterOwnershipTypeService>();
             services.AddTransient<IMasterValuationFeesService, MasterValuationFeesService>();
-            services.AddTransient<IValuationFeeTypeService, ValuationFeeTypeService>();
-            services.AddTransient<ILocationService, LocationService>();
+            services.AddTransient<IMasterValuationFeeTypeService, MasterValuationFeeTypeService>();
+            services.AddTransient<IMasterLocationService, MasterLocationService>();
             services.AddTransient<IMasterModuleService, MasterModuleService>();
             services.AddTransient<IMasterClientService, MasterClientService>();
-            services.AddTransient<IMaster_ClientTypeService, Master_ClientTypeService>();
+            services.AddTransient<IMasterClientTypeService, MasterClientTypeService>();
             
 
             services.AddTransient<IHelper, Helper>();

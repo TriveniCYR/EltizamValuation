@@ -1,12 +1,10 @@
 ﻿using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using static Eltizam.Utility.Enums.GeneralEnum;
-using System.Net;
-using Eltizam.Business.Core.Implementation;
 using Eltizam.Data.DataAccess.Helper;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -15,14 +13,14 @@ namespace EltizamValuation.Api.Controllers
     public class MasterClientTypeController : ControllerBase
     {
         #region Properties
-        private readonly IMaster_ClientTypeService _clienttypeServices;
+        private readonly IMasterClientTypeService _clienttypeServices;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
         private readonly IExceptionService _ExceptionService;
         IExceptionService exceptionService;
         #endregion Properties
 
         #region Constructor
-        public MasterClientTypeController(IMaster_ClientTypeService clienttypeServices, IResponseHandler<dynamic> ObjectResponse)
+        public MasterClientTypeController(IMasterClientTypeService clienttypeServices, IResponseHandler<dynamic> ObjectResponse)
         {
             _clienttypeServices = clienttypeServices;
             _ObjectResponse = ObjectResponse;

@@ -4,66 +4,53 @@ namespace Eltizam.Web.Helpers
 {
     public static class APIURLHelper
     {
+        public static IConfiguration Configuration;
+
         public static string LoginURL = "/api/Account/Login";
         public static string ValidateToken = "/api/Account/ValidateToken";
         public static string GetBusinessUnit = "/api/Account/GetAllBusinessUnit";
         public static string GetRegion = "/api/Account/GetAllRegion";
-        public static string GetCurrency = "/api/Account/GetAllCurrency";
-        public static string GetByPermisionRoleUsingRoleId = "api/Role/GetByPermisionRoleUsingRoleId";
+        public static string GetCurrency = "/api/Account/GetAllCurrency"; 
         public static string ForgotPassword = "api/Account/ForgotPassword";
         public static string ResetPassword = "api/Account/ResetPassword";
+        public static string Anonymous_CheckEmailAddressExists = "api/Account/CheckEmailAddressExists"; 
+        public static string Anonymous_IsTokenValid = "api/Account/IsTokenValid"; 
+        #region MasterCommon
 
-
-        public static IConfiguration Configuration;
-
-        #region CasterCommon
-
-        public static string GetDepartmentList = "api/Department/GetDepartmentList";
-        public static string GetRoleList = "api/User/GetRoleList";
-        public static string GetDesignationList = "api/Designation/GetDesignationList";
-        public static string GetResourceTypeList = "api/User/GetResourceTypeList";
-        public static string GetCountryList = "api/Country/GetCountryList";
-        public static string GetStateList = "api/State/GetStateList";
-        public static string GetCityList = "api/City/GetCityList";
+        public static string GetDepartmentList = "api/MasterDepartment/GetDepartmentList";
+        public static string GetRoleList = "api/MasterUser/GetRoleList";
+        public static string GetDesignationList = "api/MasterDesignation/GetDesignationList";
+        public static string GetResourceTypeList = "api/MasterUser/GetResourceTypeList";
+        public static string GetCountryList = "api/MasterCountry/GetCountryList";
+        public static string GetStateList = "api/MasterState/GetStateList";
+        public static string GetCityList = "api/MasterCity/GetCityList";
         public static string GetClientTypeList = "api/MasterClientType/GetClientTypeList";
+        public static string GetByPermisionRoleUsingRoleId = "api/MasterRole/GetByPermisionRoleUsingRoleId";
 
-        #endregion CasterCommon
-
-        #region DIA
-
-        public static string GetAllDIA = "api/Dashboard/GetAllDIA";
-        public static string SaveDIA = "api/Dashboard/InsertUpdateDIA";
-        public static string GetDIAById = "api/Dashboard/GetDIAById";
-        public static string DeleteDIAById = "api/Dashboard/DeleteDIA";
-
-        #endregion DIA
+        #endregion MasterCommon
+         
 
         #region User
 
-        public static string GetAll = "api/User/GetAll";
-        public static string UpsertUser = "api/User/Upsert";
-        public static string GetUserById = "api/User/GetById";
-        public static string DeleteUserById = "api/User/Delete";
-
-        // Anonymous_Access API for Forgot Passsword
-        public static string Anonymous_CheckEmailAddressExists = "api/Account/CheckEmailAddressExists";
-
-        public static string Anonymous_IsTokenValid = "api/Account/IsTokenValid";
+        public static string GetAll = "api/MasterUser/GetAll";
+        public static string UpsertUser = "api/MasterUser/Upsert";
+        public static string GetUserById = "api/MasterUser/GetById";
+        public static string DeleteUserById = "api/MasterUser/Delete"; 
 
         #endregion User
 
         #region Designation
-        public static string UpsertDesignation = "api/Designation/Upsert";
-        public static string GetAllDesignation = "api/Designation/GetAll";
-        public static string GetesignationById = "api/Designation/GetById";
-        public static string DeleteDesignationById = "api/Designation/Delete";
+        public static string UpsertDesignation = "api/MasterDesignation/Upsert";
+        public static string GetAllDesignation = "api/MasterDesignation/GetAll";
+        public static string GetesignationById = "api/MasterDesignation/GetById";
+        public static string DeleteDesignationById = "api/MasterDesignation/Delete";
         #endregion Designation
 
         #region Department
-        public static string UpsertDepartment = "api/Department/Upsert";
-        public static string GetAllDepartment = "api/Department/GetAll";
-        public static string GetDepartmentById = "api/Department/GetById";
-        public static string DeleteDepartmentById = "api/Department/Delete";
+        public static string UpsertDepartment = "api/MasterDepartment/Upsert";
+        public static string GetAllDepartment = "api/MasterDepartment/GetAll";
+        public static string GetDepartmentById = "api/MasterDepartment/GetById";
+        public static string DeleteDepartmentById = "api/MasterDepartment/Delete";
 
         #endregion Department
 
@@ -85,10 +72,10 @@ namespace Eltizam.Web.Helpers
         #endregion MasterPropertyType
 
         #region MasterOwnershipType
-        public static string UpsertOwnershipType = "api/OwnershipType/Upsert";
-        public static string GetAllOwnershipType = "api/OwnershipType/GetAll";
-        public static string GetOwnershipType = "api/OwnershipType/GetById";
-        public static string DeleteOwnershipType = "api/OwnershipType/Delete";
+        public static string UpsertOwnershipType = "api/MasterOwnershipType/Upsert";
+        public static string GetAllOwnershipType = "api/MasterOwnershipType/GetAll";
+        public static string GetOwnershipType = "api/MasterOwnershipType/GetById";
+        public static string DeleteOwnershipType = "api/MasterOwnershipType/Delete";
 
         #endregion MasterOwnershipType
 
@@ -101,10 +88,10 @@ namespace Eltizam.Web.Helpers
         #endregion Valuation Fees
 
         #region Valuation Fees Type
-        public static string UpsertValuationFeeType = "api/ValuationFeeType/Upsert";
-        public static string GetAllValuationFeeType = "api/ValuationFeeType/GetAll";
-        public static string GetValuationFeeTypeById = "api/ValuationFeeType/GetById";
-        public static string DeleteValuationFeeTypeById = "api/ValuationFeeType/Delete";
+        public static string UpsertValuationFeeType = "api/MasterValuationFeeType/Upsert";
+        public static string GetAllValuationFeeType = "api/MasterValuationFeeType/GetAll";
+        public static string GetValuationFeeTypeById = "api/MasterValuationFeeType/GetById";
+        public static string DeleteValuationFeeTypeById = "api/MasterValuationFeeType/Delete";
 
         #endregion Valuation Fees Type
 
@@ -127,18 +114,18 @@ namespace Eltizam.Web.Helpers
         #endregion Client
 
         #region Role Management
-        public static string GetAllRole = "api/Role/GetAllRole";
-        public static string GetAllActiveRole = "api/Role/GetAllActiveRole";
-        public static string GetRoleById = "api/Role/GetRoleById";
-        public static string SaveRole = "api/Role/InsertUpdateRole";
-        public static string DeleteRoleById = "api/Role/DeleteRole";
+        public static string GetAllRole = "api/MasterRole/GetAllRole";
+        public static string GetAllActiveRole = "api/MasterRole/GetAllActiveRole";
+        public static string GetRoleById = "api/MasterRole/GetRoleById";
+        public static string SaveRole = "api/MasterRole/InsertUpdateRole";
+        public static string DeleteRoleById = "api/MasterRole/DeleteRole";
         #endregion Role Management
 
         #region Location Management
-        public static string GetAllLocations = "api/Location/GetAll";
-        public static string UpsertLocation = "api/Location/Upsert";
-        public static string GetLocationById = "api/Location/GetById";
-        public static string DeleteLocationById = "api/Location/Delete";
+        public static string GetAllLocations = "api/MasterLocation/GetAll";
+        public static string UpsertLocation = "api/MasterLocation/Upsert";
+        public static string GetLocationById = "api/MasterLocation/GetById";
+        public static string DeleteLocationById = "api/MasterLocation/Delete";
         
         #endregion Location Management
 
@@ -175,7 +162,7 @@ namespace Eltizam.Web.Helpers
 
         #region Module
 
-        public static string GetAllModule = "api/Module/GetAllModule";
+        public static string GetAllModule = "api/MasterModule/GetAllModule";
 
         #endregion Module
 

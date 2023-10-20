@@ -20,11 +20,11 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
         private IRepository<MasterRole> _repository { get; set; }
-        private readonly IRoleModulePermission _roleModulePermission;
+        private readonly IMasterRoleModulePermission _roleModulePermission;
         private IRepository<MasterUser> _Userrepository { get; set; }
 
         public MasterRoleService(IUnitOfWork unitOfWork,
-                                IMapperFactory mapperFactory, IRoleModulePermission roleModulePermission)
+                                IMapperFactory mapperFactory, IMasterRoleModulePermission roleModulePermission)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;

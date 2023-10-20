@@ -8,12 +8,17 @@ namespace Eltizam.Business.Core.Interface
     public interface IMasterUserService
     {
         Task<UserSessionEntity> Login(LoginViewModel oLogin); 
-        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model); 
-       // Task<DBOperation> AddUpdateUser(MasterUserEntity entityUser);        
+        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);    
         Task<DBOperation> DeleteUser(int id); 
         Task<bool> CheckEmailAddressExists(string emailAddress);  
         Task<DBOperation> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel); 
         Task<string> ResetPassword(MasterUserResetPasswordEntity entity);  
-        Task<bool> IsTokenValid(string token);  
+        Task<bool> IsTokenValid(string token);
+
+        Task<DBOperation> Upsert(MasterUserModel entityUser);
+        Task<MasterUserDetailModel> GetById(int id); 
+        Task<List<MasterResourceTypeModel>> GetResourceTypeList();
+        Task<List<MasterRoleModel>> GetRoleList();
+        Task<DBOperation> Delete(int id);
     }
 }
