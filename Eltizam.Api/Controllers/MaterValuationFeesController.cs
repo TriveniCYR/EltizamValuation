@@ -14,7 +14,7 @@ namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuationFeesController : ControllerBase
+    public class MaterValuationFeesController : ControllerBase
     {
         #region Properties
 
@@ -28,7 +28,7 @@ namespace EltizamValuation.Api.Controllers
         #endregion Properties
 
         #region Constructor
-        public ValuationFeesController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IValuationFeesService ValuationFeesService)
+        public MaterValuationFeesController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IValuationFeesService ValuationFeesService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
