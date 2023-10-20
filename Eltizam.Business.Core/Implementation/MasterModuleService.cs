@@ -168,7 +168,7 @@ namespace Eltizam.Business.Core.Implementation
                                   Delete = p.Delete,
                                   Approve = p.Approve,
                                   ControlName = m.ControlName,  
-                                  ModuleName = m.ModuleName
+                                  ModuleName = m.ModuleName, 
                               }).ToList(); 
 
                 //Do Cache
