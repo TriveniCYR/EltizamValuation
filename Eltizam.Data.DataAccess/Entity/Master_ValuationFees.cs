@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Eltizam.Business.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Eltizam.Data.DataAccess.Entity
 {
-    public partial class MasterValuationFee
+    public partial class Master_ValuationFees
     {
         public int Id { get; set; }
         public int? PropertyTypeId { get; set; }
@@ -22,6 +23,9 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
-        public decimal? FixedvaluationFees { get; set; }
+        public virtual List<MasterPropertyTypeViewModel>? propertyTypeViewModels { get; set; }
+        public virtual List<Master_ClientTypeModel>? master_ClientTypeModels { get; set; }
+        public virtual List<MasterOwnershipTypeEntity>? masterOwnershipTypeEntities { get; set; }
+        public virtual List<MasterValuationFeeTypeModel>? masterValuationFeeTypeModels { get; set; }
     }
 }

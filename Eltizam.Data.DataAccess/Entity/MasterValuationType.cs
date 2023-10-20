@@ -7,7 +7,7 @@ namespace Eltizam.Data.DataAccess.Entity
     {
         public MasterValuationType()
         {
-            MasterValuationFees = new HashSet<MasterValuationFee>();
+            MasterValuationFees = new HashSet<Master_ValuationFees>();
         }
 
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
 
-        public virtual ICollection<MasterValuationFee> MasterValuationFees { get; set; }
+        public virtual ICollection<Master_ValuationFees> MasterValuationFees { get; set; }
     }
 }

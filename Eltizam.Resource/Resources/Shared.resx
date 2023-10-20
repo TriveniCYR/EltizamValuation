@@ -185,40 +185,13 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Some error occurred</value>
-  </data>
-  <data name="FinalSelection" xml:space="preserve">
-    <value>Final Selection</value>
-  </data>
-  <data name="Indication" xml:space="preserve">
-    <value>Indication</value>
-  </data>
-  <data name="IsActive" xml:space="preserve">
-    <value>IsActive</value>
-  </data>
-  <data name="Market Growth" xml:space="preserve">
-    <value>Market Growth</value>
-  </data>
-  <data name="MarketSize" xml:space="preserve">
-    <value>Market Size</value>
-  </data>
+  </data> 
   <data name="MobileNumber" xml:space="preserve">
     <value>Mobile Number</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
-  </data>
-  <data name="PIDFCommercial" xml:space="preserve">
-    <value>PIDF Commercial</value>
-  </data>
-  <data name="PriceDiscounting" xml:space="preserve">
-    <value>Price Discounting</value>
-  </data>
-  <data name="PriceErosion" xml:space="preserve">
-    <value>Price Erosion</value>
-  </data>
-  <data name="ProductPackaging" xml:space="preserve">
-    <value>Product Packaging</value>
-  </data>
+  </data> 
   <data name="RecordDelete" xml:space="preserve">
     <value>Deleted successfully.</value>
   </data>
@@ -236,28 +209,13 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
-  </data>
-  <data name="SaveDraft" xml:space="preserve">
-    <value>Save as Draft</value>
-  </data>
-  <data name="SaveYear" xml:space="preserve">
-    <value>Save Year</value>
-  </data>
+  </data> 
   <data name="Status" xml:space="preserve">
     <value>Status</value>
-  </data>
-  <data name="SU(IMS Volume)" xml:space="preserve">
-    <value>SU(IMS Volume)</value>
-  </data>
+  </data> 
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>Total</value>
-  </data>
-  <data name="TotalAPIReq(IMSKg)" xml:space="preserve">
-    <value>Total API Req (IMS Kg</value>
-  </data>
+  </data> 
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
@@ -266,16 +224,7 @@
   </data>
   <data name="UserMangegment" xml:space="preserve">
     <value>User Management</value>
-  </data>
-  <data name="Year1" xml:space="preserve">
-    <value>Year1</value>
-  </data>
-  <data name="Year2" xml:space="preserve">
-    <value>Year2</value>
-  </data>
-  <data name="Year3" xml:space="preserve">
-    <value>Year3</value>
-  </data>
+  </data> 
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>

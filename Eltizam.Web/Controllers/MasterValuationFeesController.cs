@@ -63,7 +63,7 @@ namespace EltizamValuation.Web.Controllers
 
 
         [HttpPost]
-        [Route("ValuationFees/ValuationFeesManage")]
+        [Route("MasterValuationFees/ValuationFeesManage")]
         public IActionResult ValuationFeesManage(int id, MasterValuationFeesModel masterValuationFeesModel)
         {
             try
@@ -131,35 +131,65 @@ namespace EltizamValuation.Web.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("ValuationFees/ValuationView")]
-        public IActionResult ValuationView(int? id)
-        {
-
-            MasterValuationFeesModel masterValuationFeesModel;
-            if (id == null || id <= 0)
-            {
+		[HttpGet]
+		[Route("MasterValuationFees/ValuationFeesDetail")]
+		public IActionResult ValuationFeesDetail(int? id)
+		{
+			MasterValuationFeesModel masterValuationFeesModel;
+			if (id == null || id <= 0)
+			{
 				masterValuationFeesModel = new MasterValuationFeesModel();
-                return View(masterValuationFeesModel);
-            }
-            else
-            {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetValuationById + "/" + id, HttpMethod.Get, token).Result;
+				return RedirectToAction("MasterValuationFees");
+			}
+			else
+			{
+				HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+				APIRepository objapi = new(_cofiguration);
+				HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetValuationById + "/" + id, HttpMethod.Get, token).Result;
 
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
-                    if (data._object is null)
-                        return NotFound();
+				if (responseMessage.IsSuccessStatusCode)
+				{
+					string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+					var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
+					if (data._object is null)
+						return NotFound();
 
-                    return View(data._object);
-                }
-                return NotFound();
-            }
-        }
+					return View(data._object);
+				}
+				return NotFound();
+			}
+		}
+
+
+		//[HttpGet]
+  //      [Route("ValuationFees/ValuationView")]
+  //      public IActionResult ValuationView(int? id)
+  //      {
+
+  //          MasterValuationFeesModel masterValuationFeesModel;
+  //          if (id == null || id <= 0)
+  //          {
+		//		masterValuationFeesModel = new MasterValuationFeesModel();
+  //              return View(masterValuationFeesModel);
+  //          }
+  //          else
+  //          {
+  //              HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+  //              APIRepository objapi = new(_cofiguration);
+  //              HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetValuationById + "/" + id, HttpMethod.Get, token).Result;
+
+  //              if (responseMessage.IsSuccessStatusCode)
+  //              {
+  //                  string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+  //                  var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
+  //                  if (data._object is null)
+  //                      return NotFound();
+
+  //                  return View(data._object);
+  //              }
+  //              return NotFound();
+  //          }
+  //      }
     }
 }
 

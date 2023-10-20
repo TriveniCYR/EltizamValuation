@@ -10,14 +10,14 @@
 
 @model Eltizam.Business.Models.MasterRoleEntity
 @{
-    ViewData["Title"] = @MasterLocalizer["RoleManage"];
-    string PageHeading = "";
+    ViewData["Title"] = @MasterLocalizer["RoleManage"]; 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     string[] Approve_Modules = { "PIDF", "IPD", "Finance", "Management HOD" };
     string[] Delete_Modules = { "User Management", "Role Management", "Master Management", "Project" };
 }
 <div id="SaveRoleModel">
-    <form asp-action="RoleManage">
+
+    <form asp-action="ManageRole">
         <input type="hidden" asp-for="RoleId" />
         <div class="content-header">
             <div class="container-fluid d-flex justify-content-between">

@@ -35,9 +35,7 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 return View("Login");
-            }
-            return View();
-
+            }  
         }
 
         public IActionResult ClientManage(int? id)
