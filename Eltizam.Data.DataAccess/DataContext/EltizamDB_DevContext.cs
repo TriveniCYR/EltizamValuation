@@ -656,7 +656,7 @@ namespace Eltizam.Data.DataAccess.DataContext
 
             modelBuilder.Entity<MasterRole>(entity =>
             {
-                entity.HasKey(e => e.RoleId);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("Master_Role", "dbo");
 

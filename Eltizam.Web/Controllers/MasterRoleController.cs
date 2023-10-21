@@ -32,43 +32,28 @@ namespace Eltizam.Web.Controllers
         {
             ModelState.Clear();
             try
-            {
-                int rolId = _helper.GetLoggedInRoleId();
-                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
-                ViewBag._objPermission = objPermssion;
-
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new APIRepository(_cofiguration);
-                List<MasterRoleEntity> oRoleList = new List<MasterRoleEntity>();
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllRole, HttpMethod.Get, token).Result;
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterRoleEntity>>>(jsonResponse);
-                    oRoleList = data._object;
-
-                    return View(oRoleList);
-                }
+            { 
+                return View();
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 return View("Login");
-            }
-            return View();
+            } 
         }
 
-        public IActionResult RoleManage(int? roleId, string flag1)
+        public IActionResult RoleManage(int? id, string flag1)
         {
-            ViewBag.IsEdit = roleId != null;
+            ViewBag.IsEdit = id != null;
             ViewBag.IsView= flag1 != null;
             MasterRoleEntity MasterRole = new MasterRoleEntity();
-            if (roleId == null)
+
+            if (id == null)
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllModule + "/" + roleId, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllModule + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -77,15 +62,13 @@ namespace Eltizam.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterModuleEntity>>>(jsonResponse);
                     MasterRole.MasterModules = data._object.OrderBy(x => x.SortOrder).ToList();
                     return View(MasterRole);
-                }
-
-                return View();
+                } 
             }
             else
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetRoleById + "/" + roleId, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetRoleById + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -99,9 +82,10 @@ namespace Eltizam.Web.Controllers
                     List<MasterModuleEntity> _oListMasterModules = data._object.MasterModules.OrderBy(x => x.SortOrder).ToList();
                     data._object.MasterModules = _oListMasterModules;
                     return View(data._object);
-                }
-                return NotFound();
+                } 
             }
+
+            return View();
         }
 
         public IActionResult RoleView(int? roleId, string flag1)
@@ -151,7 +135,7 @@ namespace Eltizam.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult RoleManage(int roleId, MasterRoleEntity masterRole)
+        public IActionResult RoleManage(int id, MasterRoleEntity masterRole)
         {
             try
             {
@@ -163,16 +147,16 @@ namespace Eltizam.Web.Controllers
 
                 if (responseMessage.IsSuccessStatusCode)
                 { 
-                    if (masterRole.RoleId > 0)
+                    if (masterRole.Id > 0)
                     {
-                        UtilityHelper.RemoveModuleRole(masterRole.RoleId);
+                        UtilityHelper.RemoveModuleRole(masterRole.Id);
 
-                        HttpResponseMessage resRoles = objapi.APICommunication(APIURLHelper.GetByPermisionRoleUsingRoleId + "/" + masterRole.RoleId, HttpMethod.Get, token).Result;
+                        HttpResponseMessage resRoles = objapi.APICommunication(APIURLHelper.GetByPermisionRoleUsingRoleId + "/" + masterRole.Id, HttpMethod.Get, token).Result;
                         if (resRoles.IsSuccessStatusCode)
                         {
                             string rolJson = resRoles.Content.ReadAsStringAsync().Result;
                             var data = JsonConvert.DeserializeObject<APIResponseEntity<IEnumerable<RolePermissionModel>>>(rolJson);
-                            UtilityHelper.AddModuleRole(masterRole.RoleId, data._object);
+                            UtilityHelper.AddModuleRole(masterRole.Id, data._object);
                         }
                     }
 
@@ -181,21 +165,22 @@ namespace Eltizam.Web.Controllers
                         string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                         TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
-                        return RedirectToAction("ManageRole", new { id = masterRole.RoleId });
+                        return RedirectToAction("Roles");
                     }
                     else
                     {
                         TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
-                        return RedirectToAction("ManageRole", new { id = masterRole.RoleId });
+                        //return RedirectToAction("ManageRole", new { id = masterRole.Id });
+                        return RedirectToAction("Roles");
                     }
                 }
-                return RedirectToAction("ManageRole", new { id = masterRole.RoleId });
+                return RedirectToAction("Roles");
             } 
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-                return RedirectToAction("ManageRole", new { Id = masterRole.RoleId });
+                return RedirectToAction("Roles");
             } 
         }  
     }

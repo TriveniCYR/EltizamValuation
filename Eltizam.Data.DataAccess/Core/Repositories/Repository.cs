@@ -132,7 +132,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 {
 
                     var isDeleted = o.GetType().GetProperty("IsDeleted").GetValue(o);
-                    if ((bool)isDeleted)
+                    if (isDeleted != null && (bool)isDeleted)
                     {
                         o = null;
                         throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
@@ -140,7 +140,8 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { }
+            { 
+            }
             return o;
         }
 
@@ -148,6 +149,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             string key = this._EntityName + id.ToString();
             TEntity o = await dbContext.Set<TEntity>().FindAsync(id);
+
             if (o == null)
             {
                 throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
@@ -166,7 +168,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { }
+            { 
+            }
+
             dbContext.Entry(o).State = EntityState.Detached;
             return o;
         }
@@ -175,6 +179,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             string key = this._EntityName + id.ToString();
             TEntity o = dbContext.Set<TEntity>().Find(id);
+
             if (o == null)
             {
                 throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
@@ -185,7 +190,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 if (props.Any(p => p.Name is "IsDeleted"))
                 {
                     var isDeleted = o.GetType().GetProperty("IsDeleted").GetValue(o);
-                    if ((bool)isDeleted)
+                    if (isDeleted != null && (bool)isDeleted)
                     {
                         o = null;
                         throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
@@ -193,7 +198,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { }
+            { 
+            }
+
             dbContext.Entry(o).State = EntityState.Detached;
             return o;
         }

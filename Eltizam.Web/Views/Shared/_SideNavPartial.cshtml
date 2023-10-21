@@ -5,11 +5,8 @@
 @using Eltizam.Utility.Utility;
 @using Eltizam.Utility.Enums;
 @using Microsoft.AspNetCore.Mvc.Localization;
-
-@*@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
-@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer*@
-
-@inject IHelper Helper 
+ 
+@inject IHelper Helper  
 
 @{
     var _curRoleId = Helper.GetLoggedInRoleId();

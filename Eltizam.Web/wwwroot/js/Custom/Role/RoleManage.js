@@ -1,8 +1,4 @@
-﻿$(document).ready(function () {
-    // SetupRoleTable();
-    $("[id^=MasterModules][type=checkbox]").change();
-});
-
+﻿  
 $('#chkView').change(function () {
     $.each($("input[name*='RoleModulePermission.View']"), function (index, item) {
         var Is_Disabled = $(item).prop('disabled');

@@ -19,7 +19,7 @@
     <form asp-action="RoleManage">
         @if (@ViewBag.IsEdit)
         {
-            <input type="hidden" asp-for="RoleId" />
+            <input type="hidden" asp-for="Id" />
             PageHeading = MasterLocalizer["UpdateRole"].Value;
         }
         else
@@ -31,6 +31,7 @@
                 <h3>@PageHeading</h3>
             </div>
         </div>
+
         <div class="container-fluid overflow-auto background-white-card">
             <div class="flex">
                 <div class="w-50">
@@ -54,8 +55,7 @@
                             @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
                             @Html.Label(@SharedLocalizer["IsActive"])
                         } 
-                    </div>
-
+                    </div> 
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                         <thead>
                             <tr>
                                 <th>Module</th>
-                                <th>Sub Module</th>
+                               @* <th>Sub Module</th>*@
                                 <th> <input type="checkbox" id="chkView" class="checkbox-checked" /> View</th>
                                 <th> <input type="checkbox" id="chkAdd" class="checkbox-checked" /> Add</th>
                                 <th><input type="checkbox" id="chkEdit" class="checkbox-checked" /> Edit</th>
@@ -84,12 +84,12 @@
                                 @Html.HiddenFor(m => m.MasterModules[i].RoleModulePermission.RoleId)
                                 <tr>
                                     <td>@Model.MasterModules[i].ModuleName</td>
-                                    <td></td>
-                                    <td>@Html.CheckBoxFor(model => perm.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                    <td>@Html.CheckBoxFor(model => perm.Add, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                    <td>@Html.CheckBoxFor(model => perm.Edit, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                    <td>@Html.CheckBoxFor(model => perm.Delete, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                    <td>@Html.CheckBoxFor(model => perm.Approve, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                    @*    <td></td>*@
+                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Edit, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Delete, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Approve, new { @class = "checkbox-checked", @checked = "checked" })</td>
                                 </tr>  
                             }
                         </tbody>
@@ -109,7 +109,6 @@
     </form>
 </div>
 
-@section MyScripts {
-
-    <script type="text/javascript" src="~/js/Custom/Role/RoleManage.js?v=@jsVersion"></script>
+@section MyScripts { 
+    <script type="text/javascript" src="~/js/Custom/Role/RoleManage.js?v=@jsVersion"></script> 
 }

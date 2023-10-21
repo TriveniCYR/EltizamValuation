@@ -1,6 +1,6 @@
 ﻿var tableId = "ValuationFeesTable";
 $(document).ready(function () {
-    InitializeUserList();
+    InitializeDataList();
 });
 
 
@@ -31,8 +31,7 @@ function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function InitializeUserList() {
-    debugger;
+function InitializeDataList() { 
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
         "url": $('#hdnBaseURL').val() + ValuationFees,
@@ -80,8 +79,7 @@ function InitializeUserList() {
         }
     ];
 
-    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
-    
+    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);    
 }
 
 
