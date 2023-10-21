@@ -1,14 +1,5 @@
-﻿$(document).ready(function () {
-    //SetupRoleTable();
-
-    if (StatusMessage != '') {
-        if (StatusMessage.includes('uccessful')) {
-            toastr.success(StatusMessage);
-        }
-        else {
-            toastr.error(StatusMessage);
-        }
-    }
+﻿$(document).ready(function () { 
+  
 });
 
 function SetupRoleTable() {
