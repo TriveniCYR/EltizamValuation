@@ -198,7 +198,7 @@ namespace Eltizam.API.Controllers.Masters
             {
                 DBOperation oResponse = await _MasterRoleService.DeleteRole(id);
                 if (oResponse == DBOperation.Success)
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else if (oResponse == DBOperation.NotFound)
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.OK, "UserAssigned");
                 else

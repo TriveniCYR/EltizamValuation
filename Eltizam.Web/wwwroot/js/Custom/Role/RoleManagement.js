@@ -1,87 +1,9 @@
-﻿$(document).ready(function () { 
-  
-});
-
-function SetupRoleTable() {
-    StaticDataTable("#RoleTable");
-}
-
-function CleareRoleFields() {
-    $('#DeleteRoleModel #Id').val("0");
-}
-
-//#region Delete Role
-function ConfirmationRole(id) {  
-    $('#DeleteRoleModel #Id').val(id);
-    alert(id);
-}
-function DeleteRole() {  
-    var tempInAtiveID = $('#DeleteRoleModel #Id').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteRoleByIdUrl + "/" + tempInAtiveID, 'POST', DeleteRoleByIdSuccess, DeleteRoleByIdError);
-}
-
-function DeleteRoleByIdSuccess(data) {
-    try {
-        if (data._Success === true) {
-            if (data._Message == "UserAssigned") {
-                toastr.error("Can not Delete Role, User assigned to this Role");
-            }
-            else {
-            CleareRoleFields();
-                toastr.success(RecordDelete);
-                location.reload(true);
-            }
-        }
-        else {
-            toastr.error(data._Message);
-        }
-    } catch (e) {
-        toastr.error('Error:' + e.message);
-    }
-}
-
-function DeleteRoleByIdError(x, y, z) {
-    if (x.get)
-    toastr.error(ErrorMessage);
-    location.reload(true);
-}
-
- 
-//#endregion
-
-var tableId = "RoleTable";
+﻿var tableId = "RoleTable";
 $(document).ready(function () {
     InitializeRoleDataList();
 });
 
-
-//#region Delete User
-function ConfirmationDeleteRole(id) {
-    $('#DeleteRoleModel #Id').val(id);
-}
-function DeleteRole() {
-    var tempInAtiveID = $('#DeleteRoleModel #Id').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteValuationByIdUrl + "/" + tempInAtiveID, 'DELETE', DeleteUserByIdSuccess, DeleteUserByIdError);
-}
-
-function DeleteUserByIdSuccess(data) {
-    try {
-        if (data._Success === true) {
-            toastr.success(RecordDelete);
-            $('#' + tableId).DataTable().draw();
-        }
-        else {
-            toastr.error(data._Message);
-        }
-    } catch (e) {
-        toastr.error('Error:' + e.message);
-    }
-}
-
-function DeleteUserByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
-
+//Load data into table
 function InitializeRoleDataList() { 
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
@@ -99,7 +21,7 @@ function InitializeRoleDataList() {
         },
         {
             "data": "roleName", "name": "Role"
-        }, 
+        },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
                 return GetActiveFlagCss(data);
@@ -120,4 +42,30 @@ function InitializeRoleDataList() {
     ];
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
+}
+
+
+//#region Delete Role  
+function ConfirmationDeleteRole(id) {
+    $('#DeleteRoleModel #Id').val(id);
+}
+function DeleteRole() {
+    var tid = $('#DeleteRoleModel #Id').val();
+    ajaxServiceMethod(BaseURL + DeleteRoleByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+}
+function DeleteUserByIdSuccess(data) {
+    try {
+        if (data._Success === true) {
+            toastr.success(RecordDelete);
+            $('#' + tableId).DataTable().draw();
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+function DeleteUserByIdError(x, y, z) {
+    toastr.error(ErrorMessage);
 }

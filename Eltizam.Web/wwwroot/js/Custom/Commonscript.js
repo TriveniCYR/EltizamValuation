@@ -1,5 +1,8 @@
 ﻿//Use this for entire project to bind the data 
-var BaseURL = $('#hdnBaseURL').val(); 
+var BaseURL = $('#hdnBaseURL').val();  
+var Post = 'POST';
+var Get = 'GET';
+var Delete = 'DELETE';
 var _successToaster = $("#successToaster").val();
 var _errorToaster = $("#errorToaster").val();
 
