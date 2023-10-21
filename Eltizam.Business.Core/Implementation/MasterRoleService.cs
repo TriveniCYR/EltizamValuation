@@ -5,12 +5,9 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Utility;
-using System;
-using System.Collections.Generic;
+using Eltizam.Utility.Utility;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -23,8 +20,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMasterRoleModulePermission _roleModulePermission;
         private IRepository<MasterUser> _Userrepository { get; set; }
 
-        public MasterRoleService(IUnitOfWork unitOfWork,
-                                IMapperFactory mapperFactory, IMasterRoleModulePermission roleModulePermission)
+        public MasterRoleService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IMasterRoleModulePermission roleModulePermission)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -37,15 +33,15 @@ namespace Eltizam.Business.Core.Implementation
         {
             MasterRole objRole;
             var LoggedUserId = masterRoleEntity.LoggedUserId;
-            if (masterRoleEntity.RoleId > 0) //Update existing user
+            if (masterRoleEntity.Id > 0) //Update existing user
             {
                 if (!masterRoleEntity.IsActive)
                 {
-                    var IsUserExist = _Userrepository.GetAllQuery().Where(x => x.RoleId == masterRoleEntity.RoleId).ToList();
+                    var IsUserExist = _Userrepository.GetAllQuery().Where(x => x.RoleId == masterRoleEntity.Id).ToList();
                     if (IsUserExist.Count > 0)
                         masterRoleEntity.IsActive = true;
                 }
-                objRole = _repository.Get(masterRoleEntity.RoleId);
+                objRole = _repository.Get(masterRoleEntity.Id);
                 var OldObjRole = objRole;
                 if (objRole != null)
                 {
@@ -53,10 +49,8 @@ namespace Eltizam.Business.Core.Implementation
                     objRole.ModifyBy = LoggedUserId;
                     objRole.ModifyDate = DateTime.Now;
                     _repository.UpdateAsync(objRole);
-                    await _unitOfWork.SaveChangesAsync();
 
-                    //var isSuccess = await _auditLogService.CreateAuditLog<MasterRole>(Utility.Audit.AuditActionType.Update,
-                    //    Utility.Enums.ModuleEnum.RoleManagement, OldObjRole, objRole,0);
+                    await _unitOfWork.SaveChangesAsync();
                 }
                 else
                 {
@@ -72,7 +66,7 @@ namespace Eltizam.Business.Core.Implementation
                 await _unitOfWork.SaveChangesAsync();
             }
 
-            if (objRole.RoleId == 0)
+            if (objRole.Id == 0)
                 return DBOperation.Error;
 
             #region Add Module Permsson
@@ -82,7 +76,7 @@ namespace Eltizam.Business.Core.Implementation
                 var ModulePermission = masterRoleEntity.MasterModules.Select(xx => xx.RoleModulePermission);
                 var SubModulePermission = masterRoleEntity.MasterModules.SelectMany(xx => xx.MasterSubModules?.Select(yy => yy.RoleModulePermission));
                 var Permissions = ModulePermission.Concat(SubModulePermission);
-                Permissions = Permissions.Select(xx => { xx.RoleId = objRole.RoleId; return xx; });
+                Permissions = Permissions.Select(xx => { xx.RoleId = objRole.Id; return xx; });
 
                 await _roleModulePermission.AddUpdateRoleModulePermission(Permissions.ToList());
             }
@@ -94,8 +88,8 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> DeleteRole(int id)
         {
-            var entityRole = _repository.Get(x => x.RoleId == id);
-            var IsUserExist = _Userrepository.GetAllQuery().Where(x => x.RoleId == entityRole.RoleId).ToList();
+            var entityRole = _repository.Get(x => x.Id == id);
+            var IsUserExist = _Userrepository.GetAllQuery().Where(x => x.RoleId == entityRole.Id).ToList();
             if (IsUserExist.Count <= 0)
             {
                 if (entityRole == null)
@@ -109,41 +103,30 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.NotFound;
         }
 
-        public async Task<List<MasterRoleEntity>> GetAll()
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            return _mapperFactory.GetList<MasterRole, MasterRoleEntity>(await _repository.GetAllAsync());
+            string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
+            string SortDir = model.order[0]?.dir;
+
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
+            };
+
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Role_AllList, CommandType.StoredProcedure, osqlParameter);
+
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(Results);
+
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterRoleListModel>());
+
+            return oDataTableResponseModel;
+            //return _mapperFactory.GetList<MasterRole, MasterRoleEntity>(await _repository.GetAllAsync());
         }
-
-        //public async Task<DataTableResponseModel> GetAll(RoleSearchModel model, PaginationModel paging)
-        //{
-        //    var _dbParams = new[]
-        //     {
-
-        //         //new DbParameter("RoleName", model.RoleName, SqlDbType.VarChar),
-        //         //  new DbParameter("PageSize", paging.pageSize, SqlDbType.Int),
-        //         // new DbParameter("PageNumber", paging.pageNo, SqlDbType.Int),
-        //         // new DbParameter("OrderClause", paging.sortName, SqlDbType.VarChar),
-        //         //new DbParameter("ReverseSort", 1, SqlDbType.Int)
-
-        //         new DbParameter("RoleName", "master", SqlDbType.VarChar),
-        //           new DbParameter("PageSize",1, SqlDbType.Int),
-        //          new DbParameter("PageNumber",1, SqlDbType.Int),
-        //          new DbParameter("OrderClause", "Id", SqlDbType.VarChar),
-        //         new DbParameter("ReverseSort", 1, SqlDbType.Int)
-        //     };
-
-        //    int _count = 0;
-        //    var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<MasterRoleEntity>(ProcedureNameCall.usp_Role_SearchAllList,
-
-        //     DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
-
-
-        //    DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(0, _count, lstStf.Count, lstStf);
-
-        //    return oDataTableResponseModel;
-        //}
-
-
 
         public async Task<List<MasterRoleEntity>> GetActiveRole()
         {
@@ -174,7 +157,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 MasterRoleEntity _roleEntity = _mapperFactory.Get<MasterRole, MasterRoleEntity>(await _repository.GetAsync(id));
 
-                var IsUserExist = _Userrepository.GetAllQuery().Where(x => x.RoleId == _roleEntity.RoleId).ToList();
+                var IsUserExist = _Userrepository.GetAllQuery().Where(x => x.RoleId == _roleEntity.Id).ToList();
                 if (IsUserExist != null && IsUserExist.Count > 0)
                     _roleEntity.IsUserAssigned = true;
 
@@ -185,7 +168,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 throw ex;
             }
-            
+
         }
     }
 }

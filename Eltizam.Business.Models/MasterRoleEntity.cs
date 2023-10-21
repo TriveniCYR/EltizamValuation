@@ -1,6 +1,4 @@
 ﻿using Eltizam.Resource.Resources;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Eltizam.Business.Models
@@ -12,8 +10,10 @@ namespace Eltizam.Business.Models
             MasterModules = new List<MasterModuleEntity>();
         }
 
-        public int RoleId { get; set; }
+        public int Id { get; set; }
+
         public int LoggedUserId { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Display(Name = "RoleName", ResourceType = typeof(Master))]
         public string RoleName { get; set; }
@@ -26,8 +26,14 @@ namespace Eltizam.Business.Models
         public bool IsUserAssigned { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public virtual List<MasterModuleEntity>? MasterModules { get; set; }
-
+        public virtual List<MasterModuleEntity>? MasterModules { get; set; } 
     }
 
+
+    public class MasterRoleListModel
+    {
+        public int Id { get; set; }
+        public string RoleName { get; set; }
+        public bool? IsActive { get; set; } 
+    }
 }

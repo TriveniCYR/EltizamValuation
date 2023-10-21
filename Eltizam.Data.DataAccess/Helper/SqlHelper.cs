@@ -28,7 +28,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Xml;
 
-namespace Eltizam.Data.DataAccess
+namespace Eltizam.Data.DataAccess.Helper
 {
     /// <summary>
     /// The SqlHelper class is intended to encapsulate high performance, scalable best practices for
@@ -68,7 +68,7 @@ namespace Eltizam.Data.DataAccess
                         // Check for derived output value with no value assigned
                         if ((p.Direction == ParameterDirection.InputOutput ||
                             p.Direction == ParameterDirection.Input) &&
-                            (p.Value == null))
+                            p.Value == null)
                         {
                             p.Value = DBNull.Value;
                         }
@@ -85,7 +85,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values</param>
         private static void AssignParameterValues(SqlParameter[] commandParameters, DataRow dataRow)
         {
-            if ((commandParameters == null) || (dataRow == null))
+            if (commandParameters == null || dataRow == null)
             {
                 // Do nothing if we get no data
                 return;
@@ -115,7 +115,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="parameterValues">Array of objects holding the values to be assigned</param>
         private static void AssignParameterValues(SqlParameter[] commandParameters, object[] parameterValues)
         {
-            if ((commandParameters == null) || (parameterValues == null))
+            if (commandParameters == null || parameterValues == null)
             {
                 // Do nothing if we get no data
                 return;
@@ -167,7 +167,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="parameterValues">Array of objects holding the values to be assigned</param>
         private static void UpdateParameterValues(SqlParameter[] commandParameters, object[] parameterValues)
         {
-            if ((commandParameters == null) || (parameterValues == null))
+            if (commandParameters == null || parameterValues == null)
             {
                 // Do nothing if we get no data
                 return;
@@ -264,13 +264,13 @@ namespace Eltizam.Data.DataAccess
         internal static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteNonQuery(connectionString, commandType, commandText, (SqlParameter[])null);
+            return ExecuteNonQuery(connectionString, commandType, commandText, null);
         }
 
         internal static int ExecuteNonQuery(string connectionString, string commandText, CommandType commandType)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteNonQuery(connectionString, commandType, commandText, (SqlParameter[])null);
+            return ExecuteNonQuery(connectionString, commandType, commandText, null);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName, true);
@@ -375,7 +375,7 @@ namespace Eltizam.Data.DataAccess
         internal static int ExecuteNonQuery(SqlConnection connection, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteNonQuery(connection, commandType, commandText, (SqlParameter[])null);
+            return ExecuteNonQuery(connection, commandType, commandText, null);
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace Eltizam.Data.DataAccess
             // Create a command and prepare it for execution
             SqlCommand cmd = new SqlCommand();
             bool mustCloseConnection = false;
-            PrepareCommand(cmd, connection, (SqlTransaction)null, commandType, commandText, commandParameters, out mustCloseConnection);
+            PrepareCommand(cmd, connection, null, commandType, commandText, commandParameters, out mustCloseConnection);
 
             // Finally, execute the command
             int retval = cmd.ExecuteNonQuery();
@@ -431,7 +431,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
@@ -463,7 +463,7 @@ namespace Eltizam.Data.DataAccess
         internal static int ExecuteNonQuery(SqlTransaction transaction, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteNonQuery(transaction, commandType, commandText, (SqlParameter[])null);
+            return ExecuteNonQuery(transaction, commandType, commandText, null);
         }
 
         /// <summary>
@@ -519,7 +519,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
@@ -556,7 +556,7 @@ namespace Eltizam.Data.DataAccess
         internal static DataSet ExecuteDataset(string connectionString, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteDataset(connectionString, commandType, commandText, (SqlParameter[])null);
+            return ExecuteDataset(connectionString, commandType, commandText, null);
         }
 
         /// <summary>
@@ -639,7 +639,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 //SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName); -- Original code from sqlHelper
@@ -681,7 +681,7 @@ namespace Eltizam.Data.DataAccess
         internal static DataSet ExecuteDataset(SqlConnection connection, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteDataset(connection, commandType, commandText, (SqlParameter[])null);
+            return ExecuteDataset(connection, commandType, commandText, null);
         }
 
         /// <summary>
@@ -704,7 +704,7 @@ namespace Eltizam.Data.DataAccess
             // Create a command and prepare it for execution
             SqlCommand cmd = new SqlCommand();
             bool mustCloseConnection = false;
-            PrepareCommand(cmd, connection, (SqlTransaction)null, commandType, commandText, commandParameters, out mustCloseConnection);
+            PrepareCommand(cmd, connection, null, commandType, commandText, commandParameters, out mustCloseConnection);
 
             // Create the DataAdapter & DataSet
             using (SqlDataAdapter da = new SqlDataAdapter(cmd))
@@ -732,7 +732,7 @@ namespace Eltizam.Data.DataAccess
             // Create a command and prepare it for execution
             SqlCommand cmd = new SqlCommand();
             bool mustCloseConnection = false;
-            PrepareCommand(cmd, connection, (SqlTransaction)null, commandType, commandText, commandParameters, out mustCloseConnection);
+            PrepareCommand(cmd, connection, null, commandType, commandText, commandParameters, out mustCloseConnection);
             cmd.CommandTimeout = 300;
             // Create the DataAdapter & DataSet
             using (SqlDataAdapter da = new SqlDataAdapter(cmd))
@@ -774,7 +774,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
@@ -806,7 +806,7 @@ namespace Eltizam.Data.DataAccess
         internal static DataSet ExecuteDataset(SqlTransaction transaction, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteDataset(transaction, commandType, commandText, (SqlParameter[])null);
+            return ExecuteDataset(transaction, commandType, commandText, null);
         }
 
         /// <summary>
@@ -870,7 +870,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
@@ -990,19 +990,19 @@ namespace Eltizam.Data.DataAccess
         internal static SqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(connectionString, commandType, commandText, (SqlParameter[])null);
+            return ExecuteReader(connectionString, commandType, commandText, null);
         }
 
         internal static SqlDataReader ExecuteReader(string connectionString, string commandText, CommandType commandType)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(connectionString, commandType, commandText, (SqlParameter[])null);
+            return ExecuteReader(connectionString, commandType, commandText, null);
         }
 
         internal static SqlDataReader ExecuteReader(string connectionString, string commandText, CommandType commandType, ConnectionState connectionstate)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(connectionString, commandType, commandText, (SqlParameter[])null);
+            return ExecuteReader(connectionString, commandType, commandText, null);
         }
 
         /// <summary>
@@ -1089,7 +1089,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName, true);
 
@@ -1127,7 +1127,7 @@ namespace Eltizam.Data.DataAccess
         internal static SqlDataReader ExecuteReader(SqlConnection connection, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(connection, commandType, commandText, (SqlParameter[])null);
+            return ExecuteReader(connection, commandType, commandText, null);
         }
 
         /// <summary>
@@ -1146,7 +1146,7 @@ namespace Eltizam.Data.DataAccess
         internal static SqlDataReader ExecuteReader(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
             // Pass through the call to the private overload using a null transaction value and an externally owned connection
-            return ExecuteReader(connection, (SqlTransaction)null, commandType, commandText, commandParameters, SqlConnectionOwnership.External);
+            return ExecuteReader(connection, null, commandType, commandText, commandParameters, SqlConnectionOwnership.External);
         }
 
         /// <summary>
@@ -1170,7 +1170,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
 
@@ -1199,7 +1199,7 @@ namespace Eltizam.Data.DataAccess
         internal static SqlDataReader ExecuteReader(SqlTransaction transaction, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(transaction, commandType, commandText, (SqlParameter[])null);
+            return ExecuteReader(transaction, commandType, commandText, null);
         }
 
         /// <summary>
@@ -1246,7 +1246,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
 
@@ -1280,7 +1280,7 @@ namespace Eltizam.Data.DataAccess
         internal static object ExecuteScalar(string connectionString, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteScalar(connectionString, commandType, commandText, (SqlParameter[])null);
+            return ExecuteScalar(connectionString, commandType, commandText, null);
         }
 
         /// <summary>
@@ -1347,7 +1347,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connectionString, spName);
@@ -1379,7 +1379,7 @@ namespace Eltizam.Data.DataAccess
         internal static object ExecuteScalar(SqlConnection connection, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteScalar(connection, commandType, commandText, (SqlParameter[])null);
+            return ExecuteScalar(connection, commandType, commandText, null);
         }
 
         /// <summary>
@@ -1403,7 +1403,7 @@ namespace Eltizam.Data.DataAccess
             SqlCommand cmd = new SqlCommand();
 
             bool mustCloseConnection = false;
-            PrepareCommand(cmd, connection, (SqlTransaction)null, commandType, commandText, commandParameters, out mustCloseConnection);
+            PrepareCommand(cmd, connection, null, commandType, commandText, commandParameters, out mustCloseConnection);
 
             // Execute the command & return the results
             object retval = cmd.ExecuteScalar();
@@ -1438,7 +1438,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
@@ -1470,7 +1470,7 @@ namespace Eltizam.Data.DataAccess
         internal static object ExecuteScalar(SqlTransaction transaction, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteScalar(transaction, commandType, commandText, (SqlParameter[])null);
+            return ExecuteScalar(transaction, commandType, commandText, null);
         }
 
         /// <summary>
@@ -1526,7 +1526,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // PPull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
@@ -1562,7 +1562,7 @@ namespace Eltizam.Data.DataAccess
         internal static XmlReader ExecuteXmlReader(SqlConnection connection, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteXmlReader(connection, commandType, commandText, (SqlParameter[])null);
+            return ExecuteXmlReader(connection, commandType, commandText, null);
         }
 
         /// <summary>
@@ -1587,7 +1587,7 @@ namespace Eltizam.Data.DataAccess
             SqlCommand cmd = new SqlCommand();
             try
             {
-                PrepareCommand(cmd, connection, (SqlTransaction)null, commandType, commandText, commandParameters, out mustCloseConnection);
+                PrepareCommand(cmd, connection, null, commandType, commandText, commandParameters, out mustCloseConnection);
 
                 // Create the DataAdapter & DataSet
                 XmlReader retval = cmd.ExecuteXmlReader();
@@ -1626,7 +1626,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
@@ -1658,7 +1658,7 @@ namespace Eltizam.Data.DataAccess
         internal static XmlReader ExecuteXmlReader(SqlTransaction transaction, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return ExecuteXmlReader(transaction, commandType, commandText, (SqlParameter[])null);
+            return ExecuteXmlReader(transaction, commandType, commandText, null);
         }
 
         /// <summary>
@@ -1714,7 +1714,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
@@ -1906,7 +1906,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
@@ -1996,7 +1996,7 @@ namespace Eltizam.Data.DataAccess
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
 
             // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
+            if (parameterValues != null && parameterValues.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(transaction.Connection, spName);
@@ -2134,7 +2134,7 @@ namespace Eltizam.Data.DataAccess
             cmd.CommandType = CommandType.StoredProcedure;
 
             // If we receive parameter values, we need to figure out where they go
-            if ((sourceColumns != null) && (sourceColumns.Length > 0))
+            if (sourceColumns != null && sourceColumns.Length > 0)
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
                 SqlParameter[] commandParameters = SqlHelperParameterCache.GetSpParameterSet(connection, spName);
@@ -2164,7 +2164,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        internal static int ExecuteNonQueryTypedParams(String connectionString, String spName, DataRow dataRow)
+        internal static int ExecuteNonQueryTypedParams(string connectionString, string spName, DataRow dataRow)
         {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
@@ -2178,11 +2178,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName);
+                return ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2196,7 +2196,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        internal static int ExecuteNonQueryTypedParams(SqlConnection connection, String spName, DataRow dataRow)
+        internal static int ExecuteNonQueryTypedParams(SqlConnection connection, string spName, DataRow dataRow)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
@@ -2210,11 +2210,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteNonQuery(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteNonQuery(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteNonQuery(connection, CommandType.StoredProcedure, spName);
+                return ExecuteNonQuery(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2228,7 +2228,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        internal static int ExecuteNonQueryTypedParams(SqlTransaction transaction, String spName, DataRow dataRow)
+        internal static int ExecuteNonQueryTypedParams(SqlTransaction transaction, string spName, DataRow dataRow)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
@@ -2243,11 +2243,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName);
+                return ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2265,7 +2265,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>A dataset containing the resultset generated by the command</returns>
-        internal static DataSet ExecuteDatasetTypedParams(string connectionString, String spName, DataRow dataRow)
+        internal static DataSet ExecuteDatasetTypedParams(string connectionString, string spName, DataRow dataRow)
         {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
@@ -2279,11 +2279,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteDataset(connectionString, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteDataset(connectionString, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteDataset(connectionString, CommandType.StoredProcedure, spName);
+                return ExecuteDataset(connectionString, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2297,7 +2297,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>A dataset containing the resultset generated by the command</returns>
-        internal static DataSet ExecuteDatasetTypedParams(SqlConnection connection, String spName, DataRow dataRow)
+        internal static DataSet ExecuteDatasetTypedParams(SqlConnection connection, string spName, DataRow dataRow)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
@@ -2311,11 +2311,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteDataset(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, spName);
+                return ExecuteDataset(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2329,7 +2329,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>A dataset containing the resultset generated by the command</returns>
-        internal static DataSet ExecuteDatasetTypedParams(SqlTransaction transaction, String spName, DataRow dataRow)
+        internal static DataSet ExecuteDatasetTypedParams(SqlTransaction transaction, string spName, DataRow dataRow)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
@@ -2344,11 +2344,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteDataset(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteDataset(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteDataset(transaction, CommandType.StoredProcedure, spName);
+                return ExecuteDataset(transaction, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2366,7 +2366,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
-        internal static SqlDataReader ExecuteReaderTypedParams(String connectionString, String spName, DataRow dataRow)
+        internal static SqlDataReader ExecuteReaderTypedParams(string connectionString, string spName, DataRow dataRow)
         {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
@@ -2380,11 +2380,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteReader(connectionString, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, spName);
+                return ExecuteReader(connectionString, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2398,7 +2398,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
-        internal static SqlDataReader ExecuteReaderTypedParams(SqlConnection connection, String spName, DataRow dataRow)
+        internal static SqlDataReader ExecuteReaderTypedParams(SqlConnection connection, string spName, DataRow dataRow)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
@@ -2412,11 +2412,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteReader(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteReader(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteReader(connection, CommandType.StoredProcedure, spName);
+                return ExecuteReader(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2430,7 +2430,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
-        internal static SqlDataReader ExecuteReaderTypedParams(SqlTransaction transaction, String spName, DataRow dataRow)
+        internal static SqlDataReader ExecuteReaderTypedParams(SqlTransaction transaction, string spName, DataRow dataRow)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
@@ -2445,11 +2445,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, spName);
+                return ExecuteReader(transaction, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2467,7 +2467,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        internal static object ExecuteScalarTypedParams(String connectionString, String spName, DataRow dataRow)
+        internal static object ExecuteScalarTypedParams(string connectionString, string spName, DataRow dataRow)
         {
             if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
@@ -2481,11 +2481,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteScalar(connectionString, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteScalar(connectionString, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteScalar(connectionString, CommandType.StoredProcedure, spName);
+                return ExecuteScalar(connectionString, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2499,7 +2499,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        internal static object ExecuteScalarTypedParams(SqlConnection connection, String spName, DataRow dataRow)
+        internal static object ExecuteScalarTypedParams(SqlConnection connection, string spName, DataRow dataRow)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
@@ -2513,11 +2513,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteScalar(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteScalar(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteScalar(connection, CommandType.StoredProcedure, spName);
+                return ExecuteScalar(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2531,7 +2531,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        internal static object ExecuteScalarTypedParams(SqlTransaction transaction, String spName, DataRow dataRow)
+        internal static object ExecuteScalarTypedParams(SqlTransaction transaction, string spName, DataRow dataRow)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
@@ -2546,11 +2546,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteScalar(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, spName);
+                return ExecuteScalar(transaction, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2568,7 +2568,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
-        internal static XmlReader ExecuteXmlReaderTypedParams(SqlConnection connection, String spName, DataRow dataRow)
+        internal static XmlReader ExecuteXmlReaderTypedParams(SqlConnection connection, string spName, DataRow dataRow)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (spName == null || spName.Length == 0) throw new ArgumentNullException("spName");
@@ -2582,11 +2582,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteXmlReader(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteXmlReader(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteXmlReader(connection, CommandType.StoredProcedure, spName);
+                return ExecuteXmlReader(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2600,7 +2600,7 @@ namespace Eltizam.Data.DataAccess
         /// <param name="spName">The name of the stored procedure</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
-        internal static XmlReader ExecuteXmlReaderTypedParams(SqlTransaction transaction, String spName, DataRow dataRow)
+        internal static XmlReader ExecuteXmlReaderTypedParams(SqlTransaction transaction, string spName, DataRow dataRow)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
@@ -2615,11 +2615,11 @@ namespace Eltizam.Data.DataAccess
                 // Set the parameters values
                 AssignParameterValues(commandParameters, dataRow);
 
-                return SqlHelper.ExecuteXmlReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return ExecuteXmlReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return SqlHelper.ExecuteXmlReader(transaction, CommandType.StoredProcedure, spName);
+                return ExecuteXmlReader(transaction, CommandType.StoredProcedure, spName);
             }
         }
 

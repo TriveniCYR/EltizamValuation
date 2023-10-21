@@ -20,11 +20,10 @@ namespace Eltizam.Business.Models
 
         public DateTime CreatedDate { get; set; }
         public string? ControlName { get; set; }
-
+        public string? Icon { get; set; }
+        public string? ViewName { get; set; }
+        public string? HoverIcon { get; set; }
         public virtual RoleModulePermissionEntity RoleModulePermission { get; set; }
-
-
-
         public virtual List<MasterSubModuleEntity> MasterSubModules { get; set; }
     }
     public class MenuModels

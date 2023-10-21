@@ -23,7 +23,7 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
-        public IActionResult Client()
+        public IActionResult Clients()
         {
             try
             {                
@@ -90,7 +90,7 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
-                    return RedirectToAction("Client");
+                    return RedirectToAction("Clients");
                 }
                 else
                 {

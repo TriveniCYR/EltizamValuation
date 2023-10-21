@@ -5,11 +5,8 @@
 @using Eltizam.Utility.Utility;
 @using Eltizam.Utility.Enums;
 @using Microsoft.AspNetCore.Mvc.Localization;
-
-@*@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
-@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer*@
-
-@inject IHelper Helper 
+ 
+@inject IHelper Helper  
 
 @{
     var _curRoleId = Helper.GetLoggedInRoleId();
@@ -22,16 +19,28 @@
             <img src="../assets/logo.svg" alt="logo" class="dashboard-logo">
         </div>
         <div class="sideMenu">  
-            <ul>
+           @* <ul>
                 <li><div class="flex"><img src="../assets/dashboard.svg" alt="dashboard"><p>Dashboard</p></div></li>
             </ul>
-            <p>MASTERS</p>
-            <ul>
+            <p>MASTERS</p>*@
+
+            <ul> 
                 @if (Helper.GetLoggedInRoleId() != 0)
                 {
-                    int _roleId = Helper.GetLoggedInRoleId();
+                    foreach (var _m in menus)
+                    {
+                        <li onclick="designation()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/@_m.Icon" alt="@_m.ModuleName" class="showIcon">
+                                <img src="../assets/@_m.HoverIcon" alt="@_m.ModuleName" class="hoverIcon">
+                                <a href="@Url.Action(@_m.ViewName, @_m.ControlName)" class="nav-link">@_m.ModuleName</a>
+                            </div>
+                        </li>
+                    } 
 
-                    @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ResourceMaster, _roleId))
+                    @* int _roleId = Helper.GetLoggedInRoleId();*@
+
+                    @*@if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.ResourceMaster, _roleId))
                     {
                         <li class="activeSideMenu">
                             <div class="flex align-item-center">
@@ -59,7 +68,7 @@
                             <div class="flex align-item-center">
                                 <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
                                 <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
-                                @* <p>System User Master</p> *@
+                                  <p>System User Master</p> 
                                 <a href="@Url.Action("ClientType", "ClientType")" class="nav-link">Client Type</a>
                             </div>
                         </li>
@@ -90,11 +99,11 @@
                     }
                     @if (UtilityHelper.GetMenuAccess((int)ModulePermissionEnum.LocationMaster, _roleId))
                     {
-                        <li onclick="locationMaster()">
+                        <li onclick="locationMaster111()">
                             <div class="flex align-item-center">
                                 <img src="../assets/current-location.svg" class="showIcon" alt="Location Master">
                                 <img src="../assets/current-location-blue.svg" class="hoverIcon" alt="Location Master">
-                                <a href="@Url.Action("Locations", "Location")" class="nav-link">Location Master</a>
+                                <a href="@Url.Action("Location111s", "Location")" class="nav-link">Location Master</a>
                             </div>
                         </li>
                     }
@@ -148,7 +157,7 @@
                                 <a href="@Url.Action("Vendors", "Vendor")" class="nav-link">Vendor Master</a>
                             </div>
                         </li>
-                    }
+                    }*@
                 }
             </ul>
 

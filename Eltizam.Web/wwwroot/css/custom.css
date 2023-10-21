@@ -190,7 +190,7 @@ select.form-control {
         list-style: none;
         width: 20px;
         height: 20px;
-        background: red;
+        background: mediumblue;
         margin: 0 5px;
         border-radius: 50%;
         animation: animate 1.4s linear infinite;

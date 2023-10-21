@@ -3,9 +3,7 @@ using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Net;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.API.Controllers.Masters
@@ -57,7 +55,7 @@ namespace Eltizam.API.Controllers.Masters
             {
                 DBOperation oResponse = await _MasterRoleService.AddUpdateRole(oRole);
                 if (oResponse == DBOperation.Success)
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oRole.RoleId > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oRole.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 else
                     return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
@@ -88,7 +86,7 @@ namespace Eltizam.API.Controllers.Masters
                 var oRoleEntity = await _MasterRoleService.GetById(id);
                 oRoleEntity.MasterModules = await _MasterModuleService.GetByRoleId(id);
 
-                if (oRoleEntity is not null && oRoleEntity.RoleId > 0)
+                if (oRoleEntity is not null && oRoleEntity.Id > 0)
                     return _ObjectResponse.Create(oRoleEntity, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
@@ -100,29 +98,43 @@ namespace Eltizam.API.Controllers.Masters
             }
         }
 
-        /// <summary>
-        /// Description - To Get All Role
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <response code="200">OK</response>
-        /// <response code="400">Bad Request</response>
-        /// <response code="401">Unauthorized</response>
-        /// <response code="403">Forbidden</response>
-        /// <response code="404">Not Found</response>
-        /// <response code="405">Method Not Allowed</response>
-        /// <response code="500">Internal Server</response>
+        ///// <summary>
+        ///// Description - To Get All Role
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        ///// <response code="200">OK</response>
+        ///// <response code="400">Bad Request</response>
+        ///// <response code="401">Unauthorized</response>
+        ///// <response code="403">Forbidden</response>
+        ///// <response code="404">Not Found</response>
+        ///// <response code="405">Method Not Allowed</response>
+        ///// <response code="500">Internal Server</response>
 
-        [HttpGet, Route("GetAllRole")]
-        public async Task<IActionResult> GetAllRole()
+        //[HttpPost, Route("GetAllRole")]
+        //public async Task<IActionResult> GetAllRole()
+        //{
+        //    try
+        //    {
+        //        var oRoleList = await _MasterRoleService.GetAll();
+        //        if (oRoleList != null)
+        //            return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
+        //        else
+        //            return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await _ExceptionService.LogException(ex);
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
+
+        [HttpPost, Route("GetAll")]
+        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
         {
             try
             {
-                var oRoleList = await _MasterRoleService.GetAll();
-                if (oRoleList != null)
-                    return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
-                else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+                return _ObjectResponse.CreateData(await _MasterRoleService.GetAll(model), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

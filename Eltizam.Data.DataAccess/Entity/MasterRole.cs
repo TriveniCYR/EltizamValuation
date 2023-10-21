@@ -5,7 +5,7 @@ namespace Eltizam.Data.DataAccess.Entity
 {
     public partial class MasterRole
     {
-        public int RoleId { get; set; }
+        public int Id { get; set; }
         public string? RoleName { get; set; }
         public bool? IsActive { get; set; }
         public int? CreatedBy { get; set; }

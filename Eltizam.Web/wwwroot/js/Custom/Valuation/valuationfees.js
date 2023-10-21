@@ -1,18 +1,16 @@
 ﻿var tableId = "ValuationFeesTable";
 $(document).ready(function () {
-    InitializeUserList();
+    InitializeDataList();
 });
 
 
 //#region Delete User
-function ConfirmationDeleteUser(id) {
-    alert(id);
-    $('#DeleteValuationModel #Id').val(id);
+function ConfirmationDeleteValuationFees(id) {  
+    $('#DeleteValuationFeesModel #Id').val(id);
 }
-function DeleteValuation() {
-    debugger;
-    var tempInAtiveID = $('#DeleteValuationModel #Id').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteValuationByIdUrl + "/" + tempInAtiveID, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
+function DeleteValuationFees() { 
+    var tempInAtiveID = $('#DeleteValuationFeesModel #Id').val();
+    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteValuationByIdUrl + "/" + tempInAtiveID, 'DELETE', DeleteUserByIdSuccess, DeleteUserByIdError);
 }
 
 function DeleteUserByIdSuccess(data) {
@@ -33,8 +31,7 @@ function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function InitializeUserList() {
-    debugger;
+function InitializeDataList() { 
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
         "url": $('#hdnBaseURL').val() + ValuationFees,
@@ -67,23 +64,14 @@ function InitializeUserList() {
         {            "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
                 return GetActiveFlagCss(data);
             }
-        },
-        //{
-        //    "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
-        //        var html = '';
-        //        html += '<a title="Edit" class="large-font"  href="/ValuationFees/ValuationFeesManage?id=' + row.id + '"><img src="../assets/edit.svg" alt = "edit" />';
-        //        html += '<a title="Delete" class="large-font text-danger" data-toggle="modal" data-target="#DeleteValuationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.id + '); return false;"><i class="fa fa-fw fa-trash mr-1"></i></a>';
-
-        //        return html;
-        //    }
-        //}, 
+        }, 
         {
             "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                 html += '<li><a title="View" href="/MasterValuationFees/ValuationFeesDetail?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
                 html += '<li><a title="Edit" href="/MasterValuationFees/ValuationFeesManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
-                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteValuationFeesModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteValuationFees(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                 html += '</ul></div>';
 
                 return html;
@@ -91,8 +79,7 @@ function InitializeUserList() {
         }
     ];
 
-    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
-    
+    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);    
 }
 
 

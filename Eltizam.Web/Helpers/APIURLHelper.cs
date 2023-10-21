@@ -114,7 +114,7 @@ namespace Eltizam.Web.Helpers
         #endregion Client
 
         #region Role Management
-        public static string GetAllRole = "api/MasterRole/GetAllRole";
+        public static string GetAllRole = "api/MasterRole/GetAll";
         public static string GetAllActiveRole = "api/MasterRole/GetAllActiveRole";
         public static string GetRoleById = "api/MasterRole/GetRoleById";
         public static string SaveRole = "api/MasterRole/InsertUpdateRole";
