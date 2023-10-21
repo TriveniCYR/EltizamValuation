@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\MasterRole\Roles1.cshtml" />
     <Content Remove="Views\MasterUser\AddResource.cshtml" />
     <Content Remove="Views\MasterUser\EditResource.cshtml" />
   </ItemGroup>
