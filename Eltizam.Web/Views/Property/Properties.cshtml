@@ -1,0 +1,126 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@{
+    ViewData["Title"] = @SharedLocalizer["PropertyMaster"];
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+
+    <!-- system user master -->
+    <div class="flex">
+        <div class="w-100 position-relative">
+            <main  class="w-100">
+            <div class="flex justify-between mt-20  mobile_flexColumn position-relative">
+                <h3 class="dashboardTitle">PROPERTY MASTER</h3>
+                   
+                    <div class="buttonArea flex align-item-center">
+                        <button class="flex align-item-center blueBtn" onClick="editProperty()">
+                            <img src="../assets/plus.svg" alt="plus"> Add New
+                        </button>
+                        
+                        @*<button class="flex align-item-center lineBtn" id="importFile">
+                            <img src="../assets/file-import.svg" alt="file-import"/>
+                            Import
+                        </button>
+                        <button class="flex align-item-center lineBtn exportFile">
+                            <img src="../assets/file-export.svg" alt="file-export"> Export
+                            <div class="actionItem">
+                                <ul>
+                                    <li>
+                                        Excel XML
+                                    </li>
+                                    <li>
+                                        CSV
+                                    </li>
+                                </ul>
+                            </div>
+                        </button>*@
+                    </div>
+                </div>
+            <div class="scroll-x whiteWithPadding">
+                <table id="PropertyTable" class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Property Name</th>
+                                <th>Property type</th>
+                                <th>Property Sub Type</th>
+                                <th>Ownership Type</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*<tr>
+                                <td>1</td>
+                                <td class="userPic text-center" onClick="editProperty()">John  G Doe</td>
+                                <td>Commercial</td>
+                                <td>Villa</td>
+                                <td>Free Hold</td>
+                                <td>City, Country, State</td>
+                                <td><span class="tableStatus green">Active</span></td>
+                                <td class="position-relative">
+                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots"/>
+                                    <div class="actionItem">
+                                        <ul>
+                                            <li onClick="editProperty()">
+                                                <img src="../assets/view.svg" alt="view"/>
+                                                view
+                                            </li>
+                                            <li onClick="editProperty()">
+                                                <img src="../assets/edit.svg" alt="edit"/>
+                                                Edit
+                                            </li>
+                                            <li class="delete">
+                                                <img src="../assets/trash.svg" alt="trash"/>
+                                                Delete
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>*@
+                        </tbody>
+                    </table>
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+@section MyScripts
+    {
+    @Html.Partial("_DataTablePartial")
+
+    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/Custom/MasterProperty/MasterProperty.js?v=@jsVersion"></script>
+    <script>
+
+        function sideNavToggle() {
+            var x = document.getElementById("sideNav");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+        //#region Setup API Url
+        var AllProperty = "@Eltizam.Web.Helpers.APIURLHelper.GetAllProperty";
+        var DeletePropertyByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeletePropertyById";
+
+        //#region Static Messae Init
+        var EditLabel = "@SharedLocalizer["Edit"]";
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+        var AddLabel = "@SharedLocalizer["Add"]";
+        var UpdateLabel = "@SharedLocalizer["Update"]";
+
+    </script>
+}
