@@ -1,4 +1,4 @@
-﻿var tableId = "RoleTable";
+﻿var tableId = "PropertyTypeTable";
 $(document).ready(function () {
     InitializePropertyTypeDataList();
 });
@@ -47,11 +47,11 @@ function InitializePropertyTypeDataList() {
 
 //#region Delete Role  
 function ConfirmationDeleteRole(id) {
-    $('#DeleteRoleModel #Id').val(id);
+    $('#DeletePropertyTypeModel #Id').val(id);
 }
 function DeleteRole() {
-    var tid = $('#DeleteRoleModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteRoleByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+    var tid = $('#DeletePropertyTypeModel #Id').val();
+    ajaxServiceMethod(BaseURL + DeleteByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
 }
 function DeleteUserByIdSuccess(data) {
     try {

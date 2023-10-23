@@ -77,7 +77,7 @@
 </main>
 
 
-<div id="DeleteDepartmentModel" class="modal themeModal " role="dialog">
+<div id="DeletePropertyTypeModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -93,10 +93,10 @@
                         </div>
                     </div>
                 </div>
-                @Html.Hidden("ID")
-                <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteDepartment()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
-                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                @Html.Hidden("Id")
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeletePropertyType()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
                 </div>
             </div>
         </div>
@@ -109,8 +109,8 @@
 
     <script type="text/javascript" src="~/js/Custom/PropertyType/PropertyTypeManagement.js?v=@jsVersion"></script>
 
-    <script> 
-        var DeleteDepartmenteByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDepartmentById";
+    <script>
+        var DeleteByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeletePropertytTypeById";
         var GetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllPropertyType";
 
         var DeleteLabel = "@SharedLocalizer["Delete"]";

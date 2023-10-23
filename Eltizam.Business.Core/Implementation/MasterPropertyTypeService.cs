@@ -150,38 +150,41 @@ namespace Eltizam.Business.Core.Implementation
 
             else
             {
-                if (masterproperty.subType != null)
+                if (masterproperty.MasterPropertySubTypes != null)
                 {
-                    if (masterproperty.subType.Id > 0)
-                    {
-                        propertySubType = _subrepository.Get(masterproperty.subType.Id);
-                        if (propertySubType != null)
+                    var subTypes = masterproperty.MasterPropertySubTypes;
+
+                    foreach (var subType in subTypes)
+                    { 
+                        if (subType.Id > 0)
                         {
-                            var entitySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(masterproperty.subType);
-                            propertySubType.PropertySubType = entitySubType.PropertySubType;
+                            propertySubType = _subrepository.Get(subType.Id);
+                            if (propertySubType != null)
+                            {
+                                var entitySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
+                                propertySubType.PropertySubType = entitySubType.PropertySubType;
 
 
-                            propertySubType.IsActive = entitySubType.IsActive;
-                            propertySubType.ModifiedBy = entitySubType.CreatedBy;
-                            propertySubType.ModifiedDate = DateTime.Now;
-                            _subrepository.UpdateAsync(propertySubType);
+                                propertySubType.IsActive = entitySubType.IsActive;
+                                propertySubType.ModifiedBy = entitySubType.CreatedBy;
+                                propertySubType.ModifiedDate = DateTime.Now;
+                                _subrepository.UpdateAsync(propertySubType);
+                            }
                         }
+                        else
+                        {
+                            propertySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
+                            propertySubType.PropertySubType = Convert.ToString(subType.PropertySubType); 
+                            propertySubType.PropertyTypeId = type.Id;
+                            propertySubType.IsActive = masterproperty.IsActive;
+                            propertySubType.CreatedBy = masterproperty.CreatedBy;
+                            propertySubType.CreatedDate = DateTime.Now;
+                            propertySubType.ModifiedBy = masterproperty.CreatedBy;
+                            propertySubType.ModifiedDate = DateTime.Now;
+                            _subrepository.AddAsync(propertySubType);
+                        }
+                        await _unitOfWork.SaveChangesAsync();
                     }
-                    else
-                    {
-                        propertySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(masterproperty.subType);
-                        propertySubType.PropertySubType = Convert.ToString(masterproperty.subType.PropertySubType);
-                        //propertySubType.PropertySubType = masterproperty.subType.PropertyTypeId;
-                        //propertySubType.PropertySubType = Convert.ToString(masterproperty.subType.PropertyTypeId);
-                        propertySubType.PropertyTypeId = type.Id;
-                        propertySubType.IsActive = masterproperty.IsActive;
-                        propertySubType.CreatedBy = masterproperty.CreatedBy;
-                        propertySubType.CreatedDate = DateTime.Now;
-                        propertySubType.ModifiedBy = masterproperty.CreatedBy;
-                        propertySubType.ModifiedDate = DateTime.Now;
-                        _subrepository.AddAsync(propertySubType);
-                    }
-                    await _unitOfWork.SaveChangesAsync();
                 }
             }
             return DBOperation.Success;
