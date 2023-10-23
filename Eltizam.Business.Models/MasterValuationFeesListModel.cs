@@ -18,6 +18,7 @@ namespace Eltizam.Business.Models
         public string? CarpetAreaInSqFt { get; set; }
         public string? CarpetAreaInSqMtr { get; set; }
         public string? ClientTypeName { get; set; }
+        public string? ClientType { get; set; }
         public int? ClientTypeId { get; set; }
         public int? ValuationType { get; set; }
         public int? ValuationFeeTypeId { get; set; }

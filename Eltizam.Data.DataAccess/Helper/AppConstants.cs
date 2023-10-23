@@ -25,6 +25,12 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string DeleteSuccess = "Data deleted successfully";
         public static string BadRequest = "Bad Reques";
         public static string ActionSuccess = "Action performed successfully";
+
+        public static string P_SearchText   = "@SearchText";
+        public static string P_SortDirection = "@SortDirection";
+        public static string P_SortColumn    = "@SortColumn";
+        public static string P_PageSize      = "@PageSize";
+        public static string P_CurrentPageNumber = "@CurrentPageNumber";
     }
 
     public class TableName

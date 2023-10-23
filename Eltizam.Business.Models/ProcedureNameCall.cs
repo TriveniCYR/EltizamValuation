@@ -18,11 +18,13 @@ namespace Eltizam.Business.Models
         public static string usp_PropertyType_SearchAllList = "usp_PropertyType_SearchAllList";
         public static string usp_PropertySubType_SearchAllList = "usp_PropertySubType_SearchAllList";
         public static string usp_Vendor_SearchAllList = "usp_Vendor_SearchAllList";
+        public static string usp_Client_Search_GetClientList = "usp_Client_Search_GetClientList";
+        public static string usp_Property_Search_GetPropertyList = "usp_Property_Search_GetPropertyList";
+       
         public static string usp_OwnershipType_SearchAllList = "usp_OwnershipType_SearchAllList";
         public static string usp_State_SearchAllList = "usp_State_SearchAllList";
         public static string usp_User_SearchAllList = "usp_User_SearchAllList";
-        public static string usp_ValuationFees_SearchAllList = "usp_ValuationFees_SearchAllList";
-        public static string usp_ValuationFeeType_SearchAllList = "usp_ValuationFeeType_SearchAllList";
+        
         public static string usp_Country_SearchAllList = "usp_Country_SearchAllList";
         public static string usp_User_Search_GetUserList = "usp_User_Search_GetUserList";
         public static string usp_Dictionary_SearchAllList = "usp_Dictionary_SearchAllList";
@@ -47,8 +49,13 @@ namespace Eltizam.Business.Models
         public static string usp_Role_SearchAllList = "usp_Role_SearchAllList";
         public static string usp_Role_GetByRoleName = "usp_Role_GetByRoleName";
 
-        public static string stp_InsertException = "stp_InsertException";
-        public static string stp_PropertyType_GetAll = "stp_PropertyType_GetAll";
-       
+        public static string usp_InsertException = "usp_InsertException";
+        
+        //Vendor 
+        public static string usp_Vendor_Search_GetVendorList = "usp_Vendor_Search_GetVendorList";
+
+        //Valuation
+        public static string usp_ValuationFees_SearchAllList = "usp_ValuationFees_SearchAllList";
+        public static string usp_ValuationFeeType_SearchAllList = "usp_ValuationFeeType_SearchAllList";
     }
 }

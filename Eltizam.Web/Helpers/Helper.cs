@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Eltizam.Utility.Models;
+using Eltizam.Utility.Utility;
 using Newtonsoft.Json;
-using System.Security.Principal;
 
 namespace Eltizam.Web.Helpers
 {
@@ -60,5 +60,10 @@ namespace Eltizam.Web.Helpers
 
         }
 
+        public List<RolePermissionModel> GetMenusByRole(int loginRoleId)
+        {
+            IEnumerable<RolePermissionModel> objList = UtilityHelper.GetModuleRole<dynamic>(loginRoleId); 
+            return objList.ToList();
+        }
     }
 }

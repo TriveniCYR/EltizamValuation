@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add property</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- system user master -->
+    <div class="flex">
+        <div>
+            <aside class="sideNavDashboard visible-in-web" id="sideNav">
+                <div class="text-center">
+                    <img src="../assets/logo.svg" alt="logo" class="dashboard-logo">
+                </div>
+                <div class="sideMenu">
+                    <!-- <p class="position-relative">MENU <button class="close-sideNavMobile visible-in-mobile">Close <span>X</span></button></p> -->
+
+                    <ul>
+                        <li><div class="flex"><img src="../assets/dashboard.svg" alt="dashboard"><p>Dashboard</p></div></li>
+                    </ul>
+                    <p>MASTERS</p>
+                    <ul>
+                        <li>
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-cog.svg" alt="Resource Master" class="showIcon">
+                                <img src="../assets/user-cog-blue.svg" alt="Resource Master" class="hoverIcon">
+                                <p>Resource Master</p>
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu"/>
+                            </div>
+                            
+                            <div class="showMoreNav">
+                                <ul>
+                                    <li onclick="resourceMaster()">Resource List</li>
+                                    <li class="activeSideMenu">Add New</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li onClick="roleMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-star.svg" alt="Role Master" class="showIcon">
+                                <img src="../assets/user-star-blue.svg" alt="Role Master" class="hoverIcon">
+                                <p>Role Master</p>
+                            </div>
+                        </li>
+                        <li onclick="userMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                                <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                                <p>System User Master</p>
+                            </div>
+                        </li>
+                        <li onclick="Property()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                                <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                                <p>Property Master</p>
+                            </div>
+                        </li>
+                        <li onclick="department()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-shield.svg" class="showIcon" alt="System User Master">
+                                <img src="../assets/user-shield-blue.svg" class="hoverIcon" alt="System User Master">
+                                <p>Department Master</p>
+                            </div>
+                        </li>
+                        <li onclick="locationMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/current-location.svg" class="showIcon" alt="Location Master">
+                                <img src="../assets/current-location-blue.svg" class="hoverIcon" alt="Location Master">
+                                <p>Location Master</p>
+                            </div>
+                        </li>
+                        <li onclick="propTypeMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/building-community.svg" class="showIcon" alt="Property Type Master">
+                                <img src="../assets/building-community-blue.svg" class="hoverIcon" alt="Property Type Master">
+                                <p>Property Type Master</p>
+                            </div>
+                        </li>
+                        <li class="activeSideMenu" onclick="propMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/building-fortress.svg" class="showIcon" alt="Property Master">
+                                <img src="../assets/building-fortress-blue.svg" class="hoverIcon" alt="Property Master">
+                                <p>Property Master</p>
+                            </div>
+                        </li>
+                        <li onclick="clientMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/user-bolt.svg" class="showIcon" alt="Client Master">
+                                <img src="../assets/user-bolt-blue.svg" class="hoverIcon" alt="Client Master">
+                                <p>Client Master</p>
+                            </div>
+                        </li>
+                        <li onclick="valuationFeestMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/home-dollar.svg" class="showIcon" alt="Valuation Fees Master">
+                                <img src="../assets/home-dollar-blue.svg" class="hoverIcon" alt="Valuation Fees Master">
+                                <p>Valuation Fees Master</p>
+                            </div>    
+                        </li>
+                        <li onclick="vendortMaster()">
+                            <div class="flex align-item-center">
+                                <img src="../assets/users-group.svg" class="showIcon" alt="Vendor Master">
+                                <img src="../assets/users-group-blue.svg" class="hoverIcon" alt="Vendor Master">
+                                <p>Vendor Master</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <p>MANAGEMENTS</p>
+                    <ul>
+                        <li>
+                            <div class="flex align-item-center">
+                            <img src="../assets/file-invoice.svg" class="showIcon" alt="file-invoice">
+                            <img src="../assets/file-invoice-blue.svg" class="hoverIcon" alt="file-invoice">
+                            <p>Audit Log</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+        <div class="w-100 position-relative">
+            <header class="flex justify-between align-item-center">
+                <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="../assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web"/> <img src="../assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
+                <div class="user flex">
+                    <div class="position-relative notification">
+                        <img src="../assets/bell.svg" alt="bell" class="cursor-pointer"/>
+                        <span>3</span>
+                    </div>
+                    <div class="flex align-item-center">
+                        <img src="../assets/user-icon.svg" alt="user-icon" class="profile cursor-pointer"/> 
+                        <p class="visible-in-web">Saeed</p>
+                        <img src="../assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web"/>
+                    </div>
+                </div>
+            </header>
+            
+            <main class="plr-0">
+                <div class="profileHead flex justify-between align-item-center cursor-pointer">
+                    <h3 class="dashboardTitle">Add Property</h3>
+                    <div class="hamburger">
+                        <span onclick="propMaster()">Property Master</span>
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon"/>
+                        <span>Add Property</span>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="profileTabSection addProperty">
+                        <div class="tab">
+                            <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property & Amenities Details</button>
+                            <button class="tablinks" onclick="profileTab(event, 'profile2')">Location Details</button>
+                        </div>
+                        
+                        <div id="profile1" class="tabcontent">
+                            <h3 class="blueHeading">Property Details</h3>
+                            <div class="inputSearchs">
+                                <form>
+                                    <div class="flex fourBox mb-28">
+                                        <label for="">
+                                            Property Name 
+                                            <input type="text" placeholder="enter first name">
+                                        </label>
+                                        <label for="">
+                                            Property Type Name 
+                                            <select name="">
+                                                <option value="">Property type1</option>
+                                                <option value="">Property type2</option>
+                                                <option value="">Property type3</option>
+                                            </select>
+                                        </label>
+                                        <label for="">
+                                            Property SubType Name 
+                                            <select name="">
+                                                <option value="">Property type1</option>
+                                                <option value="">Property type2</option>
+                                                <option value="">Property type3</option>
+                                            </select>
+                                        </label>
+                                        <label for="">
+                                            Type of Ownership
+                                            <select name="">
+                                                <option value="">Property type1</option>
+                                                <option value="">Property type2</option>
+                                                <option value="">Property type3</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="flex fourBox mb-28">
+                                        <label for="">
+                                            Unit Type
+                                            <select name="">
+                                                <option value="">Property type1</option>
+                                                <option value="">Property type2</option>
+                                                <option value="">Property type3</option>
+                                            </select>
+                                        </label>
+                                        <label for="">
+                                            Additional Units 
+                                            <input type="text" placeholder="enter first name">
+                                        </label>
+                                        <label for="">
+                                            Furnished
+                                            <select name="">
+                                                <option value="">Property type1</option>
+                                                <option value="">Property type2</option>
+                                                <option value="">Property type3</option>
+                                            </select>
+                                        </label>
+                                        <label for="">
+                                            Purpose of Valuation
+                                            <select name="">
+                                                <option value="">Property type1</option>
+                                                <option value="">Property type2</option>
+                                                <option value="">Property type3</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="flex fourBox mb-28">
+                                        <label for="">
+                                            Built Up Area (Sq.Ft)
+                                            <input type="text" placeholder="enter first name">
+                                        </label>
+                                        <label for="">
+                                            Built up Area (Sq.Meter) 
+                                            <input type="text" placeholder="enter first name">
+                                        </label>
+                                        <label for="">
+                                            Age of construction
+                                            <select name="">
+                                                <option value="">Property type1</option>
+                                                <option value="">Property type2</option>
+                                                <option value="">Property type3</option>
+                                            </select>
+                                        </label>
+                                        <label for="">
+                                            Status
+                                            <input class='input-switch' type="checkbox" id="addLocation" required/>
+                                            <label class="label-switch" for="addLocation"></label>
+                                            <span class="info-text"></span>
+                                        </label>
+                                    </div>
+                                    <div class="flex threeBox mb-28">
+                                        <label for="">
+                                            Parking
+                                            <input type="text" placeholder="enter first name">
+                                        </label>
+                                        <label for="">
+                                            Parking BAY Number 
+                                            <input type="text" placeholder="enter first name">
+                                        </label>
+                                        <label for="">
+                                            Description
+                                            <select name="">
+                                                <option value="">Property type1</option>
+                                                <option value="">Property type2</option>
+                                                <option value="">Property type3</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                            <h3 class="blueHeading">Amenities</h3>
+                            <div class="inputSearchs">
+                                <form>
+                                    <div class="flex threeBox mb-28">
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>Swimming pool </p>
+                                        </label>
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>On-site laundry facilities</p>
+                                        </label>
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>Conference room</p>
+                                        </label>
+                                    </div>
+                                    <div class="flex threeBox mb-28">
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>24-hour security or concierge service</p>
+                                        </label>
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>Fitness centre or gym</p>
+                                        </label>
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>Business centre</p>
+                                        </label>
+                                    </div>
+                                    <div class="flex threeBox mb-28">
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>Parking garage /valet parking</p>
+                                        </label>
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>On-site maintenance staff</p>
+                                        </label>
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>Playground or recreation area</p>
+                                        </label>
+                                    </div>
+                                    <div class="flex mb-28">
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>Pet-friendly accommodations</p>
+                                        </label>
+                                        <label for="" class="position-relative checkboxBtn">
+                                            <input type="checkbox" placeholder="enter first name">
+                                            <p>Wi-Fi or high-speed internet access.</p>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="text-center buttonArea bodyContent plr-0">
+                                        <button type="button" class="lineBtn greyBtn">Cancel</button>
+                                        <button type="submit" class="blueBtn">Save & Next</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div id="profile2" class="tabcontent">                            
+                            <h3 class="blueHeading">Location Details</h3>
+                            <div class="inputSearchs">
+                                <form>
+                                    <div class="addMoreAddress">
+                                        <div class="flex fourBox">
+                                            <label for="address1">
+                                                Country Name
+                                                <select name="">
+                                                    <option value="">Country Name1</option>
+                                                    <option value="">Country Name2</option>
+                                                    <option value="">Country Name3</option>
+                                                </select>
+                                            </label>
+                                            <label for="address1">
+                                                Region Master
+                                                <select name="">
+                                                    <option value="">Region Master1</option>
+                                                    <option value="">Region Master2</option>
+                                                    <option value="">Region Master3</option>
+                                                </select>
+                                            </label>
+                                            <label for="address1">
+                                                States/Emirates
+                                                <select name="">
+                                                    <option value="">States/Emirates1</option>
+                                                    <option value="">States/Emirates2</option>
+                                                    <option value="">States/Emirates3</option>
+                                                </select>
+                                            </label>
+                                            <label for="address1">
+                                                Sector /Zone
+                                                <select name="">
+                                                    <option value="">Sector /Zone1</option>
+                                                    <option value="">Sector /Zone2</option>
+                                                    <option value="">Sector /Zone3</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="address2">
+                                                Building Projects
+                                                <select name="">
+                                                    <option value="">Building Projects1</option>
+                                                    <option value="">Building Projects2</option>
+                                                    <option value="">Building Projects3</option>
+                                                </select>
+                                            </label>
+                                            <div class="flex w-50 m-0">
+                                                <label for="address2">
+                                                    Geo-cordinates
+                                                    <input type="text" placeholder="--Enter Longitude--">
+                                                </label>
+                                                <label for="address2">
+                                                    Geo-cordinates
+                                                    <input type="text" placeholder="--Enter Latitude--">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="">
+                                                Address Line 1
+                                                <input type="text" placeholder="enter address line 1">
+                                            </label>
+                                            <label for="">
+                                                Address Line 2
+                                                <input type="text" placeholder="enter address line 2">
+                                            </label>
+                                        </div>
+                                        <div class="flex w-50">
+                                            <label for="address2">
+                                                Pin Code
+                                                <input type="text" placeholder="enter Pin Code">
+                                            </label>
+                                            <label for="address2">
+                                                Landmark
+                                                <input type="text" placeholder="enter Landmark">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="text-center buttonArea bodyContent plr-0">
+                                        <button type="button" class="lineBtn greyBtn">Cancel</button>
+                                        <button type="submit" class="blueBtn">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </main>
+            <footer class="flex justify-between">
+                <p>2023 © Eltizam.</p>
+                <p>Design & Develop by NeoSoft</p>
+            </footer>
+        </div>
+     </div>
+     <script>
+
+       function profileTab(evt, cityName) {
+       var i, tabcontent, tablinks;
+       tabcontent = document.getElementsByClassName("tabcontent");
+       for (i = 0; i < tabcontent.length; i++) {
+           tabcontent[i].style.display = "none";
+       }
+       tablinks = document.getElementsByClassName("tablinks");
+       for (i = 0; i < tablinks.length; i++) {
+           tablinks[i].className = tablinks[i].className.replace(" active", "");
+       }
+       document.getElementById(cityName).style.display = "block";
+       evt.currentTarget.className += " active";
+       }
+       document.getElementById("defaultOpen").click();
+
+       function sideNavToggle() {
+           var x = document.getElementById("sideNav");
+           if (x.style.display === "none") {
+               x.style.display = "block";
+           } else {
+               x.style.display = "none";
+           }
+       }
+
+       function resourceMaster() {
+           window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/resource-master.html'
+       }
+       function userMaster(){
+           window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_User/user-master.html'
+       }
+       function roleMaster(){
+           window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Role/role-master.html'
+       }
+
+       function locationMaster() {
+           window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Location/location-master.html'
+       }
+       function propTypeMaster() {
+           window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Property_Type/property-type-master.html'
+       }
+       function Property() {
+           window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Property/Property-master.html'
+       }
+       function department() {
+           window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Department/department-master.html'
+       }
+       function propMaster() {
+           window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Property/property-master.html'
+       }
+        function clientMaster() {
+            window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Client/client-master.html'
+        }
+        function valuationFeestMaster() {
+            window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Valuation_Fees/valuation-fees-master.html'
+        }
+        function vendortMaster() {
+            window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Vendor/vendor-master.html'
+        }
+   </script>
+</body>
+</html>

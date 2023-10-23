@@ -1,22 +1,22 @@
-﻿using Eltizam.Business.Core.Interface;
-using Eltizam.Business.Core.ModelMapper;
+﻿using Eltizam.Business.Core.ModelMapper;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
-using Eltizam.Utility;
 using Eltizam.Utility.Utility;
+using Eltizam.Utility;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
+using Eltizam.Business.Core.Interface;
+using System.Data.SqlClient;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -64,154 +64,155 @@ namespace Eltizam.Business.Core.Implementation
         /// <response code="500">Internal Server</response>
         /// 
 
-        public async Task<Master_PropertyTypeModel> GetMasterPropertyByIdAsync(int id)
-        {
-            // Create a new Master_PropertyTypeModel instance.
-            var _userEntity = new Master_PropertyTypeModel();
+        //public async Task<Master_PropertyTypeModel> GetMasterPropertyByIdAsync(int id)
+        //{
+        //    // Create a new Master_PropertyTypeModel instance.
+        //    var _userEntity = new Master_PropertyTypeModel();
 
-            // Use a mapper to map the data from the repository to the model asynchronously.
-            _userEntity = _mapperFactory.Get<MasterPropertyType, Master_PropertyTypeModel>(await _repository.GetAsync(id));
+        //    // Use a mapper to map the data from the repository to the model asynchronously.
+        //    _userEntity = _mapperFactory.Get<MasterPropertyType, Master_PropertyTypeModel>(await _repository.GetAsync(id));
 
-            // Return the mapped entity.
-            return _userEntity;
-        }
+        //    // Return the mapped entity.
+        //    return _userEntity;
+        //}
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            var _dbParams = new[]
-             {
-                 new DbParameter("PropertyTypeId", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "PropertyType", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
 
-            int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_SearchAllList,
+            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
+            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
-             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
+            };
 
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Property_Search_GetPropertyList, System.Data.CommandType.StoredProcedure, osqlParameter);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
+            var res = UtilityHelper.GetPaginationInfo(Results);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterClientListModel>());
 
             return oDataTableResponseModel;
         }
 
-        public async Task<List <Master_PropertyTypeModel>>GetAllProperty()
-        {
-           
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.stp_PropertyType_GetAll,
+        //public async Task<List<Master_PropertyTypeModel>> GetAllProperty()
+        //{
 
-             DatabaseConnection.ConnString, CommandType.StoredProcedure,null);
-                       
-            return lstStf;
-        }
+        //    var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_GetAll,
 
-        public async Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel masterproperty)
-        {
-            // Create a Master_PropertyType object.
-            MasterPropertyType type;
-            MasterPropertySubType propertySubType;
-            // Check if the entity has an ID greater than 0 (indicating an update).
-            if (masterproperty.Id > 0)
-            {
-                // Get the existing entity from the repository.
-                type = _repository.Get(masterproperty.Id);
+        //     DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
-                // If the entity exists, update its properties.
-                if (type != null)
-                {
-                    type.PropertyType = masterproperty.PropertyType;
-                    type.IsActive = masterproperty.IsActive;
-                    type.ModifiedDate = DateTime.Now;
-                    type.ModifiedBy = masterproperty.ModifiedBy;
+        //    return lstStf;
+        //}
 
-                    // Update the entity in the repository asynchronously.
-                    _repository.UpdateAsync(type);
-                }
-                else
-                {
-                    // Return a not found operation if the entity does not exist.
-                    return DBOperation.NotFound;
-                }
-            }
-            else
-            {
-                // Create a new Master_PropertyType entity from the model for insertion.
-                type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
-                type.CreatedDate = DateTime.Now;
-                type.CreatedBy = masterproperty.CreatedBy;
-                type.ModifiedDate = DateTime.Now;
-                type.ModifiedBy = masterproperty.ModifiedBy;
-                // Insert the new entity into the repository asynchronously.
-                _repository.AddAsync(type);
-            }
+        //public async Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel masterproperty)
+        //{
+        //    // Create a Master_PropertyType object.
+        //    MasterPropertyType type;
+        //    MasterPropertySubType propertySubType;
+        //    // Check if the entity has an ID greater than 0 (indicating an update).
+        //    if (masterproperty.Id > 0)
+        //    {
+        //        // Get the existing entity from the repository.
+        //        type = _repository.Get(masterproperty.Id);
 
-            // Save changes to the database asynchronously.
-            await _unitOfWork.SaveChangesAsync();
+        //        // If the entity exists, update its properties.
+        //        if (type != null)
+        //        {
+        //            type.PropertyType = masterproperty.PropertyType;
+        //            type.IsActive = masterproperty.IsActive;
+        //            type.ModifiedDate = DateTime.Now;
+        //            type.ModifiedBy = masterproperty.ModifiedBy;
 
-            // Return an appropriate operation result.
-            if (type.Id == 0)
-                return DBOperation.Error;
+        //            // Update the entity in the repository asynchronously.
+        //            _repository.UpdateAsync(type);
+        //        }
+        //        else
+        //        {
+        //            // Return a not found operation if the entity does not exist.
+        //            return DBOperation.NotFound;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // Create a new Master_PropertyType entity from the model for insertion.
+        //        type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
+        //        type.CreatedDate = DateTime.Now;
+        //        type.CreatedBy = masterproperty.CreatedBy;
+        //        type.ModifiedDate = DateTime.Now;
+        //        type.ModifiedBy = masterproperty.ModifiedBy;
+        //        // Insert the new entity into the repository asynchronously.
+        //        _repository.AddAsync(type);
+        //    }
 
-            else
-            {
-                if (masterproperty.subType != null)
-                {
-                    if (masterproperty.subType.Id > 0)
-                    {
-                        propertySubType = _subrepository.Get(masterproperty.subType.Id);
-                        if (propertySubType != null)
-                        {
-                            var entitySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(masterproperty.subType);
-                            propertySubType.PropertySubType = entitySubType.PropertySubType;
+        //    // Save changes to the database asynchronously.
+        //    await _unitOfWork.SaveChangesAsync();
+
+        //    // Return an appropriate operation result.
+        //    if (type.Id == 0)
+        //        return DBOperation.Error;
+
+        //    else
+        //    {
+        //        if (masterproperty.subType != null)
+        //        {
+        //            if (masterproperty.subType.Id > 0)
+        //            {
+        //                propertySubType = _subrepository.Get(masterproperty.subType.Id);
+        //                if (propertySubType != null)
+        //                {
+        //                    var entitySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(masterproperty.subType);
+        //                    propertySubType.PropertySubType = entitySubType.PropertySubType;
 
 
-                            propertySubType.IsActive = entitySubType.IsActive;
-                            propertySubType.ModifiedBy = entitySubType.CreatedBy;
-                            propertySubType.ModifiedDate = DateTime.Now;
-                            _subrepository.UpdateAsync(propertySubType);
-                        }
-                    }
-                    else
-                    {
-                        propertySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(masterproperty.subType);
-                        propertySubType.PropertySubType = Convert.ToString(masterproperty.subType.PropertySubType);
-                        //propertySubType.PropertySubType = masterproperty.subType.PropertyTypeId;
-                        //propertySubType.PropertySubType = Convert.ToString(masterproperty.subType.PropertyTypeId);
-                        propertySubType.PropertyTypeId = type.Id;
-                        propertySubType.IsActive = masterproperty.IsActive;
-                        propertySubType.CreatedBy = masterproperty.CreatedBy;
-                        propertySubType.CreatedDate = DateTime.Now;
-                        propertySubType.ModifiedBy = masterproperty.CreatedBy;
-                        propertySubType.ModifiedDate = DateTime.Now;
-                        _subrepository.AddAsync(propertySubType);
-                    }
-                    await _unitOfWork.SaveChangesAsync();
-                }
-            }
-            return DBOperation.Success;
-        }
+        //                    propertySubType.IsActive = entitySubType.IsActive;
+        //                    propertySubType.ModifiedBy = entitySubType.CreatedBy;
+        //                    propertySubType.ModifiedDate = DateTime.Now;
+        //                    _subrepository.UpdateAsync(propertySubType);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                propertySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(masterproperty.subType);
+        //                propertySubType.PropertySubType = Convert.ToString(masterproperty.subType.PropertySubType);
+        //                //propertySubType.PropertySubType = masterproperty.subType.PropertyTypeId;
+        //                //propertySubType.PropertySubType = Convert.ToString(masterproperty.subType.PropertyTypeId);
+        //                propertySubType.PropertyTypeId = type.Id;
+        //                propertySubType.IsActive = masterproperty.IsActive;
+        //                propertySubType.CreatedBy = masterproperty.CreatedBy;
+        //                propertySubType.CreatedDate = DateTime.Now;
+        //                propertySubType.ModifiedBy = masterproperty.CreatedBy;
+        //                propertySubType.ModifiedDate = DateTime.Now;
+        //                _subrepository.AddAsync(propertySubType);
+        //            }
+        //            await _unitOfWork.SaveChangesAsync();
+        //        }
+        //    }
+        //    return DBOperation.Success;
+        //}
 
-        public async Task<DBOperation> DeleteProperty(int id)
-        {
-            // Get the entity to be deleted from the repository.
-            var entityUser = _repository.Get(x => x.Id == id);
+        //public async Task<DBOperation> DeleteProperty(int id)
+        //{
+        //    // Get the entity to be deleted from the repository.
+        //    var entityUser = _repository.Get(x => x.Id == id);
 
-            // If the entity does not exist, return a not found operation.
-            if (entityUser == null)
-                return DBOperation.NotFound;
+        //    // If the entity does not exist, return a not found operation.
+        //    if (entityUser == null)
+        //        return DBOperation.NotFound;
 
-            // Remove the entity from the repository.
-            _repository.Remove(entityUser);
+        //    // Remove the entity from the repository.
+        //    _repository.Remove(entityUser);
 
-            // Save changes to the database asynchronously.
-            await _unitOfWork.SaveChangesAsync();
+        //    // Save changes to the database asynchronously.
+        //    await _unitOfWork.SaveChangesAsync();
 
-            // Return a success operation indicating successful deletion.
-            return DBOperation.Success;
-        }
+        //    // Return a success operation indicating successful deletion.
+        //    return DBOperation.Success;
+        //}
 
 
         #endregion API Methods

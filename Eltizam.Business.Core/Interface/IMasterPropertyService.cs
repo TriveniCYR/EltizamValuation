@@ -10,11 +10,10 @@ namespace Eltizam.Business.Core.Interface
 {
     public interface IMasterPropertyService
     {
-        Task<Master_PropertyTypeModel> GetMasterPropertyByIdAsync(int id);
+        //Task<Master_PropertyTypeModel> GetMasterPropertyByIdAsync(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
-        Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel entityqualification);
-        Task<DBOperation> DeleteProperty(int id);
-
-        Task<List<Master_PropertyTypeModel>> GetAllProperty();
+        //Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel entityqualification);
+        //Task<DBOperation> DeleteProperty(int id);
+        //Task<List<Master_PropertyTypeModel>> GetAllProperty();
     }
 }

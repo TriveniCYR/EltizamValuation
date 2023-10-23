@@ -7,15 +7,8 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
-using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -74,29 +67,41 @@ namespace Eltizam.Business.Core.Implementation
             return _PropertyTypeEntity;
         }
 
-		//public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
-		//{
-		//    var _dbParams = new[]
-		//     {
-		//         new DbParameter("PropertySubTypeId", 0,SqlDbType.Int),
-		//         new DbParameter("PageSize", model.length, SqlDbType.Int),
-		//         new DbParameter("PageNumber", model.start, SqlDbType.Int),
-		//         new DbParameter("OrderClause", "PropertySubType", SqlDbType.VarChar),
-		//         new DbParameter("ReverseSort", 1, SqlDbType.Int)
-		//     };
+        public async Task<List<Master_PropertySubTypeModel>> GetMasterSubPropertyByPropertyTypeIdAsync(int PropertyTypeId)
+        {
+            // Create a new Master_PropertyTypeModel instance.
+            var _SubTypes = new List<Master_PropertySubTypeModel>();
 
-		//    int _count = 0;
-		//    var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<Master_PropertySubTypeModel>(ProcedureMetastore.usp_PropertySubType_SearchAllList,
+            var res = _repository.GetAllAsync(x => x.PropertyTypeId == PropertyTypeId).Result.ToList();
 
-		//     DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
+            // Use a mapper to map the data from the repository to the model asynchronously.
+            _SubTypes = _mapperFactory.GetList<MasterPropertySubType, Master_PropertySubTypeModel>(res);
+
+            // Return the mapped entity.
+            return _SubTypes;
+        }
+
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
+        {
+            var _dbParams = new[]
+             {
+                 new DbParameter("PropertySubTypeId", 0,SqlDbType.Int),
+                 new DbParameter("PageSize", model.length, SqlDbType.Int),
+                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
+                 new DbParameter("OrderClause", "PropertySubType", SqlDbType.VarChar),
+                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
+             };
+            int _count = 0;
+            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterCountryModel>(ProcedureMetastore.usp_Country_SearchAllList,
+            DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
 
 
-		//    DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
 
-		//    return oDataTableResponseModel;
-		//}
+            return oDataTableResponseModel;
+        }
 
-		public async Task<List<Master_PropertySubTypeModel>> GetAll()
+        public async Task<List<Master_PropertySubTypeModel>> GetAll()
 		{
 			return _mapperFactory.GetList<MasterPropertySubType, Master_PropertySubTypeModel>(await _repository.GetAllAsync());
 		}

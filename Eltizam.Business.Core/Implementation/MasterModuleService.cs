@@ -4,9 +4,9 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Eltizam.Utility.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -14,15 +14,18 @@ namespace Eltizam.Business.Core.Implementation
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
+        private readonly IMemoryCache _memoryCache;
         private IRepository<MasterModule> _repository { get; set; }
         private IRepository<MasterSubModule> _repositorySub { get; set; }
 
         private IRepository<RoleModulePermission> _repositoryRolePermission { get; set; }
 
-        public MasterModuleService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory)
+        public MasterModuleService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IMemoryCache memoryCache)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
+            _memoryCache = memoryCache;
+
             _repository = _unitOfWork.GetRepository<MasterModule>();
             _repositorySub = _unitOfWork.GetRepository<MasterSubModule>();
             _repositoryRolePermission = _unitOfWork.GetRepository<RoleModulePermission>();
@@ -70,9 +73,10 @@ namespace Eltizam.Business.Core.Implementation
                                             ModuleId = c.ModuleId,
                                             SubModuleId = c.SubModuleId,
                                             SubModuleName = c.SubModuleName,
-                                            ControlName = string.IsNullOrEmpty(c.ControlName)?"": c.ControlName,
+                                            ControlName = string.IsNullOrEmpty(c.ControlName) ? "" : c.ControlName,
                                             RoleModulePermission = o.FirstOrDefault(xx => xx.SubModuleId == c.SubModuleId)
                                         }).ToList();
+
                 foreach (var item in MasterSubModuleData)
                 {
                     if (item.RoleModulePermission == null)
@@ -100,7 +104,7 @@ namespace Eltizam.Business.Core.Implementation
                                    CreatedDate = c.CreatedDate,
                                    IsActive = c.IsActive,
                                    SortOrder = c.SortOrder,
-                                   ControlName = string.IsNullOrEmpty(c.ControlName)?"": c.ControlName,
+                                   ControlName = string.IsNullOrEmpty(c.ControlName) ? "" : c.ControlName,
                                    RoleModulePermission = Permissions.FirstOrDefault(xx => xx.ModuleId == c.ModuleId && xx.SubModuleId == 0),
                                    MasterSubModules = o.ToList()
                                }).ToList();
@@ -128,36 +132,53 @@ namespace Eltizam.Business.Core.Implementation
             }
         }
 
-        public async Task<IEnumerable<dynamic>> GetByPermisionRoleUsingRoleId(int roleId)
+        public async Task<IEnumerable<RolePermissionModel>> GetByPermisionRoleUsingRoleId(int roleId)
         {
-            var Permissions = _mapperFactory.GetList<RoleModulePermission, RoleModulePermissionEntity>((List<RoleModulePermission>)await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId));
+            var menus = "menus";
+
+            //Get from Cache first
+            var cacheData = _memoryCache.Get<IEnumerable<RolePermissionModel>>(menus);
+            if (cacheData != null)
+            {
+                return cacheData;
+            }
+
+            var Permissions = _mapperFactory.GetList<RoleModulePermission, RoleModulePermissionEntity>((List<RoleModulePermission>)
+                                await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId));
+
             if (Permissions.Any())
             {
                 var MasterModuleData = _mapperFactory.GetList<MasterModule, MasterModuleEntity>(await _repository.GetAllAsync());
 
                 var MasterSubModuleData = _mapperFactory.GetList<MasterSubModule, MasterSubModuleEntity>(await _repositorySub.GetAllAsync());
 
-                var person = (from p in Permissions
-                              join m in MasterModuleData on p.ModuleId equals m.ModuleId
-                              join s in MasterSubModuleData on p.SubModuleId equals s.SubModuleId into SubMS
-                              from SubM in SubMS.DefaultIfEmpty()
-                              select new
-                              {
-                                  RoleId = p.RoleId,
-                                  ModuleId = p.ModuleId,
-                                  MainModuleName = m.ModuleName,
-                                  SubModuleName = SubM?.SubModuleName ?? string.Empty,
-                                  SubModuleId = p.SubModuleId,
-                                  MainModuleId = p.ModuleId,
-                                  ControlName = SubM?.ControlName ?? m.ControlName,
-                                  Add = p.Add,
-                                  View = p.View,
-                                  Edit = p.Edit,
-                                  Delete = p.Delete,
-                                  Approve = p.Approve
-                              }).ToList();
+                var menuperm = (from p in Permissions
+                                join m in MasterModuleData on p.ModuleId equals m.ModuleId
+                                join s in MasterSubModuleData on p.SubModuleId equals s.SubModuleId into SubMS
+                                from SubM in SubMS.DefaultIfEmpty()
+                                select new RolePermissionModel()
+                                {
+                                    RoleModuleId = p.RoleModuleId,
+                                    RoleId = p.RoleId,
+                                    ModuleId = p.ModuleId,
+                                    SubModuleId = p.SubModuleId,
+                                    Add = p.Add,
+                                    View = p.View,
+                                    Edit = p.Edit,
+                                    Delete = p.Delete,
+                                    Approve = p.Approve,
+                                    ControlName = m.ControlName,
+                                    ModuleName = m.ModuleName,
+                                    Icon = m.Icon,
+                                    HoverIcon = m.HoverIcon,
+                                    ViewName = m.ViewName
+                                }).ToList();
 
-                return person;
+                //Do Cache
+                var expirationTime = DateTimeOffset.Now.AddMinutes(60.0);
+                _memoryCache.Set(menus, menuperm, expirationTime);
+
+                return menuperm;
             }
             else
             {

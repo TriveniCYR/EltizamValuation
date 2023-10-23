@@ -67,6 +67,24 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+        
+        [HttpGet]
+        [Route("getByPropertyTypeId/{id}")]
+        public async Task<IActionResult> GetMasterSubPropertyByPropertyTypeId([FromRoute] int id)
+        {
+            try
+            {
+                var oPrpoertyTypeEntity = await _subpropertyServices.GetMasterSubPropertyByIdAsync(id);
+                if (oPrpoertyTypeEntity != null && oPrpoertyTypeEntity.Id > 0)
+                    return _ObjectResponse.Create(oPrpoertyTypeEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
 
         //[HttpPost, Route("GetAllSubProperty")]
         //public async Task<IActionResult> GetAllSubProperty([FromForm] DataTableAjaxPostModel model)
@@ -81,22 +99,22 @@ namespace EltizamValuation.Api.Controllers
         //    }
         //}
 
-        [HttpGet, Route("GetAllSubProperty")]
-        public async Task<IActionResult> GetAllSubProperty()
-        {
-            try
-            {
-                var osubList = await _subpropertyServices.GetAll();
-                if (osubList != null)
-                    return _ObjectResponse.Create(osubList, (Int32)HttpStatusCode.OK);
-                else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
-            }
-            catch (Exception ex)
-            {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-            }
-        }
+        //[HttpGet, Route("GetAllSubProperty")]
+        //public async Task<IActionResult> GetAllSubProperty()
+        //{
+        //    try
+        //    {
+        //        var osubList = await _subpropertyServices.GetAll();
+        //        if (osubList != null)
+        //            return _ObjectResponse.Create(osubList, (Int32)HttpStatusCode.OK);
+        //        else
+        //            return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, "No Records found");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
 
         [HttpDelete("DeleteProperty/{id}")]
         public async Task<IActionResult> DeleteSubProperty([FromRoute] int id)
@@ -105,7 +123,7 @@ namespace EltizamValuation.Api.Controllers
             {
                 DBOperation oResponse = await _subpropertyServices.DeleteSubProperty(id);
                 if (oResponse == DBOperation.Success)
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, "Deleted Successfully");
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }

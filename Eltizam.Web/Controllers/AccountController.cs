@@ -74,7 +74,7 @@ namespace Eltizam.Web.Controllers
                             }
                         }
 
-                        return RedirectToAction("Resource", "Resource");
+                        return RedirectToAction("Users", "MasterUser");
                     }
                     else
                     {
@@ -104,12 +104,12 @@ namespace Eltizam.Web.Controllers
             HttpContext.Response.Cookies.Append(UserHelper.EltizamToken, oUserDetail.UserToken, new CookieOptions { Expires = oUserDetail.VallidTo });
 
             var claims = new List<Claim>
-                            {
-                                new Claim("UserName", oUserDetail.UserName),
-                                new Claim("Email", oUserDetail.Email),
-								 new Claim("RoleId", Convert.ToString(oUserDetail.RoleId)),
-								new Claim("Id", Convert.ToString(oUserDetail.UserId)),
-                            };
+            {
+                new Claim("UserName", oUserDetail.UserName),
+                new Claim("Email", oUserDetail.Email),
+			    new Claim("RoleId", Convert.ToString(oUserDetail.RoleId)),
+				new Claim("Id", Convert.ToString(oUserDetail.UserId)),
+            };
 
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);

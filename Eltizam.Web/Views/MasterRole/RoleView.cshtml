@@ -1,0 +1,118 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model Eltizam.Business.Models.MasterRoleEntity
+@{
+    ViewData["Title"] = @MasterLocalizer["RoleManage"]; 
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    string[] Approve_Modules = { "PIDF", "IPD", "Finance", "Management HOD" };
+    string[] Delete_Modules = { "User Management", "Role Management", "Master Management", "Project" };
+}
+<div id="SaveRoleModel">
+
+    <form asp-action="ManageRole">
+        <input type="hidden" asp-for="Id" />
+        <div class="content-header">
+            <div class="container-fluid d-flex justify-content-between">
+                <h3>View Role</h3>
+            </div>
+        </div>
+        <div class="container-fluid overflow-auto background-white-card">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group required">
+                        @Html.LabelFor(model => model.RoleName, new { @class = "control-label" })
+                        @Html.DisplayFor(model => model.RoleName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["RoleName"] } })
+                        
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="required">
+                        @if (Model.IsUserAssigned && Model.IsActive)
+                        {
+                            @Html.CheckBoxFor(model => model.IsActive, new { @disabled="true",  @class = "checkbox-checked", @checked = "checked" })
+                            @Html.Label(@SharedLocalizer["IsActive"])
+                            <lable class="text-danger">@MasterLocalizer["CanNotInactiveRole"]</lable>
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
+                            @Html.Label(@SharedLocalizer["IsActive"])
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Module</th>
+                                <th>Sub Module</th>
+                                <th> <input type="checkbox" id="chkView" class="checkbox-checked" /> View</th>
+                                <th> <input type="checkbox" id="chkAdd" class="checkbox-checked" /> Add</th>
+                                <th><input type="checkbox" id="chkEdit" class="checkbox-checked" /> Edit</th>
+                                <th><input type="checkbox" id="chkDelete" class="checkbox-checked" /> Delete</th>
+                                <th><input type="checkbox" id="chkApprove" class="checkbox-checked" /> Approve</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.MasterModules.Count; i++)
+                            {
+                                <tr>
+                                    <td>@Model.MasterModules[i].ModuleName</td>
+                                    <td></td>
+
+                                    <td>@Html.DisplayFor(model => Model.MasterModules[i].RoleModulePermission.View)</td>
+                                    <td>@Html.DisplayFor(model => Model.MasterModules[i].RoleModulePermission.Add)</td>
+                                    <td>@Html.DisplayFor(model => Model.MasterModules[i].RoleModulePermission.Edit)</td>
+                                    <td>@Html.DisplayFor(model => Model.MasterModules[i].RoleModulePermission.Delete)</td>
+                                    <td>@Html.DisplayFor(model => Model.MasterModules[i].RoleModulePermission.Approve)</td>
+
+                                </tr>
+                                @for (int j = 0; j < Model.MasterModules[i].MasterSubModules.Count; j++)
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td>@Model.MasterModules[i].MasterSubModules[j].SubModuleName</td>
+
+                                        <td>@Html.DisplayFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.View)</td>
+                                        <td>@Html.DisplayFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add)</td>
+                                        <td>@Html.DisplayFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Edit)</td>
+                                        <td>@Html.DisplayFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Delete)</td>
+                                        <td>@Html.DisplayFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Approve)</td>
+                                        
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @*  <div class="row">
+            <div class="col-12 text-end">
+            <div class="form-group">
+            <button type="submit" id="btnSaveRole" class="btn btn-success me-3 large-button">@SharedLocalizer["Save"]</button>
+            <a class="btn btn-danger ms-3 large-button" asp-action="Roles">@SharedLocalizer["Cancel"]</a>
+            </div>
+            </div>
+            </div> *@
+        </div>
+    </form>
+</div>
+@section MyScripts {
+
+    <script type="text/javascript" src="~/js/Custom/Role/RoleManage.js?v=@jsVersion"></script>
+}

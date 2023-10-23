@@ -150,8 +150,8 @@ footer {
 }
 
     .loginContainer .logo {
-        margin-top: 4%;
-        margin-bottom: 33px;
+        margin: 1.5em;
+        /*margin-bottom: 33px;*/
     }
 
     .loginContainer .loginBox {
@@ -1092,7 +1092,7 @@ img#closePopup {
     }
 
     .bodyContent button, .bodyContent a {
-        width: 200px;
+        width: auto;
     }
 
 /* profile tab css here */
@@ -1749,4 +1749,16 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .ptrl-20 {
     padding: 20px 20px 0;
+}
+
+.bodyContent .valuationType input[type="radio"]:first-child::after {
+    content: 'Fixed';
+    top: -4px;
+    position: relative;
+}
+
+.bodyContent .valuationType input[type="radio"]:last-child::after {
+    content: "General";
+    top: -4px;
+    position: relative;
 }

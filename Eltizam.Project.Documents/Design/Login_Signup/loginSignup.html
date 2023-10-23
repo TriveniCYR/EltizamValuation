@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login - sign up</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- login screen -->
+    <div class="loginContainer">
+        <img src="../assets/logo.svg" alt="eltizam logo" class="logo"/>
+        <div class="loginBox">
+            <form>
+                <p>Welcome</p>
+                <p>Login to the portal with your credentials</p>
+
+                <label for="userId">
+                    User ID 
+                    <input type="text" placeholder="enter user id">
+                </label>
+                <label for="password">
+                    Password 
+                    <div class="position-relative">
+                        <input type="password" placeholder="enter password" id="password">
+                        <img src="../assets/eye.svg" alt="show hide password button" class="showPassword"/>
+                        <sapn class="forgetPassword">Forget password ?</sapn>
+                    </div>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox">
+                    Remember password ?
+                </label>
+                <button type="submit" class="blueBtn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.showPassword').addEventListener('click',function(){
+            if(document.getElementById('password').type == 'password'){
+                document.getElementById('password').type = "text";
+                document.querySelector('.forgetPassword').classList.add('showPassEyeCross');
+            }else{
+                document.getElementById('password').type = "password";
+                document.querySelector('.forgetPassword').classList.remove('showPassEyeCross');
+            }
+        })
+    </script>
+</body>
+</html>
