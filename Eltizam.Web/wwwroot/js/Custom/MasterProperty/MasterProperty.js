@@ -1,5 +1,6 @@
 var tableId = "PropertyTable";
 $(document).ready(function () {
+    debugger
     InitializePropertyList();
 });
 
@@ -59,9 +60,11 @@ function InitializePropertyList() {
 
 //#region Delete User
 function ConfirmationDeleteProperty(id) {
+    debugger
     $('#DeletePropertyModel #Id').val(id);
 }
 function DeleteProperty() {
+    debugger
     var tId = $('#DeletePropertyModel #Id').val();
     ajaxServiceMethod(BaseURL + DeletePropertyByIdUrl + "/" + tId, Delete, DeletePropertyByIdSuccess, DeletePropertyByIdError);
 }

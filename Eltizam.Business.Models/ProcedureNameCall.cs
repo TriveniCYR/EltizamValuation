@@ -20,6 +20,8 @@ namespace Eltizam.Business.Models
         public static string usp_Vendor_SearchAllList = "usp_Vendor_SearchAllList";
         public static string usp_Client_Search_GetClientList = "usp_Client_Search_GetClientList";
         public static string usp_Property_Search_GetPropertyList = "usp_Property_Search_GetPropertyList";
+        public static string usp_Amenity_GetAmenityByPropertyId = "usp_Amenity_GetAmenityByPropertyId";
+        public static string usp_PropertyLocation_GetLocationByPropertyId = "usp_PropertyLocation_GetLocationByPropertyId";
        
         public static string usp_OwnershipType_SearchAllList = "usp_OwnershipType_SearchAllList";
         public static string usp_State_SearchAllList = "usp_State_SearchAllList";
@@ -42,6 +44,7 @@ namespace Eltizam.Business.Models
         public static string usp_City_AllList = "usp_City_AllList";
         public static string usp_Client_DeleteContactByClientId = "usp_Client_DeleteContactByClientId";
         public static string usp_State_AllList = "usp_State_AllList";
+        public static string usp_PropertyType_GetAll = "usp_PropertyType_GetAll";
         public static string usp_ClientType_AllList = "usp_ClientType_AllList";
         public static string usp_Role_SearchAllList = "usp_Role_SearchAllList";
         public static string usp_Role_GetByRoleName = "usp_Role_GetByRoleName";

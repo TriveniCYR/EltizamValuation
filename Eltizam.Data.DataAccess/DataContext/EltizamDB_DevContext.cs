@@ -21,6 +21,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<Dictionary> Dictionaries { get; set; } = null!;
         public virtual DbSet<EmailLogHistory> EmailLogHistories { get; set; } = null!;
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; } = null!;
+        public virtual DbSet<MasterAmenity> MasterAmenities { get; set; } = null!;
         public virtual DbSet<MasterCity> MasterCities { get; set; } = null!;
         public virtual DbSet<MasterClient> MasterClients { get; set; } = null!;
         public virtual DbSet<MasterClientContact> MasterClientContacts { get; set; } = null!;
@@ -38,6 +39,9 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterLocation> MasterLocations { get; set; } = null!;
         public virtual DbSet<MasterModule> MasterModules { get; set; } = null!;
         public virtual DbSet<MasterOwnershipType> MasterOwnershipTypes { get; set; } = null!;
+        public virtual DbSet<MasterProperty> MasterProperties { get; set; } = null!;
+        public virtual DbSet<MasterPropertyAmenity> MasterPropertyAmenities { get; set; } = null!;
+        public virtual DbSet<MasterPropertyLocation> MasterPropertyLocations { get; set; } = null!;
         public virtual DbSet<MasterPropertySubType> MasterPropertySubTypes { get; set; } = null!;
         public virtual DbSet<MasterPropertyType> MasterPropertyTypes { get; set; } = null!;
         public virtual DbSet<MasterQualification> MasterQualifications { get; set; } = null!;
@@ -191,6 +195,23 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .WithMany(p => p.MasterAddresses)
                     .HasForeignKey(d => d.CityId)
                     .HasConstraintName("FK_Master_Address_Master_City");
+            });
+
+            modelBuilder.Entity<MasterAmenity>(entity =>
+            {
+                entity.ToTable("Master_Amenity", "dbo");
+
+                entity.Property(e => e.AmenityName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Icon)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<MasterCity>(entity =>
@@ -577,6 +598,119 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<MasterProperty>(entity =>
+            {
+                entity.ToTable("Master_Property", "dbo");
+
+                entity.Property(e => e.AdditionalUnits)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Amenities)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BuildUpAreaSqFt).HasColumnType("decimal(18, 6)");
+
+                entity.Property(e => e.BuildUpAreaSqMtr).HasColumnType("decimal(18, 6)");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Parking)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParkingBayNo)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PropertyName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UnitType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValuationPurpose)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<MasterPropertyAmenity>(entity =>
+            {
+                entity.ToTable("Master_Property_Amenity", "dbo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Amenity)
+                    .WithMany(p => p.MasterPropertyAmenities)
+                    .HasForeignKey(d => d.AmenityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Master_Pr__Ameni__3DE82FB7");
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.MasterPropertyAmenities)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Master_Pr__Prope__3EDC53F0");
+            });
+
+            modelBuilder.Entity<MasterPropertyLocation>(entity =>
+            {
+                entity.ToTable("Master_Property_Location", "dbo");
+
+                entity.Property(e => e.Address1)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Address2)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BuildingProject)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Landmark)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Latitude)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Longitude)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Pincode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Zone)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.MasterPropertyLocations)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Master_PropertyDetail_Master_Property");
+            });
+
             modelBuilder.Entity<MasterPropertySubType>(entity =>
             {
                 entity.ToTable("Master_PropertySubType", "dbo");
@@ -656,8 +790,6 @@ namespace Eltizam.Data.DataAccess.DataContext
 
             modelBuilder.Entity<MasterRole>(entity =>
             {
-                entity.HasKey(e => e.Id);
-
                 entity.ToTable("Master_Role", "dbo");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
