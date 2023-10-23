@@ -1,27 +1,26 @@
 ﻿using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using static Eltizam.Utility.Enums.GeneralEnum;
-using System.Net;
 using Eltizam.Data.DataAccess.Helper;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MasterPropertyController : ControllerBase
+    public class MasterPropertyTypeController : ControllerBase
     {
         #region Properties
-        private readonly IMasterPropertyService _propertyServices;
+        private readonly IMasterPropertyTypeService _propertyServices;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
         private readonly IExceptionService _ExceptionService;
         IExceptionService exceptionService;
         #endregion Properties
 
         #region Constructor
-        public MasterPropertyController(IMasterPropertyService propertyServices, IResponseHandler<dynamic> ObjectResponse)
+        public MasterPropertyTypeController(IMasterPropertyTypeService propertyServices, IResponseHandler<dynamic> ObjectResponse)
         {
             _propertyServices = propertyServices;
             _ObjectResponse = ObjectResponse;

@@ -8,7 +8,7 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Interface
 {
-    public interface IMasterPropertyService
+    public interface IMasterPropertyTypeService
     {
         Task<Master_PropertyTypeModel> GetMasterPropertyByIdAsync(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);

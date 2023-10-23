@@ -7,20 +7,13 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
-using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class MasterPropertyService : IMasterPropertyService
+    public class MasterPropertyTypeService : IMasterPropertyTypeService
     {
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
@@ -33,7 +26,7 @@ namespace Eltizam.Business.Core.Implementation
         #endregion Properties
 
         #region Constructor
-        public MasterPropertyService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterPropertyTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
           IHelper helper,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
