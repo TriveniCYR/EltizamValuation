@@ -29,7 +29,7 @@ namespace Eltizam.Business.Models
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public decimal? FixedvaluationFees { get; set; }
-        public List<MasterPropertyTypeModel>? propertyTypeViewModels { get; set; }
+        public List<Master_PropertyTypeModel>? propertyTypeViewModels { get; set; }
         public List<Master_ClientTypeModel>? master_ClientTypeModels { get; set; }
         public List<MasterOwnershipTypeEntity>? masterOwnershipTypeEntities { get; set; }
         public List<MasterValuationFeeTypeModel>? masterValuationFeeTypeModels { get; set; }

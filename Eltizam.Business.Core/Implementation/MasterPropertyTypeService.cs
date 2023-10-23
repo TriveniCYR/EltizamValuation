@@ -7,8 +7,10 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
 using System.Data;
+using System.Data.SqlClient;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -71,35 +73,39 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            var _dbParams = new[]
-             {
-                 new DbParameter("PropertyTypeId", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "PropertyType", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
+            string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
+            string SortDir = model.order[0]?.dir;
 
-            int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_SearchAllList,
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
+            };
 
-             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_PropertyType_SearchAllList, CommandType.StoredProcedure, osqlParameter);
 
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(Results);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<Master_PropertyTypeModel>());
+
+            return oDataTableResponseModel;
 
             return oDataTableResponseModel;
         }
 
-        public async Task<List <Master_PropertyTypeModel>>GetAllProperty()
-        {
+        //public async Task<List <Master_PropertyTypeModel>>GetAllProperty()
+        //{
            
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_GetAll,
+        //    var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_GetAll,
 
-             DatabaseConnection.ConnString, CommandType.StoredProcedure,null);
+        //     DatabaseConnection.ConnString, CommandType.StoredProcedure,null);
                        
-            return lstStf;
-        }
+        //    return lstStf;
+        //}
 
         public async Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel masterproperty)
         {
@@ -150,38 +156,41 @@ namespace Eltizam.Business.Core.Implementation
 
             else
             {
-                if (masterproperty.subType != null)
+                if (masterproperty.MasterPropertySubTypes != null)
                 {
-                    if (masterproperty.subType.Id > 0)
-                    {
-                        propertySubType = _subrepository.Get(masterproperty.subType.Id);
-                        if (propertySubType != null)
+                    var subTypes = masterproperty.MasterPropertySubTypes;
+
+                    foreach (var subType in subTypes)
+                    { 
+                        if (subType.Id > 0)
                         {
-                            var entitySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(masterproperty.subType);
-                            propertySubType.PropertySubType = entitySubType.PropertySubType;
+                            propertySubType = _subrepository.Get(subType.Id);
+                            if (propertySubType != null)
+                            {
+                                var entitySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
+                                propertySubType.PropertySubType = entitySubType.PropertySubType;
 
 
-                            propertySubType.IsActive = entitySubType.IsActive;
-                            propertySubType.ModifiedBy = entitySubType.CreatedBy;
-                            propertySubType.ModifiedDate = DateTime.Now;
-                            _subrepository.UpdateAsync(propertySubType);
+                                propertySubType.IsActive = entitySubType.IsActive;
+                                propertySubType.ModifiedBy = entitySubType.CreatedBy;
+                                propertySubType.ModifiedDate = DateTime.Now;
+                                _subrepository.UpdateAsync(propertySubType);
+                            }
                         }
+                        else
+                        {
+                            propertySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
+                            propertySubType.PropertySubType = Convert.ToString(subType.PropertySubType); 
+                            propertySubType.PropertyTypeId = type.Id;
+                            propertySubType.IsActive = masterproperty.IsActive;
+                            propertySubType.CreatedBy = masterproperty.CreatedBy;
+                            propertySubType.CreatedDate = DateTime.Now;
+                            propertySubType.ModifiedBy = masterproperty.CreatedBy;
+                            propertySubType.ModifiedDate = DateTime.Now;
+                            _subrepository.AddAsync(propertySubType);
+                        }
+                        await _unitOfWork.SaveChangesAsync();
                     }
-                    else
-                    {
-                        propertySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(masterproperty.subType);
-                        propertySubType.PropertySubType = Convert.ToString(masterproperty.subType.PropertySubType);
-                        //propertySubType.PropertySubType = masterproperty.subType.PropertyTypeId;
-                        //propertySubType.PropertySubType = Convert.ToString(masterproperty.subType.PropertyTypeId);
-                        propertySubType.PropertyTypeId = type.Id;
-                        propertySubType.IsActive = masterproperty.IsActive;
-                        propertySubType.CreatedBy = masterproperty.CreatedBy;
-                        propertySubType.CreatedDate = DateTime.Now;
-                        propertySubType.ModifiedBy = masterproperty.CreatedBy;
-                        propertySubType.ModifiedDate = DateTime.Now;
-                        _subrepository.AddAsync(propertySubType);
-                    }
-                    await _unitOfWork.SaveChangesAsync();
                 }
             }
             return DBOperation.Success;
@@ -196,8 +205,14 @@ namespace Eltizam.Business.Core.Implementation
             if (entityUser == null)
                 return DBOperation.NotFound;
 
+            entityUser.IsActive = false;
+            entityUser.ModifiedDate = DateTime.Now;
+            entityUser.ModifiedBy = 1;
+
+            _repository.UpdateAsync(entityUser);
+
             // Remove the entity from the repository.
-            _repository.Remove(entityUser);
+            // _repository.Remove(entityUser);
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();

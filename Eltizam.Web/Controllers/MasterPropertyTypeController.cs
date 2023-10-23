@@ -30,35 +30,9 @@ namespace EltizamValuation.Web.Controllers
         }
 
         [HttpGet]
-        [Route(" MasterPropertyType/PropertyTypes")]
-        public IActionResult PropertyType()
-        {
-            ModelState.Clear();
-            try
-            {
-                int rolId = _helper.GetLoggedInRoleId();
-                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
-                ViewBag._objPermission = objPermssion;
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new APIRepository(_cofiguration);
-                List<Master_PropertyTypeModel> oPropertyTypeList = new List<Master_PropertyTypeModel>();
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllProperty, HttpMethod.Get, token).Result;
-               
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<Master_PropertyTypeModel>>>(jsonResponse);
-                    oPropertyTypeList = data._object;
-
-                    return View(oPropertyTypeList);
-                }
-            }
-            catch (Exception e)
-            {
-                _helper.LogExceptions(e);
-                ViewBag.errormessage = Convert.ToString(e.StackTrace);
-                return View("Login");
-            }
+        [Route("MasterPropertyType/PropertyTypes")]
+        public IActionResult PropertyTypes()
+        { 
             return View();
         }
 
@@ -68,35 +42,40 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
-
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertProperty, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterPropertyType))).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertPropertyType, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterPropertyType))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    TempData["StatusMessage"] = "Saved Successfully";
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    ModelState.Clear();
-                    return RedirectToAction(nameof(PropertyType));
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                        TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+
+                        return RedirectToAction("PropeprtyTypes");
+                    }
+                    else
+                    {
+                        TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);  
+                        return RedirectToAction("PropeprtyTypes");
+                    }
                 }
-                else
-                    TempData["StatusMessage"] = "Some Eror Occured";
+                return RedirectToAction("PropeprtyTypes");
             }
+
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                ViewBag.errormessage = Convert.ToString(e.StackTrace);
+                TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
                 ModelState.Clear();
-                return View(nameof(PropertyType));
-            }
-            ModelState.Clear();
-            return RedirectToAction(nameof(PropertyType));
+                return RedirectToAction("PropeprtyTypes");
+            } 
         }
 
         [HttpGet]
-        [Route(" MasterPropertyType/PropertyTypeManage")]
+      //  [Route(" MasterPropertyType/PropertyTypeManage")]
         public IActionResult PropertyTypeManage(int? id)
         {
             if (id != null)
@@ -114,7 +93,7 @@ namespace EltizamValuation.Web.Controllers
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetPropertyById + "/" + id, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetPropertyTypeById + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
