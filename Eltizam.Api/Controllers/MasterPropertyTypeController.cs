@@ -13,18 +13,20 @@ namespace EltizamValuation.Api.Controllers
     public class MasterPropertyTypeController : ControllerBase
     {
         #region Properties
-        private readonly IMasterPropertyTypeService _propertyServices;
+        private readonly IMasterPropertyTypeService _propertyTypeServices;
+        private readonly IMasterPropertySubTypeService _propertySubTypeServices;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
         private readonly IExceptionService _ExceptionService;
         IExceptionService exceptionService;
         #endregion Properties
 
         #region Constructor
-        public MasterPropertyTypeController(IMasterPropertyTypeService propertyServices, IResponseHandler<dynamic> ObjectResponse)
+        public MasterPropertyTypeController(IMasterPropertyTypeService propertyTypeServices, IMasterPropertySubTypeService propertySubTypeServices, IResponseHandler<dynamic> ObjectResponse)
         {
-            _propertyServices = propertyServices;
+            _propertyTypeServices = propertyTypeServices;
             _ObjectResponse = ObjectResponse;
-            _ExceptionService = exceptionService;
+            // _ExceptionService = exceptionService;
+            _propertySubTypeServices = propertySubTypeServices;
         }
         #endregion Constructor
 
@@ -35,7 +37,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                DBOperation oResponse = await _propertyServices.AddUpdateMasterProperty(oPrpoertyType);
+                DBOperation oResponse = await _propertyTypeServices.AddUpdateMasterProperty(oPrpoertyType);
                 if (oResponse == DBOperation.Success)
                 {
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oPrpoertyType.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
@@ -56,9 +58,15 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                var oPrpoertyTypeEntity = await _propertyServices.GetMasterPropertyByIdAsync(id);
+                var oPrpoertyTypeEntity = await _propertyTypeServices.GetMasterPropertyByIdAsync(id);
+
                 if (oPrpoertyTypeEntity != null && oPrpoertyTypeEntity.Id > 0)
+                {
+                    var subtypes = await _propertySubTypeServices.GetMasterSubPropertyByPropertyTypeIdAsync(oPrpoertyTypeEntity.Id);
+                    oPrpoertyTypeEntity.MasterPropertySubTypes = subtypes;
+
                     return _ObjectResponse.Create(oPrpoertyTypeEntity, (Int32)HttpStatusCode.OK);
+                }
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
@@ -73,7 +81,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                return _ObjectResponse.CreateData(await _propertyServices.GetAll(model), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _propertyTypeServices.GetAll(model), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -82,25 +90,25 @@ namespace EltizamValuation.Api.Controllers
         }
 
 
-        [HttpGet, Route("GetAllProperty")]
-        public async Task<IActionResult> GetAllProperty()
-        {
-            try
-            {
-                return _ObjectResponse.Create(await _propertyServices.GetAllProperty(), (Int32)HttpStatusCode.OK,null,null,null);
-            }
-            catch (Exception ex)
-            {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-            }
-        }
+        //[HttpGet, Route("GetAllProperty")]
+        //public async Task<IActionResult> GetAllProperty()
+        //{
+        //    try
+        //    {
+        //        return _ObjectResponse.Create(await _propertyTypeServices.GetAllProperty(), (Int32)HttpStatusCode.OK, null, null, null);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
 
-        [HttpDelete("DeletePropertyType/{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteProperty([FromRoute] int id)
         {
             try
             {
-                DBOperation oResponse = await _propertyServices.DeleteProperty(id);
+                DBOperation oResponse = await _propertyTypeServices.DeleteProperty(id);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else

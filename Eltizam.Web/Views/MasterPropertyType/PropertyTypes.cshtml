@@ -14,68 +14,82 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];    
 }
 
-<div id="PlaceHolderHere"></div>
-<main>
+<!-- system user master -->
+<div class="flex">
+    <main class="w-100">
+        <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+            <h3 class="dashboardTitle">ROLE MASTER</h3>
+            <div class="buttonArea flex align-item-center">
 
-    <div class="flex  mt-20 mobile_flexColumn position-relative justify-between">
-        <h3 class="dashboardTitle">Property Type Master</h3>
-        <div class="buttonArea flex align-item-center"> 
-          @*  <button class="flex align-item-center lineBtn" id="importFile">
-                <img src="~/assets/file-import.svg" alt="file-import" />
-                Import
-            </button>*@
+                <form asp-action="RoleManage" asp-controller="MasterRole" method="GET">
+                    <button class="flex align-item-center blueBtn" id="addNew">
+                        <img src="~/assets/plus.svg" alt="plus"> Add New
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="scroll-x whiteWithPadding">
+            <table id="PropertyTypeTable" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>@MasterLocalizer["Id"] </th>
+                        <th>@MasterLocalizer["PropertyType"] </th>
+                        <th>@MasterLocalizer["SubTypes"]</th>
+                        <th>@MasterLocalizer["Active"]</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- popup delete model -->
+    <div class="popup-overlay" id="popup-delete-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head">Delete Role</div>
+                <div class="popup-action">
+                    <p>Are you sure you want to delete?</p>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser">Cancel</button>
+                        <button class="redBtn">Delete</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="scroll-x">
-        <table id="PropertyTypeTable">
-            <thead>
-                <tr>
-                    <th>@MasterLocalizer["Id"]</th>
-                    <th>@MasterLocalizer["Property Type"]</th>
-                    <th>@MasterLocalizer["Property SubType(s)"]</th>
-                    <th>@SharedLocalizer["Active"] </th>
-                    <th>@SharedLocalizer["Action"]</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @*@foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(module => item.Id)</td>
-                        <td>@Html.DisplayFor(module => item.PropertyType)</td> 
-
-                        <td>@Html.LabelFor(model => item.IsActive, (item.IsActive == 1) ? "Active" : "InActive", new { @style = (item.IsActive == 1) ? "color:green;" : "color:red;" })</td>
-
-                        <td class="position-relative">
-                            <img src="~/assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                            <div class="actionItem">
-                                <ul>
-                                    <li class="viewRole">
-                                        <img src="~/assets/view.svg" alt="view" />
-                                        <a title="View" asp-action="DepartmentView" asp-route-Id="@item.Id">View</a>
-                                    </li>
-                                    <li class="editRole">
-                                        <img src="~/assets/edit.svg" alt="edit" />
-                                        <a title="Edit" asp-action="DepartmentManage" asp-route-Id="@item.Id"><span>Edit</span></a>
-                                    </li>
-                                    <li class="delete">
-                                        <img src="~/assets/trash.svg" alt="trash" />
-                                        <a title="Delete" data-toggle="modal" data-target="#DeleteDepartmentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDepartment(@item.Id); return false;"><span>Delete</span></a>
-                                    </li>
-                                </ul>
+    <!-- popup import model -->
+    <div class="popup-overlay" id="popup-import-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Import Resource
+                    <img src="~/assets/x.svg" alt="x" id="closePopup">
+                </div>
+                <div class="popup-action importBox">
+                    <p class="text-left">Browse File</p>
+                    <div class="inputBox">
+                        <input type="file" name="file" id="file" class="file" />
+                        <div class="flex">
+                            <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                            <div class="uploadFileBtn flex">
+                                <img src="~/assets/files.svg" alt="file">
+                                <input type="button" class="btn" value="Browse" />
                             </div>
-                        </td>
-                    </tr>
-                }*@
-
-            </tbody>
-        </table>
+                        </div>
+                    </div>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser" class="bgBlue">Submit</button>
+                        <button class="lineBtn">Download Template</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-</main>
-
+</div>
 
 <div id="DeletePropertyTypeModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">
@@ -108,10 +122,11 @@
     @Html.Partial("_DataTablePartial")
     <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
 
+    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/Custom/PropertyType/PropertyTypeManagement.js?v=@jsVersion"></script>
 
     <script>
-        var DeleteByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeletePropertytTypeById";
+        var DeleteByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeletePropertyTypeById";
         var GetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllPropertyType";
 
         var DeleteLabel = "@SharedLocalizer["Delete"]";
