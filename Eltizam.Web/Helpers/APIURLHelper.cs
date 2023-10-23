@@ -153,6 +153,13 @@ namespace Eltizam.Web.Helpers
         public static string GetAllModule = "api/Module/GetAllModule";
 
         #endregion Module
+        #region Dictionary Management
+        public static string GetAllDictionary = "api/MasterDictionary/GetAll";
+        public static string UpsertDictionary = "api/MasterDictionary/Upsert";
+        public static string GetDictionaryById = "api/MasterDictionary/GetById";
+        public static string DeleteDictionary = "api/MasterDictionary/Delete";
+
+        #endregion Dictionary Management
 
 
     }

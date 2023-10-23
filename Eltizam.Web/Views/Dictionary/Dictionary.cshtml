@@ -1,0 +1,232 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@{
+    ViewData["Title"] = @SharedLocalizer["DictionaryMangegment"];
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+<!-- system user master -->
+<div class="flex">
+    <div class="w-100 position-relative">
+        <main class="w-100">
+            <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+                <h3 class="dashboardTitle">DICTIONARY MASTER</h3>
+               
+              @*   <div class="buttonArea flex align-item-center">
+                    <form asp-action="ClientManage" asp-controller="Client" method="GET">
+                        <button class="flex align-item-center blueBtn" id="addRole">
+                            <img src="../assets/plus.svg" alt="plus"> Add New
+                        </button>
+                   </form> 
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  
+                </div> *@
+            </div>
+            <div class="scroll-x whiteWithPadding">
+                <table id="DictionaryTable">
+                    <thead>
+                        <tr>
+                            <th>Id <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                            <th>Description <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                            <th>Values</th>                                                   
+                            <th>Is Active</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer class="flex justify-between">
+            <p>2023 © Eltizam.</p>
+            <p>Design & Develop by NeoSoft</p>
+        </footer>
+
+        <!-- popup delete model -->
+        <div class="popup-overlay" id="popup-delete-overlay">
+            <div class="popup">
+                <div class="content text-center">
+                    <div class="popup-head">Delete User</div>
+                    <div class="popup-action">
+                        <p>Are you sure you want to delete?</p>
+                        <div class="buttonArea popup-btn">
+                            <button id="cancelDeleteUser" class="greyBtn">Cancel</button>
+                            <button class="redBtn">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- popup import model -->
+        <div class="popup-overlay" id="popup-import-overlay">
+            <div class="popup">
+                <div class="content text-center">
+                    <div class="popup-head position-relative">
+                        Import Resource
+                        <img src="../assets/x.svg" alt="x" id="closePopup">
+                    </div>
+                    <div class="popup-action importBox">
+                        <p class="text-left">Browse File</p>
+                        <div class="inputBox">
+                            <input type="file" name="file" id="file" class="file" />
+                            <div class="flex">
+                                <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                                <div class="uploadFileBtn flex">
+                                    <img src="../assets/files.svg" alt="file">
+                                    <input type="button" class="btn" value="Browse" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttonArea popup-btn">
+                            <button id="cancelDeleteUser" class="bgBlue">Submit</button>
+                            <button class="lineBtn">Download Template</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="DeleteDictionaryModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("Id")
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteDictionary()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- popup add location model -->
+<div class="popup-overlay w-800Popup" id="popup-addRole-overlay">
+    <div class="popup">
+        <div class="content text-center">
+            <div class="popup-head position-relative">
+                Add Location
+                <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
+            </div>
+            <div class="popup-action inputSearchs">
+                <form id="locationForm">
+                    <div class="flex">
+                        <label for="countryName">
+                            country Name
+                            <select name="countryName" id="countryName" required>
+                                <option value="countryName1">Country Name1</option>
+                                <option value="countryName2">Country Name2</option>
+                                <option value="countryName3">Country Name3</option>
+                            </select>
+                        </label>
+                        <label for="regionMaster">
+                            Region Master
+                            <select name="regionMaster" id="regionMaster" required>
+                                <option value="regionMaster1">regionMaster1</option>
+                                <option value="regionMaster2">regionMaster2</option>
+                                <option value="regionMaster3">regionMaster3</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label for="roleType">
+                            States / Emirates
+                            <select name="States" id="States" required>
+                                <option value="States1">States / Emirates 1</option>
+                                <option value="States2">States / Emirates 2</option>
+                                <option value="States3">States / Emirates 3</option>
+                            </select>
+                        </label>
+                        <label for="resourceType">
+                            Sector / Zone
+                            <select name="zone" id="zone" required>
+                                <option value="zone1">zone 1</option>
+                                <option value="zone2">zone 2</option>
+                                <option value="zone3">zone 3</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label for="">
+                            Building Projects
+                            <input type="text" placeholder="Enter Building Projects" required>
+                        </label>
+                        <label for="">
+                            Geo-cordinates
+                            <input type="text" placeholder="enter Geo-cordinates" required>
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label for="resourceType">
+                            Status
+                            <input class='input-switch' type="checkbox" id="addLocation" required />
+                            <label class="label-switch" for="addLocation"></label>
+                            <span class="info-text"></span>
+                        </label>
+                    </div>
+                </form>
+                <div class="buttonArea centerBtn">
+                    <button class="lineBtn" id="resetLocation">Reset</button>
+                    <button class="bgBlue">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
+<script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
+<script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
+<script src="~/js/custom/location/locationmaster.js"></script>
+
+@section MyScripts {
+
+    @Html.Partial("_DataTablePartial")
+    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/dictionary/masterdictionary.js?v=@jsVersion"></script>
+    <script>
+        //#region Setup API Url
+        var AllDictionary = "@Eltizam.Web.Helpers.APIURLHelper.GetAllDictionary";
+        var DeleteDictionary = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDictionary";
+
+        function sideNavToggle() {
+            var x = document.getElementById("sideNav");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+
+        // function addClient() {
+        //     window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Client/addClient.html'
+        // }
+        // function clientDetails() {
+        //     window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Client/client-details.html'
+        // }
+    </script>
+    }

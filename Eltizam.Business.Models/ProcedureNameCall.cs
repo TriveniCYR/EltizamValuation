@@ -25,11 +25,14 @@ namespace Eltizam.Business.Models
         public static string usp_ValuationFeeType_SearchAllList = "usp_ValuationFeeType_SearchAllList";
         public static string usp_Country_SearchAllList = "usp_Country_SearchAllList";
         public static string usp_User_Search_GetUserList = "usp_User_Search_GetUserList";
+        public static string usp_Dictionary_SearchAllList = "usp_Dictionary_SearchAllList";
         // Master Key Id
         public static string usp_Contact_GetContactByTableKeyId = "usp_Contact_GetContactByTableKeyId";
         public static string usp_Address_GetAddressByTableKeyId = "usp_Address_GetAddressByTableKeyId";
         public static string usp_Qualification_GetQualificationByTableKeyId = "usp_Qualification_GetQualificationByTableKeyId";
         public static string usp_Document_GetDocumentByTableKeyId = "usp_Document_GetDocumentByTableKeyId";
+        public static string usp_Dictionary_GetById = "usp_Dictionary_GetById";
+        
 
         // common master dropdown call
         public static string usp_ResourceType_AllList = "usp_ResourceType_AllList";

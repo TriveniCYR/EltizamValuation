@@ -3,21 +3,22 @@ using System.Collections.Generic;
 
 namespace Eltizam.Data.DataAccess.Entity
 {
-    public partial class MasterClientType
+    public partial class MasterAmenity
     {
-        public MasterClientType()
+        public MasterAmenity()
         {
-            MasterClients = new HashSet<MasterClient>();
+            MasterPropertyAmenities = new HashSet<MasterPropertyAmenity>();
         }
 
         public int Id { get; set; }
-        public string ClientType { get; set; } = null!;
+        public string AmenityName { get; set; } = null!;
         public bool? IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
+        public string? Icon { get; set; }
 
-        public virtual ICollection<MasterClient> MasterClients { get; set; }
+        public virtual ICollection<MasterPropertyAmenity> MasterPropertyAmenities { get; set; }
     }
 }
