@@ -11,7 +11,7 @@ namespace Eltizam.Business.Core.Interface
     public interface IMasterPropertySubTypeService
     {
         Task<Master_PropertySubTypeModel> GetMasterSubPropertyByIdAsync(int id);
-        Task<Master_PropertySubTypeModel> GetMasterSubPropertyByPropertyTypeIdAsync(int id);
+        Task<List<Master_PropertySubTypeModel>> GetMasterSubPropertyByPropertyTypeIdAsync(int PropertyTypeId);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> AddUpdateMasterSubProperty(Master_PropertySubTypeModel entityqualification);
         Task<DBOperation> DeleteSubProperty(int id);

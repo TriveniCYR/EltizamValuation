@@ -14,17 +14,19 @@ namespace EltizamValuation.Api.Controllers
     {
         #region Properties
         private readonly IMasterPropertyTypeService _propertyTypeServices;
+        private readonly IMasterPropertySubTypeService _propertySubTypeServices;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
         private readonly IExceptionService _ExceptionService;
         IExceptionService exceptionService;
         #endregion Properties
 
         #region Constructor
-        public MasterPropertyTypeController(IMasterPropertyTypeService propertyTypeServices, IResponseHandler<dynamic> ObjectResponse)
+        public MasterPropertyTypeController(IMasterPropertyTypeService propertyTypeServices, IMasterPropertySubTypeService propertySubTypeServices, IResponseHandler<dynamic> ObjectResponse)
         {
             _propertyTypeServices = propertyTypeServices;
             _ObjectResponse = ObjectResponse;
-            _ExceptionService = exceptionService;
+            // _ExceptionService = exceptionService;
+            _propertySubTypeServices = propertySubTypeServices;
         }
         #endregion Constructor
 
@@ -57,8 +59,14 @@ namespace EltizamValuation.Api.Controllers
             try
             {
                 var oPrpoertyTypeEntity = await _propertyTypeServices.GetMasterPropertyByIdAsync(id);
+
                 if (oPrpoertyTypeEntity != null && oPrpoertyTypeEntity.Id > 0)
+                {
+                    var subtypes = await _propertySubTypeServices.GetMasterSubPropertyByPropertyTypeIdAsync(oPrpoertyTypeEntity.Id);
+                    oPrpoertyTypeEntity.MasterPropertySubTypes = subtypes;
+
                     return _ObjectResponse.Create(oPrpoertyTypeEntity, (Int32)HttpStatusCode.OK);
+                }
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }

@@ -7,15 +7,8 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
-using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -74,16 +67,18 @@ namespace Eltizam.Business.Core.Implementation
             return _PropertyTypeEntity;
         }
 
-        public async Task<Master_PropertySubTypeModel> GetMasterSubPropertyByPropertyTypeIdAsync(int id)
+        public async Task<List<Master_PropertySubTypeModel>> GetMasterSubPropertyByPropertyTypeIdAsync(int PropertyTypeId)
         {
             // Create a new Master_PropertyTypeModel instance.
-            var _PropertyTypeEntity = new Master_PropertySubTypeModel();
+            var _SubTypes = new List<Master_PropertySubTypeModel>();
+
+            var res = _repository.GetAllAsync(x => x.PropertyTypeId == PropertyTypeId).Result.ToList();
 
             // Use a mapper to map the data from the repository to the model asynchronously.
-            _PropertyTypeEntity = _mapperFactory.Get<MasterPropertySubType, Master_PropertySubTypeModel>(await _repository.GetAsync(x => x.PropertyTypeId == id));
+            _SubTypes = _mapperFactory.GetList<MasterPropertySubType, Master_PropertySubTypeModel>(res);
 
             // Return the mapped entity.
-            return _PropertyTypeEntity;
+            return _SubTypes;
         }
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
