@@ -28,6 +28,9 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
+
+        [HttpGet]
+        [Route(" MasterPropertyType/PropertyTypes")]
         public IActionResult PropertyType()
         {
             ModelState.Clear();
@@ -40,6 +43,7 @@ namespace EltizamValuation.Web.Controllers
                 APIRepository objapi = new APIRepository(_cofiguration);
                 List<Master_PropertyTypeModel> oPropertyTypeList = new List<Master_PropertyTypeModel>();
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllProperty, HttpMethod.Get, token).Result;
+               
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
@@ -57,8 +61,9 @@ namespace EltizamValuation.Web.Controllers
             }
             return View();
         }
+
         [HttpPost]
-        [Route("PropertyType/PropertyTypeManage")]
+        [Route(" MasterPropertyType/PropertyTypeManage")]
         public IActionResult PropertyTypeManage(int id, Master_PropertyTypeModel masterPropertyType)
         {
             try
@@ -90,12 +95,15 @@ namespace EltizamValuation.Web.Controllers
             return RedirectToAction(nameof(PropertyType));
         }
 
+        [HttpGet]
+        [Route(" MasterPropertyType/PropertyTypeManage")]
         public IActionResult PropertyTypeManage(int? id)
         {
             if (id != null)
             {
                 ViewData["IsEdit"] = true;
             }
+
             Master_PropertyTypeModel masterPropertyType;
             if (id == null || id <= 0)
             {

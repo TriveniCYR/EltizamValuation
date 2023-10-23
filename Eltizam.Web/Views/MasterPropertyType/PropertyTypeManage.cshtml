@@ -10,8 +10,7 @@
 
 @model Eltizam.Business.Models.Master_PropertyTypeModel
 @{
-    ViewData["Title"] = @MasterLocalizer["Property Type Manage"];
-    string PageHeading = "";
+    ViewData["Title"] = @MasterLocalizer["Property Type Manage"]; 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 
 }
@@ -34,7 +33,7 @@
                         </label>
                         <label for="" class="w-50">
                           
-                            @Html.LabelFor(model => model.subType.PropertySubType,"Property SubType", new { @class = "control-label" })
+                           @* @Html.LabelFor(model => model.SubTypes.ds,"Property SubType", new { @class = "control-label" })*@
                             <span class="text-danger">*</span>
                             @Html.DropDownListFor(model => model.Id, new List<SelectListItem> { }, new { @class = "form-control", @multiple = "multiple" })
                             @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
