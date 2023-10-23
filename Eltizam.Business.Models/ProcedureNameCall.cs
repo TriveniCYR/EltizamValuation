@@ -26,6 +26,7 @@ namespace Eltizam.Business.Models
         
         public static string usp_Country_SearchAllList = "usp_Country_SearchAllList";
         public static string usp_User_Search_GetUserList = "usp_User_Search_GetUserList";
+        public static string usp_SubProperty_GetSubPropertyByPropertyIdList = "usp_SubProperty_GetSubPropertyByPropertyIdList";
         // Master Key Id
         public static string usp_Contact_GetContactByTableKeyId = "usp_Contact_GetContactByTableKeyId";
         public static string usp_Address_GetAddressByTableKeyId = "usp_Address_GetAddressByTableKeyId";

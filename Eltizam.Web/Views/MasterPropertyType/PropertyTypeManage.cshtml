@@ -23,7 +23,7 @@
             </div>
             <div class="bodyContent">
                 <div class="inputSearchs">
-                    @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                    <input type="hidden" id="hdnPropertyId" value="@(Model == null ? 0 : Model.Id)" />
                     <div class="flex mb-28">
                         <label for="" class="w-50">
                             @Html.LabelFor(model => model.PropertyType, new { @class = "control-label" })
@@ -39,6 +39,34 @@
                             @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
                         </label>
                     </div>
+
+                    <div class="flex mb-28">
+                        <label for="" class="w-50">
+                            Description
+                            <span class="text-danger">*</span>
+                            @Html.EditorFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
+                            @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
+                        </label>  
+                        <label for="" class="w-50">
+                            
+                            Status
+                            <input class='input-switch' type="checkbox" id="addLocation" required />
+                            <label class="label-switch" for="addLocation"></label>
+                            <span class="info-text"></span>
+                        </label>
+
+
+                       
+                    </div>
+                    <div class="flex mb-28">
+                        <label for="" class="w-50">
+                            Property SubType Name
+                            @Html.DropDownListFor(model => model.MasterPropertySubTypes, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
+                        </label>
+
+
+                    </div>
+
                    @*  <div class="propertySubTypeContainer">
                         @for (var i = 0; i < Model.subType.PropertySubType.Count; i++)
                         {
@@ -64,6 +92,66 @@
         </div>
     </main>
 </form>
+
+@section MyScripts {
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            var HdnId = $('#hdnPropertyId').val();
+            if (HdnId) {
+
+               // alert(HdnId);
+                BindPropertySub(HdnId);
+            }
+        });
+
+        // {
+        //     "id": 3,
+        //         "propertySubType": "Yalla sub 1",
+        //             "isActive": true,
+        //                 "createdDate": null,
+        //                     "createdBy": null,
+        //                         "modifiedDate": null,
+        //                             "modifiedBy": null,
+        //                                 "propertyTypeId": 0
+        // }
+
+        function BindPropertySub(id) {
+            debugger;
+            alert(id);
+            //return false;
+            //alert("hello");
+            var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
+            var PropertySubType = $("#PropertySubTypeId");
+            var _val = $('#hdnPropertySub').val();
+            var _rpname = "propertyTypeId";
+
+            //BindDropdowns(PropertyList, Property, _rpname, _val);
+            $.ajax({
+                type: "GET",
+                url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
+                "datatype": "json",
+                success: function (response) {
+                    debugger;
+                    for (var i = 0; i < response._object.length; i++) {
+                        PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
+            });
+        }
+
+    </script>
+}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @* <script>

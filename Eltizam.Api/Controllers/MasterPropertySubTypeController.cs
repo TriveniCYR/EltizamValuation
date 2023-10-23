@@ -74,7 +74,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                var oPrpoertyTypeEntity = await _subpropertyServices.GetMasterSubPropertyByIdAsync(id);
+                var oPrpoertyTypeEntity = await _subpropertyServices.GetMasterSubPropertyByPropertyTypeIdAsync(id);
                 if (oPrpoertyTypeEntity != null && oPrpoertyTypeEntity.Id > 0)
                     return _ObjectResponse.Create(oPrpoertyTypeEntity, (Int32)HttpStatusCode.OK);
                 else
