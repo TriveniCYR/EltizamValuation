@@ -31,34 +31,34 @@ namespace EltizamValuation.Web.Controllers
 
         [HttpGet]
         [Route(" MasterPropertyType/PropertyTypes")]
-        public IActionResult PropertyType()
+        public IActionResult PropertyTypes()
         {
-            ModelState.Clear();
-            try
-            {
-                int rolId = _helper.GetLoggedInRoleId();
-                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
-                ViewBag._objPermission = objPermssion;
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new APIRepository(_cofiguration);
-                List<Master_PropertyTypeModel> oPropertyTypeList = new List<Master_PropertyTypeModel>();
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllProperty, HttpMethod.Get, token).Result;
+            //ModelState.Clear();
+            //try
+            //{
+            //    int rolId = _helper.GetLoggedInRoleId();
+            //    RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
+            //    ViewBag._objPermission = objPermssion;
+            //    HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+            //    APIRepository objapi = new APIRepository(_cofiguration);
+            //    List<Master_PropertyTypeModel> oPropertyTypeList = new List<Master_PropertyTypeModel>();
+            //    HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllProperty, HttpMethod.Get, token).Result;
                
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<Master_PropertyTypeModel>>>(jsonResponse);
-                    oPropertyTypeList = data._object;
+            //    if (responseMessage.IsSuccessStatusCode)
+            //    {
+            //        string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+            //        var data = JsonConvert.DeserializeObject<APIResponseEntity<List<Master_PropertyTypeModel>>>(jsonResponse);
+            //        oPropertyTypeList = data._object;
 
-                    return View(oPropertyTypeList);
-                }
-            }
-            catch (Exception e)
-            {
-                _helper.LogExceptions(e);
-                ViewBag.errormessage = Convert.ToString(e.StackTrace);
-                return View("Login");
-            }
+            //        return View(oPropertyTypeList);
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    _helper.LogExceptions(e);
+            //    ViewBag.errormessage = Convert.ToString(e.StackTrace);
+            //    return View("Login");
+            //}
             return View();
         }
 

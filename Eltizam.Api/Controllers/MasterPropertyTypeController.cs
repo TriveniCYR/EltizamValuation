@@ -68,7 +68,7 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpPost, Route("GetAllProperty")]
+        [HttpPost, Route("GetAll")]
         public async Task<IActionResult> GetAllProperty([FromForm] DataTableAjaxPostModel model)
         {
             try
@@ -95,7 +95,7 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpDelete("DeleteProperty/{id}")]
+        [HttpDelete("DeletePropertyType/{id}")]
         public async Task<IActionResult> DeleteProperty([FromRoute] int id)
         {
             try
