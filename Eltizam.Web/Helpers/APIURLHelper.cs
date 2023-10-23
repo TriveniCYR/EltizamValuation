@@ -64,7 +64,7 @@ namespace Eltizam.Web.Helpers
 
         #region MasterPropertyType
         public static string UpsertPropertyType = "api/MasterPropertyType/Upsert";
-        public static string GetAllPropertyType = "api/MasterPropertyType/GetAllProperty";
+        public static string GetAllPropertyType = "api/MasterPropertyType/GetAll";
         public static string GetPropertyTypeById = "api/MasterPropertyType/GetById";
         public static string DeletePropertyTypeById = "api/MasterPropertyType/Delete";
 

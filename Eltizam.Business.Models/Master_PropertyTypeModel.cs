@@ -18,7 +18,7 @@ namespace Eltizam.Business.Models
         public int? ModifiedBy { get; set; }
         public string? SubTypes { get; set; }
        // [IgnoreMap]
-        public List<Master_PropertySubTypeModel> MasterPropertySubTypes { get; }
+        public List<Master_PropertySubTypeModel> MasterPropertySubTypes { get; set; }
     }
 
 	

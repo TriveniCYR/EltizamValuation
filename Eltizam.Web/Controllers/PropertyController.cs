@@ -106,34 +106,34 @@ namespace EltizamValuation.Web.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("MasterUser/UserDetail")]
-        public IActionResult UserDetail(int? id)
-        {
-            MasterUserModel masterUser;
-            if (id == null || id <= 0)
-            {
-                masterUser = new MasterUserModel();
-                return RedirectToAction("MasterUser");
-            }
-            else
-            {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetUserById + "/" + id, HttpMethod.Get, token).Result;
+        //[HttpGet]
+        //[Route("MasterUser/UserDetail")]
+        //public IActionResult UserDetail(int? id)
+        //{
+        //    MasterUserModel masterUser;
+        //    if (id == null || id <= 0)
+        //    {
+        //        masterUser = new MasterUserModel();
+        //        return RedirectToAction("MasterUser");
+        //    }
+        //    else
+        //    {
+        //        HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+        //        APIRepository objapi = new(_cofiguration);
+        //        HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetUserById + "/" + id, HttpMethod.Get, token).Result;
 
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
-                    if (data._object is null)
-                        return NotFound();
+        //        if (responseMessage.IsSuccessStatusCode)
+        //        {
+        //            string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+        //            var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
+        //            if (data._object is null)
+        //                return NotFound();
 
-                    return View(data._object);
-                }
-                return NotFound();
-            }
-        }
+        //            return View(data._object);
+        //        }
+        //        return NotFound();
+        //    }
+        //}
         private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
         {
             List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();
