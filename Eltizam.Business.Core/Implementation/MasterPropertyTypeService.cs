@@ -205,8 +205,14 @@ namespace Eltizam.Business.Core.Implementation
             if (entityUser == null)
                 return DBOperation.NotFound;
 
+            entityUser.IsActive = false;
+            entityUser.ModifiedDate = DateTime.Now;
+            entityUser.ModifiedBy = 1;
+
+            _repository.UpdateAsync(entityUser);
+
             // Remove the entity from the repository.
-            _repository.Remove(entityUser);
+            // _repository.Remove(entityUser);
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
