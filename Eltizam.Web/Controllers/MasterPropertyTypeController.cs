@@ -94,7 +94,7 @@ namespace EltizamValuation.Web.Controllers
         }
 
         [HttpGet]
-        [Route(" MasterPropertyType/PropertyTypeManage")]
+      //  [Route(" MasterPropertyType/PropertyTypeManage")]
         public IActionResult PropertyTypeManage(int? id)
         {
             if (id != null)

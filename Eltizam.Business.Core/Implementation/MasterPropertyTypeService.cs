@@ -7,8 +7,10 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
 using System.Data;
+using System.Data.SqlClient;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -71,35 +73,39 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            var _dbParams = new[]
-             {
-                 new DbParameter("PropertyTypeId", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "PropertyType", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
+            string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
+            string SortDir = model.order[0]?.dir;
 
-            int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_SearchAllList,
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
+            };
 
-             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_PropertyType_SearchAllList, CommandType.StoredProcedure, osqlParameter);
 
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(Results);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, lstStf.Count, lstStf);
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<Master_PropertyTypeModel>());
+
+            return oDataTableResponseModel;
 
             return oDataTableResponseModel;
         }
 
-        public async Task<List <Master_PropertyTypeModel>>GetAllProperty()
-        {
+        //public async Task<List <Master_PropertyTypeModel>>GetAllProperty()
+        //{
            
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_GetAll,
+        //    var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_GetAll,
 
-             DatabaseConnection.ConnString, CommandType.StoredProcedure,null);
+        //     DatabaseConnection.ConnString, CommandType.StoredProcedure,null);
                        
-            return lstStf;
-        }
+        //    return lstStf;
+        //}
 
         public async Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel masterproperty)
         {

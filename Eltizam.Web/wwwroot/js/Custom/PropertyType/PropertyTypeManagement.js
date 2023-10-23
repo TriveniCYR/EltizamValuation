@@ -20,7 +20,10 @@ function InitializePropertyTypeDataList() {
             "data": "id", "name": "Id"
         },
         {
-            "data": "roleName", "name": "Role"
+            "data": "propertyType", "name": "Property Type"
+        },
+        {
+            "data": "subTypes", "name": "Property Sub Type(s)"
         },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
@@ -31,9 +34,9 @@ function InitializePropertyTypeDataList() {
             "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                html += '<li><a title="View" href="/MasterRole/RoleManage?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
-                html += '<li><a title="Edit" href="/MasterRole/RoleManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
-                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteRoleModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteRole(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                html += '<li><a title="View" href="/MasterPropertyType/PropertyTypeManage?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                html += '<li><a title="Edit" href="/MasterPropertyType/PropertyTypeManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
+                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletePropertyTypeModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePropertyType(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                 html += '</ul></div>';
 
                 return html;
@@ -46,10 +49,10 @@ function InitializePropertyTypeDataList() {
 
 
 //#region Delete Role  
-function ConfirmationDeleteRole(id) {
+function ConfirmationDeletePropertyType(id) {
     $('#DeletePropertyTypeModel #Id').val(id);
 }
-function DeleteRole() {
+function DeletePropertyType() {
     var tid = $('#DeletePropertyTypeModel #Id').val();
     ajaxServiceMethod(BaseURL + DeleteByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
 }
