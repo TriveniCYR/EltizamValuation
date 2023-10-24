@@ -289,6 +289,9 @@
         }
 
     $(document).ready(function () {
+        if ($("#hdnId").val() != 0) {
+            BindPropertySub($("#hdnPropertySubType").val());
+        }
         BindProperty();
         BindOwnership();
         BindUnitType();

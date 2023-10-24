@@ -1,66 +1,39 @@
-﻿var tableId = "PropertyTypeTable";
-$(document).ready(function () {
-    InitializePropertyTypeDataList();
-});
+﻿$(document).ready(function () {
+    SetupRoleTable();
 
-//Load data into table
-function InitializePropertyTypeDataList() {
-    var setDefaultOrder = [0, 'asc'];
-    var ajaxObject = {
-        "url": BaseURL + GetAll,
-        "type": "POST",
-        "data": function (d) {
-            var pageNumber = $('#' + tableId).DataTable().page.info();
-            d.PageNumber = pageNumber.page;
-        },
-        "datatype": "json"
-    };
-    var columnObject = [
-        {
-            "data": "id", "name": "Id"
-        },
-        {
-            "data": "propertyType", "name": "Property Type"
-        },
-        {
-            "data": "subTypes", "name": "Property Sub Type(s)"
-        },
-        {
-            "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
-                return GetActiveFlagCss(data);
-            }
-        },
-        {
-            "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
-                var html = '';
-                html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                html += '<li><a title="View" href="/MasterPropertyType/PropertyTypeManage?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
-                html += '<li><a title="Edit" href="/MasterPropertyType/PropertyTypeManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
-                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletePropertyTypeModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePropertyType(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
-                html += '</ul></div>';
-
-                return html;
-            }
+    if (StatusMessage != '') {
+        if (StatusMessage.includes('uccessful')) {
+            toastr.success(StatusMessage);
         }
-    ];
-
-    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
+        else {
+            toastr.error(StatusMessage);
+        }
+    }
+});
+function SetupRoleTable() {
+    StaticDataTable("#PropertyTypeTable");
 }
 
+function ClearDesignationFields() {
+    $('#DeleteDesignationModel #ID').val("0");
+}
 
-//#region Delete Role  
-function ConfirmationDeletePropertyType(id) {
-    $('#DeletePropertyTypeModel #Id').val(id);
+//#region Delete Role
+function ConfirmationDesignation(id) {
+    
+    $('#DeleteDesignationModel #ID').val(id);
 }
-function DeletePropertyType() {
-    var tid = $('#DeletePropertyTypeModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+function DeleteDesignation() {
+  
+    var tempInAtiveID = $('#DeleteDesignationModel #ID').val();
+    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteDesignationByIdUrl + "/" + tempInAtiveID, 'POST', DeleteDesignationByIdSuccess, DeleteDesignationByIdError);
 }
-function DeleteUserByIdSuccess(data) {
+function DeleteDesignationByIdSuccess(data) {
     try {
         if (data._Success === true) {
+            ClearDesignationFields();
             toastr.success(RecordDelete);
-            $('#' + tableId).DataTable().draw();
+            location.reload(true);
         }
         else {
             toastr.error(data._Message);
@@ -69,6 +42,9 @@ function DeleteUserByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
-function DeleteUserByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
+function DeleteDesignationByIdError(x, y, z) {
+    if (x.get)
+        toastr.error(ErrorMessage);
+    location.reload(true);
 }
+//#endregion
