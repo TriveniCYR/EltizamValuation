@@ -7,12 +7,15 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
-
-@* @model List<Eltizam.Business.Models.MasterDictionaryDetailById>  *@
 @model Eltizam.Business.Models.MasterDictionaryDetailById;
-@* @model Eltizam.Business.Models.MasterDictionaryEntity; *@
 
 @{
+    if(Model!=null){
+        var dictid = Model.DictionaryId;
+        var chld = Model.ChildDescription;
+        var desc = Model.Description;
+        var data = "";
+    }
     var list = new List<Eltizam.Business.Models.MasterDictionaryDetailById>();
     if (ViewData["ChildDictList"] != null)
     {
@@ -22,34 +25,22 @@
     ViewData["Title"] = @MasterLocalizer["ChildDescriptionList"];
 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    // var id = Model[0].Id;
-    // var cid = Model[0].Id;
-    // var cdesc = Model[0].ChildDescription;
-    // var desc = Model[0].Description;
-    var ss = "";
     int id = 0;
 }
 
 <div id="PlaceHolderHere"></div>
 
 <main>
-
+@*     @Html.TextBoxFor(model=>model.Description) *@
     <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
         <h3 class="dashboardTitle">CHILD DICTIONARY LIST</h3>
-        @* <div class="buttonArea flex align-item-center">
-        <button class="flex align-item-center blueBtn" id="addRole">
-        <a class="whiteAtag" style="@IsAddAllow" asp-action="RoleManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
-        </button>
-
-        </div> *@
         <div class="buttonArea flex align-item-center">
             @*  <form asp-action="ClientManage" asp-controller="Client" method="GET"> *@
             <button class="flex align-item-center blueBtn" id="addRole">
-                <img src="../assets/plus.svg" alt="plus"> Add New
+                <img src="../assets/plus.svg"  alt="plus"> Add New
             </button>
             @*  </form> *@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
         </div>
     </div>
     <div class="scroll-x">
@@ -61,7 +52,7 @@
                     <th>@MasterLocalizer["Description"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
                     <th>@MasterLocalizer["Child Description"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
                     <th>@SharedLocalizer["Status"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                    @* <th>@SharedLocalizer["Action"]</th> *@
+                    <th>@SharedLocalizer["Action"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,41 +61,43 @@
                         foreach (var item in list)
                         {
 
-                            <input type="hidden" value="@item" id="childid" />
-                            <tr>
-                                <td>@Html.DisplayFor(module => item.Id)</td>
-                                @*      <td>@Html.DisplayFor(module => item.DictionaryId)</td> *@
-                                <td>@Html.DisplayFor(module => item.Description)</td>
-                                <td>@Html.DisplayFor(module => item.ChildDescription)</td>
-                                <td>@Html.LabelFor(model => item.IsActive, item.IsActive==1 ? "Active" : "InActive", new { @style = item.IsActive==1 ? "color:green;" : "color:red;" })</td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li class="editLocation">
-                                                <img src="../assets/edit.svg" alt="edit" />
+                                        <input type="hidden" value="@item.Id" id="childid" />
+                                        <tr>
+                                            <td>@Html.DisplayFor(module => item.Id)</td>
+                                            @*      <td>@Html.DisplayFor(module => item.DictionaryId)</td> *@
+                                            <td>@Html.DisplayFor(module => item.Description)</td>
+                                            <td>@Html.DisplayFor(module => item.ChildDescription)</td>
+                                            <td>@Html.LabelFor(model => item.IsActive, item.IsActive==1 ? "Active" : "InActive", new { @style = item.IsActive==1 ? "color:green;" : "color:red;" })</td>
+                                            <td class="position-relative">
+                                                <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                                                <div class="actionItem">
+                                                    <ul>
+                                                        <li class="editLocation">
+                                                            <img src="../assets/edit.svg" alt="edit" />
                                                 <button class="flex align-item-center blueBtn" id="editRole">
-                                                    <a title="Edit" asp-action="DictionaryAllManage" asp-route-Id="@item.ChildId"><span>eEdit</span></a>
-                                                    @*  <a title="Edit" onclick="GetLocationById(@item.Id);"><span>Edit</span></a> *@
-                                                </button>
-                                                @*  <button class="flex align-item-center blueBtn" id="addRole">
+                                                     <a title="Edit" asp-action="DictionaryAllManage" asp-route-Id="@item.ChildId"><span>Edit</span></a>
+                                                                @* <a title="Edit" onclick="GetLocationById(@item.Id);"><span>Edit</span></a> *@
+                                                            </button>
+                                                            @*  <button class="flex align-item-center blueBtn" id="addRole">
                                     <img src="../assets/plus.svg" alt="plus"> Add New
                                     </button> *@
-                                            </li>
-                                            <li class="viewLocation">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                <a title="Edit" asp-action="LocationManage" asp-route-Id="@item.Id" asp-route-Isview=1><span>View</span></a>
-                                            </li>
+                                                        </li>
+                                                        <li class="viewLocation">
+                                                            <img src="../assets/view.svg" alt="view" />
+                                                            <a title="Edit" asp-action="" asp-route-Id="@item.Id" asp-route-Isview=1><span>View</span></a>
+                                                        </li>
 
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                <a title="Delete" data-toggle="modal" data-target="#DeleteLocationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDelete(@item.Id); return false;"><span>Delete</span></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
+                                                        <li class="delete">
+                                                            <img src="../assets/trash.svg" alt="trash" />
+                                                <a title="Delete" data-toggle="modal" data-target="#DeleteDictionaryChildModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteDictionary(@item.ChildId);return false;"><span>Delete</span></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
                         }
+                   
                 }
             </tbody>
         </table>
@@ -122,7 +115,7 @@
                 </div>
                 <div class="popup-action inputSearchs">
 
-                    <div class="flex">
+                    <div class="flex">                       
                         <label for="ChildDescription">
                             Child Description
                             @Html.TextBoxFor(model => model.Description, new {@class = "form-control"})
@@ -137,14 +130,23 @@
                             <label class="label-switch" for="addLocation"></label>
                             <span class="info-text"></span>
                         </label>
-                        @Html.HiddenFor(model => model.Id, new {@class = "form-control",  @placeholder = @SharedLocalizer["DescriptionId"] })
-
+                     @*    @Html.HiddenFor(model => model.Id, new {@class = "form-control",  @placeholder = @SharedLocalizer["DescriptionId"] }) *@
+                      @*   @Html.HiddenFor(model => model.Id, new { @Value = list[0].Id }) *@
+                       @if (list.Count > 0)
+                        {
+                            <input type="hidden" value="@list[0].Id" id="DictionaryId" asp-for="DictionaryId" />
+                            <input type="hidden" value="@list[0].Description" id="ParentDescription" asp-for="ParentDescription" />
+                        }
                     </div>
 
 
                     <div class="buttonArea centerBtn">
                         <button class="lineBtn" id="resetLocation">Reset</button>
-                        <button type="submit" asp-route-id=@list[0].Id class="bgBlue">Submit</button>
+                         @if (list.Count > 0)
+                        {
+                            var DicId = list[0].Id;
+                            <button type="submit" onclick="msgalert()" class="bgBlue">Submit</button>
+                        }
                     </div>
                 </div>
             </div>
@@ -152,12 +154,13 @@
     </div>
 </form>
 <!-- popup edit model -->
-<div class="popup-overlay w-800Popup" id="popup-editRole-overlay">
+<form asp-action="DictionaryAllManage" method="post">
+    <div class="popup-overlay w-800Popup" id="popup-editRole-overlay">
 
     <div class="popup">
         <div class="content text-center">
             <div class="popup-head position-relative">
-                Edit Location
+                Edit Dictionary Child
                 <img src="../assets/x.svg" alt="x" id="closePopup" class="closeEditRolePopup">
             </div>
             <div class="popup-action inputSearchs">
@@ -194,5 +197,99 @@
         </div>
     </div>
 </div>
+</form>
 
+
+@* <form asp-action="DictionaryAllManage" method="post">
+    
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Edit Dictionary Child
+                    <img src="../assets/x.svg" alt="x" id="closePopup" class="closeEditRolePopup">
+                </div>
+                <div class="popup-action inputSearchs">
+
+                    <div class="flex">
+                        <label for="ChildDescription">
+                            Child Description
+                            @Html.TextBoxFor(model => model.Description, new {@class = "form-control"})
+                        </label>
+                        <label for="" class="">
+                            Status
+                            @{
+                                bool isActiveEdit = Model != null && Model.IsActive == 1; // Convert 1 to true, any other value to false
+                            }
+
+                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActiveEdit ? "checked" : "") required />
+                            <label class="label-switch" for="addLocation"></label>
+                            <span class="info-text"></span>
+                        </label>
+                        @Html.HiddenFor(model => model.Id, new {@class = "form-control",  @placeholder = @SharedLocalizer["DescriptionId"] })
+
+                    </div>
+
+
+                    <div class="buttonArea centerBtn">
+                        <button class="lineBtn" id="resetLocation">Reset</button>
+                        @if (list.Count > 0)
+                        {
+                            id = list[0].Id;
+                        }
+                        <button type="submit" asp-route-id=@id class="bgBlue">Submit</button>
+                    </div>
+                </div>
+            </div>
+       
+</form> *@
+
+<div id="DeleteDictionaryChildModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("ID")
+                <div class="card-footer text-center">
+                    <button type="button" onclick="DeleteRole()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+@section MyScripts {
+    <script src="~/js/custom/dictionary/masterdictionary.js?v=@jsVersion"></script>
 <script src="~/js/custom/location/locationmaster.js"></script>
+<script>
+
+        var DeleteDictionaryById = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDictionaryById";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+
+
+        // // Add an event listener to the button with the id "editRole"
+        // document.getElementById("editRole").addEventListener("click", function (event) {
+        //     // Prevent the default behavior (changing the URL)
+        //     event.preventDefault();
+
+        //     // Open the popup manually
+        //     openPopup(); // Replace this with your actual function to open the popup
+        // });
+
+        // function openPopup() {
+        //     // Show your popup by changing its style, for example:
+        //     document.getElementById("popup-editRole-overlay").style.display = "block";
+        // }
+
+
+</script>
+}

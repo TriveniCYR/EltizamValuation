@@ -1,6 +1,5 @@
 ﻿var tableId = "LocationTable";
-$(document).ready(function () {
-    debugger
+$(document).ready(function () { 
     InitializeLocationDataList();
 });
 
