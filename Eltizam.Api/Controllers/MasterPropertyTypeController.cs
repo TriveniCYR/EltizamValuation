@@ -37,7 +37,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                DBOperation oResponse = await _propertyTypeServices.AddUpdateMasterProperty(oPrpoertyType);
+                DBOperation oResponse = await _propertyTypeServices.AddUpdateMasterPropertyType(oPrpoertyType);
                 if (oResponse == DBOperation.Success)
                 {
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oPrpoertyType.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
@@ -58,7 +58,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                var oPrpoertyTypeEntity = await _propertyTypeServices.GetMasterPropertyByIdAsync(id);
+                var oPrpoertyTypeEntity = await _propertyTypeServices.GetMasterPropertyTypeByIdAsync(id);
 
                 if (oPrpoertyTypeEntity != null && oPrpoertyTypeEntity.Id > 0)
                 {
@@ -108,7 +108,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                DBOperation oResponse = await _propertyTypeServices.DeleteProperty(id);
+                DBOperation oResponse = await _propertyTypeServices.DeletePropertyType(id);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else

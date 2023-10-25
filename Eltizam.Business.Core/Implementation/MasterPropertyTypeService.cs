@@ -59,7 +59,7 @@ namespace Eltizam.Business.Core.Implementation
         /// <response code="500">Internal Server</response>
         /// 
 
-        public async Task<Master_PropertyTypeModel> GetMasterPropertyByIdAsync(int id)
+        public async Task<Master_PropertyTypeModel> GetMasterPropertyTypeByIdAsync(int id)
         {
             // Create a new Master_PropertyTypeModel instance.
             var _userEntity = new Master_PropertyTypeModel();
@@ -107,7 +107,7 @@ namespace Eltizam.Business.Core.Implementation
             return lstStf;
         }
 
-        public async Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel masterproperty)
+        public async Task<DBOperation> AddUpdateMasterPropertyType(Master_PropertyTypeModel masterproperty)
         {
             // Create a Master_PropertyType object.
             MasterPropertyType type;
@@ -196,7 +196,7 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<DBOperation> DeleteProperty(int id)
+        public async Task<DBOperation> DeletePropertyType(int id)
         {
             // Get the entity to be deleted from the repository.
             var entityUser = _repository.Get(x => x.Id == id);
