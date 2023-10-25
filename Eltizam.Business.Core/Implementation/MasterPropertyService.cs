@@ -235,7 +235,7 @@ namespace Eltizam.Business.Core.Implementation
                             {
                                 objAmenity = _mapperFactory.Get<MasterAmenityListModel, MasterPropertyAmenity>(doc);
                                 objAmenity.PropertyId = objProperty.Id;
-                                objAmenity.AmenityId = doc.Id;
+                                objAmenity.AmenityId = doc.AmenityId;
                                 objAmenity.IsActive = doc.IsActive;
                                 objAmenity.CreatedBy = 0;
                                 objAmenity.CreatedDate = DateTime.Now;
