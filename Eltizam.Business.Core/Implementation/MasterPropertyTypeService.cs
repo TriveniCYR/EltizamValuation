@@ -138,11 +138,17 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 // Create a new Master_PropertyType entity from the model for insertion.
-                type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
+                // type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
+                type = new MasterPropertyType()
+                {
+                    IsActive = masterproperty.IsActive,
+                    PropertyType = masterproperty.PropertyType
+                };
                 type.CreatedDate = DateTime.Now;
                 type.CreatedBy = masterproperty.CreatedBy;
                 type.ModifiedDate = DateTime.Now;
                 type.ModifiedBy = masterproperty.ModifiedBy;
+
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(type);
             }

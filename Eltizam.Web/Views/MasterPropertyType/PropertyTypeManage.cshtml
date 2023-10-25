@@ -12,11 +12,12 @@
 @{
     ViewData["Title"] = @MasterLocalizer["Property Type Manage"]; 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    Layout = "_Layout";
 
 }
-
+<main>
 <form>
-    <main>
+    
         <div class="whiteBoxShadow">
             <div class="heading position-relative">
                 <h3 class="dashboardTitle">Property Sub Type</h3>
@@ -25,13 +26,13 @@
                 <div class="inputSearchs">
                     <input type="hidden" id="hdnPropertyId" value="@(Model == null ? 0 : Model.Id)" />
                     <div class="flex mb-28">
-                        <label for="" class="w-50">
+                        @* <label for="" class="w-50">
                             
                             @Html.LabelFor(model => model.PropertyType, new { @class = "control-label" })
                             <span class="text-danger">*</span>
                             @Html.EditorFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
                             @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
-                        </label>
+                        </label> *@
                       @*   <label for="" class="w-50">
                           
                            @Html.LabelFor(model => model.SubTypes.ds,"Property SubType", new { @class = "control-label" })
@@ -69,7 +70,9 @@
 
 
                     <div class="propertySubTypeContainer">
-                        @for (var i = 0; i < Model.MasterPropertySubTypes.Count; i++)
+                        @if (Model.MasterPropertySubTypes != null)
+                        {
+                             @for (var i = 0; i < Model.MasterPropertySubTypes.Count; i++)
                         {
                             var _ndl = Model.MasterPropertySubTypes[i];
                             <div class="flex mb-28">
@@ -83,20 +86,26 @@
                             </div>
                         }
 
+                        }
+                       
+
                     </div>
                     <button type="button" id="addSubTypeButton" class="btn btn-secondary">Add Property SubType</button>
-                    <div class="text-center buttonArea">
+                    <div class="text-right buttonArea bodyContent plr-0">
                         <button type="button" id="btnSaveRole" onclick="alertMsg()" class="bgBlue mr-12">Save</button>
                         <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">@SharedLocalizer["Cancel"]</a>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    
 </form>
+</main>
+<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
 
-@section MyScripts {
 
+    
     @* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
     <script>
 
@@ -186,9 +195,10 @@
                     data: JSON.stringify(Master_PropertyTypeModel),
                     success: function (response) {
                         debugger;
-                        for (var i = 0; i < response._object.length; i++) {
-                            PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
-                        }
+                        // for (var i = 0; i < response._object.length; i++) {
+                        //     PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
+                        // }
+                $("#loader").hide();
                     },
                     failure: function (response) {
                         alert(response.responseText);
@@ -254,5 +264,5 @@
         // }
 
     </script>
-}
+
 
