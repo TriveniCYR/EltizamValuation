@@ -93,8 +93,6 @@ namespace Eltizam.Business.Core.Implementation
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<Master_PropertyTypeModel>());
 
             return oDataTableResponseModel;
-
-            return oDataTableResponseModel;
         }
 
         public async Task<List<Master_PropertyTypeModel>> GetAllList()
@@ -110,8 +108,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> AddUpdateMasterPropertyType(Master_PropertyTypeModel masterproperty)
         {
             // Create a Master_PropertyType object.
-            MasterPropertyType type; 
-            
+            MasterPropertyType type;
+
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (masterproperty.Id > 0)
             {
@@ -152,10 +150,27 @@ namespace Eltizam.Business.Core.Implementation
 
             // Return an appropriate operation result.
             if (type.Id == 0)
-                return DBOperation.Error; 
+                return DBOperation.Error;
             else
             {
-                await _repository.GetBySP(ProcedureMetastore.usp_PropertyType_UpsertSubTypes);
+                var subTypes = masterproperty.MasterPropertySubTypes;
+                var _Val = "";
+                if (subTypes != null)
+                { 
+                    foreach (var _stype in subTypes)
+                    {
+                        _Val += string.Format("{0}_{1},", _stype.Id, _stype.PropertySubType);
+                    }
+                } 
+
+                SqlParameter[] _sqlParameter =
+                {
+                    new SqlParameter(AppConstants.P_Id,             type.Id),
+                    new SqlParameter(AppConstants.P_CreatedBy,      type.CreatedBy),
+                    new SqlParameter(AppConstants.P_RequestData,    _Val)
+                };
+
+                await _repository.GetBySP(ProcedureMetastore.usp_PropertyType_UpsertSubTypes, CommandType.StoredProcedure, _sqlParameter);
 
                 //if (masterproperty.MasterPropertySubTypes != null)
                 //{

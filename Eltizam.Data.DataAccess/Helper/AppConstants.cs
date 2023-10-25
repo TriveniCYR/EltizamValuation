@@ -31,6 +31,10 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string P_SortColumn    = "@SortColumn";
         public static string P_PageSize      = "@PageSize";
         public static string P_CurrentPageNumber = "@CurrentPageNumber";
+
+        public static string P_Id = "@Id";
+        public static string P_CreatedBy = "@CreatedBy";
+        public static string P_RequestData = "@RequestData";
     }
 
     public class TableName
