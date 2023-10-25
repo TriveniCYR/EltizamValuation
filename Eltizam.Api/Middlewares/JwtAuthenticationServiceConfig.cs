@@ -70,7 +70,7 @@ namespace Eltizam.Api.Middlewares
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddMinutes(600),
+                Expires = AppConstants.DateTime.AddMinutes(600),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

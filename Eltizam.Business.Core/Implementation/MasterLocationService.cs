@@ -113,7 +113,7 @@ namespace Eltizam.Business.Core.Implementation
                     objLocation.Longitude = entityLocation.Longitude;
                     objLocation.Status = entityLocation.Status;
                     objLocation.LocationName = entityLocation.LocationName;
-                    objLocation.ModifiedDate = DateTime.Now;
+                    objLocation.ModifiedDate = AppConstants.DateTime;
                     objLocation.ModifiedBy = entityLocation.CreatedBy;
 
                     _repository.UpdateAsync(objLocation);
@@ -136,9 +136,9 @@ namespace Eltizam.Business.Core.Implementation
                 objLocation.HomeCurrencyId = entityLocation.HomeCurrencyId;
                 objLocation.ForeignCurrencyId = entityLocation.ForeignCurrencyId;
                 objLocation.Status = entityLocation.Status;
-                objLocation.CreatedDate = DateTime.Now;
+                objLocation.CreatedDate = AppConstants.DateTime;
                 objLocation.CreatedBy = entityLocation.CreatedBy;
-                objLocation.ModifiedDate = DateTime.Now;
+                objLocation.ModifiedDate = AppConstants.DateTime;
                 objLocation.ModifiedBy = entityLocation.CreatedBy;
                 _repository.AddAsync(objLocation);
             }

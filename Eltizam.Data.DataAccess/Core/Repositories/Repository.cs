@@ -25,7 +25,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             dbContext = Context ?? throw new ArgumentNullException(nameof(Context));
             dbSet = dbContext.Set<TEntity>();
             _EntityName = typeof(TEntity).Name;
-            _currentSQLServerDate = DateTime.Now; //_commonService.GetSQLServerDate();
+            _currentSQLServerDate = AppConstants.DateTime; //_commonService.GetSQLServerDate();
         }
 
         #region Read

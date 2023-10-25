@@ -20,6 +20,7 @@ namespace Eltizam.Business.Core
         public UserSessionEntity GetLoggedInUser()
         {
             return ((UserSessionEntity)_httpContextAccessor.HttpContext.Items["User"]);
-        }
+        } 
+         
     }
 }

@@ -121,7 +121,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     type.PropertyType = masterproperty.PropertyType;
                     type.IsActive = masterproperty.IsActive;
-                    type.ModifiedDate = DateTime.Now;
+                    type.ModifiedDate = AppConstants.DateTime;
                     type.ModifiedBy = masterproperty.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
@@ -137,9 +137,9 @@ namespace Eltizam.Business.Core.Implementation
             {
                 // Create a new Master_PropertyType entity from the model for insertion.
                 type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
-                type.CreatedDate = DateTime.Now;
+                type.CreatedDate = AppConstants.DateTime;
                 type.CreatedBy = masterproperty.CreatedBy;
-                type.ModifiedDate = DateTime.Now;
+                type.ModifiedDate = AppConstants.DateTime;
                 type.ModifiedBy = masterproperty.ModifiedBy;
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(type);
@@ -189,7 +189,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 //                propertySubType.IsActive = entitySubType.IsActive;
                 //                propertySubType.ModifiedBy = entitySubType.CreatedBy;
-                //                propertySubType.ModifiedDate = DateTime.Now;
+                //                propertySubType.ModifiedDate = AppConstants.DateTime;
                 //                _subrepository.UpdateAsync(propertySubType);
                 //            }
                 //        }
@@ -200,9 +200,9 @@ namespace Eltizam.Business.Core.Implementation
                 //            propertySubType.PropertyTypeId = type.Id;
                 //            propertySubType.IsActive = masterproperty.IsActive;
                 //            propertySubType.CreatedBy = masterproperty.CreatedBy;
-                //            propertySubType.CreatedDate = DateTime.Now;
+                //            propertySubType.CreatedDate = AppConstants.DateTime;
                 //            propertySubType.ModifiedBy = masterproperty.CreatedBy;
-                //            propertySubType.ModifiedDate = DateTime.Now;
+                //            propertySubType.ModifiedDate = AppConstants.DateTime;
                 //            _subrepository.AddAsync(propertySubType);
                 //        }
                 //        await _unitOfWork.SaveChangesAsync();
@@ -222,7 +222,7 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.NotFound;
 
             entityUser.IsActive = false;
-            entityUser.ModifiedDate = DateTime.Now;
+            entityUser.ModifiedDate = AppConstants.DateTime;
             entityUser.ModifiedBy = 1;
 
             _repository.UpdateAsync(entityUser);

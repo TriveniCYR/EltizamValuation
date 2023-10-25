@@ -35,6 +35,8 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string P_Id = "@Id";
         public static string P_CreatedBy = "@CreatedBy";
         public static string P_RequestData = "@RequestData";
+
+        public static DateTime DateTime = DateTime.Now;
     }
 
     public class TableName

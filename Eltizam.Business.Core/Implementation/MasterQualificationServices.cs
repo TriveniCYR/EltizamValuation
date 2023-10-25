@@ -115,7 +115,7 @@ namespace Eltizam.Business.Core.Implementation
                     objQualification.Grade = entityqualification.Grade;
                     objQualification.YearOfInstitute = entityqualification.YearOfInstitute;
                     objQualification.IsActive = entityqualification.IsActive;
-                    objQualification.ModifiedDate = DateTime.Now;
+                    objQualification.ModifiedDate = AppConstants.DateTime;
                     objQualification.ModifiedBy = entityqualification.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
@@ -131,10 +131,10 @@ namespace Eltizam.Business.Core.Implementation
             {
                 // Create a new Master_Qualification entity from the model for insertion.
                 objQualification = _mapperFactory.Get<Master_QualificationModel, Master_Qualification>(entityqualification);
-                objQualification.CreatedDate = DateTime.Now;
+                objQualification.CreatedDate = AppConstants.DateTime;
                 objQualification.CreatedBy = entityqualification.CreatedBy;
                 objQualification.ModifiedBy = entityqualification.ModifiedBy;  
-                objQualification.ModifiedDate = DateTime.Now;
+                objQualification.ModifiedDate = AppConstants.DateTime;
 
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objQualification);

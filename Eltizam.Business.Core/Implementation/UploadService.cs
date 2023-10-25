@@ -94,7 +94,7 @@ namespace Eltizam.Business.Core.Implementation
 				{
 					FileName = fileName,
 					ContentType = file.ContentType,
-					CreatedDate = DateTime.Now,
+					CreatedDate = AppConstants.DateTime,
 					FileType = GetFileType(file.ContentType)
 				};
 

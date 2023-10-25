@@ -47,7 +47,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objRole = _mapperFactory.Get<MasterRoleEntity, MasterRole>(masterRoleEntity);
                     objRole.ModifyBy = LoggedUserId;
-                    objRole.ModifyDate = DateTime.Now;
+                    objRole.ModifyDate = AppConstants.DateTime;
                     _repository.UpdateAsync(objRole);
 
                     await _unitOfWork.SaveChangesAsync();
@@ -61,7 +61,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 objRole = _mapperFactory.Get<MasterRoleEntity, MasterRole>(masterRoleEntity);
                 objRole.CreatedBy = LoggedUserId;
-                objRole.CreatedDate = DateTime.Now;
+                objRole.CreatedDate = AppConstants.DateTime;
                 _repository.AddAsync(objRole);
                 await _unitOfWork.SaveChangesAsync();
             }
