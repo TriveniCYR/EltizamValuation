@@ -1,0 +1,236 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@model Eltizam.Business.Models.MasterLocationEntity; 
+@{
+    List<Eltizam.Business.Models.MasterLocationEntity> objList = new List<Eltizam.Business.Models.MasterLocationEntity>();
+    objList = ViewData["locationList"] as List<Eltizam.Business.Models.MasterLocationEntity>;
+}
+
+@{
+    ViewData["Title"] = @MasterLocalizer["LocationList"];
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+
+<div id="PlaceHolderHere"></div>
+<main>
+    <h3 class="dashboardTitle">LOCATION MASTER</h3>
+    <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
+        <div class="flex">
+            <label class="searchBox position-relative">
+                <div class="flex align-item-center">
+                    <img src="../assets/search.svg" alt="search">
+                    <input type="text" placeholder="Search for System" class="searchInput">
+                </div>
+                <button class="normalSearch">Search</button>
+            </label>
+            <div class="accordion">
+                <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+                <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
+                <div class="accordion-content inputSearchs">
+                    <h3 class="text-center">Advanced Search</h3>
+                    <form>
+                        <div class="flex">
+                            <label for="userName">
+                                User Name
+                                <input type="text" placeholder="enter user id">
+                            </label>
+                            <label for="valuatorType">
+                                Valuator Type
+                                <select name="Valuator" id="ValuatorType">
+                                    <option value="Valuator1">Valuator type1</option>
+                                    <option value="Valuator2">Valuator type2</option>
+                                    <option value="Valuator3">Valuator type3</option>
+                                </select>
+                            </label>
+                            <label for="resourceType">
+                                Resource Type
+                                <select name="Valuator" id="resourceType">
+                                    <option value="resourceType1">Resource type1</option>
+                                    <option value="resourceType2">Resource type2</option>
+                                    <option value="resourceType3">Resource type3</option>
+                                </select>
+                            </label>
+                            <label for="roleName">
+                                Role Name
+                                <select name="Valuator" id="roleName">
+                                    <option value="roleName1">Role type1</option>
+                                    <option value="roleName2">Role type2</option>
+                                    <option value="roleName3">Role type3</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="flex">
+                            <label for="fromDate">
+                                From Date
+                                <input type="date">
+                            </label>
+                            <label for="toDate">
+                                To Date
+                                <input type="date">
+                            </label>
+                            <label for="designation">
+                                Designation
+                                <select name="Valuator" id="ValuatorType">
+                                    <option value="Valuator1">Designation type1</option>
+                                    <option value="Valuator2">Designation type2</option>
+                                    <option value="Valuator3">Designation type3</option>
+                                </select>
+                            </label>
+                            <label for="designation">
+                                Department
+                                <select name="Valuator" id="ValuatorType">
+                                    <option value="Valuator1">Department type1</option>
+                                    <option value="Valuator2">Department type2</option>
+                                    <option value="Valuator3">Department type3</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="blueBtn">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="buttonArea flex align-item-center">
+         @*    <form asp-action="LocationManage" asp-controller="Location" method="GET"> *@
+            <button class="flex align-item-center blueBtn" id=""> 
+                <a class="whiteAtag" asp-action="LocationManage" asp-route-Isview=2> <img src="../assets/plus.svg" alt="plus"> Add New</a>
+            </button>
+            @* </form> *@
+
+
+            <button class="flex align-item-center lineBtn" id="importFile">
+                <img src="../assets/file-import.svg" alt="file-import" />
+                Import
+            </button>
+
+            <button class="flex align-item-center lineBtn exportFile">
+                <img src="../assets/file-export.svg" alt="file-export"> Export
+                <div class="actionItem">
+                    <ul>
+                        <li>
+                            Excel XML
+                        </li>
+                        <li>
+                            cSV
+                        </li>
+                    </ul>
+                </div>
+            </button>
+        </div>
+    </div>
+          
+    <div class="scroll-x">       
+       <table id="LocationTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Country Name</th>
+                    <th>Region Name <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>States / Emirates</th>
+                    <th>Sector / Zone</th>
+                    <th>Home Currency</th>
+                    <th>Foreign Currency</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in objList)
+                {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.CountryName</td>
+                   @*  <td class="userPic editLocation">@item.CountryName</td> *@
+                    <td>@item.StateName</td>
+                    <td>@item.CityName</td>
+                    <td>@item.Sector</td>
+                    <td>@item.HomeCurrency</td>
+                    <td>@item.ForeignCurrency</td>
+                    <td class="position-relative">
+                        <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                        <div class="actionItem">
+                            <ul>
+                                    <li class="editLocation">
+                                        <img src="../assets/edit.svg" alt="edit" />
+                                        <a title="Edit" asp-action="LocationManage" asp-route-Id="@item.Id"><span>Edit</span></a>
+                                        @*  <a title="Edit" onclick="GetLocationById(@item.Id);"><span>Edit</span></a> *@
+                                       
+                                    </li>
+                                <li class="viewLocation">
+                                    <img src="../assets/view.svg" alt="view" />
+                                            <a title="Edit" asp-action="LocationManage" asp-route-Id="@item.Id" asp-route-Isview=1><span>View</span></a>
+                                </li>
+                               
+                                <li class="delete">
+                                    <img src="../assets/trash.svg" alt="trash" />
+                                        <a title="Delete" data-toggle="modal" data-target="#DeleteLocationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDelete(@item.Id); return false;"><span>Delete</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+             
+            </tbody>
+        </table>
+    </div>
+</main>
+<div id="DeleteLocationModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("ID")
+                <div class="card-footer text-center">
+                    <button type="button" onclick="DeleteRole()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section MyScripts {
+
+    @Html.Partial("_DataTablePartial")
+    <script type="text/javascript" src="~/js/Custom/Location/LocationManagement.js?v=@jsVersion"></script>
+ @*    <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" /> *@
+    
+    <script>
+        //#region Setup API Url
+
+        var DeleteRoleByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteRoleById";
+        var GetLocationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetLocationById";
+        var DeletLocationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteLocationById";
+        // #endregion
+
+        //#region Static Label Init
+
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+
+        var StatusMessage = '@TempData["StatusMessage"]';
+
+
+                                        //#endregion
+    </script>
+    }

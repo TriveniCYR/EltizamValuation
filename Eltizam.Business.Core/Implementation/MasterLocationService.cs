@@ -92,6 +92,7 @@ namespace Eltizam.Business.Core.Implementation
 
             return _LocationEntity;
         }
+
         public async Task<DBOperation> AddUpdateLocationClient(MasterLocationEntity entityLocation)
         {
 

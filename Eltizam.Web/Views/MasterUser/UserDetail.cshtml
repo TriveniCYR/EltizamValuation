@@ -48,7 +48,9 @@
                                             <div class="resourceProfile clientImg text-center">
                                                 <img src="../assets/client1.png" alt="img-7" />
                                             </div>
-                                        </div>
+                                        </div>                                        
+                                    </div>
+                                    <div class="flex">
                                         <label for="FirstName">
                                             First Name
                                             @Html.TextBoxFor(model => model.FirstName, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["First Name"], htmlAttributes })
@@ -57,9 +59,17 @@
                                             Middle Name
                                             @Html.TextBoxFor(model => model.MiddleName, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"], htmlAttributes })
                                         </label>
+                                    </div>
+                                    <div class="flex">
                                         <label for="LastName">
                                             Last Name
                                             @Html.TextBoxFor(model => model.LastName, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        </label>                                        
+                                        <label for="IsActive" class="w-50">
+                                            Status
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive"  disabled/>
+                                            <label class="label-switch" for="IsActive"></label>
+                                            <span class="info-text"></span>
                                         </label>
                                     </div>
                                     <div class="flex">
@@ -118,14 +128,6 @@
                                             AD Municipality / License No
                                             @Html.TextBoxFor(model => model.LicenseNo, new { @disabled=htmlAttributes,  @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
 
-                                        </label>
-                                    </div>
-                                    <div class="flex">
-                                        <label for="IsActive" class="w-50">
-                                            Status
-                                            <input class='input-switch' type="checkbox" asp-for="IsActive"  disabled/>
-                                            <label class="label-switch" for="IsActive"></label>
-                                            <span class="info-text"></span>
                                         </label>
                                     </div>
                                 </div>
@@ -281,11 +283,6 @@
             </div>
 
         </main>
-        <footer class="flex justify-between">
-            <p>2023 © Eltizam.</p>
-            <p>Design & Develop by NeoSoft</p>
-        </footer>
-
 
     </div>
 </div>

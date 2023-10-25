@@ -97,15 +97,15 @@ namespace Eltizam.Business.Core.Implementation
             return oDataTableResponseModel;
         }
 
-        //public async Task<List <Master_PropertyTypeModel>>GetAllProperty()
-        //{
-           
-        //    var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_GetAll,
+        public async Task<List<Master_PropertyTypeModel>> GetAllList()
+        {
 
-        //     DatabaseConnection.ConnString, CommandType.StoredProcedure,null);
-                       
-        //    return lstStf;
-        //}
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_GetAll,
+
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+
+            return lstStf;
+        }
 
         public async Task<DBOperation> AddUpdateMasterProperty(Master_PropertyTypeModel masterproperty)
         {

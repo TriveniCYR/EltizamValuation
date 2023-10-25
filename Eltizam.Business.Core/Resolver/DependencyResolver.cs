@@ -16,6 +16,7 @@ namespace Eltizam.Business.Core.Resolver
         public static IServiceCollection ContainerResolver(this IServiceCollection services)
         {
             services.AddTransient<IMasterQualificationServices, MasterQualificationServices>();
+            services.AddTransient<IMasterPropertyService, MasterPropertyService>();
             services.AddTransient<IMasterPropertyTypeService, MasterPropertyTypeService>();
             services.AddTransient<IMasterPropertySubTypeService, MasterPropertySubTypeService>();
             services.AddTransient<IMasterVendorService, MasterVendorService>();

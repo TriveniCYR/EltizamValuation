@@ -90,18 +90,18 @@ namespace EltizamValuation.Api.Controllers
         }
 
 
-        //[HttpGet, Route("GetAllProperty")]
-        //public async Task<IActionResult> GetAllProperty()
-        //{
-        //    try
-        //    {
-        //        return _ObjectResponse.Create(await _propertyTypeServices.GetAllProperty(), (Int32)HttpStatusCode.OK, null, null, null);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-        //    }
-        //}
+        [HttpGet, Route("GetAllList")]
+        public async Task<IActionResult> GetAllList()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _propertyTypeServices.GetAllList(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
 
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteProperty([FromRoute] int id)

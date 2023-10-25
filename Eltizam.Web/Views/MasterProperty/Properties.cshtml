@@ -13,6 +13,7 @@
 }
 
     <!-- system user master -->
+
     <div class="flex">
         <div class="w-100 position-relative">
             <main  class="w-100">
@@ -20,27 +21,11 @@
                 <h3 class="dashboardTitle">PROPERTY MASTER</h3>
                    
                     <div class="buttonArea flex align-item-center">
-                        <button class="flex align-item-center blueBtn" onClick="editProperty()">
-                            <img src="../assets/plus.svg" alt="plus"> Add New
-                        </button>
-                        
-                        @*<button class="flex align-item-center lineBtn" id="importFile">
-                            <img src="../assets/file-import.svg" alt="file-import"/>
-                            Import
-                        </button>
-                        <button class="flex align-item-center lineBtn exportFile">
-                            <img src="../assets/file-export.svg" alt="file-export"> Export
-                            <div class="actionItem">
-                                <ul>
-                                    <li>
-                                        Excel XML
-                                    </li>
-                                    <li>
-                                        CSV
-                                    </li>
-                                </ul>
-                            </div>
-                        </button>*@
+                        <form asp-action="PropertyManage" asp-controller="MasterProperty" method="GET">
+                            <button class="flex align-item-center blueBtn" id="addNew">
+                                <img src="../assets/plus.svg" alt="plus"> Add New
+                            </button>
+                        </form>
                     </div>
                 </div>
             <div class="scroll-x whiteWithPadding">
@@ -58,34 +43,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @*<tr>
-                                <td>1</td>
-                                <td class="userPic text-center" onClick="editProperty()">John  G Doe</td>
-                                <td>Commercial</td>
-                                <td>Villa</td>
-                                <td>Free Hold</td>
-                                <td>City, Country, State</td>
-                                <td><span class="tableStatus green">Active</span></td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots"/>
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onClick="editProperty()">
-                                                <img src="../assets/view.svg" alt="view"/>
-                                                view
-                                            </li>
-                                            <li onClick="editProperty()">
-                                                <img src="../assets/edit.svg" alt="edit"/>
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash"/>
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>*@
                         </tbody>
                     </table>
                 </div>
@@ -94,6 +51,33 @@
 
         </div>
     </div>
+
+<div id="DeletePropertyModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("Id")
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteProperty()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section MyScripts
     {
     @Html.Partial("_DataTablePartial")

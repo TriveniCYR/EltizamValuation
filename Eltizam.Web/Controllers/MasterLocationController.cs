@@ -25,8 +25,8 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
+
         public IActionResult Locations()
-        
         {
             ModelState.Clear();
             try
@@ -86,7 +86,7 @@ namespace EltizamValuation.Web.Controllers
             }
         }
 
-        public IActionResult LocationManage(int? id,int Isview = 0)
+        public IActionResult LocationManage(int? id, int Isview = 0)
         {
             MasterLocationEntity masterlocation;
             if (id == null || id <= 0)
@@ -143,5 +143,5 @@ namespace EltizamValuation.Web.Controllers
                 return RedirectToAction("LocationManage", new { Id = masterlocation.Id });
             }
         }
-        }
+    }
 }
