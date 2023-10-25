@@ -63,6 +63,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="flex">
                                         <label for="FirstName">
                                             First Name
                                             @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
@@ -71,9 +73,17 @@
                                             Middle Name
                                             @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
                                         </label>
+                                    </div>
+                                    <div class="flex">
                                         <label for="LastName">
                                             Last Name
                                             @Html.TextBoxFor(model => model.LastName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        </label>                                        
+                                        <label for="IsActive" class="w-50">
+                                            Status
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                            <label class="label-switch" for="IsActive"></label>
+                                            <span class="info-text"></span>
                                         </label>
                                     </div>
                                     <div class="flex">
@@ -132,15 +142,7 @@
                                             @Html.TextBoxFor(model => model.LicenseNo, new {  @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
 
                                         </label>                                       
-                                    </div>                                    
-                                    <div class="flex">
-                                        <label for="IsActive" class="w-50">
-                                            Status
-                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
-                                            <label class="label-switch" for="IsActive"></label>
-                                            <span class="info-text"></span>
-                                        </label>
-                                    </div>
+                                    </div>  
                                 </div>
                             </div>
                         </div>

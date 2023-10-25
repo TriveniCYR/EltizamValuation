@@ -24,19 +24,17 @@
 
 
   <!-- system user master -->
-<div class="" id="">
+
+    <form asp-action="LocationManage">
     <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative">
-                <h3 class="dashboardTitle">@PageHeading</h3>
-                @*  <h3 class="dashboardTitle">Add Location</h3> *@
-               @*  <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose"> *@
-            </div>
-            
-                <div class="bodyContent">
-                    @*    <form id="locationForm"> *@
+                <h3 class="dashboardTitle">@PageHeading</h3>             
+            </div>           
+                <div class="bodyContent">                
                     <div class="inputSearchs">
-                    <form asp-action="LocationManage" method="POST" enctype="multipart/form-data">
+                    <div class="tabSection">
+                 
                         <input type="hidden" id="hdnCountry" value="@(Model.CountryId == null ? 0 : Model.CountryId)" />
                         <input type="hidden" id="hdnState" value="@(Model.StateId == null ? 0 : Model.StateId)" />
                         <input type="hidden" id="hdnCity" value="@(Model.CityId == null ? 0 : Model.CityId)" />
@@ -101,9 +99,10 @@
                                     bool isActive = Model.Status == 1; // Convert 1 to true, any other value to false
                                 }
 
-                                <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />
+                                <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />                               
                                 <label class="label-switch" for="addLocation"></label>
                                 <span class="info-text"></span>
+                                </label>
                     </div>
                         <div class="buttonArea centerBtn">
                             @if (ViewBag.IsView!=1)
@@ -114,21 +113,22 @@
                             }
               
                     </div>
-                </form>
+                    </div>
                 </div>
                 </div>
            
            
         </div>
     </main>
-</div>
+    </form>
+
 @section MyScripts {
-<input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
+@* <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
 <script src="../js/locationMaster.js"></script>
 <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
+<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script> *@
 <script type="text/javascript" src="~/js/Custom/Location/LocationManagement.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
+@* <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script> *@
 <script>
     $(document).ready(function () {
         BindCountry();

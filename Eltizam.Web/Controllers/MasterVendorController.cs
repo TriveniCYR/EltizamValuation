@@ -115,25 +115,25 @@ namespace EltizamValuation.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Vendor/VendorsDetail")]
+        [Route("MasterVendor/VendorDetail")]
         public IActionResult VendorDetail(int? id)
         {
-            MasterUserModel masterUser;
+            MasterVendorModel masterUser;
             if (id == null || id <= 0)
             {
-                masterUser = new MasterUserModel();
+                masterUser = new MasterVendorModel();
                 return View(masterUser);
             }
             else
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetUserById + "/" + id, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetVendorById + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterVendorModel>>(jsonResponse);
                     if (data._object is null)
                         return NotFound();
 

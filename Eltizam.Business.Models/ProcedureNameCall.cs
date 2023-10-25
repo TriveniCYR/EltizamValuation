@@ -20,6 +20,8 @@ namespace Eltizam.Business.Models
         public static string usp_Vendor_SearchAllList = "usp_Vendor_SearchAllList";
         public static string usp_Client_Search_GetClientList = "usp_Client_Search_GetClientList";
         public static string usp_Property_Search_GetPropertyList = "usp_Property_Search_GetPropertyList";
+        public static string usp_Amenity_GetAmenityByPropertyId = "usp_Amenity_GetAmenityByPropertyId";
+        public static string usp_PropertyLocation_GetLocationByPropertyId = "usp_PropertyLocation_GetLocationByPropertyId";
        
         public static string usp_OwnershipType_SearchAllList = "usp_OwnershipType_SearchAllList";
         public static string usp_State_SearchAllList = "usp_State_SearchAllList";
@@ -27,12 +29,15 @@ namespace Eltizam.Business.Models
         
         public static string usp_Country_SearchAllList = "usp_Country_SearchAllList";
         public static string usp_User_Search_GetUserList = "usp_User_Search_GetUserList";
+        public static string usp_Dictionary_SearchAllList = "usp_Dictionary_SearchAllList";
         public static string usp_SubProperty_GetSubPropertyByPropertyIdList = "usp_SubProperty_GetSubPropertyByPropertyIdList";
         // Master Key Id
         public static string usp_Contact_GetContactByTableKeyId = "usp_Contact_GetContactByTableKeyId";
         public static string usp_Address_GetAddressByTableKeyId = "usp_Address_GetAddressByTableKeyId";
         public static string usp_Qualification_GetQualificationByTableKeyId = "usp_Qualification_GetQualificationByTableKeyId";
         public static string usp_Document_GetDocumentByTableKeyId = "usp_Document_GetDocumentByTableKeyId";
+        public static string usp_Dictionary_GetById = "usp_Dictionary_GetById";
+        
 
         // common master dropdown call
         public static string usp_ResourceType_AllList = "usp_ResourceType_AllList";
@@ -43,6 +48,7 @@ namespace Eltizam.Business.Models
         public static string usp_City_AllList = "usp_City_AllList";
         public static string usp_Client_DeleteContactByClientId = "usp_Client_DeleteContactByClientId";
         public static string usp_State_AllList = "usp_State_AllList";
+        public static string usp_PropertyType_GetAll = "usp_PropertyType_GetAll";
         public static string usp_ClientType_AllList = "usp_ClientType_AllList";
         public static string usp_Role_SearchAllList = "usp_Role_SearchAllList";
         public static string usp_Role_GetByRoleName = "usp_Role_GetByRoleName";

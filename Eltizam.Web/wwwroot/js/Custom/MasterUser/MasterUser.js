@@ -3,6 +3,32 @@ $(document).ready(function () {
     InitializeUserList();
 });
 
+
+//#region Delete User
+function ConfirmationDeleteUser(id) {
+    $('#DeleteUserModel #Id').val(id);
+}
+function DeleteUser() {
+    var tempInAtiveID = $('#DeleteUserModel #Id').val();
+    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteUserByIdUrl + "/" + tempInAtiveID, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
+}
+function DeleteUserByIdSuccess(data) {
+    try {
+        if (data._Success === true) {
+            toastr.success(RecordDelete);
+            $('#' + tableId).DataTable().draw();
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+function DeleteUserByIdError(x, y, z) {
+    toastr.error(ErrorMessage);
+}
+
 function InitializeUserList() {
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
@@ -60,30 +86,3 @@ function InitializeUserList() {
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
 }  
-
-
-
-//#region Delete User
-function ConfirmationDeleteUser(id) {
-    $('#DeleteUserModel #Id').val(id);
-}
-function DeleteUser() {
-    var tId = $('#DeleteUserModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteUserByIdUrl + "/" + tId, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
-}
-function DeleteUserByIdSuccess(data) {
-    try {
-        if (data._Success === true) {
-            toastr.success(RecordDelete);
-            $('#' + tableId).DataTable().draw();
-        }
-        else {
-            toastr.error(data._Message);
-        }
-    } catch (e) {
-        toastr.error('Error:' + e.message);
-    }
-}
-function DeleteUserByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
