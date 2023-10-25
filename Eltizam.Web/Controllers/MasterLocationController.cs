@@ -38,8 +38,8 @@ namespace EltizamValuation.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;                    
-                      //var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterLocationEntity>>>(jsonResponse);
-                     var data = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
+                    //  var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterLocationEntity>>>(jsonResponse);
+                     var data = JsonConvert.DeserializeObject<MasterLocationList>(jsonResponse);
                     //MasterLocationList oLocationListRoot =data;
                     oLocationList = data.data;
                     ViewData["locationList"] = oLocationList;

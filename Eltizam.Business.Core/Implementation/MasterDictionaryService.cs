@@ -28,6 +28,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
         private IRepository<MasterDictionary> _repository { get; set; }
+         private IRepository<MasterDictionaryDetail> _repositoryDetail { get; set; }
         private readonly IHelper _helper;
         public MasterDictionaryService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
                                  IHelper helper,
@@ -37,6 +38,7 @@ namespace Eltizam.Business.Core.Implementation
             _mapperFactory = mapperFactory;
 
             _repository = _unitOfWork.GetRepository<MasterDictionary>();
+            _repositoryDetail = _unitOfWork.GetRepository<MasterDictionaryDetail>();
             configuration = _configuration;
             _helper = helper;
         }
@@ -86,7 +88,7 @@ namespace Eltizam.Business.Core.Implementation
         {
             try
             {
-                var masterDictionary = await _repository.GetAsync(id);
+                var masterDictionary = await _repositoryDetail.GetAsync(id);
                 if (masterDictionary == null)
                 {
                     // Log that the data with the specified ID was not found.
@@ -94,7 +96,7 @@ namespace Eltizam.Business.Core.Implementation
                     return null;
                 }
 
-                var _DictionaryEntity = _mapperFactory.Get<MasterDictionary, MasterDictionaryDetailById>(masterDictionary);
+                var _DictionaryEntity = _mapperFactory.Get<MasterDictionaryDetail, MasterDictionaryDetailById>(masterDictionary);
                 return _DictionaryEntity;
             }
             catch (Exception ex)
@@ -108,11 +110,11 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> AddUpdateMasterDictionary(MasterDictionaryDetailById entitydictionary)
         {
 
-            MasterDictionary objDicitonary;
+            MasterDictionaryDetail objDicitonary;
 
             if (entitydictionary.Id > 0)
             {
-                objDicitonary = _repository.Get(entitydictionary.Id);
+                objDicitonary = _repositoryDetail.Get(entitydictionary.Id);
                 var OldObjLocation = objDicitonary;
                 if (objDicitonary != null)
                 {
@@ -120,12 +122,12 @@ namespace Eltizam.Business.Core.Implementation
                     objDicitonary.Description = entitydictionary.Description;
                     objDicitonary.Sort = entitydictionary.Sort;
                     objDicitonary.IsActive = entitydictionary.IsActive;
-                    
+
                     //objLocation.LocationName = entityLocation.LocationName;
                     //objLocation.ModifiedDate = DateTime.Now;
                     //objLocation.ModifiedBy = entityLocation.CreatedBy;
 
-                    _repository.UpdateAsync(objDicitonary);
+                    _repositoryDetail.UpdateAsync(objDicitonary);
                 }
                 else
                 {
@@ -134,7 +136,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
-                objDicitonary = _mapperFactory.Get<MasterDictionaryDetailById, MasterDictionary>(entitydictionary);
+                objDicitonary = _mapperFactory.Get<MasterDictionaryDetailById, MasterDictionaryDetail>(entitydictionary);
                 objDicitonary.Description = entitydictionary.Description;
               //  objDicitonary.DictionaryId = entitydictionary.DictionaryId;
                // objDicitonary.Sort = entitydictionary.Sort;
@@ -149,7 +151,7 @@ namespace Eltizam.Business.Core.Implementation
                 //objLocation.CreatedBy = entityLocation.CreatedBy;
                 //objLocation.ModifiedDate = DateTime.Now;
                 //objLocation.ModifiedBy = entityLocation.CreatedBy;
-                _repository.AddAsync(objDicitonary);
+                _repositoryDetail.AddAsync(objDicitonary);
             }
             await _unitOfWork.SaveChangesAsync();
             if (objDicitonary.Id == 0)
@@ -159,12 +161,12 @@ namespace Eltizam.Business.Core.Implementation
         }
         public async Task<DBOperation> Delete(int id)
         {
-            var entityDictionary = _repository.Get(x => x.Id == id);
+            var entityDictionary = _repositoryDetail.Get(x => x.Id == id);
 
             if (entityDictionary == null)
                 return DBOperation.NotFound;
 
-            _repository.Remove(entityDictionary);
+            _repositoryDetail.Remove(entityDictionary);
 
             await _unitOfWork.SaveChangesAsync();
 

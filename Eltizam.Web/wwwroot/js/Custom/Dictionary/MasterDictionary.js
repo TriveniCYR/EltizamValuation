@@ -3,32 +3,7 @@ $(document).ready(function () {
     InitializeDictionaryList();
 });
 
-function ConfirmationDeleteDictionary(id) {
-    $('#DeleteDictionaryModel #Id').val(id);
-}
-function DeleteDictionary() {
-    var tempInAtiveID = $('#DeleteDictionaryModel #Id').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteDictionary + "/" + tempInAtiveID, 'POST', DeleteClientByIdSuccess, DeleteClientByIdError);
-}
-function DeleteClientByIdSuccess(data) {
-    try {
-        if (data._Success === true) {
-            toastr.success(RecordDelete);
-            $('#' + tableId).DataTable().draw();
-        }
-        else {
-            toastr.error(data._Message);
-        }
-    } catch (e) {
-        toastr.error('Error:' + e.message);
-    }
-}
-function DeleteClientByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
-
 function InitializeDictionaryList() {
-    debugger
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
         "url": $('#hdnBaseURL').val() + AllDictionary,
@@ -67,8 +42,8 @@ function InitializeDictionaryList() {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                 html += '<li><a title="View" href="/Dictionary/DictionaryAllManage?id=' + row.id + '&description=' + row.description +'"><img src="../assets/view.svg" alt="view" />View</a></li>';
-                html += '<li><a title="Edit" href=""><img src="../assets/edit.svg" alt="edit" id="editRole" />Edit</a></li>';
-                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteDictionaryModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteDictionary(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+             //   html += '<li><a title="Edit" href=""><img src="../assets/edit.svg" alt="edit" id="editRole" />Edit</a></li>';
+               // html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteDictionaryModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteDictionary(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                 html += '</ul></div>';
                 return html;
             }
@@ -77,5 +52,40 @@ function InitializeDictionaryList() {
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
 }
+function CleareRoleFields() {
+    $('#DeleteLocationModel #ID').val("0");
+}
+function ConfirmationDeleteDictionary(id) {
+    $('#DeleteDictionaryChildModel #ID').val(id);
+}
+function DeleteRole() {
+    var tempInAtiveID = $('#DeleteDictionaryChildModel #ID').val();  
+    var url = DeleteDictionaryById + "/" + tempInAtiveID;
+    ajaxServiceMethod($('#hdnBaseURL').val() + url, 'POST', DeleteRoleByIdSuccess);
+}
+function DeleteRoleByIdSuccess(data) {
+    try {
+        if (data._Success === true) {
+
+            CleareRoleFields();
+            toastr.success(RecordDelete);
+            location.reload(true);
+
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+    function DeleteRoleByIdError(x, y, z) {
+        if (x.get)
+            toastr.error(ErrorMessage);
+        location.reload(true);
+    }
+}
+
 
 //#endregion
+
+
