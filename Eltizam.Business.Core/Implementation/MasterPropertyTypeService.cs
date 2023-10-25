@@ -110,8 +110,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> AddUpdateMasterPropertyType(Master_PropertyTypeModel masterproperty)
         {
             // Create a Master_PropertyType object.
-            MasterPropertyType type;
-            MasterPropertySubType propertySubType;
+            MasterPropertyType type; 
+            
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (masterproperty.Id > 0)
             {
@@ -152,46 +152,47 @@ namespace Eltizam.Business.Core.Implementation
 
             // Return an appropriate operation result.
             if (type.Id == 0)
-                return DBOperation.Error;
-
+                return DBOperation.Error; 
             else
             {
-                if (masterproperty.MasterPropertySubTypes != null)
-                {
-                    var subTypes = masterproperty.MasterPropertySubTypes;
+                await _repository.GetBySP(ProcedureMetastore.usp_PropertyType_UpsertSubTypes);
 
-                    foreach (var subType in subTypes)
-                    { 
-                        if (subType.Id > 0)
-                        {
-                            propertySubType = _subrepository.Get(subType.Id);
-                            if (propertySubType != null)
-                            {
-                                var entitySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
-                                propertySubType.PropertySubType = entitySubType.PropertySubType;
+                //if (masterproperty.MasterPropertySubTypes != null)
+                //{
+                //    var subTypes = masterproperty.MasterPropertySubTypes;
+
+                //    foreach (var subType in subTypes)
+                //    { 
+                //        if (subType.Id > 0)
+                //        {
+                //            propertySubType = _subrepository.Get(subType.Id);
+                //            if (propertySubType != null)
+                //            {
+                //                var entitySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
+                //                propertySubType.PropertySubType = entitySubType.PropertySubType;
 
 
-                                propertySubType.IsActive = entitySubType.IsActive;
-                                propertySubType.ModifiedBy = entitySubType.CreatedBy;
-                                propertySubType.ModifiedDate = DateTime.Now;
-                                _subrepository.UpdateAsync(propertySubType);
-                            }
-                        }
-                        else
-                        {
-                            propertySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
-                            propertySubType.PropertySubType = Convert.ToString(subType.PropertySubType); 
-                            propertySubType.PropertyTypeId = type.Id;
-                            propertySubType.IsActive = masterproperty.IsActive;
-                            propertySubType.CreatedBy = masterproperty.CreatedBy;
-                            propertySubType.CreatedDate = DateTime.Now;
-                            propertySubType.ModifiedBy = masterproperty.CreatedBy;
-                            propertySubType.ModifiedDate = DateTime.Now;
-                            _subrepository.AddAsync(propertySubType);
-                        }
-                        await _unitOfWork.SaveChangesAsync();
-                    }
-                }
+                //                propertySubType.IsActive = entitySubType.IsActive;
+                //                propertySubType.ModifiedBy = entitySubType.CreatedBy;
+                //                propertySubType.ModifiedDate = DateTime.Now;
+                //                _subrepository.UpdateAsync(propertySubType);
+                //            }
+                //        }
+                //        else
+                //        {
+                //            propertySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
+                //            propertySubType.PropertySubType = Convert.ToString(subType.PropertySubType); 
+                //            propertySubType.PropertyTypeId = type.Id;
+                //            propertySubType.IsActive = masterproperty.IsActive;
+                //            propertySubType.CreatedBy = masterproperty.CreatedBy;
+                //            propertySubType.CreatedDate = DateTime.Now;
+                //            propertySubType.ModifiedBy = masterproperty.CreatedBy;
+                //            propertySubType.ModifiedDate = DateTime.Now;
+                //            _subrepository.AddAsync(propertySubType);
+                //        }
+                //        await _unitOfWork.SaveChangesAsync();
+                //    }
+                //}
             }
             return DBOperation.Success;
         }
