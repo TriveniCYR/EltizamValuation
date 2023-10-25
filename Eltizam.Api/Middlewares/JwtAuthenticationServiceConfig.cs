@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace Eltizam.Api.Middlewares
 {
