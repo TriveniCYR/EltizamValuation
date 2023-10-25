@@ -1,17 +1,13 @@
 ﻿using Eltizam.Business.Models;
 using Eltizam.Resource;
-using Eltizam.Utility.Enums;
-using Eltizam.Utility.Models;
-using Eltizam.Utility.Utility;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
-using System.Data;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterValuationFeesController : Controller
+    public class MasterValuationFeeController : Controller
     {
 
         #region Properties
@@ -22,7 +18,7 @@ namespace EltizamValuation.Web.Controllers
 
         #endregion Properties
 
-        public MasterValuationFeesController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
+        public MasterValuationFeeController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
         {
             _cofiguration = configuration;
             _stringLocalizerShared = stringLocalizerShared;
@@ -33,22 +29,7 @@ namespace EltizamValuation.Web.Controllers
         {
             ModelState.Clear();
             try
-            {
-                //int rolId = _helper.GetLoggedInRoleId();
-                //RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
-                //ViewBag._objPermission = objPermssion;
-                //HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                //APIRepository objapi = new APIRepository(_cofiguration);
-                //List<MasterValuationFeesModel> oRoleList = new List<MasterValuationFeesModel>();
-                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllValuation, HttpMethod.Post, token).Result;
-                //if (responseMessage.IsSuccessStatusCode)
-                //{
-                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                //    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterValuationFeesModel>>>(jsonResponse);
-                //    oRoleList = data._object;
-
-                //    return View(oRoleList);
-                //}
+            { 
                 return View();
             }
             catch (Exception e)
@@ -56,15 +37,13 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 return View("Login");
-            }
-            return View();
-        }
-
+            } 
+        } 
 
 
         [HttpPost]
-        [Route("MasterValuationFees/ValuationFeesManage")]
-        public IActionResult ValuationFeesManage(int id, MasterValuationFeesModel masterValuationFeesModel)
+        [Route("MasterValuationFee/ValuationFeeManage")]
+        public IActionResult MasterValuationFee(int id, MasterValuationFeesModel masterValuationFeesModel)
         {
             try
             {
@@ -95,7 +74,7 @@ namespace EltizamValuation.Web.Controllers
         }
 
 
-        public IActionResult ValuationFeesManage(int? id, string view)
+        public IActionResult ValuationFeeManage(int? id, string view)
         {
             if (id != null)
             {
@@ -132,14 +111,14 @@ namespace EltizamValuation.Web.Controllers
         }
 
 		[HttpGet]
-		[Route("MasterValuationFees/ValuationFeesDetail")]
+		[Route("MasterValuationFee/ValuationFeeDetail")]
 		public IActionResult ValuationFeesDetail(int? id)
 		{
 			MasterValuationFeesModel masterValuationFeesModel;
 			if (id == null || id <= 0)
 			{
 				masterValuationFeesModel = new MasterValuationFeesModel();
-				return RedirectToAction("MasterValuationFees");
+				return RedirectToAction("MasterValuationFee");
 			}
 			else
 			{

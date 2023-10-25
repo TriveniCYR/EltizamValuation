@@ -1,5 +1,5 @@
 ﻿var tableId = "PropertyTypeTable";
-$(document).ready(function () { 
+$(document).ready(function () {
     InitializePropertyTypeDataList();
 });
 
@@ -54,9 +54,9 @@ function ConfirmationDeletePropertyType(id) {
 }
 function DeletePropertyType() {
     var tid = $('#DeletePropertyTypeModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteByIdUrl + "/" + tid, Delete, DeleteByIdSuccess, DeleteByIdError);
+    ajaxServiceMethod(BaseURL + DeleteByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
 }
-function DeleteByIdSuccess(data) {
+function DeleteUserByIdSuccess(data) {
     try {
         if (data._Success === true) {
             toastr.success(RecordDelete);
@@ -69,7 +69,6 @@ function DeleteByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
-
-function DeleteByIdError(x, y, z) {
+function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
