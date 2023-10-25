@@ -117,8 +117,8 @@
     </div>
 </div>
 
-@section MyScripts {
-
+@section MyScripts 
+{
     @Html.Partial("_DataTablePartial")
 
     <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
@@ -131,8 +131,6 @@
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-        var StatusMessage = '@TempData["StatusMessage"]';
-
-    </script>
-
+        var StatusMessage = '@TempData["StatusMessage"]'; 
+    </script> 
 }
