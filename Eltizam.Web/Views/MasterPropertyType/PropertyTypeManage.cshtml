@@ -90,7 +90,7 @@
                        
 
                     </div>
-                    <button type="button" id="addSubTypeButton" class="btn btn-secondary">Add Property SubType</button>
+                   @*  <button type="button" id="addSubTypeButton" class="btn btn-secondary">Add Property SubType</button> *@
                     <div class="text-right buttonArea bodyContent plr-0">
                         <button type="button" id="btnSaveRole" onclick="alertMsg()" class="bgBlue mr-12">Save</button>
                         <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">@SharedLocalizer["Cancel"]</a>
@@ -198,7 +198,7 @@
                         // for (var i = 0; i < response._object.length; i++) {
                         //     PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
                         // }
-                $("#loader").hide();
+                    window.location.href = "/MasterPropertyType/PropertyTypes";
                     },
                     failure: function (response) {
                         alert(response.responseText);

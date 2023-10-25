@@ -17,7 +17,7 @@ namespace Eltizam.Business.Models
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
-       // public string? SubTypes { get; set; }
+        public string? SubTypes { get; set; }
         [IgnoreMap]
         public List<Master_PropertySubTypeModel> MasterPropertySubTypes { get; set; }
     }
