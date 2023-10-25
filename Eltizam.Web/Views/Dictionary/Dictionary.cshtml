@@ -12,6 +12,8 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
 <!-- system user master -->
+<div id="PlaceHolderHere"></div>
+<main>
 <div class="flex">
     <div class="w-100 position-relative">
         <main class="w-100">
@@ -29,7 +31,7 @@
                 </div> *@
             </div>
             <div class="scroll-x whiteWithPadding">
-                <table id="DictionaryTable">
+                    <table id="DictionaryTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Id <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
@@ -44,11 +46,6 @@
                 </table>
             </div>
         </main>
-        <footer class="flex justify-between">
-            <p>2023 © Eltizam.</p>
-            <p>Design & Develop by NeoSoft</p>
-        </footer>
-
         <!-- popup delete model -->
         <div class="popup-overlay" id="popup-delete-overlay">
             <div class="popup">
@@ -96,8 +93,8 @@
 
     </div>
 </div>
-
-<div id="DeleteDictionaryModel" class="modal themeModal " role="dialog">
+</main>
+<div id="DeleteDictionaryModel1" class="modal themeModal " role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -116,7 +113,7 @@
                 @Html.Hidden("Id")
                 <div class="buttonArea popup-btn">
                     <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
-                    <button type="button" onclick="DeleteDictionary()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                    <button type="button" onclick="DeleteDictionary1()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
                 </div>
             </div>
         </div>
@@ -196,30 +193,32 @@
     </div>
 </div>
 
-<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+@* <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
 <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
 <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-<script src="~/js/custom/location/locationmaster.js"></script>
+<script src="~/js/custom/location/locationmaster.js"></script> *@
 
 @section MyScripts {
 
     @Html.Partial("_DataTablePartial")
     <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/custom/dictionary/masterdictionary.js?v=@jsVersion"></script>
+
+
     <script>
         //#region Setup API Url
         var AllDictionary = "@Eltizam.Web.Helpers.APIURLHelper.GetAllDictionary";
-        var DeleteDictionary = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDictionary";
+      
 
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
+        // function sideNavToggle() {
+        //     var x = document.getElementById("sideNav");
+        //     if (x.style.display === "none") {
+        //         x.style.display = "block";
+        //     } else {
+        //         x.style.display = "none";
+        //     }
+        // }
 
 
         // function addClient() {

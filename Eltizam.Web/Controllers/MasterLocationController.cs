@@ -28,31 +28,31 @@ namespace EltizamValuation.Web.Controllers
 
         public IActionResult Locations()
         {
-            //ModelState.Clear();
-            //try
-            //{
-            //    HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-            //    APIRepository objapi = new APIRepository(_cofiguration);
-            //    List<MasterLocationEntity> oLocationList = new List<MasterLocationEntity>();
-            //    HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllLocations, HttpMethod.Post, token).Result;
-            //    if (responseMessage.IsSuccessStatusCode)
-            //    {
-            //        string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;                    
-            //          //var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterLocationEntity>>>(jsonResponse);
-            //         var data = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
-            //        //MasterLocationList oLocationListRoot =data;
-            //        oLocationList = data.data;
-            //        ViewData["locationList"] = oLocationList;
-            //        return View();
-            //      //  return View(oLocationListRoot);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    _helper.LogExceptions(e);
-            //    ViewBag.errormessage = Convert.ToString(e.StackTrace);
-            //    return View("Login");
-            //}
+            ModelState.Clear();
+            try
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new APIRepository(_cofiguration);
+                List<MasterLocationEntity> oLocationList = new List<MasterLocationEntity>();
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllLocations, HttpMethod.Post, token).Result;
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;                    
+                    //  var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterLocationEntity>>>(jsonResponse);
+                     var data = JsonConvert.DeserializeObject<MasterLocationList>(jsonResponse);
+                    //MasterLocationList oLocationListRoot =data;
+                    oLocationList = data.data;
+                    ViewData["locationList"] = oLocationList;
+                    return View();
+                  //  return View(oLocationListRoot);
+                }
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                ViewBag.errormessage = Convert.ToString(e.StackTrace);
+                return View("Login");
+            }
             return View();
         }
 

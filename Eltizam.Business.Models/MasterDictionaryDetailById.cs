@@ -28,6 +28,7 @@ namespace Eltizam.Business.Models
         public int ChildId { get; set; }
         // public int Type { get; set; }
         public string? Description { get; set; }
+        public string? ParentDescription { get; set; }
         public string? ChildDescription { get; set; }
         public int? Sort { get; set; }
         public int? IsActive { get; set; }
