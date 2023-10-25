@@ -46,30 +46,37 @@ namespace Eltizam.Business.Core.Implementation
         // get all recoreds from Location list with sorting and pagination
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            var _dbParams = new[]
-             {
-               //  new DbParameter("Id", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "LocationName", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
+            string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
+            string SortDir = model.order[0]?.dir;
 
-            int _count = 0;
-            var lstStf = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterLocationEntity>(ProcedureMetastore.usp_Location_SearchAllList,
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
+            };
 
-             DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams); 
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Location_SearchAllList, CommandType.StoredProcedure, osqlParameter);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf); 
-            return oDataTableResponseModel;
-            }
-            public async Task<MasterLocationEntity> GetById(int id)
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(Results);
+
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterLocationEntity>());
+
+            return oDataTableResponseModel; 
+        }
+
+
+        public async Task<MasterLocationEntity> GetById(int id)
         {
             var _LocationEntity = new MasterLocationEntity();
             _LocationEntity = _mapperFactory.Get<MasterLocation, MasterLocationEntity>(await _repository.GetAsync(id));
 
             return _LocationEntity;
         }
+
         public async Task<DBOperation> AddUpdateLocationClient(MasterLocationEntity entityLocation)
         {
 
@@ -81,7 +88,7 @@ namespace Eltizam.Business.Core.Implementation
                 var OldObjLocation = objLocation;
                 if (objLocation != null)
                 {
-                 //   objLocation.LocationName = entityLocation.LocationName;
+                    //   objLocation.LocationName = entityLocation.LocationName;
                     objLocation.CountryId = entityLocation.CountryId;
                     objLocation.StateId = entityLocation.StateId;
                     objLocation.CityId = entityLocation.CityId;
@@ -92,7 +99,7 @@ namespace Eltizam.Business.Core.Implementation
                     objLocation.LocationName = entityLocation.LocationName;
                     objLocation.ModifiedDate = DateTime.Now;
                     objLocation.ModifiedBy = entityLocation.CreatedBy;
-                  
+
                     _repository.UpdateAsync(objLocation);
                 }
                 else
