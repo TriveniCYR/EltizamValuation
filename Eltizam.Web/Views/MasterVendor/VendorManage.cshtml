@@ -45,11 +45,24 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="flex">
                                         <label for="VendorName">
                                             Vendor Name
                                             @Html.TextBoxFor(model => model.VendorName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Vendor Name"] })
                                         
+                                        </label>                                        
+                                        <label for="Status" class="w-50">
+                                            Status
+                                            @{
+                                                bool isActive = Model.Status == 1; // Convert 1 to true, any other value to false
+                                            }
+                                            <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />                                
+                                            <label class="label-switch" for="Status"></label>
+                                            <span class="info-text"></span>
                                         </label>
+                                    </div>
+                                    <div class="flex">
                                         <label for="CompanyName">
                                             Company Name
                                             @Html.TextBoxFor(model => model.CompanyName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Company Name"] })
@@ -67,17 +80,6 @@
                                         <label for="CompanyDescription">
                                             Company Description
                                             @Html.TextBoxFor(model => model.CompanyDescription, new {@class = "form-control",  @placeholder = @SharedLocalizer["Company Description"] })
-                                        </label>
-                                    </div>
-                                    <div class="flex">
-                                        <label for="Status" class="w-50">
-                                            Status
-                                            @{
-                                                bool isActive = Model.Status == 1; // Convert 1 to true, any other value to false
-                                            }
-                                            <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />                                
-                                            <label class="label-switch" for="Status"></label>
-                                            <span class="info-text"></span>
                                         </label>
                                     </div>
                                 </div>

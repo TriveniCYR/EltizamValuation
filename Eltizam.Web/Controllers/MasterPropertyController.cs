@@ -118,7 +118,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
                 masterProperty = new MasterPropertyModel();
-                return RedirectToAction("MasterProperty");
+                return RedirectToAction("Properties");
             }
             else
             {

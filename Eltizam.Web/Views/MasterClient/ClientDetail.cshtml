@@ -13,25 +13,13 @@
 <div class="flex">
     <div class="w-100 position-relative">
         <main class="plr-0">
-            <div class="profileHead flex justify-between align-item-center cursor-pointer">
-                @if (Model.Id > 0)
-                {
-                    <h3 class="dashboardTitle">EDIT CLIENT MASTER</h3>
-                    <div class="hamburger">
-                        <span onclick="clientMaster()">Client Master</span>
-                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                        <span>Edit Client Master</span>
-                    </div>
-                }
-                else
-                {
-                    <h3 class="dashboardTitle">ADD CLIENT MASTER</h3>
-                    <div class="hamburger">
-                        <span onclick="clientMaster()">Client Master</span>
-                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                        <span>Add Client Master</span>
-                    </div>
-                }
+            <div class="profileHead flex justify-between align-item-center cursor-pointer">                
+                <h3 class="dashboardTitle">VIEW CLIENT MASTER</h3>
+                <div class="hamburger">
+                    <span onclick="clientMaster()">Client Master</span>
+                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                    <span>View Client Master</span>
+                </div>
             </div>
             <div class="flex">
                 <div class="profileTabSection addProperty">
@@ -55,6 +43,8 @@
                                                 <img src="../assets/client1.png" alt="img-7" />
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="flex">
                                         <label for="ClientTypeId">
                                             Client Type
                                             @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem>(),  new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Client Type"] })
@@ -64,19 +54,27 @@
                                             First Name
                                             @Html.TextBoxFor(model => model.FirstName, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
                                         </label>
+                                    </div>
+                                    <div class="flex">
                                         <label for="MiddleName">
                                             Middle Name
                                             @Html.TextBoxFor(model => model.MiddleName, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
                                         </label>
+                                        <label for="LastName">
+                                            Last Name
+                                            @Html.TextBoxFor(model => model.LastName, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        </label>
                                     </div>
                                     <div class="flex">
-                                        <label for="LastName">
-                                            Middle Name
-                                            @Html.TextBoxFor(model => model.LastName, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
-                                        </label
                                         <label for="Trnnumber">
                                             TRN Number
                                             @Html.TextBoxFor(model => model.Trnnumber, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["TRN Number"] })
+                                        </label>
+                                        <label for="IsActive" class="w-50">
+                                            Status
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive" disabled />
+                                            <label class="label-switch" for="IsActive"></label>
+                                            <span class="info-text"></span>
                                         </label>
                                     </div>
                                     <div class="flex">
@@ -88,14 +86,6 @@
                                             License Number
                                             @Html.TextBoxFor(model => model.LicenseNumber, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["License Number"] })
 
-                                        </label>
-                                    </div>
-                                    <div class="flex">
-                                        <label for="IsActive" class="w-50">
-                                            Status
-                                            <input class='input-switch' type="checkbox" asp-for="IsActive" disabled/>
-                                            <label class="label-switch" for="IsActive"></label>
-                                            <span class="info-text"></span>
                                         </label>
                                     </div>
                                 </div>

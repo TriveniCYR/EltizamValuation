@@ -107,7 +107,7 @@ namespace EltizamValuation.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Client/ClientDetail")]
+        [Route("MasterClient/ClientDetail")]
         public IActionResult ClientDetail(int? id)
         {
             MasterClientModel masterUser;
