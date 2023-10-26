@@ -24,17 +24,16 @@
 
 
   <!-- system user master -->
-
-    <form asp-action="LocationManage">
+  <form asp-action="LocationManage">
     <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative">
-                <h3 class="dashboardTitle">@PageHeading</h3>             
-            </div>           
-                <div class="bodyContent">                
+                <h3 class="dashboardTitle">@PageHeading</h3>
+            </div>
+                <div class="bodyContent">
                     <div class="inputSearchs">
                     <div class="tabSection">
-                 
+
                         <input type="hidden" id="hdnCountry" value="@(Model.CountryId == null ? 0 : Model.CountryId)" />
                         <input type="hidden" id="hdnState" value="@(Model.StateId == null ? 0 : Model.StateId)" />
                         <input type="hidden" id="hdnCity" value="@(Model.CityId == null ? 0 : Model.CityId)" />
@@ -48,65 +47,65 @@
                                 htmlAttributes.Add("disabled", "disabled");
                             }
                         }
-                        <div class="flex threeBox">
-                            <label for="LocationName">
-                                Location Name                                 
+                        <div class="flex">
+                            <label for="LocationName" class="w-50">
+                                Location Name
                                 @Html.TextBoxFor(model => model.LocationName, htmlAttributes)
                             </label>
-                            <label for="CountryId">
+                            <label for="CountryId" class="w-50">
                                 Country Name
                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem>(), htmlAttributes)
                             </label>
-                            
+
                         </div>
-                        <div class="flex threeBox">
-                            <label for="StateId">
+                        <div class="flex">
+                            <label for="StateId" class="w-50">
                                 State Name
                                 @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, htmlAttributes)
                             </label>
-                            <label for="CityId">
+                            <label for="CityId" class="w-50">
                                 City / Emirates
                                 @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, htmlAttributes)
                             </label>
                         </div>
-                        <div class="flex threeBox">
+                        <div class="flex">
 
-                            
-                                             
-                            <label for="resourceType">
+
+
+                            <label for="resourceType" class="w-50">
                                 Sector / Zone
                                 @Html.TextBoxFor(model => model.Sector, htmlAttributes)
                             </label>
 
-                            <label for="Geo-coordinates">
+                            <label for="Geo-coordinates" class="w-50">
                                 Latitude
                                 @Html.TextBoxFor(model => model.Latitude, htmlAttributes)
 
                             </label>
                         </div>
-                        <div class="flex threeBox">
-                            <label for="">
+                        <div class="flex">
+                            <label for="" class="w-50">
                                 Longitude
                                 @Html.TextBoxFor(model => model.Longitude, htmlAttributes)
                             </label>
-                            <label for="Geo-coordinates">
+                            <label for="Geo-coordinates" class="w-50">
                                 Home Currency
                                 @Html.TextBoxFor(model => model.HomeCurrencyId, htmlAttributes)
                             </label>
-                            
+
                         </div>
                         <div class="flex">
-                            <label for="Geo-coordinates">
+                            <label for="Geo-coordinates" class="w-50">
                                 Foreign Currency
                                 @Html.TextBoxFor(model => model.ForeignCurrencyId, htmlAttributes)
                             </label>
-                        <label for="" class="">
+                            <label for="" class="w-50">
                                 Status
                                 @{
                                     bool isActive = Model.Status == 1; // Convert 1 to true, any other value to false
                                 }
 
-                                <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />                               
+                                <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />
                                 <label class="label-switch" for="addLocation"></label>
                                 <span class="info-text"></span>
                                 </label>
@@ -116,15 +115,15 @@
                             {
                                 <button type="submit" class="lineBtn" id="resetLocation">Reset</button>
                                 <button type="submit" class="bgBlue">Submit</button>
-                               
+
                             }
-              
+
                     </div>
                     </div>
                 </div>
                 </div>
-           
-           
+
+
         </div>
     </main>
     </form>
