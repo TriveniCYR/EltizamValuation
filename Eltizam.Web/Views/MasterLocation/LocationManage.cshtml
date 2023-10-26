@@ -57,17 +57,21 @@
                                 Country Name
                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem>(), htmlAttributes)
                             </label>
+                            
+                        </div>
+                        <div class="flex threeBox">
                             <label for="StateId">
                                 State Name
                                 @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, htmlAttributes)
                             </label>
-                        </div>
-                        <div class="flex threeBox">
-
                             <label for="CityId">
                                 City / Emirates
                                 @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, htmlAttributes)
                             </label>
+                        </div>
+                        <div class="flex threeBox">
+
+                            
                                              
                             <label for="resourceType">
                                 Sector / Zone
@@ -89,12 +93,13 @@
                                 Home Currency
                                 @Html.TextBoxFor(model => model.HomeCurrencyId, htmlAttributes)
                             </label>
+                            
+                        </div>
+                        <div class="flex">
                             <label for="Geo-coordinates">
                                 Foreign Currency
                                 @Html.TextBoxFor(model => model.ForeignCurrencyId, htmlAttributes)
                             </label>
-                        </div>
-                        <div class="flex">
                         <label for="" class="">
                                 Status
                                 @{
