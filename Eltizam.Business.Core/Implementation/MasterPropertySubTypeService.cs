@@ -72,7 +72,7 @@ namespace Eltizam.Business.Core.Implementation
             // Create a new Master_PropertyTypeModel instance.
             var _SubTypes = new List<Master_PropertySubTypeModel>();
 
-            var res = _repository.GetAllAsync(x => x.PropertyTypeId == PropertyTypeId).Result.ToList();
+            var res = _repository.GetAllAsync(x => x.PropertyTypeId == PropertyTypeId && x.IsActive == true).Result.ToList();
 
             // Use a mapper to map the data from the repository to the model asynchronously.
             _SubTypes = _mapperFactory.GetList<MasterPropertySubType, Master_PropertySubTypeModel>(res);
