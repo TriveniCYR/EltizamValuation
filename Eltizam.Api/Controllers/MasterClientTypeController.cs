@@ -103,7 +103,8 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpGet("GetClientTypeList")]
+        [HttpGet]
+        [Route("GetClientTypeList")]
         public async Task<IActionResult> GetClientTypeList()
         {
             try

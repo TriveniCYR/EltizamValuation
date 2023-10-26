@@ -1783,3 +1783,19 @@ div.dataTables_wrapper div.dataTables_filter {
 .text-danger span {
     color: #dc3545 !important;
 }
+
+.accordianDetails {
+    background-color: #EBF5FF;
+    padding: 10px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.panel {
+    margin-top: 20px;
+}
+
+.accordianDetails img {
+    transform: rotate(90deg);
+}
