@@ -188,13 +188,79 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+        public IActionResult DictionaryDetailsManage(int id,int? status,string? pdesc)
+        {
+            ModelState.Clear();
+            //id = 3; description = "ValuationType";
+            MasterDictionaryDetailById masterdictionary;
+            if (id > 0 && status==1)
+            {                
+                masterdictionary = new MasterDictionaryDetailById();
+                masterdictionary.DictionaryId = id;
+                masterdictionary.ParentDescription = pdesc;
+                return View(masterdictionary);
+            }
+            else
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                
+                APIRepository objapi = new(_cofiguration);
+                string urlHelper = string.Empty;
+                urlHelper = APIURLHelper.GetDictionaryById + "/" + id; 
+                HttpResponseMessage responseMessage = objapi.APICommunication(urlHelper, HttpMethod.Get, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+               
+                        var data = JsonConvert.DeserializeObject<MasterDictionaryDetailById>(jsonResponse);
+                   
+                        if (data is null)
+                            return NotFound();
+                        //   ModelState.Clear();
+                        data.ParentDescription= pdesc;
+                        return View(data);
+                    
+                }
+                // return NotFound();
+                return View();
+            }
+
+        }
+        public IActionResult DictionaryDetailsView(int id)
+        {
+            MasterDictionaryDetailById model = new MasterDictionaryDetailById();
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                ViewData["ParentId"] = id;
+                APIRepository objapi = new(_cofiguration);
+                string urlHelper = string.Empty;
+                urlHelper = APIURLHelper.GetDictionaryById + "/" + id;
+                HttpResponseMessage responseMessage = objapi.APICommunication(urlHelper, HttpMethod.Get, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+
+                    var data = JsonConvert.DeserializeObject<MasterDictionaryDetailById>(jsonResponse);
+
+                    if (data is null)
+                        return NotFound();
+                    //   ModelState.Clear();
+                    return View(data);
+
+                }
+                // return NotFound();
+                return View(model);
+         
+
+        }
         [HttpPost]
-        public IActionResult DictionaryAllManage(int? Id, MasterDictionaryDetailById masterdictionary)
+        public IActionResult DictionaryDetailsManage(int? Id, MasterDictionaryDetailById masterdictionary)
         {
             try
             {
 
-               // masterdictionary.DictionaryId = Id;
+               // masterdictionary.DictionaryId = 3;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
@@ -206,7 +272,7 @@ namespace EltizamValuation.Web.Controllers
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
                     //return RedirectToAction(nameof(DictionaryAllManage));
-                    return RedirectToAction("DictionaryAllManage", new { id = masterdictionary.DictionaryId,description=masterdictionary.ParentDescription });
+                    return RedirectToAction("DictionaryAllManage", new { id = masterdictionary.DictionaryId, description = masterdictionary.ParentDescription });
                 }
                 else
                 {
@@ -221,5 +287,39 @@ namespace EltizamValuation.Web.Controllers
                 return RedirectToAction("DictionaryAllManage", new { Id = masterdictionary.DictionaryId });
             }
         }
+        //[HttpPost]
+        //public IActionResult DictionaryAllManage(int? Id, MasterDictionaryDetailById masterdictionary)
+        //{
+        //    try
+        //    {
+
+        //       // masterdictionary.DictionaryId = Id;
+        //        HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+        //        APIRepository objapi = new(_cofiguration);
+
+        //        HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertDictionary, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterdictionary))).Result;
+
+        //        if (responseMessage.IsSuccessStatusCode)
+        //        {
+        //            string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+        //            TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+
+        //            //return RedirectToAction(nameof(DictionaryAllManage));
+        //            return RedirectToAction("DictionaryAllManage", new { id = masterdictionary.DictionaryId,description=masterdictionary.ParentDescription });
+        //        }
+        //        else
+        //        {
+        //            TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+        //            return RedirectToAction("DictionaryAllManage", new { id = masterdictionary.DictionaryId });
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _helper.LogExceptions(e);
+        //        TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+        //        return RedirectToAction("DictionaryAllManage", new { Id = masterdictionary.DictionaryId });
+        //    }
+        //}
+
     }
 }
