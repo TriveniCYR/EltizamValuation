@@ -22,7 +22,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<Master_Qualification> _repository { get; set; }
         private readonly IHelper _helper;
-        private readonly int _LoginUserId
+        private readonly int _LoginUserId;
         #endregion Properties
 
         #region Constructor
@@ -121,7 +121,7 @@ namespace Eltizam.Business.Core.Implementation
                     objQualification.YearOfInstitute = entityqualification.YearOfInstitute;
                     objQualification.IsActive = entityqualification.IsActive;
                     objQualification.ModifiedDate = AppConstants.DateTime;
-                    objQualification.ModifiedBy = _CreatedUserId;
+                    objQualification.ModifiedBy = _LoginUserId;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objQualification);
@@ -137,8 +137,8 @@ namespace Eltizam.Business.Core.Implementation
                 // Create a new Master_Qualification entity from the model for insertion.
                 objQualification = _mapperFactory.Get<Master_QualificationModel, Master_Qualification>(entityqualification);
                 objQualification.CreatedDate = AppConstants.DateTime;
-                objQualification.CreatedBy = _CreatedUserId;
-                objQualification.ModifiedBy = _CreatedUserId;
+                objQualification.CreatedBy = _LoginUserId;
+                objQualification.ModifiedBy = _LoginUserId;
                 objQualification.ModifiedDate = AppConstants.DateTime;
 
                 // Insert the new entity into the repository asynchronously.
