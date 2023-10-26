@@ -10,12 +10,12 @@
 @model Eltizam.Business.Models.MasterDictionaryDetailById;
 
 @{
-    if(Model!=null){
-        var dictid = Model.DictionaryId;
-        var chld = Model.ChildDescription;
-        var desc = Model.Description;
-        var data = "";
-    }
+    // if(Model!=null){
+    //     var dictid = Model.DictionaryId;
+    //     var chld = Model.ChildDescription;
+    //     var desc = Model.Description;
+    //     var data = "";
+    // }
     var list = new List<Eltizam.Business.Models.MasterDictionaryDetailById>();
     if (ViewData["ChildDictList"] != null)
     {
@@ -26,6 +26,7 @@
 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     int id = 0;
+  
 }
 
 <div id="PlaceHolderHere"></div>
@@ -35,11 +36,24 @@
     <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
         <h3 class="dashboardTitle">CHILD DICTIONARY LIST</h3>
         <div class="buttonArea flex align-item-center">
-            @*  <form asp-action="ClientManage" asp-controller="Client" method="GET"> *@
-            <button class="flex align-item-center blueBtn" id="addRole">
+           @*  <form asp-action="DictionaryDetailsManage" asp-controller="Dictionary" method="GET">
+                <button class="flex align-item-center blueBtn" id="addRole">
                 <img src="../assets/plus.svg"  alt="plus"> Add New
             </button>
-            @*  </form> *@
+             </form> *@
+           
+            @* <form action="/Dictionary/DictionaryDetailsManage?id=@list[0].DictionaryId&status=1" method="GET">
+                <button class="flex align-item-center blueBtn" id="addNew">
+                    <img src="~/assets/plus.svg" alt="plus"> Add New
+                </button>
+            </form> *@
+
+            <a href='/Dictionary/DictionaryDetailsManage?id=@list[0].Id&status=1&pdesc=@list[0].Description'>
+                <button class="flex align-item-center blueBtn" id="addNew">
+                    <img src="~/assets/plus.svg" alt="plus"> Add New
+                </button>
+            </a>
+         
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
     </div>
@@ -75,7 +89,8 @@
                                                         <li class="editLocation">
                                                             <img src="../assets/edit.svg" alt="edit" />
                                                 <button class="flex align-item-center blueBtn" id="editRole">
-                                                     <a title="Edit" asp-action="DictionaryAllManage" asp-route-Id="@item.ChildId"><span>Edit</span></a>
+
+                                                    <a title="Edit" href='/Dictionary/DictionaryDetailsManage?id=@item.ChildId&status=0&pdesc=@item.Description'><span>Edit</span></a>
                                                                 @* <a title="Edit" onclick="GetLocationById(@item.Id);"><span>Edit</span></a> *@
                                                             </button>
                                                             @*  <button class="flex align-item-center blueBtn" id="addRole">
@@ -84,7 +99,7 @@
                                                         </li>
                                                         <li class="viewLocation">
                                                             <img src="../assets/view.svg" alt="view" />
-                                                            <a title="Edit" asp-action="" asp-route-Id="@item.Id" asp-route-Isview=1><span>View</span></a>
+                                                <a title="Edit" asp-action="DictionaryDetailsView" asp-route-Id="@item.ChildId" asp-route-Isview=1><span>View</span></a>
                                                         </li>
 
                                                         <li class="delete">
@@ -105,99 +120,7 @@
 
 </main>
 <!-- popup add location model -->
-<form asp-action="DictionaryAllManage">
-    <div class="popup-overlay w-800Popup" id="popup-addRole-overlay">
-        <div class="popup">
-            <div class="content text-center">
-                <div class="popup-head position-relative">
-                    Add Child Dictionary
-                    <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
-                </div>
-                <div class="popup-action inputSearchs">
 
-                    <div class="flex">                       
-                        <label for="ChildDescription">
-                            Child Description
-                            @Html.TextBoxFor(model => model.Description, new {@class = "form-control"})
-                        </label>
-                        <label for="" class="">
-                            Status
-                            @{
-                                bool isActive = Model != null && Model.IsActive == 1; // Convert 1 to true, any other value to false
-                            }
-
-                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required />
-                            <label class="label-switch" for="addLocation"></label>
-                            <span class="info-text"></span>
-                        </label>
-                     @*    @Html.HiddenFor(model => model.Id, new {@class = "form-control",  @placeholder = @SharedLocalizer["DescriptionId"] }) *@
-                      @*   @Html.HiddenFor(model => model.Id, new { @Value = list[0].Id }) *@
-                       @if (list.Count > 0)
-                        {
-                            <input type="hidden" value="@list[0].Id" id="DictionaryId" asp-for="DictionaryId" />
-                            <input type="hidden" value="@list[0].Description" id="ParentDescription" asp-for="ParentDescription" />
-                        }
-                    </div>
-
-
-                    <div class="buttonArea centerBtn">
-                        <button class="lineBtn" id="resetLocation">Reset</button>
-                         @if (list.Count > 0)
-                        {
-                            var DicId = list[0].Id;
-                            <button type="submit" onclick="msgalert()" class="bgBlue">Submit</button>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-<!-- popup edit model -->
-<form asp-action="DictionaryAllManage" method="post">
-    <div class="popup-overlay w-800Popup" id="popup-editRole-overlay">
-
-    <div class="popup">
-        <div class="content text-center">
-            <div class="popup-head position-relative">
-                Edit Dictionary Child
-                <img src="../assets/x.svg" alt="x" id="closePopup" class="closeEditRolePopup">
-            </div>
-            <div class="popup-action inputSearchs">
-
-                <div class="flex">
-                    <label for="ChildDescription">
-                        Child Description
-                        @Html.TextBoxFor(model => model.Description, new {@class = "form-control"})
-                    </label>
-                    <label for="" class="">
-                        Status
-                        @{
-                            bool isActiveEdit = Model != null && Model.IsActive == 1; // Convert 1 to true, any other value to false
-                        }
-
-                        <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActiveEdit ? "checked" : "") required />
-                        <label class="label-switch" for="addLocation"></label>
-                        <span class="info-text"></span>
-                    </label>
-                    @Html.HiddenFor(model => model.Id, new {@class = "form-control",  @placeholder = @SharedLocalizer["DescriptionId"] })
-
-                </div>
-
-
-                <div class="buttonArea centerBtn">
-                    <button class="lineBtn" id="resetLocation">Reset</button>
-                    @if (list.Count > 0)
-                    {
-                        id = list[0].Id;
-                    }
-                    <button type="submit" asp-route-id=@id class="bgBlue">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</form>
 
 
 @* <form asp-action="DictionaryAllManage" method="post">
@@ -269,7 +192,7 @@
 </div> 
 @section MyScripts {
     <script src="~/js/custom/dictionary/masterdictionary.js?v=@jsVersion"></script>
-<script src="~/js/custom/location/locationmaster.js"></script>
+@* <script src="~/js/custom/location/locationmaster.js"></script> *@
 <script>
 
         var DeleteDictionaryById = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDictionaryById";
