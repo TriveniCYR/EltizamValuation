@@ -80,7 +80,7 @@ namespace Eltizam.Business.Core.Implementation
                 DbParameter[] osqlParameter =
                 {
                      new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
-                     new DbParameter(AppConstants.TableName,  TableName.Master_User, SqlDbType.VarChar),
+                     new DbParameter(AppConstants.TableName,  TableName.Master_Client, SqlDbType.VarChar),
                 };
                 var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterAddressEntity>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                 
@@ -90,7 +90,7 @@ namespace Eltizam.Business.Core.Implementation
                 DbParameter[] osqlParameter2 = 
                 {
                  new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
-                 new DbParameter(AppConstants.TableName, TableName.Master_User, SqlDbType.VarChar),
+                 new DbParameter(AppConstants.TableName, TableName.Master_Client, SqlDbType.VarChar),
                 };
 
                 var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
