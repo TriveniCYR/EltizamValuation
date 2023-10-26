@@ -1,0 +1,207 @@
+﻿ 
+
+$('#ValuationType').change(function () {
+    var general = document.getElementById("general");
+    var fixed = document.getElementById("fixed");
+    var valuationType = document.getElementById('ValuationType').value;
+    //alert("You entered " + valuationType + " for your gender<br>");
+    if (valuationType === "2") {
+        general.style.display = "none";
+        fixed.style.display = "block";
+
+        document.getElementById('ValuationFees').value = null;
+        document.getElementById('Vat').value = null;
+        document.getElementById('OtherCharges').value = null;
+        document.getElementById('TotalValuationFees').value = null;
+
+
+    } else if (valuationType === "1") {
+        fixed.style.display = "none";
+        general.style.display = "block";
+        document.getElementById('FixedvaluationFees').value = null;
+    }
+})
+
+$(document).ready(function () {
+    BindProperty();
+    BindClient();
+    BindOwnership();
+    BindValuationFeeType();
+
+    ///For Dropdown Change
+    var general = document.getElementById("general");
+    var fixed = document.getElementById("fixed");
+    var valuationType = document.getElementById('ValuationType').value;
+    if (valuationType === "2") {
+        general.style.display = "none";
+        fixed.style.display = "block";
+    } else if (valuationType === "1") {
+        fixed.style.display = "none";
+        general.style.display = "block";
+    }
+    /// End For Dropdown Change
+    var HdnId = $('#hdnProperty').val();
+    if (HdnId) {
+        BindPropertySub(HdnId);
+    }
+});
+
+function BindProperty() {
+    //alert("hello");
+    var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllPropertyType";
+    var Property = $("#PropertyTypeId");
+    var _val = $('#hdnProperty').val();
+    var _rpname = "propertyTypeId";
+
+    //BindDropdowns(PropertyList, Property, _rpname, _val);
+    $.ajax({
+        type: "POST",
+        url: $('#hdnBaseURL').val() + PropertyList,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            Property.empty().append('<option selected="selected" value="0">Please select</option>');
+            for (var i = 0; i < response.data.length; i++) {
+                Property.append($("<option></option>").val(response.data[i].id).html(response.data[i].propertyType));
+            }
+            if ($('#hdnProperty').val() != 0) {
+                Property.val($('#hdnProperty').val());
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
+function BindPropertySub(id) {
+    debugger;
+    //alert("hello");
+    var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
+    var PropertySubType = $("#PropertySubTypeId");
+    var _val = $('#hdnPropertySub').val();
+    var _rpname = "propertyTypeId";
+
+    //BindDropdowns(PropertyList, Property, _rpname, _val);
+    $.ajax({
+        type: "GET",
+        url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+
+            PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
+
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
+function BindClient() {
+    debugger;
+    //alert("hello");
+    var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
+    var Client = $("#ClientTypeId");
+    var _val = $('#hdnClientType').val();
+    var _rpname = "clientTypeId";
+
+    //BindDropdowns(PropertyList, Property, _rpname, _val);
+    $.ajax({
+        type: "GET",
+        url: $('#hdnBaseURL').val() + ClientTypeList,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            Client.empty().append('<option selected="selected" value="0">Please select</option>');
+            for (var i = 0; i < response._object.length; i++) {
+                Client.append($("<option></option>").val(response._object[i].id).html(response._object[i].clientType));
+            }
+            if ($('#hdnClientType').val() != 0) {
+                Client.val($('#hdnClientType').val());
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
+function BindOwnership() {
+    debugger;
+    //alert("hello");
+    var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllOwnershipType";
+    var OwnershipType = $("#OwnershipTypeId");
+    var _val = $('#hdnOwnershipType').val();
+    var _rpname = "ownershipTypeId";
+
+    //BindDropdowns(PropertyList, Property, _rpname, _val);
+    $.ajax({
+        type: "POST",
+        url: $('#hdnBaseURL').val() + OwnershipTypeList,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            OwnershipType.empty().append('<option selected="selected" value="0">Please select</option>');
+            for (var i = 0; i < response.data.length; i++) {
+                OwnershipType.append($("<option></option>").val(response.data[i].id).html(response.data[i].ownershipType));
+            }
+            if ($('#hdnOwnershipType').val() != 0) {
+                OwnershipType.val($('#hdnOwnershipType').val());
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
+function BindValuationFeeType() {
+    debugger;
+    //alert("hello");
+    var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationFeeType";
+    var ValuationFeeType = $("#ValuationFeeTypeId");
+    var _val = $('#hdnValuationFeeType').val();
+    var _rpname = "valuationFeeTypeId";
+
+    //BindDropdowns(PropertyList, Property, _rpname, _val);
+    $.ajax({
+        type: "POST",
+        url: $('#hdnBaseURL').val() + ValuationFeeTypeList,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            ValuationFeeType.empty().append('<option selected="selected" value="0">Please select</option>');
+            for (var i = 0; i < response.data.length; i++) {
+                ValuationFeeType.append($("<option></option>").val(response.data[i].id).html(response.data[i].valuationFeeType));
+            }
+            if ($('#hdnValuationFeeType').val() != 0) {
+                ValuationFeeType.val($('#hdnValuationFeeType').val());
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
