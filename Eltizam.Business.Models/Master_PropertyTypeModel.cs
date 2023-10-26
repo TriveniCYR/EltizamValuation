@@ -12,7 +12,7 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public string PropertyType { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }

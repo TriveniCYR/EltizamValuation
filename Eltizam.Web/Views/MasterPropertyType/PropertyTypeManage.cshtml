@@ -15,23 +15,23 @@
     Layout = "_Layout";
 
 }
-<main>
-    <form>
 
+    <form>
+    <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative">
                 <h3 class="dashboardTitle">Property Type</h3>
             </div>
             <div class="bodyContent">
                 <div class="inputSearchs">
+                    <div class="tabSection">
                     <input type="hidden" id="hdnPropertyId" value="@(Model == null ? 0 : Model.Id)" />
-                    <div class="flex mb-28"> 
-                    </div>
-
+                   @Html.HiddenFor(model=> model.IsActive)
                     <div class="flex mb-28">
                         <label for="" class="w-50">
-                            Description
-                            <span class="text-danger">*</span>
+                           <p class="m-0"> Description
+                                <span class="text-danger">*</span>
+                            </p>
                             @Html.EditorFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
                             @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
                         </label>
@@ -39,9 +39,23 @@
                         <label for="" class="w-50">
 
                             Status
-                            <input class='input-switch' type="checkbox" id="addLocation" required />
+                            
+                            @* @{
+                                bool isActive = Model.IsActive; // Convert 1 to true, any other value to false
+                            } *@
+
+                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
                             <label class="label-switch" for="addLocation"></label>
-                            <span class="info-text"></span>
+                            <span class="info-text" style="top:-20px;"></span>
+                            @* @Html.CheckBox("IsActive", new { htmlAttributes = new {  @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["IsActive"] } }) *@
+                          @*   @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new {  @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["IsActive"] } }) *@
+                             @*    <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                <label class="label-switch" for="IsActive"></label>
+                                <span class="info-text"></span> *@
+                           
+                           @*  <input class='input-switch' type="checkbox" id="addLocation" required /> *@
+                            @* <label class="label-switch" for="addLocation"></label> *@
+                            @* <span class="info-text"></span> *@
                         </label>
 
 
@@ -67,7 +81,7 @@
                                     </label>
                                     @if (i >= 0)
                                     {
-                                        <button type="button" class="btn btn-danger removeSubType" onclick="removeAddPropInput(this)">Remove</button>
+                                         <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeAddPropInput(this)">
                                     }
                                 </div>
                             } 
@@ -79,11 +93,13 @@
                         <button type="button" id="btnSaveRole" onclick="SavePropertyType()" class="bgBlue mr-12">Save</button>
                     </div>
                 </div>
+
+                </div>
             </div>
         </div>
-
+    </main>
     </form>
-</main>
+
 
 <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
@@ -99,7 +115,7 @@
 
         const newBlock = document.createElement("div");
         newBlock.className = "flex threeBox mb-28";
-        newBlock.innerHTML = `<label for="" class='w-30'> <input type="text" placeholder="enter description" class="form-control"></label>
+        newBlock.innerHTML = `<label for="" class='w-50'> <input type="text" placeholder="enter description" class="form-control"></label>
                                      <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeAddPropInput(this)">`;
 
         inputPropField.appendChild(newBlock);
@@ -115,13 +131,25 @@
         var Master_PropertyTypeModel = {
             'Id': '',
             'PropertyType': '',
-            //'IsActive' : '',
+            'IsActive' : '',
             'MasterPropertySubTypes': [
             ]
         }
+        // $(document).ready(function () {
+        //     if ($('#IsActive')[0].value == 0) {
+        //         $('#IsActive')[0].checked = 0;
+        //     }
+        //     else
+        //     {
+        //         $('#IsActive')[0].checked = 1;
+        //     }
+
+        // });
+       
 
         Master_PropertyTypeModel.Id = document.getElementById('hdnPropertyId').value;
         Master_PropertyTypeModel.PropertyType = document.getElementById('PropertyType').value;
+        Master_PropertyTypeModel.IsActive = $('#addLocation')[0].checked;
 
         var DynamicMasterPropertySubTypes = $(".addPropertyInputDynamic :input");
 
