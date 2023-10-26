@@ -38,6 +38,8 @@
                         <input type="hidden" id="hdnCountry" value="@(Model.CountryId == null ? 0 : Model.CountryId)" />
                         <input type="hidden" id="hdnState" value="@(Model.StateId == null ? 0 : Model.StateId)" />
                         <input type="hidden" id="hdnCity" value="@(Model.CityId == null ? 0 : Model.CityId)" />
+                        <input type="hidden" id="hdnId" value="@(Model.Id == null ? 0 : Model.Id)" />
+                        @Html.HiddenFor(model=>model.Id)
                         @{
                             var htmlAttributes = new Dictionary<string, object> { { "class", "form-control" } };
 
