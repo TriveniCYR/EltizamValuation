@@ -58,6 +58,7 @@ namespace EltizamValuation.Web.Controllers
                     if (data is null)
                         return NotFound();
                     masterProperty.AmenityList = data;
+                    masterProperty.IsActive = true;
                 }
                 return View(masterProperty);
             }
