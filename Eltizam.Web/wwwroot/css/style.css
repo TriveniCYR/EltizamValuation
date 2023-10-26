@@ -87,6 +87,10 @@ footer {
     margin-top: 20px !important;
 }
 
+.mr-20 {
+    margin-right: 20px !important;
+}
+
 .justify-between {
     justify-content: space-between;
 }
@@ -117,6 +121,11 @@ footer {
 
 .w-50 {
     width: 49% !important;
+}
+
+
+.w-30 {
+    width: 30% !important;
 }
 
 .cursor-pointer {
@@ -294,8 +303,9 @@ footer {
     width: 16em;
     background-color: var(--white);
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.07);
-    z-index: 1;
+    z-index: 2;
     height: 100%;
+    position:relative;
 }
 
     .sideNavDashboard .dashboard-logo {
@@ -1446,7 +1456,7 @@ table.popupTable {
     align-items: center;
 }
 
-.inputSearchs form .checkboxBtn p {
+.inputSearchs .form .checkboxBtn p {
     font-size: 14px;
     position: absolute;
     left: 0;
@@ -1460,11 +1470,11 @@ table.popupTable {
     padding-left: 35px;
 }
 
-.inputSearchs form .checkboxBtn input {
+.inputSearchs .form .checkboxBtn input {
     border: 1px solid var(--title);
 }
 
-    .inputSearchs form .checkboxBtn input:checked + p {
+    .inputSearchs .form .checkboxBtn input:checked + p {
         background-color: var(--blue);
         color: white;
     }
@@ -1481,6 +1491,8 @@ table.popupTable {
     cursor: pointer;
     z-index: 1;
     padding: 0;
+    position: relative;
+    top: 3px;
 }
 
     .checkboxBtn input[type="checkbox"]:checked {
@@ -1495,6 +1507,8 @@ table.popupTable {
             color: var(--blue);
             margin-left: 3px;
             font-weight: bold;
+            position: relative;
+            top:-3px;
         }
 
 
@@ -1765,4 +1779,24 @@ div.dataTables_wrapper div.dataTables_filter {
     content: "General";
     top: -4px;
     position: relative;
+}
+
+.text-danger span {
+    color: #dc3545 !important;
+}
+
+.accordianDetails {
+    background-color: #EBF5FF;
+    padding: 10px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.panel {
+    margin-top: 20px;
+}
+
+.accordianDetails img {
+    transform: rotate(90deg);
 }
