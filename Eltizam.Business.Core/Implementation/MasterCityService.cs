@@ -88,7 +88,7 @@ namespace Eltizam.Business.Core.Implementation
                     objCity.StateId = entityCity.StateId;
                     objCity.Stdcode = entityCity.STDCode;
                     objCity.IsActive = entityCity.IsActive;
-                    objCity.ModifiedDate = DateTime.Now;
+                    objCity.ModifiedDate = AppConstants.DateTime;
                     objCity.ModifiedBy = entityCity.CreatedBy;
                     _repository.UpdateAsync(objCity);
                 }
@@ -106,9 +106,9 @@ namespace Eltizam.Business.Core.Implementation
                 objCity.StateId = entityCity.StateId;
                 objCity.Stdcode = entityCity.STDCode;
                 objCity.IsActive = entityCity.IsActive;
-                objCity.CreatedDate = DateTime.Now;
+                objCity.CreatedDate = AppConstants.DateTime;
                 objCity.CreatedBy = entityCity.CreatedBy;
-                objCity.ModifiedDate = DateTime.Now;
+                objCity.ModifiedDate = AppConstants.DateTime;
                 objCity.ModifiedBy = entityCity.CreatedBy;
                 _repository.AddAsync(objCity);
             }

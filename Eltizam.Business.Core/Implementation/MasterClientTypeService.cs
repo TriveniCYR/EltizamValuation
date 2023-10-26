@@ -96,9 +96,9 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objUser.ClientType = entityqualification.ClientType;
                     objUser.IsActive = entityqualification.IsActive;
-                    //objUser.ModifiedDate = DateTime.Now;
+                    //objUser.ModifiedDate = AppConstants.DateTime;
                     objUser.ModifiedBy = entityqualification.CreatedBy;
-                    objUser.ModifiedDate = DateTime.Now;
+                    objUser.ModifiedDate = AppConstants.DateTime;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objUser);
@@ -113,9 +113,9 @@ namespace Eltizam.Business.Core.Implementation
             {
                 // Create a new Master_PropertyType entity from the model for insertion.
                 objUser = _mapperFactory.Get<Master_ClientTypeModel, MasterClientType>(entityqualification);
-                objUser.CreatedDate = DateTime.Now;
+                objUser.CreatedDate = AppConstants.DateTime;
                 objUser.CreatedBy = entityqualification.CreatedBy;
-                objUser.ModifiedDate = DateTime.Now;
+                objUser.ModifiedDate = AppConstants.DateTime;
                 objUser.ModifiedBy = entityqualification.CreatedBy;
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objUser);

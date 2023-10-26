@@ -122,7 +122,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objPropertyType.PropertySubType = Convert.ToString(entityproperty.PropertySubType);
                     objPropertyType.IsActive = entityproperty.IsActive;
-                    objPropertyType.ModifiedDate = DateTime.Now;
+                    objPropertyType.ModifiedDate = AppConstants.DateTime;
                     objPropertyType.ModifiedBy = entityproperty.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
@@ -138,8 +138,8 @@ namespace Eltizam.Business.Core.Implementation
             {
                 // Create a new Master_PropertyType entity from the model for insertion.
                 objPropertyType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(entityproperty);
-                objPropertyType.CreatedDate = DateTime.Now;
-                objPropertyType.ModifiedDate = DateTime.Now;
+                objPropertyType.CreatedDate = AppConstants.DateTime;
+                objPropertyType.ModifiedDate = AppConstants.DateTime;
                 objPropertyType.ModifiedBy = entityproperty.ModifiedBy;
                 objPropertyType.CreatedBy= entityproperty.CreatedBy;
 

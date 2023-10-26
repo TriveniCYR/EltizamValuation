@@ -158,7 +158,7 @@ namespace Eltizam.Business.Core.Implementation
                     objVendor.BusinessType = masterVendortModel.BusinessType;
                     objVendor.CompanyDescription = masterVendortModel.CompanyDescription;
                     objVendor.Status = masterVendortModel.Status;
-                    objVendor.ModifiedDate = DateTime.Now;
+                    objVendor.ModifiedDate = AppConstants.DateTime;
                     objVendor.ModifiedBy = masterVendortModel.CreatedBy;
 
                     // Update the entity in the repository asynchronously.
@@ -167,9 +167,9 @@ namespace Eltizam.Business.Core.Implementation
                 //else if (objVendor != null)
                 //{
                 //    objContact = _mapperFactory.Get<MasterContactModel, MasterContact>(masterVendortModel.masterContact);
-                //    objContact.CreatedDate = DateTime.Now;
+                //    objContact.CreatedDate = AppConstants.DateTime;
                 //    objContact.CreatedBy = masterVendortModel.CreatedBy;
-                //    objContact.ModifiedDate = DateTime.Now;
+                //    objContact.ModifiedDate = AppConstants.DateTime;
                 //    objContact.ModifiedBy = masterVendortModel.ModifiedBy;
                 //}
                 else
@@ -182,9 +182,9 @@ namespace Eltizam.Business.Core.Implementation
             {
                 // Create a new MasterClient entity from the model for insertion.
                 objVendor = _mapperFactory.Get<MasterVendorModel, MasterVendor>(masterVendortModel);
-                objVendor.CreatedDate = DateTime.Now;
+                objVendor.CreatedDate = AppConstants.DateTime;
                 objVendor.CreatedBy = masterVendortModel.CreatedBy;
-                objVendor.ModifiedDate = DateTime.Now;
+                objVendor.ModifiedDate = AppConstants.DateTime;
                 objVendor.ModifiedBy = masterVendortModel.CreatedBy;
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objVendor);
@@ -216,7 +216,7 @@ namespace Eltizam.Business.Core.Implementation
                         objAddress.PinNo = entityAddress.PinNo;
                         objAddress.IsActive = entityAddress.IsActive;
                         objAddress.ModifiedBy = entityAddress.CreatedBy;
-                        objAddress.ModifiedDate = DateTime.Now;
+                        objAddress.ModifiedDate = AppConstants.DateTime;
                         _repositoryAddress.UpdateAsync(objAddress);
                     }
                 }
@@ -227,9 +227,9 @@ namespace Eltizam.Business.Core.Implementation
                     objAddress.TableKeyId = objVendor.Id;
                     objAddress.TableName = "Master_Vendor";
                     objAddress.CreatedBy = masterVendortModel.CreatedBy;
-                    objAddress.CreatedDate = DateTime.Now;
+                    objAddress.CreatedDate = AppConstants.DateTime;
                     objAddress.ModifiedBy = masterVendortModel.CreatedBy;
-                    objAddress.ModifiedDate = DateTime.Now;
+                    objAddress.ModifiedDate = AppConstants.DateTime;
                     _repositoryAddress.AddAsync(objAddress);
                 }
                 await _unitOfWork.SaveChangesAsync();
@@ -248,7 +248,7 @@ namespace Eltizam.Business.Core.Implementation
                         objContact.Mobile = entityAddress.Mobile;
                         objContact.Status = entityAddress.Status;
                         objContact.ModifiedBy = entityAddress.CreatedBy;
-                        objContact.ModifiedDate = DateTime.Now;
+                        objContact.ModifiedDate = AppConstants.DateTime;
                         _repositoryContact.UpdateAsync(entityAddress);
                     }
                 }
@@ -256,12 +256,12 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     // Create a new MasterClientContact entity from the model for insertion.
                     objContact = _mapperFactory.Get<MasterContactModel, MasterContact>(masterVendortModel.Contact);
-                    objContact.CreatedDate = DateTime.Now;
+                    objContact.CreatedDate = AppConstants.DateTime;
                     objContact.TableKeyId = objVendor.Id;
                     objContact.TableName = "Master_Vendor";
                     objContact.CreatedBy = masterVendortModel.CreatedBy;
-                    objContact.CreatedDate = DateTime.Now;
-                    objContact.ModifiedDate = DateTime.Now;
+                    objContact.CreatedDate = AppConstants.DateTime;
+                    objContact.ModifiedDate = AppConstants.DateTime;
                     objContact.ModifiedBy = masterVendortModel.CreatedBy;
                     _repositoryContact.AddAsync(objContact);
                 }

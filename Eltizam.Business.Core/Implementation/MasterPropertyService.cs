@@ -164,7 +164,7 @@ namespace Eltizam.Business.Core.Implementation
                     objProperty.ParkingBayNo = masterproperty.ParkingBayNo;
                     objProperty.Description = masterproperty.Description;
                     objProperty.ModifiedBy = masterproperty.CreatedBy;
-                    objProperty.ModifiedDate = DateTime.Now;
+                    objProperty.ModifiedDate = AppConstants.DateTime;
                     _repository.UpdateAsync(objProperty);
                 }
                 else
@@ -177,9 +177,9 @@ namespace Eltizam.Business.Core.Implementation
                 objProperty = _mapperFactory.Get<MasterPropertyModel, MasterProperty>(masterproperty);
                 objProperty.IsActive = masterproperty.IsActive;
                 objProperty.CreatedBy = masterproperty.CreatedBy;
-                objProperty.CreatedDate = DateTime.Now;
+                objProperty.CreatedDate = AppConstants.DateTime;
                 objProperty.ModifiedBy = masterproperty.CreatedBy;
-                objProperty.ModifiedDate = DateTime.Now;
+                objProperty.ModifiedDate = AppConstants.DateTime;
                 _repository.AddAsync(objProperty);
             }
             await _unitOfWork.SaveChangesAsync();
@@ -207,7 +207,7 @@ namespace Eltizam.Business.Core.Implementation
                             objLocation.Pincode = entityLocation.Pincode;
                             objLocation.Landmark = entityLocation.Landmark;
                             objLocation.ModifiedBy = masterproperty.CreatedBy;
-                            objLocation.ModifiedDate = DateTime.Now;
+                            objLocation.ModifiedDate = AppConstants.DateTime;
                             _detailrepository.UpdateAsync(objLocation);
                         }
                     }
@@ -216,9 +216,9 @@ namespace Eltizam.Business.Core.Implementation
                         objLocation = _mapperFactory.Get<MasterPropertyDetailModel, MasterPropertyLocation>(masterproperty.PropertyDetail);
                         objLocation.PropertyId = objProperty.Id;
                         objLocation.CreatedBy = masterproperty.CreatedBy;
-                        objLocation.CreatedDate = DateTime.Now;
+                        objLocation.CreatedDate = AppConstants.DateTime;
                         objLocation.ModifiedBy = masterproperty.CreatedBy;
-                        objLocation.ModifiedDate = DateTime.Now;
+                        objLocation.ModifiedDate = AppConstants.DateTime;
                         _detailrepository.AddAsync(objLocation);
                     }
                     await _unitOfWork.SaveChangesAsync();
@@ -238,9 +238,9 @@ namespace Eltizam.Business.Core.Implementation
                                 objAmenity.AmenityId = doc.AmenityId;
                                 objAmenity.IsActive = doc.IsActive;
                                 objAmenity.CreatedBy = 0;
-                                objAmenity.CreatedDate = DateTime.Now;
+                                objAmenity.CreatedDate = AppConstants.DateTime;
                                 objAmenity.ModifiedBy = 0;
-                                objAmenity.ModifiedDate = DateTime.Now;
+                                objAmenity.ModifiedDate = AppConstants.DateTime;
                                 _amenityrepository.UpdateAsync(objAmenity);
                             }
                         }
@@ -251,9 +251,9 @@ namespace Eltizam.Business.Core.Implementation
                             objAmenity.AmenityId = doc.AmenityId;
                             objAmenity.IsActive = doc.IsActive;
                             objAmenity.CreatedBy = 0;
-                            objAmenity.CreatedDate = DateTime.Now;
+                            objAmenity.CreatedDate = AppConstants.DateTime;
                             objAmenity.ModifiedBy = 0;
-                            objAmenity.ModifiedDate = DateTime.Now;
+                            objAmenity.ModifiedDate = AppConstants.DateTime;
                             _amenityrepository.AddAsync(objAmenity);
                         }
                         await _unitOfWork.SaveChangesAsync();

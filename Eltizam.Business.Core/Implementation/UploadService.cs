@@ -13,6 +13,7 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Resource;
 using static Eltizam.Utility.Enums.GeneralEnum;
+using Eltizam.Data.DataAccess.Helper;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -94,7 +95,7 @@ namespace Eltizam.Business.Core.Implementation
 				{
 					FileName = fileName,
 					ContentType = file.ContentType,
-					CreatedDate = DateTime.Now,
+					CreatedDate = AppConstants.DateTime,
 					FileType = GetFileType(file.ContentType)
 				};
 

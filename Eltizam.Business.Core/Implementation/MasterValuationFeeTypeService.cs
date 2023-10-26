@@ -77,7 +77,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objValuationFeeType.ValuationFeeType = entityValuationFeeType.ValuationFeeType;
                     objValuationFeeType.IsActive = entityValuationFeeType.IsActive;
-                    objValuationFeeType.ModifiedDate = DateTime.Now;
+                    objValuationFeeType.ModifiedDate = AppConstants.DateTime;
                     objValuationFeeType.ModifiedBy = entityValuationFeeType.CreatedBy;
                     _repository.UpdateAsync(objValuationFeeType);
                 }
@@ -92,9 +92,9 @@ namespace Eltizam.Business.Core.Implementation
 
                 objValuationFeeType.ValuationFeeType = entityValuationFeeType.ValuationFeeType;
                 objValuationFeeType.IsActive = entityValuationFeeType.IsActive;
-                objValuationFeeType.CreatedDate = DateTime.Now;
+                objValuationFeeType.CreatedDate = AppConstants.DateTime;
                 objValuationFeeType.CreatedBy = entityValuationFeeType.CreatedBy;
-                objValuationFeeType.ModifiedDate = DateTime.Now;
+                objValuationFeeType.ModifiedDate = AppConstants.DateTime;
                 objValuationFeeType.ModifiedBy = entityValuationFeeType.CreatedBy;
                 _repository.AddAsync(objValuationFeeType);
             }

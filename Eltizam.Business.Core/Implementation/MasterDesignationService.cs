@@ -93,7 +93,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objDesignation.Designation = entityDesignation.Designation;
                     objDesignation.IsActive = entityDesignation.IsActive;
-                    objDesignation.ModifiedDate = DateTime.Now;
+                    objDesignation.ModifiedDate = AppConstants.DateTime;
                     objDesignation.ModifiedBy = entityDesignation.CreatedBy;
                     _repository.UpdateAsync(objDesignation);
                 }
@@ -105,9 +105,9 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 objDesignation = _mapperFactory.Get<MasterDesignationEntity, MasterDesignation>(entityDesignation);
-                objDesignation.CreatedDate = DateTime.Now;
+                objDesignation.CreatedDate = AppConstants.DateTime;
                 objDesignation.CreatedBy = entityDesignation.CreatedBy;
-                objDesignation.ModifiedDate = DateTime.Now;
+                objDesignation.ModifiedDate = AppConstants.DateTime;
                 objDesignation.ModifiedBy = entityDesignation.CreatedBy;
                 _repository.AddAsync(objDesignation);
             }

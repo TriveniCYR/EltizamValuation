@@ -16,6 +16,7 @@ namespace Eltizam.Business.Models
         public static string usp_ClientType_SearchAllList = "usp_ClientType_SearchAllList";
         public static string usp_Client_SearchAllList = "usp_Client_SearchAllList";
         public static string usp_PropertyType_SearchAllList = "usp_PropertyType_SearchAllList";
+        public static string usp_PropertyType_UpsertSubTypes = "usp_PropertyType_UpsertSubTypes";
         public static string usp_PropertySubType_SearchAllList = "usp_PropertySubType_SearchAllList";
         public static string usp_Vendor_SearchAllList = "usp_Vendor_SearchAllList";
         public static string usp_Client_Search_GetClientList = "usp_Client_Search_GetClientList";
@@ -30,6 +31,7 @@ namespace Eltizam.Business.Models
         public static string usp_Country_SearchAllList = "usp_Country_SearchAllList";
         public static string usp_User_Search_GetUserList = "usp_User_Search_GetUserList";
         public static string usp_Dictionary_SearchAllList = "usp_Dictionary_SearchAllList";
+        public static string usp_SubProperty_GetSubPropertyByPropertyIdList = "usp_SubProperty_GetSubPropertyByPropertyIdList";
         // Master Key Id
         public static string usp_Contact_GetContactByTableKeyId = "usp_Contact_GetContactByTableKeyId";
         public static string usp_Address_GetAddressByTableKeyId = "usp_Address_GetAddressByTableKeyId";

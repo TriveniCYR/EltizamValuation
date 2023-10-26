@@ -9,9 +9,6 @@ using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -150,7 +147,7 @@ namespace Eltizam.Business.Core.Implementation
                     objDicitonary.IsActive = entitydictionary.IsActive;
 
                     //objLocation.LocationName = entityLocation.LocationName;
-                    //objLocation.ModifiedDate = DateTime.Now;
+                    //objLocation.ModifiedDate = AppConstants.DateTime;
                     //objLocation.ModifiedBy = entityLocation.CreatedBy;
 
                     _repositoryDetail.UpdateAsync(objDicitonary);
@@ -173,9 +170,9 @@ namespace Eltizam.Business.Core.Implementation
                 //objLocation.HomeCurrencyId = entityLocation.HomeCurrencyId;
                 //objLocation.ForeignCurrencyId = entityLocation.ForeignCurrencyId;
                 //objLocation.Status = entityLocation.Status;
-                //objLocation.CreatedDate = DateTime.Now;
+                //objLocation.CreatedDate = AppConstants.DateTime;
                 //objLocation.CreatedBy = entityLocation.CreatedBy;
-                //objLocation.ModifiedDate = DateTime.Now;
+                //objLocation.ModifiedDate = AppConstants.DateTime;
                 //objLocation.ModifiedBy = entityLocation.CreatedBy;
                 _repositoryDetail.AddAsync(objDicitonary);
             }

@@ -84,7 +84,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objOwnershipType.OwnershipType = entityOwnershipType.OwnershipType;
                     objOwnershipType.IsActive = entityOwnershipType.IsActive;
-                    objOwnershipType.ModifiedDate = DateTime.Now;
+                    objOwnershipType.ModifiedDate = AppConstants.DateTime;
                     objOwnershipType.ModifiedBy = entityOwnershipType.CreatedBy;
                     _repository.UpdateAsync(objOwnershipType);
                 }
@@ -96,9 +96,9 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 objOwnershipType = _mapperFactory.Get<MasterOwnershipTypeEntity, MasterOwnershipType>(entityOwnershipType);
-                objOwnershipType.CreatedDate = DateTime.Now;
+                objOwnershipType.CreatedDate = AppConstants.DateTime;
                 objOwnershipType.CreatedBy = entityOwnershipType.CreatedBy;
-                objOwnershipType.ModifiedDate = DateTime.Now;
+                objOwnershipType.ModifiedDate = AppConstants.DateTime;
                 objOwnershipType.ModifiedBy = entityOwnershipType.CreatedBy;
                 _repository.AddAsync(objOwnershipType);
             }

@@ -121,37 +121,19 @@
 </div>
 
 @section MyScripts {
-    @Html.Partial("_DataTablePartial")
+        @Html.Partial("_DataTablePartial") 
+        <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+        <script type="text/javascript" src="~/js/custom/valuationfee/valuationfees.js?v=@jsVersion"></script>
 
-    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/custom/valuation/valuationfees.js?v=@jsVersion"></script>
-    <script>
-        var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
-        var DeleteLabel = "@SharedLocalizer["Delete"]";
-        var ErrorMessage = "@SharedLocalizer["Error"]";
-        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-        var StatusMessage = '@TempData["StatusMessage"]';
-        var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
-        //#region Static Messae Init
-        var EditLabel = "@SharedLocalizer["Edit"]";
-
-
-        var AddLabel = "@SharedLocalizer["Add"]";
-        var UpdateLabel = "@SharedLocalizer["Update"]";
-        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
-        if (successCallBack) {
-            toastr.success(successCallBack);
-        }
-
-
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-    </script>
-    }
+        <script>
+            var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
+            var DeleteLabel = "@SharedLocalizer["Delete"]";
+            var ErrorMessage = "@SharedLocalizer["Error"]";
+            var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+            var StatusMessage = '@TempData["StatusMessage"]';
+            var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
+            //#region Static Messae Init
+            var EditLabel = "@SharedLocalizer["Edit"]";
+        </script>
+}
 

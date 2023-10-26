@@ -88,7 +88,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objDepartment.Department = entityDepartment.Department;
                     objDepartment.IsActive = entityDepartment.IsActive;
-                    objDepartment.ModifiedDate = DateTime.Now;
+                    objDepartment.ModifiedDate = AppConstants.DateTime;
                     objDepartment.ModifiedBy = entityDepartment.CreatedBy;
                     _repository.UpdateAsync(objDepartment);
                 }
@@ -100,9 +100,9 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 objDepartment = _mapperFactory.Get<MasterDepartmentEntity, MasterDepartment>(entityDepartment);
-                objDepartment.CreatedDate = DateTime.Now;
+                objDepartment.CreatedDate = AppConstants.DateTime;
                 objDepartment.CreatedBy = entityDepartment.CreatedBy;
-                objDepartment.ModifiedDate = DateTime.Now;
+                objDepartment.ModifiedDate = AppConstants.DateTime;
                 objDepartment.ModifiedBy = entityDepartment.CreatedBy;
                 _repository.AddAsync(objDepartment);
             }
