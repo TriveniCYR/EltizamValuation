@@ -40,7 +40,7 @@
                 <form asp-action="ValuationFeesManage" autocomplete="off" asp-controller="MasterValuationFees" method="post">
 
                      <input type="hidden" id="hdnProperty" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
-                    @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                        @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                    
                     <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                     <input type="hidden" id="hdnPropertySub" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
@@ -54,7 +54,6 @@
                             <label for="PropertyTypeId" class="w-50">
                                 Property Type Name
                                 @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)"})
-
                             </label>
                           
                             <label for="" class="w-50">
@@ -149,10 +148,7 @@
                                 @Html.ValidationMessageFor(model => model.FixedvaluationFees, "", new { @class = "text-danger" })
                                 </label>
                             </div>
-                        </div>
-                    
-                   
-
+                        </div> 
 
                     <div class="text-right buttonArea bodyContent plr-0">
                         <a href='/MasterValuationFees/ValuationFees'> <button type="button" class="lineBtn">Cancel</button></a>
@@ -203,7 +199,13 @@
 
         //#region Setup API Url
         var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
-        
+
+        var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllPropertyType";
+        var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
+        var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllOwnershipType";
+        var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationFeeType";
+        var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
+
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]"; 
 

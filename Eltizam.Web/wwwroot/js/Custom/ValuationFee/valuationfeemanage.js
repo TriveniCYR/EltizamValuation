@@ -39,6 +39,7 @@ $(document).ready(function () {
         fixed.style.display = "none";
         general.style.display = "block";
     }
+
     /// End For Dropdown Change
     var HdnId = $('#hdnProperty').val();
     if (HdnId) {
@@ -48,7 +49,7 @@ $(document).ready(function () {
 
 function BindProperty() {
     //alert("hello");
-    var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllPropertyType";
+   
     var Property = $("#PropertyTypeId");
     var _val = $('#hdnProperty').val();
     var _rpname = "propertyTypeId";
@@ -78,10 +79,7 @@ function BindProperty() {
     });
 }
 
-function BindPropertySub(id) {
-    debugger;
-    //alert("hello");
-    var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
+function BindPropertySub(id) { 
     var PropertySubType = $("#PropertySubTypeId");
     var _val = $('#hdnPropertySub').val();
     var _rpname = "propertyTypeId";
@@ -110,7 +108,7 @@ function BindPropertySub(id) {
 function BindClient() {
     debugger;
     //alert("hello");
-    var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
+    
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
     var _rpname = "clientTypeId";
@@ -143,7 +141,7 @@ function BindClient() {
 function BindOwnership() {
     debugger;
     //alert("hello");
-    var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllOwnershipType";
+   
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
     var _rpname = "ownershipTypeId";
@@ -176,7 +174,7 @@ function BindOwnership() {
 function BindValuationFeeType() {
     debugger;
     //alert("hello");
-    var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationFeeType";
+   
     var ValuationFeeType = $("#ValuationFeeTypeId");
     var _val = $('#hdnValuationFeeType').val();
     var _rpname = "valuationFeeTypeId";
