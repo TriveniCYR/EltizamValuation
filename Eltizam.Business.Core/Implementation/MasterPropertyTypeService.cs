@@ -136,11 +136,17 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 // Create a new Master_PropertyType entity from the model for insertion.
-                type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
+                // type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
+                type = new MasterPropertyType()
+                {
+                    IsActive = masterproperty.IsActive,
+                    PropertyType = masterproperty.PropertyType
+                };
                 type.CreatedDate = AppConstants.DateTime;
                 type.CreatedBy = masterproperty.CreatedBy;
                 type.ModifiedDate = AppConstants.DateTime;
                 type.ModifiedBy = masterproperty.ModifiedBy;
+
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(type);
             }
@@ -214,29 +220,21 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> DeletePropertyType(int id)
         {
-            // Get the entity to be deleted from the repository.
-            var entityUser = _repository.Get(x => x.Id == id);
+            var entityProperty = _repository.Get(id);
 
-            // If the entity does not exist, return a not found operation.
-            if (entityUser == null)
-                return DBOperation.NotFound;
+            var subPropertiesByPopertyId = _subrepository.GetAll().Where(x => x.PropertyTypeId == id);
+            foreach (var item in subPropertiesByPopertyId)
+            {
+                _subrepository.Remove(item);
+            }
+            _repository.Remove(entityProperty);
 
-            entityUser.IsActive = false;
-            entityUser.ModifiedDate = AppConstants.DateTime;
-            entityUser.ModifiedBy = 1;
-
-            _repository.UpdateAsync(entityUser);
-
-            // Remove the entity from the repository.
-            // _repository.Remove(entityUser);
-
-            // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
 
             // Return a success operation indicating successful deletion.
             return DBOperation.Success;
+            
         }
-
 
         #endregion API Methods
     }

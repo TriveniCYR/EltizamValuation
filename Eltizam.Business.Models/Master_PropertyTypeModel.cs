@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Eltizam.Business.Models
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public string? SubTypes { get; set; }
-       // [IgnoreMap]
+        [IgnoreMap]
         public List<Master_PropertySubTypeModel> MasterPropertySubTypes { get; set; }
     }
 
