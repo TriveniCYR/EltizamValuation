@@ -87,6 +87,10 @@ footer {
     margin-top: 20px !important;
 }
 
+.mr-20 {
+    margin-right: 20px !important;
+}
+
 .justify-between {
     justify-content: space-between;
 }
@@ -117,6 +121,11 @@ footer {
 
 .w-50 {
     width: 49% !important;
+}
+
+
+.w-30 {
+    width: 30% !important;
 }
 
 .cursor-pointer {
@@ -1442,7 +1451,7 @@ table.popupTable {
     align-items: center;
 }
 
-.inputSearchs form .checkboxBtn p {
+.inputSearchs .form .checkboxBtn p {
     font-size: 14px;
     position: absolute;
     left: 0;
@@ -1456,11 +1465,11 @@ table.popupTable {
     padding-left: 35px;
 }
 
-.inputSearchs form .checkboxBtn input {
+.inputSearchs .form .checkboxBtn input {
     border: 1px solid var(--title);
 }
 
-    .inputSearchs form .checkboxBtn input:checked + p {
+    .inputSearchs .form .checkboxBtn input:checked + p {
         background-color: var(--blue);
         color: white;
     }
@@ -1477,6 +1486,8 @@ table.popupTable {
     cursor: pointer;
     z-index: 1;
     padding: 0;
+    position: relative;
+    top: 3px;
 }
 
     .checkboxBtn input[type="checkbox"]:checked {
@@ -1491,6 +1502,8 @@ table.popupTable {
             color: var(--blue);
             margin-left: 3px;
             font-weight: bold;
+            position: relative;
+            top:-3px;
         }
 
 
@@ -1761,4 +1774,8 @@ div.dataTables_wrapper div.dataTables_filter {
     content: "General";
     top: -4px;
     position: relative;
+}
+
+.text-danger span {
+    color: #dc3545 !important;
 }
