@@ -1251,6 +1251,10 @@ img#closePopup {
         width: 48.5%;
     }
 
+    .w-30{
+        width:30%;
+    }
+
     .tabcontent .inputSearchs form .flex.threeBox label,
     .tabcontent .inputSearchs .tabSection .flex.flex.threeBox label {
         width: 31.5%;

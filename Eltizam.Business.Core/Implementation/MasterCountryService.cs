@@ -85,7 +85,7 @@ namespace Eltizam.Business.Core.Implementation
                     objCountry.CountryCode = entityCountry.CountryCode;
                     objCountry.IsdcountryCode = entityCountry.ISDCountryCode;
                     objCountry.IsActive = entityCountry.IsActive;
-                    objCountry.ModifiedDate = DateTime.Now;
+                    objCountry.ModifiedDate = AppConstants.DateTime;
                     objCountry.ModifiedBy = entityCountry.CreatedBy;
                     _repository.UpdateAsync(objCountry);
                 }
@@ -97,9 +97,9 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 objCountry = _mapperFactory.Get<MasterCountryModel, MasterCountry>(entityCountry);
-                objCountry.CreatedDate = DateTime.Now;
+                objCountry.CreatedDate = AppConstants.DateTime;
                 objCountry.CreatedBy = entityCountry.CreatedBy;
-                objCountry.ModifiedDate = DateTime.Now;
+                objCountry.ModifiedDate = AppConstants.DateTime;
                 objCountry.ModifiedBy = entityCountry.CreatedBy;
                 _repository.AddAsync(objCountry);
             }

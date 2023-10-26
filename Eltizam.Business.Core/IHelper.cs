@@ -9,6 +9,6 @@ namespace Eltizam.Business.Core
 {
     public interface IHelper
     {
-        UserSessionEntity GetLoggedInUser();
+        UserSessionEntity GetLoggedInUser(); 
     }
 }

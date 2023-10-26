@@ -86,7 +86,7 @@ namespace Eltizam.Business.Core.Implementation
                     objState.CountryId = entityState.CountryId;
                     objState.StateCode = entityState.StateCode;
                     objState.IsActive = entityState.IsActive;
-                    objState.ModifiedDate = DateTime.Now;
+                    objState.ModifiedDate = AppConstants.DateTime;
                     objState.ModifiedBy = entityState.CreatedBy;
                     _repository.UpdateAsync(objState);
                 }
@@ -103,9 +103,9 @@ namespace Eltizam.Business.Core.Implementation
                 objState.CountryId = entityState.CountryId;
                 objState.StateCode = entityState.StateCode;
                 objState.IsActive = entityState.IsActive;
-                objState.CreatedDate = DateTime.Now;
+                objState.CreatedDate = AppConstants.DateTime;
                 objState.CreatedBy = entityState.CreatedBy;
-                objState.ModifiedDate = DateTime.Now;
+                objState.ModifiedDate = AppConstants.DateTime;
                 objState.ModifiedBy = entityState.CreatedBy;
                 _repository.AddAsync(objState);
             }

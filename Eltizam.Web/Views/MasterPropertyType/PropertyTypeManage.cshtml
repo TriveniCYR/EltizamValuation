@@ -10,90 +10,167 @@
 
 @model Eltizam.Business.Models.Master_PropertyTypeModel
 @{
-    ViewData["Title"] = @MasterLocalizer["Property Type Manage"]; 
+    ViewData["Title"] = @MasterLocalizer["Property Type Manage"];
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    Layout = "_Layout";
 
 }
+<main>
+    <form>
 
-<form asp-action="PropertyTypeManage" method="post">
-    <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative">
-                <h3 class="dashboardTitle">Property Sub Type</h3>
+                <h3 class="dashboardTitle">Property Type</h3>
             </div>
             <div class="bodyContent">
                 <div class="inputSearchs">
-                    @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                    <input type="hidden" id="hdnPropertyId" value="@(Model == null ? 0 : Model.Id)" />
+                    <div class="flex mb-28"> 
+                    </div>
+
                     <div class="flex mb-28">
                         <label for="" class="w-50">
-                            @Html.LabelFor(model => model.PropertyType, new { @class = "control-label" })
+                            Description
                             <span class="text-danger">*</span>
                             @Html.EditorFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
                             @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
                         </label>
-                        <label for="" class="w-50">
-                          
-                           @* @Html.LabelFor(model => model.SubTypes.ds,"Property SubType", new { @class = "control-label" })*@
-                            <span class="text-danger">*</span>
-                            @Html.DropDownListFor(model => model.Id, new List<SelectListItem> { }, new { @class = "form-control", @multiple = "multiple" })
-                            @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
-                        </label>
-                    </div>
-                   @*  <div class="propertySubTypeContainer">
-                        @for (var i = 0; i < Model.subType.PropertySubType.Count; i++)
-                        {
-                            <div class="flex mb-28">
-                                <label for="" class="w-50">
-                                    <input type="text" asp-for="subType.PropertySubType[i]" class="form-control checkbox-checked" placeholder="Property SubType Name" />
-                                </label>
-                                @if (i > 0)
-                                {
-                                    <button type="button" class="btn btn-danger removeSubType" data-row="@i">Remove</button>
-                                }
-                            </div>
-                        }
 
-                    </div> *@
-                    <button type="button" id="addSubTypeButton" class="btn btn-secondary">Add Property SubType</button>
-                    <div class="text-center buttonArea">
-                        <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
-                        <a class="greyBtn lineBtn formAbtn" asp-action="Designation">@SharedLocalizer["Cancel"]</a>
+                        <label for="" class="w-50">
+
+                            Status
+                            <input class='input-switch' type="checkbox" id="addLocation" required />
+                            <label class="label-switch" for="addLocation"></label>
+                            <span class="info-text"></span>
+                        </label>
+
+
+
+                    </div>
+                    <div class="dynamicInput">
+                        <div class="addMoreInput buttonArea">
+                            <button type="button" class="blueBtn" onclick="addInputProperty()">+ add property</button>
+                        </div>
+                        <div class="addPropertyInputDynamic"></div>
+                    </div>
+
+
+                    <div class="propertySubTypeContainer">
+                        @if (Model.MasterPropertySubTypes != null)
+                        {
+                            @for (var i = 0; i < Model.MasterPropertySubTypes.Count; i++)
+                            {
+                                var _ndl = Model.MasterPropertySubTypes[i];
+                                <div class="flex mb-28">
+                                    <label for="" class="w-50">
+                                        <input type="text" id="@_ndl.Id" value="@_ndl.PropertySubType" asp-for="@_ndl.PropertySubType" class="form-control checkbox-checked" placeholder="Property SubType Name" />
+                                    </label>
+                                    @if (i >= 0)
+                                    {
+                                        <button type="button" class="btn btn-danger removeSubType" onclick="removeAddPropInput(this)">Remove</button>
+                                    }
+                                </div>
+                            } 
+                        } 
+                    </div>
+                    @*  <button type="button" id="addSubTypeButton" class="btn btn-secondary">Add Property SubType</button> *@
+                    <div class="text-right buttonArea bodyContent plr-0"> 
+                        <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">@SharedLocalizer["Cancel"]</a>
+                        <button type="button" id="btnSaveRole" onclick="SavePropertyType()" class="bgBlue mr-12">Save</button>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
-</form>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-@* <script>
-    $(document).ready(function () {
-        var subTypeCounter = @Model.subType.PropertySubType.Count;
+    </form>
+</main>
 
-        // Function to add a new PropertySubType input
-        function addSubTypeInput() {
-            subTypeCounter++;
-            var subTypeHtml = '<div class="flex mb-28" id="subTypeRow' + subTypeCounter + '">' +
-                '<label for="" class="w-50">' +
-                '<input type="text" asp-for="subType.PropertySubType[' + subTypeCounter + ']" class="form-control checkbox-checked" placeholder="Property SubType Name" />' +
-                '</label>' +
-                '<button type="button" class="btn btn-danger removeSubType" data-row="' + subTypeCounter + '">Remove</button>' +
-                '</div>';
-            $('.propertySubTypeContainer').append(subTypeHtml);
+<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
+
+<script>
+
+    //starts dynamic input button
+    let blockCounter = 1;
+
+    function addInputProperty() {
+        const inputPropField = document.querySelector(".addPropertyInputDynamic");
+        const uniqueId = `status-${blockCounter}`;
+
+        const newBlock = document.createElement("div");
+        newBlock.className = "flex threeBox mb-28";
+        newBlock.innerHTML = `<label for="" class='w-30'> <input type="text" placeholder="enter description" class="form-control"></label>
+                                     <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeAddPropInput(this)">`;
+
+        inputPropField.appendChild(newBlock);
+        blockCounter++;
+    }
+
+    function removeAddPropInput(element) {
+        const newAddedDiv = element.parentElement;
+        newAddedDiv.remove();
+    }
+
+    function SavePropertyType() {
+        var Master_PropertyTypeModel = {
+            'Id': '',
+            'PropertyType': '',
+            //'IsActive' : '',
+            'MasterPropertySubTypes': [
+            ]
         }
 
-        // Event handler for the plus button
-        $('#addSubTypeButton').click(function () {
-            addSubTypeInput();
-        });
+        Master_PropertyTypeModel.Id = document.getElementById('hdnPropertyId').value;
+        Master_PropertyTypeModel.PropertyType = document.getElementById('PropertyType').value;
 
-        // Event handler to remove a PropertySubType field
-        $(document).on('click', '.removeSubType', function () {
-            var rowToRemove = $(this).data('row');
-            $('#subTypeRow' + rowToRemove).remove();
-        });
-    });
+        var DynamicMasterPropertySubTypes = $(".addPropertyInputDynamic :input");
 
+        var ExistingMasterPropertySubTypes = $(".propertySubTypeContainer :input[type='text']");
+
+        for (var i = 0; i < DynamicMasterPropertySubTypes.length; i++) {
+            var objDynamic = {
+                'Id': 0,
+                'PropertySubType': DynamicMasterPropertySubTypes[i].value,
+            }
+            Master_PropertyTypeModel.MasterPropertySubTypes.push(objDynamic);
+        }
+
+        for (var j = 0; j < ExistingMasterPropertySubTypes.length; j++) {
+            var objExisting = {
+                'Id': ExistingMasterPropertySubTypes[j].id,
+                'PropertySubType': ExistingMasterPropertySubTypes[j].value,
+            }
+            Master_PropertyTypeModel.MasterPropertySubTypes.push(objExisting);
+        }
+        console.log(JSON.stringify(Master_PropertyTypeModel));
+
+        var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.UpsertPropertyType";
+        //var PropertySubType = $("#PropertySubTypeId");
+        var _val = $('#hdnPropertySub').val();
+        var _rpname = "propertyTypeId"; 
+
+        //BindDropdowns(PropertyList, Property, _rpname, _val);
+        $.ajax({
+            type: "POST",
+            url: $('#hdnBaseURL').val() + PropertyByIdSubType,
+            "datatype": "json",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, 
+            data: JSON.stringify(Master_PropertyTypeModel),
+            success: function (response) { 
+                window.location.href = "/MasterPropertyType/PropertyTypes";
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+        }); 
+    } 
 </script>
- *@
+
 

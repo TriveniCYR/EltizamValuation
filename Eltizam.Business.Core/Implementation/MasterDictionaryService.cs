@@ -7,11 +7,10 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,23 +45,47 @@ namespace Eltizam.Business.Core.Implementation
         // get all recoreds from Location list with sorting and pagination
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            var _dbParams = new[]
-             {
-                 //new DbParameter("Id", 0,SqlDbType.Int),
-                 new DbParameter("PageSize", model.length, SqlDbType.Int),
-                 new DbParameter("PageNumber", model.start, SqlDbType.Int),
-                 new DbParameter("OrderClause", "LocationName", SqlDbType.VarChar),
-                 new DbParameter("ReverseSort", 1, SqlDbType.Int)
-             };
+            string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
+            string SortDir = model.order[0]?.dir;
 
-            int _count = 0;
-            //var lstdict = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterDictionaryEntity>(ProcedureMetastore.usp_Dictionary_SearchAllList,
-            //DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
-            var lstdict = EltizamDBHelper.ExecuteMappedReader<MasterDictionaryEntity>(ProcedureMetastore.usp_Dictionary_SearchAllList, DatabaseConnection.ConnString, CommandType.StoredProcedure, _dbParams);
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
+            };
 
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Dictionary_SearchAllList, CommandType.StoredProcedure, osqlParameter);
+            //var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
+            //var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
 
-            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstdict);
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(Results);
+
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterDictionaryEntity>());
+
             return oDataTableResponseModel;
+
+
+            //var _dbParams = new[]
+            // {
+            //     //new DbParameter("Id", 0,SqlDbType.Int),
+            //     new DbParameter("PageSize", model.length, SqlDbType.Int),
+            //     new DbParameter("PageNumber", model.start, SqlDbType.Int),
+            //     new DbParameter("OrderClause", "LocationName", SqlDbType.VarChar),
+            //     new DbParameter("ReverseSort", 1, SqlDbType.Int)
+            // };
+
+            //int _count = 0;
+            ////var lstdict = EltizamDBHelper.ExecuteMappedReaderWithOutputParameter<MasterDictionaryEntity>(ProcedureMetastore.usp_Dictionary_SearchAllList,
+            ////DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, _dbParams);
+            //var lstdict = EltizamDBHelper.ExecuteMappedReader<MasterDictionaryEntity>(ProcedureMetastore.usp_Dictionary_SearchAllList, DatabaseConnection.ConnString, CommandType.StoredProcedure, _dbParams);
+
+
+            //DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstdict);
+            //return oDataTableResponseModel;
         }
         public async Task<List<MasterDictionaryDetailById>> GetDictionaryDetailsByIdAsync(int id,string description)
         {
@@ -124,7 +147,7 @@ namespace Eltizam.Business.Core.Implementation
                     objDicitonary.IsActive = entitydictionary.IsActive;
 
                     //objLocation.LocationName = entityLocation.LocationName;
-                    //objLocation.ModifiedDate = DateTime.Now;
+                    //objLocation.ModifiedDate = AppConstants.DateTime;
                     //objLocation.ModifiedBy = entityLocation.CreatedBy;
 
                     _repositoryDetail.UpdateAsync(objDicitonary);
@@ -147,9 +170,9 @@ namespace Eltizam.Business.Core.Implementation
                 //objLocation.HomeCurrencyId = entityLocation.HomeCurrencyId;
                 //objLocation.ForeignCurrencyId = entityLocation.ForeignCurrencyId;
                 //objLocation.Status = entityLocation.Status;
-                //objLocation.CreatedDate = DateTime.Now;
+                //objLocation.CreatedDate = AppConstants.DateTime;
                 //objLocation.CreatedBy = entityLocation.CreatedBy;
-                //objLocation.ModifiedDate = DateTime.Now;
+                //objLocation.ModifiedDate = AppConstants.DateTime;
                 //objLocation.ModifiedBy = entityLocation.CreatedBy;
                 _repositoryDetail.AddAsync(objDicitonary);
             }

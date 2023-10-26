@@ -68,7 +68,7 @@ namespace Eltizam.Api.Controllers
 					int expMinutes = Convert.ToInt32(_configuration["jwt:expiryMinutes"]);
 
 					var userEntity = JwtAuthenticationServiceConfig.ValidateToken(_User, _configuration["jwt:audience"].ToString(),
-						_configuration["jwt:issuer"].ToString(), Guid.NewGuid(), DateTime.Now.AddMinutes(expMinutes), _configuration["jwt:secretKey"]);
+						_configuration["jwt:issuer"].ToString(), Guid.NewGuid(), AppConstants.DateTime.AddMinutes(expMinutes), _configuration["jwt:secretKey"]);
 
 					return _ObjectResponse.Create(userEntity, (Int32)HttpStatusCode.OK);
 				}

@@ -93,8 +93,6 @@ namespace Eltizam.Business.Core.Implementation
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<Master_PropertyTypeModel>());
 
             return oDataTableResponseModel;
-
-            return oDataTableResponseModel;
         }
 
         public async Task<List<Master_PropertyTypeModel>> GetAllList()
@@ -110,8 +108,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> AddUpdateMasterPropertyType(Master_PropertyTypeModel masterproperty)
         {
             // Create a Master_PropertyType object.
-            MasterPropertyType type; 
-            
+            MasterPropertyType type;
+
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (masterproperty.Id > 0)
             {
@@ -123,7 +121,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     type.PropertyType = masterproperty.PropertyType;
                     type.IsActive = masterproperty.IsActive;
-                    type.ModifiedDate = DateTime.Now;
+                    type.ModifiedDate = AppConstants.DateTime;
                     type.ModifiedBy = masterproperty.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
@@ -138,11 +136,17 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 // Create a new Master_PropertyType entity from the model for insertion.
-                type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
-                type.CreatedDate = DateTime.Now;
+                // type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
+                type = new MasterPropertyType()
+                {
+                    IsActive = masterproperty.IsActive,
+                    PropertyType = masterproperty.PropertyType
+                };
+                type.CreatedDate = AppConstants.DateTime;
                 type.CreatedBy = masterproperty.CreatedBy;
-                type.ModifiedDate = DateTime.Now;
+                type.ModifiedDate = AppConstants.DateTime;
                 type.ModifiedBy = masterproperty.ModifiedBy;
+
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(type);
             }
@@ -152,10 +156,27 @@ namespace Eltizam.Business.Core.Implementation
 
             // Return an appropriate operation result.
             if (type.Id == 0)
-                return DBOperation.Error; 
+                return DBOperation.Error;
             else
             {
-                await _repository.GetBySP(ProcedureMetastore.usp_PropertyType_UpsertSubTypes);
+                var subTypes = masterproperty.MasterPropertySubTypes;
+                var _Val = "";
+                if (subTypes != null)
+                { 
+                    foreach (var _stype in subTypes)
+                    {
+                        _Val += string.Format("{0}_{1},", _stype.Id, _stype.PropertySubType);
+                    }
+                } 
+
+                SqlParameter[] _sqlParameter =
+                {
+                    new SqlParameter(AppConstants.P_Id,             type.Id),
+                    new SqlParameter(AppConstants.P_CreatedBy,      type.CreatedBy),
+                    new SqlParameter(AppConstants.P_RequestData,    _Val)
+                };
+
+                await _repository.GetBySP(ProcedureMetastore.usp_PropertyType_UpsertSubTypes, CommandType.StoredProcedure, _sqlParameter);
 
                 //if (masterproperty.MasterPropertySubTypes != null)
                 //{
@@ -174,7 +195,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 //                propertySubType.IsActive = entitySubType.IsActive;
                 //                propertySubType.ModifiedBy = entitySubType.CreatedBy;
-                //                propertySubType.ModifiedDate = DateTime.Now;
+                //                propertySubType.ModifiedDate = AppConstants.DateTime;
                 //                _subrepository.UpdateAsync(propertySubType);
                 //            }
                 //        }
@@ -185,9 +206,9 @@ namespace Eltizam.Business.Core.Implementation
                 //            propertySubType.PropertyTypeId = type.Id;
                 //            propertySubType.IsActive = masterproperty.IsActive;
                 //            propertySubType.CreatedBy = masterproperty.CreatedBy;
-                //            propertySubType.CreatedDate = DateTime.Now;
+                //            propertySubType.CreatedDate = AppConstants.DateTime;
                 //            propertySubType.ModifiedBy = masterproperty.CreatedBy;
-                //            propertySubType.ModifiedDate = DateTime.Now;
+                //            propertySubType.ModifiedDate = AppConstants.DateTime;
                 //            _subrepository.AddAsync(propertySubType);
                 //        }
                 //        await _unitOfWork.SaveChangesAsync();
@@ -199,29 +220,21 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> DeletePropertyType(int id)
         {
-            // Get the entity to be deleted from the repository.
-            var entityUser = _repository.Get(x => x.Id == id);
+            var entityProperty = _repository.Get(id);
 
-            // If the entity does not exist, return a not found operation.
-            if (entityUser == null)
-                return DBOperation.NotFound;
+            var subPropertiesByPopertyId = _subrepository.GetAll().Where(x => x.PropertyTypeId == id);
+            foreach (var item in subPropertiesByPopertyId)
+            {
+                _subrepository.Remove(item);
+            }
+            _repository.Remove(entityProperty);
 
-            entityUser.IsActive = false;
-            entityUser.ModifiedDate = DateTime.Now;
-            entityUser.ModifiedBy = 1;
-
-            _repository.UpdateAsync(entityUser);
-
-            // Remove the entity from the repository.
-            // _repository.Remove(entityUser);
-
-            // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
 
             // Return a success operation indicating successful deletion.
             return DBOperation.Success;
+            
         }
-
 
         #endregion API Methods
     }

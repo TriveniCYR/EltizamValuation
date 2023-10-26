@@ -4,6 +4,7 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
@@ -21,12 +22,12 @@ namespace Eltizam.Business.Core.Implementation
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<Master_Qualification> _repository { get; set; }
         private readonly IHelper _helper;
+        private readonly int _LoginUserId;
         #endregion Properties
 
         #region Constructor
         public MasterQualificationServices(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
-          IHelper helper,
-           Microsoft.Extensions.Configuration.IConfiguration _configuration)
+                IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -34,7 +35,10 @@ namespace Eltizam.Business.Core.Implementation
             _repository = _unitOfWork.GetRepository<Master_Qualification>();
             configuration = _configuration;
             _helper = helper;
+
+            _LoginUserId = _helper.GetLoggedInUser().UserId;
         }
+
         #endregion Constructor
 
         #region API Methods
@@ -72,14 +76,15 @@ namespace Eltizam.Business.Core.Implementation
             string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
             // Create an array of SQL parameters for a stored procedure call.
-            SqlParameter[] osqlParameter = {
-        new SqlParameter("@Id", 0),
-        new SqlParameter("@CurrentPageNumber", model.start),
-        new SqlParameter("@PageSize", model.length),
-        new SqlParameter("@SortColumn", ColumnName),
-        new SqlParameter("@SortDirection", SortDir),
-        new SqlParameter("@SearchText", model.search.value)
-    };
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter("@Id", 0),
+                new SqlParameter("@CurrentPageNumber", model.start),
+                new SqlParameter("@PageSize", model.length),
+                new SqlParameter("@SortColumn", ColumnName),
+                new SqlParameter("@SortDirection", SortDir),
+                new SqlParameter("@SearchText", model.search.value)
+            };
 
             // Call a stored procedure to get a list of Master_Qualification entities.
             var QualificationList = await _repository.GetBySP("usp_Qualification_GetMasterQualificationList", System.Data.CommandType.StoredProcedure, osqlParameter);
@@ -115,8 +120,8 @@ namespace Eltizam.Business.Core.Implementation
                     objQualification.Grade = entityqualification.Grade;
                     objQualification.YearOfInstitute = entityqualification.YearOfInstitute;
                     objQualification.IsActive = entityqualification.IsActive;
-                    objQualification.ModifiedDate = DateTime.Now;
-                    objQualification.ModifiedBy = entityqualification.ModifiedBy;
+                    objQualification.ModifiedDate = AppConstants.DateTime;
+                    objQualification.ModifiedBy = _LoginUserId;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objQualification);
@@ -131,10 +136,10 @@ namespace Eltizam.Business.Core.Implementation
             {
                 // Create a new Master_Qualification entity from the model for insertion.
                 objQualification = _mapperFactory.Get<Master_QualificationModel, Master_Qualification>(entityqualification);
-                objQualification.CreatedDate = DateTime.Now;
-                objQualification.CreatedBy = entityqualification.CreatedBy;
-                objQualification.ModifiedBy = entityqualification.ModifiedBy;  
-                objQualification.ModifiedDate = DateTime.Now;
+                objQualification.CreatedDate = AppConstants.DateTime;
+                objQualification.CreatedBy = _LoginUserId;
+                objQualification.ModifiedBy = _LoginUserId;
+                objQualification.ModifiedDate = AppConstants.DateTime;
 
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objQualification);

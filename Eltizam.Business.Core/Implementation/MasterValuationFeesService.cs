@@ -98,7 +98,7 @@ namespace Eltizam.Business.Core.Implementation
                     objValuationFees.OtherCharges = entityValuationFees.OtherCharges;
                     objValuationFees.TotalValuationFees = entityValuationFees.TotalValuationFees;
                     objValuationFees.FixedvaluationFees = entityValuationFees.FixedvaluationFees;
-                    objValuationFees.ModifiedDate = DateTime.Now;
+                    objValuationFees.ModifiedDate = AppConstants.DateTime;
                     objValuationFees.ModifiedBy = entityValuationFees.CreatedBy;
                     _repository.UpdateAsync(objValuationFees);
                 }
@@ -110,9 +110,9 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 objValuationFees = _mapperFactory.Get<MasterValuationFeesModel, MasterValuationFee>(entityValuationFees);
-                objValuationFees.CreatedDate = DateTime.Now;
+                objValuationFees.CreatedDate = AppConstants.DateTime;
                 objValuationFees.CreatedBy = entityValuationFees.CreatedBy;
-                objValuationFees.ModifiedDate = DateTime.Now;
+                objValuationFees.ModifiedDate = AppConstants.DateTime;
                 objValuationFees.ModifiedBy = entityValuationFees.CreatedBy;
                 _repository.AddAsync(objValuationFees);
             }
