@@ -191,20 +191,13 @@
     </div>
 </div>
 
-@section MyScripts {
-
-    @Html.Partial("_DataTablePartial")
-
-    @* <script type="text/javascript" src="~/js/Custom/Department/DepartmentManagement.js?v=@jsVersion"></script> *@
-    <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
+@section MyScripts { 
+  @*  @Html.Partial("_DataTablePartial")  
     <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
 
     <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-
-    @* <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/custom/valuation/valuationmanagement.js?v=@jsVersion"></script> *@
+    <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script> *@
     <script>
 
         var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
