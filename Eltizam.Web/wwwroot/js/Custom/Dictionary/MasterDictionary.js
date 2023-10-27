@@ -30,12 +30,15 @@ function InitializeDictionaryList() {
        
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
-                if (data.isActive) {
-                    return "<span class='tableStatus green'>Active</span>";
-                } else {
-                    return "<span class='tableStatus red'>Inactive</span>";
-                }
+                return GetActiveFlagCss(data);
             }
+            //"data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
+            //    if (data.isActive) {
+            //        return "<span class='tableStatus green'>Active</span>";
+            //    } else {
+            //        return "<span class='tableStatus red'>Inactive</span>";
+            //    }
+           // }
         },
         {
             "data": "id", "name": "Action", "render": function (data, type, row, meta) {

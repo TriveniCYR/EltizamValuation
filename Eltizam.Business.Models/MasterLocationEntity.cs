@@ -30,6 +30,8 @@ namespace Eltizam.Business.Models
         public string? ForeignCurrency { get; set; }
         public string? CurrencyName { get; set; }
         //public string BuildingType { get; set; }
+        public string? RegionName { get; set; }
+        public string? StatesEmirates { get; set; }
     }
     public class MasterLocationList
     {
