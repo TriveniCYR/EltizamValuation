@@ -1832,7 +1832,7 @@ div.dataTables_wrapper div.dataTables_filter {
 /* dynamic input on add more property description ends*/
 
 .hamburger a {
-    color: var(--black);
+    color: #25408f;
     background-color: transparent !important;
 }
 

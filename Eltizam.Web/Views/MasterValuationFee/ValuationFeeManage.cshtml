@@ -9,60 +9,50 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 
 @model Eltizam.Business.Models.MasterValuationFeesModel
-@{ 
+@{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    var _header = "Valuation Fees Master";
+    var _md = Model.Id > 0 ? "Edit" : "Add";
+
 }
 <div id="PlaceHolderHere"></div>
 <main>
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between ">
-            @if (Model.Id > 0)
-            {
-                <h3 class="dashboardTitle">EDIT VALUATION FEES MASTER</h3>
-                <div class="hamburger">
-                    <a class="greyBtn lineBtn formAbtn" asp-action="ValuationFees">Valuation Fees Master</a>
-                   @*  <span onclick="resourceMaster()">Valuation Master</span> *@
-                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                    <span>Edit</span>
-                </div>
-            }
-            else
-            {
-                <h3 class="dashboardTitle">ADD VALUATION FEES MASTER</h3>
-                <div class="hamburger">
-                    <a class="greyBtn lineBtn formAbtn" asp-action="ValuationFees">Valuation Fees Master</a>
-                    @* <span onclick="resourceMaster()">Valuation Master</span> *@
-                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                    <span>Add</span>
-                </div>
-            }
+            <h3 class="dashboardTitle">@_md @_header</h3>
+            <div class="hamburger">
+                <a class="greyBtn lineBtn formAbtn" asp-action="ValuationFees">@_header</a>
+                <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                <span>@_md</span>
+            </div>
         </div>
+
         <div class="bodyContent">
             <div class="inputSearchs p-0">
                 <form asp-action="ValuationFeeManage" autocomplete="off" asp-controller="MasterValuationFee" method="post">
 
-                     <input type="hidden" id="hdnProperty" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
-                        @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
-                   
+                    <input type="hidden" id="hdnProperty" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
+                    @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+
                     <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                     <input type="hidden" id="hdnPropertySub" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
                     <input type="hidden" id="hdnClientType" value="@(Model == null ? 0 : Model.ClientTypeId)" />
                     <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
-                    <input type="hidden" id="hdnValuationFeeType" value="@(Model == null ? 0 : Model.ValuationFeeTypeId)" /> 
-                   
+                    <input type="hidden" id="hdnValuationFeeType" value="@(Model == null ? 0 : Model.ValuationFeeTypeId)" />
+
                     <div>
                         <div class="flex">
                             <label for="PropertyTypeId" class="w-50">
                                 Property Type Name
                                 @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)"})
                             </label>
-                          
+
                             <label for="" class="w-50">
                                 Property SubType Name
                                 @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
                             </label>
-                         </div>
-                         <div class="flex">
+                        </div>
+                        <div class="flex">
                             <label for="" class="w-50">
                                 Type of Ownership
                                 @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
@@ -84,7 +74,7 @@
                                 @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqMtr, "", new { @class = "text-danger" })
                             </label>
-                            </div>
+                        </div>
                         <div class="flex">
                             <label for="" class="w-50">
                                 Valuation Fee Type
@@ -96,7 +86,7 @@
                                     @Html.DropDownList("ValuationType", new List<SelectListItem>{
                                     new SelectListItem{ Text="General", Value = "1" },
                                     new SelectListItem{ Text="Fixed", Value = "2" }}, new { @class = "form-control" })
-                                    
+
                                 </div>
                             </label>
                         </div>
@@ -110,63 +100,46 @@
                             </label>
                         </div>
                     </div>
-                    
-                        <div class="" id="general">
-                        <div class="addMoreAddress roundBorderBox">
-                            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                <h4>Valuation Charges - General Valuation Fees</h4>
-                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                            </div>
-                            <div class="pannel" style="display:none">
-                            
+
+                    <div class="roundBorderBox">
+                        <h3 class="mb-28" id="hdnHeader">Valuation Charges</h3>
+
+                        <div id="general">
+
                             <div class="flex">
-                            <label for="" class="w-50">
+                                <label for="" class="w-50">
                                     Valuation Fees (AED)
                                     @Html.EditorFor(model => model.ValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" ,@placeholder="enter Valuation Fees (AED)"} })
                                     @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" })
                                 </label>
-                            <label for="" class="w-50">
+                                <label for="" class="w-50">
                                     VAT (Percent)
                                     @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control", @placeholder="enter VAT (Percent)"} })
                                     @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
                                 </label>
-                                </div>
-                        <div class="flex">
-                            <label for="" class="w-50">
+                            </div>
+                            <div class="flex">
+                                <label for="" class="w-50">
                                     Other Charges
                                     @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",placeholder="enter other chargesr" } })
                                     @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
                                 </label>
-                            <label for="" class="w-50">
+                                <label for="" class="w-50">
                                     Total evaluation Fees
                                     @Html.EditorFor(model => model.TotalValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",@placeholder="enter Total evaluation Fees" } })
                                     @Html.ValidationMessageFor(model => model.TotalValuationFees, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                         </div>
-                        </div>
-                        </div>
-                    
-                    
-                        <div class="" id="fixed">
-                        <div class="addMoreAddress roundBorderBox">
-                            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                <h4>Valuation Charges - Fixed Valuation Fees</h4>
-                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                            </div>
-                            <div class="pannel" style="display:none">
-                            
-                            <div class="flex">
 
+                        <div id="fixed">
                             <label for="" class="w-50">
-                                    Fixed valuation Fees
+                                Fixed valuation Fees
                                 @Html.EditorFor(model => model.FixedvaluationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",@placeholder="enter Fixed evaluation Fees" } })
                                 @Html.ValidationMessageFor(model => model.FixedvaluationFees, "", new { @class = "text-danger" })
-                                </label>
-                            </div>
-                        </div> 
-                        </div> 
-                        </div> 
+                            </label>
+                        </div>
+                    </div>
 
                     <div class="text-right buttonArea bodyContent plr-0">
                         <a href='/MasterValuationFee/ValuationFees'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
@@ -178,42 +151,15 @@
     </div>
 </main>
 
-
-<div id="DeleteValuationModel" class="modal themeModal " role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
-                        </div>
-                    </div>
-                </div>
-                @Html.Hidden("Id")
-                <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteValuation()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
-                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 @section MyScripts {
     <script type="text/javascript" src="~/js/Custom/ValuationFee/valuationfeemanage.js?v=@jsVersion"></script>
 
-    <script> 
+    <script>
         var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-        var StatusMessage = '@TempData["StatusMessage"]'; 
+        var StatusMessage = '@TempData["StatusMessage"]';
 
         //#region Setup API Url
         var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
@@ -225,10 +171,10 @@
         var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
 
         //#region Static Messae Init
-        var EditLabel = "@SharedLocalizer["Edit"]"; 
+        var EditLabel = "@SharedLocalizer["Edit"]";
 
         var AddLabel = "@SharedLocalizer["Add"]";
-        var UpdateLabel = "@SharedLocalizer["Update"]"; 
+        var UpdateLabel = "@SharedLocalizer["Update"]";
     </script>
 
 }
