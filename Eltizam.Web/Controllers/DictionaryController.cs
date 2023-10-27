@@ -119,18 +119,18 @@ namespace EltizamValuation.Web.Controllers
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
                 string urlHelper = string.Empty;
-                if (!string.IsNullOrEmpty(description))
-                {
+                //if (!string.IsNullOrEmpty(description))
+                //{
                     urlHelper = APIURLHelper.GetDictionaryById + "/" + id + "/" + description;
-                }
-                else { urlHelper = APIURLHelper.GetDictionaryById + "/" + id; }
+                //}
+                //else { urlHelper = APIURLHelper.GetDictionaryById + "/" + id; }
                 HttpResponseMessage responseMessage = objapi.APICommunication(urlHelper, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    if (!string.IsNullOrEmpty(description))
-                    {
+                    //if (!string.IsNullOrEmpty(description))
+                    //{
 
                         var data = JsonConvert.DeserializeObject<List<MasterDictionaryDetailById>>(jsonResponse);
 
@@ -138,16 +138,16 @@ namespace EltizamValuation.Web.Controllers
                         if (data is null)
                             return NotFound();
                         ViewData["ChildDictList"] = data;
-                }
-                else
-                {
-                    var data = JsonConvert.DeserializeObject<MasterDictionaryDetailById>(jsonResponse);
-                        if (data is null)
-                            return NotFound();
-                     //   ModelState.Clear();
-                    return View(data);
-                        //return View();
-                    }
+                //}
+                //else
+                //{
+                //    var data = JsonConvert.DeserializeObject<MasterDictionaryDetailById>(jsonResponse);
+                //        if (data is null)
+                //            return NotFound();
+                //     //   ModelState.Clear();
+                //    return View(data);
+                //        //return View();
+                //    }
              //   ModelState.Clear();
                     // ViewBag.IsView = Isview;
                     // return View(data);
@@ -156,37 +156,6 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
 
-        }
-        public IActionResult DictionaryDetailBy(int id)
-        {
-            //id = 3; description = "ValuationType";
-            MasterDictionaryDetailById masterdictionary;
-            if (id == null || id <= 0)
-            {
-                masterdictionary = new MasterDictionaryDetailById();
-
-                return View(masterdictionary);
-            }
-            else
-            {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
-                string urlHelper = string.Empty;               
-                urlHelper = APIURLHelper.GetDictionaryById + "/" + id;
-                   HttpResponseMessage responseMessage = objapi.APICommunication(urlHelper, HttpMethod.Get, token).Result;
-
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    
-                    var data = JsonConvert.DeserializeObject< APIResponseEntity<MasterDictionaryDetailById>>(jsonResponse);
-                    ModelState.Clear();
-                    return View(data._object);                    
-                    ModelState.Clear();
-                  
-                }
-                return NotFound();
-            }
         }
         public IActionResult DictionaryDetailsManage(int id,int? status,string? pdesc)
         {

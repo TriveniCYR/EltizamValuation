@@ -70,8 +70,6 @@
                         </div>
                         <div class="flex">
 
-
-
                             <label for="resourceType" class="w-50">
                                 Sector / Zone
                                 @Html.TextBoxFor(model => model.Sector, htmlAttributes)
@@ -129,12 +127,7 @@
     </form>
 
 @section MyScripts {
-@* <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
-<script src="../js/locationMaster.js"></script>
-<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script> *@
 <script type="text/javascript" src="~/js/Custom/Location/LocationManagement.js?v=@jsVersion"></script>
-@* <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script> *@
 <script>
     $(document).ready(function () {
         BindCountry();

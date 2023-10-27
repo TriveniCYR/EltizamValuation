@@ -1,5 +1,5 @@
 ﻿var tableId = "LocationTable";
-$(document).ready(function () { 
+$(document).ready(function () {
     InitializeLocationDataList();
 });
 
@@ -23,10 +23,10 @@ function InitializeLocationDataList() {
             "data": "countryName", "name": "Country"
         },
         {
-            "data": "cityName", "name": "CityName"
+            "data": "statesEmirates", "name": "States Emirates"
         },
         {
-            "data": "stateName", "name": "States Emirates"
+            "data": "regionName", "name": "CityName"
         },
         {
             "data": "sector", "name": "Sector Zone"
@@ -36,7 +36,7 @@ function InitializeLocationDataList() {
         },
         {
             "data": "foreignCurrency", "name": "Foreign Currency"
-        }, 
+        },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
                 return GetActiveFlagCss(data);
