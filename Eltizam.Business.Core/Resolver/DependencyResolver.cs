@@ -41,7 +41,7 @@ namespace Eltizam.Business.Core.Resolver
             services.AddTransient<IMasterLocationService, MasterLocationService>();
             services.AddTransient<IMasterModuleService, MasterModuleService>();
             services.AddTransient<IMasterClientService, MasterClientService>();
-            //services.AddTransient<IMaster_ClientTypeService, Master_ClientTypeService>();
+            services.AddTransient<IMasterClientTypeService, MasterClientTypeService>();
             services.AddTransient<IMasterDictionaryService, MasterDictionaryService>();
             
 

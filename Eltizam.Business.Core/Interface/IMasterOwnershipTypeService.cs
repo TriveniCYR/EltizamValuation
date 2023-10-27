@@ -14,6 +14,7 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> Upsert(MasterOwnershipTypeEntity entityUser);
         Task<MasterOwnershipTypeEntity> GetById(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
+        Task<List<MasterOwnershipTypeEntity>> GetOwnershipTypeList();
         Task<DBOperation> Delete(int id);
     }
 }

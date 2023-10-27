@@ -75,7 +75,7 @@ namespace EltizamValuation.Api.Controllers
             {
                 var oRoleList = await _clienttypeServices.GetAll();
                 if (oRoleList != null)
-                    return _ObjectResponse.Create(oRoleList, (Int32)HttpStatusCode.OK);
+                    return _ObjectResponse.CreateData(oRoleList, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
@@ -103,7 +103,8 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpGet("GetClientTypeList")]
+        [HttpGet]
+        [Route("GetClientTypeList")]
         public async Task<IActionResult> GetClientTypeList()
         {
             try

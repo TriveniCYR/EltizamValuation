@@ -21,10 +21,10 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? DepartmentId { get; set; }
         public int? DesignationId { get; set; }
         public string? LicenseNo { get; set; }
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
         public int? ResourceId { get; set; }
         public string Password { get; set; } = null!;
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }

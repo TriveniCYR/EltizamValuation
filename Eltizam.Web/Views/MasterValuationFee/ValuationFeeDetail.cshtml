@@ -24,16 +24,30 @@
 <main>
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between ">
-          
+
+            @if (Model.Id > 0)
+            {
                 <h3 class="dashboardTitle">VIEW VALUATION FEES MASTER</h3>
                 <div class="hamburger">
-                    <span onclick="resourceMaster()">Valuation Master</span>
+                    <a class="greyBtn lineBtn formAbtn" asp-action="ValuationFees">Valuation Fees Master</a>
+                    @*  <span onclick="resourceMaster()">Valuation Master</span> *@
                     <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                    <span>Edit Resource Master</span>
+                    <span>View</span>
                 </div>
+            }
+            else
+            {
+                <h3 class="dashboardTitle">ADD VALUATION FEES MASTER</h3>
+                <div class="hamburger">
+                    <a class="greyBtn lineBtn formAbtn" asp-action="ValuationFees">Valuation Fees Master</a>
+                    @* <span onclick="resourceMaster()">Valuation Master</span> *@
+                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                    <span>Add</span>
+                </div>
+            }
         </div>
         <div class="bodyContent">
-            <div class="inputSearchs">
+            <div class="inputSearchs p-0">
                 <form>
 
                     <input type="hidden" id="hdnProperty" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
@@ -107,7 +121,7 @@
                                     <div class="flex m-0 valuationType">
                                         @Html.DropDownList("ValuationType", new List<SelectListItem>{
                                         new SelectListItem{ Text="General", Value = "1" },
-                                    new SelectListItem{ Text="Fixed", Value = "2" }}, new { @disabled=htmlAttributes,htmlAttributes})
+                                    new SelectListItem{ Text="Fixed", Value = "2" }}, new {  @class = "form-control" , @disabled=htmlAttributes,htmlAttributes})
 
                                     </div>
                             </label>
@@ -115,14 +129,22 @@
                         <div class="flex">
                             <label for="">
                                 Status
-                                <input class='input-switch' type="checkbox" id="addLocation" required />
+
+                                <input disabled="@htmlAttributes" type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "" ) required />
                                 <label class="label-switch" for="addLocation"></label>
-                                <span class="info-text"></span>
+                                <span class="info-text" style="top:-20px;"></span>
                             </label>
                         </div>
                     </div>
-                    <div class="roundBorderBox" id="general">
-                        <h3 class="mb-28">Valuation Charges - General Valuation Fees</h3>
+                    
+                        <div class="" id="general">
+                            <div class="addMoreAddress roundBorderBox">
+                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                    <h4>Valuation Charges - General Valuation Fees</h4>
+                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                </div>
+                                <div class="pannel" style="display:none">
+                        
                         <div class="flex">
                             <label for="" class="w-50">
                                 Valuation Fees (AED)
@@ -152,8 +174,15 @@
                             </label>
                          </div>
                      </div>
-                        <div class="roundBorderBox" id="fixed">
-                            <h3 class="mb-28">Valuation Charges - Fixed Valuation Fees</h3>
+                     </div>
+                     </div>
+                    <div class="" id="fixed">
+                        <div class="addMoreAddress roundBorderBox">
+                            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                <h4>Valuation Charges - Fixed Valuation Fees</h4>
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                            </div>
+                            <div class="pannel" style="display:none">
                             <div class="flex">
 
                                 <label for="" class="w-50">
@@ -163,9 +192,11 @@
                                 </label>
                             </div>
                         </div>
+                        </div>
+                        </div>
                     
                     <div class="text-right buttonArea bodyContent plr-0">
-                        <a href='/MasterValuationFees/ValuationFees'> <button type="button" class="lineBtn">Cancel</button></a>
+                        <a href='/MasterValuationFee/ValuationFees'> <button type="button" class="lineBtn">Cancel</button></a>
                       @*   <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button> *@
                     </div>
                 </form>
@@ -202,260 +233,30 @@
 </div>
 
 @section MyScripts {
+    <script type="text/javascript" src="~/js/Custom/ValuationFee/valuationfeemanage.js?v=@jsVersion"></script>
 
-    @Html.Partial("_DataTablePartial")
-
-    @* <script type="text/javascript" src="~/js/Custom/Department/DepartmentManagement.js?v=@jsVersion"></script> *@
-    <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
-    <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-
-    <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-
-    @* <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/custom/valuation/valuationmanagement.js?v=@jsVersion"></script> *@
     <script>
-
         var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
         var StatusMessage = '@TempData["StatusMessage"]';
 
-
         //#region Setup API Url
         var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
-       
+
+        var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";//GetAllPropertyType";
+        var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
+        var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";//GetAllOwnershipType";
+        var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationFeeTypeList";//GetAllValuationFeeType";
+        var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
+
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]";
 
-
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
-        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
-        if (successCallBack) {
-            toastr.success(successCallBack);
-        }
-
-
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-
-        $('#ValuationType').change(function () {
-            var general = document.getElementById("general");
-            var fixed = document.getElementById("fixed");
-            var valuationType = document.getElementById('ValuationType').value;
-            //alert("You entered " + valuationType + " for your gender<br>");
-            if (valuationType === "2") {
-                general.style.display = "none";
-                fixed.style.display = "block";
-
-                document.getElementById('ValuationFees').value = null;
-                document.getElementById('Vat').value = null;
-                document.getElementById('OtherCharges').value = null;
-                document.getElementById('TotalValuationFees').value = null;
-
-
-            } else if (valuationType === "1") {
-                fixed.style.display = "none";
-                general.style.display = "block";
-                document.getElementById('FixedvaluationFees').value = null;
-            }
-        });
-
-        $(document).ready(function () {
-            BindProperty();
-            BindClient();
-            BindOwnership();
-            BindValuationFeeType();
-            ///For Dropdown Change
-            var general = document.getElementById("general");
-            var fixed = document.getElementById("fixed");
-            var valuationType = document.getElementById('ValuationType').value;
-            alert(valuationType);
-            if (valuationType === "2") {
-                general.style.display = "none";
-                fixed.style.display = "block";
-            } else if (valuationType === "1") {
-                fixed.style.display = "none";
-                general.style.display = "block";
-            }
-            /// End For Dropdown Change
-            var HdnId = $('#hdnProperty').val();
-            if (HdnId) {
-                BindPropertySub(HdnId);
-            }
-          
-        });
-
-        function BindProperty() { 
-
-            //alert("hello");
-            var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllPropertyType";
-            var Property = $("#PropertyTypeId");
-            var _val = $('#hdnProperty').val();
-            var _rpname = "propertyTypeId";
-
-            //BindDropdowns(PropertyList, Property, _rpname, _val);
-            $.ajax({
-                type: "POST",
-                url: $('#hdnBaseURL').val() + PropertyList,
-                "datatype": "json",
-                success: function (response) {
-                    debugger;
-                    Property.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.data.length; i++) {
-                        Property.append($("<option></option>").val(response.data[i].id).html(response.data[i].propertyType));
-                    }
-                    if ($('#hdnProperty').val() != 0) {
-                        Property.val($('#hdnProperty').val());
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-
-        function BindPropertySub(id) {
-            debugger;
-            //alert("hello");
-            var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
-            var PropertySubType = $("#PropertySubTypeId");
-            var _val = $('#hdnPropertySub').val();
-            var _rpname = "propertyTypeId";
-
-            //BindDropdowns(PropertyList, Property, _rpname, _val);
-            $.ajax({
-                type: "GET",
-                url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
-                "datatype": "json",
-                success: function (response) {
-                   
-                    PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
-                  
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-
-        function BindClient() {
-            debugger;
-            //alert("hello");
-            var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
-            var Client = $("#ClientTypeId");
-            var _val = $('#hdnClientType').val();
-            var _rpname = "clientTypeId";
-
-            //BindDropdowns(PropertyList, Property, _rpname, _val);
-            $.ajax({
-                type: "GET",
-                url: $('#hdnBaseURL').val() + ClientTypeList,
-                "datatype": "json",
-                success: function (response) {
-                    debugger;
-                    Client.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response._object.length; i++) {
-                        Client.append($("<option></option>").val(response._object[i].id).html(response._object[i].clientType));
-                    }
-                    if ($('#hdnClientType').val() != 0) {
-                        Client.val($('#hdnClientType').val());
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-
-        function BindOwnership() {
-            debugger;
-            //alert("hello");
-            var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllOwnershipType";
-            var OwnershipType = $("#OwnershipTypeId");
-            var _val = $('#hdnOwnershipType').val();
-            var _rpname = "ownershipTypeId";
-
-            //BindDropdowns(PropertyList, Property, _rpname, _val);
-            $.ajax({
-                type: "POST",
-                url: $('#hdnBaseURL').val() + OwnershipTypeList,
-                "datatype": "json",
-                success: function (response) {
-                    debugger;
-                    OwnershipType.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.data.length; i++) {
-                        OwnershipType.append($("<option></option>").val(response.data[i].id).html(response.data[i].ownershipType));
-                    }
-                    if ($('#hdnOwnershipType').val() != 0) {
-                        OwnershipType.val($('#hdnOwnershipType').val());
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-
-        function BindValuationFeeType() {
-            debugger;
-            //alert("hello");
-            var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationFeeType";
-            var ValuationFeeType = $("#ValuationFeeTypeId");
-            var _val = $('#hdnValuationFeeType').val();
-            var _rpname = "valuationFeeTypeId";
-
-            //BindDropdowns(PropertyList, Property, _rpname, _val);
-            $.ajax({
-                type: "POST",
-                url: $('#hdnBaseURL').val() + ValuationFeeTypeList,
-                "datatype": "json",
-                success: function (response) {
-                    debugger;
-                    ValuationFeeType.empty().append('<option selected="selected" value="0">Please select</option>');
-                    for (var i = 0; i < response.data.length; i++) {
-                        ValuationFeeType.append($("<option></option>").val(response.data[i].id).html(response.data[i].valuationFeeType));
-                    }
-                    if ($('#hdnValuationFeeType').val() != 0) {
-                        ValuationFeeType.val($('#hdnValuationFeeType').val());
-                    }
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                    $("#loader").hide();
-                }
-            });
-        }
-
-                //#endregion
     </script>
 
 }
+

@@ -302,8 +302,8 @@
     }
 
     $(document).ready(function () {
-        if ($("#hdnId").val() != 0) {
-            BindPropertySub($("#hdnPropertySubType").val());
+        if ($("#hdnPropertyType").val() != 0) {
+            BindPropertySub($("#hdnPropertyType").val());
         }
         BindProperty();
         BindOwnership();
@@ -353,29 +353,29 @@
         var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
         var PropertySubType = $("#PropertySubTypeId");
         var _val = $('#hdnPropertySubType').val();
-        var _rpname = "propertyTypeId";
+        var _rpname = "propertySubType";
 
-        //BindDropdowns(PropertyList, Property, _rpname, _val);
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
-            "datatype": "json",
-            success: function (response) {
-                debugger;
+        BindDropdowns(PropertyByIdSubType + '/' + id, PropertySubType, _rpname, _val);
+        // $.ajax({
+        //     type: "GET",
+        //     url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
+        //     "datatype": "json",
+        //     success: function (response) {
+        //         debugger;
 
-                PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
-                if ($('#hdnPropertySubType').val() != 0) {
-                    Property.val($('#hdnPropertySubType').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
-        });
+        //         PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
+        //         if ($('#hdnPropertySubType').val() != 0) {
+        //             PropertySubType.val($('#hdnPropertySubType').val());
+        //         }
+        //     },
+        //     failure: function (response) {
+        //         alert(response.responseText);
+        //     },
+        //     error: function (response) {
+        //         alert(response.responseText);
+        //         $("#loader").hide();
+        //     }
+        // });
     }
 
     function BindClient() {

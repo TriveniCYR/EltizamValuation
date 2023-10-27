@@ -133,7 +133,7 @@ namespace EltizamValuation.Web.Controllers
 					if (data._object is null)
 						return NotFound();
 
-					return View(data._object);
+					return View("ValuationFeeDetail",data._object);
 				}
 				return NotFound();
 			}

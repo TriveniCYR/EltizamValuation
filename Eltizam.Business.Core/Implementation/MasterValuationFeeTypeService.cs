@@ -57,6 +57,11 @@ namespace Eltizam.Business.Core.Implementation
 
             return oDataTableResponseModel;
         }
+
+        public async Task<List<MasterValuationFeeTypeModel>> GetAllValuationFeeType()
+        {
+            return _mapperFactory.GetList<MasterValuationFeeType, MasterValuationFeeTypeModel>(await _repository.GetAllAsync());
+        }
         public async Task<MasterValuationFeeTypeModel> GetById(int id)
         {
             var _ValuationFeeTypeEntity = new MasterValuationFeeTypeModel();

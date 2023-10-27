@@ -303,8 +303,9 @@ footer {
     width: 16em;
     background-color: var(--white);
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.07);
-    z-index: 1;
+    z-index: 2;
     height: 100%;
+    position:relative;
 }
 
     .sideNavDashboard .dashboard-logo {
@@ -562,12 +563,13 @@ main {
     border: none;
     background: none;
     border-radius: 4px;
-    padding: 8px 14px;
+    padding: 10px 30px;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 120%;
     cursor: pointer;
+    height: 45px;
 }
 
 .buttonArea img {
@@ -1782,4 +1784,58 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .text-danger span {
     color: #dc3545 !important;
+}
+
+.accordianDetails {
+    background-color: #EBF5FF;
+    padding: 10px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.panel {
+    margin-top: 20px;
+}
+
+.accordianDetails img {
+    transform: rotate(90deg);
+}
+
+/* dynamic input on add more property description */  
+.addPropertyInputDynamic {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 30px;
+    padding: 20px 0;
+}
+
+.inputFieldProp {
+    position: relative;
+    width: 47%;
+}
+
+    .inputFieldProp label {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .inputFieldProp input {
+        margin-top: 0 !important;
+    }
+
+    .inputFieldProp img {
+        position: absolute;
+        top: -6px;
+        right: -8px;
+    }
+/* dynamic input on add more property description ends*/
+
+.hamburger a {
+    color: #25408f;
+    background-color: transparent !important;
+}
+
+.actionItem ul {
+    margin-bottom: 0px;
 }

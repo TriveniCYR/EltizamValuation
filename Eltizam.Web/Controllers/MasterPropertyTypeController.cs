@@ -108,5 +108,40 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet]
+        //  [Route(" MasterPropertyType/PropertyTypeManage")]
+        public IActionResult PropertyTypeDetail(int? id)
+        {
+            if (id != null)
+            {
+                ViewData["IsEdit"] = true;
+            }
+
+            Master_PropertyTypeModel masterPropertyType;
+            if (id == null || id <= 0)
+            {
+                masterPropertyType = new Master_PropertyTypeModel();
+                return View(masterPropertyType);
+            }
+            else
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetPropertyTypeById + "/" + id, HttpMethod.Get, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<Master_PropertyTypeModel>>(jsonResponse);
+                    if (data._object is null)
+                        return NotFound();
+
+                    return View("PropertyTypeDetail", data._object);
+                }
+                return NotFound();
+            }
+        }
     }
 }
