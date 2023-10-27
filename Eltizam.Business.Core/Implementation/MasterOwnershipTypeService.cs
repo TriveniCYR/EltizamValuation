@@ -64,6 +64,12 @@ namespace Eltizam.Business.Core.Implementation
 
             return oDataTableResponseModel;
         }
+
+        public async Task<List<MasterOwnershipTypeEntity>> GetOwnershipTypeList()
+        {
+            return _mapperFactory.GetList<MasterOwnershipType, MasterOwnershipTypeEntity>(await _repository.GetAllAsync());
+        }
+
         public async Task<MasterOwnershipTypeEntity> GetById(int id)
         {
             var _OwnershipTypeEntity = new MasterOwnershipTypeEntity();

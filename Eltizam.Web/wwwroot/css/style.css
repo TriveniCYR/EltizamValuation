@@ -563,12 +563,13 @@ main {
     border: none;
     background: none;
     border-radius: 4px;
-    padding: 8px 14px;
+    padding: 10px 30px;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 120%;
     cursor: pointer;
+    height: 45px;
 }
 
 .buttonArea img {
@@ -1799,4 +1800,42 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .accordianDetails img {
     transform: rotate(90deg);
+}
+
+/* dynamic input on add more property description */  
+.addPropertyInputDynamic {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 30px;
+    padding: 20px 0;
+}
+
+.inputFieldProp {
+    position: relative;
+    width: 47%;
+}
+
+    .inputFieldProp label {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .inputFieldProp input {
+        margin-top: 0 !important;
+    }
+
+    .inputFieldProp img {
+        position: absolute;
+        top: -6px;
+        right: -8px;
+    }
+/* dynamic input on add more property description ends*/
+
+.hamburger a {
+    color: var(--black);
+    background-color: transparent !important;
+}
+
+.actionItem ul {
+    margin-bottom: 0px;
 }

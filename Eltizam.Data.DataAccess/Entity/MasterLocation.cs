@@ -20,6 +20,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifiedBy { get; set; }
         public int? HomeCurrencyId { get; set; }
         public int? ForeignCurrencyId { get; set; }
+        public bool? IsActive { get; set; }
 
         public virtual MasterCity City { get; set; } = null!;
         public virtual MasterCountry Country { get; set; } = null!;

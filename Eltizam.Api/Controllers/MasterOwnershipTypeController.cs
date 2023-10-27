@@ -70,6 +70,23 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
+        [HttpGet, Route("GetAllOwnershipType")]
+        public async Task<IActionResult> GetAllOwnershipType()
+        {
+            try
+            {
+                var oRoleList = await _OwnershipTypeService.GetOwnershipTypeList();
+                if (oRoleList != null)
+                    return _ObjectResponse.CreateData(oRoleList, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         // get master OwnershipType detail by id
         [HttpGet, Route("GetById/{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)

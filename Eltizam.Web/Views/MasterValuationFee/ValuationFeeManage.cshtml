@@ -20,24 +20,26 @@
             {
                 <h3 class="dashboardTitle">EDIT VALUATION FEES MASTER</h3>
                 <div class="hamburger">
-                    <span onclick="resourceMaster()">Valuation Master</span>
+                    <a class="greyBtn lineBtn formAbtn" asp-action="ValuationFees">Valuation Fees Master</a>
+                   @*  <span onclick="resourceMaster()">Valuation Master</span> *@
                     <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                    <span>Edit Resource Master</span>
+                    <span>Edit</span>
                 </div>
             }
             else
             {
                 <h3 class="dashboardTitle">ADD VALUATION FEES MASTER</h3>
                 <div class="hamburger">
-                    <span onclick="resourceMaster()">Valuation Master</span>
+                    <a class="greyBtn lineBtn formAbtn" asp-action="ValuationFees">Valuation Fees Master</a>
+                    @* <span onclick="resourceMaster()">Valuation Master</span> *@
                     <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                    <span>Add Resource Master</span>
+                    <span>Add</span>
                 </div>
             }
         </div>
         <div class="bodyContent">
-            <div class="inputSearchs">
-                <form asp-action="ValuationFeesManage" autocomplete="off" asp-controller="MasterValuationFees" method="post">
+            <div class="inputSearchs p-0">
+                <form asp-action="ValuationFeeManage" autocomplete="off" asp-controller="MasterValuationFee" method="post">
 
                      <input type="hidden" id="hdnProperty" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
                         @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
@@ -48,8 +50,7 @@
                     <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
                     <input type="hidden" id="hdnValuationFeeType" value="@(Model == null ? 0 : Model.ValuationFeeTypeId)" /> 
                    
-                    <div class="roundBorderBox">
-                        <h3 class="mb-28">Property Details</h3>
+                    <div>
                         <div class="flex">
                             <label for="PropertyTypeId" class="w-50">
                                 Property Type Name
@@ -94,7 +95,7 @@
                                 <div class="flex m-0 valuationType">
                                     @Html.DropDownList("ValuationType", new List<SelectListItem>{
                                     new SelectListItem{ Text="General", Value = "1" },
-                                    new SelectListItem{ Text="Fixed", Value = "2" }})
+                                    new SelectListItem{ Text="Fixed", Value = "2" }}, new { @class = "form-control" })
                                     
                                 </div>
                             </label>
@@ -102,15 +103,22 @@
                         <div class="flex">
                             <label for="">
                                 Status
-                                <input class='input-switch' type="checkbox" id="addLocation" required />
+
+                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
                                 <label class="label-switch" for="addLocation"></label>
-                                <span class="info-text"></span>
+                                <span class="info-text" style="top:-20px;"></span>
                             </label>
                         </div>
                     </div>
                     
-                        <div class="roundBorderBox" id="general">
-                            <h3 class="mb-28">Valuation Charges - General Valuation Fees</h3>
+                        <div class="" id="general">
+                        <div class="addMoreAddress roundBorderBox">
+                            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                <h4>Valuation Charges - General Valuation Fees</h4>
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                            </div>
+                            <div class="pannel" style="display:none">
+                            
                             <div class="flex">
                             <label for="" class="w-50">
                                     Valuation Fees (AED)
@@ -136,10 +144,18 @@
                                 </label>
                             </div>
                         </div>
+                        </div>
+                        </div>
                     
                     
-                        <div class="roundBorderBox" id="fixed">
-                            <h3 class="mb-28">Valuation Charges - Fixed Valuation Fees</h3>
+                        <div class="" id="fixed">
+                        <div class="addMoreAddress roundBorderBox">
+                            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                <h4>Valuation Charges - Fixed Valuation Fees</h4>
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                            </div>
+                            <div class="pannel" style="display:none">
+                            
                             <div class="flex">
 
                             <label for="" class="w-50">
@@ -149,10 +165,12 @@
                                 </label>
                             </div>
                         </div> 
+                        </div> 
+                        </div> 
 
                     <div class="text-right buttonArea bodyContent plr-0">
-                        <a href='/MasterValuationFees/ValuationFees'> <button type="button" class="lineBtn">Cancel</button></a>
-                        <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
+                        <a href='/MasterValuationFee/ValuationFees'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                        <button type="submit" id="btnSaveRole" class="bgBlue">@SharedLocalizer["Save"]</button>
                     </div>
                 </form>
             </div>
@@ -202,8 +220,8 @@
 
         var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";//GetAllPropertyType";
         var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
-        var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllOwnershipType";
-        var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationFeeType";
+        var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";//GetAllOwnershipType";
+        var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationFeeTypeList";//GetAllValuationFeeType";
         var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
 
         //#region Static Messae Init

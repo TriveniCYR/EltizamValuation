@@ -13,6 +13,7 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> Upsert(MasterValuationFeeTypeModel entityUser);
         Task<MasterValuationFeeTypeModel> GetById(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
+        Task<List<MasterValuationFeeTypeModel>> GetAllValuationFeeType();
         Task<DBOperation> Delete(int id);
     }
 }

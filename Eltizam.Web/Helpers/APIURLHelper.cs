@@ -86,6 +86,7 @@ namespace Eltizam.Web.Helpers
         public static string GetAllOwnershipType = "api/MasterOwnershipType/GetAll";
         public static string GetOwnershipType = "api/MasterOwnershipType/GetById";
         public static string DeleteOwnershipType = "api/MasterOwnershipType/Delete";
+        public static string OwnershipTypeList = "api/MasterOwnershipType/GetAllOwnershipType";
 
         #endregion MasterOwnershipType
 
@@ -102,6 +103,7 @@ namespace Eltizam.Web.Helpers
         public static string GetAllValuationFeeType = "api/MasterValuationFeeType/GetAll";
         public static string GetValuationFeeTypeById = "api/MasterValuationFeeType/GetById";
         public static string DeleteValuationFeeTypeById = "api/MasterValuationFeeType/Delete";
+        public static string ValuationFeeTypeList = "api/MasterValuationFeeType/GetAllValuationFeeType";
 
         #endregion Valuation Fees Type
 
