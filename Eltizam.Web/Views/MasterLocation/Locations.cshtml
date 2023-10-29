@@ -20,11 +20,13 @@
             <h3 class="dashboardTitle">LOCATION MASTER</h3>
             <div class="buttonArea flex align-item-center">
 
-                <form asp-action="LocationManage" asp-controller="MasterLocation" method="GET">
-                    <button class="flex align-item-center blueBtn" id="addNew">
+                                
+                    <a href='/MasterLocation/LocationManage?Isview=2'>
+                        <button class="flex align-item-center blueBtn" id="addNew">
                         <img src="~/assets/plus.svg" alt="plus"> Add New
-                    </button>
-                </form>
+                        </button> 
+                    </a>
+                
             </div>
         </div>
         <div class="scroll-x whiteWithPadding">

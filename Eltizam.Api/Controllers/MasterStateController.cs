@@ -139,6 +139,19 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
+        [HttpGet("GetStateListByCountryId")]
+        public async Task<IActionResult> GetStateListByCountryId(int countryId)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _StateService.GetStateList(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         #endregion API Methods
     }
 }
