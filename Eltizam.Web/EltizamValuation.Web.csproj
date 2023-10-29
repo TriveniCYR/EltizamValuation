@@ -39,7 +39,6 @@
 
   <ItemGroup>
     <Folder Include="Views\User\" />
-    <Folder Include="wwwroot\js\Custom\MasterClient\" />
     <Folder Include="wwwroot\Uploads\errorlogs\" />
   </ItemGroup>
 

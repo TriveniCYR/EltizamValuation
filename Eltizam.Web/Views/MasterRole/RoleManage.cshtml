@@ -36,8 +36,7 @@
                         <div class="flex">
                             <div class="w-50">
                                 <div class="form-group required">
-                                    @Html.LabelFor(model => model.RoleName, new { @class = "control-label" })
-                                    <span class="text-danger">*</span>
+                                    <p class="m-0">Role Name<span class="text-danger">*</span></p>
                                     @Html.EditorFor(model => model.RoleName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["RoleName"] } })
                                     @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
                                 </div>
@@ -96,7 +95,7 @@
                         </div>
                     </div> 
                     <div class="text-right buttonArea bodyContent plr-0">
-                        <a href='/MasterValuationFee/ValuationFees'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                        <a href='/MasterRole/Roles'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
                         <button type="submit" id="btnSaveRole" class="bgBlue">@SharedLocalizer["Save"]</button>
                     </div>
                 </form>
