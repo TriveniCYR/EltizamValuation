@@ -1,18 +1,15 @@
+//document.addEventListener("DOMContentLoaded", () => {
+//    const addResourceRedirection = document.getElementById("addResourceRedirection");
 
-document.addEventListener("DOMContentLoaded", () => {
-    const addResourceRedirection = document.getElementById("addResourceRedirection");
-
-    addResourceRedirection.addEventListener('click', () => {
-        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
-    });
-});
+//    addResourceRedirection.addEventListener('click', () => {
+//        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
+//    });
+//});
 
 $(document).ready(function () {
-    BindClientType();
     BindCountry();
     BindState();
     BindCity();
-    BindGender();
 });
 
 function profileTab(evt, cityName) {
@@ -29,6 +26,17 @@ function profileTab(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
+
+// accordian function here
+function accordianToggle(header) {
+    const item = header.nextElementSibling;
+    if (item.style.display === 'block') {
+        item.style.display = 'none';
+    } else {
+        item.style.display = 'block';
+    }
+}
+//accordian function end
 
 function sideNavToggle() {
     var x = document.getElementById("sideNav");
@@ -66,8 +74,8 @@ function addMoreAddress() {
     const minusDiv = document.createElement('div');
     minusDiv.className = 'text-right';
     minusDiv.innerHTML = `
-    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
-        `;
+                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+                            `;
     clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
 
     addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
@@ -86,45 +94,12 @@ function removeParentDivAddress(element) {
 
 
 
-function BindClientType() {
-    debugger
-    
-    var ClientType = $("#ClientTypeId");
-    var _val = $('#hdnClientType').val();
-    var _rpname = "clientType";
-
-    BindDropdowns(ClientTypeList, ClientType, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + ClientTypeList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        ClientType.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            ClientType.append($("<option></option>").val(response[i].id).html(response[i].clientType));
-    //        }
-    //        if ($('#hdnClientType').val() != 0) {
-    //            ClientType.val($('#hdnClientType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
-}
-
 function BindCountry() {
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
 
     BindDropdowns(CountryList, Country, _rpname, _val);
-    
-   
     //$.ajax({
     //    type: "GET",
     //    url: $('#hdnBaseURL').val() + CountryList,
@@ -155,7 +130,6 @@ function BindState() {
     var _rpname = "stateName";
 
     BindDropdowns(StateList, State, _rpname, _val);
-
     //$.ajax({
     //    type: "GET",
     //    url: $('#hdnBaseURL').val() + StateList,
@@ -186,7 +160,6 @@ function BindCity() {
     var _rpname = "cityName";
 
     BindDropdowns(CityList, City, _rpname, _val);
-
     //$.ajax({
     //    type: "GET",
     //    url: $('#hdnBaseURL').val() + CityList,

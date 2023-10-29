@@ -73,29 +73,38 @@
                             @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @disabled= htmlAttributes, @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)",htmlAttributes})
 
                             </label>
+                            <label for="" class="w-50">
+                                Status
+
+                                <input disabled="@htmlAttributes" type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text" style="top:-20px;"></span>
+                            </label>
                             @*  <label for="">
                             Property Type Name
                             <input type="text" placeholder="enter Property Type Name">
                             </label> *@
+                            
+                            </div>
+                        <div class="flex">
                             <label for="" class="w-50">
                                 Property SubType Name
                                 @*  <input type="text" placeholder="enter Property SubType Name"> *@
-                            @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes/*  @disabled = "disabled" */})
+                                @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes/*  @disabled = "disabled" */})
                             </label>
-                            </div>
-                        <div class="flex">
                             <label for="" class="w-50">
                                 Type of Ownership
                                 @* <input type="text" placeholder="enter Type of Ownership"> *@
                                 @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
+                            
+                        </div>
+                        <div class="flex">
                             <label for="" class="w-50">
                                 Client Type
                                 @* <input type="text" placeholder="enter Client Type" /> *@
-                            @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
+                                @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
-                        </div>
-                        <div class="flex">
                             <label for="CarpetAreaInSqFt" class="w-50">
                                 Carpet Area (Sq.Ft)
                                 @* <input type="text" placeholder="enter Carpet Area (Sq.Ft)" /> *@
@@ -103,36 +112,31 @@
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqFt, "", new { @class = "text-danger" })
                             </label>
 
+                            
+                            </div>
+                        <div class="flex">
                             <label for="CarpetAreaInSqMtr" class="w-50">
                                 Carpet Area (Sq.Meter)
                                 @* <input type="text" placeholder="enter Carpet Area (Sq.Meter)"> *@
                                 @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control" ,htmlAttributes} })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqMtr, "", new { @class = "text-danger" })
                             </label>
-                            </div>
-                        <div class="flex">
-                            <label for="">
+                            <label for="" class="w-50">
                                 Valuation Fee Type
                                 @* <input type="text" placeholder="enter Valuation Fee Type"> *@
                             @Html.DropDownListFor(model => model.ValuationFeeTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
-                            <label for="">
-                                    Valuation Type
-                                    <div class="flex m-0 valuationType">
-                                        @Html.DropDownList("ValuationType", new List<SelectListItem>{
-                                        new SelectListItem{ Text="General", Value = "1" },
-                                    new SelectListItem{ Text="Fixed", Value = "2" }}, new {  @class = "form-control" , @disabled=htmlAttributes,htmlAttributes})
-
-                                    </div>
-                            </label>
+                           
                         </div>
                         <div class="flex">
                             <label for="">
-                                Status
+                                Valuation Type
+                                <div class="flex m-0 valuationType">
+                                    @Html.DropDownList("ValuationType", new List<SelectListItem>{
+                                    new SelectListItem{ Text="General", Value = "1" },
+                                    new SelectListItem{ Text="Fixed", Value = "2" }}, new {  @class = "form-control" , @disabled=htmlAttributes,htmlAttributes})
 
-                                <input disabled="@htmlAttributes" type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "" ) required />
-                                <label class="label-switch" for="addLocation"></label>
-                                <span class="info-text" style="top:-20px;"></span>
+                                </div>
                             </label>
                         </div>
                     </div>
@@ -205,35 +209,8 @@
     </div>
 </main>
 
-
-<div id="DeleteValuationModel" class="modal themeModal " role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
-                        </div>
-                    </div>
-                </div>
-                @Html.Hidden("Id")
-                <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteValuation()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
-                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 @section MyScripts {
-    <script type="text/javascript" src="~/js/Custom/ValuationFee/valuationfeemanage.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/Custom/ValuationFee/valuationfeedetail.js?v=@jsVersion"></script>
 
     <script>
         var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
