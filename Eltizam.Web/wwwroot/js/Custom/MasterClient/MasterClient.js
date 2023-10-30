@@ -41,27 +41,26 @@ function InitializeClientList() {
     };
     var columnObject = [
         {
-            "data": "clientName", "name": "Clent Name"
+            "data": "id" 
         },
         {
-            "data": "clientType", "name": "Client Type"
+            "data": "clientName" 
         },
         {
-            "data": "trnnumber", "name": "TRN Number"
+            "data": "clientType" 
         },
         {
-            "data": "trnexpiryDate", "name": "TRN Expiry"
+            "data": "trnnumber" 
         },
         {
-            "data": "licenseNumber", "name": "License Number"
+            "data": "trnexpiryDate" 
+        },
+        {
+            "data": "licenseNumber" 
         },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
-                if (data.isActive) {
-                    return "<span class='tableStatus green'>Active</span>";
-                } else {
-                    return "<span class='tableStatus red'>Inactive</span>";
-                }
+                return GetActiveFlagCss(data);
             }
         },
         {

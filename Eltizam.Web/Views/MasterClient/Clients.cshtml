@@ -11,90 +11,88 @@
     ViewData["Title"] = @SharedLocalizer["ClientMangegment"];
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
-    <!-- system user master -->
-    <div class="flex">
-        <div class="w-100 position-relative">
+<!-- system user master -->
+<div class="flex">
+    <div class="w-100 position-relative">
         <main class="w-100">
             <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
-                <h3 class="dashboardTitle">CLIENT MASTER</h3> 
-                    <div class="buttonArea flex align-item-center">
+                <h3 class="dashboardTitle">CLIENT MASTER</h3>
+                <div class="buttonArea flex align-item-center">
                     <form asp-action="ClientManage" asp-controller="MasterClient" method="GET">
                         <button class="flex align-item-center blueBtn">
                             <img src="../assets/plus.svg" alt="plus"> Add New
                         </button>
-                        </form> 
-                    </div>
+                    </form>
                 </div>
+            </div>
             <div class="scroll-x whiteWithPadding">
                 <table id="ClientTable" class="table table-bordered table-striped table-hover dataTable no-footer">
-                        <thead>
-                            <tr>
-                                <th>Client Name</th>
-                                <th>Client Type</th>
-                                <th>TRN Number</th>
-                                <th>TRN Expiry</th>
-                                <th>License Number</th>
-                                <th>Active</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>                
-            </main>
-            <footer class="flex justify-between">
-                <p>2023 © Eltizam.</p>
-                <p>Design & Develop by NeoSoft</p>
-            </footer>
-           
-            <!-- popup delete model -->
-            <div class="popup-overlay" id="popup-delete-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head">Delete User</div>
-                        <div class="popup-action">
-                            <p>Are you sure you want to delete?</p>
-                            <div class="buttonArea popup-btn">
-                                <button id="cancelDeleteUser" class="greyBtn">Cancel</button>
-                                <button class="redBtn">Delete</button>
-                            </div>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Client Name</th>
+                            <th>Client Type</th>
+                            <th>TRN Number</th>
+                            <th>TRN Expiry</th>
+                            <th>License Number</th>
+                            <th>Active</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <!-- popup delete model -->
+        <div class="popup-overlay" id="popup-delete-overlay">
+            <div class="popup">
+                <div class="content text-center">
+                    <div class="popup-head">Delete User</div>
+                    <div class="popup-action">
+                        <p>Are you sure you want to delete?</p>
+                        <div class="buttonArea popup-btn">
+                            <button id="cancelDeleteUser" class="greyBtn">Cancel</button>
+                            <button class="redBtn">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- popup import model -->
-            <div class="popup-overlay" id="popup-import-overlay">
-                <div class="popup">
-                    <div class="content text-center">
-                        <div class="popup-head position-relative">Import Resource
-                            <img src="../assets/x.svg" alt="x" id="closePopup">
-                        </div>
-                        <div class="popup-action importBox">
-                            <p class="text-left">Browse File</p>
-                            <div class="inputBox">
-                                <input type="file" name="file" id="file" class="file"/>
-                                <div class="flex">
-                                    <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name"/>
-                                    <div class="uploadFileBtn flex">
-                                        <img src="../assets/files.svg" alt="file">
-                                        <input type="button" class="btn" value="Browse"/>
-                                    </div>
+        <!-- popup import model -->
+        <div class="popup-overlay" id="popup-import-overlay">
+            <div class="popup">
+                <div class="content text-center">
+                    <div class="popup-head position-relative">
+                        Import Resource
+                        <img src="../assets/x.svg" alt="x" id="closePopup">
+                    </div>
+                    <div class="popup-action importBox">
+                        <p class="text-left">Browse File</p>
+                        <div class="inputBox">
+                            <input type="file" name="file" id="file" class="file" />
+                            <div class="flex">
+                                <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                                <div class="uploadFileBtn flex">
+                                    <img src="../assets/files.svg" alt="file">
+                                    <input type="button" class="btn" value="Browse" />
                                 </div>
                             </div>
-                            <div class="buttonArea popup-btn">
-                                <button id="cancelDeleteUser" class="bgBlue">Submit</button>
-                                <button class="lineBtn">Download Template</button>
-                            </div>
+                        </div>
+                        <div class="buttonArea popup-btn">
+                            <button id="cancelDeleteUser" class="bgBlue">Submit</button>
+                            <button class="lineBtn">Download Template</button>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
+
     </div>
-    
+</div>
+
 <div id="DeleteClientModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -121,30 +119,15 @@
     </div>
 </div>
 
-    @section MyScripts {
+@section MyScripts {
 
-        @Html.Partial("_DataTablePartial")
-        <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
-        <script type="text/javascript" src="~/js/Custom/MasterClient/MasterClient.js?v=@jsVersion"></script>
+    @Html.Partial("_DataTablePartial")
+    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/Custom/MasterClient/MasterClient.js?v=@jsVersion"></script>
 
     <script>
         //#region Setup API Url
         var AllClient = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClient";
-        var DeleteClient = "@Eltizam.Web.Helpers.APIURLHelper.DeleteClient";
-        
-        var successCallBack = '@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]';
-        if (successCallBack) {
-            toastr.success(successCallBack);
-        }
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-
-        
+        var DeleteClient = "@Eltizam.Web.Helpers.APIURLHelper.DeleteClient"; 
     </script>
-    }
+}
