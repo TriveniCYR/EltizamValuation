@@ -12,11 +12,8 @@
 @{
     ViewData["Title"] = @MasterLocalizer["ValuationFeesManage"];
     string PageHeading = "";
-    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-
-}
-
-
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"]; 
+} 
 
 <form asp-action="ValuationFeesManage">
     <main>
@@ -34,22 +31,9 @@
                                 <span class="text-danger">*</span>
                                 @Html.EditorFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control", @placeholder = @MasterLocalizer["Property Name"] } })
                                 @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
-                            </label>
-                           @*  <label for="" class="w-50 roleswitch">
-                                Status
-                                @{
-                                    bool isActive = Model.IsActive == 1; // Convert 1 to true, any other value to false
-                                }
-
-                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required disabled />
-                                <label class="label-switch" for="addLocation"></label>
-                                <span class="info-text"></span>
-                            </label> *@
-
-                        </div>
-
-                    </form>
-
+                            </label> 
+                        </div> 
+                    </form> 
                 </div>
             </div>
         </div>

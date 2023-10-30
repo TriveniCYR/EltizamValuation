@@ -16,104 +16,13 @@
         <div class="w-100 position-relative">
         <main class="w-100">
             <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
-                <h3 class="dashboardTitle">CLIENT MASTER</h3>
-                    @*<div class="flex">
-                        <label class="searchBox position-relative">
-                            <div class="flex align-item-center">
-                                <img src="../assets/search.svg" alt="search">
-                                <input type="text" placeholder="Search for System" class="searchInput">
-                            </div>
-                            <button class="normalSearch">Search</button>
-                        </label>
-                        <div class="accordion">
-                            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
-                            <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch"/></label>
-                            <div class="accordion-content inputSearchs">
-                                <h3 class="text-center">Advanced Search</h3>
-                                <form>
-                                    <div class="flex">
-                                        <label for="userName">
-                                            User Name 
-                                            <input type="text" placeholder="enter user id">
-                                        </label>
-                                        <label for="valuatorType">
-                                            Valuator Type 
-                                            <select name="Valuator" id="ValuatorType">
-                                                <option value="Valuator1">Valuator type1</option>
-                                                <option value="Valuator2">Valuator type2</option>
-                                                <option value="Valuator3">Valuator type3</option>
-                                            </select>
-                                        </label>
-                                        <label for="resourceType">
-                                            Resource Type 
-                                            <select name="Valuator" id="resourceType">
-                                                <option value="resourceType1">Resource type1</option>
-                                                <option value="resourceType2">Resource type2</option>
-                                                <option value="resourceType3">Resource type3</option>
-                                            </select>
-                                        </label>
-                                        <label for="roleName">
-                                            Role Name 
-                                            <select name="Valuator" id="roleName">
-                                                <option value="roleName1">Role type1</option>
-                                                <option value="roleName2">Role type2</option>
-                                                <option value="roleName3">Role type3</option>
-                                            </select>
-                                        </label>
-                                    </div>
-                                    <div class="flex">
-                                        <label for="fromDate">
-                                            From Date 
-                                            <input type="date">    
-                                        </label>
-                                        <label for="toDate">
-                                            To Date 
-                                            <input type="date">    
-                                        </label>
-                                        <label for="designation">
-                                            Designation 
-                                            <select name="Valuator" id="ValuatorType">
-                                                <option value="Valuator1">Designation type1</option>
-                                                <option value="Valuator2">Designation type2</option>
-                                                <option value="Valuator3">Designation type3</option>
-                                            </select>
-                                        </label>
-                                        <label for="designation">
-                                            Department 
-                                            <select name="Valuator" id="ValuatorType">
-                                                <option value="Valuator1">Department type1</option>
-                                                <option value="Valuator2">Department type2</option>
-                                                <option value="Valuator3">Department type3</option>
-                                            </select>
-                                        </label>
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="blueBtn">Search</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>*@
+                <h3 class="dashboardTitle">CLIENT MASTER</h3> 
                     <div class="buttonArea flex align-item-center">
                     <form asp-action="ClientManage" asp-controller="MasterClient" method="GET">
                         <button class="flex align-item-center blueBtn">
                             <img src="../assets/plus.svg" alt="plus"> Add New
                         </button>
-                        </form>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        @*<button class="flex align-item-center lineBtn exportFile">
-                            <img src="../assets/file-export.svg" alt="file-export"> Export
-                            <div class="actionItem">
-                                <ul>
-                                    <li>
-                                        Excel XML
-                                    </li>
-                                    <li>
-                                        CSV
-                                    </li>
-                                </ul>
-                            </div>
-                        </button>*@
+                        </form> 
                     </div>
                 </div>
             <div class="scroll-x whiteWithPadding">
@@ -125,7 +34,7 @@
                                 <th>TRN Number</th>
                                 <th>TRN Expiry</th>
                                 <th>License Number</th>
-                                <th>Status</th>
+                                <th>Active</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
