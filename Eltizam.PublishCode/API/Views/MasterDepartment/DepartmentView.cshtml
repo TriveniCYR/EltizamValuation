@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model Eltizam.Business.Models.MasterDepartmentEntity
+@{
+    ViewData["Title"] = @MasterLocalizer["DepartmentManage"];
+    string PageHeading = "";
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+
+}
+
+
+
+<form asp-action="DepartmentManage">
+    <main>
+        <div class="whiteBoxShadow">
+            <div class="heading position-relative">
+                <h3 class="dashboardTitle">Department View</h3>
+            </div>
+            <div class="bodyContent">
+                <div class="inputSearchs">
+                    <form>
+                        <div class="flex mb-28">
+                            @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                            <label for="" class="w-50">
+                                @Html.LabelFor(model => model.Department, new { @class = "control-label" })
+                                <span class="text-danger">*</span>
+                                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Department Name"], @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                            </label>
+                            <label for="" class="w-50 roleswitch">
+                                Status
+                                @{
+                                    bool isActive = Model.IsActive == 1; // Convert 1 to true, any other value to false
+                                }
+
+                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required disabled />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text"></span>
+                            </label>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</form>
+
+    

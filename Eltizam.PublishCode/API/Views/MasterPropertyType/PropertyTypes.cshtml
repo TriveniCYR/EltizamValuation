@@ -1,0 +1,136 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+
+@model List<Eltizam.Business.Models.Master_PropertyTypeModel>
+@{
+    ViewData["Title"] = @MasterLocalizer["Property Type List"];
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];    
+}
+
+<!-- system user master -->
+<div class="flex">
+    <main class="w-100">
+        <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+            <h3 class="dashboardTitle">PROPERTY TYPE MASTER</h3>
+            <div class="buttonArea flex align-item-center">
+
+                <form asp-action="PropertyTypeManage" asp-controller="MasterPropertyType" method="GET">
+                    <button class="flex align-item-center blueBtn" id="addNew">
+                        <img src="~/assets/plus.svg" alt="plus"> Add New
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="scroll-x whiteWithPadding">
+            <table id="PropertyTypeTable" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>@MasterLocalizer["Id"] </th>
+                        <th>@MasterLocalizer["PropertyType"] </th>
+                        <th>@MasterLocalizer["SubTypes"]</th>
+                        <th>@MasterLocalizer["Active"]</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- popup delete model -->
+    <div class="popup-overlay" id="popup-delete-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head">Delete Role</div>
+                <div class="popup-action">
+                    <p>Are you sure you want to delete?</p>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser">Cancel</button>
+                        <button class="redBtn">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- popup import model -->
+    <div class="popup-overlay" id="popup-import-overlay">
+        <div class="popup">
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Import Resource
+                    <img src="~/assets/x.svg" alt="x" id="closePopup">
+                </div>
+                <div class="popup-action importBox">
+                    <p class="text-left">Browse File</p>
+                    <div class="inputBox">
+                        <input type="file" name="file" id="file" class="file" />
+                        <div class="flex">
+                            <input type="text" name="file-name" id="file-name" class="w-100" readonly="readonly" placeholder="Doc Name" />
+                            <div class="uploadFileBtn flex">
+                                <img src="~/assets/files.svg" alt="file">
+                                <input type="button" class="btn" value="Browse" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonArea popup-btn">
+                        <button id="cancelDeleteUser" class="bgBlue">Submit</button>
+                        <button class="lineBtn">Download Template</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="DeletePropertyTypeModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("Id")
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeletePropertyType()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section MyScripts 
+{
+    @Html.Partial("_DataTablePartial")
+    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+
+    <script type="text/javascript" src="~/js/Custom/PropertyType/PropertyType.js?v=@jsVersion"></script>
+
+    <script>
+        var DeleteByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeletePropertyTypeById";
+        var GetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllPropertyType";
+
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+        var StatusMessage = '@TempData["StatusMessage"]'; 
+    </script> 
+}
