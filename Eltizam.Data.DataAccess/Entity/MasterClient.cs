@@ -8,6 +8,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public MasterClient()
         {
             MasterClientContacts = new HashSet<MasterClientContact>();
+            ValuationRequests = new HashSet<ValuationRequest>();
         }
 
         public int Id { get; set; }
@@ -29,5 +30,6 @@ namespace Eltizam.Data.DataAccess.Entity
 
         public virtual MasterClientType? ClientType { get; set; }
         public virtual ICollection<MasterClientContact> MasterClientContacts { get; set; }
+        public virtual ICollection<ValuationRequest> ValuationRequests { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Eltizam.Data.DataAccess.Entity
         {
             MasterPropertyAmenities = new HashSet<MasterPropertyAmenity>();
             MasterPropertyLocations = new HashSet<MasterPropertyLocation>();
+            ValuationRequests = new HashSet<ValuationRequest>();
         }
 
         public int Id { get; set; }
@@ -35,5 +36,6 @@ namespace Eltizam.Data.DataAccess.Entity
 
         public virtual ICollection<MasterPropertyAmenity> MasterPropertyAmenities { get; set; }
         public virtual ICollection<MasterPropertyLocation> MasterPropertyLocations { get; set; }
+        public virtual ICollection<ValuationRequest> ValuationRequests { get; set; }
     }
 }
