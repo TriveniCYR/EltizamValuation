@@ -55,7 +55,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterValuationFee> MasterValuationFees { get; set; } = null!;
         public virtual DbSet<MasterValuationFeeType> MasterValuationFeeTypes { get; set; } = null!;
         public virtual DbSet<MasterVendor> MasterVendors { get; set; } = null!;
-        public virtual DbSet<RoleModulePermission> RoleModulePermissions { get; set; } = null!;
+        public virtual DbSet<MasterRoleModulePermission> RoleModulePermissions { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -1043,11 +1043,11 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<RoleModulePermission>(entity =>
+            modelBuilder.Entity<MasterRoleModulePermission>(entity =>
             {
                 entity.HasKey(e => e.RoleModuleId);
 
-                entity.ToTable("RoleModulePermission", "dbo");
+                entity.ToTable("Master_RoleModulePermission", "dbo");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 

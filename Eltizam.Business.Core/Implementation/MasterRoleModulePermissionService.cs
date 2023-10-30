@@ -16,25 +16,25 @@ namespace Eltizam.Business.Core.Implementation
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private IRepository<RoleModulePermission> _repository { get; set; }
+        private IRepository<MasterRoleModulePermission> _repository { get; set; }
 
         public MasterRoleModulePermissionService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
-            _repository = _unitOfWork.GetRepository<RoleModulePermission>();
+            _repository = _unitOfWork.GetRepository<MasterRoleModulePermission>();
         }
 
         public async Task<DBOperation> AddUpdateRoleModulePermission(List<RoleModulePermissionEntity> roleModulePermissionEntitys)
         {
-            List<RoleModulePermission> objRoleModulePermission;
+            List<MasterRoleModulePermission> objRoleModulePermission;
             if (roleModulePermissionEntitys.Count > 0)
             {
                 var objRoleModulePermissionEntity = roleModulePermissionEntitys.FirstOrDefault();
                 await DeleteRoleModulePermission(objRoleModulePermissionEntity.RoleId);
             }
 
-            objRoleModulePermission = _mapperFactory.GetList<RoleModulePermissionEntity, RoleModulePermission>(roleModulePermissionEntitys);
+            objRoleModulePermission = _mapperFactory.GetList<RoleModulePermissionEntity, MasterRoleModulePermission>(roleModulePermissionEntitys);
 
             foreach (var rolePermission in objRoleModulePermission)
             {

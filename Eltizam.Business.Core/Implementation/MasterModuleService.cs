@@ -18,7 +18,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterModule> _repository { get; set; }
         private IRepository<MasterSubModule> _repositorySub { get; set; }
 
-        private IRepository<RoleModulePermission> _repositoryRolePermission { get; set; }
+        private IRepository<MasterRoleModulePermission> _repositoryRolePermission { get; set; }
 
         public MasterModuleService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IMemoryCache memoryCache)
         {
@@ -28,7 +28,7 @@ namespace Eltizam.Business.Core.Implementation
 
             _repository = _unitOfWork.GetRepository<MasterModule>();
             _repositorySub = _unitOfWork.GetRepository<MasterSubModule>();
-            _repositoryRolePermission = _unitOfWork.GetRepository<RoleModulePermission>();
+            _repositoryRolePermission = _unitOfWork.GetRepository<MasterRoleModulePermission>();
         }
 
         public async Task<List<MasterModuleEntity>> GetAll()
@@ -58,7 +58,7 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<List<MasterModuleEntity>> GetByRoleId(int roleId)
         {
-            var Permissions = _mapperFactory.GetList<RoleModulePermission, RoleModulePermissionEntity>((List<RoleModulePermission>)await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId)).OrderBy(x => x.SortOrder).ToList();
+            var Permissions = _mapperFactory.GetList<MasterRoleModulePermission, RoleModulePermissionEntity>((List<MasterRoleModulePermission>)await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId)).OrderBy(x => x.SortOrder).ToList();
             if (Permissions.Any())
             {
                 var MasterModuleData = _mapperFactory.GetList<MasterModule, MasterModuleEntity>(await _repository.GetAllAsync());
@@ -143,7 +143,7 @@ namespace Eltizam.Business.Core.Implementation
                 return cacheData;
             }
 
-            var Permissions = _mapperFactory.GetList<RoleModulePermission, RoleModulePermissionEntity>((List<RoleModulePermission>)
+            var Permissions = _mapperFactory.GetList<MasterRoleModulePermission, RoleModulePermissionEntity>((List<MasterRoleModulePermission>)
                                 await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId));
 
             if (Permissions.Any())

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Eltizam.Data.DataAccess.Entity
 {
-    public partial class RoleModulePermission
+    public partial class MasterRoleModulePermission
     {
         public int RoleModuleId { get; set; }
         public int? RoleId { get; set; }
