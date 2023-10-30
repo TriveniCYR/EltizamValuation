@@ -8,17 +8,18 @@
     string PageHeading = "";
     if (ViewBag.IsView == 0)
     {
-        PageHeading = "Edit Location";
+        PageHeading = "Edit";
     }
 
     else if (ViewBag.IsView == 2)
     {
-        PageHeading = "Add Location";
+        PageHeading = "Add";
     }
     else 
     {
-        PageHeading = "View Location";
+        PageHeading = "View";
     }
+    var _header = "Location Master";
 }
    
 
@@ -27,8 +28,13 @@
   <form asp-action="LocationManage">
     <main>
         <div class="whiteBoxShadow">
-            <div class="heading position-relative">
-                <h3 class="dashboardTitle">@PageHeading</h3>
+            <div class="heading position-relative flex justify-between">
+                <h3 class="dashboardTitle">@PageHeading @_header</h3>
+                <div class="hamburger">
+                    <a class="greyBtn lineBtn formAbtn" asp-action="Locations">@_header</a>
+                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                    <span>@PageHeading</span>
+                </div>
             </div>
                 <div class="bodyContent">
                     <div class="inputSearchs">
@@ -48,54 +54,9 @@
                             }
                         }
                         <div class="flex">
-                            <label for="LocationName" class="w-50">
-                                Location Name
-                                @Html.TextBoxFor(model => model.LocationName, htmlAttributes)
-                            </label>
                             <label for="CountryId" class="w-50">
                                 Country Name
-                               @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem>(), htmlAttributes)
-                            </label>
-
-                        </div>
-                        <div class="flex">
-                            <label for="StateId" class="w-50">
-                                State Name
-                                @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, htmlAttributes)
-                            </label>
-                            <label for="CityId" class="w-50">
-                                City / Emirates
-                                @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, htmlAttributes)
-                            </label>
-                        </div>
-                        <div class="flex">
-
-                            <label for="resourceType" class="w-50">
-                                Sector / Zone
-                                @Html.TextBoxFor(model => model.Sector, htmlAttributes)
-                            </label>
-
-                            <label for="Geo-coordinates" class="w-50">
-                                Latitude
-                                @Html.TextBoxFor(model => model.Latitude, htmlAttributes)
-
-                            </label>
-                        </div>
-                        <div class="flex">
-                            <label for="" class="w-50">
-                                Longitude
-                                @Html.TextBoxFor(model => model.Longitude, htmlAttributes)
-                            </label>
-                            <label for="Geo-coordinates" class="w-50">
-                                Home Currency
-                                @Html.TextBoxFor(model => model.HomeCurrencyId, htmlAttributes)
-                            </label>
-
-                        </div>
-                        <div class="flex">
-                            <label for="Geo-coordinates" class="w-50">
-                                Foreign Currency
-                                @Html.TextBoxFor(model => model.ForeignCurrencyId, htmlAttributes)
+                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem>(), htmlAttributes)
                             </label>
                             <label for="" class="w-50">
                                 Status
@@ -106,13 +67,77 @@
                                 <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />
                                 <label class="label-switch" for="addLocation"></label>
                                 <span class="info-text"></span>
-                                </label>
+                            </label>
+
+                        </div>
+                        <div class="flex">
+                            @* <label for="LocationName" class="w-50">
+                                Location Name
+                                @Html.TextBoxFor(model => model.LocationName, htmlAttributes)
+                            </label> *@
+                            
+                            <label for="StateId" class="w-50">
+                                State Name
+                                @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, htmlAttributes)
+                            </label>
+                            <label for="CityId" class="w-50">
+                                City / Emirates
+                                @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, htmlAttributes)
+                            </label>
+                        </div>
+                        <div class="flex">
+                           
+                            
+
+                            <label for="resourceType" class="w-50">
+                                Sector / Zone
+                                @Html.TextBoxFor(model => model.Sector, htmlAttributes)
+                            </label>
+                            <label for="Geo-coordinates" class="w-50">
+                                Latitude
+                                @Html.TextBoxFor(model => model.Latitude, htmlAttributes)
+                            </label>
+                        </div>
+                        <div class="flex">
+
+
+                            
+                            <label for="" class="w-50">
+                                Longitude
+                                @Html.TextBoxFor(model => model.Longitude, htmlAttributes)
+                            </label>
+                            <label for="Geo-coordinates" class="w-50">
+                                Home Currency
+                                @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>(), htmlAttributes)
+
+                                @*   @Html.TextBoxFor(model => model.HomeCurrencyId, htmlAttributes) *@
+                            </label>
+                        </div>
+                        <div class="flex">                              
+                            <label for="Geo-coordinates" class="w-50">
+                                Foreign Currency
+                                @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem>(), htmlAttributes)
+                               @*  @Html.TextBoxFor(model => model.ForeignCurrencyId, htmlAttributes) *@
+                            </label>
+                        </div>
+                        <div class="flex">
+                            
+                           @*  <label for="" class="w-50">
+                                Status
+                                @{
+                                    bool isActive = Model.Status == 1; // Convert 1 to true, any other value to false
+                                }
+
+                                <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text"></span>
+                                </label> *@
                     </div>
-                        <div class="buttonArea centerBtn">
+                        <div class="text-right buttonArea bodyContent plr-0">
                             @if (ViewBag.IsView!=1)
                             {
-                                <button type="submit" class="lineBtn" id="resetLocation">Reset</button>
-                                <button type="submit" class="bgBlue">Submit</button>
+                                <button type="submit" class="lineBtn" id="resetLocation">Cancel</button>
+                                <button type="submit" class="bgBlue">Save</button>
 
                             }
 
