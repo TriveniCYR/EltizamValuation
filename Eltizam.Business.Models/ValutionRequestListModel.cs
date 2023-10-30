@@ -20,6 +20,16 @@ namespace Eltizam.Business.Models
         public DateTime? ValuationDate { get; set; }
         public string? ValuationPurpose { get; set; }
 
-        
+        public string? StatusName { get; set; }
+
+        public string? Approver { get; set; }
+
+        public string? Requestor { get; set; }
+        public string? Valuator { get; set; }
+        public string MethodOfValution { get; set; }
+
+        public string ColorCode { get; set; }
+
+
     }
 }
