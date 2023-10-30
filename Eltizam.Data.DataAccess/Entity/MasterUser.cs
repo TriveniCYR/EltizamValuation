@@ -9,6 +9,7 @@ namespace Eltizam.Data.DataAccess.Entity
         {
             MasterUserAddresses = new HashSet<MasterUserAddress>();
             MasterUserContacts = new HashSet<MasterUserContact>();
+            ValuationRequests = new HashSet<ValuationRequest>();
         }
 
         public int Id { get; set; }
@@ -41,5 +42,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public virtual MasterDesignation? Designation { get; set; }
         public virtual ICollection<MasterUserAddress> MasterUserAddresses { get; set; }
         public virtual ICollection<MasterUserContact> MasterUserContacts { get; set; }
+        public virtual ICollection<ValuationRequest> ValuationRequests { get; set; }
     }
 }
