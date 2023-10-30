@@ -1,0 +1,70 @@
+﻿@model Eltizam.Business.Models.MasterDictionaryDetailById;
+
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    string PageHeading = "";
+    // if (ViewBag.IsView == 0)
+    // {
+    //     PageHeading = "Edit Dictionary Details";
+    // }
+
+    // else if (ViewBag.IsView == 2)
+    // {
+    //     PageHeading = "Add Dictionary Details";
+    // }
+    // else
+    // {
+    //     PageHeading = "View Location";
+    // }
+  //  var parentid= ViewData["ParentId"];
+  
+}
+
+<form asp-action="DictionaryDetailsManage" method="post">
+    <main>
+        <div class="whiteBoxShadow">
+            <div class="heading position-relative">
+                <h3 class="dashboardTitle">@PageHeading</h3>
+            </div>
+            <div class="bodyContent">
+                <div class="inputSearchs">
+                    <div class="tabSection">
+                        @Html.HiddenFor(model=>model.DictionaryId)
+                        @Html.HiddenFor(model=>model.ParentDescription)
+                        @Html.HiddenFor(model=>model.Id)
+                        @* <input type="hidden" id="DictionaryId" value="@(Model.DictionaryId == null ? 0 : Model.DictionaryId)" />
+                        <input type="hidden" id="ParentDescription" value="@(Model.ParentDescription == null ? 0 : Model.ParentDescription)" />
+                        <input type="hidden" id="Id" value="@(Model.ChildId == null ? 0 : Model.ChildId)" /> *@
+                        <div class="flex threeBox">
+                            <label for="LocationName">
+                                ChildDescription
+                                @Html.TextBoxFor(model => model.Description, new {@class = "form-control"})
+                            </label>                          
+                        </div>                        
+                        <div class="flex">
+                            <label for="" class="">
+                                Status
+                                @{
+                                    
+                                    bool isActive = Model.IsActive == 1; // Convert 1 to true, any other value to false
+                                }
+                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text"></span>
+                            </label>
+                        </div>
+                        <div class="buttonArea centerBtn">
+                            <button type="submit" class="lineBtn greyBtn" id="resetLocation">Cancel</button>
+                                <button type="submit" class="bgBlue">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+</form>
