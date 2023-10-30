@@ -1,0 +1,112 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model Eltizam.Business.Models.MasterRoleEntity
+@{
+    ViewData["Title"] = @MasterLocalizer["RoleManage"];
+    string PageHeading = "";
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"]; 
+}
+ <form asp-action="RoleManage">
+
+    @if (@ViewBag.IsEdit)
+    {
+        <input type="hidden" asp-for="Id" />
+        PageHeading = MasterLocalizer["UpdateRole"].Value;
+    }
+    else
+    {
+        PageHeading = MasterLocalizer["AddRole"].Value;
+    }
+<div class="popup-overlay w-800Popup" id="popup-viewRole-overlay">
+    <div class="popup">
+        <div class="content text-center">
+            <div class="popup-head position-relative">
+                View Role
+                <img src="./assets/x.svg" alt="x" id="closePopup" class="closeViewRolePopup">
+            </div>
+            <div class="popup-action inputSearchs">
+                <form>
+                    <div class="flex">
+                        <label for="roleType">
+                            Role Name
+                            <select name="Valuator" id="ValuatorType">
+                                <option value="Valuator1">Role type1</option>
+                                <option value="Valuator2">Role type2</option>
+                                <option value="Valuator3">Role type3</option>
+                            </select>
+                        </label>
+                        <label for="resourceType">
+                            Status
+                            <input class='input-switch' type="checkbox" id="viewRole" />
+                            <label class="label-switch" for="viewRole"></label>
+                            <span class="info-text"></span>
+                        </label>
+                    </div>
+                </form>
+                <table class="popupTable">
+                    <thead>
+                        <tr>
+                            <th>Module \ Sub Module Name</th>
+                            <th>Read</th>
+                            <th>Write</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" class="bgGrey"><b>Masters</b></td>
+                        </tr>
+                        <tr>
+                            <td>User Listing</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>User Listing</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>User Listing</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="bgGrey"><b>Manager Users</b></td>
+                        </tr>
+                        <tr>
+                            <td>User Listing</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>User Listing</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td>User Listing</td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</form>

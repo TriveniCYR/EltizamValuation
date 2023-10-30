@@ -1,0 +1,655 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+
+@model Eltizam.Business.Models.ValuationRequestModel
+@{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    var _header = "Valuation Request";
+    var _md = Model.Id > 0 ? "Edit" : "Add";
+
+}
+<div id="PlaceHolderHere"></div>
+<main class="plr-0">
+    <div class="profileHead flex justify-between align-item-center cursor-pointer">
+        <h3 class="dashboardTitle">View Valuation</h3>
+        <div class="hamburger">
+            <span onclick="valuationListingMaster()">Valuation Listings</span>
+            <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+            <span>View valuations</span>
+        </div>
+    </div>
+    <div class="flex">
+        <div class="profileTabSection addProperty">
+            <div class="tab">
+                <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
+                <button class="tablinks" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
+                <button class="tablinks" onclick="profileTab(event, 'profile3')">Payment Details</button>
+            </div>
+
+            <div id="profile1" class="tabcontent">
+                <h3 class="blueHeading">Valuation Details</h3>
+                <div class="inputSearchs">
+                    <form asp-action="ValuationRequestManage">
+                        <div class="flex fourBox mb-28">
+                            
+                            <label for="">
+                                Valuation Reference no
+                                <input type="text" placeholder="12837187236" disabled>
+                            </label>
+                            <label for="">
+                                Other Reference no
+                                <input type="text" placeholder="12837187236" disabled>
+                            </label>
+                            </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                Approver Name
+                                <input type="text" placeholder="Clyde" disabled>
+                            </label>
+                            <label for="">
+                                Valuation Status
+                                <input type="text" placeholder="Pending" disabled>
+                            </label>
+                        </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                Valuation Date
+                                <input type="date">
+                            </label>
+                           @*  <label for="">
+                                Valuer Name
+                                <input type="text" placeholder="Clyde" disabled>
+                            </label> *@
+                            
+                            <label for="" class="bodyContent p-0">
+                                Method of Valuation
+                                <div class="flex m-0 method">
+                                    <input type="radio" value="Internal" name="method" checked disabled />
+                                    <input type="radio" value="External" name="method" disabled />
+                                </div>
+                            </label>
+                        </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                Valuation Time Frame
+                                <input type="text" placeholder="enter days">
+                            </label>
+
+                        </div>
+                    </form>
+                </div>
+                <h3 class="blueHeading">Client Details</h3>
+                <div class="inputSearchs">
+                    <form>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                Client Type
+                                <input type="text" placeholder="Client" disabled>
+                            </label>
+                            <label for="">
+                                Sub Client Type
+                                <input type="text" placeholder="Bank" disabled>
+                            </label>
+                        </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                Company Name
+                                <input type="text" placeholder="ICICI Bank" disabled>
+                            </label>
+                            <label for="">
+                                Client Name
+                                <input type="text" placeholder="Jones" disabled>
+                            </label>
+                        </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                Address Line 1
+                                <input type="text" placeholder="ABC" disabled>
+                            </label>
+                            <label for="">
+                                Address Line 2
+                                <input type="text" placeholder="DEF" disabled>
+                            </label>
+                        </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                Pincode
+                                <input type="text" placeholder="234343" disabled>
+                            </label>
+                            <label for="">
+                                City
+                                <select name="city" disabled>
+                                    <option value="city1">ABC</option>
+                                    <option value="city2">DEF</option>
+                                    <option value="city3">GHI</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                State
+                                <input type="text" placeholder="ABC" disabled>
+                            </label>
+                            <label for="">
+                                Country
+                                <input type="text" placeholder="DEF" disabled>
+                            </label>
+                        </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                TRN Number
+                                <input type="text" placeholder="232423" disabled>
+                            </label>
+                            <label for="">
+                                TRN Expiry Date
+                                <input type="text" placeholder="11/14/2022" disabled>
+                            </label>
+                        </div>
+
+                        <div class="flex fourBox">
+                            <label for="">
+                                License Number
+                                <input type="text" placeholder="234232" disabled>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <h3 class="blueHeading">Contant Details</h3>
+                <div class="inputSearchs">
+                    <form>
+                        <div class="flex threeBox mb-28">
+                            <label for="">
+                                Contact Person Name
+                                <input type="text" placeholder="ABC" disabled>
+                            </label>
+                            <label for="">
+                                Department
+                                <input type="text" placeholder="A" disabled>
+                            </label>
+                        </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                Designation
+                                <input type="text" placeholder="B" disabled>
+                            </label>
+                        
+                            <label for="">
+                                Email ID
+                                <input type="email" placeholder="clyde@abc.com" disabled>
+                            </label>
+                        </div>
+                        <div class="flex fourBox mb-28">
+                            <label for="">
+                                Phone Number
+                                <input type="text" placeholder="2876567" disabled>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <h3 class="blueHeading">Property & Amenities</h3>
+                <div class="inputSearchs">
+                    <form>
+                        <div class="flex threeBox mb-28">
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" checked disabled>
+                                <p>Swimming pool </p>
+                            </label>
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>On-site laundry facilities</p>
+                            </label>
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>Conference room</p>
+                            </label>
+                        </div>
+                        <div class="flex threeBox mb-28">
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>24-hour security or concierge service</p>
+                            </label>
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>Fitness centre or gym</p>
+                            </label>
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>Business centre</p>
+                            </label>
+                        </div>
+                        <div class="flex threeBox mb-28">
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>Parking garage /valet parking</p>
+                            </label>
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>On-site maintenance staff</p>
+                            </label>
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>Playground or recreation area</p>
+                            </label>
+                        </div>
+                        <div class="flex mb-28">
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>Pet-friendly accommodations</p>
+                            </label>
+                            <label for="" class="position-relative checkboxBtn">
+                                <input type="checkbox" placeholder="enter first name" disabled>
+                                <p>Wi-Fi or high-speed internet access.</p>
+                            </label>
+                        </div>
+
+                        <div class="text-center buttonArea bodyContent plr-0">
+                            <button type="button" class="lineBtn greyBtn">Cancel</button>
+                            <button type="button" class="blueBtn">Next</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="profile2" class="tabcontent">
+                <h3 class="ptrl-20">Quotation Listing</h3>
+                <div class="scroll-x ptrl-20">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#Quotation</th>
+                                <th>Valuation Charges</th>
+                                <th>VAT <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                                <th>Other Charges</th>
+                                <th>Discount (%)</th>
+                                <th>Total Valuation Charge</th>
+                                <th>Creation Date</th>
+                                <th>Status <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="userPic" onClick="edit()"> 65790-45321</td>
+                                <td>1000</td>
+                                <td>5%</td>
+                                <td>1000</td>
+                                <td>5%</td>
+                                <td>2657</td>
+                                <td>12/09/2022</td>
+                                <td><span class="tableStatus blue">Submitted</span></td>
+                                <td class="position-relative">
+                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                                    <div class="actionItem">
+                                        <ul>
+                                            <li onClick="edit()">
+                                                <a href="">
+                                                    <img src="../assets/view.svg" alt="view" />
+                                                    view
+                                                </a>
+                                            </li>
+                                            <li onClick="edit()">
+                                                <a href="">
+                                                    <img src="../assets/edit.svg" alt="edit" />
+                                                    Edit
+                                                </a>
+                                            </li>
+                                            <li class="delete">
+                                                <a href="">
+                                                    <img src="../assets/trash.svg" alt="trash" />
+                                                    Delete
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="userPic" onClick="edit()"> 65790-45321</td>
+                                <td>1000</td>
+                                <td>5%</td>
+                                <td>1000</td>
+                                <td>5%</td>
+                                <td>2657</td>
+                                <td>12/09/2022</td>
+                                <td><span class="tableStatus green">Confirm</span></td>
+                                <td class="position-relative">
+                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                                    <div class="actionItem">
+                                        <ul>
+                                            <li onClick="edit()">
+                                                <img src="../assets/view.svg" alt="view" />
+                                                view
+                                            </li>
+                                            <li onClick="edit()">
+                                                <img src="../assets/edit.svg" alt="edit" />
+                                                Edit
+                                            </li>
+                                            <li class="delete">
+                                                <img src="../assets/trash.svg" alt="trash" />
+                                                Delete
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="userPic" onClick="edit()"> 65790-45321</td>
+                                <td>1000</td>
+                                <td>5%</td>
+                                <td>1000</td>
+                                <td>5%</td>
+                                <td>2657</td>
+                                <td>12/09/2022</td>
+                                <td><span class="tableStatus orange">Pending</span></td>
+                                <td class="position-relative">
+                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                                    <div class="actionItem">
+                                        <ul>
+                                            <li onClick="edit()">
+                                                <img src="../assets/view.svg" alt="view" />
+                                                view
+                                            </li>
+                                            <li onClick="edit()">
+                                                <img src="../assets/edit.svg" alt="edit" />
+                                                Edit
+                                            </li>
+                                            <li class="delete">
+                                                <img src="../assets/trash.svg" alt="trash" />
+                                                Delete
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="userPic" onClick="edit()"> 65790-45321</td>
+                                <td>1000</td>
+                                <td>5%</td>
+                                <td>1000</td>
+                                <td>5%</td>
+                                <td>2657</td>
+                                <td>12/09/2022</td>
+                                <td><span class="tableStatus blue">Submitted</span></td>
+                                <td class="position-relative">
+                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                                    <div class="actionItem">
+                                        <ul>
+                                            <li onClick="edit()">
+                                                <img src="../assets/view.svg" alt="view" />
+                                                view
+                                            </li>
+                                            <li onClick="edit()">
+                                                <img src="../assets/edit.svg" alt="edit" />
+                                                Edit
+                                            </li>
+                                            <li class="delete">
+                                                <img src="../assets/trash.svg" alt="trash" />
+                                                Delete
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="profile3" class="tabcontent">
+                <h3 class="ptrl-20">Select Payment Mode</h3>
+                <div class="paymentOption">
+                    <div class="payTab">
+                        <button class="payTabLink" onclick="payTab(event, 'pay1')" id="defaultOpenPay">Cash</button>
+                        <button class="payTabLink" onclick="payTab(event, 'pay2')">Cheque</button>
+                        <button class="payTabLink" onclick="payTab(event, 'pay3')">Credit Card</button>
+                        <button class="payTabLink" onclick="payTab(event, 'pay4')">Net Banking</button>
+                    </div>
+
+                    <div id="pay1" class="payTabContent">
+                        <h3 class="ptrl-20">Add Cash Payment Details</h3>
+                        <div class="inputSearchs">
+                            <div class="tabSection">
+                                <div class="flex threeBox mb-28">
+                                    <label for="">
+                                        Transaction Status
+                                        <select>
+                                            <option value="completed">completed</option>
+                                            <option value="inprogress">inprogress</option>
+                                            <option value="failed">failed</option>
+                                        </select>
+                                    </label>
+                                    <label for="">
+                                        Amount
+                                        <input type="text" placeholder="enter the amount">
+                                    </label>
+                                    <label for="">
+                                        Date
+                                        <input type="date">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pay2" class="payTabContent">
+                        <h3 class="ptrl-20">Add Cheque Payment Details</h3>
+                        <div class="inputSearchs">
+                            <div class="tabSection">
+
+                                <div class="flex threeBox mb-28">
+                                    <label for="">
+                                        Cheque Number
+                                        <input type="number" placeholder="enter cheque number">
+                                    </label>
+                                    <label for="">
+                                        Cheque Bank Name
+                                        <input type="text" placeholder="enter cheque number">
+                                    </label>
+                                    <label for="">
+                                        Cheque Date
+                                        <input type="date">
+                                    </label>
+                                </div>
+                                <div class="flex threeBox mb-28">
+
+                                    <label for="">
+                                        Cheque Recieved Date
+                                        <input type="date">
+                                    </label>
+                                    <label for="">
+                                        Amount
+                                        <input type="number" placeholder="enter the amount">
+                                    </label>
+                                    <label for="">
+                                        Transaction Status
+                                        <select>
+                                            <option value="completed">completed</option>
+                                            <option value="inprogress">inprogress</option>
+                                            <option value="failed">failed</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pay3" class="payTabContent">
+                        <h3 class="ptrl-20">Add Credit Card Payment Details</h3>
+                        <div class="inputSearchs">
+                            <div class="tabSection">
+
+                                <div class="flex threeBox mb-28">
+                                    <label for="">
+                                        Transaction ID
+                                        <input type="number" placeholder="enter Transaction ID">
+                                    </label>
+                                    <label for="">
+                                        Transaction Status
+                                        <select>
+                                            <option value="completed">completed</option>
+                                            <option value="inprogress">inprogress</option>
+                                            <option value="failed">failed</option>
+                                        </select>
+                                    </label>
+                                    <label for="">
+                                        Amount
+                                        <input type="number" placeholder="enter the amount">
+                                    </label>
+                                </div>
+                                <div class="flex threeBox mb-28">
+                                    <label for="">
+                                        Credit Card Number
+                                        <input type="number" placeholder="enter credit card number">
+                                    </label>
+                                    <label for="">
+                                        Bank Name
+                                        <input type="text" placeholder="enter bank name">
+                                    </label>
+                                    <label for="">
+                                        Name on card
+                                        <input type="text" placeholder="enter name on card">
+                                    </label>
+                                </div>
+                                <div class="flex threeBox">
+                                    <label for="">
+                                        Expiry Date
+                                        <input type="date">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pay4" class="payTabContent">
+                        <h3 class="ptrl-20">Add Net Banking Payment Details</h3>
+                        <div class="inputSearchs">
+                            <div class="tabSection">
+                                <div class="flex threeBox mb-28">
+                                    <label for="">
+                                        Transaction ID
+                                        <input type="number" placeholder="enter Transaction ID">
+                                    </label>
+                                    <label for="">
+                                        Bank Name
+                                        <input type="text" placeholder="enter banke name">
+                                    </label>
+                                    <label for="">
+                                        Accoubt Number
+                                        <input type="number" placeholder="enter acount number">
+                                    </label>
+
+                                </div>
+                                <div class="flex threeBox mb-28">
+
+                                    <label for="">
+                                        Amount
+                                        <input type="number" placeholder="enter the amount">
+                                    </label>
+                                    <label for="">
+                                        Transfer Date
+                                        <input type="date">
+                                    </label>
+                                    <label for="">
+                                        Transaction Status
+                                        <select>
+                                            <option value="completed">completed</option>
+                                            <option value="inprogress">inprogress</option>
+                                            <option value="failed">failed</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="blueHeading">Upload Supporting Documents</h3>
+                <div class="inputSearchs uploadDocBox">
+                    <div class="tabSection">
+                        <div class="flex mb-28">
+                            <label for="document">
+                                Documents Name
+                                <input type="text" placeholder="enter Documents Name">
+                            </label>
+                            <label for="atach">
+                                Attach Supporting Documents
+                                <div class="attachDoc">
+                                    <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
+                                    <input type="file" class="btn" value="Upload Photo" multiple />
+                                    <p>click to upload.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="W-100">
+                            <div class="prevUpload roundBorderBox m-0">
+                                <h3>Previously uploaded</h3>
+                                <div class="flex">
+                                    <div class="prevUploadTab">
+                                        <div class="flex align-item-center m-0">
+                                            <img src="../assets/file.svg" alt="file" />
+                                            ABC
+                                        </div>
+                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                    </div>
+                                    <div class="prevUploadTab">
+                                        <div class="flex align-item-center m-0">
+                                            <img src="../assets/file.svg" alt="file" />
+                                            ABC
+                                        </div>
+                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                    </div>
+                                    <div class="prevUploadTab">
+                                        <div class="flex align-item-center m-0">
+                                            <img src="../assets/file.svg" alt="file" />
+                                            ABC
+                                        </div>
+                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                    </div>
+                                    <div class="prevUploadTab">
+                                        <div class="flex align-item-center m-0">
+                                            <img src="../assets/file.svg" alt="file" />
+                                            ABC
+                                        </div>
+                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+@section MyScripts {
+    <script type="text/javascript" src="~/js/Custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
+
+    <script>
+        //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
+        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var ErrorMessage = "@SharedLocalizer["Error"]";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+        var StatusMessage = '@TempData["StatusMessage"]';
+
+        //#region Setup API Url
+        // var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
+
+        // var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";//GetAllPropertyType";
+        // var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
+        // var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";//GetAllOwnershipType";
+        // var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationFeeTypeList";//GetAllValuationFeeType";
+        // var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
+
+        //#region Static Messae Init
+        var EditLabel = "@SharedLocalizer["Edit"]";
+
+        var AddLabel = "@SharedLocalizer["Add"]";
+        var UpdateLabel = "@SharedLocalizer["Update"]";
+    </script>
+
+}
