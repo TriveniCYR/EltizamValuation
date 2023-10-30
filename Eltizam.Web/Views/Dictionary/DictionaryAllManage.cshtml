@@ -45,15 +45,15 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
     </div>
-    <div class="scroll-x">
-        <table id="RoleTable">
+    <div class="scroll-x whiteWithPadding">
+        <table id="DictionaryAllManageTable" class="table table-bordered table-striped table-hover dataTable no-footer">
             <thead>
                 <tr>
-                    <th>@MasterLocalizer["Id"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@MasterLocalizer["Id"]</th>
                     @* <th>@MasterLocalizer["Description Id"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th> *@
-                    <th>@MasterLocalizer["Description"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                    <th>@MasterLocalizer["Child Description"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                    <th>@SharedLocalizer["Status"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@MasterLocalizer["Description"]</th>
+                    <th>@MasterLocalizer["Child Description"]</th>
+                    <th>@SharedLocalizer["Status"] </th>
                     <th>@SharedLocalizer["Action"]</th>
                 </tr>
             </thead>
@@ -184,9 +184,13 @@
     </div>
 </div> 
 @section MyScripts {
+    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
     <script src="~/js/custom/dictionary/masterdictionary.js?v=@jsVersion"></script>
 @* <script src="~/js/custom/location/locationmaster.js"></script> *@
 <script>
+        $(document).ready(function () {
+            $('#DictionaryAllManageTable').DataTable();
+        });
 
         var DeleteDictionaryById = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDictionaryById";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
@@ -204,8 +208,6 @@
         // function openPopup() {
         //     // Show your popup by changing its style, for example:
         //     document.getElementById("popup-editRole-overlay").style.display = "block";
-        // }
-
-
+        // }                
 </script>
 }

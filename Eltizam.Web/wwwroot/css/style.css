@@ -1842,4 +1842,22 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .buttons-excel, .buttons-pdf, .buttons-csv {
     border: none;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.buttons-excel i, .buttons-pdf i, .buttons-csv i{
+    font-size:x-large;
+}
+tbody, td, tfoot, th, thead, tr {
+    border: none !important;
+}
+.table-bordered {
+    border: none;
+}
+#profile1, #profile2, #profile3, #profile4{
+    margin-top:0px;
+    border:1px solid var(--blue);
+}
+table.table-bordered.dataTable {
+    border: 1px solid var(--grey) !important;
 }

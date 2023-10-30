@@ -37,7 +37,7 @@
                 </div>
             </div>
                 <div class="bodyContent">
-                    <div class="inputSearchs">
+                    <div class="inputSearchs p-0">
                     <div class="tabSection">
 
                         <input type="hidden" id="hdnCountry" value="@(Model.CountryId == null ? 0 : Model.CountryId)" />
@@ -136,7 +136,7 @@
                         <div class="text-right buttonArea bodyContent plr-0">
                             @if (ViewBag.IsView!=1)
                             {
-                                <button type="submit" class="lineBtn" id="resetLocation">Cancel</button>
+                                <button type="submit" class="lineBtn greyBtn" id="resetLocation">Cancel</button>
                                 <button type="submit" class="bgBlue">Save</button>
 
                             }
