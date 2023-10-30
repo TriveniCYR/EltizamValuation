@@ -140,5 +140,10 @@ namespace Eltizam.Business.Core.Implementation
             return lstStf;
         }
 
+        public async Task<List<MasterStateEntity>> GetStateListByCountryId(int countryId)
+        {
+            return null;
+        }
+
     }
 }
