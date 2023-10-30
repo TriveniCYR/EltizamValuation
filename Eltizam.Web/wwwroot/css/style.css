@@ -1839,3 +1839,7 @@ div.dataTables_wrapper div.dataTables_filter {
 .actionItem ul {
     margin-bottom: 0px;
 }
+
+.buttons-excel, .buttons-pdf, .buttons-csv {
+    border: none;
+}
