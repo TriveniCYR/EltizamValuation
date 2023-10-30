@@ -115,8 +115,7 @@ namespace Eltizam.Data.DataAccess.Helper
             }
         }
 
-        public static void ExecuteReader(string commandText, string connSting, Action<IDataReader> recordHandler,
-                        CommandType commandType = CommandType.Text, params DbParameter[] dbParameters)
+        public static void ExecuteReader(string commandText, string connSting, Action<IDataReader> recordHandler, CommandType commandType = CommandType.Text, params DbParameter[] dbParameters)
         {
             using (var dbConnection = CommonDb.CreateDbConnection(connSting))
             {
@@ -141,6 +140,40 @@ namespace Eltizam.Data.DataAccess.Helper
                     }
                 }
             }
+        }
+
+        /// <summary> 
+        /// Method to execute Stored Procedure and return multiple resultset as DataSet
+        /// </summary>
+        /// <param name="commandText">the Command text</param>
+        /// <param name="connectionSting">the Connection string</param>
+        /// <param name="commandType">the Command type</param>
+        /// <param name="dbParameters">the prameters for Stored Procedure</param>
+        /// <returns></returns>
+        public static DataSet ExecuteMultiReader(string commandText, string connSting, CommandType commandType = CommandType.Text, params DbParameter[] dbParameters)
+        {
+            DataSet resultSet = new();
+            using SqlConnection dbConnection = new(connSting);
+            using SqlCommand dbCommand = new(commandText, dbConnection)
+            {
+                CommandType = commandType,
+                CommandText = commandText,
+                CommandTimeout = timeout
+            };
+
+            if (dbParameters != null)
+            {
+                foreach (var dbParameter in dbParameters)
+                {
+                    CommonDb.AddParameter(dbCommand, dbParameter.Name, dbParameter.Value, dbParameter.FieldType);
+                }
+            }
+
+            dbConnection.Open();
+            SqlDataAdapter dataAdapter = new() { SelectCommand = dbCommand };
+            dataAdapter.Fill(resultSet);
+
+            return resultSet;
         }
 
         public static IDataReader GetReader(string commandText, string connSting, CommandType commandType = CommandType.Text, params DbParameter[] dbParameters)
@@ -403,4 +436,5 @@ namespace Eltizam.Data.DataAccess.Helper
             return RetVal;
         }
     }
+
 }
