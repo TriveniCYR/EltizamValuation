@@ -1,11 +1,4 @@
-//document.addEventListener("DOMContentLoaded", () => {
-//    const addResourceRedirection = document.getElementById("addResourceRedirection");
-
-//    addResourceRedirection.addEventListener('click', () => {
-//        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
-//    });
-//});
-
+ 
 $(document).ready(function () {
     BindCountry();
     BindState();
@@ -37,15 +30,7 @@ function accordianToggle(header) {
     }
 }
 //accordian function end
-
-function sideNavToggle() {
-    var x = document.getElementById("sideNav");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
+ 
 
 function removeParentDiv(element) {
     const parentDiv = element.closest('.roundBorderBox');
@@ -90,38 +75,14 @@ function removeParentDivAddress(element) {
     if (parentDivAdd) {
         parentDivAdd.remove()
     }
-}
-
-
+} 
 
 function BindCountry() {
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
 
-    BindDropdowns(CountryList, Country, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + CountryList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        ;
-    //        Country.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
-    //        }
-    //        if ($('#hdnCountry').val() != 0) {
-    //            Country.val($('#hdnCountry').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    BindDropdowns(CountryList, Country, _rpname, _val); 
 }
 
 function BindState() {

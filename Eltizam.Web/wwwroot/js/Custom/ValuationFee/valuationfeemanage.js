@@ -60,36 +60,12 @@ $(document).ready(function () {
     }
 });
 
-function BindProperty() {
-    //alert("hello");
-   
+function BindProperty() { 
     var Property = $("#PropertyTypeId");
     var _val = $('#hdnProperty').val();
     var _rpname = "propertyType";
 
-    BindDropdowns(PropertyList, Property, _rpname, _val);
-    //$.ajax({
-    //    type: "POST",
-    //    url: $('#hdnBaseURL').val() + PropertyList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
-    //        Property.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.data.length; i++) {
-    //            Property.append($("<option></option>").val(response.data[i].id).html(response.data[i].propertyType));
-    //        }
-    //        if ($('#hdnProperty').val() != 0) {
-    //            Property.val($('#hdnProperty').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    BindDropdowns(PropertyList, Property, _rpname, _val); 
 }
 
 function BindPropertySub(id) {
@@ -98,64 +74,18 @@ function BindPropertySub(id) {
     var _val = $('#hdnPropertySub').val();
     var _rpname = "propertySubType";
 
-    BindDropdowns(PropertyByIdSubType + '/' + id, PropertySubType, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
-
-    //        PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
-
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    BindDropdowns(PropertyByIdSubType + '/' + id, PropertySubType, _rpname, _val); 
 }
 
-function BindClient() {
-    debugger;
-    //alert("hello");
-    
+function BindClient() { 
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
     var _rpname = "clientType";
 
-    BindDropdowns(ClientTypeList, Client, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + ClientTypeList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
-    //        Client.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response._object.length; i++) {
-    //            Client.append($("<option></option>").val(response._object[i].id).html(response._object[i].clientType));
-    //        }
-    //        if ($('#hdnClientType').val() != 0) {
-    //            Client.val($('#hdnClientType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    BindDropdowns(ClientTypeList, Client, _rpname, _val); 
 }
 
-function BindOwnership() {
-    debugger;
-    //alert("hello");
-   
+function BindOwnership() { 
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
     var _rpname = "ownershipType";
@@ -185,35 +115,10 @@ function BindOwnership() {
     //});
 }
 
-function BindValuationFeeType() {
-    debugger;
-    //alert("hello");
-   
+function BindValuationFeeType() { 
     var ValuationFeeType = $("#ValuationFeeTypeId");
     var _val = $('#hdnValuationFeeType').val();
     var _rpname = "valuationFeeType";
 
-    BindDropdowns(ValuationFeeTypeList, ValuationFeeType, _rpname, _val);
-    //$.ajax({
-    //    type: "POST",
-    //    url: $('#hdnBaseURL').val() + ValuationFeeTypeList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
-    //        ValuationFeeType.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.data.length; i++) {
-    //            ValuationFeeType.append($("<option></option>").val(response.data[i].id).html(response.data[i].valuationFeeType));
-    //        }
-    //        if ($('#hdnValuationFeeType').val() != 0) {
-    //            ValuationFeeType.val($('#hdnValuationFeeType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    BindDropdowns(ValuationFeeTypeList, ValuationFeeType, _rpname, _val); 
 }
