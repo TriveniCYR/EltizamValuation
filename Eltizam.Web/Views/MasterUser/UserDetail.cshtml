@@ -136,7 +136,7 @@
 
                     <div id="profile2" class="tabcontent">
                         @* <h3 class="ptrl-20">Mailing Address</h3> *@
-                        <div class="inputSearchs">
+                        <div class="inputSearchs p-0">
                             <div class="tabSection">
                                 <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
                                 <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
@@ -291,7 +291,7 @@
                         </div>
                     </div>
                     <div class="text-right buttonArea bodyContent plr-0">
-                        <a href='/MasterUser/Users'> <button type="button" class="lineBtn">Cancel</button></a>
+                        <a href='/MasterUser/Users'> <button type="button" class="lineBtn greyBtn">Cancel</button></a>
                        @*  <button type="submit" class="blueBtn">Save</button> *@
                     </div>
                 </form>

@@ -41,18 +41,18 @@
                                     @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div>
-                                <div class="required isActive">
+                            <div class="w-50">
+                                <div class="flex flex-start align-item-center required isActive m-0">
                                     @if (Model.IsUserAssigned && Model.IsActive)
                                     {
                                         @Html.CheckBoxFor(model => model.IsActive, new { @disabled="true",  @class = "checkbox-checked", @checked = "checked" })
-                                        @Html.Label(@SharedLocalizer["IsActive"])
+                                        @Html.Label(@SharedLocalizer["IsActive"],"IsActive", new { @class = "m-0" })
                                         @*<lable class="text-danger">@MasterLocalizer["CanNotInactiveRole"]</lable>*@
                                     }
                                     else
                                     {
                                         @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
-                                        @Html.Label(@SharedLocalizer["IsActive"])
+                                        @Html.Label(@SharedLocalizer["IsActive"],"IsActive", new { @class = "m-0" })
                                     }
                                 </div>
                             </div>

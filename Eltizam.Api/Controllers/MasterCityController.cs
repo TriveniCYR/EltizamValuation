@@ -137,6 +137,19 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+        [HttpGet("GetCityListByStateId")]
+        public async Task<IActionResult> GetCityListByStateId(int stateId)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _CityService.GetCityListByStateId(stateId), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
 
         #endregion API Methods
     }
