@@ -7,15 +7,8 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
-using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -141,6 +134,11 @@ namespace Eltizam.Business.Core.Implementation
              DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
+        }
+
+        public async Task<List<MasterCityEntity>> GetCityListByStateId(int StateId)
+        { 
+            return null;
         }
     }
 }

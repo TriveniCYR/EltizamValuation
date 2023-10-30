@@ -137,6 +137,7 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
         [HttpGet("GetCityListByStateId")]
         public async Task<IActionResult> GetCityListByStateId(int stateId)
         {
