@@ -186,6 +186,13 @@ namespace Eltizam.Web.Helpers
 
         #endregion Dictionary Management
 
+        #region Valuation Request
+       
+        public static string GetAllValuationRequest = "api/ValuationRequest/GetAllValuationRequest";
+       
+
+        #endregion Valuation Request
+
 
     }
 }

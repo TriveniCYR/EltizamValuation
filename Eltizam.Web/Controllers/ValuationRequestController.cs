@@ -28,7 +28,11 @@ namespace EltizamValuation.Web.Controllers
         //{
         //    return View();
         //}
-
+        [HttpGet]
+        public IActionResult ValuationRequests()
+        {
+            return View();
+        }
         public IActionResult ValuationRequestManage(int? id, string view)
         {
             if (id != null)
