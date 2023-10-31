@@ -15,7 +15,23 @@ namespace Eltizam.Business.Models
         public DateTime ValuationDate { get; set; }
         public int? ValuationTimeFrame { get; set; }
         public int ClientId { get; set; }
+        public int ClientTypeId { get; set; }
         public int PropertyId { get; set; }
+        public int PropertyTypeId { get; set; }
+        public int PropertySubTypeId { get; set; }
+        public int OwnershipTypeId { get; set; }
+        public string PropertyName { get; set; }
+        public string UnitType { get; set; }
+        public string AdditionalUnits { get; set; }
+        public int Furnished { get; set; }
+        public string? ValuationPurpose { get; set; }
+         public decimal? BuildUpAreaSqFt { get; set; }
+        public decimal? BuildUpAreaSqMtr { get; set; }
+        public int? AgeOfConstruction { get; set; }
+        public string? Parking { get; set; }
+        public string? ParkingBayNo { get; set; }
+        public string? Description { get; set; }
+
         public int StatusId { get; set; }
         public int? ApproverId { get; set; }
         public string? ApproverComment { get; set; }
@@ -27,6 +43,11 @@ namespace Eltizam.Business.Models
         public int? ValuerId { get; set; }
         public string? ValuerComment { get; set; }
         public DateTime? ValuerUpdateDate { get; set; }
+        //public Master_ClientTypeModel? master_ClientType { get; set; }
+        //public MasterPropertyModel? masterPropertyModel { get; set; }
+        //public Master_PropertySubTypeModel? master_PropertySub { get; set; }
+        //public MasterOwnershipTypeEntity? masterOwnershipTypeEntity { get; set; }
+        //public Master_PropertyTypeModel? master_PropertyType { get; set; }
 
         //public virtual MasterUser? Approver { get; set; }
         //public virtual MasterClient Client { get; set; } = null!;

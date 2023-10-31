@@ -37,29 +37,31 @@
                 <h3 class="blueHeading">Valuation Details</h3>
                 <div class="inputSearchs">
                     <form asp-action="ValuationRequestManage">
-                        <div class="flex fourBox mb-28">
+                        
+                        <input type="hidden" id="hdnClientId" value="@(Model == null ? 0 : Model.ClientId)" />
+                        <div class="flex  mb-28">
                             
-                            <label for="">
+                            <label for="" class="w-50">
                                 Valuation Reference no
                                 <input type="text" placeholder="12837187236" disabled>
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 Other Reference no
                                 <input type="text" placeholder="12837187236" disabled>
                             </label>
                             </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Approver Name
                                 <input type="text" placeholder="Clyde" disabled>
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 Valuation Status
                                 <input type="text" placeholder="Pending" disabled>
                             </label>
                         </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Valuation Date
                                 <input type="date">
                             </label>
@@ -68,16 +70,23 @@
                                 <input type="text" placeholder="Clyde" disabled>
                             </label> *@
                             
-                            <label for="" class="bodyContent p-0">
+                            <label for="" class="bodyContent p-0 w-50">
                                 Method of Valuation
-                                <div class="flex m-0 method">
+                                    <div class="flex m-0 valuationType">
+                                        @Html.DropDownList("ValuationType", new List<SelectListItem>{
+                                        new SelectListItem{ Text="Internal", Value = "1" },
+                                        new SelectListItem{ Text="External", Value = "2" }}, new { @class = "form-control" })
+
+                                    </div>
+                                
+                                @* <div class="flex m-0 method">
                                     <input type="radio" value="Internal" name="method" checked disabled />
                                     <input type="radio" value="External" name="method" disabled />
-                                </div>
+                                </div> *@
                             </label>
                         </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Valuation Time Frame
                                 <input type="text" placeholder="enter days">
                             </label>
@@ -88,42 +97,45 @@
                 <h3 class="blueHeading">Client Details</h3>
                 <div class="inputSearchs">
                     <form>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Client Type
-                                <input type="text" placeholder="Client" disabled>
+                                @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientByClientType(this.options[this.selectedIndex].value)"})
+                                @* <input type="text" placeholder="Bank" disabled> *@
                             </label>
-                            <label for="">
-                                Sub Client Type
-                                <input type="text" placeholder="Bank" disabled>
+                            <label for="" class="w-50">
+                                Clients
+                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @*  <input type="text" placeholder="Client" disabled> *@
                             </label>
+                           
                         </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Company Name
                                 <input type="text" placeholder="ICICI Bank" disabled>
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 Client Name
                                 <input type="text" placeholder="Jones" disabled>
                             </label>
                         </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Address Line 1
                                 <input type="text" placeholder="ABC" disabled>
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 Address Line 2
                                 <input type="text" placeholder="DEF" disabled>
                             </label>
                         </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Pincode
                                 <input type="text" placeholder="234343" disabled>
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 City
                                 <select name="city" disabled>
                                     <option value="city1">ABC</option>
@@ -132,29 +144,29 @@
                                 </select>
                             </label>
                         </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 State
                                 <input type="text" placeholder="ABC" disabled>
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 Country
                                 <input type="text" placeholder="DEF" disabled>
                             </label>
                         </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 TRN Number
                                 <input type="text" placeholder="232423" disabled>
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 TRN Expiry Date
                                 <input type="text" placeholder="11/14/2022" disabled>
                             </label>
                         </div>
 
-                        <div class="flex fourBox">
-                            <label for="">
+                        <div class="flex ">
+                            <label for="" class="w-50">
                                 License Number
                                 <input type="text" placeholder="234232" disabled>
                             </label>
@@ -164,36 +176,142 @@
                 <h3 class="blueHeading">Contant Details</h3>
                 <div class="inputSearchs">
                     <form>
-                        <div class="flex threeBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Contact Person Name
                                 <input type="text" placeholder="ABC" disabled>
                             </label>
-                            <label for="">
+                            <label for="" class="w-50">
                                 Department
                                 <input type="text" placeholder="A" disabled>
                             </label>
                         </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Designation
                                 <input type="text" placeholder="B" disabled>
                             </label>
                         
-                            <label for="">
+                            <label for="" class="w-50">
                                 Email ID
                                 <input type="email" placeholder="clyde@abc.com" disabled>
                             </label>
                         </div>
-                        <div class="flex fourBox mb-28">
-                            <label for="">
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
                                 Phone Number
                                 <input type="text" placeholder="2876567" disabled>
                             </label>
                         </div>
                     </form>
                 </div>
-                <h3 class="blueHeading">Property & Amenities</h3>
+                <h3 class="blueHeading">Property Details</h3>
+                <div class="inputSearchs">
+                    <form>
+                        <input type="hidden" id="hdnPropertyType" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
+                        <input type="hidden" id="hdnPropertySub" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
+                        <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
+                       @*  <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
+                        <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
+                        <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" /> *@
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
+                                Property Type Name
+                                @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value);"})
+                              @*   <input type="text" placeholder="ABC" disabled> *@
+                            </label>
+                            <label for="" class="w-50">
+                                Property SubType Name
+                                @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
+                            </label>
+                        </div>
+                        <div class="flex  mb-28">
+                            <label for="" class="w-50">
+                                Type of Ownership
+                                @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindPropertyDetail()"})
+                            </label>
+
+                            <label for="" class="w-50">
+                                Property Name
+                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control"})
+                              @*   @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Property Name"] }) *@
+                               @*  @Html.ValidationMessageFor(model => model.PropertyName, "", new { @class = "text-danger" }) *@
+                            </label>
+                        </div>
+                        <div class="flex mb-28">
+                            <label for="" class="w-50">
+                                Unit Type
+                                @Html.DropDownListFor(model => model.UnitType, new List<SelectListItem> { }, new { @class = "form-control"})
+                             @*    @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
+                            </label>
+                            <label for="" class="w-50">
+                                Additional Units
+                                @Html.TextBoxFor(model => model.AdditionalUnits, new { @class = "form-control",  @placeholder = @SharedLocalizer["Additional Unit"] })
+
+                            </label>
+                        </div>
+                        <div class="flex mb-28">
+                            <label for=" class=" w-50"">
+                                <p class="m-0">
+                                    Furnished
+                                    <span class="text-danger">*</span>
+                                </p>
+                                @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @* @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
+                            </label>
+                            <label for="" class="w-50">
+                                Purpose of Valuation
+                                @Html.TextBoxFor(model => model.ValuationPurpose, new { @class = "form-control",  @placeholder = @SharedLocalizer["Valuation Purpose"] })
+
+                            </label>
+                        </div> 
+                        <div class="flex mb-28">
+                            <label for="" class="w-50">
+                                <p class="m-0">
+                                    Built Up Area (Sq.Ft)
+                                    <span class="text-danger">*</span>
+                                </p>
+                                @Html.TextBoxFor(model => model.BuildUpAreaSqFt, new { @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Ft"] })
+                               @*  @Html.ValidationMessageFor(model => model.BuildUpAreaSqFt, "", new { @class = "text-danger" }) *@
+                            </label>
+                            <label for="" class="w-50">
+                                <p class="m-0">
+                                    Built up Area (Sq.Meter)
+                                    <span class="text-danger">*</span>
+                                </p>
+                                @Html.TextBoxFor(model => model.BuildUpAreaSqMtr, new { @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
+                              @*   @Html.ValidationMessageFor(model => model.BuildUpAreaSqMtr, "", new { @class = "text-danger" }) *@
+                            </label>
+                        </div>
+                        <div class="flex mb-28">
+                            <label for="" class="w-50">
+                                Age of construction
+                                @Html.TextBoxFor(model => model.AgeOfConstruction, new { @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
+
+                            </label>
+                            <label for="" class="w-50">
+                                Parking
+                                @Html.TextBoxFor(model => model.Parking, new { @class = "form-control",  @placeholder = @SharedLocalizer["Parking"] })
+
+                            </label>
+                        </div>
+                        <div class="flex mb-28">
+                            <label for="" class="w-50">
+                                Parking BAY Number
+                                @Html.TextBoxFor(model => model.ParkingBayNo, new { @class = "form-control",  @placeholder = @SharedLocalizer["Parking Bay No"] })
+
+                            </label>
+                            <label for="" class="w-50">
+                                Description
+                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control",  @placeholder = @SharedLocalizer["Description"] })
+
+                            </label>
+
+                        </div>
+
+                    </form>
+                </div>
+                <h3 class="blueHeading"> Amenities</h3>
                 <div class="inputSearchs">
                     <form>
                         <div class="flex threeBox mb-28">
@@ -639,11 +757,15 @@
         //#region Setup API Url
         // var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
 
-        // var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";//GetAllPropertyType";
-        // var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
-        // var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";//GetAllOwnershipType";
+         var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";//GetAllPropertyType";
+        var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
+         var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
+        var ClientByClientTypeId = "@Eltizam.Web.Helpers.APIURLHelper.GetClientByClientTypeId";
+         var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";//GetAllOwnershipType";
+        var GetPropertyByFilters = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByFilters";//GetAllOwnershipType";
+        var GetPropertyById = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyById";//GetAllOwnershipType";
         // var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationFeeTypeList";//GetAllValuationFeeType";
-        // var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
+        
 
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]";

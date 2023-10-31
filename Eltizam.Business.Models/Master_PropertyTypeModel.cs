@@ -10,7 +10,7 @@ namespace Eltizam.Business.Models
 {
     public class Master_PropertyTypeModel
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
         public string PropertyType { get; set; }
         public bool IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
