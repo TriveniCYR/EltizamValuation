@@ -139,12 +139,12 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpGet("GetStateListByCountryId")]
-        public async Task<IActionResult> GetStateListByCountryId(int countryId)
+        [HttpGet("GetStateListByCountryId/{countryId}")]
+        public async Task<IActionResult> GetStateListByCountryId([FromRoute] int countryId)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _StateService.GetStateList(), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _StateService.GetStateListByCountryId(countryId), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

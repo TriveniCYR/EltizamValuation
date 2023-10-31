@@ -136,9 +136,13 @@ namespace Eltizam.Business.Core.Implementation
             return lstStf;
         }
 
-        public async Task<List<MasterCityEntity>> GetCityListByStateId(int StateId)
-        { 
-            return null;
+        public async Task<List<MasterCityEntity>> GetCityListByStateId(int stateId)
+        {
+            var cityList = new List<MasterCityEntity>();
+            var stateListAsync = _repository.GetAllAsync(x => x.StateId == stateId).Result.ToList();
+            // Use a mapper to map the data from the repository to the model asynchronously.
+            cityList = _mapperFactory.GetList<MasterCity, MasterCityEntity>(stateListAsync);
+            return cityList;
         }
     }
 }
