@@ -62,5 +62,6 @@ namespace Eltizam.Business.Models
         //Valuation
         public static string usp_ValuationFees_SearchAllList = "usp_ValuationFees_SearchAllList";
         public static string usp_ValuationFeeType_SearchAllList = "usp_ValuationFeeType_SearchAllList";
+        public static string usp_Valution_GetValuationList = "usp_Valution_GetValuationList";
     }
 }

@@ -138,8 +138,8 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpGet("GetCityListByStateId")]
-        public async Task<IActionResult> GetCityListByStateId(int stateId)
+        [HttpGet("GetCityListByStateId/{stateId}")]
+        public async Task<IActionResult> GetCityListByStateId([FromRoute] int stateId)
         {
             try
             {

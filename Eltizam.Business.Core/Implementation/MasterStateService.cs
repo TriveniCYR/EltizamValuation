@@ -142,7 +142,11 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<List<MasterStateEntity>> GetStateListByCountryId(int countryId)
         {
-            return null;
+            var stateList = new List<MasterStateEntity>();
+            var stateListAsync = _repository.GetAllAsync(x => x.CountryId == countryId).Result.ToList();
+            // Use a mapper to map the data from the repository to the model asynchronously.
+            stateList = _mapperFactory.GetList<MasterState, MasterStateEntity>(stateListAsync);
+            return stateList;
         }
 
     }

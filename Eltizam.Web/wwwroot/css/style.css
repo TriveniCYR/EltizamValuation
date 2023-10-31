@@ -392,9 +392,9 @@ footer {
             top: 9px;
         }
 
-        .sideNavDashboard .sideMenu ul li:hover img.right-arrow-menu, .sideNavDashboard .sideMenu ul li.activeSideMenu img.right-arrow-menu {
+       /* .sideNavDashboard .sideMenu ul li:hover img.right-arrow-menu, .sideNavDashboard .sideMenu ul li.activeSideMenu img.right-arrow-menu {
             transform: rotate(90deg);
-        }
+        }*/
 
 .showMoreNav {
     display: none;
@@ -476,6 +476,7 @@ header {
         font-weight: 400;
         line-height: 120%;
         margin-right: 10px;
+        margin-left:50px;
     }
 
     header .notification span {
@@ -1907,4 +1908,60 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .buttons-excel, .buttons-pdf, .buttons-csv {
     border: none;
+}
+.flex-column {
+    flex-direction: column !important;
+}
+
+.navMenuToggle {
+    display: none;
+}
+
+    .navMenuToggle ul {
+        margin-top: 15px;
+    }
+.sideNavDashboard .sideMenu ul li img.right-arrow-menu.rotateNav, .sideNavDashboard .sideMenu ul li.activeSideMenu img.right-arrow-menu {
+    transform: rotate(90deg);
+}
+.activeSideMenuClcik:hover {
+    background-color: var(--blue) !important;
+    color: var(--white);
+}
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover img {
+    filter: brightness(20);
+}
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover a {
+    color: var(--white);
+    background: var(--blue );
+    font-weight: normal;
+}
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover img.right-arrow-menu {
+    filter: invert(1);
+}
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover .navMenuToggle li:hover img {
+    filter: initial;
+}
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover .navMenuToggle li:hover a {
+    background: var(--grey, linear-gradient(90deg, rgba(29, 63, 138, 0.10) 72.1%, rgba(29, 63, 138, 0.00) 138.85%));
+    color: var(--blue);
+}
+
+.redToaste p {
+    color: var(--error);
+}
+
+.redToaste {
+    background-color: var(--lightRed);
+}
+
+.greenToaste img {
+    width: 16px;
+}
+#profileMenu ul li {
+    width: 100%;
 }

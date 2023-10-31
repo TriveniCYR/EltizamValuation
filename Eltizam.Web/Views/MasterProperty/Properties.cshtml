@@ -12,45 +12,42 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
 
-    <!-- system user master -->
-
-    <div class="flex">
-        <div class="w-100 position-relative">
-            <main  class="w-100">
+<!-- system user master -->
+<div class="flex">
+    <div class="w-100 position-relative">
+        <main class="w-100">
             <div class="flex justify-between mt-20  mobile_flexColumn position-relative">
                 <h3 class="dashboardTitle">PROPERTY MASTER</h3>
-                   
-                    <div class="buttonArea flex align-item-center">
-                        <form asp-action="PropertyManage" asp-controller="MasterProperty" method="GET">
-                            <button class="flex align-item-center blueBtn" id="addNew">
-                                <img src="../assets/plus.svg" alt="plus"> Add New
-                            </button>
-                        </form>
-                    </div>
+
+                <div class="buttonArea flex align-item-center">
+                    <form asp-action="PropertyManage" asp-controller="MasterProperty" method="GET">
+                        <button class="flex align-item-center blueBtn" id="addNew">
+                            <img src="../assets/plus.svg" alt="plus"> Add New
+                        </button>
+                    </form>
                 </div>
+            </div>
             <div class="scroll-x whiteWithPadding">
                 <table id="PropertyTable" class="table table-bordered table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Property Name</th>
-                                <th>Property type</th>
-                                <th>Property Sub Type</th>
-                                <th>Ownership Type</th>
-                                <th>Location</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-
-            </main>
-
-        </div>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Property Name</th>
+                            <th>Property Type</th>
+                            <th>Property Sub Type(s)</th>
+                            <th>Ownership Type</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </main>
     </div>
+</div>
 
 <div id="DeletePropertyModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">

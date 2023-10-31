@@ -1,10 +1,4 @@
-//document.addEventListener("DOMContentLoaded", () => {
-//    const addResourceRedirection = document.getElementById("addResourceRedirection");
-
-//    addResourceRedirection.addEventListener('click', () => {
-//        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
-//    });
-//});
+ 
 
 $(document).ready(function () {
     BindCountry();
@@ -35,17 +29,7 @@ function accordianToggle(header) {
     } else {
         item.style.display = 'block';
     }
-}
-//accordian function end
-
-function sideNavToggle() {
-    var x = document.getElementById("sideNav");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
+} 
 
 function removeParentDiv(element) {
     const parentDiv = element.closest('.roundBorderBox');
@@ -129,29 +113,7 @@ function BindState() {
     var _val = $('#hdnState').val();
     var _rpname = "stateName";
 
-    BindDropdowns(StateList, State, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + StateList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        ;
-    //        State.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
-    //        }
-    //        if ($('#hdnState').val() != 0) {
-    //            State.val($('#hdnState').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    BindDropdowns(StateList, State, _rpname, _val); 
 }
 
 function BindCity() {
@@ -159,27 +121,5 @@ function BindCity() {
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";
 
-    BindDropdowns(CityList, City, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + CityList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        ;
-    //        City.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
-    //        }
-    //        if ($('#hdnCity').val() != 0) {
-    //            City.val($('#hdnCity').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    BindDropdowns(CityList, City, _rpname, _val); 
 }

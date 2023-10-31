@@ -42,28 +42,28 @@ function InitializeUserList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
+            "data": "id" 
         },
         {
-            "data": "userName", "name": "User Name"
+            "data": "userName" 
         },
         {
-            "data": "department", "name": "Department"
+            "data": "department" 
         },
         {
-            "data": "designation", "name": "Designation"
+            "data": "designation" 
         },
         {
-            "data": "resourceType", "name": "Resource Type"
+            "data": "resourceType" 
         },
         {
-            "data": "roleName", "name": "Role"
+            "data": "roleName" 
         },
         {
-            "data": "phone", "name": "Phone"
+            "data": "phone" 
         },
         {
-            "data": "email", "name": "Email"
+            "data": "email" 
         },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
