@@ -11,6 +11,7 @@ namespace Eltizam.Business.Core.Interface
     public interface IMasterClientService
     {
         Task<MasterClientModel> GetMasterClientByIdAsync(int id);
+        Task<List<MasterClientModel>> GetMasterClientByClientTypeIdAsync(int ClientTypeId);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> AddUpdateMasterClient(MasterClientModel model);
         Task<DBOperation> DeleteClient(int id);

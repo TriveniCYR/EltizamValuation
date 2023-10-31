@@ -59,6 +59,7 @@ namespace Eltizam.Web.Helpers
         public static string GetAllProperty = "api/MasterProperty/GetAll";
         public static string GetPropertyById = "api/MasterProperty/GetById";
         public static string DeletePropertyById = "api/MasterProperty/Delete";
+        public static string GetPropertyByFilters = "api/MasterProperty/getPropertyByFilters";
         public static string GetPropertyAmenityList = "api/MasterProperty/GetPropertyAmenityList";
 
         #endregion MasterProperty
@@ -122,6 +123,7 @@ namespace Eltizam.Web.Helpers
         public static string GetClientById = "api/MasterClient/GetById";
         public static string UpsertClient = "api/MasterClient/Upsert";
         public static string DeleteClient = "api/MasterClient/DeleteClient";
+        public static string GetClientByClientTypeId = "api/MasterClient/getByClientTypeId";
 
         #endregion Client
 

@@ -15,5 +15,6 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> AddUpdateMasterProperty(MasterPropertyModel entityqualification);
         Task<DBOperation> DeleteProperty(int id);
         Task<List<MasterAmenityListModel>> GetPropertyAmenityList();
+        Task<List<MasterPropertyModel>> GetMasterPropertyByFiltersAsync(int propertyTypeId, int subPropertyTypeId, int ownershipTypeId);
     }
 }

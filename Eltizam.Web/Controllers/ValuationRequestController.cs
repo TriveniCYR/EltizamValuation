@@ -43,7 +43,12 @@ namespace EltizamValuation.Web.Controllers
             ValuationRequestModel valuationRequestModel;
             if (id == null || id <= 0)
             {
+
                 valuationRequestModel = new ValuationRequestModel();
+               // Master_PropertyTypeModel master_PropertyType = new Master_PropertyTypeModel();
+                //valuationRequestModel.master_PropertyType = master_PropertyType;
+
+
                 return View("ValuationRequestManage", valuationRequestModel);
             }
             else
