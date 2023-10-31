@@ -159,6 +159,41 @@
                         </li>
                     }*@
                 }
+                <li>
+                <div class="flex flex-column" onclick="sideNavMenuToggle(this)">
+                    <div class="flex align-item-center">
+                        <img src="../assets/building-fortress.svg" class="showIcon" alt="Property Master">
+                        <img src="../assets/building-fortress-blue.svg" class="hoverIcon" alt="Property Master">
+                        <a>Sample Masters</a>
+                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu" />
+                    </div>
+                    <div class="navMenuToggle">
+                        <ul>
+                            <li>
+                                <div class="flex align-item-center">
+                                    <img src="../assets/current-location.svg" class="showIcon" alt="Location Master">
+                                    <img src="../assets/current-location-blue.svg" class="hoverIcon" alt="Location Master">
+                                    <a>Sub Master1</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex align-item-center">
+                                    <img src="../assets/building-community.svg" class="showIcon" alt="Property Type Master">
+                                    <img src="../assets/building-community-blue.svg" class="hoverIcon" alt="Property Type Master">
+                                        <a>Sub Master2</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex align-item-center">
+                                    <img src="../assets/building-fortress.svg" class="showIcon" alt="Property Master">
+                                    <img src="../assets/building-fortress-blue.svg" class="hoverIcon" alt="Property Master">
+                                        <a>Sub Master3</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                </li>
             </ul>
 
             <p>MANAGEMENTS</p>
@@ -174,3 +209,18 @@
         </div>
     </aside>
 </div>
+<script>
+    function sideNavMenuToggle(element) {
+        if (element.childNodes[1].childNodes[7].classList.contains('rotateNav') == true) {
+            console.log(element);
+            element.children[1].style.display = "none";
+            element.childNodes[1].childNodes[7].classList.remove("rotateNav");
+            element.parentElement.classList.remove('activeSideMenuClcik');
+        } else if (element.childNodes[1].childNodes[7].parentNode.classList.contains("rotateNav") == false) {
+            console.log(element);
+            element.children[1].style.display = "block";
+            element.childNodes[1].childNodes[7].classList.add("rotateNav");
+            element.parentElement.classList.add('activeSideMenuClcik');
+        }
+    }
+</script>

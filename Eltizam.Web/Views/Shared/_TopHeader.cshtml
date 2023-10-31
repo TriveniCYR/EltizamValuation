@@ -5,10 +5,40 @@
             <img src="~/assets/bell.svg" alt="bell" class="cursor-pointer" />
             <span>3</span>
         </div>
-        <div class="flex align-item-center">
-            <img src="~/assets/user-icon.svg" alt="user-icon" class="profile cursor-pointer" />
+        <div class="flex align-item-center position-relative" onclick="profileMenu()">            
             <p class="visible-in-web">Saeed</p>
             <img src="~/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" />
+            <div id="profileMenu" class="actionItem" style="width: 120px;display: none;">
+                <ul>
+                    <li>
+                        <a href="">
+                            Manage profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+
+                            Change password
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </div>   
 </header>
+<script>
+    function profileMenu() {
+        var x = document.getElementById("profileMenu");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
