@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model Eltizam.Business.Models.MasterRoleEntity
+@{
+    ViewData["Title"] = @MasterLocalizer["RoleManage"]; 
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"]; 
+    var _header = "Role Master";
+    var _md = Model.Id > 0 ? "Edit" : "Add";
+}
+
+<div id="PlaceHolderHere"></div>
+<main>
+    <div class="whiteBoxShadow">
+        <div class="heading position-relative flex justify-between ">
+            <h3 class="dashboardTitle">@_md @_header</h3>
+            <div class="hamburger">
+                <a class="greyBtn lineBtn formAbtn" asp-action="MasterRoles">@_header</a>
+                <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                <span>@_md</span>
+            </div>
+        </div>
+
+        <div class="bodyContent">
+            <div class="inputSearchs p-0">
+                <form asp-action="RoleManage" autocomplete="off" asp-controller="MasterRole" method="post">
+ 
+                    <div>
+                        <div class="flex">
+                            <div class="w-50">
+                                <div class="form-group required">
+                                    <p class="m-0">Role Name<span class="text-danger">*</span></p>
+                                    @Html.EditorFor(model => model.RoleName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["RoleName"] } })
+                                    @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="w-50">
+                                <div class="flex flex-start align-item-center required isActive m-0">
+                                    @if (Model.IsUserAssigned && Model.IsActive)
+                                    {
+                                        @Html.CheckBoxFor(model => model.IsActive, new { @disabled="true",  @class = "checkbox-checked", @checked = "checked" })
+                                        @Html.Label(@SharedLocalizer["IsActive"],"IsActive", new { @class = "m-0" })
+                                        @*<lable class="text-danger">@MasterLocalizer["CanNotInactiveRole"]</lable>*@
+                                    }
+                                    else
+                                    {
+                                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
+                                        @Html.Label(@SharedLocalizer["IsActive"],"IsActive", new { @class = "m-0" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Module</th>
+                                            @* <th>Sub Module</th>*@
+                                            <th> <input type="checkbox" id="chkView" class="checkbox-checked" /> View</th>
+                                            <th> <input type="checkbox" id="chkAdd" class="checkbox-checked" /> Add</th>
+                                            <th><input type="checkbox" id="chkEdit" class="checkbox-checked" /> Edit</th>
+                                            <th><input type="checkbox" id="chkDelete" class="checkbox-checked" /> Delete</th>
+                                            <th><input type="checkbox" id="chkApprove" class="checkbox-checked" /> Approve</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.MasterModules.Count; i++)
+                                        {
+                                            var perm = Model.MasterModules[i].RoleModulePermission;
+                                            @Html.HiddenFor(m => m.MasterModules[i].ModuleName)
+                                            @Html.HiddenFor(m => m.MasterModules[i].ModuleId)
+                                            @Html.HiddenFor(m => m.MasterModules[i].RoleModulePermission.ModuleId)
+                                            @Html.HiddenFor(m => m.MasterModules[i].RoleModulePermission.RoleId)
+                                            <tr>
+                                                <td>@Model.MasterModules[i].ModuleName</td>
+                                                @*    <td></td>*@
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Edit, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Delete, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Approve, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="text-right buttonArea bodyContent plr-0">
+                        <a href='/MasterRole/Roles'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                        <button type="submit" id="btnSaveRole" class="bgBlue">@SharedLocalizer["Save"]</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+ 
+
+@section MyScripts { 
+    <script type="text/javascript" src="~/js/Custom/Role/RoleManage.js?v=@jsVersion"></script> 
+}

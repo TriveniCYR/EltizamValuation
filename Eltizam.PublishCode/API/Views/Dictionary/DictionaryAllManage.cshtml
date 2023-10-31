@@ -1,0 +1,213 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@model Eltizam.Business.Models.MasterDictionaryDetailById;
+
+@{
+    // if(Model!=null){
+    //     var dictid = Model.DictionaryId;
+    //     var chld = Model.ChildDescription;
+    //     var desc = Model.Description;
+    //     var data = "";
+    // }
+    var list = new List<Eltizam.Business.Models.MasterDictionaryDetailById>();
+    if (ViewData["ChildDictList"] != null)
+    {
+        list = ViewData["ChildDictList"] as List<Eltizam.Business.Models.MasterDictionaryDetailById>;
+
+    }
+    ViewData["Title"] = @MasterLocalizer["ChildDescriptionList"];
+
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    int id = 0;
+  
+}
+
+<div id="PlaceHolderHere"></div>
+
+<main>
+@*     @Html.TextBoxFor(model=>model.Description) *@
+    <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+        <h3 class="dashboardTitle">CHILD DICTIONARY LIST</h3>
+        <div class="buttonArea flex align-item-center">           
+            <a href='/Dictionary/DictionaryDetailsManage?id=@list[0].Id&status=1&pdesc=@list[0].Description'>
+                <button class="flex align-item-center blueBtn" id="addNew">
+                    <img src="~/assets/plus.svg" alt="plus"> Add New
+                </button>
+            </a>
+         
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
+    <div class="scroll-x whiteWithPadding">
+        <table id="DictionaryAllManageTable" class="table table-bordered table-striped table-hover dataTable no-footer">
+            <thead>
+                <tr>
+                    <th>@MasterLocalizer["Id"]</th>
+                    @* <th>@MasterLocalizer["Description Id"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th> *@
+                    <th>@MasterLocalizer["Description"]</th>
+                    <th>@MasterLocalizer["Child Description"]</th>
+                    <th>@SharedLocalizer["Status"] </th>
+                    <th>@SharedLocalizer["Action"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (list != null && list.Count() > 0)
+                        foreach (var item in list)
+                        {
+
+                                        <input type="hidden" value="@item.Id" id="childid" />
+                                        <tr>
+                                            <td>@Html.DisplayFor(module => item.Id)</td>
+                                            @*      <td>@Html.DisplayFor(module => item.DictionaryId)</td> *@
+                                            <td>@Html.DisplayFor(module => item.Description)</td>
+                                            <td>@Html.DisplayFor(module => item.ChildDescription)</td>
+
+                                <td>
+                                    @Html.LabelFor(model => item.IsActive, item.IsActive==1 ? "Active" : "InActive", new { @style = item.IsActive==1 ? "color:green;" : "color:red;" })
+
+
+                                </td>
+                                            <td class="position-relative">
+                                                <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+                                                <div class="actionItem">
+                                                    <ul>
+                                                        <li class="editLocation">
+                                                            <img src="../assets/edit.svg" alt="edit" />
+                                                <button class="flex align-item-center blueBtn" id="editRole">
+
+                                                    <a title="Edit" href='/Dictionary/DictionaryDetailsManage?id=@item.ChildId&status=0&pdesc=@item.Description'><span>Edit</span></a>
+                                                                @* <a title="Edit" onclick="GetLocationById(@item.Id);"><span>Edit</span></a> *@
+                                                            </button>
+                                                            @*  <button class="flex align-item-center blueBtn" id="addRole">
+                                    <img src="../assets/plus.svg" alt="plus"> Add New
+                                    </button> *@
+                                                        </li>
+                                                        <li class="viewLocation">
+                                                            <img src="../assets/view.svg" alt="view" />
+                                                <a title="Edit" asp-action="DictionaryDetailsView" asp-route-Id="@item.ChildId" asp-route-Isview=1><span>View</span></a>
+                                                        </li>
+
+                                                        <li class="delete">
+                                                            <img src="../assets/trash.svg" alt="trash" />
+                                                <a title="Delete" data-toggle="modal" data-target="#DeleteDictionaryChildModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteDictionary(@item.ChildId);return false;"><span>Delete</span></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                        }
+                   
+                }
+            </tbody>
+        </table>
+    </div>
+
+</main>
+<!-- popup add location model -->
+
+
+
+@* <form asp-action="DictionaryAllManage" method="post">
+    
+            <div class="content text-center">
+                <div class="popup-head position-relative">
+                    Edit Dictionary Child
+                    <img src="../assets/x.svg" alt="x" id="closePopup" class="closeEditRolePopup">
+                </div>
+                <div class="popup-action inputSearchs">
+
+                    <div class="flex">
+                        <label for="ChildDescription">
+                            Child Description
+                            @Html.TextBoxFor(model => model.Description, new {@class = "form-control"})
+                        </label>
+                        <label for="" class="">
+                            Status
+                            @{
+                                bool isActiveEdit = Model != null && Model.IsActive == 1; // Convert 1 to true, any other value to false
+                            }
+
+                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActiveEdit ? "checked" : "") required />
+                            <label class="label-switch" for="addLocation"></label>
+                            <span class="info-text"></span>
+                        </label>
+                        @Html.HiddenFor(model => model.Id, new {@class = "form-control",  @placeholder = @SharedLocalizer["DescriptionId"] })
+
+                    </div>
+
+
+                    <div class="buttonArea centerBtn">
+                        <button class="lineBtn" id="resetLocation">Reset</button>
+                        @if (list.Count > 0)
+                        {
+                            id = list[0].Id;
+                        }
+                        <button type="submit" asp-route-id=@id class="bgBlue">Submit</button>
+                    </div>
+                </div>
+            </div>
+       
+</form> *@
+
+<div id="DeleteDictionaryChildModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("ID")
+                <div class="card-footer text-center">
+                    <button type="button" onclick="DeleteRole()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+@section MyScripts {
+    <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
+    <script src="~/js/custom/dictionary/masterdictionary.js?v=@jsVersion"></script>
+@* <script src="~/js/custom/location/locationmaster.js"></script> *@
+<script>
+        $(document).ready(function () {
+            $('#DictionaryAllManageTable').DataTable();
+        });
+
+        var DeleteDictionaryById = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDictionaryById";
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
+
+
+        // // Add an event listener to the button with the id "editRole"
+        // document.getElementById("editRole").addEventListener("click", function (event) {
+        //     // Prevent the default behavior (changing the URL)
+        //     event.preventDefault();
+
+        //     // Open the popup manually
+        //     openPopup(); // Replace this with your actual function to open the popup
+        // });
+
+        // function openPopup() {
+        //     // Show your popup by changing its style, for example:
+        //     document.getElementById("popup-editRole-overlay").style.display = "block";
+        // }                
+</script>
+}

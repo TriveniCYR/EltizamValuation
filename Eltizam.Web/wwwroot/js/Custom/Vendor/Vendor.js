@@ -44,27 +44,23 @@ function InitializeVendorList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
+            "data": "id" 
         },
         {
-            "data": "companyName", "name": "Company Name"
+            "data": "companyName" 
         },
         {
-            "data": "estimattionDate", "name": "Estimation Date"
+            "data": "estimattionDate" 
         },
         {
-            "data": "businessType", "name": "Resource Type"
+            "data": "businessType" 
         },
         {
-            "data": "companyDescription", "name": "Company Description"
+            "data": "companyDescription" 
         },
         {
             "data": "status", "name": "Active", "render": function (data, type, row, meta) {
-                if (row.status) {
-                    return "<span class='tableStatus green'>Active</span>";
-                } else {
-                    return "<span class='tableStatus red'>Inactive</span>";
-                }
+                return GetActiveFlagCss(data);
             }
         },
         {
@@ -82,6 +78,4 @@ function InitializeVendorList() {
     ];
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
-}
-
-//#endregion
+} 
