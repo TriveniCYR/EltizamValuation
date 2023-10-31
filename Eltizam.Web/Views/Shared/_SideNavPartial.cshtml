@@ -215,12 +215,12 @@
             console.log(element);
             element.children[1].style.display = "none";
             element.childNodes[1].childNodes[7].classList.remove("rotateNav");
-            element.parentElement.classList.remove('activeSideMenu');
+            element.parentElement.classList.remove('activeSideMenuClcik');
         } else if (element.childNodes[1].childNodes[7].parentNode.classList.contains("rotateNav") == false) {
             console.log(element);
             element.children[1].style.display = "block";
             element.childNodes[1].childNodes[7].classList.add("rotateNav");
-            element.parentElement.classList.add('activeSideMenu');
+            element.parentElement.classList.add('activeSideMenuClcik');
         }
     }
 </script>

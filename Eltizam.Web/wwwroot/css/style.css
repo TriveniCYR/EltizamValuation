@@ -1885,7 +1885,7 @@ table.table-bordered.dataTable {
     filter: brightness(20);
 }
 
-.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover p {
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover a {
     color: var(--white);
     background: var(--blue );
     font-weight: normal;
@@ -1899,7 +1899,7 @@ table.table-bordered.dataTable {
     filter: initial;
 }
 
-.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover .navMenuToggle li:hover p {
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover .navMenuToggle li:hover a {
     background: var(--grey, linear-gradient(90deg, rgba(29, 63, 138, 0.10) 72.1%, rgba(29, 63, 138, 0.00) 138.85%));
     color: var(--blue);
 }
