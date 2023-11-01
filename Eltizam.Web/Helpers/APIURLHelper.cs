@@ -23,7 +23,9 @@ namespace Eltizam.Web.Helpers
         public static string GetResourceTypeList = "api/MasterUser/GetResourceTypeList";
         public static string GetCountryList = "api/MasterCountry/GetCountryList";
         public static string GetStateList = "api/MasterState/GetStateList";
+        public static string GetStateListByCountryId = "api/MasterState/GetStateListByCountryId";
         public static string GetCityList = "api/MasterCity/GetCityList";
+        public static string GeCityListByStateId = "api/MasterCity/GetCityListByStateId";
         public static string GetClientTypeList = "api/MasterClientType/GetClientTypeList";
         public static string GetByPermisionRoleUsingRoleId = "api/MasterRole/GetByPermisionRoleUsingRoleId";
 
@@ -59,6 +61,7 @@ namespace Eltizam.Web.Helpers
         public static string GetAllProperty = "api/MasterProperty/GetAll";
         public static string GetPropertyById = "api/MasterProperty/GetById";
         public static string DeletePropertyById = "api/MasterProperty/Delete";
+        public static string GetPropertyByFilters = "api/MasterProperty/getPropertyByFilters";
         public static string GetPropertyAmenityList = "api/MasterProperty/GetPropertyAmenityList";
 
         #endregion MasterProperty
@@ -122,6 +125,7 @@ namespace Eltizam.Web.Helpers
         public static string GetClientById = "api/MasterClient/GetById";
         public static string UpsertClient = "api/MasterClient/Upsert";
         public static string DeleteClient = "api/MasterClient/DeleteClient";
+        public static string GetClientByClientTypeId = "api/MasterClient/getByClientTypeId";
 
         #endregion Client
 
@@ -183,6 +187,7 @@ namespace Eltizam.Web.Helpers
         public static string GetDictionaryById = "api/MasterDictionary/GetById";
         //public static string DeleteDictionary = "api/MasterDictionary/Delete";
         public static string DeleteDictionaryById = "api/MasterDictionary/Delete";
+        public static string UpsertMasterDictionary = "api/MasterDictionary/Upsert";
 
         #endregion Dictionary Management
 

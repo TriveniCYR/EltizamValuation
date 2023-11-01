@@ -113,6 +113,25 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+
+        [HttpGet]
+        [Route("getPropertyByFilters/{propertyTypeId}/{subPropertyTypeId}/{ownershipTypeId}")]
+        public async Task<IActionResult> GetMasterPropertyByFilters([FromRoute] int propertyTypeId, int subPropertyTypeId, int ownershipTypeId)
+        {
+            try
+            {
+                var oPrpoertyTypeEntity = await _propertyServices.GetMasterPropertyByFiltersAsync(propertyTypeId,subPropertyTypeId,ownershipTypeId);
+                if (oPrpoertyTypeEntity != null)
+                    return _ObjectResponse.CreateData(oPrpoertyTypeEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
     }
 }

@@ -392,9 +392,9 @@ footer {
             top: 9px;
         }
 
-        .sideNavDashboard .sideMenu ul li:hover img.right-arrow-menu, .sideNavDashboard .sideMenu ul li.activeSideMenu img.right-arrow-menu {
+       /* .sideNavDashboard .sideMenu ul li:hover img.right-arrow-menu, .sideNavDashboard .sideMenu ul li.activeSideMenu img.right-arrow-menu {
             transform: rotate(90deg);
-        }
+        }*/
 
 .showMoreNav {
     display: none;
@@ -476,6 +476,7 @@ header {
         font-weight: 400;
         line-height: 120%;
         margin-right: 10px;
+        margin-left:50px;
     }
 
     header .notification span {
@@ -1216,8 +1217,74 @@ img#closePopup {
     .profileTabSection .tab .tablinks + .tablinks {
         margin-left: 8px;
     }
+.tab, .payTab {
+    overflow: hidden;
+}
 
-.tab {
+.payTab {
+    display: flex;
+    justify-content: space-around;
+}
+
+    .tab button, .payTab button {
+        background-color: white;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 7.5px 16.27px 8px 15px;
+        transition: 0.3s;
+        font-size: 13px;
+        background-color: var(--grey);
+        border-radius: 2px 2px 0 0;
+    }
+
+        .tab button:hover,
+        .tab button.active {
+            background-color: var(--blue);
+            color: var(--white);
+        }
+
+.tabcontent, .payTabContent {
+    /*display: none;*/
+    padding: 6px 12px;
+    border-top: none;
+    box-shadow: 0px 0px 12px 0px #00000012;
+    margin-top: 15px;
+    background-color: white;
+    overflow: hidden;
+}
+
+button.payTabLink {
+    background: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 0 0 0;
+    font-size: 1em;
+    width: 20%;
+}
+
+.payTab button.active, .payTab button:hover {
+    font-weight: bold;
+    border: 1px solid var(--blue);
+    position: relative;
+    background-color: transparent;
+    color: var(--blue);
+}
+
+    .payTab button.active:after,
+    .payTab button:hover:after {
+        content: '';
+        width: 40%;
+        height: 2px;
+        border-radius: 4px;
+        background-color: var(--blue);
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        margin: auto;
+    }
+/*.tab {
     overflow: hidden;
 }
 
@@ -1240,14 +1307,13 @@ img#closePopup {
         }
 
 .tabcontent {
-    /*display: none;*/
+    display: none;
     padding: 6px 12px;
     border-top: none;
     box-shadow: 0px 0px 12px 0px #00000012;
     margin-top: 15px;
     background-color: white;
-    overflow:hidden;
-}
+}*/
 
     .tabcontent .inputSearchs form .flex label,
     .tabcontent .inputSearchs .tabSection .flex label {
@@ -1843,24 +1909,62 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .buttons-excel, .buttons-pdf, .buttons-csv {
     border: none;
-    padding-right: 8px;
-    padding-left: 8px;
 }
-.buttons-excel i, .buttons-pdf i, .buttons-csv i{
-    font-size:x-large;
+.flex-column {
+    flex-direction: column !important;
 }
-tbody, td, tfoot, th, thead, tr {
-    border: none !important;
+
+.navMenuToggle {
+    display: none;
 }
-.table-bordered {
-    border: none;
+
+    .navMenuToggle ul {
+        margin-top: 15px;
+    }
+.sideNavDashboard .sideMenu ul li img.right-arrow-menu.rotateNav, .sideNavDashboard .sideMenu ul li.activeSideMenu img.right-arrow-menu {
+    transform: rotate(90deg);
 }
-#profile1, #profile2, #profile3, #profile4{
-    margin-top:0px;
-    border:1px solid var(--blue);
+.activeSideMenuClcik:hover {
+    background-color: var(--blue) !important;
+    color: var(--white);
 }
-table.table-bordered.dataTable {
-    border: 1px solid var(--grey) !important;
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover img {
+    filter: brightness(20);
+}
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover a {
+    color: var(--white);
+    background: var(--blue );
+    font-weight: normal;
+}
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover img.right-arrow-menu {
+    filter: invert(1);
+}
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover .navMenuToggle li:hover img {
+    filter: initial;
+}
+
+.sideNavDashboard .sideMenu ul li.activeSideMenuClcik:hover .navMenuToggle li:hover a {
+    background: var(--grey, linear-gradient(90deg, rgba(29, 63, 138, 0.10) 72.1%, rgba(29, 63, 138, 0.00) 138.85%));
+    color: var(--blue);
+}
+
+.redToaste p {
+    color: var(--error);
+}
+
+.redToaste {
+    background-color: var(--lightRed);
+}
+
+.greenToaste img {
+    width: 16px;
+}
+#profileMenu ul li {
+    width: 100%;
 }
 .input-validation-error {
     border: 1px solid #dc3545 !important;

@@ -3,13 +3,18 @@ function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+        tabcontent[i].style.height = 0;
+        tabcontent[i].style.padding = 0;
+        tabcontent[i].style.border = "none";
+        tabcontent[i].style.marginTop = 0;
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    document.getElementById(cityName).style.display = "block";
+    document.getElementById(cityName).style.height = "auto";
+    document.getElementById(cityName).style.padding = "6px 12px";
+    document.getElementById(cityName).style.border = "1px solid var(--blue)";
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
@@ -17,10 +22,10 @@ document.getElementById("defaultOpen").click();
 // accordian function here
 function accordianToggle(header) {
     const item = header.nextElementSibling;
-    if (item.style.display === 'block') {
-        item.style.display = 'none';
+    if (item.style.height === 'auto') {
+        item.style.height = 0;
     } else {
-        item.style.display = 'block';
+        item.style.height = 'auto';
     }
 }
 //accordian function end

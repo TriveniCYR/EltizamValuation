@@ -105,6 +105,24 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+        [HttpGet]
+        [Route("getByClientTypeId/{id}")]
+        public async Task<IActionResult> GetMasterClientByClientTypeId([FromRoute] int id)
+        {
+            try
+            {
+                var oPrpoertyTypeEntity = await _clientServices.GetMasterClientByClientTypeIdAsync(id);
+                if (oPrpoertyTypeEntity != null)
+                    return _ObjectResponse.CreateData(oPrpoertyTypeEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
     }
 }

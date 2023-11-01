@@ -15,17 +15,17 @@
     {
         PageHeading = "Add";
     }
-    else 
+    else
     {
         PageHeading = "View";
     }
     var _header = "Location Master";
 }
-   
 
 
-  <!-- system user master -->
-  <form asp-action="LocationManage">
+
+<!-- system user master -->
+<form asp-action="LocationManage" autocomplete="off" asp-controller="MasterLocation" method="post">
     <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative flex justify-between">
@@ -36,28 +36,29 @@
                     <span>@PageHeading</span>
                 </div>
             </div>
-                <div class="bodyContent">
-                    <div class="inputSearchs p-0">
+            <div class="bodyContent">
+                <div class="inputSearchs p-0">
                     <div class="tabSection">
 
                         <input type="hidden" id="hdnCountry" value="@(Model.CountryId == null ? 0 : Model.CountryId)" />
                         <input type="hidden" id="hdnState" value="@(Model.StateId == null ? 0 : Model.StateId)" />
                         <input type="hidden" id="hdnCity" value="@(Model.CityId == null ? 0 : Model.CityId)" />
                         <input type="hidden" id="hdnId" value="@(Model.Id == null ? 0 : Model.Id)" />
+                        <input type="hidden" id="hdnHomeCurrencyId" value="@(Model.HomeCurrencyId == null ? 0 : Model.HomeCurrencyId)" />
+                        <input type="hidden" id="hdnForeignCurrencyId" value="@(Model.ForeignCurrencyId == null ? 0 : Model.ForeignCurrencyId)" />
                         @Html.HiddenFor(model=>model.Id)
-                        @{
+                       @*  @{
                             var htmlAttributes = new Dictionary<string, object> { { "class", "form-control" } };
 
                             if (ViewBag.IsView == 1)
                             {
                                 htmlAttributes.Add("disabled", "disabled");
                             }
-                        }
+                        } *@
                         <div class="flex">
                             <label for="CountryId" class="w-50">
-                                <p class="m-0">Country<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
-                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                                Country Name
+                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem>(),  new {id="country_Id",@class = "form-control disabletxtbox" })
                             </label>
                             <label for="" class="w-50">
                                 Status
@@ -73,175 +74,201 @@
                         </div>
                         <div class="flex">
                             @* <label for="LocationName" class="w-50">
-                                Location Name
-                                @Html.TextBoxFor(model => model.LocationName, htmlAttributes)
+                            Location Name
+                            @Html.TextBoxFor(model => model.LocationName, htmlAttributes)
                             </label> *@
-                            
+
                             <label for="StateId" class="w-50">
-                                <p class="m-0">State<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
-                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                State Name
+                                @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { },"Please select", new { id = "state_Id",@class = "form-control disabletxtbox" } )
+                             
+                         
                             </label>
                             <label for="CityId" class="w-50">
-                                <p class="m-0">City<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
-                                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                                City / Emirates
+                                @*   @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, htmlAttributes) *@
+                                @Html.DropDownListFor(m => m.CityId, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"), "Please select", new { id = "city_Id",@class = "form-control disabletxtbox" })
                             </label>
                         </div>
-                        <div class="flex">  
+                        <div class="flex">
+
+
+
                             <label for="resourceType" class="w-50">
                                 Sector / Zone
-                                @Html.TextBoxFor(model => model.Sector, htmlAttributes)
+                                @Html.TextBoxFor(model => model.Sector,  new { @class = "form-control disabletxtbox" })
                             </label>
                             <label for="Geo-coordinates" class="w-50">
                                 Latitude
-                                @Html.TextBoxFor(model => model.Latitude, htmlAttributes)
+                                @Html.TextBoxFor(model => model.Latitude,  new { @class = "form-control disabletxtbox" })
                             </label>
                         </div>
                         <div class="flex">
 
 
-                            
+
                             <label for="" class="w-50">
                                 Longitude
-                                @Html.TextBoxFor(model => model.Longitude, htmlAttributes)
+                                @Html.TextBoxFor(model => model.Longitude,  new { @class = "form-control disabletxtbox" })
                             </label>
                             <label for="Geo-coordinates" class="w-50">
-                                <p class="m-0">Home Currency<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>(), htmlAttributes)
-                                @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" })
+                                Home Currency
+                                @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>{},  new { @class = "form-control disabletxtbox"})
+
                                 @*   @Html.TextBoxFor(model => model.HomeCurrencyId, htmlAttributes) *@
                             </label>
                         </div>
-                        <div class="flex">                              
+                        <div class="flex">
                             <label for="Geo-coordinates" class="w-50">
-                                p class="m-0">Foreign Currency<<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem>(), htmlAttributes)
-                                @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" })
-                               @*  @Html.TextBoxFor(model => model.ForeignCurrencyId, htmlAttributes) *@
+                                Foreign Currency
+                                @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem> { },  new { @class = "form-control disabletxtbox" })
+                                @*  @Html.TextBoxFor(model => model.ForeignCurrencyId, htmlAttributes) *@
                             </label>
                         </div>
                         <div class="flex">
-                            
-                           @*  <label for="" class="w-50">
-                                Status
-                                @{
-                                    bool isActive = Model.Status == 1; // Convert 1 to true, any other value to false
-                                }
 
-                                <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />
-                                <label class="label-switch" for="addLocation"></label>
-                                <span class="info-text"></span>
-                                </label> *@
-                    </div>
-                        <div class="text-right buttonArea bodyContent plr-0">
-                            @if (ViewBag.IsView!=1)
-                            {
-                                <button type="submit" class="lineBtn greyBtn" id="resetLocation">Cancel</button>
-                                <button type="submit" class="bgBlue">Save</button>
-
+                            @*  <label for="" class="w-50">
+                            Status
+                            @{
+                            bool isActive = Model.Status == 1; // Convert 1 to true, any other value to false
                             }
 
-                    </div>
+                            <input type="checkbox" id="addLocation" class="input-switch" name="Status" value="1" @(isActive ? "checked" : "") required />
+                            <label class="label-switch" for="addLocation"></label>
+                            <span class="info-text"></span>
+                            </label> *@
+                        </div>
+                        <div class="text-right buttonArea bodyContent plr-0">
+                          @*   @if (ViewBag.IsView != 1)
+                            { *@
+                                <button type="submit" class="lineBtn greyBtn" id="resetLocation">Cancel</button>
+                                <button type="submit" id="btnSave" class="bgBlue">Save</button>
+
+                            @* } *@
+
+                        </div>
                     </div>
                 </div>
-                </div>
+            </div>
 
 
         </div>
     </main>
-    </form>
+</form>
 
 @section MyScripts {
-<script type="text/javascript" src="~/js/Custom/Location/LocationManagement.js?v=@jsVersion"></script>
-<script>
-    $(document).ready(function () {
-        BindCountry();
-        BindState();
-        BindCity();
+    <script type="text/javascript" src="~/js/Custom/Location/LocationManagement.js?v=@jsVersion"></script>
+    <script>
+        var stateListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
+        $(document).ready(function () {
+            BindCountry();
+            $('#country_Id').change(function () {
+                var countryId = $(this).val();
+                if (countryId) {
+                    // var stateListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";                   
+                    $.ajax({
+                        type: "GET",
+                        url: $('#hdnBaseURL').val() + stateListUrl + '/' + countryId,
+                        dataType: "json",
+                        success: function (response) {
+                            $('#state_Id').empty();
+                            $('#state_Id').append($('<option>').text('Please select'));
+                            $.each(response, function (index, state) {
+                                $('#state_Id').append($('<option>').val(state.id).text(state.stateName));
+                            });
+                            debugger;
+                            // if ($('#hdnState').val() != 0) {
+                            //  //   alert($('#hdnState').val());
+                            //     $('#state_Id').val($('#hdnState').val());
+                            // }
+                            
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                } else {                  
+                    $('#state_Id').empty();
+                }
+            });
+            $('#state_Id').change(function () {
+                var stateId = $(this).val();
+                if (stateId) {
+                    var cityListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
+                    $.ajax({
+                        type: "GET",
+                        url: $('#hdnBaseURL').val() + cityListUrl + '/' + stateId,
+                        dataType: "json",
+                        success: function (response) {
+                            $('#city_Id').empty();
+                            $('#city_Id').append($('<option>').text('Please select'));
+                            $.each(response, function (index, city) {
+                                $('#city_Id').append($('<option>').val(city.id).text(city.cityName));
+                            });
+                            
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                } else {
+                    $('#city_Id').empty();
+                }
+            });
+            if (@ViewBag.IsView == 1) {
+                $(".disabletxtbox").prop("disabled", true);
+                $("#addLocation").prop("disabled", true);
 
-    });
-    function BindCountry() {
-        var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
-        var Country = $("#CountryId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + CountryList,
-            "datatype": "json",
-            success: function (response) {
-                ;
-                Country.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
-                }
-                if ($('#hdnCountry').val() != 0) {
-                    Country.val($('#hdnCountry').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
+                // Disable the associated label element
+                $("label[for='addLocation']").addClass("disabled");
             }
-        });
-    }
-
-    function BindState() {
-
-        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
-        var State = $("#StateId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + StateList,
-            "datatype": "json",
-            success: function (response) {
-                ;
-                State.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
-                }
-                if ($('#hdnState').val() != 0) {
-                    State.val($('#hdnState').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
+           
+            if ($('#hdnState').val() != 0) {
+                alert($('#hdnState').val());
+                $('#state_Id').val($('#hdnState').val());
             }
-        });
-    }
+            // if ($('#hdnHomeCurrencyId').val() != 0) {
+            //     alert($('#hdnHomeCurrencyId').val());
+            //     $('#HomeCurrencyId').text($('#hdnHomeCurrencyId').val());
+            // }
+            var selectedHomeCurrencyId = @Model.HomeCurrencyId; // Replace with the correct value
+            alert(selectedHomeCurrencyId);
+            $("#HomeCurrencyId").text(selectedHomeCurrencyId);
+            // function BindState() {
 
-    function BindCity() {
-
-        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
-        var City = $("#CityId");
-        $.ajax({
-            type: "GET",
-            url: $('#hdnBaseURL').val() + CityList,
-            "datatype": "json",
-            success: function (response) {
-                ;
-                City.empty().append('<option selected="selected" value="0">Please select</option>');
-                for (var i = 0; i < response.length; i++) {
-                    City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
-                }
-                if ($('#hdnCity').val() != 0) {
-                    City.val($('#hdnCity').val());
-                }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
-            }
+            //     var State = $("#StateId");
+            //     var _val = $('#hdnState').val();
+            //     var _rpname = "stateName";
+            //     BindDropdowns(stateListUrl, State, _rpname, _val);
+            // }
         });
-    }</script>
-@* <script src="~/js/custom/location/locationmaster.js"></script> *@
+        function BindCountry() {
+            var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
+            var Country = $("#country_Id");
+            $.ajax({
+                type: "GET",
+                url: $('#hdnBaseURL').val() + CountryList,
+                "datatype": "json",
+                success: function (response) {
+                    ;
+                    Country.empty().append('<option selected="selected" value="0">Please select</option>');
+                    for (var i = 0; i < response.length; i++) {
+                        Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
+                    }
+                    if ($('#hdnCountry').val() != 0) {
+                        Country.val($('#hdnCountry').val());
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    $("#loader").hide();
+                }
+            });
+        }
+        
+    </script>
+    @* <script src="~/js/custom/location/locationmaster.js"></script> *@
 }

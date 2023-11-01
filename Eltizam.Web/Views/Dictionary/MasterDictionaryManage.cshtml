@@ -1,0 +1,134 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model Eltizam.Business.Models.MasterDictionaryEntity;
+@{
+    ViewData["Title"] = @MasterLocalizer["Property Type Manage"];
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    Layout = "_Layout";
+
+}
+
+<form>
+    <main>
+        <div class="whiteBoxShadow">
+            <div class="heading position-relative flex justify-between ">
+                @if (Model.Id > 0)
+                {
+                    <h3 class="dashboardTitle">EDIT MASTER DICTIONARY</h3>
+                    <div class="hamburger">
+                        <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">Property Type Master</a>
+                        @*  <span onclick="resourceMaster()">Property Type Master</span> *@
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                        <span>Edit</span>
+                    </div>
+                }
+                else
+                {
+                    <h3 class="dashboardTitle">ADD MASTER DICTIONARY</h3>
+                    <div class="hamburger">
+                        <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">Property Type Master</a>
+                        @*  <span onclick="resourceMaster()">Property Type Master</span> *@
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                        <span>Add</span>
+                    </div>
+                }
+            </div>
+            <div class="bodyContent">
+                <div class="inputSearchs p-0">
+                    <div class="tabSection">
+                        <input type="hidden" id="hdnPropertyId" value="@(Model == null ? 0 : Model.Id)" />
+                        @Html.HiddenFor(model=> model.IsActive)
+                        <div class="flex">
+                            <label for="" class="w-50">
+                                <p class="m-0">
+                                    Description
+                                    <span class="text-danger">*</span>
+                                </p>
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Dictionary Name"] } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </label>
+
+                            <label for="" class="w-50">
+
+                                Status
+@* 
+                                @{
+                                    bool isActive = Model.data[0].IsActive==1; // Convert 1 to true, any other value to false
+                                } *@
+
+                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text" style="top:-20px;"></span>
+                                @* @Html.CheckBox("IsActive", new { htmlAttributes = new {  @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["IsActive"] } }) *@
+                                @*   @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new {  @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["IsActive"] } }) *@
+                                @*    <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                <label class="label-switch" for="IsActive"></label>
+                                <span class="info-text"></span> *@
+
+                                @*  <input class='input-switch' type="checkbox" id="addLocation" required /> *@
+                                @* <label class="label-switch" for="addLocation"></label> *@
+                                @* <span class="info-text"></span> *@
+                            </label>
+
+
+
+                        </div>
+                        <div class="dynamicInput">
+                            <div class="addMoreInput buttonArea">
+                                <button type="button" class="blueBtn" onclick="addInputDictionary()">+ add property</button>
+                            </div>
+                            <div class="addPropertyInputDynamic"></div>
+                        </div>
+
+
+                        <div class="propertySubTypeContainer addPropertyInputDynamic">
+                            @if (Model.MasterDicitonaryDetails!= null)
+                            {
+                                @for (var i = 0; i < Model.MasterDicitonaryDetails.Count; i++)
+                                {
+                                    var _ndl = Model.MasterDicitonaryDetails[i];
+                                    <div class="inputFieldProp">
+                                        <label for="" class="">
+                                            <input type="text" id="@_ndl.Id" value="@_ndl.ChildDescription" asp-for="@_ndl.ChildDescription" class="form-control checkbox-checked" placeholder="Master Dictionary Value" />
+                                        </label>
+                                        @if (i >= 0)
+                                        {
+                                            <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeAddPropInput(this)">
+                                        }
+                                    </div>
+                                }
+                            }
+                        </div>
+                        @*  <button type="button" id="addSubTypeButton" class="btn btn-secondary">Add Property SubType</button> *@
+                        <div class="text-right buttonArea bodyContent plr-0">
+                            <a href='/Dictionary/Dictionary'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                            @* <a class="greyBtn lineBtn mr-12" asp-action="PropertyTypes">@SharedLocalizer["Cancel"]</a> *@
+                            <button type="button" id="btnSaveRole" onclick="SaveMasterDictionary()" class="bgBlue">Save</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</form>
+
+
+<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
+<script type="text/javascript" src="~/js/Custom/Dictionary/MasterDictionaryManage.js?v=@jsVersion"></script>
+
+@section MyScripts
+    {
+    <script>
+        var MasterDictionaryUpsert = "@Eltizam.Web.Helpers.APIURLHelper.UpsertMasterDictionary";
+    </script>
+}

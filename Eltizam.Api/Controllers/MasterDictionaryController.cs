@@ -137,6 +137,26 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+        //[HttpPost]
+        //[Route("Upsert")]
+        //public async Task<IActionResult> Upsert(Master_PropertyTypeModel oPrpoertyType)
+        //{
+        //    try
+        //    {
+        //        DBOperation oResponse = await _DictionaryService.AddUpdateMasterPropertyType(oPrpoertyType);
+        //        if (oResponse == DBOperation.Success)
+        //        {
+        //            return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oPrpoertyType.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+        //        }
+        //        else
+        //            return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
 
         #endregion API Methods
 
