@@ -1861,6 +1861,16 @@ div.dataTables_wrapper div.dataTables_filter {
     cursor: pointer;
 }
 
+.accordianErrorDetails {
+    background-color: #dc3545 !important;
+    padding: 10px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+    color:white;
+}
+
+
 .panel {
     margin-top: 20px;
 }
