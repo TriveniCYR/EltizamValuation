@@ -423,7 +423,7 @@
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
         minusDiv.innerHTML = `<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
-                                                                `;
+                                                                    `;
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
 
         addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
@@ -448,8 +448,8 @@
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
         minusDiv.innerHTML = `
-                                    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
-                                `;
+                                        <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
+                                    `;
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
 
         roundBorderBox.parentElement.insertBefore(clonedDiv, roundBorderBox.nextSibling);
@@ -468,25 +468,39 @@
     }
 
     //Validation fixes
+    var ErrorDev = $("#errors");
     $(document).on('click', 'form button[type=submit]', function (e) {
-        setTimeout(function () {
+        setTimeout(function () { 
+            showLoader();
             ValidateTabAndPage();
-        }, 1500);
+        }, 500);
     });
 
+   
     function ValidateTabAndPage() {
         var errors = $(".input-validation-error");
+        var err = ""; 
+         
         var msg_1 = $(".input-validation-error").parent().closest('div.tabcontent').attr("title");
         if (msg_1 !== undefined) {
-            var e1 += "<li>" + msg_1 + "<li>";
-            FormattedError(e1);
+            err += "<li>" + msg_1 + "<li>";
+        }
+        else if (errors.length > 0) {
+            err += "<li>Fill all mandate fields with valid data.<li>";
+        }
+         
+        if (err !== "") {
+            FormattedError(err);
         }
     }
 
     function FormattedError(err) {
         if (err !== undefined && err !== "") {
+            ErrorDev.empty();
             $("#errors").show();
-            $("#errors").append("Please resolve errors by filling mandate field under the page/tab: <ul>" + err + "<ul>")
+            $("#errors").append("Please resolve errors by filling mandate field under the page/tab: <ul>" + err + "<ul>");
+
+            hideLoader();
         }
     }
 
