@@ -470,8 +470,9 @@
     //Validation fixes
     var ErrorDev = $("#errors");
     $(document).on('click', 'form button[type=submit]', function (e) {
-        setTimeout(function () { 
-            showLoader();
+         showLoader();
+
+        setTimeout(function () {  
             ValidateTabAndPage();
         }, 500);
     });
