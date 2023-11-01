@@ -195,5 +195,140 @@ namespace Eltizam.Business.Core.Implementation
 
             return DBOperation.Success;
         }
+        public async Task<DBOperation> MasterDictionaryAddUpdate(MasterDictionaryEntity entity_dictionary)
+        {
+            // Create a Master_PropertyType object.
+            MasterDictionary objmasterDictionary;
+
+            // Check if the entity has an ID greater than 0 (indicating an update).
+            if (entity_dictionary.Id > 0)
+            {
+                // Get the existing entity from the repository.
+                objmasterDictionary = _repository.Get(entity_dictionary.Id);
+
+                // If the entity exists, update its properties.
+                if (objmasterDictionary != null)
+                {
+                    objmasterDictionary.Description = entity_dictionary.Description;
+                    objmasterDictionary.IsActive =Convert.ToInt32(entity_dictionary.IsActive);
+                    objmasterDictionary.ModifiedDate = AppConstants.DateTime;
+                   // objmasterDictionary.ModifiedBy = entity_dictionary.ModifiedBy;
+
+                    // Update the entity in the repository asynchronously.
+                    _repository.UpdateAsync(objmasterDictionary);
+                }
+                else
+                {
+                    // Return a not found operation if the entity does not exist.
+                    return DBOperation.NotFound;
+                }
+            }
+            else
+            {
+                // Create a new Master_PropertyType entity from the model for insertion.
+                // type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
+                objmasterDictionary = new MasterDictionary()
+                {
+                    IsActive = Convert.ToInt32(entity_dictionary.IsActive),
+                    Description = entity_dictionary.Description
+                };
+                objmasterDictionary.CreatedDate = AppConstants.DateTime;
+               // objmasterDictionary.CreatedBy = entity_dictionary.CreatedBy;
+                objmasterDictionary.ModifiedDate = AppConstants.DateTime;
+               // objmasterDictionary.ModifiedBy = masterproperty.ModifiedBy;
+
+                // Insert the new entity into the repository asynchronously.
+                _repository.AddAsync(objmasterDictionary);
+            }
+
+            // Save changes to the database asynchronously.
+            await _unitOfWork.SaveChangesAsync();
+
+            // Return an appropriate operation result.
+            if (objmasterDictionary.Id == 0)
+                return DBOperation.Error;
+            else
+            {
+                var subTypes = entity_dictionary.MasterDicitonaryDetails;
+                var _Val = "";
+                if (subTypes != null)
+                {
+                    foreach (var _stype in subTypes)
+                    {
+                        _Val += string.Format("{0}_{1},", _stype.Id, _stype.Description);
+                    }
+                }
+
+                SqlParameter[] _sqlParameter =
+                {
+                    new SqlParameter(AppConstants.P_Id,             objmasterDictionary.Id),
+                    new SqlParameter(AppConstants.P_CreatedBy,      objmasterDictionary.CreatedBy),
+                    new SqlParameter(AppConstants.P_RequestData,    _Val)
+                };
+
+                await _repository.GetBySP(ProcedureMetastore.usp_MasterDictionary_UpsertDictionaryDetails, CommandType.StoredProcedure, _sqlParameter);
+                //if (entity_dictionary.MasterDicitonaryDetails != null)
+                //{
+                //    var subTypes = entity_dictionary.MasterDicitonaryDetails;
+                //    MasterDictionaryDetail objmasterDictDetail;
+                //    foreach (var subType in subTypes)
+                //    {
+                //        if (subType.Id > 0)
+                //        {
+                //            objmasterDictDetail = _repositoryDetail.Get(subType.Id);
+                //            if (objmasterDictDetail != null)
+                //            {
+                //                var entitySubType = _mapperFactory.Get<MasterDictionaryDetailById, MasterDictionaryDetail>(subType);
+                //                objmasterDictDetail.Description = entitySubType.Description;
+
+
+                //                objmasterDictDetail.IsActive = entitySubType.IsActive;
+                //                objmasterDictDetail.ModifiedBy = entitySubType.CreatedBy;
+                //                objmasterDictDetail.ModifiedDate = AppConstants.DateTime;
+                //                _repositoryDetail.UpdateAsync(objmasterDictDetail);
+                //            }
+                //        }
+                //        else
+                //        {
+                //            objmasterDictDetail = _mapperFactory.Get<MasterDictionaryDetailById, MasterDictionaryDetail>(subType);
+                //            objmasterDictDetail.Description = subType.ChildDescription;
+                //            objmasterDictDetail.DictionaryId = objmasterDictionary.Id;
+                //            objmasterDictDetail.IsActive =Convert.ToInt32(entity_dictionary.IsActive);
+                //            //objmasterDictDetail.CreatedBy = entity_dictionary.CreatedBy;
+                //            objmasterDictDetail.CreatedDate = AppConstants.DateTime;
+                //          //  objmasterDictDetail.ModifiedBy = entity_dictionary.CreatedBy;
+                //            objmasterDictDetail.ModifiedDate = AppConstants.DateTime;
+                //            _repositoryDetail.AddAsync(objmasterDictDetail);
+                //        }
+                //        await _unitOfWork.SaveChangesAsync();
+                //    }
+                //}
+            }
+            return DBOperation.Success;
+        }
+        public async Task<MasterDictionaryEntity> GetMasterDictionaryDetailByIdAsync(int id)
+        {
+            // Create a new Master_PropertyTypeModel instance.
+            var _userEntity = new MasterDictionaryEntity();
+
+            // Use a mapper to map the data from the repository to the model asynchronously.
+            _userEntity = _mapperFactory.Get<MasterDictionary, MasterDictionaryEntity>(await _repository.GetAsync(id));
+
+            // Return the mapped entity.
+            return _userEntity;
+        }
+        public async Task<List<MasterDictionaryDetailById>> GetMasterDictionaryDetailSubByIdAsync(int DictionaryId)
+        {
+            // Create a new Master_PropertyTypeModel instance.
+            var _SubTypes = new List<MasterDictionaryDetailById>();
+
+            var res = _repositoryDetail.GetAllAsync(x => x.DictionaryId == DictionaryId && x.IsActive == 1).Result.ToList();
+
+            // Use a mapper to map the data from the repository to the model asynchronously.
+            _SubTypes = _mapperFactory.GetList<MasterDictionaryDetail, MasterDictionaryDetailById>(res);
+
+            // Return the mapped entity.
+            return _SubTypes;
+        }
     }
 }

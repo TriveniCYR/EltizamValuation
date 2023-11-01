@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class DictionaryController : Controller
+    public class MasterDictionaryController : Controller
     {
         #region Properties
 
@@ -20,7 +20,7 @@ namespace EltizamValuation.Web.Controllers
         private readonly IHelper _helper;
 
         #endregion Properties
-        public DictionaryController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
+        public MasterDictionaryController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
         {
             _cofiguration = configuration;
             _stringLocalizerShared = stringLocalizerShared;
@@ -69,74 +69,23 @@ namespace EltizamValuation.Web.Controllers
             }
             else
             {
-                //HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                //APIRepository objapi = new(_cofiguration);
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
 
-                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetPropertyTypeById + "/" + id, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetDictionaryDetailsById + "/" + id, HttpMethod.Get, token).Result;
 
-                //if (responseMessage.IsSuccessStatusCode)
-                //{
-                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                //    var data = JsonConvert.DeserializeObject<APIResponseEntity<Master_PropertyTypeModel>>(jsonResponse);
-                //    if (data._object is null)
-                //        return NotFound();
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterDictionaryEntity>>(jsonResponse);
+                    if (data._object is null)
+                        return NotFound();
 
-                //    return View("PropertyTypeManage", data._object);
-                //}
+                    return View("MasterDictionaryManage", data._object);
+                }
                 return NotFound();
             }
-        }
-
-        //public IActionResult DictionaryAllManage(int id, string? description)
-        //{
-        //    //id = 3; description = "ValuationType";
-        //    MasterDictionaryDetailById masterdictionary;
-        //    if (id == null || id <= 0)
-        //    {
-        //        masterdictionary = new MasterDictionaryDetailById();
-
-        //        return View(masterdictionary);
-        //    }
-        //    else
-        //    {
-        //        HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-        //        APIRepository objapi = new(_cofiguration);
-        //        string urlHelper = string.Empty;
-        //        if (!string.IsNullOrEmpty(description))
-        //        {
-        //            urlHelper = APIURLHelper.GetDictionaryById + "/" + id + "/" + description;
-        //        }
-        //        else { urlHelper = APIURLHelper.GetDictionaryById + "/" + id; }
-        //        HttpResponseMessage responseMessage = objapi.APICommunication(urlHelper, HttpMethod.Get, token).Result;
-
-        //        if (responseMessage.IsSuccessStatusCode)
-        //        {
-        //            string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-        //            if (!string.IsNullOrEmpty(description))
-        //            {
-
-        //                var data = JsonConvert.DeserializeObject<List<MasterDictionaryDetailById>>(jsonResponse);
-
-
-        //                if (data is null)
-        //                    return NotFound();
-        //                ViewData["ChildDictList"] = data;
-        //            }
-        //            else
-        //            {
-        //                var data = JsonConvert.DeserializeObject<MasterDictionaryDetailById>(jsonResponse);
-        //                ModelState.Clear();
-        //                return View(data);
-        //            }
-        //            ModelState.Clear();
-        //            // ViewBag.IsView = Isview;
-        //            // return View(data);
-        //            return View();
-        //        }
-        //        return NotFound();
-        //    }
-        //}
-
+        }    
         public IActionResult DictionaryAllManage(int id, string? description)
         {
             ModelState.Clear();
@@ -323,6 +272,8 @@ namespace EltizamValuation.Web.Controllers
         //        return RedirectToAction("DictionaryAllManage", new { Id = masterdictionary.DictionaryId });
         //    }
         //}
+
+      
 
     }
 }

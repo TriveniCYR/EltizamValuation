@@ -38,6 +38,7 @@ namespace Eltizam.Business.Models
         public static string usp_Qualification_GetQualificationByTableKeyId = "usp_Qualification_GetQualificationByTableKeyId";
         public static string usp_Document_GetDocumentByTableKeyId = "usp_Document_GetDocumentByTableKeyId";
         public static string usp_Dictionary_GetById = "usp_Dictionary_GetById";
+        public static string usp_MasterDictionary_UpsertDictionaryDetails = "usp_MasterDictionary_UpsertDictionaryDetails";
         
 
         // common master dropdown call

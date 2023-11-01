@@ -137,26 +137,49 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
-        //[HttpPost]
-        //[Route("Upsert")]
-        //public async Task<IActionResult> Upsert(Master_PropertyTypeModel oPrpoertyType)
-        //{
-        //    try
-        //    {
-        //        DBOperation oResponse = await _DictionaryService.AddUpdateMasterPropertyType(oPrpoertyType);
-        //        if (oResponse == DBOperation.Success)
-        //        {
-        //            return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oPrpoertyType.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
-        //        }
-        //        else
-        //            return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
-        //    }
-        //    catch (Exception ex)
-        //    {
+        [HttpPost]
+        [Route("UpsertMasterDictionary")]
+        public async Task<IActionResult> UpsertMasterDictionary(MasterDictionaryEntity oPrpoertyType)
+        {
+            try
+            {
+                DBOperation oResponse = await _DictionaryService.MasterDictionaryAddUpdate(oPrpoertyType);
+                if (oResponse == DBOperation.Success)
+                {
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oPrpoertyType.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+                }
+                else
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+            }
+            catch (Exception ex)
+            {
 
-        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-        //    }
-        //}
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+        [HttpGet]
+         [Route("GetDictionaryDetailsById/{id}")]
+        public async Task<IActionResult> GetDictionaryDetailsById([FromRoute] int id)
+        {
+            try
+            {
+                var MasterDictEntity = await _DictionaryService.GetMasterDictionaryDetailByIdAsync(id);
+
+                if (MasterDictEntity != null && MasterDictEntity.Id > 0)
+                {
+                    var subtypes = await _DictionaryService.GetMasterDictionaryDetailSubByIdAsync(MasterDictEntity.Id);
+                    MasterDictEntity.MasterDicitonaryDetails = subtypes;
+
+                    return _ObjectResponse.Create(MasterDictEntity, (Int32)HttpStatusCode.OK);
+                }
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
 
         #endregion API Methods
 

@@ -185,12 +185,13 @@ namespace Eltizam.Web.Helpers
         public static string GetDictionaryById = "api/MasterDictionary/GetById";
         //public static string DeleteDictionary = "api/MasterDictionary/Delete";
         public static string DeleteDictionaryById = "api/MasterDictionary/Delete";
-        public static string UpsertMasterDictionary = "api/MasterDictionary/Upsert";
+        public static string UpsertMasterDictionary = "api/MasterDictionary/UpsertMasterDictionary";
+        public static string GetDictionaryDetailsById = "api/MasterDictionary/GetDictionaryDetailsById";
 
         #endregion Dictionary Management
 
         #region Valuation Request
-       
+
         public static string GetAllValuationRequest = "api/ValuationRequest/GetAllValuationRequest";
        
 
