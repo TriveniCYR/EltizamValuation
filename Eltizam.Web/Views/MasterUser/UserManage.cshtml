@@ -64,8 +64,9 @@
                                 </div>
                                 <div class="flex">
                                     <label for="FirstName">
-                                        First Name
+                                        <p class="m-0">First Name<span class="text-danger">*</span></p>
                                         @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
+                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="MiddleName">
                                         Middle Name
@@ -74,33 +75,38 @@
                                 </div>
                                 <div class="flex">
                                     <label for="LastName">
-                                        Last Name
+                                        <p class="m-0">Last Name<span class="text-danger">*</span></p>
                                         @Html.TextBoxFor(model => model.LastName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="DepartmentId">
-                                        Department
+                                        <p class="m-0">Department<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.DepartmentId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Department"] })
-
+                                        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex">
                                     <label for="DesignationId">
-                                        Designation
+                                        <p class="m-0">Designation<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.DesignationId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Designation"] })
+                                        @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="DateOfBirth">
-                                        Date of Birth
-                                        <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth" class="form-control">
+                                        <p class="m-0">Date of Birth<span class="text-danger">*</span></p>
+                                        <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth">
+                                        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex">
                                     <label for="Gender">
-                                        Gender
+                                        <p class="m-0">Gender<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Select Gender"] })
+                                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="ResourceId">
-                                        Resource Type
+                                       <p class="m-0">Resource Type<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                                        @Html.ValidationMessageFor(model => model.ResourceId, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 @if (Model.Id <= 0)
@@ -124,8 +130,9 @@
                                         @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select Role"] })
                                     </label>
                                     <label for="CompanyName">
-                                        Company / Vendor Name
+                                        <p class="m-0">Company/Vendor Name<span class="text-danger">*</span></p>
                                         @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex">
@@ -152,11 +159,12 @@
                                         <p>Mailing Address Section</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
-                                    <div class="pannel" style="display:none">
+                                    <div class="pannel" style="height:0;overflow:hidden">
                                         <div class="flex">
                                             <label for="address1">
-                                                <span>Address Line 1 </span>
+                                                <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Address.Address1, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                                @Html.ValidationMessageFor(model => model.Address.Address1, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="address2">
                                                 Address Line 2
@@ -165,38 +173,44 @@
                                         </div>
                                         <div class="flex">
                                             <label for="CountryId">
-                                                CountryId
+                                                <p class="m-0">Country<span class="text-danger">*</span></p>
                                                 @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.Address.CountryId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="StateId">
-                                                State
+                                                 <p class="m-0">State<span class="text-danger">*</span></p>
                                                 @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.Address.StateId, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="CityId">
-                                                City
+                                                <p class="m-0">City<span class="text-danger">*</span></p>
                                                 @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.Address.CityId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="PinNo">
-                                                Pin Code
+                                                ZIP Code
                                                 @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Email">
-                                                Email
+                                                <p class="m-0">Email<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Address.Email, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                                @Html.ValidationMessageFor(model => model.Address.Email, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="AlternateEmail">
                                                 Alternate Email
                                                 @Html.TextBoxFor(model => model.Address.AlternateEmail, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                                @Html.ValidationMessageFor(model => model.Address.AlternateEmail, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Phone">
-                                                Phone
+                                                <p class="m-0">Phone<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Address.Phone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                                @Html.ValidationMessageFor(model => model.Address.Phone, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="AlternatePhone">
                                                 Alternate Phone
@@ -225,7 +239,7 @@
                                 <p>Qualification Section</p>
                                 <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                             </div>
-                            <div class="pannel mt-28" style="display:none">
+                            <div class="pannel mt-28" style="height:0;overflow:hidden">
                                 <div class="text-right">
                                     @*<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" />*@
                                 </div>
@@ -235,28 +249,33 @@
                                         @Html.HiddenFor(model => model.Qualification.Id)
                                         <div class="flex">
                                             <label for="Qualification">
-                                                Programme of Study/ Qualification
+                                                <p class="m-0">Programme of Study/ Qualification<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Qualification.Qualification, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
+                                                @Html.ValidationMessageFor(model => model.Qualification.Qualification, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="Subject">
-                                                Subject/Stream
+                                                <p class="m-0">Subject/Stream<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Qualification.Subject, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
+                                                @Html.ValidationMessageFor(model => model.Qualification.Subject, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Institute">
-                                                Education Institute
+                                                <p class="m-0">Education Institute<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Qualification.Institute, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
+                                                @Html.ValidationMessageFor(model => model.Qualification.Institute, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="year">
-                                                Year of Institute
+                                                <p class="m-0">Year of Institute<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Qualification.YearOfInstitute, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
+                                                @Html.ValidationMessageFor(model => model.Qualification.YearOfInstitute, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="grade" class="w-100">
-                                                Grade/Percent/class
+                                                <p class="m-0">Grade/Percent/class<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Qualification.Grade, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
+                                                @Html.ValidationMessageFor(model => model.Qualification.Grade, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                     </div>
@@ -320,7 +339,7 @@
                     </div>
                     <div class="text-right buttonArea bodyContent plr-0">
                         <a href='/MasterUser/Users'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
-                        <button type="submit" class="blueBtn">Save</button>
+                        <button type="submit" class="blueBtn" onclick="CheckValidation()">Save</button>
                     </div>
                 </form>
             </div>
@@ -330,26 +349,22 @@
 @*  </div>
 </div> *@
 
-
-<input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
-
-<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-
 <script>
     function profileTab(evt, cityName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+            tabcontent[i].style.height = 0;
+            tabcontent[i].style.padding = 0;
+            tabcontent[i].style.border = "none";
         }
         tablinks = document.getElementsByClassName("tablinks");
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
-        document.getElementById(cityName).style.display = "block";
+        document.getElementById(cityName).style.height = "auto";
+        document.getElementById(cityName).style.padding = "6px 12px";
+        document.getElementById(cityName).style.border = "1px solid #007bff";
         evt.currentTarget.className += " active";
     }
     document.getElementById("defaultOpen").click();
@@ -366,10 +381,10 @@
     // accordian function here
     function accordianToggle(header) {
         const item = header.nextElementSibling;
-        if (item.style.display === 'block') {
-            item.style.display = 'none';
+        if (item.style.height === 'auto') {
+            item.style.height = 0;
         } else {
-            item.style.display = 'block';
+            item.style.height = 'auto';
         }
     }
     //accordian function end
@@ -454,6 +469,41 @@
         BindState();
         BindCity();
         BindGender();
+
+        debugger
+        $('#Address_Phone').keypress(function (e) {
+            if ($('#Address_Phone').val() == '' && e.which == 48) {
+                return false;
+            }
+            else {
+                var charCode = (e.which) ? e.which : event.keyCode;
+                if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                    return false;
+                }
+            }
+        });
+        $('#Address_Landlinephone').keypress(function (e) {
+            if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+                return false;
+            }
+            else {
+                var charCode = (e.which) ? e.which : event.keyCode;
+                if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                    return false;
+                }
+            }
+        });
+        $('#Address_AlternatePhone').keypress(function (e) {
+            if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+                return false;
+            }
+            else {
+                var charCode = (e.which) ? e.which : event.keyCode;
+                if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                    return false;
+                }
+            }
+        });
     });
 
     function BindDepartment() {
@@ -547,6 +597,68 @@
         Gender.append($("<option></option>").val('F').html('Female'));
         if ($('#hdnGender').val() != 0) {
             Gender.val($('#hdnGender').val());
+        }
+    }
+
+    function CheckValidation(){
+        let profileMsg = "";
+        if($("#FirstName").val()=="")
+        {
+            profileMsg = "Profile .";
+        }
+        else if ($("#LastName").val() == "") {
+            profileMsg = "Profile Validation is required.";
+        }
+        else if ($("#DepartmentId").val() == "0") {
+            profileMsg = "Profile Validation is required.";
+        }
+        else if ($("#DesignationId").val() == "0") {
+            profileMsg = "Profile Validation is required.";
+        }
+        else if ($("#DateOfBirth").val() == "01-01-0001") {
+            profileMsg = "Profile Validation is required.";
+        }
+        else if ($("#ResourceId").val() == "0") {
+            profileMsg = "Profile Validation is required.";
+        }
+        else if ($("#CompanyName").val() == "") {
+            profileMsg = "Profile Validation is required.";
+        }
+        else if ($("#Address_Address1").val() == "") {
+            profileMsg = "Address tab validation is required.";
+        }
+        else if ($("#Address_Address2").val() == "") {
+            profileMsg = "Address tab validation is required.";
+        }
+        else if ($("#Address_CountryId").val() == "0") {
+            profileMsg = "Address tab validation is required.";
+        }
+        else if ($("#Address_StateId").val() == "0") {
+            profileMsg = "Address tab validation is required.";
+        }
+        else if ($("#Address_CityId").val() == "0") {
+            profileMsg = "Address tab validation is required.";
+        }
+        else if ($("#Address_Email").val() == "") {
+            profileMsg = "Address tab validation is required.";
+        }
+        else if ($("#Address_Phone").val() == "") {
+            profileMsg = "Address tab validation is required.";
+        }
+        else if ($("#Qualification_Qualification").val() == "") {
+            profileMsg = "Qualification tab validation is required.";
+        }
+        else if ($("#Qualification_Subject").val() == "") {
+            profileMsg = "Qualification tab validation is required.";
+        }
+        else if ($("#Qualification_Institute").val() == "") {
+            profileMsg = "Qualification tab validation is required.";
+        }
+        else if ($("#Qualification_YearOfInstitute").val() == "") {
+            profileMsg = "Qualification tab validation is required.";
+        }
+        else if ($("#Qualification_Grade").val() == "") {
+            profileMsg = "Qualification tab validation is required.";
         }
     }
 

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Eltizam.Resource.Resources;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,12 @@ namespace Eltizam.Business.Models
         public string? ContactPersonName { get; set; }
         public string? Department { get; set; }
         public string? Designation { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [DataType(DataType.EmailAddress)]
+        [MaxLength(50)]
+        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
         public string? Email { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? Mobile { get; set; }
         public int? Status { get; set; }
         public DateTime? CreatedDate { get; set; }

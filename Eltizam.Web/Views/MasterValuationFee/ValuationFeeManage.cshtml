@@ -43,8 +43,9 @@
                     <div>
                         <div class="flex">
                             <label for="PropertyTypeId" class="w-50">
-                                Property Type Name
+                                <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)"})
+                                @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">
                                 Status
@@ -57,22 +58,25 @@
                         </div>
                         <div class="flex">
                             <label for="" class="w-50">
-                                Property SubType Name
+                                <p class="m-0">Property SubType Name<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
+                                @Html.ValidationMessageFor(model => model.PropertySubTypeId, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">
-                                Type of Ownership
+                                <p class="m-0">Type of Ownership<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" })
                             </label>
                             
                         </div>
                         <div class="flex">
                             <label for="" class="w-50">
-                                Client Type
+                                <p class="m-0">Client Type<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" })
                             </label>
                             <label for="CarpetAreaInSqFt" class="w-50">
-                                Carpet Area (Sq.Ft)
+                                <p class="m-0">Carpet Area (Sq.Ft)<span class="text-danger">*</span></p>
                                 @Html.EditorFor(model => model.CarpetAreaInSqFt, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqFt, "", new { @class = "text-danger" })
                             </label>
@@ -81,13 +85,14 @@
                         </div>
                         <div class="flex">
                             <label for="CarpetAreaInSqMtr" class="w-50">
-                                Carpet Area (Sq.Meter)
+                                <p class="m-0">Carpet Area (Sq.Meter)<span class="text-danger">*</span></p>
                                 @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqMtr, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">
-                                Valuation Fee Type
+                                <p class="m-0">Valuation Fee Type<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.ValuationFeeTypeId, new List<SelectListItem> { }, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ValuationFeeTypeId, "", new { @class = "text-danger" })
                             </label>
                            
                         </div>
@@ -111,24 +116,24 @@
 
                             <div class="flex">
                                 <label for="" class="w-50">
-                                    Valuation Fees (AED)
+                                    <p class="m-0">Valuation Fees (AED)<span class="text-danger">*</span></p>
                                     @Html.EditorFor(model => model.ValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" ,@placeholder="enter Valuation Fees (AED)"} })
                                     @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="" class="w-50">
-                                    VAT (Percent)
+                                    <p class="m-0">VAT (Percent)<span class="text-danger">*</span></p>
                                     @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control", @placeholder="enter VAT (Percent)"} })
                                     @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="" class="w-50">
-                                    Other Charges
+                                    <p class="m-0">Other Charges<span class="text-danger">*</span></p>
                                     @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",placeholder="enter other chargesr" } })
                                     @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="" class="w-50">
-                                    Total evaluation Fees
+                                    <p class="m-0">Total evaluation Fees<span class="text-danger">*</span></p>
                                     @Html.EditorFor(model => model.TotalValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",@placeholder="enter Total evaluation Fees" } })
                                     @Html.ValidationMessageFor(model => model.TotalValuationFees, "", new { @class = "text-danger" })
                                 </label>
@@ -137,7 +142,7 @@
 
                         <div id="fixed">
                             <label for="" class="w-50">
-                                Fixed valuation Fees
+                                <p class="m-0">Fixed valuation Fees<span class="text-danger">*</span></p>
                                 @Html.EditorFor(model => model.FixedvaluationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",@placeholder="enter Fixed evaluation Fees" } })
                                 @Html.ValidationMessageFor(model => model.FixedvaluationFees, "", new { @class = "text-danger" })
                             </label>
@@ -158,6 +163,127 @@
     <script type="text/javascript" src="~/js/Custom/ValuationFee/valuationfeemanage.js?v=@jsVersion"></script>
 
     <script>
+
+        $(document).ready(function () {
+            $('#ValuationFees').keypress(function (e) {
+                debugger
+                if ($('#ValuationFees').val() == '' && (e.which == 48 || e.charCode == 46)) {
+                    return false;
+                }
+                else {
+                    if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+                        var keypress = e.keyCode || e.which || e.charCode;
+                        var key = String.fromCharCode(keypress);
+                        var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+
+                        var txt = $(this).val() + key;
+                        if (!regEx.test(txt)) {
+                            if (keypress != 8) {
+                                e.preventDefault();
+                            } else {
+                            }
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                }
+            });
+            $('#Vat').keypress(function (e) {
+                if ($('#Vat').val() == '' && (e.which == 48 || e.charCode == 46)) {
+                    return false;
+                }
+                else {
+                    if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+                        var keypress = e.keyCode || e.which || e.charCode;
+                        var key = String.fromCharCode(keypress);
+                        var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+
+                        var txt = $(this).val() + key;
+                        if (!regEx.test(txt)) {
+                            if (keypress != 8) {
+                                e.preventDefault();
+                            } else {
+                            }
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                }
+            });
+            $('#OtherCharges').keypress(function (e) {
+                if ($('#OtherCharges').val() == '' && (e.which == 48 || e.charCode == 46)) {
+                    return false;
+                }
+                else {
+                    if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+                        var keypress = e.keyCode || e.which || e.charCode;
+                        var key = String.fromCharCode(keypress);
+                        var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+
+                        var txt = $(this).val() + key;
+                        if (!regEx.test(txt)) {
+                            if (keypress != 8) {
+                                e.preventDefault();
+                            } else {
+                            }
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            $('#TotalValuationFees').keypress(function (e) {
+                if ($('#TotalValuationFees').val() == '' && (e.which == 48 || e.charCode == 46)) {
+                    return false;
+                }
+                else {
+                    if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+                        var keypress = e.keyCode || e.which || e.charCode;
+                        var key = String.fromCharCode(keypress);
+                        var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+
+                        var txt = $(this).val() + key;
+                        if (!regEx.test(txt)) {
+                            if (keypress != 8) {
+                                e.preventDefault();
+                            } else {
+                            }
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            $('#FixedvaluationFees').keypress(function (e) {
+                if ($('#FixedvaluationFees').val() == '' && (e.which == 48 || e.charCode == 46)) {
+                    return false;
+                }
+                else {
+                    if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+                        var keypress = e.keyCode || e.which || e.charCode;
+                        var key = String.fromCharCode(keypress);
+                        var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+
+                        var txt = $(this).val() + key;
+                        if (!regEx.test(txt)) {
+                            if (keypress != 8) {
+                                e.preventDefault();
+                            } else {
+                            }
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                }
+            });
+        });
         var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";

@@ -55,8 +55,9 @@
                         }
                         <div class="flex">
                             <label for="CountryId" class="w-50">
-                                Country Name
-                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem>(), htmlAttributes)
+                                <p class="m-0">Country<span class="text-danger">*</span></p>
+                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">
                                 Status
@@ -77,18 +78,17 @@
                             </label> *@
                             
                             <label for="StateId" class="w-50">
-                                State Name
-                                @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, htmlAttributes)
+                                <p class="m-0">State<span class="text-danger">*</span></p>
+                                @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
                             </label>
                             <label for="CityId" class="w-50">
-                                City / Emirates
-                                @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, htmlAttributes)
+                                <p class="m-0">City<span class="text-danger">*</span></p>
+                                @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                             </label>
                         </div>
-                        <div class="flex">
-                           
-                            
-
+                        <div class="flex">  
                             <label for="resourceType" class="w-50">
                                 Sector / Zone
                                 @Html.TextBoxFor(model => model.Sector, htmlAttributes)
@@ -107,16 +107,17 @@
                                 @Html.TextBoxFor(model => model.Longitude, htmlAttributes)
                             </label>
                             <label for="Geo-coordinates" class="w-50">
-                                Home Currency
+                                <p class="m-0">Home Currency<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>(), htmlAttributes)
-
+                                @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" })
                                 @*   @Html.TextBoxFor(model => model.HomeCurrencyId, htmlAttributes) *@
                             </label>
                         </div>
                         <div class="flex">                              
                             <label for="Geo-coordinates" class="w-50">
-                                Foreign Currency
+                                p class="m-0">Foreign Currency<<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem>(), htmlAttributes)
+                                @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" })
                                @*  @Html.TextBoxFor(model => model.ForeignCurrencyId, htmlAttributes) *@
                             </label>
                         </div>

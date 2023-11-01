@@ -77,7 +77,7 @@
                                     <label for="">
                                         <p class="m-0">Unit Type<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.UnitType, new List<SelectListItem> { }, new { @class = "form-control"})
-                                        @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.UnitType, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="">
                                         Additional Units
@@ -92,7 +92,7 @@
                                             <span class="text-danger">*</span>
                                         </p>
                                         @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @class = "form-control"})
-                                        @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.Furnished, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="">
                                         Purpose of Valuation
@@ -121,7 +121,7 @@
                                 <div class="flex mb-28">
                                     <label for="">
                                         Age of construction
-                                        @Html.TextBoxFor(model => model.AgeOfConstruction, new { @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
+                                        @Html.TextBoxFor(model => model.AgeOfConstruction, new { @class = "form-control", @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
 
                                     </label>
                                     <label for="">
@@ -160,15 +160,15 @@
                                     @{
                                         if (Model.AmenityList.Count != 0)
                                         {
-                                            @for (int z = 0; z < Model.AmenityList.Count; z++)
+                                                        @for (int z = 0; z < Model.AmenityList.Count; z++)
                                             {
-                                                <label for="" class="position-relative checkboxBtn w-30 mr-20">
-                                                    @Html.HiddenFor(m => m.AmenityList[z].Id)
-                                                    @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
-                                                    @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
-                                                    @Html.CheckBoxFor(model => Model.AmenityList[z].IsActive, new { @class = "checkbox-checked", @checked = "checked" })
-                                                    <p>@Model.AmenityList[z].AmenityName</p>
-                                                </label>
+                                                            <label for="" class="position-relative checkboxBtn w-30 mr-20">
+                                                                @Html.HiddenFor(m => m.AmenityList[z].Id)
+                                                                @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
+                                                                @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
+                                                                @Html.CheckBoxFor(model => Model.AmenityList[z].IsActive, new { @class = "checkbox-checked", @checked = "checked" })
+                                                                <p>@Model.AmenityList[z].AmenityName</p>
+                                                            </label>
                                             }
                                         }
                                     }
@@ -216,9 +216,10 @@
                                             </label>
                                         </div>
                                         <div class="flex">
-                                            <label for="address2">
-                                                Building Projects
+                                            <label for="address2">                                                
+                                                <p class="m-0">Building Projects<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.PropertyDetail.BuildingProject, new { @class = "form-control",  @placeholder = @SharedLocalizer["Zone"] })
+                                                @Html.ValidationMessageFor(model => model.PropertyDetail.BuildingProject, "", new { @class = "text-danger" })
 
                                             </label>
                                             <label for="address2">
@@ -246,7 +247,7 @@
 
                                             </label>
                                             <label for="address2">
-                                                Pin Code
+                                                ZIP Code
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Pincode, new { @class = "form-control",  @placeholder = @SharedLocalizer["Pincode"] })
 
                                             </label>
@@ -305,6 +306,85 @@
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
+
+        $(document).ready(function () {
+
+            $('#BuildUpAreaSqFt').keypress(function (e) {
+                if ($('#BuildUpAreaSqFt').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            }); 
+            $('#BuildUpAreaSqMtr').keypress(function (e) {
+                if ($('#BuildUpAreaSqMtr').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
+            $('#AgeOfConstruction').keypress(function (e) {
+                if ($('#AgeOfConstruction').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
+            $('#PropertyDetail_Pincode').keypress(function (e) {
+                if ($('#PropertyDetail_Pincode').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
+            $('#PropertyDetail_Longitude').on("keypress", function (e) {
+                var keypress = e.keyCode || e.which || e.charCode;
+                var key = String.fromCharCode(keypress);
+                var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
+
+                var txt = $(this).val() + key;
+                if (!regEx.test(txt)) {
+                    if (keypress != 8) {
+                        e.preventDefault();
+                    } else {
+                    }
+                } else {
+
+                }
+            });
+
+            $('#PropertyDetail_Latitude').on("keypress", function (e) {
+                var keypress = e.keyCode || e.which || e.charCode;
+                var key = String.fromCharCode(keypress);
+                var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
+
+                var txt = $(this).val() + key;
+                if (!regEx.test(txt)) {
+                    if (keypress != 8) {
+                        e.preventDefault();
+                    } else {
+                    }
+                } else {
+
+                }
+            });
+        });
 
     </script>
 }

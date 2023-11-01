@@ -1,18 +1,9 @@
 
-document.addEventListener("DOMContentLoaded", () => {
-    const addResourceRedirection = document.getElementById("addResourceRedirection");
-
-    addResourceRedirection.addEventListener('click', () => {
-        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
-    });
-});
-
 $(document).ready(function () {
     BindClientType();
     BindCountry();
     BindState();
     BindCity();
-    BindGender();
 });
 
 function profileTab(evt, cityName) {
@@ -94,27 +85,6 @@ function BindClientType() {
     var _rpname = "clientType";
 
     BindDropdowns(ClientTypeList, ClientType, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + ClientTypeList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        ClientType.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            ClientType.append($("<option></option>").val(response[i].id).html(response[i].clientType));
-    //        }
-    //        if ($('#hdnClientType').val() != 0) {
-    //            ClientType.val($('#hdnClientType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
 }
 
 function BindCountry() {
@@ -210,3 +180,16 @@ function BindCity() {
     //    }
     //});
 }
+
+
+// accordian function here
+function accordianToggle(header) {
+    const item = header.nextElementSibling;
+    if (item.style.display === 'block') {
+        item.style.display = 'none';
+    } else {
+        item.style.display = 'block';
+    }
+}
+        //accordian function end
+

@@ -59,13 +59,18 @@
                                 </div>
                                 <div class="flex">
                                     <label for="ClientTypeId">
-                                        Client Type
+                                        <p class="m-0">
+                                            Client Type
+                                            <span class="text-danger">*</span>
+                                        </p>
                                         @* <select id="ClientTypeId" name="ClientTypeId" class="form-control" asp-for="ClientTypeId"></select> *@
-                                        @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control"}) 
+                                        @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                        @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="FirstName">
-                                        First Name
+                                       <p class="m-0">First Name<span class="text-danger">*</span></p>
                                         @Html.TextBoxFor(model => model.FirstName, new {@class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
+                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                                     </label>
 
                                 </div>
@@ -75,25 +80,37 @@
                                         @Html.TextBoxFor(model => model.MiddleName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
                                     </label>
                                     <label for="LastName">
-                                        Last Name
+                                        <p class="m-0">Last Name<span class="text-danger">*</span></p>
                                         @Html.TextBoxFor(model => model.LastName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex">
                                     <label for="Trnnumber">
-                                        TRN Number
+                                        <p class="m-0">
+                                            TRN Number
+                                            <span class="text-danger">*</span>
+                                        </p>
                                         @Html.TextBoxFor(model => model.Trnnumber, new {@class = "form-control",  @placeholder = @SharedLocalizer["TRN Number"] })
+                                        @Html.ValidationMessageFor(model => model.Trnnumber, "", new { @class = "text-danger" })
                                     </label>
-                                    <label for="TrnexpiryDate">
-                                        TRN Expire Date
+                                    <label for="TrnexpiryDate">                                        
+                                        <p class="m-0">
+                                            TRN Expire Date
+                                            <span class="text-danger">*</span>
+                                        </p>
                                         <input type="date" id="TrnexpiryDate" name="TrnexpiryDate" asp-for="TrnexpiryDate">
+                                        @Html.ValidationMessageFor(model => model.TrnexpiryDate, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex">
                                     <label for="">
-                                        License Number
+                                       <p class="m-0">
+                                            License Number
+                                            <span class="text-danger">*</span>
+                                        </p>
                                         @Html.TextBoxFor(model => model.LicenseNumber, new {@class = "form-control",  @placeholder = @SharedLocalizer["License Number"] })
-
+                                        @Html.ValidationMessageFor(model => model.LicenseNumber, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                             </div>
@@ -116,8 +133,9 @@
                                     <div class="pannel" style="display:none">
                                         <div class="flex">
                                             <label for="address1">
-                                                <span>Address Line 1 </span>
+                                                <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Address.Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                                @Html.ValidationMessageFor(model => model.Address.Address1, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="address2">
                                                 Address Line 2
@@ -125,39 +143,45 @@
                                             </label>
                                         </div>
                                         <div class="flex">
-                                            <label for="CountryId">
-                                                CountryId
+                                            <label for="CountryId">                                                
+                                                <p class="m-0">Country<span class="text-danger">*</span></p>
                                                 @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.Address.CountryId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="StateId">
-                                                State
+                                                <p class="m-0">State<span class="text-danger">*</span></p>
                                                 @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.Address.StateId, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="CityId">
-                                                City
+                                                <p class="m-0">City<span class="text-danger">*</span></p>
                                                 @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                @Html.ValidationMessageFor(model => model.Address.CityId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="PinNo">
-                                                Pin Code
+                                                ZIP Code
                                                 @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Email">
-                                                Email
+                                                <p class="m-0">Email<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Address.Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                                @Html.ValidationMessageFor(model => model.Address.Email, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="AlternateEmail">
                                                 Alternate Email
                                                 @Html.TextBoxFor(model => model.Address.AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                                @Html.ValidationMessageFor(model => model.Address.AlternateEmail, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Phone">
-                                                Phone
+                                                <p class="m-0">Phone<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                                @Html.ValidationMessageFor(model => model.Address.Phone, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="AlternatePhone">
                                                 Alternate Phone
@@ -245,33 +269,60 @@
 
     <script>
 
-        // accordian function here
-        function accordianToggle(header) {
-            const item = header.nextElementSibling;
-            if (item.style.display === 'block') {
-                item.style.display = 'none';
-            } else {
-                item.style.display = 'block';
-            }
-        }
-        //accordian function end
-
-        var DeleteLabel = "@SharedLocalizer["Delete"]";
-        var ErrorMessage = "@SharedLocalizer["Error"]";
-        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
-        var StatusMessage = '@TempData["StatusMessage"]';
-
+        debugger
         //#region Setup API Url
         var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetClientTypeList";
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
         var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
         var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
 
-        //#region Static Messae Init
-        var EditLabel = "@SharedLocalizer["Edit"]";
-
-        var AddLabel = "@SharedLocalizer["Add"]";
-        var UpdateLabel = "@SharedLocalizer["Update"]";
+        $(document).ready(function () {
+            debugger
+            $('#Address_Phone').keypress(function (e) {
+                if ($('#Address_Phone').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
+            $('#Address_AlternatePhone').keypress(function (e) {
+                if ($('#Address_AlternatePhone').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
+            $('#Address_Landlinephone').keypress(function (e) {
+                if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
+            $('#Address_PinNo').keypress(function (e) {
+                if ($('#Address_PinNo').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
+        });
     </script>
 
 }
