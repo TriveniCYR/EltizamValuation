@@ -1,6 +1,8 @@
 ﻿var tableId = "ResourceUserTable";
 $(document).ready(function () {
+    debugger
     InitializeUserList();
+
 });
 
 
@@ -30,6 +32,7 @@ function DeleteUserByIdError(x, y, z) {
 }
 
 function InitializeUserList() {
+    debugger
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
         "url": $('#hdnBaseURL').val() + AllUser,
@@ -42,28 +45,28 @@ function InitializeUserList() {
     };
     var columnObject = [
         {
-            "data": "id" 
+            "data": "id", "name": "Id"
         },
         {
-            "data": "userName" 
+            "data": "userName", "name": "User Name"
         },
         {
-            "data": "department" 
+            "data": "department", "name": "Department"
         },
         {
-            "data": "designation" 
+            "data": "designation", "name": "Designation"
         },
         {
-            "data": "resourceType" 
+            "data": "resourceType", "name": "Resource Type"
         },
         {
-            "data": "roleName" 
+            "data": "roleName", "name": "Role"
         },
         {
-            "data": "phone" 
+            "data": "phone", "name": "Phone"
         },
         {
-            "data": "email" 
+            "data": "email", "name": "Email"
         },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {

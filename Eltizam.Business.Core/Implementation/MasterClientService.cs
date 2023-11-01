@@ -319,6 +319,19 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
+        public async Task<List<MasterClientModel>> GetMasterClientByClientTypeIdAsync(int ClientTypeId)
+        {
+            // Create a new Master_PropertyTypeModel instance.
+            var _Clients = new List<MasterClientModel>();
+
+            var res = _repository.GetAllAsync(x => x.ClientTypeId == ClientTypeId && x.IsActive == true).Result.ToList();
+
+            // Use a mapper to map the data from the repository to the model asynchronously.
+            _Clients = _mapperFactory.GetList<MasterClient, MasterClientModel>(res);
+
+            // Return the mapped entity.
+            return _Clients;
+        }
 
         #endregion API Methods
     }

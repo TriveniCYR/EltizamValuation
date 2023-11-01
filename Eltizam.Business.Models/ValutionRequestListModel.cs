@@ -30,6 +30,14 @@ namespace Eltizam.Business.Models
 
         public string ColorCode { get; set; }
 
+        public string ReferenceNO { get; set; }
+
+        public int ResourceId { get; set; }
+        public int RoleId { get; set; }
+
+        public int DepartmentId { get; set; }
+        public int DesignationId { get; set; }
+
 
     }
 }

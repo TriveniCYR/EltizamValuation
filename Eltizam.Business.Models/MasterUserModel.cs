@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Http;
+using Eltizam.Resource.Resources;
 
 namespace Eltizam.Business.Models
 {
@@ -15,18 +16,29 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public string? UserName { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? LastName { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? Gender { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public DateTime DateOfBirth { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Designation' field is required.")]
         public int DesignationId { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Department' field is required.")]
         public int DepartmentId { get; set; }
 
         public string? LicenseNo { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
 
         public string? CompanyName { get; set; }
         public int CompanyId { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'ResourceI' field is required.")]
         public int ResourceId { get; set; }
         public int RoleId { get; set; }
         public bool IsActive { get; set; }

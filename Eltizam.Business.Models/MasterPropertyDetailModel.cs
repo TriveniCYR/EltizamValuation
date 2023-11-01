@@ -13,16 +13,17 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public int PropertyId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "Selection is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Country' field is required.")]
         public int? CountryId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "Selection is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'State' field is required.")]
         public int? StateId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "Selection is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'City' field is required.")]
         public int? CityId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? Zone { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? BuildingProject { get; set; }
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }

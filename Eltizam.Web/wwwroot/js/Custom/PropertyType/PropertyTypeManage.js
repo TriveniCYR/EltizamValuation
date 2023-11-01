@@ -3,6 +3,7 @@
 let blockCounter = 1;
 
 function addInputProperty() {
+    debugger
     const inputPropField = document.querySelector(".addPropertyInputDynamic");
     const uniqueId = `status-${blockCounter}`;
 
@@ -26,6 +27,7 @@ function removeAddPropInput(element) {
 }
 
 function SavePropertyType() {
+    debugger
     var Master_PropertyTypeModel = {
         'Id': '',
         'PropertyType': '',

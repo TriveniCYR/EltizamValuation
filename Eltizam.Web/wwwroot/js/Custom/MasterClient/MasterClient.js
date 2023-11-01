@@ -41,22 +41,24 @@ function InitializeClientList() {
     };
     var columnObject = [
         {
-            "data": "id" 
+            "data": "id", "name": "Clent Name"
         },
         {
-            "data": "clientName" 
+            "data": "clientName", "name": "Clent Name"
         },
         {
-            "data": "clientType" 
+            "data": "clientType", "name": "Client Type"
         },
         {
-            "data": "trnnumber" 
+            "data": "trnnumber", "name": "TRN Number"
         },
         {
-            "data": "trnexpiryDate" 
+            "data": "trnexpiryDate", "name": "TRN Expiry", "render": function (data, type, row, meta) {
+                return moment(row.trnexpiryDate).format('DD-MMM-YYYY');
+            }
         },
         {
-            "data": "licenseNumber" 
+            "data": "licenseNumber", "name": "License Number"
         },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
