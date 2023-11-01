@@ -1245,12 +1245,13 @@ img#closePopup {
         }
 
 .tabcontent, .payTabContent {
-    display: none;
+    /*display: none;*/
     padding: 6px 12px;
     border-top: none;
     box-shadow: 0px 0px 12px 0px #00000012;
     margin-top: 15px;
     background-color: white;
+    overflow: hidden;
 }
 
 button.payTabLink {
@@ -1981,3 +1982,7 @@ div.dataTables_wrapper div.dataTables_filter {
 .accordion.valueAdvance .inputSearchs {
     transform: translateX(-502px);
 }
+.input-validation-error {
+    border: 1px solid #dc3545 !important;
+}
+

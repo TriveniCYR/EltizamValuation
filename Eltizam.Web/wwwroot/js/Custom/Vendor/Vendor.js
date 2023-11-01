@@ -44,19 +44,21 @@ function InitializeVendorList() {
     };
     var columnObject = [
         {
-            "data": "id" 
+            "data": "id", "name": "Id"
         },
         {
-            "data": "companyName" 
+            "data": "companyName", "name": "Company Name"
         },
         {
-            "data": "estimattionDate" 
+            "data": "estimattionDate", "name": "Estimation Date", "render": function (data, type, row, data) {
+                return moment(row.estimattionDate).format('DD-MMM-YYYY');
+            }
         },
         {
-            "data": "businessType" 
+            "data": "businessType", "name": "Resource Type"
         },
         {
-            "data": "companyDescription" 
+            "data": "companyDescription", "name": "Company Description"
         },
         {
             "data": "status", "name": "Active", "render": function (data, type, row, meta) {

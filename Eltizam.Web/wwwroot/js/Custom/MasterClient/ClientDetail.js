@@ -1,11 +1,4 @@
 
-document.addEventListener("DOMContentLoaded", () => {
-    const addResourceRedirection = document.getElementById("addResourceRedirection");
-
-    addResourceRedirection.addEventListener('click', () => {
-        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
-    });
-});
 
 $(document).ready(function () {
     BindClientType();
@@ -19,13 +12,18 @@ function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+        tabcontent[i].style.height = 0;
+        tabcontent[i].style.padding = 0;
+        tabcontent[i].style.border = "none";
+        tabcontent[i].style.marginTop = 0;
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    document.getElementById(cityName).style.display = "block";
+    document.getElementById(cityName).style.height = "auto";
+    document.getElementById(cityName).style.padding = "6px 12px";
+    document.getElementById(cityName).style.border = "1px solid var(--blue)";
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();

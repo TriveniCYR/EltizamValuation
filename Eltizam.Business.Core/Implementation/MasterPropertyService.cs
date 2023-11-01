@@ -34,7 +34,7 @@ namespace Eltizam.Business.Core.Implementation
 
         private IRepository<MasterProperty> _repository { get; set; }
         private IRepository<MasterPropertyLocation> _detailrepository { get; set; }
-        private IRepository<MasterPropertyAmenity> _amenityrepository { get; set; } 
+        private IRepository<MasterPropertyAmenity> _amenityrepository { get; set; }
 
         #endregion Properties
 
@@ -50,7 +50,7 @@ namespace Eltizam.Business.Core.Implementation
             _amenityrepository = _unitOfWork.GetRepository<MasterPropertyAmenity>();
             _configuration = configuration;
             _helper = helper;
-            
+
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
         }
         #endregion Constructor
@@ -84,26 +84,48 @@ namespace Eltizam.Business.Core.Implementation
             {
                 DbParameter[] osqlParameter =
                 {
-                 new DbParameter("PropertyId", id, SqlDbType.Int),
+                    new DbParameter("PropertyId", id, SqlDbType.Int),
                 };
                 var amenityList = EltizamDBHelper.ExecuteMappedReader<MasterAmenityListModel>(ProcedureMetastore.usp_Amenity_GetAmenityByPropertyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
+
                 if (amenityList != null)
                 {
                     _userEntity.AmenityList = amenityList;
-
                 }
 
-                DbParameter[] osqlParameter1 = {
-                 new DbParameter("PropertyId", id, SqlDbType.Int),
+                DbParameter[] osqlParameter1 =
+                {
+                    new DbParameter("PropertyId", id, SqlDbType.Int),
                 };
                 var detailLocation = EltizamDBHelper.ExecuteSingleMappedReader<MasterPropertyDetailModel>(ProcedureMetastore.usp_PropertyLocation_GetLocationByPropertyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
+
                 if (detailLocation != null)
                 {
                     _userEntity.PropertyDetail = detailLocation;
-
                 }
 
+                /*
+                    DbParameter[] p =
+                    {
+                        new DbParameter("PropertyId", id, SqlDbType.Int),
+                    };
+                    var resultSet = EltizamDBHelper.ExecuteMultiReader(ProcedureMetastore.usp_PropertyLocation_GetLocationByPropertyId, DatabaseConnection.ConnString, CommandType.StoredProcedure, p);
+                    if (resultSet != null && resultSet.Tables.Count > 0)
+                    { 
+                        //To read list 
+                        _userEntity.AmenityList = new List<MasterAmenityListModel>(); 
+
+                        if (resultSet.Tables[0] != null)
+                            DataTableHelper.FillCollectionFromDataView<MasterAmenityListModel>(_userEntity.AmenityList, resultSet.Tables[0].DefaultView);
+
+                        if (resultSet.Tables[1] != null)
+                        {
+                            _userEntity.PropertyDetail = resultSet.Tables[0].DefaultView.FillObjectFromDataView<MasterPropertyDetailModel>(); 
+                        }
+                    }
+                */
             }
+
             return _userEntity;
         }
 
@@ -131,7 +153,7 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         public async Task<List<MasterAmenityListModel>> GetPropertyAmenityList()
-        { 
+        {
             DbParameter[] osqlParameter =
             {
                 new DbParameter("PropertyId", 0, SqlDbType.Int),
@@ -173,8 +195,8 @@ namespace Eltizam.Business.Core.Implementation
                     objProperty.ModifiedDate = AppConstants.DateTime;
                     _repository.UpdateAsync(objProperty);
                 }
-                else 
-                    return DBOperation.NotFound; 
+                else
+                    return DBOperation.NotFound;
             }
             else
             {
@@ -227,10 +249,10 @@ namespace Eltizam.Business.Core.Implementation
                         objLocation.ModifiedDate = AppConstants.DateTime;
                         _detailrepository.AddAsync(objLocation);
                     }
-                    await _unitOfWork.SaveChangesAsync(); 
+                    await _unitOfWork.SaveChangesAsync();
                 }
 
-                if (masterproperty.AmenityList!= null && masterproperty.AmenityList.Count > 0)
+                if (masterproperty.AmenityList != null && masterproperty.AmenityList.Count > 0)
                 {
                     foreach (var doc in masterproperty.AmenityList)
                     {

@@ -14,17 +14,17 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string PropertyName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "Selection is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'PropertyType' field is required.")]
         public int PropertyTypeId { get; set; }
         public int? PropertySubTypeId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "Selection is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'OwnershipType' field is required.")]
         public int OwnershipTypeId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string UnitType { get; set; }
         public string? AdditionalUnits { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "Selection is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Furnished' field is required.")]
         public int Furnished { get; set; }
         public string? ValuationPurpose { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -38,7 +38,7 @@ namespace Eltizam.Business.Models
         public string? Description { get; set; }
         public int? CreatedBy { get; set; }
         public string? Amenities { get; set; }
-        public MasterPropertyDetailModel? PropertyDetail { get; set; }
+        public MasterPropertyDetailModel PropertyDetail { get; set; }
         public List<MasterAmenityListModel>? AmenityList { get; set; }
     }
 }

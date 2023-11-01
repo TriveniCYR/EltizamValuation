@@ -1,31 +1,27 @@
 
-document.addEventListener("DOMContentLoaded", () => {
-    const addResourceRedirection = document.getElementById("addResourceRedirection");
-
-    addResourceRedirection.addEventListener('click', () => {
-        window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/addResource.html'
-    });
-});
-
 $(document).ready(function () {
     BindClientType();
     BindCountry();
     BindState();
     BindCity();
-    BindGender();
 });
 
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+        tabcontent[i].style.height = 0;
+        tabcontent[i].style.padding = 0;
+        tabcontent[i].style.border = "none";
+        tabcontent[i].style.marginTop = 0;
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    document.getElementById(cityName).style.display = "block";
+    document.getElementById(cityName).style.height = "auto";
+    document.getElementById(cityName).style.padding = "6px 12px";
+    document.getElementById(cityName).style.border = "1px solid var(--blue)";
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
@@ -94,27 +90,6 @@ function BindClientType() {
     var _rpname = "clientType";
 
     BindDropdowns(ClientTypeList, ClientType, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + ClientTypeList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        ClientType.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            ClientType.append($("<option></option>").val(response[i].id).html(response[i].clientType));
-    //        }
-    //        if ($('#hdnClientType').val() != 0) {
-    //            ClientType.val($('#hdnClientType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
 }
 
 function BindCountry() {
@@ -210,3 +185,16 @@ function BindCity() {
     //    }
     //});
 }
+
+
+// accordian function here
+function accordianToggle(header) {
+    const item = header.nextElementSibling;
+    if (item.style.height === 'auto') {
+        item.style.height = 0;
+    } else {
+        item.style.height = 'auto';
+    }
+}
+        //accordian function end
+

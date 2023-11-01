@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Eltizam.Resource.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,8 @@ namespace Eltizam.Business.Models
 {
     public class Master_PropertyTypeModel
     {
-        public int Id { get; set; } = 0;
+        public int Id { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string PropertyType { get; set; }
         public bool IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }

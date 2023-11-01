@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Eltizam.Resource.Resources;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +11,17 @@ namespace Eltizam.Business.Models
     public class MasterLocationEntity
     {
         public int Id { get; set; }
-        public string? LocationName { get; set; } 
+        public string? LocationName { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Country' field is required.")]
         public int CountryId { get; set; }
         public string? CountryName { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'State' field is required.")]
         public int StateId { get; set; }
         public string? StateName { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'City' field is required.")]
         public int CityId { get; set; }
         public string? CityName { get; set; }
         public string Sector { get; set; }
@@ -24,7 +32,11 @@ namespace Eltizam.Business.Models
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'HomeCurrency' field is required.")]
         public int HomeCurrencyId { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'ForeignCurrency' field is required.")]
         public int ForeignCurrencyId { get; set; }
         public string? HomeCurrency { get; set; }
         public string? ForeignCurrency { get; set; }
