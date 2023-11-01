@@ -17,6 +17,9 @@ function InitializeValutionRequestDataList() {
     };
     var columnObject = [
         {
+            "data": "referenceNO", "name": "ReferenceNO"
+        },
+        {
             "data": "id", "name": "Id"
         },
         {
@@ -34,30 +37,42 @@ function InitializeValutionRequestDataList() {
         {
             "data": "valuationPurpose", "name": "Valuation Purpose"
         },
-        
+
         {
             "data": "methodOfValution", "name": "Method of Valuation"
         },
         {
-            "data": "valuationDate", "name": "Valuation Date"
+            "data": "valuationDate",
+            "name": "Valuation Date",
+            "render": function (data, type, row, data) {
+                return moment(row.valuationDate).format('DD-MMM-YYYY');
+            }
         },
+
         {
             "data": "requestor", "name": "Requestor"
         },
-        {
-            "data": "valuator", "name": "Valuator"
-        },
+      
         {
             "data": "approver", "name": "Approver"
         },
         {
-            "data": "statusName", "name": "Status"
+            "data": "valuator", "name": "Valuator"
         },
-        //{
-        //    "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
-        //        return GetActiveFlagCss(data);
-        //    }
-        //},
+
+        {
+            "data": "statusName",
+            "name": "Status",
+            "render": function (data, type, row, meta) {
+                var statusColorCode = row.colorCode;
+                // Define a custom CSS style based on the color code
+                var statusStyle = "color: " + statusColorCode;
+                //var statusStyle = "background-color: " + statusColorCode + "; color: statusColorCode;";
+                return '<span style="' + statusStyle + '">' + data + '</span>';
+            }
+
+        },
+
         {
             "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
@@ -71,6 +86,8 @@ function InitializeValutionRequestDataList() {
             }
         }
     ];
+
+
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
 }

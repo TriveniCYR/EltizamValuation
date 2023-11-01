@@ -1965,3 +1965,19 @@ div.dataTables_wrapper div.dataTables_filter {
 #profileMenu ul li {
     width: 100%;
 }
+.tableXscroll {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+.accordion.valueAdvance {
+    position: absolute;
+    left: 550px;
+    margin: auto;
+    margin-top: 12px;
+    width: 93%;
+    z-index:1;
+}
+.accordion.valueAdvance .inputSearchs {
+    transform: translateX(-502px);
+}
