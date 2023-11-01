@@ -96,3 +96,10 @@ function sideNavToggle() {
         x.style.display = "none";
     }
 } 
+
+function GetIdLinkCss(url, id) {
+
+    var dd = "<a class='userPic' href='" + url + id + "'>" + id + "</a>"; 
+
+    return dd;
+}
