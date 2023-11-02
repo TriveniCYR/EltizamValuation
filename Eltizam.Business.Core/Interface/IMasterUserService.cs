@@ -20,5 +20,6 @@ namespace Eltizam.Business.Core.Interface
         Task<List<MasterResourceTypeModel>> GetResourceTypeList();
         Task<List<MasterRoleModel>> GetRoleList();
         Task<DBOperation> Delete(int id);
+        Task<DBOperation> ChangePassword(ChangePasswordModel changePasswordModel);
     }
 }

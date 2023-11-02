@@ -13,6 +13,8 @@ using Eltizam.Web.Helpers;
 using Eltizam.Utility.Utility;
 using Eltizam.Utility.Models;
 using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Data.DataAccess.Entity;
+using Microsoft.CodeAnalysis;
 
 namespace Eltizam.Web.Controllers
 {
@@ -35,6 +37,7 @@ namespace Eltizam.Web.Controllers
         }
         public IActionResult Login()
         {
+            
             //APIRepository objapi = new APIRepository(_cofiguration);
             LoginViewModel loginViewModel = new LoginViewModel();
 
@@ -129,6 +132,7 @@ namespace Eltizam.Web.Controllers
 
         public IActionResult ForGetPassword()
         {
+           
             return View();
         }
 
@@ -277,6 +281,45 @@ namespace Eltizam.Web.Controllers
         public IActionResult ProfileDetails()
         {
             return View();
-        } 
+        }
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+           
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ChangePassword(ChangePasswordModel passwordModel)
+        {
+            int rolId = _helper.GetLoggedInRoleId();
+            passwordModel.UserId = rolId;
+            try
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ChangePassword, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(passwordModel))).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    
+
+                    return RedirectToAction(nameof(Login));
+                }
+                else
+                {
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+                    //return RedirectToAction("LocationManage", new { id = masterlocation.Id });
+                }
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+                //return RedirectToAction("LocationManage", new { Id = masterlocation.Id });
+            }
+            return View();
+        }
     }
 }

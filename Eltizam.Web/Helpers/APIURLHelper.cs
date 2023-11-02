@@ -14,7 +14,8 @@ namespace Eltizam.Web.Helpers
         public static string ForgotPassword = "api/Account/ForgotPassword";
         public static string ResetPassword = "api/Account/ResetPassword";
         public static string Anonymous_CheckEmailAddressExists = "api/Account/CheckEmailAddressExists"; 
-        public static string Anonymous_IsTokenValid = "api/Account/IsTokenValid"; 
+        public static string Anonymous_IsTokenValid = "api/Account/IsTokenValid";
+        public static string ChangePassword = "api/Account/ChangePassword";
         #region MasterCommon
 
         public static string GetDepartmentList = "api/MasterDepartment/GetDepartmentList";
