@@ -78,7 +78,8 @@
             @Html.Partial("_TopHeader")
 
             @*Validation div*@
-            <div id="errors" class="accordianErrorDetails position-relative" style="display:none;">
+            <div id="errorBanner" class="accordianErrorDetails position-relative" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span onclick="CloseBanner();" aria-hidden="true">×</span></button>
             </div>
 
             @RenderBody()

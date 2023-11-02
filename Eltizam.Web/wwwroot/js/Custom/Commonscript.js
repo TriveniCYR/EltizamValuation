@@ -5,7 +5,7 @@ var Get = 'GET';
 var Delete = 'DELETE';
 var _successToaster = $("#successToaster").val();
 var _errorToaster = $("#errorToaster").val();
-var ErrorDev = $("#errors");
+var ErrorDev = $("#errorBanner");
 $(document).ready(function () {
     hideLoader();
     ErrorDev.hide();
@@ -52,8 +52,7 @@ function hideLoader() {
     setTimeout(function () {
         $('#loading-wrapper').hide();
     }, 500);
-}
-
+} 
 function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
     $.ajax({
         type: Get,
@@ -134,10 +133,17 @@ function ValidateTabAndPage() {
 function FormattedError(err) {
     if (err !== undefined && err !== "") {
         ErrorDev.empty().show();
-        ErrorDev.append("Please resolve errors by filling mandate field under the page/tab: <ul>" + err + "<ul>");
+
+        ErrorDev
+        .append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span onclick="CloseErrorBanner();" aria-hidden="true">×</span></button>')
+        .append("Please fill all mandatory fields and resolve error(s) in page/tab (if applicable).: <ul>" + err + "<ul>");
 
         hideLoader();
     }
+}
+
+function CloseErrorBanner() {
+    ErrorDev.hide();
 }
 
 //-----Validation form things - END/ -------------
