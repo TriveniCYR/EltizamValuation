@@ -3,8 +3,8 @@ var BaseURL = $('#hdnBaseURL').val();
 var Post = 'POST';
 var Get = 'GET';
 var Delete = 'DELETE';
-var _successToaster = $("#successToaster").val();
-var _errorToaster = $("#errorToaster").val();
+var SuccessToaster = $("#successToaster").val();
+var ErrorToaster = $("#errorToaster").val();
 var ErrorDev = $("#errorBanner");
 var ShowMenuCache = "showMenuCache";
 
@@ -14,12 +14,12 @@ $(document).ready(function () {
     hideLoader();
 
     //Toaster related things
-    if (_successToaster !== "" && _successToaster !== null) {
-        toastr.success(_successToaster);
+    if (SuccessToaster !== "" && SuccessToaster !== null) {
+        toastr.success(SuccessToaster);
     }
 
-    if (_errorToaster !== "" && _errorToaster !== null) {
-        toastr.error(_errorToaster);
+    if (ErrorToaster !== "" && ErrorToaster !== null) {
+        toastr.error(ErrorToaster);
     }
 });
 
