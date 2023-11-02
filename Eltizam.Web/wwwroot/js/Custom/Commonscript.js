@@ -5,9 +5,10 @@ var Get = 'GET';
 var Delete = 'DELETE';
 var _successToaster = $("#successToaster").val();
 var _errorToaster = $("#errorToaster").val();
-
+var ErrorDev = $("#errors");
 $(document).ready(function () {
     hideLoader();
+    ErrorDev.hide();
 
     //Toaster related things
     if (_successToaster !== "" && _successToaster !== null) {
@@ -50,7 +51,7 @@ function showLoader() {
 function hideLoader() {
     setTimeout(function () {
         $('#loading-wrapper').hide();
-    }, 3000);
+    }, 1000);
 }
 
 function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
@@ -97,9 +98,46 @@ function sideNavToggle() {
     }
 } 
 
-function GetIdLinkCss(url, id) {
-
+function GetIdLinkCss(url, id) {  
     var dd = "<a class='userPic' href='" + url + id + "'>" + id + "</a>"; 
-
     return dd;
 }
+
+
+//-----Validation form things ------------- 
+$(document).on('click', 'form button[type=submit]', function (e) {
+    showLoader();
+
+    setTimeout(function () {
+        ValidateTabAndPage();
+    }, 500);
+});
+
+
+function ValidateTabAndPage() {
+    var errors = $(".input-validation-error");
+    var err = "";
+
+    var msg_1 = $(".input-validation-error").parent().closest('div.tabcontent').attr("title");
+    if (msg_1 !== undefined) {
+        err += "<li>" + msg_1 + "<li>";
+    }
+    else if (errors.length > 0) {
+        err += "<li>Fill all mandate fields with valid data.<li>";
+    }
+
+    if (err !== "") {
+        FormattedError(err);
+    }
+}
+
+function FormattedError(err) {
+    if (err !== undefined && err !== "") {
+        ErrorDev.empty().show();
+        ErrorDev.append("Please resolve errors by filling mandate field under the page/tab: <ul>" + err + "<ul>");
+
+        hideLoader();
+    }
+}
+
+//-----Validation form things - END/ -------------

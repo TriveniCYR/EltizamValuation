@@ -12,6 +12,7 @@
 <!-- system user master -->
 @* <div class="flex">
     <div class="w-100 position-relative"> *@
+
 <main>
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between">
@@ -21,11 +22,7 @@
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md</span>
             </div>
-        </div>
-
-        @*//Validation tab*@
-        <div id="errors" class="accordianErrorDetails position-relative" style="display:none;">
-        </div>
+        </div> 
 
         <div class="bodyContent">
             <div class="profileTabSection">
@@ -465,45 +462,8 @@
         if (parentDivAdd) {
             parentDivAdd.remove()
         }
-    }
-
-    //Validation fixes
-    var ErrorDev = $("#errors");
-    $(document).on('click', 'form button[type=submit]', function (e) {
-         showLoader();
-
-        setTimeout(function () {  
-            ValidateTabAndPage();
-        }, 500);
-    });
-
-   
-    function ValidateTabAndPage() {
-        var errors = $(".input-validation-error");
-        var err = ""; 
-         
-        var msg_1 = $(".input-validation-error").parent().closest('div.tabcontent').attr("title");
-        if (msg_1 !== undefined) {
-            err += "<li>" + msg_1 + "<li>";
-        }
-        else if (errors.length > 0) {
-            err += "<li>Fill all mandate fields with valid data.<li>";
-        }
-         
-        if (err !== "") {
-            FormattedError(err);
-        }
-    }
-
-    function FormattedError(err) {
-        if (err !== undefined && err !== "") {
-            ErrorDev.empty();
-            $("#errors").show();
-            $("#errors").append("Please resolve errors by filling mandate field under the page/tab: <ul>" + err + "<ul>");
-
-            hideLoader();
-        }
-    }
+    } 
+    
 
     $(document).ready(function () {
         BindDepartment();
