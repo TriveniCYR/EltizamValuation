@@ -229,8 +229,8 @@ function BindPropertyDetail() {
 
     //BindDropdowns(OwnershipTypeList, OwnershipType, _rpname, _val);
     $.ajax({
-        type: "GET",
-        url: $('#hdnBaseURL').val() + GetPropertyByFilters + '/' + PropertyTypeId + '/' + PropertySubTypeId + '/' + OwnershipTypeId,
+        type: Get,
+        url: BaseURL + GetPropertyByFilters + '/' + PropertyTypeId + '/' + PropertySubTypeId + '/' + OwnershipTypeId,
         "datatype": "json",
         success: function (response) {
             debugger;
@@ -253,10 +253,7 @@ function BindPropertyDetail() {
     });
 }
 
-function BindAmenityDetail() {
-    debugger;
-    alert("Detail");
-
+function BindAmenityDetail() {  
     var PropertyTypeId = document.getElementById("PropertyTypeId").value;
 
     if ((PropertyTypeId == null || PropertyTypeId == "")) {
@@ -269,19 +266,11 @@ function BindAmenityDetail() {
 
     //BindDropdowns(OwnershipTypeList, OwnershipType, _rpname, _val);
     $.ajax({
-        type: "GET",
-        url: $('#hdnBaseURL').val() + GetPropertyById + '/' + PropertyTypeId,
+        type: Get,
+        url: BaseURL + GetPropertyById + '/' + PropertyTypeId,
         "datatype": "json",
-        success: function (response) {
-            debugger;
-            alert(response);
-            //OwnershipType.empty().append('<option selected="selected" value="0">Please select</option>');
-            //for (var i = 0; i < response.data.length; i++) {
-            //    OwnershipType.append($("<option></option>").val(response.data[i].id).html(response.data[i].ownershipType));
-            //}
-            //if ($('#hdnOwnershipType').val() != 0) {
-            //    OwnershipType.val($('#hdnOwnershipType').val());
-            //}
+        success: function (response) { 
+            alert(response); 
         },
         failure: function (response) {
             alert(response.responseText);
