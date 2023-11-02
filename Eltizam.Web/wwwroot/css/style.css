@@ -1862,12 +1862,13 @@ div.dataTables_wrapper div.dataTables_filter {
 }
 
 .accordianErrorDetails {
-    background-color: #dc3545 !important;
+    background-color: var(--lightRed) !important;
     padding: 10px;
     border-radius: 5px;
     align-items: center;
     cursor: pointer;
-    color:white;
+    color:var(--error);
+    margin: 10px;
 }
 
 
@@ -1996,3 +1997,13 @@ div.dataTables_wrapper div.dataTables_filter {
     border: 1px solid #dc3545 !important;
 }
 
+.accordianErrorDetails ul li {
+    list-style: none;
+    color: var(--error);
+    display: inline;
+    margin-right: 10px;
+}
+
+.accordianErrorDetails ul {
+    margin-bottom: 0;
+}

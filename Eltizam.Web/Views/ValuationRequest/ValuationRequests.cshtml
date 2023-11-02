@@ -25,10 +25,6 @@
 
 
                 <form asp-action="" asp-controller="" method="GET">
-                    <input type="hidden" id="hdnResourceType" value="@(Model == null ? 0 : Model.ResourceId)" />
-                    <input type="hidden" id="hdnRole" value="@(Model == null ? 0 : Model.RoleId)" />
-                    <input type="hidden" id="hdnDeparment" value="@(Model == null ? 0 : Model.DepartmentId)" />
-                    <input type="hidden" id="hdnDesignation" value="@(Model == null ? 0 : Model.DesignationId)" />
                     <button class="flex align-item-center blueBtn" id="addNew">
                         <img src="~/assets/plus.svg" alt="plus"> Add New
                     </button>
@@ -47,7 +43,7 @@
                     <div class="flex">
                         <label for="userName">
                             User Name
-                            <input type="text" placeholder="enter user id">
+                            <input type="text" name="UserName" id="UserName" placeholder="User Name" />
                         </label>
                         <label for="valuatorType">
                             Valuator Type
@@ -60,12 +56,12 @@
                        
                         <label for="ResourceId">
                             Resource Type
-                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new { @placeholder = @SharedLocalizer[" Select ResourceType"] })
                         </label>
                        
                         <label for="RoleId">
                             Role
-                            @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select Role"] })
+                            @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @placeholder = @SharedLocalizer[" Select Role"] })
                         </label>
                     </div>
                     <div class="flex">
@@ -88,7 +84,7 @@
                         </label>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="blueBtn">Search</button>
+                        <button type="submit" class="blueBtn" onclick="InitializeValutionRequestDataList()">Search</button>
                     </div>
                 </form>
             </div>
@@ -164,35 +160,7 @@
             BindResourceType();
             BindDepartment();
             BindDesignation();
-
-            ("form").submit(function (e) {
-                e.preventDefault();
-                // Capture the form data
-                var formData = {
-                    userName: $("#userName").val(),
-                    ValuatorType: $("#ValuatorType").val(),
-                    ResourceId: $("#ResourceId").val(),
-                    RoleId: $("#RoleId").val(),
-                    fromDate: $("#fromDate").val(),
-                    toDate: $("#toDate").val(),
-                    DesignationId: $("#DesignationId").val(),
-                    DepartmentId: $("#DepartmentId").val()
-                };
-
-                // Make an AJAX request
-                $.ajax({
-                    type: "POST",
-                    url: "api/ValuationRequest/GetAllValuationRequest",
-                    data: formData,
-                    success: function (data) {
-                        // Update the table with the filtered data
-                        $("tbody").html(data);
-                    },
-                    error: function () {
-                        // Handle errors
-                    }
-                });
-            });
+           
         });
 
 
@@ -200,7 +168,7 @@
 
             var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
             var Role = $("#RoleId");
-            var _val = $('#hdnRole').val();
+            var _val = "";
             var _rpname = "roleName";
 
             BindDropdowns(RoleList, Role, _rpname, _val);
@@ -210,14 +178,14 @@
 
             var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
             var ResourceType = $("#ResourceId");
-            var _val = $('#hdnResourceType').val();
+            var _val = "";
             var _rpname = "resourceType";
             BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
         }
         function BindDepartment() {
             var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
             var Department = $("#DepartmentId");
-            var _val = $('#hdnDeparment').val();
+            var _val = "";
             var _rpname = "department";
 
             BindDropdowns(DepartmentList, Department, _rpname, _val);
@@ -225,7 +193,7 @@
         function BindDesignation() {
             var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
             var Designation = $("#DesignationId");
-            var _val = $('#hdnDesignation').val();
+            var _val = "";
             var _rpname = "designation";
 
             BindDropdowns(DesignationList, Designation, _rpname, _val);
