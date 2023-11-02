@@ -29,15 +29,7 @@ function accordianToggle(header) {
     }
 }
 //accordian function end
-
-function sideNavToggle() {
-    var x = document.getElementById("sideNav");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
+ 
 
 $(document).ready(function () {
     if ($("#hdnPropertyType").val() != 0) {
@@ -50,6 +42,83 @@ $(document).ready(function () {
     BindCountry();
     BindState();
     BindCity();
+
+
+    $('#BuildUpAreaSqFt').keypress(function (e) {
+        if ($('#BuildUpAreaSqFt').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#BuildUpAreaSqMtr').keypress(function (e) {
+        if ($('#BuildUpAreaSqMtr').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#AgeOfConstruction').keypress(function (e) {
+        if ($('#AgeOfConstruction').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#PropertyDetail_Pincode').keypress(function (e) {
+        if ($('#PropertyDetail_Pincode').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#PropertyDetail_Longitude').on("keypress", function (e) {
+        var keypress = e.keyCode || e.which || e.charCode;
+        var key = String.fromCharCode(keypress);
+        var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
+
+        var txt = $(this).val() + key;
+        if (!regEx.test(txt)) {
+            if (keypress != 8) {
+                e.preventDefault();
+            } else {
+            }
+        } else {
+
+        }
+    });
+
+    $('#PropertyDetail_Latitude').on("keypress", function (e) {
+        var keypress = e.keyCode || e.which || e.charCode;
+        var key = String.fromCharCode(keypress);
+        var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
+
+        var txt = $(this).val() + key;
+        if (!regEx.test(txt)) {
+            if (keypress != 8) {
+                e.preventDefault();
+            } else {
+            }
+        } else {
+
+        }
+    });
 });
 
 function BindProperty() {

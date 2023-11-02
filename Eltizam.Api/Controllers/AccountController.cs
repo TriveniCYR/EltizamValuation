@@ -157,6 +157,27 @@ namespace Eltizam.Api.Controllers
                 return false;
             }
         }
+        [AllowAnonymous]
+        [HttpPost, Route("ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePasswordModel)
+        {
+            try
+            {
+                var changeOperation = await _MasterUserService.ChangePassword(changePasswordModel);
+                if (changeOperation == DBOperation.Success)
+                    return _ObjectResponse.Create(changeOperation, (Int32)HttpStatusCode.OK);
+                else if (changeOperation == DBOperation.NotFound)
+                {
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+                }
+                return _ObjectResponse.Create(null, (Int32)HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
 
     }

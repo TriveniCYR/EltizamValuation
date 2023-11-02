@@ -6,7 +6,7 @@ $(document).ready(function () {
 function InitializeDictionaryList() {
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": $('#hdnBaseURL').val() + AllDictionary,
+        "url": BaseURL + AllDictionary,
         "type": "POST",
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
@@ -23,30 +23,19 @@ function InitializeDictionaryList() {
         },
         {
             "data": "values", "name": "Values"
-        },
-        //{
-        //    "data": "isactive", "name": "Is Active"
-        //},
-       
+        },  
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
                 return GetActiveFlagCss(data);
-            }
-            //"data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
-            //    if (data.isActive) {
-            //        return "<span class='tableStatus green'>Active</span>";
-            //    } else {
-            //        return "<span class='tableStatus red'>Inactive</span>";
-            //    }
-           // }
+            } 
         },
         {
             "data": "id", "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                html += '<li><a title="View" href="/Dictionary/DictionaryAllManage?id=' + row.id + '&description=' + row.description +'"><img src="../assets/view.svg" alt="view" />View</a></li>';
-             //   html += '<li><a title="Edit" href=""><img src="../assets/edit.svg" alt="edit" id="editRole" />Edit</a></li>';
-               // html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteDictionaryModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteDictionary(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                html += '<li><a title="View" href="/MasterDictionary/DictionaryAllManage?id=' + row.id + '&description=' + row.description +'"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                html += '<li><a title="Edit" href="/MasterDictionary/MasterDictionaryManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
+                             // html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteDictionaryModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteDictionary(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                 html += '</ul></div>';
                 return html;
             }
@@ -64,7 +53,7 @@ function ConfirmationDeleteDictionary(id) {
 function DeleteRole() {
     var tempInAtiveID = $('#DeleteDictionaryChildModel #ID').val();  
     var url = DeleteDictionaryById + "/" + tempInAtiveID;
-    ajaxServiceMethod($('#hdnBaseURL').val() + url, 'POST', DeleteRoleByIdSuccess);
+    ajaxServiceMethod(BaseURL + url, 'POST', DeleteRoleByIdSuccess);
 }
 function DeleteRoleByIdSuccess(data) {
     try {

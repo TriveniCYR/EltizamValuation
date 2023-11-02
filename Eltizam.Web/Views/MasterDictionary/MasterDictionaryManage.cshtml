@@ -24,7 +24,7 @@
                 {
                     <h3 class="dashboardTitle">EDIT MASTER DICTIONARY</h3>
                     <div class="hamburger">
-                        <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">Property Type Master</a>
+                        <a class="greyBtn lineBtn formAbtn" asp-action="Dictionary">Master Dictionary</a>
                         @*  <span onclick="resourceMaster()">Property Type Master</span> *@
                         <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                         <span>Edit</span>
@@ -34,7 +34,7 @@
                 {
                     <h3 class="dashboardTitle">ADD MASTER DICTIONARY</h3>
                     <div class="hamburger">
-                        <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">Property Type Master</a>
+                        <a class="greyBtn lineBtn formAbtn" asp-action="Dictionary">Master Dictionary</a>
                         @*  <span onclick="resourceMaster()">Property Type Master</span> *@
                         <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                         <span>Add</span>
@@ -66,20 +66,8 @@
 
                                 <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
                                 <label class="label-switch" for="addLocation"></label>
-                                <span class="info-text" style="top:-20px;"></span>
-                                @* @Html.CheckBox("IsActive", new { htmlAttributes = new {  @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["IsActive"] } }) *@
-                                @*   @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new {  @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["IsActive"] } }) *@
-                                @*    <input class='input-switch' type="checkbox" asp-for="IsActive" />
-                                <label class="label-switch" for="IsActive"></label>
-                                <span class="info-text"></span> *@
-
-                                @*  <input class='input-switch' type="checkbox" id="addLocation" required /> *@
-                                @* <label class="label-switch" for="addLocation"></label> *@
-                                @* <span class="info-text"></span> *@
+                                <span class="info-text" style="top:-20px;"></span>                               
                             </label>
-
-
-
                         </div>
                         <div class="dynamicInput">
                             <div class="addMoreInput buttonArea">
@@ -87,8 +75,6 @@
                             </div>
                             <div class="addPropertyInputDynamic"></div>
                         </div>
-
-
                         <div class="propertySubTypeContainer addPropertyInputDynamic">
                             @if (Model.MasterDicitonaryDetails!= null)
                             {
@@ -97,7 +83,7 @@
                                     var _ndl = Model.MasterDicitonaryDetails[i];
                                     <div class="inputFieldProp">
                                         <label for="" class="">
-                                            <input type="text" id="@_ndl.Id" value="@_ndl.ChildDescription" asp-for="@_ndl.ChildDescription" class="form-control checkbox-checked" placeholder="Master Dictionary Value" />
+                                            <input type="text" id="@_ndl.Id" value="@_ndl.Description" asp-for="@_ndl.Description" class="form-control checkbox-checked" placeholder="Dictionary Value" />
                                         </label>
                                         @if (i >= 0)
                                         {

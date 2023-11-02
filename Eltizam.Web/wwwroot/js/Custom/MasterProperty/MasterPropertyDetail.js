@@ -29,15 +29,7 @@ function accordianToggle(header) {
     }
 }
 //accordian function end
-
-function sideNavToggle() {
-    var x = document.getElementById("sideNav");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
+ 
 
 $(document).ready(function () {
     if ($("#hdnPropertyType").val() != 0) {

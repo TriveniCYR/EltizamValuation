@@ -67,40 +67,4 @@ document.addEventListener("DOMContentLoaded", () => {
     closePopup.addEventListener("click", () => addRolePopup.classList.remove("display-block"));
 });
 
-
-function userMaster(){
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_User/user-master.html'
-}
-function roleMaster(){
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Role/role-master.html'
-}
-function resourceMaster() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/resource-master.html'
-}
-
-
-function sideNavToggle() {
-    var x = document.getElementById("sideNav");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
-
-function locationMaster() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Location/location-master.html'
-}
-function propTypeMaster() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Property_Type/property-type-master.html'
-}
-function designation() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Designation/designation-master.html'
-}
-function department() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Department/department-master.html'
-}
-function propMaster() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Property/property-master.html'
-}
-
+ 

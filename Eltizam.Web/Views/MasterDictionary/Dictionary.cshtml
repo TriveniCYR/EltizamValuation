@@ -20,7 +20,7 @@
                 <h3 class="dashboardTitle">DICTIONARY MASTER</h3>
                
                 <div class="buttonArea flex align-item-center">
-                    <form asp-action="MasterDictionaryManage" asp-controller="Dictionary" method="GET">
+                    <form asp-action="MasterDictionaryManage" asp-controller="MasterDictionary" method="GET">
                         <button class="flex align-item-center blueBtn" id="addRole">
                             <img src="../assets/plus.svg" alt="plus"> Add New
                         </button>
@@ -190,40 +190,12 @@
         </div>
     </div>
 </div>
-
-@* <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
-<script src="~/js/custom/location/locationmaster.js"></script> *@
-
 @section MyScripts {
-
     @Html.Partial("_DataTablePartial")
     <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/custom/dictionary/masterdictionary.js?v=@jsVersion"></script>
-
-
     <script>
         //#region Setup API Url
-        var AllDictionary = "@Eltizam.Web.Helpers.APIURLHelper.GetAllDictionary";
-      
-
-        // function sideNavToggle() {
-        //     var x = document.getElementById("sideNav");
-        //     if (x.style.display === "none") {
-        //         x.style.display = "block";
-        //     } else {
-        //         x.style.display = "none";
-        //     }
-        // }
-
-
-        // function addClient() {
-        //     window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Client/addClient.html'
-        // }
-        // function clientDetails() {
-        //     window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Client/client-details.html'
-        // }
+        var AllDictionary = "@Eltizam.Web.Helpers.APIURLHelper.GetAllDictionary";  
     </script>
     }

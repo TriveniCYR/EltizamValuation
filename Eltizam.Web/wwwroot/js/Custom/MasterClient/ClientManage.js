@@ -4,6 +4,51 @@ $(document).ready(function () {
     BindCountry();
     BindState();
     BindCity();
+
+    $('#Address_Phone').keypress(function (e) {
+        if ($('#Address_Phone').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#Address_AlternatePhone').keypress(function (e) {
+        if ($('#Address_AlternatePhone').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#Address_Landlinephone').keypress(function (e) {
+        if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#Address_PinNo').keypress(function (e) {
+        if ($('#Address_PinNo').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
 });
 
 function profileTab(evt, cityName) {
@@ -25,16 +70,7 @@ function profileTab(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
-
-function sideNavToggle() {
-    var x = document.getElementById("sideNav");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
-
+ 
 function removeParentDiv(element) {
     const parentDiv = element.closest('.roundBorderBox');
     if (parentDiv) {

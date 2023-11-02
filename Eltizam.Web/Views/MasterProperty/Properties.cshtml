@@ -81,16 +81,8 @@
 
     <script type="text/javascript" src="~/js/Custom/DynamicDataTable.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/Custom/MasterProperty/MasterProperty.js?v=@jsVersion"></script>
-    <script>
-
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
+    <script> 
+         
         //#region Setup API Url
         var AllProperty = "@Eltizam.Web.Helpers.APIURLHelper.GetAllProperty";
         var DeletePropertyByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeletePropertyById";

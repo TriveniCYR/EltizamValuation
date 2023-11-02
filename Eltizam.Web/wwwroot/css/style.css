@@ -1861,6 +1861,20 @@ div.dataTables_wrapper div.dataTables_filter {
     cursor: pointer;
 }
 
+.accordianErrorDetails {
+    background-color: var(--lightRed) !important;
+    padding: 10px;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
+    color: white; 
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif !important;
+    font-size: 14px; 
+    background: #FFC199;
+    border-left: 9px solid red; 
+}
+
+
 .panel {
     margin-top: 20px;
 }
@@ -1986,3 +2000,13 @@ div.dataTables_wrapper div.dataTables_filter {
     border: 1px solid #dc3545 !important;
 }
 
+.accordianErrorDetails ul li {
+    list-style: none;
+    color: var(--error);
+    display: inline;
+    margin-right: 10px;
+}
+
+.accordianErrorDetails ul {
+    margin-bottom: 0;
+}

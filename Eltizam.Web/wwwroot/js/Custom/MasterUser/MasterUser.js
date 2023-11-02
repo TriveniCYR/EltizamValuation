@@ -1,9 +1,44 @@
 ﻿var tableId = "ResourceUserTable";
 $(document).ready(function () {
-    debugger
+    //BindDepartment();
+    //BindDesignation();
+    //BindRole();
+    //BindResourceType();
     InitializeUserList();
-
 });
+
+
+function BindDepartment() {
+    var Department = $("#DepartmentId");
+    var _val = $('#hdnDeparment').val();
+    var _rpname = "department";
+
+    BindDropdowns(DepartmentList, Department, _rpname, _val);
+}
+function BindDesignation() {
+    var Designation = $("#DesignationId");
+    var _val = $('#hdnDesignation').val();
+    var _rpname = "designation";
+
+    BindDropdowns(DesignationList, Designation, _rpname, _val);
+}
+
+function BindRole() {
+
+    var Role = $("#RoleId");
+    var _val = $('#hdnRole').val();
+    var _rpname = "roleName";
+
+    BindDropdowns(RoleList, Role, _rpname, _val);
+}
+
+function BindResourceType() {
+
+    var ResourceType = $("#ResourceId");
+    var _val = $('#hdnResourceType').val();
+    var _rpname = "resourceType";
+    BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
+}
 
 
 //#region Delete User
@@ -12,7 +47,7 @@ function ConfirmationDeleteUser(id) {
 }
 function DeleteUser() {
     var tempInAtiveID = $('#DeleteUserModel #Id').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteUserByIdUrl + "/" + tempInAtiveID, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
+    ajaxServiceMethod(BaseURL + DeleteUserByIdUrl + "/" + tempInAtiveID, Post, DeleteUserByIdSuccess, DeleteUserByIdError);
 }
 function DeleteUserByIdSuccess(data) {
     try {
@@ -31,12 +66,11 @@ function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function InitializeUserList() {
-    debugger
+function InitializeUserList() { 
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": $('#hdnBaseURL').val() + AllUser,
-        "type": "POST",
+        "url": BaseURL + AllUser,
+        "type": Post,
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
             d.PageNumber = pageNumber.page;

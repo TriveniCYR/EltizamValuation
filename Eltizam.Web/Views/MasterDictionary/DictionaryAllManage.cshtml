@@ -36,7 +36,7 @@
     <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
         <h3 class="dashboardTitle">CHILD DICTIONARY LIST</h3>
         <div class="buttonArea flex align-item-center">           
-            <a href='/Dictionary/DictionaryDetailsManage?id=@list[0].Id&status=1&pdesc=@list[0].Description'>
+            <a href='/MasterDictionary/DictionaryDetailsManage?id=@list[0].Id&status=1&pdesc=@list[0].Description'>
                 <button class="flex align-item-center blueBtn" id="addNew">
                     <img src="~/assets/plus.svg" alt="plus"> Add New
                 </button>
@@ -83,7 +83,7 @@
                                                             <img src="../assets/edit.svg" alt="edit" />
                                                 <button class="flex align-item-center blueBtn" id="editRole">
 
-                                                    <a title="Edit" href='/Dictionary/DictionaryDetailsManage?id=@item.ChildId&status=0&pdesc=@item.Description'><span>Edit</span></a>
+                                                    <a title="Edit" href='/MasterDictionary/DictionaryDetailsManage?id=@item.ChildId&status=0&pdesc=@item.Description'><span>Edit</span></a>
                                                                 @* <a title="Edit" onclick="GetLocationById(@item.Id);"><span>Edit</span></a> *@
                                                             </button>
                                                             @*  <button class="flex align-item-center blueBtn" id="addRole">

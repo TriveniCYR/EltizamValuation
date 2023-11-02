@@ -278,16 +278,7 @@
     {
 
     <script type="text/javascript" src="~/js/Custom/MasterProperty/MasterPropertyDetail.js?v=@jsVersion"></script>
-    <script>
-
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
+    <script> 
         //#region Setup API Url
         var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";
         var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";

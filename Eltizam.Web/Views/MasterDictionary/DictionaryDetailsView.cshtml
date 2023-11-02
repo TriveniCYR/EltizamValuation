@@ -20,7 +20,8 @@
     //     PageHeading = "View Location";
     // }
   //  var parentid= ViewData["ParentId"];
-  
+         var htmlAttributes = true;
+   
 }
 
 <form asp-action="DictionaryDetailsManage" method="post">
@@ -41,7 +42,7 @@
                         <div class="flex threeBox">
                             <label for="LocationName">
                                 ChildDescription
-                                @Html.TextBoxFor(model => model.Description, new {@class = "form-control"})
+                                @Html.TextBoxFor(model => model.Description, new {@disabled=htmlAttributes,@class = "form-control"})
                             </label>                          
                         </div>                        
                         <div class="flex">
@@ -51,14 +52,15 @@
                                     
                                     bool isActive = Model.IsActive == 1; // Convert 1 to true, any other value to false
                                 }
-                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(isActive ? "checked" : "") required />
+                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" disabled value="1" @(isActive ? "checked" : "") required />
                                 <label class="label-switch" for="addLocation"></label>
                                 <span class="info-text"></span>
                             </label>
                         </div>
-                        <div class="buttonArea centerBtn">
-                            <button type="submit" class="lineBtn greyBtn" id="resetLocation">Cancel</button>
-                                <button type="submit" class="bgBlue">Save</button>
+                        <div class="buttonArea centerBtn">                          
+                               @*  <button type="submit" class="lineBtn" id="resetLocation">Reset</button> *@
+                            <a href='/MasterDictionary/Dictionary'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                                <button type="submit" class="bgBlue">Submit</button>
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,8 @@ namespace Eltizam.Web.Helpers
         public static string ForgotPassword = "api/Account/ForgotPassword";
         public static string ResetPassword = "api/Account/ResetPassword";
         public static string Anonymous_CheckEmailAddressExists = "api/Account/CheckEmailAddressExists"; 
-        public static string Anonymous_IsTokenValid = "api/Account/IsTokenValid"; 
+        public static string Anonymous_IsTokenValid = "api/Account/IsTokenValid";
+        public static string ChangePassword = "api/Account/ChangePassword";
         #region MasterCommon
 
         public static string GetDepartmentList = "api/MasterDepartment/GetDepartmentList";
@@ -187,12 +188,13 @@ namespace Eltizam.Web.Helpers
         public static string GetDictionaryById = "api/MasterDictionary/GetById";
         //public static string DeleteDictionary = "api/MasterDictionary/Delete";
         public static string DeleteDictionaryById = "api/MasterDictionary/Delete";
-        public static string UpsertMasterDictionary = "api/MasterDictionary/Upsert";
+        public static string UpsertMasterDictionary = "api/MasterDictionary/UpsertMasterDictionary";
+        public static string GetDictionaryDetailsById = "api/MasterDictionary/GetDictionaryDetailsById";
 
         #endregion Dictionary Management
 
         #region Valuation Request
-       
+
         public static string GetAllValuationRequest = "api/ValuationRequest/GetAllValuationRequest";
         public static string GetAllValuationRequestStatus = "api/ValuationRequestStatus/GetAll";
 
