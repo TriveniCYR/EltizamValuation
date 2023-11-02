@@ -6,7 +6,7 @@ $(document).ready(function () {
 function InitializeDictionaryList() {
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": $('#hdnBaseURL').val() + AllDictionary,
+        "url": BaseURL + AllDictionary,
         "type": "POST",
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
@@ -23,22 +23,11 @@ function InitializeDictionaryList() {
         },
         {
             "data": "values", "name": "Values"
-        },
-        //{
-        //    "data": "isactive", "name": "Is Active"
-        //},
-       
+        },  
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
                 return GetActiveFlagCss(data);
-            }
-            //"data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
-            //    if (data.isActive) {
-            //        return "<span class='tableStatus green'>Active</span>";
-            //    } else {
-            //        return "<span class='tableStatus red'>Inactive</span>";
-            //    }
-           // }
+            } 
         },
         {
             "data": "id", "name": "Action", "render": function (data, type, row, meta) {
@@ -64,7 +53,7 @@ function ConfirmationDeleteDictionary(id) {
 function DeleteRole() {
     var tempInAtiveID = $('#DeleteDictionaryChildModel #ID').val();  
     var url = DeleteDictionaryById + "/" + tempInAtiveID;
-    ajaxServiceMethod($('#hdnBaseURL').val() + url, 'POST', DeleteRoleByIdSuccess);
+    ajaxServiceMethod(BaseURL + url, 'POST', DeleteRoleByIdSuccess);
 }
 function DeleteRoleByIdSuccess(data) {
     try {

@@ -10,7 +10,7 @@ function ConfirmationDeleteVendor(id) {
 function DeleteVendor() {
      
     var tempInAtiveID = $('#DeleteVendorModel #Id').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteVendors + "/" + tempInAtiveID, 'POST', DeleteVendorByIdSuccess, DeleteVendorByIdError);
+    ajaxServiceMethod(BaseURL + DeleteVendors + "/" + tempInAtiveID, 'POST', DeleteVendorByIdSuccess, DeleteVendorByIdError);
 }
 function DeleteVendorByIdSuccess(data) {
     try {
@@ -34,7 +34,7 @@ function InitializeVendorList() {
      
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": $('#hdnBaseURL').val() + AllVendor,
+        "url": BaseURL + AllVendor,
         "type": "POST",
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();

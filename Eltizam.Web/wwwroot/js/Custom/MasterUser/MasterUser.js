@@ -47,7 +47,7 @@ function ConfirmationDeleteUser(id) {
 }
 function DeleteUser() {
     var tempInAtiveID = $('#DeleteUserModel #Id').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteUserByIdUrl + "/" + tempInAtiveID, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
+    ajaxServiceMethod(BaseURL + DeleteUserByIdUrl + "/" + tempInAtiveID, Post, DeleteUserByIdSuccess, DeleteUserByIdError);
 }
 function DeleteUserByIdSuccess(data) {
     try {
@@ -66,11 +66,11 @@ function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function InitializeUserList() {
+function InitializeUserList() { 
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": $('#hdnBaseURL').val() + AllUser,
-        "type": "POST",
+        "url": BaseURL + AllUser,
+        "type": Post,
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
             d.PageNumber = pageNumber.page;

@@ -4,19 +4,17 @@
 
 // #region Get ClientType List
 function GetClientTypeList() {
-    ajaxServiceMethod($('#hdnBaseURL').val() + AllClientType, 'GET', GetClientTypeListSuccess, GetClientTypeListError);
+    ajaxServiceMethod(BaseURL + AllClientType, Get, GetClientTypeListSuccess, GetClientTypeListError);
 }
 function GetClientTypeListSuccess(data) {
-    try {
-        debugger
+    try { 
         destoryStaticDataTable('#ClientTypeTable');
         $('#ClientTypeTable tbody').html('');
         $.each(data._object, function (index, object) { //  <td>' + object.ClientTypeCode + '</td>  <td>' + object.isdClientTypeCode + '</td>  
             $('#ClientTypeTable tbody').append(' <tr><td>' + object.id + '</td><td>' + object.clientType + '</td><td>' + (object.isActive == true ? '<span class="tableStatus green">Active</span>' : '<span class="tableStatus red">Inactive</span>') + '</td><td class="position-relative"> <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"> <ul> <li onClick="view(' + object.id + ')" ><img src="../assets/view.svg" alt = "view" /> view </li>  <li onclick="GetClientTypeById(' + object.id + ')"><div onclick="edit()"><img src="../assets/edit.svg" alt = "edit" /> Edit </div></li>    <li onclick="deleteClient()" class="delete"><div onclick="ConfirmationDeleteClientType(' + object.id + '); return false;"> <img src="../assets/trash.svg" alt = "trash" /> Delete </div></li>  </ul> </div> </td> </tr>');
         });
         StaticDataTable("#ClientTypeTable");
-    } catch (e) {
-        debugger
+    } catch (e) { 
         toastr.error('Error:' + e.message);
     }
 }
@@ -27,13 +25,11 @@ function GetClientTypeListError(x, y, z) {
 // #endregion
 
 // #region Get ClientType By Id
-function GetClientTypeById(id) {
-    debugger
-    ajaxServiceMethod($('#hdnBaseURL').val() + GetClientTypeByIdUrl + "/" + id, 'GET', GetClientTypeByIdSuccess, GetClientTypeByIdError);
+function GetClientTypeById(id) { 
+    ajaxServiceMethod(BaseURL + GetClientTypeByIdUrl + "/" + id, Get, GetClientTypeByIdSuccess, GetClientTypeByIdError);
 }
 function GetClientTypeByIdSuccess(data) {
-    try {
-        debugger
+    try { 
         CleareClientTypeFields();
         $('#popup-editProp-overlay #Id').val(data._object.id);
         $('#popup-editProp-overlay #ClientType').val(data._object.clientType); 
@@ -59,8 +55,7 @@ function AddClientType() {
     CleareClientTypeFields();
     $('#popup-addRole-overlay #ClientTypeTitle').html(AddLabel);
 }
-function SaveClientTypeForm(form) {
-    debugger
+function SaveClientTypeForm(form) { 
     $.validator.unobtrusive.parse(form);
     if ($(form).valid()) {
         ajaxServiceMethod($('#hdnBaseURL').val() + SaveClientType, 'POST', SaveClientTypeFormSuccess, SaveClientTypeFormError, JSON.stringify(getFormData($(form))));
@@ -73,6 +68,7 @@ function SaveClientTypeFormSuccess(data) {
         if (data._Success === true) {
             CleareClientTypeFields();
             toastr.success(RecordInsertUpdate);
+
             GetClientTypeList();
             $('#popup-addRole-overlay #closePopup').trigger('click');
             $('#popup-editProp-overlay #closePopup').trigger('click');
@@ -105,14 +101,13 @@ function CleareClientTypeFields() {
 // #endregion
 
 //#region Delete ClientType
-function ConfirmationDeleteClientType(id) {
-    debugger
+function ConfirmationDeleteClientType(id) { 
     $('#popup-delete-overlay #ClientTypeID').val(id);
 }
 function DeleteClientType() {
     debugger
     var tempInAtiveID = $('#popup-delete-overlay #ClientTypeID').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteClientTypeByIdUrl + "/" + tempInAtiveID, 'POST', DeleteClientTypeByIdSuccess, DeleteClientTypeByIdError);
+    ajaxServiceMethod(BaseURL + DeleteClientTypeByIdUrl + "/" + tempInAtiveID, Post, DeleteClientTypeByIdSuccess, DeleteClientTypeByIdError);
 }
 function DeleteClientTypeByIdSuccess(data) {
     try {

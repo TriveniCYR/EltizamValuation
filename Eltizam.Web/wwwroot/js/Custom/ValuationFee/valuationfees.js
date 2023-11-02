@@ -10,7 +10,7 @@ function ConfirmationDeleteValuationFees(id) {
 }
 function DeleteValuationFees() {
     var tempInAtiveID = $('#DeleteValuationFeesModel #Id').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteValuationByIdUrl + "/" + tempInAtiveID, 'DELETE', DeleteUserByIdSuccess, DeleteUserByIdError);
+    ajaxServiceMethod(BaseURL + DeleteValuationByIdUrl + "/" + tempInAtiveID, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
 }
 
 function DeleteUserByIdSuccess(data) {
@@ -34,8 +34,8 @@ function DeleteUserByIdError(x, y, z) {
 function InitializeDataList() {
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": $('#hdnBaseURL').val() + ValuationFees,
-        "type": "POST",
+        "url": BaseURL + ValuationFees,
+        "type": Post,
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
             d.PageNumber = pageNumber.page;

@@ -55,8 +55,8 @@ function SaveMasterDictionary() {
     }
     console.log(JSON.stringify(MasterDictionaryEntity));  
     $.ajax({
-        type: "POST",
-        url: $('#hdnBaseURL').val() + MasterDictionaryUpsert,
+        type: Post,
+        url: BaseURL + MasterDictionaryUpsert,
         "datatype": "json",
         headers: {
             'Accept': 'application/json',

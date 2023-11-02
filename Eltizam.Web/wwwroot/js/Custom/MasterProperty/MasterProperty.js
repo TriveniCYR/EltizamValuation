@@ -6,8 +6,8 @@ $(document).ready(function () {
 function InitializePropertyList() {
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": $('#hdnBaseURL').val() + AllProperty,
-        "type": "POST",
+        "url": BaseURL + AllProperty,
+        "type": Post,
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
             d.PageNumber = pageNumber.page;

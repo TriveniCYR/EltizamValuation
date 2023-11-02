@@ -12,6 +12,7 @@
 <!-- system user master -->
 @* <div class="flex">
     <div class="w-100 position-relative"> *@
+
 <main>
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between">
@@ -21,11 +22,7 @@
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md</span>
             </div>
-        </div>
-
-        @*//Validation tab*@
-        <div id="errors" class="accordianErrorDetails position-relative" style="display:none;">
-        </div>
+        </div> 
 
         <div class="bodyContent">
             <div class="profileTabSection">
@@ -133,7 +130,7 @@
                                 <div class="flex">
                                     <label for="RoleId">
                                         Role
-                                        @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @placeholder = @SharedLocalizer[" Select Role"] })
+                                        @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select Role"] })
                                     </label>
                                     <label for="CompanyName">
                                         <p class="m-0">Company/Vendor Name<span class="text-danger">*</span></p>
@@ -165,7 +162,7 @@
                                         <p>Mailing Address Section</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
-                                    <div class="pannel" style="height:auto;overflow:hidden">
+                                    <div class="pannel" style="height:0;overflow:hidden">
                                         <div class="flex">
                                             <label for="address1">
                                                 <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
@@ -245,7 +242,7 @@
                                 <p>Qualification Section</p>
                                 <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                             </div>
-                            <div class="pannel mt-28" style="height:auto;overflow:hidden">
+                            <div class="pannel mt-28" style="height:0;overflow:hidden">
                                 <div class="text-right">
                                     @*<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" />*@
                                 </div>
@@ -368,12 +365,16 @@
         var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
         var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
 
-    </script>
 
-    $(document).ready(function () {
+        $(document).ready(function(){
+            $("#RoleId").change(function () {
 
-        $("#RoleId").on('change', function() {
-            var roleId = $("#RoleId").val();
+                let roleId = $("#RoleId").val();
+                if(roleId = "0")
+                {
+                    
+                }
+            });
         })
-    })
+    </script>
 }

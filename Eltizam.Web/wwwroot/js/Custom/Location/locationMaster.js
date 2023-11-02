@@ -78,49 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.getElementById('resetLocation').addEventListener('click', function(){
     document.getElementById('locationForm').reset();
-});
-function userMaster(){
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_User/user-master.html'
-}
-function roleMaster(){
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Role/role-master.html'
-}
-function resourceMaster() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/resource-master.html'
-}
-
-
-function sideNavToggle() {
-    var x = document.getElementById("sideNav");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
-
-function locationMaster() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Location/location-master.html'
-}
-function propTypeMaster() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Property_Type/property-type-master.html'
-}
-function designation() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Designation/designation-master.html'
-}
-function department() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Department/department-master.html'
-}
-function propMaster() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Property/property-master.html'
-}
-function clientMaster() {
-    window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Client/client-master.html'
-}
+}); 
 
 $(document).ready(function () {
-    SetupRoleTable();
-    /* $('#LocationTable').DataTable();*/
+    SetupRoleTable(); 
 
     if (StatusMessage != '') {
         if (StatusMessage.includes('uccessful')) {
@@ -131,22 +92,20 @@ $(document).ready(function () {
         }
     }
 });
+
 function SetupRoleTable() {
     StaticDataTable("#LocationTable");
 }
 
 // #region Get ClientType By Id
-function GetLocationById(id) {
-    debugger
+function GetLocationById(id) { 
     BindCountry();
     BindState();
     BindCity();
     ajaxServiceMethod($('#hdnBaseURL').val() + GetLocationByIdUrl + "/" + id, 'GET', GetLocationByIdSuccess);
 }
-function GetLocationByIdSuccess(data) {
-
-    try {
-        debugger
+function GetLocationByIdSuccess(data) { 
+    try { 
         //CleareClientTypeFields();
         $('#popup-editRole-overlay #Id').val(data._object.id);
         $('#popup-editRole-overlay #CountryId').val(data._object.countryId);
@@ -156,14 +115,7 @@ function GetLocationByIdSuccess(data) {
         $('#popup-editRole-overlay #Latitude').val(data._object.latitude);
         $('#popup-editRole-overlay #Longitude').val(data._object.longitude);
         $('#popup-editRole-overlay #HomeCurrencyId').val(data._object.homeCurrencyId);
-        $('#popup-editRole-overlay #ForeignCurrencyId').val(data._object.foreignCurrencyId);
-        //if (!data._object.isActive) {
-        //    $('#popup-editProp-overlay #IsActive').prop('checked', false);
-        //}
-        //else {
-        //    $('#popup-editProp-overlay #IsActive').prop('checked', true);
-        //}
-        // $('#popup-editRole-overlay #ClientTypeTitle').html(UpdateLabel);
+        $('#popup-editRole-overlay #ForeignCurrencyId').val(data._object.foreignCurrencyId); 
     }
     catch (e) {
         toastr.error('Error:' + e.message);
@@ -173,15 +125,15 @@ function GetLocationByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 // #endregion
+
 function BindCountry() {
     //var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
     var Country = $("#CountryId") + CountryList;
     $.ajax({
         type: "GET",
-        url: $('#hdnBaseURL').val() + CountryList,
+        url: BaseURL + CountryList,
         "datatype": "json",
-        success: function (response) {
-            ;
+        success: function (response) { 
             Country.empty().append('<option selected="selected" value="0">Please select</option>');
             for (var i = 0; i < response.length; i++) {
                 Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
@@ -200,8 +152,7 @@ function BindCountry() {
     });
 }
 
-function BindState() {
-
+function BindState() { 
     //var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
     var State = $("#StateId") + StateList;
     $.ajax({
@@ -261,17 +212,14 @@ function CleareRoleFields() {
 function ConfirmationDelete(id) {
     $('#DeleteLocationModel #ID').val(id);
 }
-function DeleteRole() {
-    debugger;
+function DeleteRole() { 
     var tempInAtiveID = $('#DeleteLocationModel #ID').val();
     var url = DeletLocationByIdUrl + "/" + tempInAtiveID;
-    ajaxServiceMethod($('#hdnBaseURL').val() + url, 'POST', DeleteRoleByIdSuccess);
-    debugger;
+    ajaxServiceMethod(BaseURL + url, 'POST', DeleteRoleByIdSuccess); 
 }
 function DeleteRoleByIdSuccess(data) {
     try {
-        if (data._Success === true) {
-
+        if (data._Success === true) { 
             CleareRoleFields();
             toastr.success(RecordDelete);
             location.reload(true);
