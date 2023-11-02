@@ -3,6 +3,40 @@ $(document).ready(function () {
     BindCountry();
     BindState();
     BindCity();
+
+    $('#Address_Phone').keypress(function (e) {
+                if ($('#Address_Phone').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
+            $('#Address_Landlinephone').keypress(function (e) {
+                if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
+            $('#Address_AlternatePhone').keypress(function (e) {
+                if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+                    return false;
+                }
+                else {
+                    var charCode = (e.which) ? e.which : event.keyCode;
+                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                        return false;
+                    }
+                }
+            });
 });
 
 function profileTab(evt, cityName) {

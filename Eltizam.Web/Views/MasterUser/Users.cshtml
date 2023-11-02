@@ -26,6 +26,61 @@
                 </form>
             </div>
         </div>
+       @*  <div class="accordion valueAdvance">
+            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+            <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
+            <div class="accordion-content inputSearchs">
+                <h3 class="text-center">Advanced Search</h3>
+                <form>
+                    <div class="flex">
+                        <label for="userName">
+                            User Name
+                            <input type="text" id="UserName" placeholder="enter user id">
+                        </label>
+                        <label for="valuatorType">
+                            Valuator Type
+                            <select name="Valuator" id="ValuatorType">
+                                <option value="Valuator1">Valuator type1</option>
+                                <option value="Valuator2">Valuator type2</option>
+                                <option value="Valuator3">Valuator type3</option>
+                            </select>
+                        </label>
+
+                        <label for="ResourceId">
+                            Resource Type
+                            @Html.DropDownList("ResourceId", new List<SelectListItem>(),  new { @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                        </label>
+
+                        <label for="RoleId">
+                            Role
+                            @Html.DropDownList("RoleId", new List<SelectListItem>(),  new { @placeholder = @SharedLocalizer[" Select Role"] })
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <label for="fromDate">
+                            From Date
+                            <input type="date">
+                        </label>
+                        <label for="toDate">
+                            To Date
+                            <input type="date">
+                        </label>
+                        <label for="DesignationId">
+                            Designation
+                            @Html.DropDownList("DesignationId", new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Designation"] })
+                        </label>
+                        <label for="DepartmentId">
+                            Department
+                            @Html.DropDownList("DepartmentId", new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Department"] })
+
+                        </label>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="blueBtn" onclick="InitializeUserList()">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div> *@
         <div class="scroll-x whiteWithPadding">
             <table id="ResourceUserTable" class="table table-bordered table-striped table-hover">
                 <thead>

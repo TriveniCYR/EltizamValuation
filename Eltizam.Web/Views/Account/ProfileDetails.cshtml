@@ -123,7 +123,7 @@
         </div>
         <div class="w-100 position-relative">
             <header class="flex justify-between align-item-center">
-                <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="./assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="./assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
+                <div class="hamburger-icon cursor-pointer"  ><img src="./assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="./assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
                 <div class="user flex">
                     <div class="position-relative notification">
                         <img src="./assets/bell.svg" alt="bell" class="cursor-pointer" />
@@ -474,14 +474,7 @@
         }
         document.getElementById("defaultOpen").click();
 
-        function sideNavToggle() {
-            var x = document.getElementById("sideNav");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
+         
 
         function removeParentDiv(element) {
             const parentDiv = element.closest('.roundBorderBox');
