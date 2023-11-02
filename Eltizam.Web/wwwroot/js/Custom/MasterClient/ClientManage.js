@@ -70,16 +70,7 @@ function profileTab(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
-
-function sideNavToggle() {
-    var x = document.getElementById("sideNav");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
-
+ 
 function removeParentDiv(element) {
     const parentDiv = element.closest('.roundBorderBox');
     if (parentDiv) {

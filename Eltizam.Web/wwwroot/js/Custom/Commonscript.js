@@ -3,20 +3,23 @@ var BaseURL = $('#hdnBaseURL').val();
 var Post = 'POST';
 var Get = 'GET';
 var Delete = 'DELETE';
-var _successToaster = $("#successToaster").val();
-var _errorToaster = $("#errorToaster").val();
-var ErrorDev = $("#errors");
+var SuccessToaster = $("#successToaster").val();
+var ErrorToaster = $("#errorToaster").val();
+var ErrorDev = $("#errorBanner");
+var ShowMenuCache = "showMenuCache";
+
 $(document).ready(function () {
-    hideLoader();
     ErrorDev.hide();
+    readsideNavToggle();
+    hideLoader();
 
     //Toaster related things
-    if (_successToaster !== "" && _successToaster !== null) {
-        toastr.success(_successToaster);
+    if (SuccessToaster !== "" && SuccessToaster !== null) {
+        toastr.success(SuccessToaster);
     }
 
-    if (_errorToaster !== "" && _errorToaster !== null) {
-        toastr.error(_errorToaster);
+    if (ErrorToaster !== "" && ErrorToaster !== null) {
+        toastr.error(ErrorToaster);
     }
 });
 
@@ -53,7 +56,6 @@ function hideLoader() {
         $('#loading-wrapper').hide();
     }, 500);
 }
-
 function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
     $.ajax({
         type: Get,
@@ -90,16 +92,35 @@ function GetActiveFlagCss(data) {
 }
 
 function sideNavToggle() {
+    var x = document.getElementById("sideNav"); 
+    var dsi = "none"; 
+    if (x.style.display === "none") {
+        dsi = "block";
+    } 
+
+    x.style.display = dsi;
+    localStorage.setItem(ShowMenuCache, dsi);
+}
+
+function readsideNavToggle() {
     var x = document.getElementById("sideNav");
+    var curdsi = localStorage.getItem(ShowMenuCache); 
+
+    if (curdsi !== null)
+        x.style.display = curdsi;
+}
+
+function profileMenu() {
+    var x = document.getElementById("profileMenu");
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {
         x.style.display = "none";
     }
-} 
+}
 
-function GetIdLinkCss(url, id) {  
-    var dd = "<a class='userPic' href='" + url + id + "'>" + id + "</a>"; 
+function GetIdLinkCss(url, id) {
+    var dd = "<a class='userPic' href='" + url + id + "'>" + id + "</a>";
     return dd;
 }
 
@@ -134,10 +155,17 @@ function ValidateTabAndPage() {
 function FormattedError(err) {
     if (err !== undefined && err !== "") {
         ErrorDev.empty().show();
-        ErrorDev.append("Please resolve errors by filling mandate field under the page/tab: <ul>" + err + "<ul>");
+
+        ErrorDev
+            .append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span onclick="CloseErrorBanner();" aria-hidden="true">×</span></button>')
+            .append("Please fill all mandatory fields and resolve error(s) in page/tab (if applicable).: <ul>" + err + "<ul>");
 
         hideLoader();
     }
+}
+
+function CloseErrorBanner() {
+    ErrorDev.hide();
 }
 
 //-----Validation form things - END/ -------------
