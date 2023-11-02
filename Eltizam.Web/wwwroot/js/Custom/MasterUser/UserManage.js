@@ -241,42 +241,4 @@ function removeParentDivAddress(element) {
         parentDivAdd.remove()
     }
 }
-
-//Validation fixes
-var ErrorDev = $("#errors");
-$(document).on('click', 'form button[type=submit]', function (e) {
-    showLoader();
-
-    setTimeout(function () {
-        ValidateTabAndPage();
-    }, 500);
-});
-
-
-function ValidateTabAndPage() {
-    var errors = $(".input-validation-error");
-    var err = "";
-
-    var msg_1 = $(".input-validation-error").parent().closest('div.tabcontent').attr("title");
-    if (msg_1 !== undefined) {
-        err += "<li>" + msg_1 + "<li>";
-    }
-    else if (errors.length > 0) {
-        err += "<li>Fill all mandate fields with valid data.<li>";
-    }
-
-    if (err !== "") {
-        FormattedError(err);
-    }
-}
-
-function FormattedError(err) {
-    if (err !== undefined && err !== "") {
-        ErrorDev.empty();
-        $("#errors").show();
-        $("#errors").append("Please resolve errors by filling mandate field under the page/tab: <ul>" + err + "<ul>");
-
-        hideLoader();
-    }
-}
-
+ 
