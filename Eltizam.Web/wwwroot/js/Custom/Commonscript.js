@@ -51,7 +51,7 @@ function showLoader() {
 function hideLoader() {
     setTimeout(function () {
         $('#loading-wrapper').hide();
-    }, 1000);
+    }, 500);
 }
 
 function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
