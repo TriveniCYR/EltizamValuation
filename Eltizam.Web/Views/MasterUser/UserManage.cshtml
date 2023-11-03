@@ -126,10 +126,11 @@
                                         </label>
                                     </div>
                                 }
-                                <div class="flex">
+                                <div class="flex"> 
                                     <label for="RoleId">
-                                        Role
-                                        @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select Role"] })
+                                        <p class="m-0">Role<span class="text-danger">*</span></p>
+                                        @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Select Role"] })
+                                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="CompanyName">
                                         <p class="m-0">Company/Vendor Name<span class="text-danger">*</span></p>

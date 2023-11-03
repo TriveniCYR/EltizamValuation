@@ -249,7 +249,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 entityUser.Password = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.Password);
                 entityUser.ConfirmPassowrd = entityUser.Password;
             }
-            entityUser.DateOfBirth = AppConstants.DateTime;
+            //entityUser.DateOfBirth = AppConstants.DateTime;
             MasterUser objUser;
             MasterAddress objUserAddress;
             MasterQualification objUserQualification;
@@ -260,8 +260,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 objUser = _repository.Get(entityUser.Id);
                 var OldObjUser = objUser;
                 if (objUser != null)
-                {
-
+                { 
                     objUser.FirstName = entityUser.FirstName;
                     objUser.MiddleName = entityUser.MiddleName;
                     objUser.LastName = entityUser.LastName;
@@ -277,12 +276,9 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     objUser.IsActive = entityUser.IsActive;
                     objUser.ModifiedBy = entityUser.CreatedBy;
                     objUser.ModifiedDate = AppConstants.DateTime;
+                    objUser.RoleId = entityUser.RoleId; 
                     _repository.UpdateAsync(objUser);
-                }
-                else
-                {
-                    return DBOperation.NotFound;
-                }
+                } 
             }
             else
             {
@@ -295,6 +291,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 _repository.AddAsync(objUser);
             }
             await _unitOfWork.SaveChangesAsync();
+
+
             if (objUser.Id == 0)
                 return DBOperation.Error;
             else
@@ -341,12 +339,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         objUserAddress.ModifiedDate = AppConstants.DateTime;
                         _addressRepository.AddAsync(objUserAddress);
                     }
-                    await _unitOfWork.SaveChangesAsync();
-
+                    await _unitOfWork.SaveChangesAsync(); 
                 }
-                if (entityUser.Qualification != null)
-                {
 
+                if (entityUser.Qualification != null)
+                { 
                     if (entityUser.Qualification.Id > 0)
                     {
                         objUserQualification = _qualifyRepository.Get(entityUser.Qualification.Id);
@@ -378,6 +375,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     }
                     await _unitOfWork.SaveChangesAsync();
                 }
+
                 if (entityUser.uploadDocument != null)
                 {
                     foreach (var doc in entityUser.uploadDocument)

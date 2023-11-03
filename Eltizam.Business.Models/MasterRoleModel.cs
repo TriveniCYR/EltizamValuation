@@ -8,7 +8,7 @@ namespace Eltizam.Business.Models
 {
     public class MasterRoleModel
     {
-        public int RoleId { get; set; }
+        public int Id { get; set; }
         public string? RoleName { get; set; }
         public bool? IsActive { get; set; }
     }
