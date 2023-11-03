@@ -19,7 +19,7 @@
 <div class="flex">
     <main class="w-100">
         <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
-            <h3 class="dashboardTitle">Valution List</h3>
+            <h3 class="dashboardTitle">Valuation List</h3>
             <div class="buttonArea flex align-item-center">
 
                 <button class="flex align-item-center blueBtn" id="addNew">
@@ -108,7 +108,11 @@
                             <p class="m-0">State</p>
                             @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new {  })
                         </label>
+                        </div>
 
+                      <div class="flex flex-start" style=" gap: 5px;">
+
+   
                         <label for="CityId">
                             <p class="m-0">City</p>
                             @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new {  })
