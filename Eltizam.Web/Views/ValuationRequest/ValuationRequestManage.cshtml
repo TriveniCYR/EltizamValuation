@@ -11,18 +11,19 @@
 @model Eltizam.Business.Models.ValuationRequestModel
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = "Valuation Request";
+    var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
-
+    ViewData["Title"] = _md + _header; 
 }
+
 <div id="PlaceHolderHere"></div>
 <main class="plr-0">
     <div class="profileHead flex justify-between align-item-center cursor-pointer">
-        <h3 class="dashboardTitle">View Valuation</h3>
+        <h3 class="dashboardTitle">@_md @_header</h3>
         <div class="hamburger">
-            <span onclick="valuationListingMaster()">Valuation Listings</span>
+            <span onclick="valuationListingMaster()">Valuation List</span>
             <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-            <span>View valuations</span>
+            <span>@_md @_header</span>
         </div>
     </div>
     <div class="flex">

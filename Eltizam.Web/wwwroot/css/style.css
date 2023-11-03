@@ -505,6 +505,7 @@ main {
         line-height: 120%;
         color: var(--title);
         padding: 18px 0;
+        text-transform: uppercase;
     }
 
     main .searchBox {

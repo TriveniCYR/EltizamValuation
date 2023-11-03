@@ -7,6 +7,7 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = "Client Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
+    ViewData["Title"] = _header;
 }
 <!-- system user master -->
 @* <div class="flex">

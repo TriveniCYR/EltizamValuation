@@ -8,7 +8,7 @@
 @inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
-    ViewData["Title"] = @SharedLocalizer["ClientType"];
+    ViewData["Title"] = @SharedLocalizer["Client Types"];
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
 @model Eltizam.Business.Models.Master_ClientTypeModel

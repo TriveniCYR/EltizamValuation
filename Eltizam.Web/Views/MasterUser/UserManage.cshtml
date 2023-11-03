@@ -5,8 +5,9 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = "Resource Master";
+    var _header = " Resource Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
+    ViewData["Title"] = _md + _header;
 }
 <div id="PlaceHolderHere"></div>
 <!-- system user master -->

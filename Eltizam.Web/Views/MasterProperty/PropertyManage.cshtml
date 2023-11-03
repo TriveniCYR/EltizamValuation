@@ -6,8 +6,9 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = "Property Master";
+    var _header = " Property Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
+    ViewData["Title"] = _md + _header;
 }
 <!-- system user master -->
 @* <div class="flex">
@@ -16,7 +17,7 @@
 
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between">
-            <h3 class="dashboardTitle">@_md @_header</h3>
+            <h3 class="dashboardTitle">@_md@_header</h3>
             <div class="hamburger">
                 <a class="greyBtn lineBtn formAbtn" asp-action="Properties">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />

@@ -5,22 +5,8 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    string PageHeading = "";
-    // if (ViewBag.IsView == 0)
-    // {
-    //     PageHeading = "Edit Dictionary Details";
-    // }
-
-    // else if (ViewBag.IsView == 2)
-    // {
-    //     PageHeading = "Add Dictionary Details";
-    // }
-    // else
-    // {
-    //     PageHeading = "View Location";
-    // }
-  //  var parentid= ViewData["ParentId"];
-  
+    string PageHeading = "Dictionary Manage";
+    ViewData["Title"] = PageHeading;
 }
 
 <form asp-action="DictionaryDetailsManage" method="post">

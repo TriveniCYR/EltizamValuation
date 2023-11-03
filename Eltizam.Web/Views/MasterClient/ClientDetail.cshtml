@@ -7,11 +7,10 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = "Client Master";
     var _md = "View";
+    ViewData["Title"] = _header;
     var htmlAttributes = true;
 }
-<!-- system user master -->
-@* <div class="flex">
-    <div class="w-100 position-relative"> *@
+ 
 <main>
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between">
@@ -216,10 +215,7 @@
         </div>
     </div>
 </main>
-@*
-    </div>
-</div> *@
-
+ 
 @section MyScripts {
     <script type="text/javascript" src="~/js/Custom/MasterClient/ClientDetail.js?v=@jsVersion"></script>
 
