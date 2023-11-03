@@ -505,6 +505,7 @@ main {
         line-height: 120%;
         color: var(--title);
         padding: 18px 0;
+        text-transform: uppercase;
     }
 
     main .searchBox {
@@ -1867,11 +1868,11 @@ div.dataTables_wrapper div.dataTables_filter {
     border-radius: 5px;
     align-items: center;
     cursor: pointer;
-    color: white; 
+    color: var(--error);
     font-family: 'Open Sans', Arial, Helvetica, sans-serif !important;
-    font-size: 14px; 
-    background: #FFC199;
-    border-left: 9px solid red; 
+    font-size: 14px;
+    background: var(--error);
+    border-left: 9px solid red;
 }
 
 
@@ -2009,4 +2010,13 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .accordianErrorDetails ul {
     margin-bottom: 0;
+}
+
+#assignToggle {
+    display: block;
+    left: auto;
+    right: 0px;
+    height: auto;
+    width: 330px;
+    border: 1px solid var(--blue);
 }

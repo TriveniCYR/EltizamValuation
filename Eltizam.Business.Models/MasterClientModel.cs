@@ -30,7 +30,6 @@ namespace Eltizam.Business.Models
         public string? Logo { get; set; }
         public int CreatedBy { get; set; }
         public MasterAddressEntity? Address { get; set; }
-        public List<MasterAddressEntity> Addresses { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
         public DocumentFilesModel? Document { get; set; }

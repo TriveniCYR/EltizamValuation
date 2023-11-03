@@ -144,7 +144,9 @@ function InitializeValutionRequestDataList() {
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
 }
 
-
+function CheckAssignId(id, eve) {
+    debugger
+}
 //#region Delete Role  
 function ConfirmationDeletePropertyType(id) {
     debugger;

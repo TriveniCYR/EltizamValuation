@@ -31,6 +31,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
+       
+      
         public MasterUserService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
                                   IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
@@ -45,6 +47,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
             configuration = _configuration;
             _helper = helper;
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
+            
+           
         }
 
         public async Task<UserSessionEntity> Login(LoginViewModel oLogin)
@@ -426,6 +430,10 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
         public async Task<DBOperation> ChangePassword(ChangePasswordModel entityUser)
         {
+            //int userId = _LoginUserId ?? 0;
+
+            int userId = 1;//_LoginUserId; //_helper.GetLoggedInUser().UserId;
+            entityUser.UserId= userId;
             if (entityUser.UserId >= 0 && entityUser.NewPassword == entityUser.ConfirmPassword)
             {
                 entityUser.NewPassword = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.NewPassword);
@@ -451,6 +459,16 @@ namespace Eltizam.Business.Core.ServiceImplementations
             }
             await _unitOfWork.SaveChangesAsync();
             return DBOperation.Success;
+        }
+        public async Task<List<MasterUserListModel>> GetApproverList(int id)
+        {
+            DbParameter[] osqlParameter1 = {
+                 new DbParameter("UserId", id, SqlDbType.Int)
+            };
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserListModel>(ProcedureMetastore.usp_Approver_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter1);
+
+            return lstStf;
         }
     }
 }

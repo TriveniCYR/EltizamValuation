@@ -5,8 +5,9 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = "Vendor Master";
+    var _header = " Vendor Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
+    ViewData["Title"] = _md + _header;
 } 
 <div id="PlaceHolderHere"></div>
 <main>
@@ -100,7 +101,7 @@
                                         <p>Mailing Address Section</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
-                                    <div class="pannel" style="height:0;overflow:hidden">
+                                    <div class="pannel" style="height:auto;overflow:hidden">
                                         <div class="flex">
                                             <label for="address1">
                                                 <p class="m-0">Address Line 1 <span class="text-danger">*</span></p>
@@ -181,7 +182,7 @@
                                 <p>Qualification Section</p>
                                 <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                             </div>
-                            <div class="pannel mt-28" style="height:0;overflow:hidden">
+                            <div class="pannel mt-28" style="height:auto;overflow:hidden">
                             <div class="text-right">
                                 @* <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" /> *@
                             </div>

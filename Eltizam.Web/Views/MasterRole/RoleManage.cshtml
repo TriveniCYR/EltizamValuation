@@ -10,7 +10,7 @@
 
 @model Eltizam.Business.Models.MasterRoleEntity
 @{
-    ViewData["Title"] = @MasterLocalizer["RoleManage"]; 
+    ViewData["Title"] = @MasterLocalizer["Role Manage"]; 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"]; 
     var _header = "Role Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";

@@ -9,6 +9,7 @@ using Eltizam.Resource;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,6 +17,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -29,6 +31,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequest> _repository { get; set; }
         //private IRepository<MasterPropertySubType> _subrepository { get; set; }
         private readonly IHelper _helper;
+        private readonly int? _LoginUserId;
         #endregion Properties
 
         #region Constructor
@@ -41,7 +44,8 @@ namespace Eltizam.Business.Core.Implementation
 
             _repository = _unitOfWork.GetRepository<ValuationRequest>();
             configuration = _configuration;
-            _helper = helper;
+            _helper = helper; 
+            _LoginUserId = _helper.GetLoggedInUser()?.UserId;
         }
         #endregion Constructor
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId, int countryId, int stateId, int cityId, string? fromDate, string? toDate)
@@ -78,6 +82,37 @@ namespace Eltizam.Business.Core.Implementation
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<ValutionRequestListModel>());
 
             return oDataTableResponseModel;
+        }
+        public async Task<DBOperation> AssignApprovor(AssignApprovorRequestModel model)
+        {
+            if (model.ApprovorId > 0)
+            {
+                if(model.RequestIds.Length > 0)
+                {
+                    int[] ids = model.RequestIds.Split(',').Select(int.Parse).ToArray();
+
+                    if(ids.Length > 0)
+                    {
+                        foreach(int id in ids)
+                        {
+                            var valuationEntity = _repository.Get(id);
+                            valuationEntity.ApproverId = model.ApprovorId;
+                            valuationEntity.AssignRemark = model.Remarks;
+                            valuationEntity.ModifyBy = _LoginUserId;
+                            valuationEntity.ModifyDate = AppConstants.DateTime;
+                            _repository.UpdateAsync(valuationEntity);
+                        }
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+
+                    return DBOperation.Success;
+                }
+            }
+            else
+            {
+                return DBOperation.NotFound;
+            }
+            return DBOperation.Success;
         }
     }
 }

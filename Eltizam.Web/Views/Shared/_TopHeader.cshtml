@@ -1,4 +1,4 @@
-﻿@model Eltizam.Business.Models.ChangePasswordModel
+﻿@* @model Eltizam.Business.Models.ChangePasswordModel *@
 <header class="flex justify-between align-item-center">
     <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="~/assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="~/assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
     <div class="user flex">
@@ -39,24 +39,24 @@
                 <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
             </div>
             <div class="popup-action inputSearchs">
-                <form asp-action="ChangePassword" asp-controller="Account" method="post">
+                 <form> 
                     <div class="flex text-left">
                         <label class="w-100" for="">
                             New Password
-                            <input asp-for="NewPassword" type="password" placeholder="Enter Password" required>
+                            <input id="NewPassword" type="password" placeholder="Enter Password" required>
                         </label>
                         
                     </div>
                     <div class="flex text-left">                      
                         <label class="w-100" for="">
                             Confirm Password
-                            <input asp-for="ConfirmPassword" type="password" placeholder="Confirm New Password" required>
+                            <input id="ConfirmPassword" type="password" placeholder="Confirm New Password" required>
                         </label>
                     </div>                   
                 
                 <div class="buttonArea centerBtn">
                    @*  <button class="lineBtn" id="resetLocation">Reset</button> *@
-                    <button type="submit" class="bgBlue">Submit</button>
+                        <button type="button" onclick="PosttopHeader();" class="bgBlue">Submit</button>
                 </div>
                 </form>
             </div>
@@ -64,6 +64,7 @@
     </div>
 </div>
 <script>
+    var ChangePasswordUrl = "@Eltizam.Web.Helpers.APIURLHelper.ChangePassword";
     function profileMenu() {
         var x = document.getElementById("profileMenu");
         if (x.style.display === "none") {
@@ -82,3 +83,4 @@
         closePopup.addEventListener("click", () => addRolePopup.classList.remove("display-block"));
     });
 </script>
+<script type="text/javascript" src="~/js/custom/topheader/topheader.js"></script>

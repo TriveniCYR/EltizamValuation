@@ -31,6 +31,7 @@ namespace EltizamValuation.Web.Controllers
         [HttpGet]
         public IActionResult ValuationRequests()
         {
+            ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }
         public IActionResult ValuationRequestManage(int? id, string view)

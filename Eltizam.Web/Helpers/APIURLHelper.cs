@@ -20,6 +20,7 @@ namespace Eltizam.Web.Helpers
 
         public static string GetDepartmentList = "api/MasterDepartment/GetDepartmentList";
         public static string GetRoleList = "api/MasterUser/GetRoleList";
+        public static string GetApproverList = "api/MasterUser/GetApproverList";
         public static string GetDesignationList = "api/MasterDesignation/GetDesignationList";
         public static string GetResourceTypeList = "api/MasterUser/GetResourceTypeList";
         public static string GetCountryList = "api/MasterCountry/GetCountryList";

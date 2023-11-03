@@ -5,10 +5,10 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = "Resource Master";
+    var _header = " Resource Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
+    ViewData["Title"] = _md + _header;
 }
-<div id="PlaceHolderHere"></div>
 <!-- system user master -->
 @* <div class="flex">
     <div class="w-100 position-relative"> *@
@@ -22,8 +22,7 @@
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md</span>
             </div>
-        </div> 
-
+        </div>
         <div class="bodyContent">
             <div class="profileTabSection">
                 <div class="tab">
@@ -162,7 +161,7 @@
                                         <p>Mailing Address Section</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
-                                    <div class="pannel" style="height:0;overflow:hidden">
+                                    <div class="pannel" style="height:auto;overflow:hidden">
                                         <div class="flex">
                                             <label for="address1">
                                                 <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
@@ -242,7 +241,7 @@
                                 <p>Qualification Section</p>
                                 <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                             </div>
-                            <div class="pannel mt-28" style="height:0;overflow:hidden">
+                            <div class="pannel mt-28" style="height:auto;overflow:hidden">
                                 <div class="text-right">
                                     @*<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" />*@
                                 </div>
@@ -342,7 +341,7 @@
                     </div>
                     <div class="text-right buttonArea bodyContent plr-0">
                         <a href='/MasterUser/Users'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
-                        <button type="submit" id="btnSubmitUser" class="blueBtn" onclick="CheckValidation()">Save</button>
+                        <button type="submit" id="btnSubmitUser" class="blueBtn" onclick="validations()">Save</button>
                     </div>
                 </form>
             </div>
@@ -364,17 +363,26 @@
         var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
         var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
         var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
+        var stateListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
+        var cityListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
 
 
         $(document).ready(function(){
-            $("#RoleId").change(function () {
-
-                let roleId = $("#RoleId").val();
-                if(roleId = "0")
-                {
-                    
+           
+            const selectElement = document.getElementById("RoleId");
+            selectElement.addEventListener("change", function () {
+                debugger
+                if (selectElement.value !== "0") {
+                    selectElement.classList.remove("input-validation-error");
+                } else {
+                    selectElement.classList.remove("input-validation-error");
                 }
             });
+
         })
+        function validations(){
+            const selectElement = document.getElementById("RoleId");
+            selectElement.classList.remove("input-validation-error");
+        }
     </script>
 }
