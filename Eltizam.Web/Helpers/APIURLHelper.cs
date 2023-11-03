@@ -196,7 +196,7 @@ namespace Eltizam.Web.Helpers
         #region Valuation Request
 
         public static string GetAllValuationRequest = "api/ValuationRequest/GetAllValuationRequest";
-       
+        public static string GetAllValuationRequestStatus = "api/ValuationRequestStatus/GetAll";
 
         #endregion Valuation Request
 

@@ -40,48 +40,70 @@
 
                 <h3 class="text-center">Advanced Search</h3>
                 <form>
+
                     <div class="flex">
                         <label for="userName">
                             User Name
-                            <input type="text" name="UserName" id="UserName" placeholder="User Name" />
+                            @* <input type="text" name="UserName" id="UserName" placeholder="User Name" /> *@
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control",  @placeholder = @SharedLocalizer["User Name"] })
                         </label>
-                        <label for="valuatorType">
-                            Valuator Type
-                            <select name="Valuator" id="ValuatorType">
-                                <option value="Valuator1">Valuator type1</option>
-                                <option value="Valuator2">Valuator type2</option>
-                                <option value="Valuator3">Valuator type3</option>
-                            </select>
+                        <label for="ClientName">
+                            Client Name
+                            @* <input type="text" name="UserName" id="UserName" placeholder="User Name" /> *@
+                            @Html.TextBoxFor(model => model.ClientName, new { @class = "form-control",  @placeholder = @SharedLocalizer["ClientName"] })
                         </label>
-                       
-                        <label for="ResourceId">
-                            Resource Type
-                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new { @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                        <label for="PropertyName">
+                            Property Name
+                            @* <input type="text" name="UserName" id="UserName" placeholder="User Name" /> *@
+                            @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["PropertyName"] })
                         </label>
-                       
-                        <label for="RoleId">
-                            Role
-                            @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @placeholder = @SharedLocalizer[" Select Role"] })
+                        <label for="CountryId">
+                            <p class="m-0">Country<span class="text-danger">*</span></p>
+                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                        </label>
+
+                        <label for="StateId">
+                            <p class="m-0">State<span class="text-danger">*</span></p>
+                            @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                        </label>
+
+                        <label for="CityId">
+                            <p class="m-0">City<span class="text-danger">*</span></p>
+                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                        </label>
+
+                        <label for="">
+                            <p class="m-0">
+                                Property Type
+                                <span class="text-danger">*</span>
+                            </p>
+                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
+
+                        </label>
+                        <label for="">
+                            <p class="m-0">
+                                Request Status
+                                <span class="text-danger">*</span>
+                            </p>
+                            @Html.DropDownListFor(model => model.RequestStatusId, new List<SelectListItem> { }, new { @class = "form-control"})
+
+                        </label>
+                        <label for="Method of Valuation">
+                            <p class="m-0">Method of Valuation<span class="text-danger">*</span></p>
+                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                            @Html.ValidationMessageFor(model => model.ResourceId, "", new { @class = "text-danger" })
                         </label>
                     </div>
                     <div class="flex">
                         <label for="fromDate">
                             From Date
-                            <input type="date">
+                            <input type="date" id="FromDate" name="FromDate" asp-for="FromDate">
                         </label>
                         <label for="toDate">
                             To Date
-                            <input type="date">
+                            <input type="date" id="ToDate" name="ToDate" asp-for="ToDate">
                         </label>
-                        <label for="DesignationId">
-                            Designation
-                            @Html.DropDownListFor(model => model.DesignationId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Designation"] })
-                        </label>
-                        <label for="DepartmentId">
-                            Department
-                            @Html.DropDownListFor(model => model.DepartmentId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Department"] })
 
-                        </label>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="blueBtn" onclick="InitializeValutionRequestDataList()">Search</button>
@@ -157,10 +179,12 @@
 
         $(document).ready(function () {
             BindRole();
+            BindCountry();
+            BindState();
+            BindCity();
+            BindPropertype();
+            BindRequestStaus();
             BindResourceType();
-            BindDepartment();
-            BindDesignation();
-           
         });
 
 
@@ -174,6 +198,49 @@
             BindDropdowns(RoleList, Role, _rpname, _val);
         }
 
+        function BindCountry() {
+
+            var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
+            var Country = $("#CountryId");
+            var _val = $('#hdnCountry').val();
+            var _rpname = "countryName";
+            BindDropdowns(CountryList, Country, _rpname, _val);
+        }
+
+        function BindState() {
+
+            var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
+            var State = $("#StateId");
+            var _val = $('#hdnState').val();
+            var _rpname = "stateName";
+            BindDropdowns(StateList, State, _rpname, _val);
+        }
+
+        function BindCity() {
+            var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
+            var City = $("#CityId");
+            var _val = $('#hdnCity').val();
+            var _rpname = "cityName";
+            BindDropdowns(CityList, City, _rpname, _val);
+        }
+
+        function BindPropertype() {
+            //debugger
+            var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";
+            var PropertyType = $("#PropertyTypeId");
+            var _val = $('#hdnPropertyType').val();
+            var _rpname = "propertyType";
+            BindDropdowns(PropertyList, PropertyType, _rpname, _val);
+        }
+
+        function BindRequestStaus() {
+            //debugger
+            var ValutionRequestStatusList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationRequestStatus";
+            var RequestStaus = $("#RequestStatusId");
+            var _val = $('#hdnRequestStaus').val();
+            var _rpname = "statusName";
+            BindDropdowns(ValutionRequestStatusList, RequestStaus, _rpname, _val);
+        }
         function BindResourceType() {
 
             var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
@@ -181,22 +248,6 @@
             var _val = "";
             var _rpname = "resourceType";
             BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
-        }
-        function BindDepartment() {
-            var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
-            var Department = $("#DepartmentId");
-            var _val = "";
-            var _rpname = "department";
-
-            BindDropdowns(DepartmentList, Department, _rpname, _val);
-        }
-        function BindDesignation() {
-            var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
-            var Designation = $("#DesignationId");
-            var _val = "";
-            var _rpname = "designation";
-
-            BindDropdowns(DesignationList, Designation, _rpname, _val);
         }
         var GetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationRequest";
 
