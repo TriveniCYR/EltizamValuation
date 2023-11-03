@@ -27,4 +27,9 @@ namespace Eltizam.Business.Models
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
+    public class ApiResponse
+    {
+        public bool Success { get; set; }
+        public List<string> Errors { get; set; }
+    }
 }

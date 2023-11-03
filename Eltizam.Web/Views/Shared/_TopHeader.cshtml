@@ -1,4 +1,5 @@
-﻿@* @model Eltizam.Business.Models.ChangePasswordModel *@
+﻿
+@* @model Eltizam.Business.Models.ChangePasswordModel *@
 <header class="flex justify-between align-item-center">
     <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="~/assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="~/assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
     <div class="user flex">
@@ -39,25 +40,33 @@
                 <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
             </div>
             <div class="popup-action inputSearchs">
-                 <form> 
+                <form>
                     <div class="flex text-left">
                         <label class="w-100" for="">
                             New Password
-                            <input id="NewPassword" type="password" placeholder="Enter Password" required>
+                            @* <input id="NewPassword" type="password" placeholder="Enter Password"> *@
+
+                              <input id="NewPassword" type="password" placeholder="Enter Password">
+                            <div id="newPasswordError" class="error-message"></div>
+                            @*    <input id="NewPassword" type="password" placeholder="Enter Password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" title="A password must have Minimum 8, Maximum 16 characters, at least one number, at least one upper case, at least one lower case, at least one special character e.g. @$!%*?&">
+                            *@
                         </label>
-                        
+
                     </div>
-                    <div class="flex text-left">                      
+                    <div class="flex text-left">
                         <label class="w-100" for="">
                             Confirm Password
-                            <input id="ConfirmPassword" type="password" placeholder="Confirm New Password" required>
+                           @*  <input id="ConfirmPassword" type="password" placeholder="Confirm New Password"> *@
+
+                               <input id="ConfirmPassword" type="password" placeholder="Confirm New Password">
+                            <div id="confirmPasswordError" class="error-message"></div>
                         </label>
-                    </div>                   
-                
-                <div class="buttonArea centerBtn">
-                   @*  <button class="lineBtn" id="resetLocation">Reset</button> *@
+                    </div>
+
+                    <div class="buttonArea centerBtn">
+                        @*  <button class="lineBtn" id="resetLocation">Reset</button> *@
                         <button type="button" onclick="PosttopHeader();" class="bgBlue">Submit</button>
-                </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -84,3 +93,4 @@
     });
 </script>
 <script type="text/javascript" src="~/js/custom/topheader/topheader.js"></script>
+
