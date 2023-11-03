@@ -30,27 +30,15 @@ namespace EltizamValuation.Web.Controllers
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new APIRepository(_cofiguration);
-                Master_ClientTypeModel oUserList = new Master_ClientTypeModel();
-                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAll, HttpMethod.Post, token).Result;
-                //if (responseMessage.IsSuccessStatusCode)
-                //{
-                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                //    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterUserModel>>>(jsonResponse);
-                //    oUserList.Users = data._object;
-
-                //    return View();
-                //}
+                Master_ClientTypeModel oUserList = new Master_ClientTypeModel(); 
                 return View();
             }
             catch (Exception e)
-            {
-
+            { 
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 return View("Login");
-            }
-            return View();
-
+            } 
         }
 
         public IActionResult ClientTypeManage(int? id)
@@ -79,6 +67,8 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+
+
         [HttpPost,Route("ClientTypeManage")]
         public IActionResult ClientTypeManage(int id, Master_ClientTypeModel masterUser)
         {
