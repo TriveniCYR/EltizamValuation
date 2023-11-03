@@ -5,9 +5,9 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = "Resource Master";
+    var _header = " Resource Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
-    Layout = "_Layout";
+    ViewData["Title"] = _md + _header;
 }
 <!-- system user master -->
 @* <div class="flex">

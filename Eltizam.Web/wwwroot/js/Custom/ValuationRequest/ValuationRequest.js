@@ -6,9 +6,41 @@ $(document).ready(function () {
 //Load data into table
 function InitializeValutionRequestDataList() {
     debugger
-    var setDefaultOrder = [1, 'asc'];
+   
+    $("#ValuationRequestTable").dataTable().fnDestroy();
+    var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
+    var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
+    var countryId = $("#CountryId").val();
+    if (countryId === undefined || isNaN(parseInt(countryId))) {
+        countryId = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        countryId = parseInt(countryId);
+    }
+
+    var stateId = $("#StateId").val();
+
+    if (stateId === undefined || isNaN(parseInt(stateId))) {
+        stateId = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        stateId = parseInt(stateId);
+    }
+
+    var cityId = $("#CityId").val();
+    if (cityId === undefined || isNaN(parseInt(cityId))) {
+        cityId = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        cityId = parseInt(cityId);
+    }
+
+    
+    var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val();
+    
+    var toDate = $("#ToDate").val() === undefined ? "" : $("#ToDate").val();
+    
+    var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": BaseURL + GetAll,
+        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
+        
         "type": "POST",
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
@@ -16,6 +48,8 @@ function InitializeValutionRequestDataList() {
         },
         "datatype": "json"
     };
+
+
     var columnObject = [
         
         {
@@ -61,7 +95,7 @@ function InitializeValutionRequestDataList() {
         {
             "data": "requestor", "name": "Requestor"
         },
-      
+
         {
             "data": "approver", "name": "Approver"
         },

@@ -8,7 +8,7 @@
 @inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
-    ViewData["Title"] = @SharedLocalizer["PropertyMaster"];
+    ViewData["Title"] = @SharedLocalizer["Property List"];
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 }
 

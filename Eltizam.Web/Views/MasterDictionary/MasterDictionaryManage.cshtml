@@ -56,14 +56,8 @@
                                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                             </label>
 
-                            <label for="" class="w-50">
-
-                                Status
-@* 
-                                @{
-                                    bool isActive = Model.data[0].IsActive==1; // Convert 1 to true, any other value to false
-                                } *@
-
+                            <label for="" class="w-50"> 
+                                Status 
                                 <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
                                 <label class="label-switch" for="addLocation"></label>
                                 <span class="info-text" style="top:-20px;"></span>                               
@@ -71,7 +65,7 @@
                         </div>
                         <div class="dynamicInput">
                             <div class="addMoreInput buttonArea">
-                                <button type="button" class="blueBtn" onclick="addInputDictionary()">+ add property</button>
+                                <button type="button" class="blueBtn" onclick="addInputDictionary()">+ Add Values</button>
                             </div>
                             <div class="addPropertyInputDynamic"></div>
                         </div>

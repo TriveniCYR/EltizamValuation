@@ -11,9 +11,9 @@
 @model Eltizam.Business.Models.MasterValuationFeesModel
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = "Valuation Fees Master";
+    var _header = " Valuation Fees Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
-
+    ViewData["Title"] = _md + _header;
 }
 <div id="PlaceHolderHere"></div>
 <main>

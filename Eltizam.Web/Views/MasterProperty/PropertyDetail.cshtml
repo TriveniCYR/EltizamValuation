@@ -6,8 +6,9 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = "Property Master";
-    var _md = "View";
+    var _header = " Property Master";
+    var _md = "View ";
+    ViewData["Title"] = _md + _header;
 }
 @{
     var htmlAttributes = true;

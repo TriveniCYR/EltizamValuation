@@ -10,6 +10,7 @@ using Eltizam.Business.Models;
 using Eltizam.Resource;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Business.Core;
 
 namespace Eltizam.Api.Controllers
 {
@@ -24,19 +25,20 @@ namespace Eltizam.Api.Controllers
 		private readonly IMasterUserService _MasterUserService;
 		private readonly IStringLocalizer<Errors> _stringLocalizerError;
 		private readonly IExceptionService _ExceptionService;
-		
-		#endregion Properties
+        private readonly IHelper _helper;
+        #endregion Properties
 
-		#region Constructor
+        #region Constructor
 
-		public AccountController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IMasterUserService MasterUserService, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService)
+        public AccountController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IMasterUserService MasterUserService, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IHelper helper)
 		{
 			_configuration = configuration;
 			_ObjectResponse = ObjectResponse;
 			_MasterUserService = MasterUserService;
 			_stringLocalizerError = stringLocalizerError;
 			_ExceptionService = exceptionService;
-		}
+            _helper = helper;
+        }
 
 		#endregion Constructor
 
@@ -155,6 +157,27 @@ namespace Eltizam.Api.Controllers
             {
                 await _ExceptionService.LogException(ex);
                 return false;
+            }
+        }
+        [AllowAnonymous]
+        [HttpPost, Route("ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePasswordModel)
+        {
+            try
+            {              
+                var changeOperation = await _MasterUserService.ChangePassword(changePasswordModel);
+                if (changeOperation == DBOperation.Success)
+                    return _ObjectResponse.Create(changeOperation, (Int32)HttpStatusCode.OK);
+                else if (changeOperation == DBOperation.NotFound)
+                {
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+                }
+                return _ObjectResponse.Create(null, (Int32)HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
         #endregion API Methods
