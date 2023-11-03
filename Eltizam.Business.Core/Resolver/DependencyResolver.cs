@@ -44,7 +44,7 @@ namespace Eltizam.Business.Core.Resolver
             services.AddTransient<IMasterClientTypeService, MasterClientTypeService>();
             services.AddTransient<IMasterDictionaryService, MasterDictionaryService>();
             services.AddTransient<IValutionRequestService, ValutionRequestService>();
-
+            services.AddTransient<IValuationRequestStatusService, ValuationRequestStatusService>();
             services.AddTransient<IHelper, Helper>();
            
             services.AddTransient<IExceptionService, ExceptionService>();

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Eltizam.Resource.Resources;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,11 +34,28 @@ namespace Eltizam.Business.Models
 
         public string ReferenceNO { get; set; }
 
-        public int ResourceId { get; set; }
-        public int RoleId { get; set; }
+        public int CountryId { get; set; }
+        public int StateId { get; set; }
+        public int CityId { get; set; }
 
-        public int DepartmentId { get; set; }
-        public int DesignationId { get; set; }
+        public string? CountryName { get; set; }
+       
+        public string? StateName { get; set; }
+
+        public string UserName { get; set; }
+
+        public string? CityName { get; set; }
+        public int PropertyTypeId { get; set; }
+
+        public string RequestStatusId { get; set; }
+        public int ResourceId { get; set; }
+
+
+
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+
+
 
 
     }

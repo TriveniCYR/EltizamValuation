@@ -18,81 +18,87 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 namespace Eltizam.Business.Core.ServiceImplementations
 {
     public class MasterUserService : IMasterUserService
-	{
-		private readonly IUnitOfWork _unitOfWork;
-		private readonly IMapperFactory _mapperFactory;
-		private readonly IStringLocalizer<Errors> _stringLocalizerError;
-		private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
+    {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapperFactory _mapperFactory;
+        private readonly IStringLocalizer<Errors> _stringLocalizerError;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<MasterUser> _repository { get; set; }
         private IRepository<MasterAddress> _addressRepository { get; set; }
         private IRepository<MasterQualification> _qualifyRepository { get; set; }
         private IRepository<MasterDocument> _documentRepository { get; set; }
-        private IRepository<EmailLogHistory> _emailLog { get; set; } 
+        private IRepository<EmailLogHistory> _emailLog { get; set; }
 
-		private readonly IHelper _helper;
-		public MasterUserService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
-								  IHelper helper,  Microsoft.Extensions.Configuration.IConfiguration _configuration)
-		{
-			_unitOfWork = unitOfWork;
-			_mapperFactory = mapperFactory;
-			 
-			_emailLog = _unitOfWork.GetRepository<EmailLogHistory>();
+        private readonly IHelper _helper;
+        private readonly int? _LoginUserId;
+       
+      
+        public MasterUserService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+                                  IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
+        {
+            _unitOfWork = unitOfWork;
+            _mapperFactory = mapperFactory;
+
+            _emailLog = _unitOfWork.GetRepository<EmailLogHistory>();
             _repository = _unitOfWork.GetRepository<MasterUser>();
             _addressRepository = _unitOfWork.GetRepository<MasterAddress>();
             _qualifyRepository = _unitOfWork.GetRepository<MasterQualification>();
             _documentRepository = _unitOfWork.GetRepository<MasterDocument>();
             configuration = _configuration;
-			_helper = helper;
-		}
+            _helper = helper;
+            _LoginUserId = _helper.GetLoggedInUser()?.UserId;
+            
+           
+        }
 
-		public async Task<UserSessionEntity> Login(LoginViewModel oLogin)
-		{ 
-			UserSessionEntity oUser = null;
+        public async Task<UserSessionEntity> Login(LoginViewModel oLogin)
+        {
+            UserSessionEntity oUser = null;
 
-			SqlParameter[] osqlParameter = 
-			{
-		        new SqlParameter("@Email", oLogin.Email),
-				new SqlParameter("@Password", UtilityHelper.GenerateSHA256String(oLogin.Password))
-			};
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter("@Email", oLogin.Email),
+                new SqlParameter("@Password", UtilityHelper.GenerateSHA256String(oLogin.Password))
+            };
 
-			var UserList = await _repository.GetBySP("usp_User_VerifyUserLogin", System.Data.CommandType.StoredProcedure, osqlParameter);
+            var UserList = await _repository.GetBySP("usp_User_VerifyUserLogin", System.Data.CommandType.StoredProcedure, osqlParameter);
 
-			if (UserList != null && UserList.Rows.Count > 0)
-			{
+            if (UserList != null && UserList.Rows.Count > 0)
+            {
                 oUser = new UserSessionEntity();
                 oUser.UserName = Convert.ToString(UserList.Rows[0]["UserName"]);
                 oUser.UserId = Convert.ToInt32(UserList.Rows[0]["UserId"]);
                 oUser.Email = Convert.ToString(UserList.Rows[0]["EmailAddress"]);
-				oUser.RoleId = Convert.ToInt32(UserList.Rows[0]["RoleId"]);
-			}
-			return oUser;
-		}  
+                oUser.RoleId = Convert.ToInt32(UserList.Rows[0]["RoleId"]);
+            }
+            return oUser;
+        }
 
-		public async Task<DBOperation> DeleteUser(int id)
-		{
-			var entityUser = _repository.Get(x => x.Id == id);
+        public async Task<DBOperation> DeleteUser(int id)
+        {
+            var entityUser = _repository.Get(x => x.Id == id);
 
-			if (entityUser == null)
-				return DBOperation.NotFound;
+            if (entityUser == null)
+                return DBOperation.NotFound;
 
-			_repository.Remove(entityUser);
+            _repository.Remove(entityUser);
 
-			await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
-			return DBOperation.Success;
-		}
+            return DBOperation.Success;
+        }
 
 
-		public async Task<bool> CheckEmailAddressExists(string emailAddress)
-		{
-			var isExists = await _repository.GetAllQuery().AnyAsync(x => x.Email.ToLower() == emailAddress.ToLower());
-			return isExists;
+        public async Task<bool> CheckEmailAddressExists(string emailAddress)
+        {
+            var isExists = await _repository.GetAllQuery().AnyAsync(x => x.Email.ToLower() == emailAddress.ToLower());
+            return isExists;
         }
 
         public async Task<DBOperation> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
         {
             EmailHelper email = new EmailHelper();
-			bool IsSuccess = false;
+            bool IsSuccess = false;
             string baseURL = forgotPasswordViewModel.WebApplicationUrl;
             var entityUser = _repository.Get(x => x.Email == forgotPasswordViewModel.Email);
             if (entityUser == null)
@@ -108,24 +114,24 @@ namespace Eltizam.Business.Core.ServiceImplementations
             strHtml = strHtml.Replace("ValidateURL", strURL);
             strHtml = strHtml.Replace("ValidDateTime", entityUser.ForgotPasswordDateTime.Value.AddHours(1).ToString());
             strHtml = strHtml.Replace("Name", entityUser.FirstName + entityUser.LastName);
-            IsSuccess =	email.SendMail(entityUser.Email, string.Empty, "Eltizam - Forgot Password", strHtml, GetSMTPConfiguration());
-			
-			
-			EmailLogHistory emailLogHistory = new EmailLogHistory();
-			emailLogHistory.FromAddress = configuration.GetSection("SMTPDetails").GetSection("FromEmail").Value;//entityUser.Email;
+            IsSuccess = email.SendMail(entityUser.Email, string.Empty, "Eltizam - Forgot Password", strHtml, GetSMTPConfiguration());
+
+
+            EmailLogHistory emailLogHistory = new EmailLogHistory();
+            emailLogHistory.FromAddress = configuration.GetSection("SMTPDetails").GetSection("FromEmail").Value;//entityUser.Email;
 
             emailLogHistory.ToAddress = entityUser.Email;
-			emailLogHistory.Subject = "Eltizam - Forgot Password";
-			emailLogHistory.EmailResponse = "";
-			emailLogHistory.CreatedBy = null;
-			emailLogHistory.CreatedDate = AppConstants.DateTime;
-			emailLogHistory.Body = strHtml;
-			emailLogHistory.IsSent = IsSuccess;
-			_emailLog.Add(emailLogHistory);
-			await _unitOfWork.SaveChangesAsync();
+            emailLogHistory.Subject = "Eltizam - Forgot Password";
+            emailLogHistory.EmailResponse = "";
+            emailLogHistory.CreatedBy = null;
+            emailLogHistory.CreatedDate = AppConstants.DateTime;
+            emailLogHistory.Body = strHtml;
+            emailLogHistory.IsSent = IsSuccess;
+            _emailLog.Add(emailLogHistory);
+            await _unitOfWork.SaveChangesAsync();
 
-			//if (IsSuccess)
-			return DBOperation.Success;
+            //if (IsSuccess)
+            return DBOperation.Success;
         }
         public async Task<string> ResetPassword(MasterUserResetPasswordEntity resetPasswordentity)
         {
@@ -157,10 +163,10 @@ namespace Eltizam.Business.Core.ServiceImplementations
             return _smtp;
         }
         public async Task<bool> IsTokenValid(string token)
-		{
-			var isExists = await _repository.GetAllQuery().AnyAsync(x => x.ForgotPasswordToken == token);
-			return isExists;
-		}
+        {
+            var isExists = await _repository.GetAllQuery().AnyAsync(x => x.ForgotPasswordToken == token);
+            return isExists;
+        }
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
@@ -187,7 +193,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
             return oDataTableResponseModel;
         }
-       
+
         public async Task<MasterUserDetailModel> GetById(int id)
         {
             var _userEntity = new MasterUserDetailModel();
@@ -231,7 +237,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
             }
             return _userEntity;
         }
-        
+
         public async Task<DBOperation> Upsert(MasterUserModel entityUser)
         {
             if (!string.IsNullOrEmpty(entityUser.Password) && entityUser.Id <= 0)
@@ -421,6 +427,38 @@ namespace Eltizam.Business.Core.ServiceImplementations
             await _unitOfWork.SaveChangesAsync();
 
             return DBOperation.Success;
-        }   
+        }
+        public async Task<DBOperation> ChangePassword(ChangePasswordModel entityUser)
+        {
+            //int userId = _LoginUserId ?? 0;
+
+            int userId = 1;//_LoginUserId; //_helper.GetLoggedInUser().UserId;
+            entityUser.UserId= userId;
+            if (entityUser.UserId >= 0 && entityUser.NewPassword == entityUser.ConfirmPassword)
+            {
+                entityUser.NewPassword = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.NewPassword);
+                entityUser.ConfirmPassword = entityUser.NewPassword;
+            }
+            MasterUser objUser;
+            if (entityUser.UserId > 0)
+            {
+                objUser = _repository.Get(entityUser.UserId);
+                var OldObjUser = objUser;
+                if (objUser != null)
+                {
+                    objUser.Password = entityUser.NewPassword;
+
+                    objUser.ModifiedBy = _LoginUserId;
+                    objUser.ModifiedDate = AppConstants.DateTime;
+                    _repository.UpdateAsync(objUser);
+                }
+                else
+                {
+                    return DBOperation.NotFound;
+                }
+            }
+            await _unitOfWork.SaveChangesAsync();
+            return DBOperation.Success;
+        }
     }
 }
