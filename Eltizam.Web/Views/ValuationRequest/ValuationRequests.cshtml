@@ -22,13 +22,9 @@
             <h3 class="dashboardTitle">Valution List</h3>
             <div class="buttonArea flex align-item-center">
 
-
-
-                <form asp-action="" asp-controller="" method="GET">
-                    <button class="flex align-item-center blueBtn" id="addNew">
-                        <img src="~/assets/plus.svg" alt="plus"> Add New
-                    </button>
-                </form>
+                <button class="flex align-item-center blueBtn" id="addNew">
+                    <img src="~/assets/plus.svg" alt="plus"> Add New
+                </button>
 
                 <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()">
                     <img src="../assets/user-shield.svg" alt="user">
@@ -82,11 +78,32 @@
 
                             @Html.TextBoxFor(model => model.PropertyName, new {  @placeholder = @SharedLocalizer["PropertyName"] })
                         </label>
-                        <label for="CountryId">
-                            <p class="m-0">Country></p>
-                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new {  })
+                        <label for="">
+                            <p class="m-0">
+                                Property Type
+
+                            </p>
+                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { })
+
                         </label>
 
+                    </div>
+                    <div class="flex">
+
+                        <label for="Method of Valuation">
+                            <p class="m-0">Method of Valuation</p>
+                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new {  @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                        </label>
+                        <label for="">
+                            <p class="m-0">Request Status </p>
+
+                            @Html.DropDownListFor(model => model.RequestStatusId, new List<SelectListItem> { }, new { })
+
+                        </label>
+                        <label for="CountryId">
+                            <p class="m-0">Country</p>
+                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new {  })
+                        </label>
                         <label for="StateId">
                             <p class="m-0">State</p>
                             @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new {  })
@@ -96,30 +113,6 @@
                             <p class="m-0">City</p>
                             @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new {  })
                         </label>
-
-                        <label for="">
-                            <p class="m-0">
-                                Property Type
-
-                            </p>
-                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { })
-
-                        </label>
-                        <label for="">
-                            <p class="m-0">
-                                Request Status
-
-                            </p>
-                            @Html.DropDownListFor(model => model.RequestStatusId, new List<SelectListItem> { }, new { })
-
-                        </label>
-                        <label for="Method of Valuation">
-                            <p class="m-0">Method of Valuation</p>
-                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new {  @placeholder = @SharedLocalizer[" Select ResourceType"] })
-
-                        </label>
-                    </div>
-                    <div class="flex">
                         <label for="fromDate">
                             From Date
                             <input type="date" id="FromDate" name="FromDate" asp-for="FromDate">
@@ -130,8 +123,12 @@
                         </label>
 
                     </div>
+
+
+
+
                     <div class="text-center">
-                        <button type="submit" class="blueBtn" onclick="InitializeValutionRequestDataList()">Search</button>
+                        <button type="button" class="blueBtn" onclick="InitializeValutionRequestDataList()">Search</button>
                     </div>
                 </form>
             </div>
@@ -211,10 +208,8 @@
             BindPropertype();
             BindRequestStaus();
             BindResourceType();
-            // BindDepartment();
-            // BindDesignation();
             BindApproverList();
-           
+
         });
 
         function assignToggle() {

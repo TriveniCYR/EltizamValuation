@@ -19,5 +19,6 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> MasterDictionaryAddUpdate(MasterDictionaryEntity entity_dictionary);
         Task<MasterDictionaryEntity> GetMasterDictionaryDetailByIdAsync(int id);
         Task<List<MasterDictionaryDetailById>> GetMasterDictionaryDetailSubByIdAsync(int DictionaryId);
+        Task<MasterDictionaryDetails> GetDictionaryWithSubDetailsAsync(int? DictionaryId, string? Description, string? Code);
     }
 }

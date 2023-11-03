@@ -1,85 +1,26 @@
-﻿
-//starts dynamic input button
-let blockCounter = 1;
-
-function addInputProperty() {
-    debugger
-    const inputPropField = document.querySelector(".addPropertyInputDynamic");
-    const uniqueId = `status-${blockCounter}`;
-
-    const newBlock = document.createElement("div");
-    newBlock.className = "inputFieldProp";
-    newBlock.innerHTML = `
-    <label for="">
-
-        <input type="text" placeholder="enter description">
-    </label>
-    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeAddPropInput(this)">
-        `;
-
-    inputPropField.appendChild(newBlock);
-    blockCounter++;
-}
-
-function removeAddPropInput(element) {
-    const newAddedDiv = element.parentElement;
-    newAddedDiv.remove();
-}
-
-function SavePropertyType() {
-    debugger
-    var Master_PropertyTypeModel = {
-        'Id': '',
-        'PropertyType': '',
-        'IsActive': '',
+﻿ 
+function SavePropertyType() { 
+    var Dict = {
+        'Id': $("#hdnPropertyId").val(),
+        'PropertyType': $("#PropertyType").val(),
+        'IsActive': $('#isActiveT')[0].checked,
         'MasterPropertySubTypes': []
-    }
-    // $(document).ready(function () {
-    //     if ($('#IsActive')[0].value == 0) {
-    //         $('#IsActive')[0].checked = 0;
-    //     }
-    //     else
-    //     {
-    //         $('#IsActive')[0].checked = 1;
-    //     }
+    }  
 
-    // });
-
-
-    Master_PropertyTypeModel.Id = document.getElementById('hdnPropertyId').value;
-    Master_PropertyTypeModel.PropertyType = document.getElementById('PropertyType').value;
-    Master_PropertyTypeModel.IsActive = $('#addLocation')[0].checked;
-
-    var DynamicMasterPropertySubTypes = $(".addPropertyInputDynamic :input");
-
-    var ExistingMasterPropertySubTypes = $(".propertySubTypeContainer :input[type='text']");
-
-    for (var i = 0; i < DynamicMasterPropertySubTypes.length; i++) {
+    var Inputs = $(".addPropertyInputDynamic :input");  
+    for (var i = 0; i < Inputs.length; i++) {
         var objDynamic = {
-            'Id': 0,
-            'PropertySubType': DynamicMasterPropertySubTypes[i].value,
+            'Id': Inputs[i].id,
+            'PropertySubType': Inputs[i].value,
         }
-        Master_PropertyTypeModel.MasterPropertySubTypes.push(objDynamic);
-    }
+        Dict.MasterPropertySubTypes.push(objDynamic);
+    } 
 
-    for (var j = 0; j < ExistingMasterPropertySubTypes.length; j++) {
-        var objExisting = {
-            'Id': ExistingMasterPropertySubTypes[j].id,
-            'PropertySubType': ExistingMasterPropertySubTypes[j].value,
-        }
-        Master_PropertyTypeModel.MasterPropertySubTypes.push(objExisting);
-    }
-    console.log(JSON.stringify(Master_PropertyTypeModel));
+    var Master_PropertyTypeModel = Dict;
 
-    
-    //var PropertySubType = $("#PropertySubTypeId");
-    var _val = $('#hdnPropertySub').val();
-    var _rpname = "propertyTypeId";
-
-    //BindDropdowns(PropertyList, Property, _rpname, _val);
     $.ajax({
         type: "POST",
-        url: $('#hdnBaseURL').val() + PropertyByIdSubType,
+        url: BaseURL + PropertyByIdSubType,
         "datatype": "json",
         headers: {
             'Accept': 'application/json',
@@ -87,13 +28,16 @@ function SavePropertyType() {
         },
         data: JSON.stringify(Master_PropertyTypeModel),
         success: function (response) {
-            window.location.href = "/MasterPropertyType/PropertyTypes";
+            toastr.success(SucessMsg);
+            setTimeout(function () {
+                window.location.href = "/MasterPropertyType/PropertyTypes";
+            }, 1000); 
         },
         failure: function (response) {
-            alert(response.responseText);
+            toastr.error(ErrorMsg);
         },
         error: function (response) {
-            alert(response.responseText);
+            toastr.error(ErrorMsg);
             $("#loader").hide();
         }
     });

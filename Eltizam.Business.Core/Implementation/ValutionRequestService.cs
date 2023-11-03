@@ -48,7 +48,7 @@ namespace Eltizam.Business.Core.Implementation
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
         }
         #endregion Constructor
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId, int countryId, int stateId, int cityId, string? fromDate, string? toDate)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId, int propertyTypeId,int countryId, int stateId, int cityId, string? fromDate, string? toDate)
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
             //string SortDir = model.order[0]?.dir;
@@ -66,6 +66,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter("PropertyName",                    propertyName),
                 new SqlParameter("ValuationStatus",                 requestStatusId),
                 new SqlParameter("ValuationMethod",                 resourceId),
+                  new SqlParameter("@PropertyTypeId",                 propertyTypeId),
                 new SqlParameter("CountryId",                       countryId),
                 new SqlParameter("StateId",                         stateId),
                 new SqlParameter("CityId",                          cityId),
@@ -85,11 +86,12 @@ namespace Eltizam.Business.Core.Implementation
         }
         public async Task<DBOperation> AssignApprover(AssignApprovorRequestModel model)
         {
+            var VRIDs = model.RequestIds;
             if (model.ApprovorId > 0)
             {
-                if(model.RequestIds.Length > 0)
+                if(VRIDs != null && VRIDs.Length > 0)
                 {
-                    int[] ids = model.RequestIds.Split(',').Select(int.Parse).ToArray();
+                    int[] ids = VRIDs.Split(',').Select(int.Parse).ToArray();
 
                     if(ids.Length > 0)
                     {
