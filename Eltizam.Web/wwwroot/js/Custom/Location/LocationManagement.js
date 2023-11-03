@@ -1,7 +1,7 @@
 ﻿var tableId = "LocationTable";
 $(document).ready(function () {
     InitializeLocationDataList();
-    BindCountry();
+    //BindCountry();
     //if (ViewBag.IsView === 1) {
     //    $(".disabletxtbox").prop("disabled", true);
     //    $("#addLocation").prop("disabled", true);
