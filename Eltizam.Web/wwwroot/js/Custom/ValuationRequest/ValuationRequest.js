@@ -5,13 +5,19 @@ $(document).ready(function () {
 
 //Load data into table
 function InitializeValutionRequestDataList() {
-    debugger
+  
    
     $("#ValuationRequestTable").dataTable().fnDestroy();
     var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
     var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
     var propertyName = $("#PropertyName").val() === undefined ? "" : $("#PropertyName").val();
     var requestStatusId = $("#RequestStatusId").val();
+    var propertyTypeId = $("#PropertyTypeId").val();
+    if (propertyTypeId === undefined || isNaN(parseInt(propertyTypeId))) {
+        propertyTypeId = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        propertyTypeId = parseInt(propertyTypeId);
+    }
 
     if (requestStatusId === undefined || isNaN(parseInt(requestStatusId))) {
         requestStatusId = 0; // Set a default value when the input is not a valid integer.
@@ -54,7 +60,7 @@ function InitializeValutionRequestDataList() {
     
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
+        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
         
         "type": "POST",
         "data": function (d) {
