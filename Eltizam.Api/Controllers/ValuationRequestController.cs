@@ -45,10 +45,22 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpPost, Route("AssignApprovor")]
-        public async Task<IActionResult> AssignApprovor([FromForm] AssignApprovorRequestModel model)
+        [HttpPost, Route("AssignApprover")]
+        public async Task<IActionResult> AssignApprover([FromBody] AssignApprovorRequestModel model)
         {
-            DBOperation oResponse = await _valutionServices.AssignApprovor(model);
+            DBOperation oResponse = await _valutionServices.AssignApprover(model);
+            if (oResponse == DBOperation.Success)
+            {
+                return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+            }
+            else
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        }
+
+        [HttpPost, Route("AssignApproverStatus")]
+        public async Task<IActionResult> AssignApproverStatus([FromBody] ApprovorStatusRequestModel model)
+        {
+            DBOperation oResponse = await _valutionServices.AssignApproverStatus(model);
             if (oResponse == DBOperation.Success)
             {
                 return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));

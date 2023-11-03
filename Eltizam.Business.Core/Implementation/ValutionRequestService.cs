@@ -83,7 +83,7 @@ namespace Eltizam.Business.Core.Implementation
 
             return oDataTableResponseModel;
         }
-        public async Task<DBOperation> AssignApprovor(AssignApprovorRequestModel model)
+        public async Task<DBOperation> AssignApprover(AssignApprovorRequestModel model)
         {
             if (model.ApprovorId > 0)
             {
@@ -106,6 +106,34 @@ namespace Eltizam.Business.Core.Implementation
                     }
 
                     return DBOperation.Success;
+                }
+            }
+            else
+            {
+                return DBOperation.NotFound;
+            }
+            return DBOperation.Success;
+        }
+
+        public async Task<DBOperation> AssignApproverStatus(ApprovorStatusRequestModel model)
+        {
+            if (model.ApprovorId > 0 && model.ValuationRequestId > 0)
+            {
+                if (model.StatusId > 0)
+                {
+                    var valuationEntity = _repository.Get(model.ValuationRequestId);
+                    valuationEntity.ApproverId = model.ApprovorId;
+                    valuationEntity.ApproverComment = model.ApprovorComment;
+                    valuationEntity.StatusId = model.StatusId;
+                    valuationEntity.ModifyBy = _LoginUserId;
+                    valuationEntity.ModifyDate = AppConstants.DateTime;
+                    _repository.UpdateAsync(valuationEntity);
+
+                    await _unitOfWork.SaveChangesAsync();
+                }
+                else
+                {
+                    return DBOperation.NotFound;
                 }
             }
             else

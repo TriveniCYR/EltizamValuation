@@ -141,7 +141,7 @@
                 <table id="ValuationRequestTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>@MasterLocalizer["Id"] </th>
+                            <th><input type="checkbox" id="cbSelectAll"> Select all &nbsp;|&nbsp; @MasterLocalizer["Id"] </th>
                             <th>@MasterLocalizer["Val.Ref.No"] </th>
                             <th>@MasterLocalizer["Client Name"] </th>
                             <th>@MasterLocalizer["Client Type"] </th>
@@ -201,17 +201,8 @@
     <script type="text/javascript" src="~/js/Custom/ValuationRequest/ValuationRequest.js?v=@jsVersion"></script>
 
     <script>
-        function AssignRequest(){
-            // $("#ValuationRequestTable  tbody tr").on("click", function (e) {
-            //     $("input[type='checkbox']", this).each(function () {
-            //         $(this).attr('checked', !$(this).attr('checked'));
-            //     });
-            // });
-            $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () {
-                debugger
-                this.checked = true;
-            });
-        }
+        var AssignApproverUrl = "@Eltizam.Web.Helpers.APIURLHelper.AssignApprover"
+
         $(document).ready(function () {
             BindRole();
             BindCountry();
@@ -220,8 +211,8 @@
             BindPropertype();
             BindRequestStaus();
             BindResourceType();
-            BindDepartment();
-            BindDesignation();
+            // BindDepartment();
+            // BindDesignation();
             BindApproverList();
            
         });

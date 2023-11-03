@@ -1,6 +1,7 @@
 ﻿var tableId = "ValuationRequestTable";
 $(document).ready(function () {
     InitializeValutionRequestDataList();
+
 });
 
 //Load data into table
@@ -66,9 +67,11 @@ function InitializeValutionRequestDataList() {
 
 
     var columnObject = [
-
         {
-            "data": "id", "name": "Id"
+            "data": "id", "name": "Id",
+            "render": function (data, type, row, data) {
+                return '<div class="checkboxColumn"><input type="checkbox" value="'+row.id+'"><span>'+row.id+'</span><div>';
+            }
         },
         {
             "data": "referenceNO", "name": "ReferenceNO"
@@ -171,4 +174,52 @@ function DeleteUserByIdSuccess(data) {
 }
 function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
+}
+
+$("#cbSelectAll").on("click", function () {
+    var ischecked = this.checked;
+    $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () {
+        this.checked = ischecked;
+    });
+});
+function AssignRequest() {
+
+    var modelReq = {
+        'RequestIds': '',
+        'ApprovorId': 0,
+        'Remarks': ''
+    }
+    var approverId = $("#ApproverId").val();
+    var remarks = $("#Remarks").val();
+    var ids = '';
+    $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () {
+        debugger
+        ids += this.value + ',';
+
+    });
+    debugger
+    ids = ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
+    modelReq.ApprovorId = parseInt(approverId);
+    modelReq.RequestIds = ids;
+    modelReq.Remarks = remarks;
+    $.ajax({
+        type: "POST",
+        url: $('#hdnBaseURL').val() + AssignApproverUrl,
+        "datatype": "json",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(modelReq),
+        success: function (response) {
+            window.location.href = "/ValuationRequest/ValuationRequests";
+        },
+        failure: function (response) {
+            toaster.error("Error is occured.")
+        },
+        error: function (response) {
+            toaster.error(response)
+            $("#loader").hide();
+        }
+    });
 }
