@@ -28,35 +28,28 @@ namespace Eltizam.Business.Models
 
         public string? Requestor { get; set; }
         public string? Valuator { get; set; }
-        public string MethodOfValution { get; set; }
+        public string? MethodOfValution { get; set; }
 
-        public string ColorCode { get; set; }
+        public string? ColorCode { get; set; }
 
-        public string ReferenceNO { get; set; }
+        public string? ReferenceNO { get; set; }
 
-        public int CountryId { get; set; }
-        public int StateId { get; set; }
-        public int CityId { get; set; }
+        public int? CountryId { get; set; }
+        public int? StateId { get; set; }
+        public int? CityId { get; set; }
 
         public string? CountryName { get; set; }
        
         public string? StateName { get; set; }
 
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         public string? CityName { get; set; }
-        public int PropertyTypeId { get; set; }
+        public int? PropertyTypeId { get; set; }
 
-        public string RequestStatusId { get; set; }
-        public int ResourceId { get; set; }
-
-
-
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
-
-
-
-
+        public string? RequestStatusId { get; set; }
+        public int? ResourceId { get; set; } 
+        public string? FromDate { get; set; }
+        public string? ToDate { get; set; } 
     }
 }

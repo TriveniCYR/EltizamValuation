@@ -505,6 +505,7 @@ main {
         line-height: 120%;
         color: var(--title);
         padding: 18px 0;
+        text-transform: uppercase;
     }
 
     main .searchBox {
@@ -796,9 +797,9 @@ table .userPic {
     position: absolute;
     border: 1px solid var(--grey);
     left: 0;
-    width: 100%;
+    width: 1136px;
     top: 50px;
-    height: 330px;
+    /*height: 330px;*/
     background: white;
     z-index: 1;
     border-radius: 5px;
@@ -1621,6 +1622,7 @@ label.roleswitch {
 .page-item.active .page-link {
     background-color: var(--blue);
     border-color: var(--blue);
+    z-index:0;
 }
 
 .page-link {
@@ -1867,11 +1869,11 @@ div.dataTables_wrapper div.dataTables_filter {
     border-radius: 5px;
     align-items: center;
     cursor: pointer;
-    color: white; 
+    color: var(--error);
     font-family: 'Open Sans', Arial, Helvetica, sans-serif !important;
-    font-size: 14px; 
-    background: #FFC199;
-    border-left: 9px solid red; 
+    font-size: 14px;
+    background: var(--error);
+    border-left: 9px solid red;
 }
 
 
@@ -1990,7 +1992,7 @@ div.dataTables_wrapper div.dataTables_filter {
     left: 550px;
     margin: auto;
     margin-top: 12px;
-    width: 93%;
+    width: auto;
     z-index:1;
 }
 .accordion.valueAdvance .inputSearchs {
@@ -2009,4 +2011,14 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .accordianErrorDetails ul {
     margin-bottom: 0;
+}
+
+#assignToggle {
+    display: block;
+    left: auto;
+    right: 0px;
+    height: auto;
+    width: 330px;
+    border: 1px solid var(--blue);
+    z-index:99;
 }

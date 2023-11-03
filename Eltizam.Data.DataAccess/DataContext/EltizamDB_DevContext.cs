@@ -458,6 +458,10 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.DictionaryCode)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
@@ -1182,6 +1186,10 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.ApproverUpdateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AssignRemark)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 

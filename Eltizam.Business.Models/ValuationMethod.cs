@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class ValuationRequestStatusModel
+    public class ValuationMethod
     {
         public int Id { get; set; }
-        public string? StatusName { get; set; }
-        
+        public string Description { get; set; }
     }
 }

@@ -54,6 +54,7 @@ namespace Eltizam.Business.Models
         public static string usp_ClientType_AllList = "usp_ClientType_AllList";
         public static string usp_Role_SearchAllList = "usp_Role_SearchAllList";
         public static string usp_Role_GetByRoleName = "usp_Role_GetByRoleName";
+        public static string usp_Approver_AllList = "usp_Approver_AllList";
 
         public static string usp_InsertException = "usp_InsertException";
         
@@ -64,5 +65,8 @@ namespace Eltizam.Business.Models
         public static string usp_ValuationFees_SearchAllList = "usp_ValuationFees_SearchAllList";
         public static string usp_ValuationFeeType_SearchAllList = "usp_ValuationFeeType_SearchAllList";
         public static string usp_Valution_GetValuationList = "usp_Valution_GetValuationList";
+        public static string usp_ValuationRequestStatus_AllList = "usp_ValuationRequestStatus_AllList";
+        public static string usp_ValuationMethod_AllList = "usp_ValuationMethod_AllList";
+        
     }
 }

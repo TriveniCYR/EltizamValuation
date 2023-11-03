@@ -9,116 +9,83 @@
 @inject IConfiguration Configuration
 
 @model Eltizam.Business.Models.Master_PropertyTypeModel
-@{
-    ViewData["Title"] = @MasterLocalizer["Property Type Manage"];
+@{ 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     Layout = "_Layout";
-
+    var _md = (Model.Id) > 0 ? "Edit" : "Add";
+    var _header = " Property Type Master";
+    ViewData["Title"] = _md + _header;
 }
 
-    <form>
+<form>
     <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative flex justify-between ">
-                @if (Model.Id > 0)
-                {
-                    <h3 class="dashboardTitle">EDIT PROPERTY TYPE MASTER</h3>
-                    <div class="hamburger">
-                        <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">Property Type Master</a>
-                       @*  <span onclick="resourceMaster()">Property Type Master</span> *@
-                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                        <span>Edit</span>
-                    </div>
-                }
-                else
-                {
-                    <h3 class="dashboardTitle">ADD PROPERTY TYPE MASTER</h3>
-                    <div class="hamburger">
-                        <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">Property Type Master</a>
-                       @*  <span onclick="resourceMaster()">Property Type Master</span> *@
-                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                        <span>Add</span>
-                    </div>
-                }
+                <h3 class="dashboardTitle">@_md @_header</h3>
+                <div class="hamburger">
+                    <a class="greyBtn lineBtn formAbtn" asp-action="PropertyTypes">@_header</a>
+                    <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                    <span>@_md</span>
+                </div>
             </div>
             <div class="bodyContent">
                 <div class="inputSearchs p-0">
                     <div class="tabSection">
-                    <input type="hidden" id="hdnPropertyId" value="@(Model == null ? 0 : Model.Id)" />
-                   @Html.HiddenFor(model=> model.IsActive)
-                    <div class="flex">
-                        <label for="" class="w-50">
-                           <p class="m-0"> Description
-                                <span class="text-danger">*</span>
-                            </p>
-                            @Html.EditorFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
-                            @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
-                        </label>
+                        <input type="hidden" id="hdnPropertyId" value="@(Model == null ? 0 : Model.Id)" />
+                        @Html.HiddenFor(model=> model.IsActive)
+                        <div class="flex">
+                            <label for="" class="w-50">
+                                <p class="m-0">
+                                    Description
+                                    <span class="text-danger">*</span>
+                                </p>
+                                @Html.TextBoxFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
+                                @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
+                            </label>
 
-                        <label for="" class="w-50">
-
-                            Status
-                            
-                            @* @{
-                                bool isActive = Model.IsActive; // Convert 1 to true, any other value to false
-                            } *@
-
-                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
-                            <label class="label-switch" for="addLocation"></label>
-                            <span class="info-text" style="top:-20px;"></span>
-                            @* @Html.CheckBox("IsActive", new { htmlAttributes = new {  @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["IsActive"] } }) *@
-                          @*   @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new {  @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["IsActive"] } }) *@
-                             @*    <input class='input-switch' type="checkbox" asp-for="IsActive" />
-                                <label class="label-switch" for="IsActive"></label>
-                                <span class="info-text"></span> *@
-                           
-                           @*  <input class='input-switch' type="checkbox" id="addLocation" required /> *@
-                            @* <label class="label-switch" for="addLocation"></label> *@
-                            @* <span class="info-text"></span> *@
-                        </label>
-
-
-
-                    </div>
-                    <div class="dynamicInput">
-                        <div class="addMoreInput buttonArea">
-                            <button type="button" class="blueBtn" onclick="addInputProperty()">+ add property</button>
+                            <label for="" class="w-50">
+                                Status
+                                <input type="checkbox" id="isActiveT" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
+                                <label class="label-switch" for="isActiveT"></label>
+                                <span class="info-text" style="top:-20px;"></span>
+                            </label>
                         </div>
-                        <div class="addPropertyInputDynamic"></div>
-                    </div>
-
+                        <div class="dynamicInput">
+                            <div class="addMoreInput buttonArea">
+                                <button type="button" class="blueBtn" onclick="addDynamicTextbox()">+ Add Subtypes</button>
+                            </div>
+                            <div class="addPropertyInputDynamic"></div>
+                        </div>
 
                         <div class="propertySubTypeContainer addPropertyInputDynamic">
-                        @if (Model.MasterPropertySubTypes != null)
-                        {
-                            @for (var i = 0; i < Model.MasterPropertySubTypes.Count; i++)
+                            @if (Model.MasterPropertySubTypes != null)
                             {
-                                var _ndl = Model.MasterPropertySubTypes[i];
+                                @for (var i = 0; i < Model.MasterPropertySubTypes.Count; i++)
+                                {
+                                    var _ndl = Model.MasterPropertySubTypes[i];
                                     <div class="inputFieldProp">
-                                    <label for="" class="">
-                                        <input type="text" id="@_ndl.Id" value="@_ndl.PropertySubType" asp-for="@_ndl.PropertySubType" class="form-control checkbox-checked" placeholder="Property SubType Name" />
-                                    </label>
-                                    @if (i >= 0)
-                                    {
-                                         <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeAddPropInput(this)">
-                                    }
-                                </div>
-                            } 
-                        } 
+                                        <label for="" class="">
+                                            <input type="text" id="@_ndl.Id" value="@_ndl.PropertySubType" asp-for="@_ndl.PropertySubType" class="form-control checkbox-checked" placeholder="Property SubType Name" />
+                                        </label>
+                                        @if (i >= 0)
+                                        {
+                                            <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeDynamicTextbox(this)">
+                                        }
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="text-right buttonArea bodyContent plr-0">
+                            <a href='/MasterPropertyType/PropertyTypes'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a> 
+                            <button type="button" id="btnSaveRole" onclick="SavePropertyType()" class="bgBlue">Save</button>
+                        </div>
                     </div>
-                    @*  <button type="button" id="addSubTypeButton" class="btn btn-secondary">Add Property SubType</button> *@
-                    <div class="text-right buttonArea bodyContent plr-0">
-                            <a href='/MasterPropertyType/PropertyTypes'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
-                        @* <a class="greyBtn lineBtn mr-12" asp-action="PropertyTypes">@SharedLocalizer["Cancel"]</a> *@
-                        <button type="button" id="btnSaveRole" onclick="SavePropertyType()" class="bgBlue">Save</button>
-                    </div>
-                </div>
 
                 </div>
             </div>
         </div>
     </main>
-    </form>
+</form>
 
 
 <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
@@ -126,9 +93,9 @@
 <script type="text/javascript" src="~/js/Custom/PropertyType/PropertyTypeManage.js?v=@jsVersion"></script>
 
 @section MyScripts
-{
+    {
     <script>
-    var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.UpsertPropertyType";
+        var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.UpsertPropertyType";
     </script>
 }
 

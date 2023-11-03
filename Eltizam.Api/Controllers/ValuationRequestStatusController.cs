@@ -1,5 +1,6 @@
 ﻿using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
+using Eltizam.Business.Core.ServiceImplementations;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Microsoft.AspNetCore.Http;
@@ -36,20 +37,17 @@ namespace EltizamValuation.Api.Controllers
         }
 
         #endregion Constructor
-        [HttpGet, Route("GetAll")]
+        
+
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                var statusList = await _RequestStatusService.GetAll();
-                if (statusList != null)
-                    return _ObjectResponse.Create(statusList, (Int32)HttpStatusCode.OK);
-                else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+                return _ObjectResponse.CreateData(await _RequestStatusService.GetAll(), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
-                await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }

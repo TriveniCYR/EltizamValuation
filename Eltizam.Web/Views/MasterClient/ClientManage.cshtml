@@ -7,6 +7,7 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = "Client Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
+    ViewData["Title"] = _header;
 }
 <!-- system user master -->
 @* <div class="flex">
@@ -130,7 +131,7 @@
                                         <p>Mailing Address Section</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
-                                    <div class="pannel" style="height:0;overflow:hidden">
+                                    <div class="pannel" style="height:auto;overflow:hidden">
                                         <div class="flex">
                                             <label for="address1">
                                                 <p class="m-0">Address Line 1<span class="text-danger">*</span></p>

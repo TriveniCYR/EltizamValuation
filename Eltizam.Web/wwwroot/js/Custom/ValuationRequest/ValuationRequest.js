@@ -1,15 +1,31 @@
 ﻿var tableId = "ValuationRequestTable";
 $(document).ready(function () {
     InitializeValutionRequestDataList();
+
 });
 
 //Load data into table
 function InitializeValutionRequestDataList() {
-    debugger
+  
    
     $("#ValuationRequestTable").dataTable().fnDestroy();
     var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
     var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
+    var propertyName = $("#PropertyName").val() === undefined ? "" : $("#PropertyName").val();
+    var requestStatusId = $("#RequestStatusId").val();
+    var propertyTypeId = $("#PropertyTypeId").val();
+    if (propertyTypeId === undefined || isNaN(parseInt(propertyTypeId))) {
+        propertyTypeId = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        propertyTypeId = parseInt(propertyTypeId);
+    }
+
+    if (requestStatusId === undefined || isNaN(parseInt(requestStatusId))) {
+        requestStatusId = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        requestStatusId = parseInt(requestStatusId);
+    }
+
     var countryId = $("#CountryId").val();
     if (countryId === undefined || isNaN(parseInt(countryId))) {
         countryId = 0; // Set a default value when the input is not a valid integer.
@@ -32,6 +48,12 @@ function InitializeValutionRequestDataList() {
         cityId = parseInt(cityId);
     }
 
+    var resourceId = $("#ResourceId").val();
+    if (resourceId === undefined || isNaN(parseInt(resourceId))) {
+        resourceId = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        resourceId = parseInt(resourceId);
+    }
     
     var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val();
     
@@ -39,7 +61,7 @@ function InitializeValutionRequestDataList() {
     
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
+        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
         
         "type": "POST",
         "data": function (d) {
@@ -52,11 +74,15 @@ function InitializeValutionRequestDataList() {
 
     var columnObject = [
         {
-            "data": "referenceNO", "name": "ReferenceNO"
+            "data": "id", "name": "Id",
+            "render": function (data, type, row, data) {
+                return '<div class="checkboxColumn"><input type="checkbox" value="'+row.id+'"><span>'+row.id+'</span><div>';
+            }
         },
         {
-            "data": "id", "name": "Id"
+            "data": "referenceNO", "name": "ReferenceNO"
         },
+       
         {
             "data": "clientName", "name": "Client Name"
         },
@@ -127,7 +153,9 @@ function InitializeValutionRequestDataList() {
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
 }
 
-
+function CheckAssignId(id, eve) {
+    debugger
+}
 //#region Delete Role  
 function ConfirmationDeletePropertyType(id) {
     debugger;
@@ -152,4 +180,52 @@ function DeleteUserByIdSuccess(data) {
 }
 function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
+}
+
+$("#cbSelectAll").on("click", function () {
+    var ischecked = this.checked;
+    $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () {
+        this.checked = ischecked;
+    });
+});
+function AssignRequest() {
+
+    var modelReq = {
+        'RequestIds': '',
+        'ApprovorId': 0,
+        'Remarks': ''
+    }
+    var approverId = $("#ApproverId").val();
+    var remarks = $("#Remarks").val();
+    var ids = '';
+    $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () {
+        debugger
+        ids += this.value + ',';
+
+    });
+    debugger
+    ids = ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
+    modelReq.ApprovorId = parseInt(approverId);
+    modelReq.RequestIds = ids;
+    modelReq.Remarks = remarks;
+    $.ajax({
+        type: "POST",
+        url: $('#hdnBaseURL').val() + AssignApproverUrl,
+        "datatype": "json",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(modelReq),
+        success: function (response) {
+            window.location.href = "/ValuationRequest/ValuationRequests";
+        },
+        failure: function (response) {
+            toaster.error("Error is occured.")
+        },
+        error: function (response) {
+            toaster.error(response)
+            $("#loader").hide();
+        }
+    });
 }

@@ -153,6 +153,19 @@ namespace Eltizam.API.Controllers.Masters
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+        [HttpGet("GetApproverList/{id}")]
+        public async Task<IActionResult> GetApproverList([FromQuery] int id)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _MasterUserService.GetApproverList(id), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         #endregion API Methods
     }
 }

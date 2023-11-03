@@ -27,7 +27,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
         private IRepository<MasterDictionary> _repository { get; set; }
-         private IRepository<MasterDictionaryDetail> _repositoryDetail { get; set; }
+        private IRepository<MasterDictionaryDetail> _repositoryDetail { get; set; }
         private readonly IHelper _helper;
         public MasterDictionaryService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
                                  IHelper helper,
@@ -87,15 +87,15 @@ namespace Eltizam.Business.Core.Implementation
             //DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstdict);
             //return oDataTableResponseModel;
         }
-        public async Task<List<MasterDictionaryDetailById>> GetDictionaryDetailsByIdAsync(int id,string description)
+        public async Task<List<MasterDictionaryDetailById>> GetDictionaryDetailsByIdAsync(int id, string description)
         {
-        //   var _DictionaryEntity = new List<MasterDictionaryDetailById>();            
-                DbParameter[] osqlParameter = {
+            //   var _DictionaryEntity = new List<MasterDictionaryDetailById>();            
+            DbParameter[] osqlParameter = {
                  new DbParameter("Id", id, SqlDbType.Int),
                  new DbParameter("Description",description,SqlDbType.VarChar),
                 };
-                //_DictionaryEntity = EltizamDBHelper.ExecuteSingleMappedReader<MasterDictionaryDetailById>(ProcedureMetastore.usp_Dictionary_GetById, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
-           var _Dictionary = EltizamDBHelper.ExecuteMappedReader<MasterDictionaryDetailById>(ProcedureMetastore.usp_Dictionary_GetById, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
+            //_DictionaryEntity = EltizamDBHelper.ExecuteSingleMappedReader<MasterDictionaryDetailById>(ProcedureMetastore.usp_Dictionary_GetById, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
+            var _Dictionary = EltizamDBHelper.ExecuteMappedReader<MasterDictionaryDetailById>(ProcedureMetastore.usp_Dictionary_GetById, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
 
 
             return _Dictionary;
@@ -114,8 +114,6 @@ namespace Eltizam.Business.Core.Implementation
                 var masterDictionary = await _repositoryDetail.GetAsync(id);
                 if (masterDictionary == null)
                 {
-                    // Log that the data with the specified ID was not found.
-                    // You can add proper logging here.
                     return null;
                 }
 
@@ -124,9 +122,6 @@ namespace Eltizam.Business.Core.Implementation
             }
             catch (Exception ex)
             {
-                // Handle exceptions, log them, or rethrow as needed.
-                // You should log the exception details for debugging.
-                // Logging should be implemented to record errors.
                 return null;
             }
         }
@@ -161,8 +156,8 @@ namespace Eltizam.Business.Core.Implementation
             {
                 objDicitonary = _mapperFactory.Get<MasterDictionaryDetailById, MasterDictionaryDetail>(entitydictionary);
                 objDicitonary.Description = entitydictionary.Description;
-              //  objDicitonary.DictionaryId = entitydictionary.DictionaryId;
-               // objDicitonary.Sort = entitydictionary.Sort;
+                //  objDicitonary.DictionaryId = entitydictionary.DictionaryId;
+                // objDicitonary.Sort = entitydictionary.Sort;
                 objDicitonary.IsActive = entitydictionary.IsActive;
                 //objLocation.Sector = entityLocation.Sector;
                 //objLocation.Latitude = entityLocation.Latitude;
@@ -210,9 +205,9 @@ namespace Eltizam.Business.Core.Implementation
                 if (objmasterDictionary != null)
                 {
                     objmasterDictionary.Description = entity_dictionary.Description;
-                    objmasterDictionary.IsActive =Convert.ToInt32(entity_dictionary.IsActive);
+                    objmasterDictionary.IsActive = Convert.ToInt32(entity_dictionary.IsActive);
                     objmasterDictionary.ModifiedDate = AppConstants.DateTime;
-                   // objmasterDictionary.ModifiedBy = entity_dictionary.ModifiedBy;
+                    // objmasterDictionary.ModifiedBy = entity_dictionary.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objmasterDictionary);
@@ -233,9 +228,9 @@ namespace Eltizam.Business.Core.Implementation
                     Description = entity_dictionary.Description
                 };
                 objmasterDictionary.CreatedDate = AppConstants.DateTime;
-               // objmasterDictionary.CreatedBy = entity_dictionary.CreatedBy;
+                // objmasterDictionary.CreatedBy = entity_dictionary.CreatedBy;
                 objmasterDictionary.ModifiedDate = AppConstants.DateTime;
-               // objmasterDictionary.ModifiedBy = masterproperty.ModifiedBy;
+                // objmasterDictionary.ModifiedBy = masterproperty.ModifiedBy;
 
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objmasterDictionary);
@@ -327,8 +322,45 @@ namespace Eltizam.Business.Core.Implementation
             // Use a mapper to map the data from the repository to the model asynchronously.
             _SubTypes = _mapperFactory.GetList<MasterDictionaryDetail, MasterDictionaryDetailById>(res);
 
-            // Return the mapped entity.
+            // Return the mapped entity.    
             return _SubTypes;
+        }
+
+        public async Task<MasterDictionaryDetails> GetDictionaryWithSubDetailsAsync(int? DictionaryId, string? Description, string? Code)
+        {
+            var _header = new MasterDictionaryDetails();
+
+            // Create a new Master_PropertyTypeModel instance. 
+            var desc = await _repository.GetAsync(a =>
+                               (DictionaryId == null || a.Id == DictionaryId) &&
+                               (Description  == null || a.Description == Description) &&
+                               (Code         == null || a.Description == Code)); 
+
+            if (desc != null)
+            {
+                _header = new MasterDictionaryDetails()
+                {
+                    Description = desc.Description,
+                    Id = desc.Id,
+                    IsActive = desc.IsActive
+                };
+
+                var _SubTypes = _repositoryDetail.GetAllAsync(x => x.DictionaryId == _header.Id && x.IsActive == 1).Result.ToList(); 
+                _header.Values = new List<MasterDictionaryDetailChild>();
+
+                foreach (var item in _SubTypes)
+                {
+                    _header.Values.Add(new MasterDictionaryDetailChild()
+                    {
+                        Id = item.Id,
+                        IsActive = item.IsActive,
+                        Description = item.Description
+                    });
+                }; 
+            }
+
+            // Return the mapped entity.    
+            return _header;
         }
     }
 }

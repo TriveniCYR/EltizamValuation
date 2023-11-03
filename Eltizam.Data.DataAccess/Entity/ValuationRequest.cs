@@ -30,6 +30,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ValuerId { get; set; }
         public string? ValuerComment { get; set; }
         public DateTime? ValuerUpdateDate { get; set; }
+        public string? AssignRemark { get; set; }
 
         public virtual MasterUser? Approver { get; set; }
         public virtual MasterClient Client { get; set; } = null!;

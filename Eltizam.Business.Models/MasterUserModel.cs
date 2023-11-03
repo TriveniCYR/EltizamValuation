@@ -40,7 +40,7 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'ResourceI' field is required.")]
         public int ResourceId { get; set; }
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public bool IsActive { get; set; }
 
 
