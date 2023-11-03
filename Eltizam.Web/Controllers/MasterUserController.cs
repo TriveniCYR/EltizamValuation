@@ -29,18 +29,18 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult Users()
         {
             try
-            { 
+            {
                 return View();
             }
             catch (Exception e)
-            { 
+            {
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 return View("Login");
-            } 
+            }
         }
 
-        [HttpGet] 
+        [HttpGet]
         public IActionResult UserManage(int? id)
         {
             MasterUserModel masterUser;
@@ -67,22 +67,26 @@ namespace EltizamValuation.Web.Controllers
             }
         }
 
-        [HttpPost] 
+        [HttpPost]
         public IActionResult UserManage(int id, MasterUserModel masterUser)
         {
             try
             {
-                if (masterUser.Document.Files != null)
-                {
-                    List<MasterDocumentModel> docs =  FileUpload(masterUser.Document);
-                    masterUser.uploadDocument = docs;
-                    masterUser.Document = null;
-                }
                 if (masterUser != null)
                 {
+                    masterUser.Email ??= masterUser.Address?.Email;
+
+                    if (masterUser.Document!= null && masterUser.Document.Files != null)
+                    {
+                        List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
+                        masterUser.uploadDocument = docs;
+                        masterUser.Document = null;
+                    }
+
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
                 }
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

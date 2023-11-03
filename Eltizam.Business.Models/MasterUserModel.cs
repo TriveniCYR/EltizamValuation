@@ -63,6 +63,7 @@ namespace Eltizam.Business.Models
         [CompareAttribute("Password", ErrorMessage = "Password and Confirm Password doesn't match.")]
         [DataType(DataType.Password)]
         public string? ConfirmPassowrd { get; set; }
+        public string? Email { get; set; }
 
         public int CreatedBy { get; set; }
         public MasterUserAddressModel? Address { get; set; } = null;

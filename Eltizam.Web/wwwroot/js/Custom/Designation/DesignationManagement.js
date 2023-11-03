@@ -23,11 +23,11 @@ function ConfirmationDesignation(id) {
     
     $('#DeleteDesignationModel #ID').val(id);
 }
-function DeleteDesignation() {
-  
+function DeleteDesignation() { 
     var tempInAtiveID = $('#DeleteDesignationModel #ID').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteDesignationByIdUrl + "/" + tempInAtiveID, 'POST', DeleteDesignationByIdSuccess, DeleteDesignationByIdError);
+    ajaxServiceMethod(BaseURL + DeleteDesignationByIdUrl + "/" + tempInAtiveID, 'POST', DeleteDesignationByIdSuccess, DeleteDesignationByIdError);
 }
+
 function DeleteDesignationByIdSuccess(data) {
     try {
         if (data._Success === true) {

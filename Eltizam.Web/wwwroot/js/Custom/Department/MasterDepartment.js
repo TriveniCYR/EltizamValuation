@@ -9,7 +9,7 @@ function ConfirmationDeleteUser(id) {
 }
 function DeleteUser() {
     var tempInAtiveID = $('#DeleteUserModel #UserID').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteUserByIdUrl + "/" + tempInAtiveID, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
+    ajaxServiceMethod(BaseURL + DeleteUserByIdUrl + "/" + tempInAtiveID, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
 }
 function DeleteUserByIdSuccess(data) {
     try {
@@ -31,7 +31,7 @@ function DeleteUserByIdError(x, y, z) {
 function InitializeUserList () {
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": $('#hdnBaseURL').val() + AllUser,
+        "url": BaseURL + AllUser,
         "type": "POST",
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();

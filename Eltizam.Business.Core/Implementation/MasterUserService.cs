@@ -277,6 +277,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     objUser.ModifiedBy = entityUser.CreatedBy;
                     objUser.ModifiedDate = AppConstants.DateTime;
                     objUser.RoleId = entityUser.RoleId; 
+                    objUser.Email = entityUser.Email;
+
                     _repository.UpdateAsync(objUser);
                 } 
             }

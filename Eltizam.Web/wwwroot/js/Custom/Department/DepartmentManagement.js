@@ -25,7 +25,7 @@ function ConfirmationDepartment(id) {
 }
 function DeleteDepartment() {
     var tempInAtiveID = $('#DeleteDepartmentModel #ID').val();
-    ajaxServiceMethod($('#hdnBaseURL').val() + DeleteDepartmenteByIdUrl + "/" + tempInAtiveID, 'POST', DeleteDepartmentByIdSuccess, DeleteDepartmentByIdError);
+    ajaxServiceMethod(BaseURL + DeleteDepartmenteByIdUrl + "/" + tempInAtiveID, 'POST', DeleteDepartmentByIdSuccess, DeleteDepartmentByIdError);
 }
 
 function DeleteDepartmentByIdSuccess(data) {

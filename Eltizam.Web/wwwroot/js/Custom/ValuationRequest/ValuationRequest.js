@@ -198,19 +198,18 @@ function AssignRequest() {
     var approverId = $("#ApproverId").val();
     var remarks = $("#Remarks").val();
     var ids = '';
-    $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () {
-        debugger
-        ids += this.value + ',';
-
+    $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () { 
+        ids += this.value + ','; 
     });
     debugger
+
     ids = ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
     modelReq.ApprovorId = parseInt(approverId);
     modelReq.RequestIds = ids;
     modelReq.Remarks = remarks;
     $.ajax({
         type: "POST",
-        url: $('#hdnBaseURL').val() + AssignApproverUrl,
+        url: BaseURL + AssignApproverUrl,
         "datatype": "json",
         headers: {
             'Accept': 'application/json',
