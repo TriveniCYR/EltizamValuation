@@ -84,13 +84,16 @@ namespace Eltizam.Business.Core.Implementation
 
             return oDataTableResponseModel;
         }
-        public async Task<DBOperation> AssignApprovor(AssignApprovorRequestModel model)
+
+
+        public async Task<DBOperation> AssignApprover(AssignApprovorRequestModel model)
         {
+            var VRIDs = model.RequestIds;
             if (model.ApprovorId > 0)
             {
-                if(model.RequestIds.Length > 0)
+                if(VRIDs != null && VRIDs.Length > 0)
                 {
-                    int[] ids = model.RequestIds.Split(',').Select(int.Parse).ToArray();
+                    int[] ids = VRIDs.Split(',').Select(int.Parse).ToArray();
 
                     if(ids.Length > 0)
                     {

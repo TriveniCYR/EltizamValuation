@@ -50,14 +50,39 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
         [HttpGet]
         [Route("GetById/{id}/{description}")]
-        public async Task<IActionResult> GetById( int id,string? description)
+        public async Task<IActionResult> GetById(int id, string? description)
         {
             try
             {
-                
-                var masterDictionary = await _DictionaryService.GetDictionaryDetailsByIdAsync(id,description);
+
+                var masterDictionary = await _DictionaryService.GetDictionaryDetailsByIdAsync(id, description);
+
+                if (masterDictionary != null)
+                {
+                    // Assuming _ObjectResponse.Create takes three parameters: data, status code, and message.
+                    return _ObjectResponse.CreateData(masterDictionary, (int)HttpStatusCode.OK);
+                }
+                else
+                {
+                    return _ObjectResponse.Create(null, (int)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+                }
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(null, (int)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpGet]
+        [Route("GetDictionaryWithSubDetails")]
+        public async Task<IActionResult> GetDictionaryWithSubDetails(int? id = null, string? description = null, string? code = null)
+        {
+            try
+            { 
+                var masterDictionary = await _DictionaryService.GetDictionaryWithSubDetailsAsync(id, description, code);
 
                 if (masterDictionary != null)
                 {
@@ -137,6 +162,7 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
         [HttpPost]
         [Route("UpsertMasterDictionary")]
         public async Task<IActionResult> UpsertMasterDictionary(MasterDictionaryEntity oPrpoertyType)
@@ -157,8 +183,10 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+
         [HttpGet]
-         [Route("GetDictionaryDetailsById/{id}")]
+        [Route("GetDictionaryDetailsById/{id}")]
         public async Task<IActionResult> GetDictionaryDetailsById([FromRoute] int id)
         {
             try
