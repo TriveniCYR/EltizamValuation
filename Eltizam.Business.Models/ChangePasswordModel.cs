@@ -10,7 +10,7 @@ namespace Eltizam.Business.Models
 {
     public class ChangePasswordModel
     {
-        public Int32 UserId { get; set; }
+        public int UserId { get; set; }
         //[Required]
         //public string OldPassword { get; set; }
 
