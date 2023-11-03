@@ -432,7 +432,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         {
             //int userId = _LoginUserId ?? 0;
 
-            int userId = 1;//_LoginUserId; //_helper.GetLoggedInUser().UserId;
+            int userId = 45;//_LoginUserId; //_helper.GetLoggedInUser().UserId;
             entityUser.UserId= userId;
             if (entityUser.UserId >= 0 && entityUser.NewPassword == entityUser.ConfirmPassword)
             {
