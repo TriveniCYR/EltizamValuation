@@ -51,7 +51,7 @@
                            <p class="m-0"> Description
                                 <span class="text-danger">*</span>
                             </p>
-                            @Html.EditorFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
+                            @Html.TextBoxFor(model => model.PropertyType, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Property Type Name"] } })
                             @Html.ValidationMessageFor(model => model.PropertyType, "", new { @class = "text-danger" })
                         </label>
 

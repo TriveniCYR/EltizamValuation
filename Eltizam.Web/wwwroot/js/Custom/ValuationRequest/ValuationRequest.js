@@ -5,7 +5,8 @@ $(document).ready(function () {
 
 //Load data into table
 function InitializeValutionRequestDataList() {
-    var setDefaultOrder = [0, 'asc'];
+    debugger
+    var setDefaultOrder = [1, 'asc'];
     var ajaxObject = {
         "url": BaseURL + GetAll,
         "type": "POST",
@@ -16,8 +17,16 @@ function InitializeValutionRequestDataList() {
         "datatype": "json"
     };
     var columnObject = [
+        
         {
-            "data": "referenceNO", "name": "ReferenceNO"
+            "data": "referenceNO",
+            "name": "ReferenceNO",
+            "render": function (data, type, row, meta) {
+                var html = '';
+                html += '<div class="checkboxColumn">'
+                html += '<input type="checkbox"  height:10px; width:10px; /><span>' + row.referenceNO + '</span></div> '
+                return html;
+            }
         },
         {
             "data": "id", "name": "Id"
@@ -92,7 +101,9 @@ function InitializeValutionRequestDataList() {
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
 }
 
-
+function CheckAssignId(id, eve) {
+    debugger
+}
 //#region Delete Role  
 function ConfirmationDeletePropertyType(id) {
     debugger;

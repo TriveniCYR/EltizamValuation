@@ -29,6 +29,32 @@
                         <img src="~/assets/plus.svg" alt="plus"> Add New
                     </button>
                 </form>
+
+                <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()">
+                    <img src="../assets/user-shield.svg" alt="user">
+                    ASSIGN
+                </button>
+                <div class="accordion-content inputSearchs" id="assignToggle" style="display:none">
+                    <div class="flex justify-between">
+                        <h3>Assign</h3>
+                        <span class="cursor-pointer" onclick="assignToggle()">X</span>
+                    </div>
+                    <form>
+                        <div class="flex">
+                            <label for="userName" class="w-100">
+                                Remarks
+                                <input type="text" id="Remarks" placeholder="Remarks" />
+                            </label>
+                            <label for="valuatorType" class="w-100">
+                                Alternate Approver
+                                @Html.DropDownList("ApproverId", new List<SelectListItem>{},  new { @class = "form-control disabletxtbox"})
+                            </label>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" onclick="AssignRequest()" class="blueBtn">Save</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -94,7 +120,7 @@
                 <table id="ValuationRequestTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>@MasterLocalizer["Val.Ref.No"] </th>
+                            <th><input type="checkbox"> Select All &nbsp;|&nbsp; @MasterLocalizer["Val.Ref.No"] </th>
                             <th>@MasterLocalizer["Id"] </th>
                             <th>@MasterLocalizer["Client Name"] </th>
                             <th>@MasterLocalizer["Client Type"] </th>
@@ -154,15 +180,45 @@
     <script type="text/javascript" src="~/js/Custom/ValuationRequest/ValuationRequest.js?v=@jsVersion"></script>
 
     <script>
-
+        function AssignRequest(){
+            // $("#ValuationRequestTable  tbody tr").on("click", function (e) {
+            //     $("input[type='checkbox']", this).each(function () {
+            //         $(this).attr('checked', !$(this).attr('checked'));
+            //     });
+            // });
+            $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () {
+                debugger
+                this.checked = true;
+            });
+        }
         $(document).ready(function () {
             BindRole();
             BindResourceType();
             BindDepartment();
             BindDesignation();
+            BindApproverList();
            
         });
 
+        function assignToggle() {
+            var x = document.getElementById("assignToggle");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        function BindApproverList() {
+            debugger
+            var ApproverList = "@Eltizam.Web.Helpers.APIURLHelper.GetApproverList";
+            var Approver = $("#ApproverId");
+            var _val = "";
+            var _rpname = "userName";
+            var currentUserId = "@ViewBag.CurrentUserId";
+            let ApproverListUrl = ApproverList + "/" + currentUserId
+            BindDropdowns(ApproverListUrl, Approver, _rpname, _val);
+        }
 
         function BindRole() {
 

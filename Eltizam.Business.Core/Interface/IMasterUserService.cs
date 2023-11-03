@@ -19,6 +19,7 @@ namespace Eltizam.Business.Core.Interface
         Task<MasterUserDetailModel> GetById(int id); 
         Task<List<MasterResourceTypeModel>> GetResourceTypeList();
         Task<List<MasterRoleModel>> GetRoleList();
+        Task<List<MasterUserListModel>> GetApproverList(int id);
         Task<DBOperation> Delete(int id);
     }
 }

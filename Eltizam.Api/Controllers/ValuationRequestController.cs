@@ -1,9 +1,13 @@
 ﻿using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
+using Eltizam.Business.Core.ServiceImplementations;
 using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -41,5 +45,16 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
+        [HttpPost, Route("AssignApprovor")]
+        public async Task<IActionResult> AssignApprovor([FromForm] AssignApprovorRequestModel model)
+        {
+            DBOperation oResponse = await _valutionServices.AssignApprovor(model);
+            if (oResponse == DBOperation.Success)
+            {
+                return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+            }
+            else
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        }
     }
 }

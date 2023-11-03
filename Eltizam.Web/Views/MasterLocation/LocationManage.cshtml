@@ -45,10 +45,10 @@
                         @Html.HiddenFor(model=>model.Id)                      
                         <div class="flex">
                             <label for="CountryId" class="w-50">
-                                Country Name
+                                <p class="m-0">Country<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control disabletxtbox", @onchange = "BindState(this.options[this.selectedIndex].value)"})
-
-                            </label>
+                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                            </label>    
                             <label for="" class="w-50">
                                 Status
                                 @{
@@ -63,12 +63,14 @@
                         </div>
                         <div class="flex">                        
                             <label for="StateId" class="w-50">
-                                State Name
+                                <p class="m-0">State<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control disabletxtbox",@onchange = "BindCity(this.options[this.selectedIndex].value)"})
+                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
                             </label>
                             <label for="CityId" class="w-50">
-                                City / Emirates
+                                <p class="m-0">City / Emirates<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control disabletxtbox"})
+                                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
@@ -87,18 +89,19 @@
                                 @Html.TextBoxFor(model => model.Longitude,  new { @class = "form-control disabletxtbox" })
                             </label>
                             <label for="Geo-coordinates" class="w-50">
-                                Home Currency
+                                <p class="m-0">Home Currency<span class="text-danger">*</span></p>
                                @*  @Html.TextBoxFor(model => model.HomeCurrencyId,  new { @class = "form-control disabletxtbox" }) *@
                                 @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>{},  new { @class = "form-control disabletxtbox"})
-                               @*  @Html.DropDownListFor(model => model.HomeCurrencyId, new SelectList(new List<SelectListItem>(), "Value", "Text", Model.HomeCurrencyId), new { @class = "form-control disabletxtbox" })
- *@
+                               @*  @Html.DropDownListFor(model => model.HomeCurrencyId, new SelectList(new List<SelectListItem>(), "Value", "Text", Model.HomeCurrencyId), new { @class = "form-control disabletxtbox" })*@
+                                @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
                             <label for="Geo-coordinates" class="w-50">
-                                Foreign Currency
+                                <p class="m-0">Foreign Currency<span class="text-danger">*</span></p>
                                 @*  @Html.TextBoxFor(model => model.ForeignCurrencyId,  new { @class = "form-control disabletxtbox" })*@
                                  @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem> { },  new { @class = "form-control disabletxtbox" })
+                                @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" })
                             </label>
                         </div> 
                         <div class="flex">

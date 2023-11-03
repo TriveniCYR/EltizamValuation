@@ -421,6 +421,16 @@ namespace Eltizam.Business.Core.ServiceImplementations
             await _unitOfWork.SaveChangesAsync();
 
             return DBOperation.Success;
-        }   
+        }
+        public async Task<List<MasterUserListModel>> GetApproverList(int id)
+        {
+            DbParameter[] osqlParameter1 = {
+                 new DbParameter("UserId", id, SqlDbType.Int)
+            };
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserListModel>(ProcedureMetastore.usp_Approver_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter1);
+
+            return lstStf;
+        }
     }
 }
