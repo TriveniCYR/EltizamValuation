@@ -199,6 +199,7 @@ namespace Eltizam.Web.Helpers
         public static string GetAllValuationRequest = "api/ValuationRequest/GetAllValuationRequest";
         public static string GetAllValuationRequestStatus = "api/ValuationRequestStatus/GetAll";
         public static string AssignApprover = "api/ValuationRequest/AssignApprover";
+        public static string ValuationMethod = "api/ValuationRequest/GetAllValuationMethod";
 
         #endregion Valuation Request
 

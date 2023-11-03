@@ -6,6 +6,7 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
@@ -143,6 +144,15 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.NotFound;
             }
             return DBOperation.Success;
+        }
+
+        public async Task<List<ValuationMethod>> GetAllValuationMethod()
+        {
+
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationMethod>(ProcedureMetastore.usp_ValuationMethod_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+
+            return lstStf;
         }
     }
 }

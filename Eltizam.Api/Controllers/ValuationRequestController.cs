@@ -68,5 +68,19 @@ namespace EltizamValuation.Api.Controllers
             else
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
         }
+
+
+        [HttpGet("GetAllValuationMethod")]
+        public async Task<IActionResult> GetAllValuationMethod()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _valutionServices.GetAllValuationMethod(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
     }
 }
