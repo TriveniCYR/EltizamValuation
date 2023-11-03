@@ -7,6 +7,7 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Utility;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace Eltizam.Business.Core.Implementation
             _helper = helper;
         }
         #endregion Constructor
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, int countryId, int stateId, int cityId, string? fromDate, string? toDate)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId, int countryId, int stateId, int cityId, string? fromDate, string? toDate)
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
             //string SortDir = model.order[0]?.dir;
@@ -57,7 +58,10 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter(AppConstants.P_SortDirection,      SortDir),
                 new SqlParameter(AppConstants.P_SearchText,         model.search?.value),
                 new SqlParameter("UserName",                        userName),
-                 new SqlParameter("ClientName",                     clientName),
+                new SqlParameter("ClientName",                     clientName),
+                new SqlParameter("PropertyName",                    propertyName),
+                new SqlParameter("ValuationStatus",                 requestStatusId),
+                new SqlParameter("ValuationMethod",                 resourceId),
                 new SqlParameter("CountryId",                       countryId),
                 new SqlParameter("StateId",                         stateId),
                 new SqlParameter("CityId",                          cityId),

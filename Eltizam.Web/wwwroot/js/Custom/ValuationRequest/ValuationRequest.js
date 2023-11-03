@@ -10,6 +10,15 @@ function InitializeValutionRequestDataList() {
     $("#ValuationRequestTable").dataTable().fnDestroy();
     var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
     var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
+    var propertyName = $("#PropertyName").val() === undefined ? "" : $("#PropertyName").val();
+    var requestStatusId = $("#RequestStatusId").val();
+
+    if (requestStatusId === undefined || isNaN(parseInt(requestStatusId))) {
+        requestStatusId = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        requestStatusId = parseInt(requestStatusId);
+    }
+
     var countryId = $("#CountryId").val();
     if (countryId === undefined || isNaN(parseInt(countryId))) {
         countryId = 0; // Set a default value when the input is not a valid integer.
@@ -32,6 +41,12 @@ function InitializeValutionRequestDataList() {
         cityId = parseInt(cityId);
     }
 
+    var resourceId = $("#ResourceId").val();
+    if (resourceId === undefined || isNaN(parseInt(resourceId))) {
+        resourceId = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        resourceId = parseInt(resourceId);
+    }
     
     var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val();
     
@@ -39,7 +54,7 @@ function InitializeValutionRequestDataList() {
     
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
-        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
+        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
         
         "type": "POST",
         "data": function (d) {
@@ -51,12 +66,14 @@ function InitializeValutionRequestDataList() {
 
 
     var columnObject = [
-        {
-            "data": "referenceNO", "name": "ReferenceNO"
-        },
+
         {
             "data": "id", "name": "Id"
         },
+        {
+            "data": "referenceNO", "name": "ReferenceNO"
+        },
+       
         {
             "data": "clientName", "name": "Client Name"
         },

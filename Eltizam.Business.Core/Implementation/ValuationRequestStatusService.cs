@@ -4,10 +4,13 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,9 +38,14 @@ namespace Eltizam.Business.Core.Implementation
             _helper = helper;
         }
 
+        
         public async Task<List<ValuationRequestStatusModel>> GetAll()
         {
-            return _mapperFactory.GetList<ValuationRequestStatus, ValuationRequestStatusModel>(await _repository.GetAllAsync());
+
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestStatusModel>(ProcedureMetastore.usp_ValuationRequestStatus_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+
+            return lstStf;
         }
     }
 }

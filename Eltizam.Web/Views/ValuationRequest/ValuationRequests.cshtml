@@ -44,54 +44,53 @@
                     <div class="flex">
                         <label for="userName">
                             User Name
-                            @* <input type="text" name="UserName" id="UserName" placeholder="User Name" /> *@
-                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control",  @placeholder = @SharedLocalizer["User Name"] })
+                            @Html.TextBoxFor(model => model.UserName, new {   @placeholder = @SharedLocalizer["User Name"] })
                         </label>
                         <label for="ClientName">
                             Client Name
-                            @* <input type="text" name="UserName" id="UserName" placeholder="User Name" /> *@
-                            @Html.TextBoxFor(model => model.ClientName, new { @class = "form-control",  @placeholder = @SharedLocalizer["ClientName"] })
+
+                            @Html.TextBoxFor(model => model.ClientName, new {   @placeholder = @SharedLocalizer["ClientName"] })
                         </label>
                         <label for="PropertyName">
                             Property Name
-                            @* <input type="text" name="UserName" id="UserName" placeholder="User Name" /> *@
-                            @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["PropertyName"] })
+
+                            @Html.TextBoxFor(model => model.PropertyName, new {  @placeholder = @SharedLocalizer["PropertyName"] })
                         </label>
                         <label for="CountryId">
-                            <p class="m-0">Country<span class="text-danger">*</span></p>
-                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                            <p class="m-0">Country></p>
+                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new {  })
                         </label>
 
                         <label for="StateId">
-                            <p class="m-0">State<span class="text-danger">*</span></p>
-                            @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                            <p class="m-0">State</p>
+                            @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new {  })
                         </label>
 
                         <label for="CityId">
-                            <p class="m-0">City<span class="text-danger">*</span></p>
-                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                            <p class="m-0">City</p>
+                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new {  })
                         </label>
 
                         <label for="">
                             <p class="m-0">
                                 Property Type
-                                <span class="text-danger">*</span>
+
                             </p>
-                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
+                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { })
 
                         </label>
                         <label for="">
                             <p class="m-0">
                                 Request Status
-                                <span class="text-danger">*</span>
+
                             </p>
-                            @Html.DropDownListFor(model => model.RequestStatusId, new List<SelectListItem> { }, new { @class = "form-control"})
+                            @Html.DropDownListFor(model => model.RequestStatusId, new List<SelectListItem> { }, new { })
 
                         </label>
                         <label for="Method of Valuation">
-                            <p class="m-0">Method of Valuation<span class="text-danger">*</span></p>
-                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select ResourceType"] })
-                            @Html.ValidationMessageFor(model => model.ResourceId, "", new { @class = "text-danger" })
+                            <p class="m-0">Method of Valuation</p>
+                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new {  @placeholder = @SharedLocalizer[" Select ResourceType"] })
+
                         </label>
                     </div>
                     <div class="flex">
@@ -116,8 +115,8 @@
                 <table id="ValuationRequestTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>@MasterLocalizer["Val.Ref.No"] </th>
                             <th>@MasterLocalizer["Id"] </th>
+                            <th>@MasterLocalizer["Val.Ref.No"] </th>
                             <th>@MasterLocalizer["Client Name"] </th>
                             <th>@MasterLocalizer["Client Type"] </th>
                             <th>@MasterLocalizer["Location"] </th>
