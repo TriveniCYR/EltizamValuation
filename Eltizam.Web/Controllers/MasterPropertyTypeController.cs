@@ -154,7 +154,7 @@ namespace EltizamValuation.Web.Controllers
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetPropertyTypeExists +"?PropertyType=" + PropertyType, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.CheckPropertyTypeExists + "?PropertyType=" + PropertyType, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {

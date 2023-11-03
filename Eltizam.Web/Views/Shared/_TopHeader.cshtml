@@ -1,41 +1,49 @@
-﻿
+﻿@using Eltizam.Web.Helpers;
+
+@{
+    var _UId = @Context.Session.GetString(UserHelper.LoggedInUserId); 
+    var _UName = @Context.Session.GetString(UserHelper.LoggedInUserName); 
+    var _act = "/MasterUser/UserManage?id=" + _UId; 
+    //var username = User.Claims.FirstOrDefault(); 
+}
+
 @* @model Eltizam.Business.Models.ChangePasswordModel *@
 <header class="flex justify-between align-item-center">
     <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="~/assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="~/assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
     <div class="user flex">
         <div class="position-relative notification">
             <img src="~/assets/bell.svg" alt="bell" class="cursor-pointer" />
-            <span>3</span>
-        </div>
-        @{
-            var username = User.Claims.FirstOrDefault(); //@Convert.ToString(Context.Session.GetString(Eltizam.Web.Helpers.UserHelper.LoggedInUserName)); //User.Claims.FirstOrDefault();
-            var ss = "";
-        }
-        <div class="flex align-item-center position-relative" onclick="profileMenu()">            
-            <p class="visible-in-web">@username</p>
+            <span> 0 </span>
+        </div> 
+
+        <div class="flex align-item-center position-relative" onclick="profileMenu()">
+            <input type="hidden" id="LoginUserId" value="@_UId" /> 
+            <p class="visible-in-web">@_UName</p>
             <img src="~/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" />
             <div id="profileMenu" class="actionItem" style="width: 120px;display: none;">
                 <ul>
                     <li>
-                        <a href="">
+                        <a href="@_act">
                             Manage profile
                         </a>
                     </li>
-                    <li>
-                      @*   <a asp-controller="Account" asp-action="ChangePassword">Change password</a> *@
+                    <li> 
                        <a id="addRole">Change password</a>
                      </li>
                     <li>
-                        <a href="">
-
-                            Logout
-                        </a>
+                        <form asp-action="Logout" asp-controller="Account" method="post">
+                            <button class="dropdown-item" type="submit">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>
         </div>
     </div>   
 </header>
+
+
 <div class="popup-overlay" id="popup-addRole-overlay">
     <div class="popup">
         <div class="content text-center" style="width:460px">
@@ -47,28 +55,21 @@
                 <form>
                     <div class="flex text-left">
                         <label class="w-100" for="">
-                            New Password
-                            @* <input id="NewPassword" type="password" placeholder="Enter Password"> *@
-
+                            New Password 
                               <input id="NewPassword" type="password" placeholder="Enter Password">
-                            <div id="newPasswordError" class="error-message"></div>
-                            @*    <input id="NewPassword" type="password" placeholder="Enter Password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" title="A password must have Minimum 8, Maximum 16 characters, at least one number, at least one upper case, at least one lower case, at least one special character e.g. @$!%*?&">
-                            *@
+                            <div id="newPasswordError" class="error-message"></div> 
                         </label>
 
                     </div>
                     <div class="flex text-left">
                         <label class="w-100" for="">
-                            Confirm Password
-                           @*  <input id="ConfirmPassword" type="password" placeholder="Confirm New Password"> *@
-
+                            Confirm Password 
                                <input id="ConfirmPassword" type="password" placeholder="Confirm New Password">
                             <div id="confirmPasswordError" class="error-message"></div>
                         </label>
                     </div>
 
-                    <div class="buttonArea centerBtn">
-                        @*  <button class="lineBtn" id="resetLocation">Reset</button> *@
+                    <div class="buttonArea centerBtn"> 
                         <button type="button" onclick="PosttopHeader();" class="bgBlue">Submit</button>
                     </div>
                 </form>
@@ -76,25 +77,6 @@
         </div>
     </div>
 </div>
-<script>
-    var ChangePasswordUrl = "@Eltizam.Web.Helpers.APIURLHelper.ChangePassword";
-    function profileMenu() {
-        var x = document.getElementById("profileMenu");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
+ 
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const addRole = document.getElementById("addRole");
-        const addRolePopup = document.getElementById("popup-addRole-overlay");
-        const closePopup = document.querySelector(".addRoleClose");
-
-        addRole.addEventListener("click", () => addRolePopup.classList.add("display-block"));
-        closePopup.addEventListener("click", () => addRolePopup.classList.remove("display-block"));
-    });
-</script>
-<script type="text/javascript" src="~/js/custom/topheader/topheader.js"></script>
 

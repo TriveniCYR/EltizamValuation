@@ -15,6 +15,7 @@ using Eltizam.Utility.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Data.DataAccess.Entity;
 using Microsoft.CodeAnalysis;
+using Microsoft.AspNetCore.Http;
 
 namespace Eltizam.Web.Controllers
 {
@@ -36,9 +37,7 @@ namespace Eltizam.Web.Controllers
             _helper = helper;
         }
         public IActionResult Login()
-        {
-            
-            //APIRepository objapi = new APIRepository(_cofiguration);
+        { 
             LoginViewModel loginViewModel = new LoginViewModel();
 
             return View(loginViewModel);
@@ -122,13 +121,27 @@ namespace Eltizam.Web.Controllers
             props.ExpiresUtc = oUserDetail.VallidTo;
 
             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
+            
+            //Set Session
             HttpContext.Session.SetString(UserHelper.LoggedInUserId, Convert.ToString(oUserDetail.UserId));
+            HttpContext.Session.SetString(UserHelper.LoggedInRoleId, Convert.ToString(oUserDetail.UserId));
+            HttpContext.Session.SetString(UserHelper.LoggedInUserName, oUserDetail.UserName);
         }
 
 
         public IActionResult ForGetPassword()
         { 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
+
+            HttpContext.Response.Cookies.Delete(UserHelper.EltizamToken); 
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]

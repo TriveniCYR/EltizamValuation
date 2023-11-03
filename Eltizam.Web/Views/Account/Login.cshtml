@@ -15,15 +15,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <!-- login screen -->
     <div class="loginContainer">
-        <img src="./assets/logo.svg" alt="eltizam logo" class="logo"/>
+        <img src="./assets/logo.svg" alt="eltizam logo" class="logo" />
         <div class="loginBox">
-            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post"> 
+            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                 <p>Welcome</p>
                 <p>Login to the portal with your credentials</p>
                 @if (ViewBag.ErrorMessage != null)
@@ -36,35 +36,40 @@
                     <input asp-for="Email" placeholder="enter user id">
                 </label>
                 <label for="password">
-                    Password 
+                    Password
                     <div class="position-relative">
-                        <input asp-for ="Password" placeholder="enter password">
-                        <img src="./assets/eye.svg" alt="show hide password button" class="showPassword"/>
+                        <input asp-for="Password" placeholder="enter password">
+                        <img src="./assets/eye.svg" alt="show hide password button" class="showPassword" />
                         @* <sapn class="forgetPassword">Forget password ?</sapn> *@
-                        <span class="forgetPassword"><a asp-controller="Account" asp-action="ForgetPassword">Forget password?</a></span>
-
+                        <span class="forgetPassword">
+                            <a asp-controller="Account" asp-action="ForgetPassword" style="color: var(--blue); font-size:medium;">Forget password?</a>
+                        </span>
                     </div>
                 </label>
-                <label class="checkbox">
-                    <input type="checkbox">
-                    Remember password ?
-                </label>
+                @* <label class="checkbox">
+                <input type="checkbox">
+                Remember password ?
+                </label>*@
                 <button type="submit" class="blueBtn">Submit</button>
             </form>
         </div>
     </div>
-
-    <script>
-        document.querySelector('.showPassword').addEventListener('click', function () {
-            if (document.getElementById('password').type == 'password') {
-                document.getElementById('password').type = "text";
-                document.querySelector('.forgetPassword').classList.add('showPassEyeCross');
-            } else {
-                document.getElementById('password').type = "password";
-                document.querySelector('.forgetPassword').classList.remove('showPassEyeCross');
-            }
-        })
-    </script>
-
 </body>
 </html>
+
+@section MyScripts{
+    <script>
+        var pswd = $("#Password");
+        var frgtpswd = $(".forgetPassword");
+
+        $(".showPassword").on('click', function () {
+            if (pswd.attr('type') === 'password') {
+                pswd.attr('type', 'text');
+                frgtpswd.addClass('showPassEyeCross');
+            } else {
+                pswd.attr('type', 'password');
+                frgtpswd.removeClass('showPassEyeCross');
+            }
+        });
+    </script>
+}

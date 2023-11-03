@@ -159,6 +159,8 @@ namespace Eltizam.Api.Controllers
                 return false;
             }
         }      
+        
+        /*
         [AllowAnonymous]
         [HttpPost, Route("ChangePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePasswordModel)
@@ -218,6 +220,7 @@ namespace Eltizam.Api.Controllers
             //    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             //}
         }
+        */
         #endregion API Methods
 
     }

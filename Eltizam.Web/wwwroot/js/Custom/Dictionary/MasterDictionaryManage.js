@@ -2,7 +2,7 @@
 function SaveMasterDictionary() {  
     var Dict = {
         'Id': $("#hdnPropertyId").val(),
-        'PropertyType': $("#PropertyType").val(),
+        'Description': $("#Description").val(),
         'IsActive': $('#isActiveT')[0].checked,
         'MasterDicitonaryDetails': []
     }  

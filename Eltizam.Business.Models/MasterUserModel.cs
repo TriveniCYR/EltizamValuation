@@ -45,9 +45,8 @@ namespace Eltizam.Business.Models
 
 
         [Display(Name = "Password")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$", ErrorMessage = "A password must have Minimum 8, " +
-            "Maximum 16 characters,at least one number,at least one upper case,at least one lower case," +
-            "at least one special character e.g. @$!%*?&")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$", 
+         ErrorMessage = "Password should be atleast 8 characters with one number, upper case, lower case & special character e.g. @$!5%B*gr&")]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
         [NotMapped]
