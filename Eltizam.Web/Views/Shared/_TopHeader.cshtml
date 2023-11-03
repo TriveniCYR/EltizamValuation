@@ -7,8 +7,12 @@
             <img src="~/assets/bell.svg" alt="bell" class="cursor-pointer" />
             <span>3</span>
         </div>
+        @{
+            var username = User.Claims.FirstOrDefault(); //@Convert.ToString(Context.Session.GetString(Eltizam.Web.Helpers.UserHelper.LoggedInUserName)); //User.Claims.FirstOrDefault();
+            var ss = "";
+        }
         <div class="flex align-item-center position-relative" onclick="profileMenu()">            
-            <p class="visible-in-web">Saeed</p>
+            <p class="visible-in-web">@username</p>
             <img src="~/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" />
             <div id="profileMenu" class="actionItem" style="width: 120px;display: none;">
                 <ul>
