@@ -81,23 +81,21 @@ namespace Eltizam.Web.Controllers
                     }
                     else
                     {
-                        ViewBag.errormessage = _stringLocalizer["InvalidUser"].Value;
-                        //loginViewModel.masterBusinessUnitEntities = BindListBusinessUnit();
+                        ViewBag.ErrorMessage = _stringLocalizer["InvalidUser"].Value; 
                         return View(loginViewModel);
                     }
                 }
                 else
                 {
-                    ViewBag.errormessage = _stringLocalizer["InvalidUser"].Value;
-                    //loginViewModel.masterBusinessUnitEntities = BindListBusinessUnit();
+                    ViewBag.ErrorMessage = _stringLocalizer["InvalidUser"].Value; 
                     return View(loginViewModel);
                 }
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                ViewBag.errormessage = Convert.ToString(e.StackTrace);
-                //loginViewModel.masterBusinessUnitEntities = BindListBusinessUnit();
+                ViewBag.ErrorMessage = Convert.ToString(e.StackTrace);
+                 
                 return View(loginViewModel);
             }
         }
@@ -114,10 +112,8 @@ namespace Eltizam.Web.Controllers
 				new Claim("Id", Convert.ToString(oUserDetail.UserId)),
             };
 
-            var claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            //var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); 
+            var identity       = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var principal = new ClaimsPrincipal(identity);
 
@@ -131,8 +127,7 @@ namespace Eltizam.Web.Controllers
 
 
         public IActionResult ForGetPassword()
-        {
-           
+        { 
             return View();
         }
 
@@ -152,8 +147,7 @@ namespace Eltizam.Web.Controllers
                 }
                 else //if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    ViewBag.ErrorMessage = AppConstants.SomeErrorOccurred;
-                    //return View("ForgetPassword");
+                    ViewBag.ErrorMessage = AppConstants.SomeErrorOccurred; 
                 }
             }
             else
@@ -288,6 +282,8 @@ namespace Eltizam.Web.Controllers
            
             return View();
         }
+
+
         [HttpPost]
         public IActionResult ChangePassword(ChangePasswordModel passwordModel)
         {
@@ -309,15 +305,13 @@ namespace Eltizam.Web.Controllers
                 }
                 else
                 {
-                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
-                    //return RedirectToAction("LocationManage", new { id = masterlocation.Id });
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result); 
                 }
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-                //return RedirectToAction("LocationManage", new { Id = masterlocation.Id });
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace); 
             }
             return View();
         }

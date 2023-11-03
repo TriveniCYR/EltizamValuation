@@ -154,8 +154,10 @@ namespace Eltizam.Business.Core.Implementation
 
                 var menuperm = (from p in Permissions
                                 join m in MasterModuleData on p.ModuleId equals m.ModuleId
-                                join s in MasterSubModuleData on p.SubModuleId equals s.SubModuleId into SubMS
+                                join s in MasterSubModuleData on p.SubModuleId equals s.SubModuleId 
+                                into SubMS
                                 from SubM in SubMS.DefaultIfEmpty()
+                                where m.IsActive == true
                                 select new RolePermissionModel()
                                 {
                                     RoleModuleId = p.RoleModuleId,

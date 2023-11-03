@@ -120,6 +120,24 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+        [HttpGet("CheckPropertTypeExists")]
+        public async Task<IActionResult> CheckPropertTypeExists(string PropertyType)
+        {
+            try
+            {
+                int id = 0;
+
+                var oResponse = await _propertyTypeServices.CheckDuplicatePropertyType(PropertyType);
+                return _ObjectResponse.Create(oResponse, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         #endregion API Methods
     }
 }

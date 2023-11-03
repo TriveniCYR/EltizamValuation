@@ -15,12 +15,12 @@
             "bLengthChange": true,
             'bSortable': true,
             fixedHeader: true,
-            pageLength: 10,
+            pageLength: 25,
             bPaginate: false,
             paging: true,
             lengthMenu: [
-                [10, 25, 50, -1],
-                [10, 25, 50, 'All'],
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, 'All'],
             ],
             dom: 'Bfrtip',
             stateSaveCallback: function (settings, data) {

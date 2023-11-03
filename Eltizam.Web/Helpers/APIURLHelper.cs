@@ -74,6 +74,7 @@ namespace Eltizam.Web.Helpers
         public static string GetPropertyTypeById = "api/MasterPropertyType/GetById";
         public static string DeletePropertyTypeById = "api/MasterPropertyType/Delete";
         public static string GetPropertyTypeList = "api/MasterPropertyType/GetAllList";
+        public static string CheckPropertyTypeExists = "api/MasterPropertyType/CheckPropertTypeExists";
 
         #endregion MasterPropertyType
 

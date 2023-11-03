@@ -16,5 +16,6 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> DeletePropertyType(int id);
 
        Task<List<Master_PropertyTypeModel>> GetAllList();
+        Task<bool> CheckDuplicatePropertyType(string PropertyType);
     }
 }
