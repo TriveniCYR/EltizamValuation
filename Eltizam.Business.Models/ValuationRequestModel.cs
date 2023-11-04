@@ -43,6 +43,14 @@ namespace Eltizam.Business.Models
         public int? ValuerId { get; set; }
         public string? ValuerComment { get; set; }
         public DateTime? ValuerUpdateDate { get; set; }
+        public DateTime? TrnexpiryDate { get; set; }
+        public string? ClientName { get; set; }
+        public int? CityId { get; set; }
+        public int? StateId { get; set; }
+        public int? CountryId { get; set; }
+        public string? Trnnumber { get; set; }
+        public string? LicenseNumber { get; set; }
+        public List<MasterAmenityListModel>? AmenityList { get; set; }
         //public Master_ClientTypeModel? master_ClientType { get; set; }
         //public MasterPropertyModel? masterPropertyModel { get; set; }
         //public Master_PropertySubTypeModel? master_PropertySub { get; set; }

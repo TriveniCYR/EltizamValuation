@@ -35,6 +35,8 @@ $(document).ready(function () {
     BindClientType();
     BindProperty();
     BindOwnership();
+    BindUnitType();
+    BindFurnished();
     //BindValuationFeeType();
 
     /////For Dropdown Change
@@ -251,6 +253,118 @@ function BindPropertyDetail() {
             $("#loader").hide();
         }
     });
+}
+
+function BindUnitType() {
+    var UnitType = $("#UnitType");
+    UnitType.empty().append('<option selected="selected" value="0">Please select</option>');
+    UnitType.append($("<option></option>").val('1BHK').html('1BHK'));
+    UnitType.append($("<option></option>").val('2BHK').html('2BHK'));
+    UnitType.append($("<option></option>").val('3BHK').html('3BHK'));
+    if ($('#hdnUnitType').val() != 0) {
+        UnitType.val($('#hdnUnitType').val());
+    }
+}
+
+function BindFurnished() {
+    var Furnished = $("#Furnished");
+    Furnished.empty().append('<option selected="selected" value="0">Please select</option>');
+    Furnished.append($("<option></option>").val(1).html('Yes'));
+    Furnished.append($("<option></option>").val(0).html('No'));
+    if ($('#hdnFurnished').val() != 0) {
+        Furnished.val($('#hdnFurnished').val());
+    }
+}
+
+function BindPropertyDetailById(Id) {
+    var Amentiesdiv =$("#amentiesdiv");
+    $.ajax({
+        type: Get,
+        url: BaseURL + GetPropertyById + '/' + Id,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            //alert(response);
+            document.getElementById('UnitType').value = response._object.unitType;
+            document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
+            document.getElementById('Furnished').value = response._object.furnished;
+            document.getElementById('ValuationPurpose').value = response._object.valuationPurpose;
+            document.getElementById('BuildUpAreaSqFt').value = response._object.buildUpAreaSqFt;
+            document.getElementById('BuildUpAreaSqMtr').value = response._object.buildUpAreaSqMtr;
+            document.getElementById('AgeOfConstruction').value = response._object.ageOfConstruction;
+            document.getElementById('Parking').value = response._object.parking;
+            document.getElementById('ParkingBayNo').value = response._object.parkingBayNo;
+            document.getElementById('Description').value = response._object.description;
+            //AmenityList = {}
+            var AmenityList = response._object.amenityList;
+            // ViewBag.AmenityList = AmenityList;
+            
+
+            for (i = 0; i < response._object.amenityList.length; i++) {
+                //var _id = response._object.amenityList[i].id
+                Amentiesdiv.append('<label for="" class="checkboxBtn w-30 mr-20">' +
+                    '<input checked="checked" class="position-relative checkbox-checked" data-val="true"   name="AmenityList[' + response._object.amenityList[i].id + '].IsActive" type="checkbox" text="[' + response._object.amenityList[i].amenityName + ']" value="true" ' + '<p> ' + response._object.amenityList[i].amenityName + '  </p>' +
+                    '</label>')
+            }
+
+            
+            //AmenityList = response._object.amenityList;
+
+            //$("#UnitType").val = response.unitType;
+            //Property.empty().append('<option selected="selected" value="0">Please select</option>');
+            //for (var i = 0; i < response.length; i++) {
+            //    Property.append($("<option></option>").val(response[i].id).html(response[i].propertyName));
+            //}
+            //if ($('#hdnProperty').val() != 0) {
+            //    Property.val($('#hdnProperty').val());
+            //}
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
+function BindClientDetailsByClientId(Id) {
+   // var Amentiesdiv = $("#amentiesdiv");
+    $.ajax({
+        type: Get,
+        url: BaseURL + GetClientDetailById + '/' + Id,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            //alert(response);
+            document.getElementById('ClientName').value = response._object.clientName;
+            document.getElementById('LicenseNumber').value = response._object.licenseNumber;
+            document.getElementById('TrnexpiryDate').value = response._object.trnexpiryDate;
+            document.getElementById('Trnnumber').value = response._object.trnnumber;
+            //document.getElementById('BuildUpAreaSqMtr').value = response._object.buildUpAreaSqMtr;
+            //document.getElementById('AgeOfConstruction').value = response._object.ageOfConstruction;
+            //document.getElementById('Parking').value = response._object.parking;
+            //document.getElementById('ParkingBayNo').value = response._object.parkingBayNo;
+            //document.getElementById('Description').value = response._object.description;
+            ////AmenityList = {}
+           // var AmenityList = response._object.amenityList;
+            // ViewBag.AmenityList = AmenityList;
+
+
+           
+
+           
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+
 }
 
 function BindAmenityDetail() {  

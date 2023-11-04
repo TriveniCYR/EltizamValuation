@@ -106,7 +106,7 @@
                             </label>
                             <label for="" class="w-50">
                                 Clients
-                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientDetailsByClientId(this.options[this.selectedIndex].value)"})
                                 @*  <input type="text" placeholder="Client" disabled> *@
                             </label>
                            
@@ -118,10 +118,11 @@
                             </label>
                             <label for="" class="w-50">
                                 Client Name
-                                <input type="text" placeholder="Jones" disabled>
+                                @Html.TextBoxFor(model => model.ClientName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Client Name"] })
+                               @*  <input type="text" placeholder="Jones" disabled> *@
                             </label>
                         </div>
-                        <div class="flex  mb-28">
+                       @*  <div class="flex  mb-28">
                             <label for="" class="w-50">
                                 Address Line 1
                                 <input type="text" placeholder="ABC" disabled>
@@ -130,7 +131,7 @@
                                 Address Line 2
                                 <input type="text" placeholder="DEF" disabled>
                             </label>
-                        </div>
+                        </div> *@
                         <div class="flex  mb-28">
                             <label for="" class="w-50">
                                 Pincode
@@ -138,73 +139,132 @@
                             </label>
                             <label for="" class="w-50">
                                 City
-                                <select name="city" disabled>
+                                @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+                               @*  <select name="city" disabled>
                                     <option value="city1">ABC</option>
                                     <option value="city2">DEF</option>
                                     <option value="city3">GHI</option>
-                                </select>
+                                </select> *@
                             </label>
                         </div>
                         <div class="flex  mb-28">
                             <label for="" class="w-50">
                                 State
-                                <input type="text" placeholder="ABC" disabled>
+                                @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control"})
+                               @*  <input type="text" placeholder="ABC" disabled> *@
                             </label>
                             <label for="" class="w-50">
                                 Country
-                                <input type="text" placeholder="DEF" disabled>
+                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @* <input type="text" placeholder="DEF" disabled> *@
                             </label>
                         </div>
                         <div class="flex  mb-28">
                             <label for="" class="w-50">
                                 TRN Number
-                                <input type="text" placeholder="232423" disabled>
+                                @Html.TextBoxFor(model => model.Trnnumber, new {@class = "form-control",  @placeholder = @SharedLocalizer["TRN Number"] })
+                              @*   <input type="text" placeholder="232423" disabled> *@
                             </label>
                             <label for="" class="w-50">
                                 TRN Expiry Date
-                                <input type="text" placeholder="11/14/2022" disabled>
+                                <input type="date" id="TrnexpiryDate" name="TrnexpiryDate" asp-for="TrnexpiryDate">
+                               @*  <input type="text" placeholder="11/14/2022" disabled> *@
                             </label>
                         </div>
 
                         <div class="flex ">
                             <label for="" class="w-50">
                                 License Number
-                                <input type="text" placeholder="234232" disabled>
+                                @Html.TextBoxFor(model => model.LicenseNumber, new {@class = "form-control",  @placeholder = @SharedLocalizer["License Number"] })
+                               @*  <input type="text" placeholder="234232" disabled> *@
                             </label>
                         </div>
                     </form>
                 </div>
-                <h3 class="blueHeading">Contant Details</h3>
-                <div class="inputSearchs">
-                    <form>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Contact Person Name
-                                <input type="text" placeholder="ABC" disabled>
-                            </label>
-                            <label for="" class="w-50">
-                                Department
-                                <input type="text" placeholder="A" disabled>
-                            </label>
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Designation
-                                <input type="text" placeholder="B" disabled>
-                            </label>
-                        
-                            <label for="" class="w-50">
-                                Email ID
-                                <input type="email" placeholder="clyde@abc.com" disabled>
-                            </label>
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Phone Number
-                                <input type="text" placeholder="2876567" disabled>
-                            </label>
-                        </div>
-                    </form>
+                <h3>Addrress Details</h3>
+                <div class="flex m-0">
+                    <table class="multipleValueTable">
+                        <thead>
+                            <tr>
+                                <th>Address 1</th>
+                                <th>Address 2</th>
+                                <th>City</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>123 Main St</td>
+                                <td>Apt 4B</td>
+                                <td>New York</td>
+                                <td>NY</td>
+                            </tr>
+                            <tr>
+                                <td>456 Elm St</td>
+                                <td>Suite 201</td>
+                                <td>Los Angeles</td>
+                                <td>CA</td>
+                            </tr>
+                            <tr>
+                                <td>789 Oak St</td>
+                                <td>Unit 102</td>
+                                <td>Chicago</td>
+                                <td>IL</td>
+                            </tr>
+                            <tr>
+                                <td>101 Pine St</td>
+                                <td>Room 301</td>
+                                <td>Houston</td>
+                                <td>TX</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <h3>Contant Details</h3>
+                <div class="inputSearchs p-0">
+                    <table class="multipleValueTable">
+                        <thead>
+                            <tr>
+                                <th>Contact Person Name</th>
+                                <th>Department</th>
+                                <th>Designation</th>
+                                <th>Email ID</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Department</td>
+                                <td>Apt 4B</td>
+                                <td>New York</td>
+                                <td>test@test.com</td>
+                                <td>999999991</td>
+                            </tr>
+                            <tr>
+                                <td>456 Elm St</td>
+                                <td>Suite 201</td>
+                                <td>Los Angeles</td>
+                                <td>test@test.com</td>
+                                <td>999999991</td>
+                            </tr>
+                            <tr>
+                                <td>789 Oak St</td>
+                                <td>Unit 102</td>
+                                <td>Chicago</td>
+                                <td>test@test.com</td>
+                                <td>999999991</td>
+                            </tr>
+                            <tr>
+                                <td>101 Pine St</td>
+                                <td>Room 301</td>
+                                <td>Houston</td>
+                                <td>test@test.com</td>
+                                <td>999999991</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <h3 class="blueHeading">Property Details</h3>
                 <div class="inputSearchs">
@@ -234,7 +294,7 @@
 
                             <label for="" class="w-50">
                                 Property Name
-                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)"})
                               @*   @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Property Name"] }) *@
                                @*  @Html.ValidationMessageFor(model => model.PropertyName, "", new { @class = "text-danger" }) *@
                             </label>
@@ -315,57 +375,22 @@
                 <h3 class="blueHeading"> Amenities</h3>
                 <div class="inputSearchs">
                     <form>
-                        <div class="flex threeBox mb-28">
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" checked disabled>
-                                <p>Swimming pool </p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>On-site laundry facilities</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Conference room</p>
-                            </label>
-                        </div>
-                        <div class="flex threeBox mb-28">
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>24-hour security or concierge service</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Fitness centre or gym</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Business centre</p>
-                            </label>
-                        </div>
-                        <div class="flex threeBox mb-28">
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Parking garage /valet parking</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>On-site maintenance staff</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Playground or recreation area</p>
-                            </label>
-                        </div>
-                        <div class="flex mb-28">
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Pet-friendly accommodations</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Wi-Fi or high-speed internet access.</p>
-                            </label>
+                        <div class="flex mb-28 flex-start" id="amentiesdiv">
+                            @{
+                                if (Model.AmenityList != null)
+                                {
+                                    @for (int z = 0; z < Model.AmenityList.Count; z++)
+                                    {
+                                        <label for="" class="position-relative checkboxBtn w-30 mr-20">
+                                            @Html.HiddenFor(m => m.AmenityList[z].Id)
+                                            @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
+                                            @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
+                                            @Html.CheckBoxFor(model => Model.AmenityList[z].IsActive, new { @class = "checkbox-checked", @checked = "checked" })
+                                            <p>@Model.AmenityList[z].AmenityName</p>
+                                        </label>
+                                    }
+                                }
+                            }
                         </div>
 
                         <div class="text-center buttonArea bodyContent plr-0">
@@ -765,6 +790,7 @@
          var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";//GetAllOwnershipType";
         var GetPropertyByFilters = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByFilters";//GetAllOwnershipType";
         var GetPropertyById = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyById";//GetAllOwnershipType";
+        var GetClientDetailById = "@Eltizam.Web.Helpers.APIURLHelper.GetClientById";//GetAllOwnershipType";
         // var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationFeeTypeList";//GetAllValuationFeeType";
         
 
