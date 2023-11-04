@@ -43,7 +43,15 @@ namespace Eltizam.Data.DataAccess.Helper
     {
         public static string Master_User = "Master_User";
         public static string Master_Client = "Master_Client";
+        public static string Master_ClientType = "Master_ClientType";
         public static string Master_Vendor = "Master_Vendor";
-        public static string Master_Dictionary = "Master_Dictionary"; 
+        public static string Master_Dictionary = "Master_Dictionary";
+        public static string Master_Location = "Master_Location";
+        public static string Master_Property = "Master_Property";
+        public static string Master_PropertyType = "Master_PropertyType";
+        public static string Master_Role = "Master_Role"; 
+        public static string Master_ValuationFee = "Master_ValuationFee";
+
+        public static string ValuationRequest = "ValuationRequest";
     }
 }

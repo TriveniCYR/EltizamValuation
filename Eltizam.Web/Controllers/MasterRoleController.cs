@@ -1,4 +1,5 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Models;
@@ -75,10 +76,19 @@ namespace Eltizam.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
 
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterRoleEntity>>(jsonResponse);
-                    if (data._object is null)
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetFooterDetails, id, TableName.Master_Role);
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
                     {
-                        return NotFound();
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<FooterDetails>(json);
                     }
+
+                    if (data._object is null) 
+                        return NotFound(); 
+
                     List<MasterModuleEntity> _oListMasterModules = data._object.MasterModules.OrderBy(x => x.SortOrder).ToList();
                     data._object.MasterModules = _oListMasterModules;
                     return View(data._object);

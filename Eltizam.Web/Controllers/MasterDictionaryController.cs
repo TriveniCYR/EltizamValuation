@@ -1,5 +1,6 @@
 ﻿using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNet.SignalR.Hubs;
@@ -32,26 +33,15 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new APIRepository(_cofiguration);
-                //List<MasterDictionaryEntity> oLocationList = new List<MasterDictionaryEntity>();
-                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllDictionary, HttpMethod.Post, token).Result;
-                //if (responseMessage.IsSuccessStatusCode)
-                //{
-                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                //  //  var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterDictionaryEntity>>>(jsonResponse);
-                //    var data = JsonConvert.DeserializeObject<MasterDictionaryList>(jsonResponse);               
-                //    ViewData["locationList"] = oLocationList;
-                return View();
-                //  return View(oLocationListRoot);
-                //}
+                APIRepository objapi = new APIRepository(_cofiguration); 
+                return View(); 
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 return View("Login");
-            }
-            return View();
+            } 
         }
         [HttpGet]
         public IActionResult MasterDictionaryManage(int? id)
@@ -78,6 +68,16 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterDictionaryEntity>>(jsonResponse);
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetFooterDetails, id, TableName.Master_Dictionary);
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<FooterDetails>(json);
+                    }
+
                     if (data._object is null)
                         return NotFound();
 
