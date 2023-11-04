@@ -1,9 +1,11 @@
 ﻿ //--- Save dictionary details for each value ------
 function SaveMasterDictionary() {  
-    var Dict = {
+    var Dict =
+    {
         'Id': $("#hdnPropertyId").val(),
         'Description': $("#Description").val(),
         'IsActive': $('#isActiveT')[0].checked,
+        'LogInUserId': LogInUserId,
         'MasterDicitonaryDetails': []
     }  
 

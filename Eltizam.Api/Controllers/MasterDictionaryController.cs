@@ -36,6 +36,7 @@ namespace EltizamValuation.Api.Controllers
         }
 
         #endregion Constructor
+
         #region API Methods
 
         [HttpPost, Route("GetAll")]

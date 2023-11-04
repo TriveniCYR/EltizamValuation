@@ -370,10 +370,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         public void AddAsync(TEntity entity)
         {
             try
-            {
-                //dbContext.Entry(entity).Property(CreatedDate).CurrentValue = _currentSQLServerDate;
-                //dbContext.Entry(entity).Property(ModifiedDate).CurrentValue = _currentSQLServerDate; 
-                //dbContext.Entry(entity).Property(ModifiedBy).CurrentValue   = dbContext.Entry(entity).Property(CreateBy).CurrentValue; 
+            { 
                 SetCommmonPropertiesWhileAdd(entity);
             }
             catch (Exception ex) 

@@ -8,6 +8,7 @@ namespace Eltizam.Business.Models
 {
     public class GlobalAuditFields
     {
+        public int? LogInUserId { get; set; }
         public int? CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }

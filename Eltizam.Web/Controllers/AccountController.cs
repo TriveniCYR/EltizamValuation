@@ -59,7 +59,7 @@ namespace Eltizam.Web.Controllers
                         string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                         var oUserDetail = JsonConvert.DeserializeObject<APIResponseEntity<UserSessionEntity>>(jsonResponse);
                         SetUserClaim(oUserDetail._object);
-                        HttpContext.Session.SetInt32(UserHelper.LoggedInRoleId, oUserDetail._object.RoleId);
+                        HttpContext.Session.SetInt32(UserHelper.LogInRoleId, oUserDetail._object.RoleId);
 
                        
                         var roles = UtilityHelper.GetModuleRole<dynamic>(oUserDetail._object.RoleId);
@@ -123,9 +123,9 @@ namespace Eltizam.Web.Controllers
             HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
             
             //Set Session
-            HttpContext.Session.SetString(UserHelper.LoggedInUserId, Convert.ToString(oUserDetail.UserId));
-            HttpContext.Session.SetString(UserHelper.LoggedInRoleId, Convert.ToString(oUserDetail.UserId));
-            HttpContext.Session.SetString(UserHelper.LoggedInUserName, oUserDetail.UserName);
+            HttpContext.Session.SetString(UserHelper.LogInUserId, Convert.ToString(oUserDetail.UserId));
+            HttpContext.Session.SetString(UserHelper.LogInRoleId, Convert.ToString(oUserDetail.RoleId));
+            HttpContext.Session.SetString(UserHelper.LogInUserName, oUserDetail.UserName);
         }
 
 

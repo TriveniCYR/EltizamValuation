@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class MasterDictionaryEntity
+    public class MasterDictionaryEntity : GlobalAuditFields
     {
         public int Id { get; set; }
         public int Type { get; set; }
@@ -14,7 +14,7 @@ namespace Eltizam.Business.Models
         //  public string Dictionary { get; set; }
         public string Description { get; set; }
         public string? Values { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } 
         public List<MasterDictionaryDetailById> MasterDicitonaryDetails { get; set; }
 
     }

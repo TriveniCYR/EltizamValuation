@@ -207,28 +207,25 @@ namespace Eltizam.Business.Core.ServiceImplementations
                                   DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (UserAddress != null)
                 {
-                    _userEntity.Address = UserAddress;
-
+                    _userEntity.Address = UserAddress; 
                 }
 
                 DbParameter[] osqlParameter1 =
                 {
-                 new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
-                 new DbParameter(AppConstants.TableName, TableName.Master_User, SqlDbType.VarChar),
+                    new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                    new DbParameter(AppConstants.TableName, TableName.Master_User, SqlDbType.VarChar),
                 };
                 var UserQualification = EltizamDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureMetastore.usp_Qualification_GetQualificationByTableKeyId, 
                                         DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
                 if (UserQualification != null)
                 {
-                    _userEntity.Qualification = UserQualification;
-
-                }
-
+                    _userEntity.Qualification = UserQualification; 
+                } 
 
                 DbParameter[] osqlParameter2 =
                 {
-                 new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
-                 new DbParameter(AppConstants.TableName,  TableName.Master_User, SqlDbType.VarChar),
+                    new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                    new DbParameter(AppConstants.TableName,  TableName.Master_User, SqlDbType.VarChar),
                 };
 
                 var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, 

@@ -18,14 +18,14 @@ namespace Eltizam.Web.Helpers
 
         public int GetLoggedInUserId()
         {
-            return Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString(UserHelper.LoggedInUserId));
+            return Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetString(UserHelper.LogInUserId));
         }
 
         public int GetLoggedInRoleId()
         {
             try
             {
-                return Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetInt32(UserHelper.LoggedInRoleId));
+                return Convert.ToInt32(_httpContextAccessor.HttpContext.Session.GetInt32(UserHelper.LogInRoleId));
             }
             catch (Exception ex)
             {

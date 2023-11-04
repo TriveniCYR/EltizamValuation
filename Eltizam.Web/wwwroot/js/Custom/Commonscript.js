@@ -1,5 +1,6 @@
 ﻿//Use this for entire project to bind the data 
 var BaseURL = $('#hdnAPIURL').val();
+var LogInUserId = $("LogInUserId").val() ?? 1;
 var Post = 'POST';
 var Get = 'GET';
 var Delete = 'DELETE';
