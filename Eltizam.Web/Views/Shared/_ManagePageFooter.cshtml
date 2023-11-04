@@ -2,7 +2,7 @@
 @using Eltizam.Business.Models;
 
 @{
-    var data = (FooterDetails)ViewBag.FooterInfo;
+    var data = (GlobalAuditFields)ViewBag.FooterInfo;
     var href = "MasterUser/" + ((data == null || data.CreatedBy == null)   ? "Users" : "ManageUser?id=" + data.CreatedBy.ToString());
     var href2 = "MasterUser/" + ((data == null || data.ModifiedBy == null) ? "Users" : "ManageUser?id=" + data.ModifiedBy.ToString());
 }

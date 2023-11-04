@@ -10,8 +10,10 @@ namespace Eltizam.Business.Models
     {
         public int? LogInUserId { get; set; }
         public int? CreatedBy { get; set; }
-        public int? ModifiedBy { get; set; }
+        public string? CreatedByName { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public string? ModifiedByName { get; set; }
         public DateTime? ModifiedDate { get; set; }
     }
 }

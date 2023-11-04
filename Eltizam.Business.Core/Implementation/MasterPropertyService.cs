@@ -102,28 +102,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (detailLocation != null)
                 {
                     _userEntity.PropertyDetail = detailLocation;
-                }
-
-                /*
-                    DbParameter[] p =
-                    {
-                        new DbParameter("PropertyId", id, SqlDbType.Int),
-                    };
-                    var resultSet = EltizamDBHelper.ExecuteMultiReader(ProcedureMetastore.usp_PropertyLocation_GetLocationByPropertyId, DatabaseConnection.ConnString, CommandType.StoredProcedure, p);
-                    if (resultSet != null && resultSet.Tables.Count > 0)
-                    { 
-                        //To read list 
-                        _userEntity.AmenityList = new List<MasterAmenityListModel>(); 
-
-                        if (resultSet.Tables[0] != null)
-                            DataTableHelper.FillCollectionFromDataView<MasterAmenityListModel>(_userEntity.AmenityList, resultSet.Tables[0].DefaultView);
-
-                        if (resultSet.Tables[1] != null)
-                        {
-                            _userEntity.PropertyDetail = resultSet.Tables[0].DefaultView.FillObjectFromDataView<MasterPropertyDetailModel>(); 
-                        }
-                    }
-                */
+                } 
             }
 
             return _userEntity;
@@ -174,8 +153,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 objProperty = _repository.Get(masterproperty.Id);
                 if (objProperty != null)
-                {
-
+                { 
                     objProperty.PropertyName = masterproperty.PropertyName;
                     objProperty.PropertyTypeId = masterproperty.PropertyTypeId;
                     objProperty.PropertySubTypeId = masterproperty.PropertySubTypeId;
@@ -193,6 +171,7 @@ namespace Eltizam.Business.Core.Implementation
                     objProperty.Description = masterproperty.Description;
                     objProperty.ModifiedBy = _LoginUserId;
                     objProperty.ModifiedDate = AppConstants.DateTime;
+                    
                     _repository.UpdateAsync(objProperty);
                 }
                 else

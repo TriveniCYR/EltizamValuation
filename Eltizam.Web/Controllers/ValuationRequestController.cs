@@ -1,4 +1,5 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -23,17 +24,14 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+         
         [HttpGet]
         public IActionResult ValuationRequests()
         {
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }
+
         public IActionResult ValuationRequestManage(int? id, string view)
         {
             if (id != null)
@@ -47,13 +45,8 @@ namespace EltizamValuation.Web.Controllers
             }
             ValuationRequestModel valuationRequestModel;
             if (id == null || id <= 0)
-            {
-
-                valuationRequestModel = new ValuationRequestModel();
-               // Master_PropertyTypeModel master_PropertyType = new Master_PropertyTypeModel();
-                //valuationRequestModel.master_PropertyType = master_PropertyType;
-
-
+            { 
+                valuationRequestModel = new ValuationRequestModel(); 
                 return View("ValuationRequestManage", valuationRequestModel);
             }
             else
@@ -66,6 +59,16 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, TableName.ValuationRequest);
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    } 
+
                     if (data._object is null)
                         return NotFound();
 

@@ -1,4 +1,5 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
@@ -31,36 +32,34 @@ namespace EltizamValuation.Web.Controllers
             ModelState.Clear();
             try
             {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new APIRepository(_cofiguration);
-                List<MasterLocationEntity> oLocationList = new List<MasterLocationEntity>();
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllLocations, HttpMethod.Post, token).Result;
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;                    
-                    //  var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterLocationEntity>>>(jsonResponse);
-                     var data = JsonConvert.DeserializeObject<MasterLocationList>(jsonResponse);
-                    //MasterLocationList oLocationListRoot =data;
-                    oLocationList = data.data;
-                    ViewData["locationList"] = oLocationList;
-                    return View();
-                  //  return View(oLocationListRoot);
-                }
+                //HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                //APIRepository objapi = new APIRepository(_cofiguration);
+                //List<MasterLocationEntity> oLocationList = new List<MasterLocationEntity>();
+                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllLocations, HttpMethod.Post, token).Result;
+                //if (responseMessage.IsSuccessStatusCode)
+                //{
+                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;                     
+                //     var data = JsonConvert.DeserializeObject<MasterLocationList>(jsonResponse); 
+                //    oLocationList = data.data;
+                //    ViewData["locationList"] = oLocationList;
+                //    return View(); 
+                //  //  return View(oLocationListRoot);
+                //}
+                return View();
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
+
                 return View("Login");
-            }
-            return View();
+            } 
         }
 
 
 
         public IActionResult LocationById(int id)
-        {
-
+        { 
             MasterLocationEntity masterlocation;
             if (id == null || id <= 0)
             {
@@ -77,6 +76,16 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, TableName.Master_Location);
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    }
+
                     if (data._object is null)
                         return NotFound();
 

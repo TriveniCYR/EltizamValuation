@@ -62,12 +62,12 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse); 
 
                     //Get Footer info
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetFooterDetails, id, TableName.Master_User);
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, TableName.Master_User);
                     var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
                     if (footerRes.IsSuccessStatusCode)
                     {
                         string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<FooterDetails>(json); 
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json); 
                     }
 
                     return View(data._object);
