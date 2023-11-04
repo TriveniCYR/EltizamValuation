@@ -50,6 +50,8 @@ namespace Eltizam.Business.Core.Resolver
             services.AddTransient<IExceptionService, ExceptionService>();
             services.AddTransient<IUploadService, UploadService>();
 
+            services.AddTransient<IAuditLogService, AuditLogService>();
+
             return services;
         }
 

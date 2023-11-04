@@ -1,25 +1,7 @@
 ﻿using System.ComponentModel;
 
 namespace Eltizam.Utility.Enums
-{
-    public enum ModuleEnum
-    {
-        UserManagement = 1,
-        RoleManagement = 2,
-        Dashboard = 3,
-        MasterManagement = 4,
-        PIDF = 5,
-        PBF = 6,
-        IPD = 7,
-        Finance = 8,
-        Medical = 9,
-        APIListManagement = 10,
-        Formulation = 11,
-        ManagementHOD = 12,
-        CommercialManagement = 15,
-        APIManagement =13
-    }
-
+{  
     public enum ModulePermissionEnum
     {
         [Description("Resourc Master")]
@@ -36,24 +18,9 @@ namespace Eltizam.Utility.Enums
         PropertyMaster = 9,
         ClientMaster = 13,       
         ValutionFeesMaster = 14,
-        VendorMaster = 15,
-        //      Commercial = 15,
-        //      ManagementHOD = 16,
-        //      Project = 17,
-        //    [Description("Wish List")] 
+        VendorMaster = 15, 
     }
-
-	public enum SubModulePermissionEnum
-    {
-        RnD = 1,
-        Clinical = 2,
-        Analytical = 3,
-        APIRnD = 4,
-        APIIPD = 12,
-        APICharter = 13,
-        APICharterSummary = 14,
-        RA = 15
-    }
+     
 
     public enum PermissionEnum
     {
@@ -64,9 +31,10 @@ namespace Eltizam.Utility.Enums
         Delete = 4,
         Approve = 5
     }
-    public enum IPDPatenDetailsType
+    public enum AuditActionTypeEnum
     {
-        PatenDetailsForFormulation = 1,
-        PatientDetailsForAPI = 2,
+        Create = 1,
+        Update = 2,
+        Delete = 3
     }
 }

@@ -42,6 +42,9 @@ namespace Eltizam.Data.DataAccess.Helper
     public class TableName
     {
         public static string Master_User = "Master_User";
+        public static string Master_Address = "Master_Address";
+        public static string Master_Contact = "Master_Contact";
+
         public static string Master_Client = "Master_Client";
         public static string Master_ClientType = "Master_ClientType";
         public static string Master_Vendor = "Master_Vendor";

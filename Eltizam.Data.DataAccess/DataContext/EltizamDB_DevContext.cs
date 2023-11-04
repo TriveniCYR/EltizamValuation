@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Eltizam.Data.DataAccess.Entity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Eltizam.Data.DataAccess.Entity;
 
 namespace Eltizam.Data.DataAccess.DataContext
 {
@@ -17,7 +14,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         {
         }
 
-        public virtual DbSet<AuditLog> AuditLogs { get; set; } = null!;
+        public virtual DbSet<MasterAuditLog> MasterAuditLogs { get; set; }
         public virtual DbSet<Dictionary> Dictionaries { get; set; } = null!;
         public virtual DbSet<EmailLogHistory> EmailLogHistories { get; set; } = null!;
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; } = null!;
@@ -66,7 +63,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=180.149.241.172;Initial Catalog=EltizamDB_Dev;Persist Security Info=True;User ID=eltizam_dbUser;pwd=eltizam234@#$;Connection Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;");
             }
         }
@@ -75,23 +72,15 @@ namespace Eltizam.Data.DataAccess.DataContext
         {
             modelBuilder.HasDefaultSchema("eltizam_dbUser");
 
-            modelBuilder.Entity<AuditLog>(entity =>
+            modelBuilder.Entity<MasterAuditLog>(entity =>
             {
-                entity.ToTable("Audit_Log", "dbo");
+                entity.HasKey(e => e.Id);
 
-                entity.Property(e => e.ActionDate).HasColumnType("datetime");
+                entity.ToTable("Master_AuditLog", "dbo");
 
-                entity.Property(e => e.ActionName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.ActionType).HasMaxLength(20);
 
-                entity.Property(e => e.ModuleName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UserId)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Dictionary>(entity =>

@@ -7,9 +7,9 @@ namespace Eltizam.Data.DataAccess.Entity
 {
     public partial class MasterAuditLog
     {
-        public int AuditLogId { get; set; }
-        public int? ModuleId { get; set; }
-        public int? EntityId { get; set; }
+        public int Id { get; set; }
+        public int? TableKeyId { get; set; }
+        public string TableName { get; set; }
         public string ActionType { get; set; }
         public string Log { get; set; }
         public int? CreatedBy { get; set; }

@@ -5,12 +5,11 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Helpers;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using System.Data;
 using System.Data.SqlClient;
 using static Eltizam.Utility.Enums.GeneralEnum;
@@ -20,20 +19,19 @@ namespace Eltizam.Business.Core.ServiceImplementations
     public class MasterUserService : IMasterUserService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
+        private readonly IMapperFactory _mapperFactory; 
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<MasterUser> _repository { get; set; }
         private IRepository<MasterAddress> _addressRepository { get; set; }
         private IRepository<MasterQualification> _qualifyRepository { get; set; }
         private IRepository<MasterDocument> _documentRepository { get; set; }
         private IRepository<EmailLogHistory> _emailLog { get; set; }
-
+       private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
 
 
-        public MasterUserService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterUserService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IAuditLogService auditLogService,
                                   IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
@@ -45,16 +43,13 @@ namespace Eltizam.Business.Core.ServiceImplementations
             _qualifyRepository = _unitOfWork.GetRepository<MasterQualification>();
             _documentRepository = _unitOfWork.GetRepository<MasterDocument>();
             configuration = _configuration;
-            _helper = helper;
-            _LoginUserId = _helper.GetLoggedInUser()?.UserId;
-
-
+            _helper = helper; 
+           _auditLogService = auditLogService;
         }
 
         public async Task<UserSessionEntity> Login(LoginViewModel oLogin)
-        {
-            UserSessionEntity oUser = null;
-
+        { 
+            UserSessionEntity oUser = null; 
             SqlParameter[] osqlParameter =
             {
                 new SqlParameter("@Email", oLogin.Email),
@@ -75,7 +70,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
 
         public async Task<DBOperation> DeleteUser(int id)
-        {
+        { 
             var entityUser = _repository.Get(x => x.Id == id);
 
             if (entityUser == null)
@@ -169,7 +164,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
-        {
+        { 
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
             string SortDir = model.order[0]?.dir;
 
@@ -193,7 +188,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
 
         public async Task<MasterUserDetailModel> GetById(int id)
-        {
+        { 
             var _userEntity = new MasterUserDetailModel();
             _userEntity = _mapperFactory.Get<MasterUser, MasterUserDetailModel>(await _repository.GetAsync(id));
             if (_userEntity != null)
@@ -240,13 +235,13 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
 
         public async Task<DBOperation> Upsert(MasterUserModel entityUser)
-        {
+        { 
             if (!string.IsNullOrEmpty(entityUser.Password) && entityUser.Id <= 0)
             {
                 entityUser.Password = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.Password);
                 entityUser.ConfirmPassowrd = entityUser.Password;
             }
-            //entityUser.DateOfBirth = AppConstants.DateTime;
+             
             MasterUser objUser;
             MasterAddress objUserAddress;
             MasterQualification objUserQualification;
@@ -254,8 +249,9 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
             if (entityUser.Id > 0)
             {
+                var OldObjUser = _repository.GetNoTracking(entityUser.Id);
                 objUser = _repository.Get(entityUser.Id);
-                var OldObjUser = objUser;
+
                 if (objUser != null)
                 { 
                     objUser.FirstName = entityUser.FirstName;
@@ -276,6 +272,10 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     objUser.ModifiedBy = entityUser.ModifiedBy;
 
                     _repository.UpdateAsync(objUser);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log
+                    await _auditLogService.CreateAuditLog<MasterUser>(AuditActionTypeEnum.Update, OldObjUser, objUser, TableName.Master_User,  objUser.Id);
                     await _unitOfWork.SaveChangesAsync();
                 } 
             }
@@ -301,7 +301,9 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
                     if (entityUser.Address.Id > 0)
                     {
+                        var OldEntity = _addressRepository.GetNoTracking(entityUser.Address.Id);  
                         objUserAddress = _addressRepository.Get(entityUser.Address.Id);
+
                         if (objUserAddress != null)
                         {
                             var entityAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(entityUser.Address);
@@ -324,7 +326,12 @@ namespace Eltizam.Business.Core.ServiceImplementations
                             objUserAddress.ModifiedBy = entityUser.ModifiedBy;
 
                             //objUserAddress.ModifiedDate = AppConstants.DateTime;
-                            _addressRepository.UpdateAsync(objUserAddress);
+                            _addressRepository.UpdateAsync(objUserAddress); 
+                            await _unitOfWork.SaveChangesAsync();
+
+                            //Do Audit Log
+                            await _auditLogService.CreateAuditLog<MasterAddress>(AuditActionTypeEnum.Update,
+                                  OldEntity, objUserAddress, TableName.Master_Address, objUserAddress.Id);
                         }
                     }
                     else
@@ -340,27 +347,35 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         //objUserAddress.ModifiedDate = AppConstants.DateTime;
 
                         _addressRepository.AddAsync(objUserAddress);
-                    }
-                    await _unitOfWork.SaveChangesAsync(); 
+                        await _unitOfWork.SaveChangesAsync();
+                    } 
                 }
 
                 if (entityUser.Qualification != null)
-                { 
-                    if (entityUser.Qualification.Id > 0)
+                {
+                    var Qlfc = entityUser.Qualification;
+                    if (Qlfc.Id > 0)
                     {
-                        objUserQualification = _qualifyRepository.Get(entityUser.Qualification.Id);
+                        var OldEntity = _qualifyRepository.GetNoTracking(Qlfc.Id);
+
+                        objUserQualification = _qualifyRepository.Get(Qlfc.Id);
                         if (objUserQualification != null)
                         {
-                            var entityContact = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(entityUser.Qualification);
-                            objUserQualification.Qualification = entityUser.Qualification.Qualification;
-                            objUserQualification.Subject = entityUser.Qualification.Subject;
-                            objUserQualification.Institute = entityUser.Qualification.Institute;
-                            objUserQualification.Grade = entityUser.Qualification.Grade;
-                            objUserQualification.YearOfInstitute = entityUser.Qualification.YearOfInstitute;
-                            objUserQualification.IsActive = entityUser.Qualification.IsActive;
+                            //var entityContact = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(entityUser.Qualification);
+                            objUserQualification.Qualification = Qlfc.Qualification;
+                            objUserQualification.Subject = Qlfc.Subject;
+                            objUserQualification.Institute = Qlfc.Institute;
+                            objUserQualification.Grade = Qlfc.Grade;
+                            objUserQualification.YearOfInstitute = Qlfc.YearOfInstitute;
+                            objUserQualification.IsActive = Qlfc.IsActive;
                             objUserQualification.ModifiedBy = entityUser.ModifiedBy;
 
                             _qualifyRepository.UpdateAsync(objUserQualification);
+                            await _unitOfWork.SaveChangesAsync();
+
+                            //Do Audit Log
+                            await _auditLogService.CreateAuditLog<MasterQualification>(AuditActionTypeEnum.Update,
+                                  OldEntity, objUserQualification, TableName.Master_Address, objUserQualification.Id);
                         }
                     }
                     else
@@ -375,8 +390,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         //objUserQualification.ModifiedBy = entityUser.CreatedBy;
                         //objUserQualification.ModifiedDate = AppConstants.DateTime;
                         _qualifyRepository.AddAsync(objUserQualification);
-                    }
-                    await _unitOfWork.SaveChangesAsync();
+                        await _unitOfWork.SaveChangesAsync();
+                    } 
                 }
 
                 if (entityUser.uploadDocument != null)
@@ -406,8 +421,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
 
         public async Task<List<MasterResourceTypeModel>> GetResourceTypeList()
-        {
-
+        { 
             var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterResourceTypeModel>(ProcedureMetastore.usp_ResourceType_AllList,
              DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
@@ -415,12 +429,14 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
         public async Task<List<MasterRoleModel>> GetRoleList()
         {
+            var lId = _helper.GetLoggedInUser()?.UserId;
 
             var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterRoleModel>(ProcedureMetastore.usp_Role_AllList,
              DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }
+
         public async Task<DBOperation> Delete(int id)
         {
             var entityDepartment = _repository.Get(x => x.Id == id);
@@ -434,10 +450,12 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
             return DBOperation.Success;
         }
+
         public async Task<DBOperation> ChangePassword(ChangePasswordModel entityUser)
         { 
-            int userId = 1;//_LoginUserId; //_helper.GetLoggedInUser().UserId;
+            var userId = _helper.GetLoggedInUser()?.UserId ?? 1; 
             entityUser.UserId = userId;
+
             if (entityUser.UserId >= 0 && entityUser.NewPassword == entityUser.ConfirmPassword)
             {
                 entityUser.NewPassword = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.NewPassword);
