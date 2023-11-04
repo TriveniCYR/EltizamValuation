@@ -273,13 +273,13 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     objUser.CompanyId = entityUser.CompanyId;
                     objUser.CompanyName = entityUser.CompanyName;
                     objUser.ResourceId = entityUser.ResourceId;
-                    objUser.IsActive = entityUser.IsActive;
-                    objUser.ModifiedBy = entityUser.CreatedBy;
-                    objUser.ModifiedDate = AppConstants.DateTime;
+                    objUser.IsActive = entityUser.IsActive; 
                     objUser.RoleId = entityUser.RoleId; 
                     objUser.Email = entityUser.Email;
+                    objUser.ModifiedBy = entityUser.ModifiedBy;
 
                     _repository.UpdateAsync(objUser);
+                    await _unitOfWork.SaveChangesAsync();
                 } 
             }
             else
@@ -287,14 +287,14 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 objUser = _mapperFactory.Get<MasterUserModel, MasterUser>(entityUser);
                 objUser.IsActive = entityUser.IsActive;
                 objUser.CreatedBy = entityUser.CreatedBy;
-                objUser.CreatedDate = AppConstants.DateTime;
-                objUser.ModifiedBy = entityUser.CreatedBy;
-                objUser.ModifiedDate = AppConstants.DateTime;
+
+                //objUser.CreatedDate = AppConstants.DateTime;
+                //objUser.ModifiedBy = entityUser.CreatedBy;
+                //objUser.ModifiedDate = AppConstants.DateTime;
                 _repository.AddAsync(objUser);
+                await _unitOfWork.SaveChangesAsync();
             }
-            await _unitOfWork.SaveChangesAsync();
-
-
+             
             if (objUser.Id == 0)
                 return DBOperation.Error;
             else
@@ -323,9 +323,10 @@ namespace Eltizam.Business.Core.ServiceImplementations
                             objUserAddress.Phone = entityAddress.Phone;
                             objUserAddress.AlternatePhone = entityAddress.AlternatePhone;
                             objUserAddress.Landlinephone = entityAddress.Landlinephone;
-                            objUserAddress.IsActive = entityAddress.IsActive;
-                            objUserAddress.ModifiedBy = entityUser.CreatedBy;
-                            objUserAddress.ModifiedDate = AppConstants.DateTime;
+                            objUserAddress.IsActive = entityAddress.IsActive; 
+                            objUserAddress.ModifiedBy = entityUser.ModifiedBy;
+
+                            //objUserAddress.ModifiedDate = AppConstants.DateTime;
                             _addressRepository.UpdateAsync(objUserAddress);
                         }
                     }
@@ -336,9 +337,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         objUserAddress.TableKeyId = objUser.Id;
                         objUserAddress.TableName = TableName.Master_User;
                         objUserAddress.CreatedBy = entityUser.CreatedBy;
-                        objUserAddress.CreatedDate = AppConstants.DateTime;
-                        objUserAddress.ModifiedBy = entityUser.CreatedBy;
-                        objUserAddress.ModifiedDate = AppConstants.DateTime;
+
+                        //objUserAddress.CreatedDate = AppConstants.DateTime;
+                        //objUserAddress.ModifiedBy = entityUser.CreatedBy;
+                        //objUserAddress.ModifiedDate = AppConstants.DateTime;
+
                         _addressRepository.AddAsync(objUserAddress);
                     }
                     await _unitOfWork.SaveChangesAsync(); 
@@ -358,8 +361,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
                             objUserQualification.Grade = entityUser.Qualification.Grade;
                             objUserQualification.YearOfInstitute = entityUser.Qualification.YearOfInstitute;
                             objUserQualification.IsActive = entityUser.Qualification.IsActive;
-                            objUserQualification.ModifiedBy = entityUser.CreatedBy;
-                            objUserQualification.ModifiedDate = AppConstants.DateTime;
+                            objUserQualification.ModifiedBy = entityUser.ModifiedBy;
+
                             _qualifyRepository.UpdateAsync(objUserQualification);
                         }
                     }
@@ -368,11 +371,12 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         objUserQualification = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(entityUser.Qualification);
                         objUserQualification.IsActive = entityUser.Qualification.IsActive;
                         objUserQualification.TableKeyId = objUser.Id;
-                        objUserQualification.TableName = TableName.Master_User;
+                        objUserQualification.TableName = TableName.Master_User; 
                         objUserQualification.CreatedBy = entityUser.CreatedBy;
-                        objUserQualification.CreatedDate = AppConstants.DateTime;
-                        objUserQualification.ModifiedBy = entityUser.CreatedBy;
-                        objUserQualification.ModifiedDate = AppConstants.DateTime;
+
+                        //objUserQualification.CreatedDate = AppConstants.DateTime;
+                        //objUserQualification.ModifiedBy = entityUser.CreatedBy;
+                        //objUserQualification.ModifiedDate = AppConstants.DateTime;
                         _qualifyRepository.AddAsync(objUserQualification);
                     }
                     await _unitOfWork.SaveChangesAsync();
@@ -389,11 +393,12 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         objUserDocument.DocumentName = doc.DocumentName;
                         objUserDocument.FileName = doc.FileName;
                         objUserDocument.FilePath = doc.FilePath;
-                        objUserDocument.FileType = doc.FileType;
+                        objUserDocument.FileType = doc.FileType; 
                         objUserDocument.CreatedBy = entityUser.CreatedBy;
-                        objUserDocument.CreatedDate = AppConstants.DateTime;
-                        objUserDocument.ModifiedBy = entityUser.CreatedBy;
-                        objUserDocument.ModifiedDate = AppConstants.DateTime;
+
+                        //objUserDocument.CreatedDate = AppConstants.DateTime;
+                        //objUserDocument.ModifiedBy = entityUser.CreatedBy;
+                        //objUserDocument.ModifiedDate = AppConstants.DateTime;
                         _documentRepository.AddAsync(objUserDocument);
                     }
                     await _unitOfWork.SaveChangesAsync();

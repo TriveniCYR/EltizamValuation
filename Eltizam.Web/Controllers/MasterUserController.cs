@@ -94,6 +94,11 @@ namespace EltizamValuation.Web.Controllers
 
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
+
+                    //Fill audit logs field
+                    if (masterUser.Id == 0) 
+                        masterUser.CreatedBy = _helper.GetLoggedInUserId();  
+                    masterUser.ModifiedBy = _helper.GetLoggedInUserId(); 
                 } 
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
