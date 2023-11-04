@@ -805,7 +805,7 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.DeletedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.RoleName).HasMaxLength(50);
             });
@@ -1193,7 +1193,7 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.OtherReferenceNo)
                     .HasMaxLength(500)

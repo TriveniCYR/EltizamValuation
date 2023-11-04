@@ -8,19 +8,7 @@ using System.Threading.Tasks;
 namespace Eltizam.Business.Models
 {
     public class MasterDictionaryDetailById
-    {
-        //public int ChildId { get; set; }
-        //public int Id { get; set; }
-        //public int Type { get; set; }
-        ////  public string Dictionary { get; set; }
-        //public string Description { get; set; }
-        //public string ChildDescription { get; set; }
-        //public int? Sort { get; set; }
-        //public int? IsActive { get; set; }
-        //public int? CreatedBy { get; set; }
-        //public DateTime? CreatedDate { get; set; }
-        //public DateTime? ModifiedDate { get; set; }
-        //public int? ModifiedBy { get; set; }
+    { 
         public int Id { get; set; }
         [NotMapped]
         public int? Type { get; set; }
@@ -37,5 +25,23 @@ namespace Eltizam.Business.Models
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
 
+    }
+
+    public class MasterDictionaryDetails
+    {  
+        public int? Id { get; set; } 
+        public string? Description { get; set; } 
+        public int? Sort { get; set; }
+        public int? IsActive { get; set; }
+        [NotMapped]
+        public List<MasterDictionaryDetailChild> Values { get; set; }
+    }
+
+    public class MasterDictionaryDetailChild
+    {
+        public int? Id { get; set; }
+        public string? Description { get; set; }
+        public int? Sort { get; set; }
+        public int? IsActive { get; set; } 
     }
 }

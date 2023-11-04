@@ -60,7 +60,7 @@ function BindDesignation() {
 }
 
 function BindRole() {
-
+    debugger
     var Role = $("#RoleId");
     var _val = $('#hdnRole').val();
     var _rpname = "roleName";

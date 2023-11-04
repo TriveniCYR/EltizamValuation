@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Eltizam.Resource.Resources;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,7 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Remote("CheckPropertTypeExists", "MasterPropertyType", ErrorMessage = "Email Address already exists in database.")]
         public string PropertyType { get; set; }
         public bool IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }

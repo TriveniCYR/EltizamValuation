@@ -24,7 +24,7 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string UpdateSuccess = "Data updated successfully";
         public static string DeleteSuccess = "Data deleted successfully";
         public static string BadRequest = "Bad Reques";
-        public static string ActionSuccess = "Action performed successfully";
+        public static string ActionSuccess = "Action performed successfully.";
 
         public static string P_SearchText   = "@SearchText";
         public static string P_SortDirection = "@SortDirection";
@@ -44,6 +44,6 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string Master_User = "Master_User";
         public static string Master_Client = "Master_Client";
         public static string Master_Vendor = "Master_Vendor";
-        public static string Master_Dictionary = "Master_Dictionary";
+        public static string Master_Dictionary = "Master_Dictionary"; 
     }
 }

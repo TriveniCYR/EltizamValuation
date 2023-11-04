@@ -157,19 +157,19 @@
                         <h3 class="blueHeading">Amenities</h3>
                         <div class="inputSearchs">
                             <div class="form">
-                                <div class="flex mb-28 flex-start">
+                                <div class="flex mb-28 flex-start" id="amentiesdiv">
                                     @{
                                         if (Model.AmenityList.Count != 0)
                                         {
-                                                        @for (int z = 0; z < Model.AmenityList.Count; z++)
+                                             @for (int z = 0; z < Model.AmenityList.Count; z++)
                                             {
-                                                            <label for="" class="position-relative checkboxBtn w-30 mr-20">
-                                                                @Html.HiddenFor(m => m.AmenityList[z].Id)
-                                                                @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
-                                                                @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
-                                                                @Html.CheckBoxFor(model => Model.AmenityList[z].IsActive, new { @class = "checkbox-checked", @checked = "checked" })
-                                                                <p>@Model.AmenityList[z].AmenityName</p>
-                                                            </label>
+                                                <label for="" class="position-relative checkboxBtn w-30 mr-20">
+                                                    @Html.HiddenFor(m => m.AmenityList[z].Id)
+                                                    @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
+                                                    @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
+                                                    @Html.CheckBoxFor(model => Model.AmenityList[z].IsActive, new { @class = "checkbox-checked", @checked = "checked" })
+                                                    <p>@Model.AmenityList[z].AmenityName</p>
+                                                </label>
                                             }
                                         }
                                     }
@@ -280,7 +280,7 @@
 @section MyScripts
     {
    
-    <script type="text/javascript" src="~/js/Custom/MasterProperty/MasterPropertyManage.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/MasterProperty/MasterPropertyManage.js?v=@jsVersion"></script>
     <script> 
         //#region Setup API Url
         var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";

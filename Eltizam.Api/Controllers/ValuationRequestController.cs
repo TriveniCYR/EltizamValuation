@@ -33,11 +33,11 @@ namespace EltizamValuation.Api.Controllers
         #endregion Constructor
 
         [HttpPost, Route("GetAllValuationRequest")]
-        public async Task<IActionResult> GetAllValuationRequest([FromForm] DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId, int countryId,int stateId,int cityId,string? fromDate, string? toDate)
+        public async Task<IActionResult> GetAllValuationRequest([FromForm] DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId,int propertyTypeId, int countryId,int stateId,int cityId,string? fromDate, string? toDate)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _valutionServices.GetAll(model, userName, clientName, propertyName, requestStatusId, resourceId,countryId, stateId, cityId, fromDate,toDate), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _valutionServices.GetAll(model, userName, clientName, propertyName, requestStatusId, resourceId, propertyTypeId,countryId, stateId, cityId, fromDate,toDate), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace EltizamValuation.Api.Controllers
         }
 
         [HttpPost, Route("AssignApprover")]
-        public async Task<IActionResult> AssignApprover([FromForm] AssignApprovorRequestModel model)
+        public async Task<IActionResult> AssignApprover([FromBody] AssignApprovorRequestModel model)
         {
             DBOperation oResponse = await _valutionServices.AssignApprover(model);
             if (oResponse == DBOperation.Success)
@@ -55,6 +55,32 @@ namespace EltizamValuation.Api.Controllers
             }
             else
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        }
+
+        [HttpPost, Route("AssignApproverStatus")]
+        public async Task<IActionResult> AssignApproverStatus([FromBody] ApprovorStatusRequestModel model)
+        {
+            DBOperation oResponse = await _valutionServices.AssignApproverStatus(model);
+            if (oResponse == DBOperation.Success)
+            {
+                return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+            }
+            else
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        }
+
+
+        [HttpGet("GetAllValuationMethod")]
+        public async Task<IActionResult> GetAllValuationMethod()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _valutionServices.GetAllValuationMethod(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
         }
     }
 }

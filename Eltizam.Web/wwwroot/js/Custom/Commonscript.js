@@ -1,17 +1,24 @@
 ﻿//Use this for entire project to bind the data 
-var BaseURL = $('#hdnBaseURL').val();
+var BaseURL = $('#hdnAPIURL').val();
 var Post = 'POST';
 var Get = 'GET';
 var Delete = 'DELETE';
-var SuccessToaster = $("#successToaster").val();
-var ErrorToaster = $("#errorToaster").val();
+
+var SuccessToast = $("#successToaster");
+var ErrorToast = $("#errorToaster");
+var SuccessToaster = SuccessToast.val();
+var ErrorToaster = ErrorToast.val();
 var ErrorDev = $("#errorBanner");
+
 var ShowMenuCache = "showMenuCache";
+
+var SucessMsg = "Request saved successfully.";
+var ErrorMsg = "Some error occurred while processing request.";
 
 $(document).ready(function () {
     ErrorDev.hide();
     readsideNavToggle();
-    hideLoader();
+    hideLoader(); 
 
     //Toaster related things
     if (SuccessToaster !== "" && SuccessToaster !== null) {
@@ -56,6 +63,10 @@ function hideLoader() {
         $('#loading-wrapper').hide();
     }, 500);
 }
+
+
+
+// ======== Bind dropdowns ============
 function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
     $.ajax({
         type: Get,
@@ -81,6 +92,9 @@ function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
     });
 }
 
+
+
+// ======== IsActive list page color ============
 function GetActiveFlagCss(data) {
     var dd = "";
     if (data === 1 || data === true) {
@@ -90,7 +104,15 @@ function GetActiveFlagCss(data) {
     }
     return dd;
 }
+function GetIdLinkCss(url, id) {
+    var dd = "<a class='userPic' href='" + url + id + "'>" + id + "</a>";
+    return dd;
+}
 
+
+
+
+// ======== Left menu hide/show with Cache ============
 function sideNavToggle() {
     var x = document.getElementById("sideNav"); 
     var dsi = "none"; 
@@ -101,7 +123,6 @@ function sideNavToggle() {
     x.style.display = dsi;
     localStorage.setItem(ShowMenuCache, dsi);
 }
-
 function readsideNavToggle() {
     var x = document.getElementById("sideNav");
     var curdsi = localStorage.getItem(ShowMenuCache); 
@@ -119,13 +140,10 @@ function profileMenu() {
     }
 }
 
-function GetIdLinkCss(url, id) {
-    var dd = "<a class='userPic' href='" + url + id + "'>" + id + "</a>";
-    return dd;
-}
 
 
-//-----Validation form things ------------- 
+
+// ======== Start: Validation form things ============
 $(document).on('click', 'form button[type=submit]', function (e) {
     showLoader();
 
@@ -133,7 +151,6 @@ $(document).on('click', 'form button[type=submit]', function (e) {
         ValidateTabAndPage();
     }, 500);
 });
-
 
 function ValidateTabAndPage() {
     var errors = $(".input-validation-error");
@@ -167,5 +184,32 @@ function FormattedError(err) {
 function CloseErrorBanner() {
     ErrorDev.hide();
 }
+ 
+// ======== End: Validation form things ============
 
-//-----Validation form things - END/ -------------
+
+
+
+// ======== Start: Dynamic textboxes append ============ 
+let blockCount = 1;
+
+function addDynamicTextbox() {
+    const inputPropField = document.querySelector(".addPropertyInputDynamic"); 
+    const uniqueId = `status-${blockCount}`;
+
+
+    const newBlock = document.createElement("div");
+    newBlock.className = "inputFieldProp";
+    newBlock.innerHTML = '<label for=""><input type="text" id="0" placeholder="enter description"></label>' +
+        '<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeDynamicTextbox(this)">';
+
+    inputPropField.appendChild(newBlock);
+    blockCount++;
+}
+
+function removeDynamicTextbox(element) {
+    const newAddedDiv = element.parentElement;
+    newAddedDiv.remove();
+}
+
+// ======== End: Dynamic textboxes append ============

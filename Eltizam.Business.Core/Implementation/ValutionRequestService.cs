@@ -6,6 +6,7 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
@@ -48,7 +49,7 @@ namespace Eltizam.Business.Core.Implementation
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
         }
         #endregion Constructor
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId, int countryId, int stateId, int cityId, string? fromDate, string? toDate)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId, int propertyTypeId,int countryId, int stateId, int cityId, string? fromDate, string? toDate)
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
             //string SortDir = model.order[0]?.dir;
@@ -66,6 +67,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter("PropertyName",                    propertyName),
                 new SqlParameter("ValuationStatus",                 requestStatusId),
                 new SqlParameter("ValuationMethod",                 resourceId),
+                  new SqlParameter("@PropertyTypeId",                 propertyTypeId),
                 new SqlParameter("CountryId",                       countryId),
                 new SqlParameter("StateId",                         stateId),
                 new SqlParameter("CityId",                          cityId),
@@ -83,8 +85,6 @@ namespace Eltizam.Business.Core.Implementation
 
             return oDataTableResponseModel;
         }
-
-
         public async Task<DBOperation> AssignApprover(AssignApprovorRequestModel model)
         {
             var VRIDs = model.RequestIds;
@@ -101,8 +101,8 @@ namespace Eltizam.Business.Core.Implementation
                             var valuationEntity = _repository.Get(id);
                             valuationEntity.ApproverId = model.ApprovorId;
                             valuationEntity.AssignRemark = model.Remarks;
-                            valuationEntity.ModifyBy = _LoginUserId;
-                            valuationEntity.ModifyDate = AppConstants.DateTime;
+                            valuationEntity.ModifiedBy = _LoginUserId;
+                            valuationEntity.ModifiedDate = AppConstants.DateTime;
                             _repository.UpdateAsync(valuationEntity);
                         }
                         await _unitOfWork.SaveChangesAsync();
@@ -116,6 +116,43 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.NotFound;
             }
             return DBOperation.Success;
+        }
+
+        public async Task<DBOperation> AssignApproverStatus(ApprovorStatusRequestModel model)
+        {
+            if (model.ApprovorId > 0 && model.ValuationRequestId > 0)
+            {
+                if (model.StatusId > 0)
+                {
+                    var valuationEntity = _repository.Get(model.ValuationRequestId);
+                    valuationEntity.ApproverId = model.ApprovorId;
+                    valuationEntity.ApproverComment = model.ApprovorComment;
+                    valuationEntity.StatusId = model.StatusId;
+                    valuationEntity.ModifiedBy = _LoginUserId;
+                    valuationEntity.ModifiedDate = AppConstants.DateTime;
+                    _repository.UpdateAsync(valuationEntity);
+
+                    await _unitOfWork.SaveChangesAsync();
+                }
+                else
+                {
+                    return DBOperation.NotFound;
+                }
+            }
+            else
+            {
+                return DBOperation.NotFound;
+            }
+            return DBOperation.Success;
+        }
+
+        public async Task<List<ValuationMethod>> GetAllValuationMethod()
+        {
+
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationMethod>(ProcedureMetastore.usp_ValuationMethod_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+
+            return lstStf;
         }
     }
 }

@@ -31,7 +31,7 @@
         <div class="bodyContent">
             <div class="inputSearchs p-0">
                 <form asp-action="RoleManage" autocomplete="off" asp-controller="MasterRole" method="post">
- 
+                    @Html.HiddenFor(m => m.Id)
                     <div>
                         <div class="flex">
                             <div class="w-50">
@@ -106,5 +106,5 @@
  
 
 @section MyScripts { 
-    <script type="text/javascript" src="~/js/Custom/Role/RoleManage.js?v=@jsVersion"></script> 
+    <script type="text/javascript" src="~/js/custom/Role/RoleManage.js?v=@jsVersion"></script> 
 }

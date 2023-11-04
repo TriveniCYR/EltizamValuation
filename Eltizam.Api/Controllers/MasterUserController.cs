@@ -153,12 +153,28 @@ namespace Eltizam.API.Controllers.Masters
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+
         [HttpGet("GetApproverList/{id}")]
         public async Task<IActionResult> GetApproverList([FromQuery] int id)
         {
             try
             {
                 return _ObjectResponse.CreateData(await _MasterUserService.GetApproverList(id), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpGet("GetFooterDetails/{id}/{tablename}")]
+        public async Task<IActionResult> GetFooterDetails(int id, string tablename)
+        {
+            try
+            {
+                var _user = await _MasterUserService.GetFooterDetails(id, tablename);
+                return _ObjectResponse.CreateData(_user, (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

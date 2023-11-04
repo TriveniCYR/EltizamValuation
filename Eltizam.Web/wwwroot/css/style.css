@@ -79,13 +79,13 @@ footer {
 }
 
 .mb-28 {
-    margin-bottom: 28px !important;
+    margin-bottom: 0.2em !important;
 }
 
 
-.mt-20 {
+/*.mt-20 {
     margin-top: 20px !important;
-}
+}*/
 
 .mr-20 {
     margin-right: 20px !important;
@@ -188,7 +188,7 @@ footer {
             font-size: 14px;
             font-weight: 400;
             line-height: 120%;
-            margin-bottom: 34px;
+            margin-bottom: 2em;
         }
 
         .loginContainer form label {
@@ -494,7 +494,7 @@ header {
     }
 
 main {
-    padding: 0 28px 80px;
+    padding: 0 25px 25px;
 }
 
     main .dashboardTitle {
@@ -571,7 +571,8 @@ main {
     font-weight: 400;
     line-height: 120%;
     cursor: pointer;
-    height: 45px;
+    /*height: 45px;*/
+    height: 2.5em;
 }
 
 .buttonArea img {
@@ -797,9 +798,9 @@ table .userPic {
     position: absolute;
     border: 1px solid var(--grey);
     left: 0;
-    width: 100%;
+    width: 1136px;
     top: 50px;
-    height: 330px;
+    /*height: 330px;*/
     background: white;
     z-index: 1;
     border-radius: 5px;
@@ -810,9 +811,9 @@ table .userPic {
     padding: 20px;
 }
 
-    .inputSearchs .flex + .flex {
+    /*.inputSearchs .flex + .flex {
         margin-top: 20px;
-    }
+    }*/
 
     .inputSearchs .flex {
         margin: 10px 0;
@@ -1026,7 +1027,7 @@ img#closePopup {
 }
 
 .heading {
-    padding: 19px 0;
+    padding: 10px 0;
     box-shadow: 0px 0px 12px 0px #00000012;
 }
 
@@ -1039,7 +1040,7 @@ img#closePopup {
     }
 
 .bodyContent {
-    padding: 19px 18px 29px 18px;
+    padding: 19px;
 }
 
     .bodyContent .imgBox {
@@ -1622,6 +1623,7 @@ label.roleswitch {
 .page-item.active .page-link {
     background-color: var(--blue);
     border-color: var(--blue);
+    z-index:0;
 }
 
 .page-link {
@@ -1702,6 +1704,8 @@ div.dataTables_wrapper div.dataTables_info {
         display: initial;
         position: relative;
         text-decoration: none;
+        /*height: 45px;*/
+        height: 2.5em;
     }
 
         .buttonArea button img {
@@ -1862,17 +1866,18 @@ div.dataTables_wrapper div.dataTables_filter {
     cursor: pointer;
 }
 
-.accordianErrorDetails {
-    background-color: var(--lightRed) !important;
+.accordianErrorDetails, accordianErrorDetails {
+    background-color: #dc3545 !important;
     padding: 10px;
     border-radius: 5px;
     align-items: center;
     cursor: pointer;
-    color: var(--error);
+    color: white;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif !important;
     font-size: 14px;
     background: var(--error);
     border-left: 9px solid red;
+    margin: 0.3em 2em 0em 2em;
 }
 
 
@@ -1991,7 +1996,7 @@ div.dataTables_wrapper div.dataTables_filter {
     left: 550px;
     margin: auto;
     margin-top: 12px;
-    width: 93%;
+    width: auto;
     z-index:1;
 }
 .accordion.valueAdvance .inputSearchs {
@@ -2003,7 +2008,7 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .accordianErrorDetails ul li {
     list-style: none;
-    color: var(--error);
+    color: white;
     display: inline;
     margin-right: 10px;
 }
@@ -2019,4 +2024,5 @@ div.dataTables_wrapper div.dataTables_filter {
     height: auto;
     width: 330px;
     border: 1px solid var(--blue);
+    z-index:99;
 }

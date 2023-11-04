@@ -46,8 +46,8 @@ namespace Eltizam.Business.Core.Implementation
                 if (objRole != null)
                 {
                     objRole = _mapperFactory.Get<MasterRoleEntity, MasterRole>(masterRoleEntity);
-                    objRole.ModifyBy = LoggedUserId;
-                    objRole.ModifyDate = AppConstants.DateTime;
+                    objRole.ModifiedBy = LoggedUserId;
+                    objRole.ModifiedDate = AppConstants.DateTime;
                     _repository.UpdateAsync(objRole);
 
                     await _unitOfWork.SaveChangesAsync();

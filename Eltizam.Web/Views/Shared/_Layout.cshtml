@@ -72,12 +72,15 @@
             </div>
 
             @RenderBody()
+
+            @Html.Partial("_ManagePageFooter")
         </div>
 
-        <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
+        <input type="hidden" id="hdnAPIURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
         <input type="hidden" id="hdnWebBaseURL" />
         <input type="hidden" id="successToaster" value="@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]" />
         <input type="hidden" id="errorToaster" value="@TempData[Eltizam.Web.Helpers.UserHelper.ErrorMessage]" />
+        <input type="hidden" id="ChangePasswordUrl" value="@Eltizam.Web.Helpers.APIURLHelper.ChangePassword" />
     </div>
 
 
@@ -113,10 +116,11 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script src="~/AdminLTE/plugins/toastr/toastr.min.js"></script>
-    <script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/Custom/CustomDateFormat.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/Custom/JqueryExtension.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/main.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/CustomDateFormat.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/JqueryExtension.js?v=@jsVersion"></script>
     <script type="text/javascript" Src="~/js/custom/commonscript.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/topheader.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("MyScripts", required: false)

@@ -39,7 +39,8 @@ namespace Eltizam.Web.Helpers
         public static string GetAll = "api/MasterUser/GetAll";
         public static string UpsertUser = "api/MasterUser/Upsert";
         public static string GetUserById = "api/MasterUser/GetById";
-        public static string DeleteUserById = "api/MasterUser/Delete"; 
+        public static string DeleteUserById = "api/MasterUser/Delete";
+        public static string GetFooterDetails = "api/MasterUser/GetFooterDetails";
 
         #endregion User
 
@@ -74,6 +75,7 @@ namespace Eltizam.Web.Helpers
         public static string GetPropertyTypeById = "api/MasterPropertyType/GetById";
         public static string DeletePropertyTypeById = "api/MasterPropertyType/Delete";
         public static string GetPropertyTypeList = "api/MasterPropertyType/GetAllList";
+        public static string CheckPropertyTypeExists = "api/MasterPropertyType/CheckPropertTypeExists";
 
         #endregion MasterPropertyType
 
@@ -198,6 +200,8 @@ namespace Eltizam.Web.Helpers
 
         public static string GetAllValuationRequest = "api/ValuationRequest/GetAllValuationRequest";
         public static string GetAllValuationRequestStatus = "api/ValuationRequestStatus/GetAll";
+        public static string AssignApprover = "api/ValuationRequest/AssignApprover";
+        public static string ValuationMethod = "api/ValuationRequest/GetAllValuationMethod";
 
         #endregion Valuation Request
 

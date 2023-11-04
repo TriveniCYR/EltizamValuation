@@ -102,7 +102,7 @@ function GetLocationById(id) {
     BindCountry();
     BindState();
     BindCity();
-    ajaxServiceMethod($('#hdnBaseURL').val() + GetLocationByIdUrl + "/" + id, 'GET', GetLocationByIdSuccess);
+    ajaxServiceMethod(BaseURL + GetLocationByIdUrl + "/" + id, 'GET', GetLocationByIdSuccess);
 }
 function GetLocationByIdSuccess(data) { 
     try { 
@@ -157,7 +157,7 @@ function BindState() {
     var State = $("#StateId") + StateList;
     $.ajax({
         type: "GET",
-        url: $('#hdnBaseURL').val() + StateList,
+        url: BaseURL + StateList,
         "datatype": "json",
         success: function (response) {
             ;
@@ -179,13 +179,11 @@ function BindState() {
     });
 }
 
-function BindCity() {
-
-    //var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
+function BindCity() {  
     var City = $("#CityId") + CityList;
     $.ajax({
         type: "GET",
-        url: $('#hdnBaseURL').val() + CityList,
+        url: BaseURL + CityList,
         "datatype": "json",
         success: function (response) {
             ;

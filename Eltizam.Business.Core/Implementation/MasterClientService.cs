@@ -169,7 +169,7 @@ namespace Eltizam.Business.Core.Implementation
                     objClient.IsActive = master_ClientModel.IsActive;
                     objClient.Logo = master_ClientModel.Logo;
                     objClient.ModifiedDate = AppConstants.DateTime;
-                    objClient.ModidiedBy = master_ClientModel.CreatedBy;
+                    objClient.ModifiedBy = master_ClientModel.CreatedBy;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objClient);
@@ -187,7 +187,7 @@ namespace Eltizam.Business.Core.Implementation
                 objClient.CreatedDate = AppConstants.DateTime;
                 objClient.CreatedBy = master_ClientModel.CreatedBy;
                 objClient.ModifiedDate = AppConstants.DateTime;
-                objClient.ModidiedBy = master_ClientModel.CreatedBy;
+                objClient.ModifiedBy = master_ClientModel.CreatedBy;
 
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objClient);

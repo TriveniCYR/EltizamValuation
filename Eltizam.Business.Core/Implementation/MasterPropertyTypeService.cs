@@ -236,6 +236,12 @@ namespace Eltizam.Business.Core.Implementation
             
         }
 
+        public async Task<bool> CheckDuplicatePropertyType(string PropertyType)
+        {
+            var dd = 1;
+            return false;
+        }
+
         #endregion API Methods
     }
 }

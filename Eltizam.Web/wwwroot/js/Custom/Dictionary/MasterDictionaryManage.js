@@ -1,59 +1,23 @@
-﻿
-//starts dynamic input button
-let blockCounter = 1;
-
-function addInputDictionary() {
-    const inputPropField = document.querySelector(".addPropertyInputDynamic");
-    const uniqueId = `status-${blockCounter}`;
-
-    const newBlock = document.createElement("div");
-    newBlock.className = "inputFieldProp";
-    newBlock.innerHTML = `
-    <label for="">
-
-        <input type="text" placeholder="Dictionary Value">
-    </label>
-    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeAddPropInput(this)">
-        `;
-
-    inputPropField.appendChild(newBlock);
-    blockCounter++;
-}
-
-function removeAddPropInput(element) {
-    const newAddedDiv = element.parentElement;
-    newAddedDiv.remove();
-}
-
+﻿ //--- Save dictionary details for each value ------
 function SaveMasterDictionary() {  
-    var MasterDictionaryEntity = {
-        'Id': '',
-        'Description': '',
-        'IsActive': '',
+    var Dict = {
+        'Id': $("#hdnPropertyId").val(),
+        'Description': $("#Description").val(),
+        'IsActive': $('#isActiveT')[0].checked,
         'MasterDicitonaryDetails': []
-    }
-    MasterDictionaryEntity.Id = document.getElementById('hdnPropertyId').value; debugger;
-    MasterDictionaryEntity.Description = document.getElementById('Description').value;
-    MasterDictionaryEntity.IsActive = $('#addLocation')[0].checked;
+    }  
 
-    var DynamicMasterPropertySubTypes = $(".addPropertyInputDynamic :input");  
-    var ExistingMasterPropertySubTypes = $(".propertySubTypeContainer :input[type='text']");
-    for (var i = 0; i < DynamicMasterPropertySubTypes.length; i++) {     
+    var Inputs = $(".addPropertyInputDynamic :input");
+    for (var i = 0; i < Inputs.length; i++) {
         var objDynamic = {
-            'Id': 0,
-            'Description': DynamicMasterPropertySubTypes[i].value,
+            'Id': Inputs[i].id,
+            'Description': Inputs[i].value,
         }
-        MasterDictionaryEntity.MasterDicitonaryDetails.push(objDynamic);        
+        Dict.MasterDicitonaryDetails.push(objDynamic);
     }
 
-    for (var j = 0; j < ExistingMasterPropertySubTypes.length; j++) {       
-        var objExisting = {
-            'Id': ExistingMasterPropertySubTypes[j].id,
-            'Description': ExistingMasterPropertySubTypes[j].value,
-        }
-        MasterDictionaryEntity.MasterDicitonaryDetails.push(objExisting);       
-    }
-    console.log(JSON.stringify(MasterDictionaryEntity));  
+    var MasterDictionaryEntity = Dict;
+
     $.ajax({
         type: Post,
         url: BaseURL + MasterDictionaryUpsert,
@@ -63,24 +27,18 @@ function SaveMasterDictionary() {
             'Content-Type': 'application/json'
         },
         data: JSON.stringify(MasterDictionaryEntity),
-        success: function (response) {
-            window.location.href = "/MasterDictionary/Dictionary";
+        success: function (response) { 
+            toastr.success(SucessMsg);
+            setTimeout(function () {
+                window.location.href = "/MasterDictionary/Dictionary";
+            }, 1000);
         },
         failure: function (response) {
-            alert(response.responseText);
+            toastr.error(ErrorMsg);
         },
         error: function (response) {
-            alert('error occured!');
-            alert(response.responseText);
+            toastr.error(ErrorMsg);
             $("#loader").hide();
         }
-    });
-    //document.getElementById('hdnPropertyId').value = ''; // Clear Id
-    //document.getElementById('Description').value = ''; // Clear Description
-    //$('#addLocation').prop('checked', false); // Uncheck IsActive
-
-    //// Clear dynamic and existing input fields as needed
-    //$(".addPropertyInputDynamic").empty();
-    //$(".propertySubTypeContainer").empty();
-   
+    }); 
 }

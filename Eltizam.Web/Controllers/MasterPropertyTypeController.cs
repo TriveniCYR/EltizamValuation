@@ -1,5 +1,6 @@
 ﻿using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Models;
@@ -8,6 +9,7 @@ using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace EltizamValuation.Web.Controllers
 {
@@ -109,8 +111,7 @@ namespace EltizamValuation.Web.Controllers
             }
         }
 
-        [HttpGet]
-        //  [Route(" MasterPropertyType/PropertyTypeManage")]
+        [HttpGet] 
         public IActionResult PropertyTypeDetail(int? id)
         {
             if (id != null)
@@ -143,5 +144,38 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet]
+        [Route("CheckPropertTypeExists")]
+        public IActionResult CheckPropertTypeExists(string PropertyType)
+        {
+            try
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.CheckPropertyTypeExists + "?PropertyType=" + PropertyType, HttpMethod.Get, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                        TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]); 
+                    }
+                    else
+                    {
+                        TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result); 
+                    }
+                }
+
+                return null;
+            } 
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
     }
 }

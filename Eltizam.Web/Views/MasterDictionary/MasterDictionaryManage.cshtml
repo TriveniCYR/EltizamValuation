@@ -58,14 +58,14 @@
 
                             <label for="" class="w-50"> 
                                 Status 
-                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
-                                <label class="label-switch" for="addLocation"></label>
+                                <input type="checkbox" id="isActiveT" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
+                                <label class="label-switch" for="isActiveT"></label>
                                 <span class="info-text" style="top:-20px;"></span>                               
                             </label>
                         </div>
                         <div class="dynamicInput">
                             <div class="addMoreInput buttonArea">
-                                <button type="button" class="blueBtn" onclick="addInputDictionary()">+ Add Values</button>
+                                <button type="button" class="blueBtn" onclick="addDynamicTextbox()">+ Add Values</button>
                             </div>
                             <div class="addPropertyInputDynamic"></div>
                         </div>
@@ -81,7 +81,7 @@
                                         </label>
                                         @if (i >= 0)
                                         {
-                                            <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeAddPropInput(this)">
+                                            <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeDynamicTextbox(this)">
                                         }
                                     </div>
                                 }
@@ -103,8 +103,8 @@
 
 
 <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="~/js/Custom/main.js?v=@jsVersion"></script>
-<script type="text/javascript" src="~/js/Custom/Dictionary/MasterDictionaryManage.js?v=@jsVersion"></script>
+<script type="text/javascript" src="~/js/custom/main.js?v=@jsVersion"></script>
+<script type="text/javascript" src="~/js/custom/Dictionary/MasterDictionaryManage.js?v=@jsVersion"></script>
 
 @section MyScripts
     {

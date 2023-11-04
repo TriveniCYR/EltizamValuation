@@ -31,8 +31,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
-       
-      
+
+
         public MasterUserService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
                                   IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
@@ -47,8 +47,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
             configuration = _configuration;
             _helper = helper;
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
-            
-           
+
+
         }
 
         public async Task<UserSessionEntity> Login(LoginViewModel oLogin)
@@ -183,8 +183,6 @@ namespace Eltizam.Business.Core.ServiceImplementations
             };
 
             var Results = await _repository.GetBySP(ProcedureMetastore.usp_User_SearchAllList, CommandType.StoredProcedure, osqlParameter);
-            //var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
-            //var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
 
             //Get Pagination information
             var res = UtilityHelper.GetPaginationInfo(Results);
@@ -202,21 +200,24 @@ namespace Eltizam.Business.Core.ServiceImplementations
             {
                 DbParameter[] osqlParameter =
                 {
-                 new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", TableName.Master_User, SqlDbType.VarChar),
+                 new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                 new DbParameter(AppConstants.TableName, TableName.Master_User, SqlDbType.VarChar),
                 };
-                var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
+                var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, 
+                                  DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (UserAddress != null)
                 {
                     _userEntity.Address = UserAddress;
 
                 }
 
-                DbParameter[] osqlParameter1 = {
-                 new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", TableName.Master_User, SqlDbType.VarChar),
+                DbParameter[] osqlParameter1 =
+                {
+                 new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                 new DbParameter(AppConstants.TableName, TableName.Master_User, SqlDbType.VarChar),
                 };
-                var UserQualification = EltizamDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureMetastore.usp_Qualification_GetQualificationByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
+                var UserQualification = EltizamDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureMetastore.usp_Qualification_GetQualificationByTableKeyId, 
+                                        DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
                 if (UserQualification != null)
                 {
                     _userEntity.Qualification = UserQualification;
@@ -224,17 +225,20 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 }
 
 
-                DbParameter[] osqlParameter2 = {
-                 new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName",  TableName.Master_User, SqlDbType.VarChar),
+                DbParameter[] osqlParameter2 =
+                {
+                 new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                 new DbParameter(AppConstants.TableName,  TableName.Master_User, SqlDbType.VarChar),
                 };
-                var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
+
+                var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, 
+                                    DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
                 if (UserDocuments != null)
                 {
-                    _userEntity.Documents = UserDocuments;
-
+                    _userEntity.Documents = UserDocuments; 
                 }
             }
+
             return _userEntity;
         }
 
@@ -245,7 +249,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 entityUser.Password = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.Password);
                 entityUser.ConfirmPassowrd = entityUser.Password;
             }
-            entityUser.DateOfBirth = AppConstants.DateTime;
+            //entityUser.DateOfBirth = AppConstants.DateTime;
             MasterUser objUser;
             MasterAddress objUserAddress;
             MasterQualification objUserQualification;
@@ -256,8 +260,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 objUser = _repository.Get(entityUser.Id);
                 var OldObjUser = objUser;
                 if (objUser != null)
-                {
-
+                { 
                     objUser.FirstName = entityUser.FirstName;
                     objUser.MiddleName = entityUser.MiddleName;
                     objUser.LastName = entityUser.LastName;
@@ -273,12 +276,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     objUser.IsActive = entityUser.IsActive;
                     objUser.ModifiedBy = entityUser.CreatedBy;
                     objUser.ModifiedDate = AppConstants.DateTime;
+                    objUser.RoleId = entityUser.RoleId; 
+                    objUser.Email = entityUser.Email;
+
                     _repository.UpdateAsync(objUser);
-                }
-                else
-                {
-                    return DBOperation.NotFound;
-                }
+                } 
             }
             else
             {
@@ -291,6 +293,8 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 _repository.AddAsync(objUser);
             }
             await _unitOfWork.SaveChangesAsync();
+
+
             if (objUser.Id == 0)
                 return DBOperation.Error;
             else
@@ -337,12 +341,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         objUserAddress.ModifiedDate = AppConstants.DateTime;
                         _addressRepository.AddAsync(objUserAddress);
                     }
-                    await _unitOfWork.SaveChangesAsync();
-
+                    await _unitOfWork.SaveChangesAsync(); 
                 }
-                if (entityUser.Qualification != null)
-                {
 
+                if (entityUser.Qualification != null)
+                { 
                     if (entityUser.Qualification.Id > 0)
                     {
                         objUserQualification = _qualifyRepository.Get(entityUser.Qualification.Id);
@@ -374,6 +377,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     }
                     await _unitOfWork.SaveChangesAsync();
                 }
+
                 if (entityUser.uploadDocument != null)
                 {
                     foreach (var doc in entityUser.uploadDocument)
@@ -429,11 +433,9 @@ namespace Eltizam.Business.Core.ServiceImplementations
             return DBOperation.Success;
         }
         public async Task<DBOperation> ChangePassword(ChangePasswordModel entityUser)
-        {
-            //int userId = _LoginUserId ?? 0;
-
+        { 
             int userId = 1;//_LoginUserId; //_helper.GetLoggedInUser().UserId;
-            entityUser.UserId= userId;
+            entityUser.UserId = userId;
             if (entityUser.UserId >= 0 && entityUser.NewPassword == entityUser.ConfirmPassword)
             {
                 entityUser.NewPassword = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.NewPassword);
@@ -460,15 +462,38 @@ namespace Eltizam.Business.Core.ServiceImplementations
             await _unitOfWork.SaveChangesAsync();
             return DBOperation.Success;
         }
+
         public async Task<List<MasterUserListModel>> GetApproverList(int id)
         {
-            DbParameter[] osqlParameter1 = {
+            DbParameter[] osqlParameter1 = 
+            {
                  new DbParameter("UserId", id, SqlDbType.Int)
             };
+
             var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserListModel>(ProcedureMetastore.usp_Approver_AllList,
-             DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter1);
+                         DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter1);
 
             return lstStf;
+        }
+
+        /// <summary>
+        /// Get Footer by Table Name, Key
+        /// </summary>
+        /// <param name="TableKeyId"></param>
+        /// <param name="TableName"></param>
+        /// <returns></returns>
+        public async Task<FooterDetails?> GetFooterDetails(int TableKeyId, string TableName)
+        {
+            DbParameter[] p1 =
+            {
+                 new DbParameter(AppConstants.TableKeyId, TableKeyId, SqlDbType.Int),
+                 new DbParameter(AppConstants.TableName, TableName, SqlDbType.VarChar)
+            };
+
+            var data = EltizamDBHelper.ExecuteSingleMappedReader<FooterDetails>(ProcedureMetastore.usp_GetPageFooterDetails,
+                       DatabaseConnection.ConnString, CommandType.StoredProcedure, p1);
+
+            return data;
         }
     }
 }

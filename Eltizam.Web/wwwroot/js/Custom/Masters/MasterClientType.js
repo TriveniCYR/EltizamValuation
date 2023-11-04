@@ -58,7 +58,7 @@ function AddClientType() {
 function SaveClientTypeForm(form) { 
     $.validator.unobtrusive.parse(form);
     if ($(form).valid()) {
-        ajaxServiceMethod($('#hdnBaseURL').val() + SaveClientType, 'POST', SaveClientTypeFormSuccess, SaveClientTypeFormError, JSON.stringify(getFormData($(form))));
+        ajaxServiceMethod(BaseURL + SaveClientType, 'POST', SaveClientTypeFormSuccess, SaveClientTypeFormError, JSON.stringify(getFormData($(form))));
     }
     return false;
 }

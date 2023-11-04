@@ -196,7 +196,7 @@
     <value>Deleted successfully.</value>
   </data>
   <data name="RecordInsertUpdate" xml:space="preserve">
-    <value>Saved successfully.</value>
+    <value>Action performed successfully.</value>
   </data>
   <data name="Reject" xml:space="preserve">
     <value>Reject</value>

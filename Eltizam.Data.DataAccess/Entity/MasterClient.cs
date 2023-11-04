@@ -26,7 +26,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int? ModidiedBy { get; set; }
+        public int? ModifiedBy { get; set; }
 
         public virtual MasterClientType? ClientType { get; set; }
         public virtual ICollection<MasterClientContact> MasterClientContacts { get; set; }

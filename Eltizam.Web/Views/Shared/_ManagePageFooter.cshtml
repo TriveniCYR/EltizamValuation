@@ -1,0 +1,30 @@
+﻿@using Eltizam.Web.Helpers;
+@using Eltizam.Business.Models;
+
+@{
+    var data = (FooterDetails)ViewBag.FooterInfo;
+    var href = "MasterUser/" + ((data == null || data.CreatedBy == null)   ? "Users" : "ManageUser?id=" + data.CreatedBy.ToString());
+    var href2 = "MasterUser/" + ((data == null || data.ModifiedBy == null) ? "Users" : "ManageUser?id=" + data.ModifiedBy.ToString());
+}
+
+@*//Show footer for page if data exists*@
+@if (data != null)
+{
+    <div class="heading position-relative flex justify-between" style="margin:0em 2em; background:white;">
+        <h3 class="dashboardTitle"></h3>
+        <div class="hamburger">
+            <input type="hidden" id="CreatedBy" value="@data.CreatedBy" />
+            <span>Created By</span><img src="../assets/right-arrow.svg" alt="hamburger-icon">
+            <a class="greyBtn lineBtn formAbtn" href="@href">@data.CreatedByName</a>
+            <br>
+            <span style="padding-left:2.5em;"> Date</span><img src="../assets/right-arrow.svg" alt="hamburger-icon"><p>@data.CreatedDate</p>
+        </div>
+        <div class="hamburger">
+            <input type="hidden" id="ModifiedBy" value="@data.ModifiedBy" />
+            <span>Last Updated By</span><img src="../assets/right-arrow.svg" alt="hamburger-icon">
+            <a class="greyBtn lineBtn formAbtn" href="@href2">@data.ModifiedByName</a> <br>
+            <span style="padding-left:2.5em;">Date</span><img src="../assets/right-arrow.svg" alt="hamburger-icon"><p>@data.ModifiedDate</p>
+        </div>
+    </div>
+}
+
