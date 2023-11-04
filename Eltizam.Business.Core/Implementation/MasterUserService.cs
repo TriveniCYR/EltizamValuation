@@ -475,5 +475,25 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
             return lstStf;
         }
+
+        /// <summary>
+        /// Get Footer by Table Name, Key
+        /// </summary>
+        /// <param name="TableKeyId"></param>
+        /// <param name="TableName"></param>
+        /// <returns></returns>
+        public async Task<FooterDetails?> GetFooterDetails(int TableKeyId, string TableName)
+        {
+            DbParameter[] p1 =
+            {
+                 new DbParameter(AppConstants.TableKeyId, TableKeyId, SqlDbType.Int),
+                 new DbParameter(AppConstants.TableName, TableName, SqlDbType.VarChar)
+            };
+
+            var data = EltizamDBHelper.ExecuteSingleMappedReader<FooterDetails>(ProcedureMetastore.usp_GetPageFooterDetails,
+                       DatabaseConnection.ConnString, CommandType.StoredProcedure, p1);
+
+            return data;
+        }
     }
 }

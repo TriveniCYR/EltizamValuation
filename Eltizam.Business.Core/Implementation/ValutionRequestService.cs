@@ -101,8 +101,8 @@ namespace Eltizam.Business.Core.Implementation
                             var valuationEntity = _repository.Get(id);
                             valuationEntity.ApproverId = model.ApprovorId;
                             valuationEntity.AssignRemark = model.Remarks;
-                            valuationEntity.ModifyBy = _LoginUserId;
-                            valuationEntity.ModifyDate = AppConstants.DateTime;
+                            valuationEntity.ModifiedBy = _LoginUserId;
+                            valuationEntity.ModifiedDate = AppConstants.DateTime;
                             _repository.UpdateAsync(valuationEntity);
                         }
                         await _unitOfWork.SaveChangesAsync();
@@ -128,8 +128,8 @@ namespace Eltizam.Business.Core.Implementation
                     valuationEntity.ApproverId = model.ApprovorId;
                     valuationEntity.ApproverComment = model.ApprovorComment;
                     valuationEntity.StatusId = model.StatusId;
-                    valuationEntity.ModifyBy = _LoginUserId;
-                    valuationEntity.ModifyDate = AppConstants.DateTime;
+                    valuationEntity.ModifiedBy = _LoginUserId;
+                    valuationEntity.ModifiedDate = AppConstants.DateTime;
                     _repository.UpdateAsync(valuationEntity);
 
                     await _unitOfWork.SaveChangesAsync();

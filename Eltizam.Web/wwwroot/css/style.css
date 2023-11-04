@@ -494,7 +494,7 @@ header {
     }
 
 main {
-    padding: 0 28px 80px;
+    padding: 0 25px 25px;
 }
 
     main .dashboardTitle {
@@ -1040,7 +1040,7 @@ img#closePopup {
     }
 
 .bodyContent {
-    padding: 19px 18px 29px 18px;
+    padding: 19px;
 }
 
     .bodyContent .imgBox {

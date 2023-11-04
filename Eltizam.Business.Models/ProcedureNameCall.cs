@@ -57,6 +57,7 @@ namespace Eltizam.Business.Models
         public static string usp_Approver_AllList = "usp_Approver_AllList";
 
         public static string usp_InsertException = "usp_InsertException";
+        public static string usp_GetPageFooterDetails = "usp_GetPageFooterDetails";
         
         //Vendor 
         public static string usp_Vendor_Search_GetVendorList = "usp_Vendor_Search_GetVendorList";

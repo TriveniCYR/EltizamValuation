@@ -44,6 +44,6 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string Master_User = "Master_User";
         public static string Master_Client = "Master_Client";
         public static string Master_Vendor = "Master_Vendor";
-        public static string Master_Dictionary = "Master_Dictionary";
+        public static string Master_Dictionary = "Master_Dictionary"; 
     }
 }

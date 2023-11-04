@@ -1,5 +1,6 @@
 ﻿using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -58,9 +59,17 @@ namespace EltizamValuation.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
-                    if (data._object is null)
-                        return NotFound();
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse); 
+
+                    //Get Footer info
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetFooterDetails, id, TableName.Master_User);
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<FooterDetails>(json); 
+                    }
+
                     return View(data._object);
                 }
                 return NotFound();
@@ -76,7 +85,7 @@ namespace EltizamValuation.Web.Controllers
                 {
                     masterUser.Email ??= masterUser.Address?.Email;
 
-                    if (masterUser.Document!= null && masterUser.Document.Files != null)
+                    if (masterUser.Document != null && masterUser.Document.Files != null)
                     {
                         List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
                         masterUser.uploadDocument = docs;
@@ -85,7 +94,7 @@ namespace EltizamValuation.Web.Controllers
 
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
-                }
+                } 
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);

@@ -25,8 +25,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ApproverUpdateDate { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int? ModifyBy { get; set; }
-        public DateTime? ModifyDate { get; set; }
+        public int? ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public int? ValuerId { get; set; }
         public string? ValuerComment { get; set; }
         public DateTime? ValuerUpdateDate { get; set; }

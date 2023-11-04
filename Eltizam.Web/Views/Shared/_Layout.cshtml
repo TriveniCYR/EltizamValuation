@@ -72,6 +72,8 @@
             </div>
 
             @RenderBody()
+
+            @Html.Partial("_ManagePageFooter")
         </div>
 
         <input type="hidden" id="hdnAPIURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
