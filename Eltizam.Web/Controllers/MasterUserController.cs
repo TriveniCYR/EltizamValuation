@@ -67,7 +67,7 @@ namespace EltizamValuation.Web.Controllers
                     if (footerRes.IsSuccessStatusCode)
                     {
                         string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<FooterDetails>(json); 
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<FooterDetails>(json);
                     }
 
                     return View(data._object);
@@ -94,7 +94,17 @@ namespace EltizamValuation.Web.Controllers
 
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
+
+                    //Fill audit logs field
+                    if (masterUser.Id == 0)
+                    {
+                        masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                        masterUser.CreatedDate = AppConstants.DateTime;
+                    }
+                    masterUser.ModifiedBy ??= _helper.GetLoggedInUserId();
+                    masterUser.ModifiedDate = AppConstants.DateTime; 
                 } 
+
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);

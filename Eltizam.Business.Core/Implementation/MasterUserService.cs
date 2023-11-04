@@ -1,4 +1,5 @@
-﻿using Eltizam.Business.Core.Interface;
+﻿using Eltizam.Business.Core.Implementation;
+using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Core.ModelMapper;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
@@ -28,13 +29,15 @@ namespace Eltizam.Business.Core.ServiceImplementations
         private IRepository<MasterQualification> _qualifyRepository { get; set; }
         private IRepository<MasterDocument> _documentRepository { get; set; }
         private IRepository<EmailLogHistory> _emailLog { get; set; }
+        private readonly IAuditLogService _auditLogService;
 
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
 
 
         public MasterUserService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
-                                  IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
+                                  IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration,
+                                  IAuditLogService auditLogService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -47,8 +50,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
             configuration = _configuration;
             _helper = helper;
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
-
-
+            _auditLogService = auditLogService;
         }
 
         public async Task<UserSessionEntity> Login(LoginViewModel oLogin)
@@ -249,6 +251,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 entityUser.Password = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.Password);
                 entityUser.ConfirmPassowrd = entityUser.Password;
             }
+
             //entityUser.DateOfBirth = AppConstants.DateTime;
             MasterUser objUser;
             MasterAddress objUserAddress;
@@ -259,6 +262,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
             {
                 objUser = _repository.Get(entityUser.Id);
                 var OldObjUser = objUser;
+
                 if (objUser != null)
                 { 
                     objUser.FirstName = entityUser.FirstName;
@@ -280,6 +284,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     objUser.Email = entityUser.Email;
 
                     _repository.UpdateAsync(objUser);
+                    await _unitOfWork.SaveChangesAsync();
+                    
+                    //Do Audit log
+                    await _auditLogService.CreateAuditLog(Utility.Enums.AuditActionTypeEnum.Update,
+                           Utility.Enums.ModuleEnum.MasterUser, OldObjUser, objUser, (int)objUser.Id);
                 } 
             }
             else
@@ -290,9 +299,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 objUser.CreatedDate = AppConstants.DateTime;
                 objUser.ModifiedBy = entityUser.CreatedBy;
                 objUser.ModifiedDate = AppConstants.DateTime;
+
                 _repository.AddAsync(objUser);
+                await _unitOfWork.SaveChangesAsync();
             }
-            await _unitOfWork.SaveChangesAsync();
+            
 
 
             if (objUser.Id == 0)

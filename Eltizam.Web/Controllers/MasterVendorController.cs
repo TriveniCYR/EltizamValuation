@@ -24,22 +24,11 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
+
         public IActionResult Vendors()
         {
             try
-            {
-                //HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                //APIRepository objapi = new APIRepository(_cofiguration);
-                //MasterUserModel oUserList = new MasterUserModel();
-                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAll, HttpMethod.Post, token).Result;
-                //if (responseMessage.IsSuccessStatusCode)
-                //{
-                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                //    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterUserModel>>>(jsonResponse);
-                //    oUserList.Users = data._object;
-
-                //    return View();
-                //}
+            { 
                 return View();
             }
             catch (Exception e)
@@ -48,9 +37,7 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 return View("Login");
-            }
-            return View();
-
+            } 
         }
 
         public IActionResult VendorManage(int? id)
@@ -79,17 +66,15 @@ namespace EltizamValuation.Web.Controllers
                     {
                         string json = footerRes.Content.ReadAsStringAsync().Result;
                         ViewBag.FooterInfo = JsonConvert.DeserializeObject<FooterDetails>(json);
-                    }
-
-
-                    if (data._object is null)
-                        return NotFound();
-
+                    } 
+                     
                     return View(data._object);
                 }
                 return NotFound();
             }
         }
+
+
         [HttpPost]
         public IActionResult VendorManage(int id, MasterVendorModel masterUser)
         {
@@ -154,6 +139,8 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+
+
         private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
         {
             List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();
