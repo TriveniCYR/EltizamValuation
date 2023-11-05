@@ -238,6 +238,12 @@ namespace Eltizam.Business.Core.ServiceImplementations
             return _userEntity;
         }
 
+        /// <summary>
+        /// User save code
+        /// 
+        /// </summary>
+        /// <param name="entityUser"></param>
+        /// <returns></returns>
         public async Task<DBOperation> Upsert(MasterUserModel entityUser)
         { 
             if (!string.IsNullOrEmpty(entityUser.Password) && entityUser.Id <= 0)
@@ -254,9 +260,10 @@ namespace Eltizam.Business.Core.ServiceImplementations
             string MainTableName = Enum.GetName(TableNameEnum.Master_User); 
             int MainTableKey = entityUser.Id;
 
+            //User details
             if (entityUser.Id > 0)
             {
-                //Old entity
+                //Old entity --- AUDITLOGUSER
                 MasterUser OldEntity = null; 
                 OldEntity = _repository.GetNoTracking(entityUser.Id); 
 
@@ -279,13 +286,13 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     objUser.IsActive = entityUser.IsActive; 
                     objUser.RoleId = entityUser.RoleId; 
                     objUser.Email = entityUser.Address?.Email ?? entityUser.Email;
-                    objUser.ModifiedBy = entityUser.ModifiedBy; 
+                    objUser.ModifiedBy = entityUser.ModifiedBy;
 
-                    // _repository.UpdateAsync(objUser); 
+                    // _repository.UpdateAsync(objUser); --- AUDITLOGUSER
                     _repository.UpdateGraph(objUser, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
-                    //Do Audit Log 
+                    //Do Audit Log --- AUDITLOGUSER
                     await _auditLogService.CreateAuditLog<MasterUser>(AuditActionTypeEnum.Update, OldEntity, objUser); 
                 } 
             }
@@ -304,6 +311,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 return DBOperation.Error;
             else
             {
+                //Address details
                 if (entityUser.Address != null)
                 { 
                     if (entityUser.Address.Id > 0)
@@ -354,6 +362,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     } 
                 } 
 
+                //Qualification details
                 if (entityUser.Qualification != null)
                 {
                     var Qlfc = entityUser.Qualification;
