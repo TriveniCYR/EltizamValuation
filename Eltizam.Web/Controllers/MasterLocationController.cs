@@ -1,6 +1,7 @@
 ﻿using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility.Enums;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Humanizer.Localisation;
@@ -78,7 +79,7 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
 
                     //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, TableName.Master_Location);
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Location));
                     var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
                     if (footerRes.IsSuccessStatusCode)
                     {

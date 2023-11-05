@@ -1,6 +1,7 @@
 ﻿using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility.Enums;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -61,7 +62,7 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
 
                     //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, TableName.ValuationRequest);
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.ValuationRequest));
                     var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
                     if (footerRes.IsSuccessStatusCode)
                     {

@@ -6,8 +6,8 @@ namespace Eltizam.Business.Core.Interface
 {
     public interface IAuditLogService
     {
-        Task<bool> CreateAuditLog<TResult>(AuditActionTypeEnum auditActionType, TResult Old, TResult New, 
-                    string TableName, int? TableKeyId) where TResult : new();
+        Task<bool> CreateAuditLog<TResult>(AuditActionTypeEnum auditActionType, TResult oldEntity, TResult newEntity,
+                   string? PTName = null, int? PTId = null) where TResult : new();
 
         Task<List<AuditLogModel>> GetAllAuditLog();
 

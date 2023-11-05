@@ -1,21 +1,16 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Resource;
+using Eltizam.Utility.Models;
+using Eltizam.Utility.Utility;
+using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using System.Security.Claims;
-using System.Security.Principal;
-using Eltizam.Business.Models;
-using Eltizam.Resource;
-using Eltizam.Web.Helpers;
-using Eltizam.Utility.Utility;
-using Eltizam.Utility.Models;
-using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Data.DataAccess.Entity;
-using Microsoft.CodeAnalysis;
-using Microsoft.AspNetCore.Http;
 
 namespace Eltizam.Web.Controllers
 {
@@ -80,13 +75,13 @@ namespace Eltizam.Web.Controllers
                     }
                     else
                     {
-                        ViewBag.ErrorMessage = _stringLocalizer["InvalidUser"].Value; 
+                        TempData[UserHelper.ErrorMessage] = _stringLocalizer["InvalidUser"].Value; 
                         return View(loginViewModel);
                     }
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = _stringLocalizer["InvalidUser"].Value; 
+                    TempData[UserHelper.ErrorMessage] = _stringLocalizer["InvalidUser"].Value; 
                     return View(loginViewModel);
                 }
             }
@@ -154,18 +149,17 @@ namespace Eltizam.Web.Controllers
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ForgotPassword, HttpMethod.Post, string.Empty, new StringContent(JsonConvert.SerializeObject(forgotPasswordViewModel))).Result;
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    ViewBag.SuccessMessage = AppConstants.msgLinkToResetpasswordSentOnEmail;
-                    return View("ForgetPassword");
-
+                    TempData[UserHelper.SuccessMessage] = AppConstants.msgLinkToResetpasswordSentOnEmail;
+                    return View("ForgetPassword"); 
                 }
-                else //if (responseMessage.StatusCode == HttpStatusCode.BadRequest)
+                else  
                 {
-                    ViewBag.ErrorMessage = AppConstants.SomeErrorOccurred; 
+                    TempData[UserHelper.ErrorMessage] = AppConstants.SomeErrorOccurred; 
                 }
             }
             else
             {
-                ViewBag.ErrorMessage = AppConstants.msgEmailAddressNotExistIndatabase;
+                TempData[UserHelper.ErrorMessage] = AppConstants.msgEmailAddressNotExistIndatabase;
                 return View("ForgetPassword");
             }
             return View("ForgetPassword");
@@ -236,6 +230,7 @@ namespace Eltizam.Web.Controllers
                 {
                     string strValue = HttpContext.Request.Query["userToken"].ToString();
                     resetPasswordEntity.ForgotPasswordToken = strValue;
+
                     return View("ResetPassword", resetPasswordEntity);
                 }
                 else
@@ -262,17 +257,17 @@ namespace Eltizam.Web.Controllers
                 var data = JsonConvert.DeserializeObject<APIResponseEntity<string>>(jsonResponse);
                 if (data._object == "ResetSuccessfully")
                 {
-                    ViewBag.SuccessMessage = AppConstants.msgPasswordResetSuccessfully;//_stringLocalizer["msgPasswordResetSuccessfully"].Value;
+                    TempData[UserHelper.SuccessMessage] = AppConstants.msgPasswordResetSuccessfully;
                     return View("ResetPassword", masterUserresetpassword);
                 }
                 else if (data._object == "TokenExpired")
                 {
-                    ViewBag.ErrorMessage = AppConstants.msgResetPasswordTokenExpired;//_stringLocalizer["msgResetPasswordTokenExpired"].Value;
+                    TempData[UserHelper.ErrorMessage] = AppConstants.msgResetPasswordTokenExpired; 
                     return View("ResetPassword", masterUserresetpassword);
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = AppConstants.msgInvalidLink; //_stringLocalizer["msgInvalidLink"].Value;
+                    TempData[UserHelper.ErrorMessage] = AppConstants.msgInvalidLink;
                     
                 }
                 return View("ResetPassword", masterUserresetpassword);
@@ -312,8 +307,7 @@ namespace Eltizam.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    
-
+                    TempData[UserHelper.SuccessMessage] = AppConstants.ActionSuccess;
                     return RedirectToAction(nameof(Login));
                 }
                 else

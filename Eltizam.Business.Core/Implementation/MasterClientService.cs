@@ -7,6 +7,7 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
 using System;
@@ -74,13 +75,14 @@ namespace Eltizam.Business.Core.Implementation
             // Create a new Master_PropertyTypeModel instance.
             var _clientEntity = new MasterClientModel();
             _clientEntity = _mapperFactory.Get<MasterClient, MasterClientModel>(await _repository.GetAsync(id));
-           
+            var tableName = Enum.GetName(TableNameEnum.Master_Client);
+
             if (_clientEntity != null)
             {
                 DbParameter[] osqlParameter =
                 {
                      new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
-                     new DbParameter(AppConstants.TableName,  TableName.Master_Client, SqlDbType.VarChar),
+                     new DbParameter(AppConstants.TableName,  tableName, SqlDbType.VarChar),
                 };
                 var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterAddressEntity>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                 
@@ -90,7 +92,7 @@ namespace Eltizam.Business.Core.Implementation
                 DbParameter[] osqlParameter2 = 
                 {
                  new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
-                 new DbParameter(AppConstants.TableName, TableName.Master_Client, SqlDbType.VarChar),
+                 new DbParameter(AppConstants.TableName,  tableName, SqlDbType.VarChar),
                 };
 
                 var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter2);
@@ -242,7 +244,7 @@ namespace Eltizam.Business.Core.Implementation
                     // Create a new MasterClientContact entity from the model for insertion.
                     objAddress = _mapperFactory.Get<MasterAddressEntity, MasterAddress>(master_ClientModel.Address);
                     objAddress.TableKeyId = objClient.Id; // Associate with the MasterClient entity.
-                    objAddress.TableName = TableName.Master_Client;
+                    objAddress.TableName = Enum.GetName(TableNameEnum.Master_Client);
                     objAddress.CreatedDate = AppConstants.DateTime;
                     objAddress.CreatedBy = master_ClientModel.CreatedBy;
                     objAddress.ModifiedDate = AppConstants.DateTime;
@@ -259,7 +261,7 @@ namespace Eltizam.Business.Core.Implementation
                         objDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
                         objDocument.IsActive = doc.IsActive;
                         objDocument.TableKeyId = master_ClientModel.Id;
-                        objDocument.TableName = TableName.Master_Client;
+                        objDocument.TableName = Enum.GetName(TableNameEnum.Master_Client);
                         objDocument.DocumentName = doc.DocumentName;
                         objDocument.FileName = doc.FileName;
                         objDocument.FilePath = doc.FilePath;
@@ -300,7 +302,7 @@ namespace Eltizam.Business.Core.Implementation
                 DbParameter[] osqlParameter = 
                 {
                  new DbParameter(AppConstants.TableKeyId, id,                      SqlDbType.Int),
-                 new DbParameter(AppConstants.TableName,  TableName.Master_Client, SqlDbType.VarChar),
+                 new DbParameter(AppConstants.TableName,  Enum.GetName(TableNameEnum.Master_Client), SqlDbType.VarChar),
                 };
 
                 int result = EltizamDBHelper.ExecuteSingleMappedReader<int>(ProcedureMetastore.usp_Client_DeleteContactByClientId, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);

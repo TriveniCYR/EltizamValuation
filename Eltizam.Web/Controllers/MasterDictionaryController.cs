@@ -2,6 +2,7 @@
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility.Enums;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNetCore.Mvc;
@@ -72,7 +73,7 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterDictionaryEntity>>(jsonResponse);
 
                     //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, TableName.Master_Dictionary);
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Dictionary));
                     var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
                     if (footerRes.IsSuccessStatusCode)
                     {
@@ -241,6 +242,8 @@ namespace EltizamValuation.Web.Controllers
                 return RedirectToAction("DictionaryAllManage", new { Id = masterdictionary.DictionaryId });
             }
         }
+
+
         //[HttpPost]
         //public IActionResult DictionaryAllManage(int? Id, MasterDictionaryDetailById masterdictionary)
         //{
@@ -273,9 +276,7 @@ namespace EltizamValuation.Web.Controllers
         //        TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
         //        return RedirectToAction("DictionaryAllManage", new { Id = masterdictionary.DictionaryId });
         //    }
-        //}
-
-      
+        //} 
 
     }
 }

@@ -78,7 +78,7 @@ namespace Eltizam.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterRoleEntity>>(jsonResponse);
 
                     //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, TableName.Master_Role);
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Role));
                     var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
                     if (footerRes.IsSuccessStatusCode)
                     {

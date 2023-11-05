@@ -234,7 +234,8 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { }
+            { 
+            }
             dbContext.Entry(o).State = EntityState.Detached;
             return o;
         }
@@ -467,7 +468,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             TEntity originalEntity = GetOrignalEntity(entity);
              
             SetCommonPropertiesWhileUpdate(entity, originalEntity, IsCreatedDateUpdate);
-        }
+        } 
 
         public TEntity GetEntity(Expression<Func<TEntity, bool>> predicate)
         {
@@ -624,14 +625,14 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         /// Method to Update Parent and all child entities depending on the state of object.
         /// </summary>
         /// <param name="entity"></param>
-        public void UpdateGraph(TEntity entity)
+        public void UpdateGraph(TEntity entity, EntityState entityState)
         {
             dbContext.ChangeTracker.TrackGraph(entity, node =>
             {
                 var entry = node.Entry;
                 var childEntity = entry.Entity;
 
-                EntityState entityState = (EntityState)childEntity.GetType().GetProperty("EntityState").GetValue(childEntity);
+                // EntityState entityState = (EntityState)childEntity.GetType().GetProperty("EntityState").GetValue(childEntity);
 
                 switch (entityState)
                 {

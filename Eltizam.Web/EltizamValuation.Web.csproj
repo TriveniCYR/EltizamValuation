@@ -48,6 +48,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="..\.editorconfig" Link=".editorconfig" />
 		<None Include="Views\MasterRole\RoleManage.cshtml" />
 		<None Include="Views\MasterRole\Roles.cshtml" />
 		<None Include="wwwroot\js\custom\masteruser\UserManage.js" />

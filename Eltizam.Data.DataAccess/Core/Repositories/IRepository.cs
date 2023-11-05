@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -64,7 +65,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
 
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes);
 
-        void UpdateGraph(TEntity entity);
+        void UpdateGraph(TEntity entity, EntityState entityState);
 
         Task<IEnumerable<TEntity>> GetPagedSortedFilteredListAsync(int start, int length, string orderColumnName, ListSortDirection order, string searchValue);
 

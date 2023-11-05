@@ -11,17 +11,32 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public int? TableKeyId { get; set; }
         public string TableName { get; set; }
+        public int? ParentTableKeyId { get; set; }
+        public string? ParentTableName { get; set; }
         public string ActionType { get; set; }
         public string Log { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
     }
+    public class AuditLogModelResponse : AuditLogModel
+    { 
+        public string? CreatedByName { get; set; }
+        public List<AuditLogs> AuditLogListData { get; set; }
+    }
+
+    public class AuditLogs
+    {
+        public string? PropertyName { get; set; }
+        public string? OldValue { get; set; }
+        public string? NewValue { get; set; }
+        public string? DisplayName { get; set; }
+    }
+
     public class MasterAuditLogWrapperEntity<TLog>
     {
-        public int AuditLogId { get; set; }
-        public int? ModuleId { get; set; }
-
-        public int? EntityId { get; set; }
+        public int Id { get; set; }
+        public int? TableKeyId { get; set; }
+        public string TableName { get; set; }
         public string ActionType { get; set; }
         public IEnumerable<TLog> Log { get; set; }
         public int? CreatedBy { get; set; }

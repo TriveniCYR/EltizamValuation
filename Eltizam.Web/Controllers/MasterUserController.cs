@@ -1,12 +1,9 @@
 ﻿using Eltizam.Business.Models;
-using Eltizam.Data.DataAccess.Entity;
-using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility.Enums;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
-using Microsoft.Owin.BuilderProperties;
 using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
@@ -62,7 +59,7 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse); 
 
                     //Get Footer info
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, TableName.Master_User);
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_User));
                     var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
                     if (footerRes.IsSuccessStatusCode)
                     {
@@ -109,22 +106,19 @@ namespace EltizamValuation.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
-
-                    return RedirectToAction("Users");
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]); 
                 }
-                else
-                {
-                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
-                    return RedirectToAction("UserManage", new { id = masterUser.Id });
-                }
+                else 
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);  
+                
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-                return RedirectToAction("UserManage", new { Id = masterUser.Id });
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace); 
             }
+
+            return RedirectToAction("Users");
         }
 
         [HttpGet]
@@ -155,6 +149,8 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+
+
         private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
         {
             List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();

@@ -1,15 +1,10 @@
 ﻿using Eltizam.Business.Models;
-using Eltizam.Data.DataAccess.Entity;
-using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
-using Eltizam.Utility.Models;
-using Eltizam.Utility.Utility;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
-using System.Net;
 
 namespace EltizamValuation.Web.Controllers
 {
@@ -103,7 +98,7 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<Master_PropertyTypeModel>>(jsonResponse);
 
                     //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, TableName.Master_PropertyType);
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_PropertyType));
                     var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
                     if (footerRes.IsSuccessStatusCode)
                     {

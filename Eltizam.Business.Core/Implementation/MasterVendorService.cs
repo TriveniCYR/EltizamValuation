@@ -7,7 +7,9 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -72,12 +74,16 @@ namespace Eltizam.Business.Core.Implementation
             // Use a mapper to map the data from the repository to the model asynchronously.
             var masterVendor = new MasterVendorModel();
             masterVendor = _mapperFactory.Get<MasterVendor, MasterVendorModel>(await _repository.GetAsync(id));
+            var tableName = Enum.GetName(TableNameEnum.Master_Vendor);
+
             if (masterVendor != null)
             {
-                DbParameter[] osqlParameter = {
-                 new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", TableName.Master_Vendor, SqlDbType.VarChar),
+                DbParameter[] osqlParameter = 
+                {
+                 new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                 new DbParameter(AppConstants.TableName, tableName, SqlDbType.VarChar),
                 };
+
                 var Address = EltizamDBHelper.ExecuteSingleMappedReader<MasterAddressEntity>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (Address != null)
                 {
@@ -85,17 +91,20 @@ namespace Eltizam.Business.Core.Implementation
 
                 }
 
-                DbParameter[] osqlParameter1 = {
-                 new DbParameter("TableKeyId", id, SqlDbType.Int),
-                 new DbParameter("TableName", TableName.Master_Vendor, SqlDbType.VarChar),
+                DbParameter[] osqlParameter1 = 
+                {
+                 new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                 new DbParameter(AppConstants.TableName, tableName, SqlDbType.VarChar),
                 };
+
+
                 var contacts = EltizamDBHelper.ExecuteSingleMappedReader<MasterContactModel>(ProcedureMetastore.usp_Contact_GetContactByTableKeyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
                 if (contacts != null)
                 {
-                    masterVendor.Contact = contacts;
-
+                    masterVendor.Contact = contacts; 
                 }
             }
+
             // Return all objects as a tuple.
             return masterVendor;
         }
@@ -105,14 +114,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
             string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
-            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty); 
-
-            //int _count = 0;
-            //var UserList = await _repository.GetBySP("usp_Vendor_Search_GetVendorList", System.Data.CommandType.StoredProcedure, osqlParameter); 
-            //DatabaseConnection.ConnString, out _count, CommandType.StoredProcedure, osqlParameter); 
-            //var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
-            //var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
-
+            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);  
 
             SqlParameter[] osqlParameter =
             {
@@ -123,9 +125,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
             };
 
-            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Vendor_Search_GetVendorList, CommandType.StoredProcedure, osqlParameter);
-            //var TotalRecord = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalRecord"]) : 0);
-            //var TotalCount = (UserList != null && UserList.Rows.Count > 0 ? Convert.ToInt32(UserList.Rows[0]["TotalCount"]) : 0);
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Vendor_Search_GetVendorList, CommandType.StoredProcedure, osqlParameter); 
 
             //Get Pagination information
             var res = UtilityHelper.GetPaginationInfo(Results); 

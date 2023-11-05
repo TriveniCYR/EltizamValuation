@@ -10,6 +10,9 @@ using Eltizam.Utility.Enums;
 using Eltizam.Utility.Helpers;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using static Eltizam.Utility.Enums.GeneralEnum;
@@ -166,8 +169,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         { 
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
-            string SortDir = model.order[0]?.dir;
-
+            string SortDir = model.order[0]?.dir; 
             SqlParameter[] osqlParameter =
             {
                 new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
@@ -188,7 +190,9 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
 
         public async Task<MasterUserDetailModel> GetById(int id)
-        { 
+        {
+            var tableName = Enum.GetName(TableNameEnum.Master_User);  
+
             var _userEntity = new MasterUserDetailModel();
             _userEntity = _mapperFactory.Get<MasterUser, MasterUserDetailModel>(await _repository.GetAsync(id));
             if (_userEntity != null)
@@ -196,7 +200,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 DbParameter[] osqlParameter =
                 {
                  new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
-                 new DbParameter(AppConstants.TableName, TableName.Master_User, SqlDbType.VarChar),
+                 new DbParameter(AppConstants.TableName,  tableName, SqlDbType.VarChar),
                 };
                 var UserAddress = EltizamDBHelper.ExecuteSingleMappedReader<MasterUserAddressModel>(ProcedureMetastore.usp_Address_GetAddressByTableKeyId, 
                                   DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
@@ -208,7 +212,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 DbParameter[] osqlParameter1 =
                 {
                     new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
-                    new DbParameter(AppConstants.TableName, TableName.Master_User, SqlDbType.VarChar),
+                    new DbParameter(AppConstants.TableName, tableName, SqlDbType.VarChar),
                 };
                 var UserQualification = EltizamDBHelper.ExecuteSingleMappedReader<Master_QualificationModel>(ProcedureMetastore.usp_Qualification_GetQualificationByTableKeyId, 
                                         DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
@@ -220,7 +224,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 DbParameter[] osqlParameter2 =
                 {
                     new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
-                    new DbParameter(AppConstants.TableName,  TableName.Master_User, SqlDbType.VarChar),
+                    new DbParameter(AppConstants.TableName,  tableName, SqlDbType.VarChar),
                 };
 
                 var UserDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, 
@@ -238,7 +242,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         { 
             if (!string.IsNullOrEmpty(entityUser.Password) && entityUser.Id <= 0)
             {
-                entityUser.Password = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.Password);
+                entityUser.Password = UtilityHelper.GenerateSHA256String(entityUser.Password);
                 entityUser.ConfirmPassowrd = entityUser.Password;
             }
              
@@ -247,9 +251,15 @@ namespace Eltizam.Business.Core.ServiceImplementations
             MasterQualification objUserQualification;
             MasterDocument objUserDocument;
 
+            string MainTableName = Enum.GetName(TableNameEnum.Master_User); 
+            int MainTableKey = entityUser.Id;
+
             if (entityUser.Id > 0)
             {
-                var OldObjUser = _repository.GetNoTracking(entityUser.Id);
+                //Old entity
+                MasterUser OldEntity = null; 
+                OldEntity = _repository.GetNoTracking(entityUser.Id); 
+
                 objUser = _repository.Get(entityUser.Id);
 
                 if (objUser != null)
@@ -268,15 +278,15 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     objUser.ResourceId = entityUser.ResourceId;
                     objUser.IsActive = entityUser.IsActive; 
                     objUser.RoleId = entityUser.RoleId; 
-                    objUser.Email = entityUser.Email;
-                    objUser.ModifiedBy = entityUser.ModifiedBy;
+                    objUser.Email = entityUser.Address?.Email ?? entityUser.Email;
+                    objUser.ModifiedBy = entityUser.ModifiedBy; 
 
-                    _repository.UpdateAsync(objUser);
+                    // _repository.UpdateAsync(objUser); 
+                    _repository.UpdateGraph(objUser, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
-                    //Do Audit Log
-                    await _auditLogService.CreateAuditLog<MasterUser>(AuditActionTypeEnum.Update, OldObjUser, objUser, TableName.Master_User,  objUser.Id);
-                    await _unitOfWork.SaveChangesAsync();
+                    //Do Audit Log 
+                    await _auditLogService.CreateAuditLog<MasterUser>(AuditActionTypeEnum.Update, OldEntity, objUser); 
                 } 
             }
             else
@@ -284,24 +294,22 @@ namespace Eltizam.Business.Core.ServiceImplementations
                 objUser = _mapperFactory.Get<MasterUserModel, MasterUser>(entityUser);
                 objUser.IsActive = entityUser.IsActive;
                 objUser.CreatedBy = entityUser.CreatedBy;
-
-                //objUser.CreatedDate = AppConstants.DateTime;
-                //objUser.ModifiedBy = entityUser.CreatedBy;
-                //objUser.ModifiedDate = AppConstants.DateTime;
+                 
                 _repository.AddAsync(objUser);
                 await _unitOfWork.SaveChangesAsync();
             }
-             
+            
+
             if (objUser.Id == 0)
                 return DBOperation.Error;
             else
             {
                 if (entityUser.Address != null)
-                {
-
+                { 
                     if (entityUser.Address.Id > 0)
                     {
-                        var OldEntity = _addressRepository.GetNoTracking(entityUser.Address.Id);  
+                        //Get Odl one
+                        var OldEntity = _addressRepository.GetNoTracking(entityUser.Address.Id);
                         objUserAddress = _addressRepository.Get(entityUser.Address.Id);
 
                         if (objUserAddress != null)
@@ -323,15 +331,14 @@ namespace Eltizam.Business.Core.ServiceImplementations
                             objUserAddress.AlternatePhone = entityAddress.AlternatePhone;
                             objUserAddress.Landlinephone = entityAddress.Landlinephone;
                             objUserAddress.IsActive = entityAddress.IsActive; 
-                            objUserAddress.ModifiedBy = entityUser.ModifiedBy;
+                            objUserAddress.ModifiedBy = entityUser.ModifiedBy;  
 
-                            //objUserAddress.ModifiedDate = AppConstants.DateTime;
-                            _addressRepository.UpdateAsync(objUserAddress); 
+                            // _repository.UpdateAsync(objUser); 
+                            _repository.UpdateGraph(objUser, EntityState.Modified);
                             await _unitOfWork.SaveChangesAsync();
 
                             //Do Audit Log
-                            await _auditLogService.CreateAuditLog<MasterAddress>(AuditActionTypeEnum.Update,
-                                  OldEntity, objUserAddress, TableName.Master_Address, objUserAddress.Id);
+                            await _auditLogService.CreateAuditLog<MasterAddress>(AuditActionTypeEnum.Update, OldEntity, objUserAddress, MainTableName, MainTableKey);
                         }
                     }
                     else
@@ -339,29 +346,25 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         objUserAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(entityUser.Address);
                         objUserAddress.IsActive = entityUser.IsActive;
                         objUserAddress.TableKeyId = objUser.Id;
-                        objUserAddress.TableName = TableName.Master_User;
+                        objUserAddress.TableName = Enum.GetName(TableNameEnum.Master_User);
                         objUserAddress.CreatedBy = entityUser.CreatedBy;
-
-                        //objUserAddress.CreatedDate = AppConstants.DateTime;
-                        //objUserAddress.ModifiedBy = entityUser.CreatedBy;
-                        //objUserAddress.ModifiedDate = AppConstants.DateTime;
-
+                         
                         _addressRepository.AddAsync(objUserAddress);
                         await _unitOfWork.SaveChangesAsync();
                     } 
-                }
+                } 
 
                 if (entityUser.Qualification != null)
                 {
                     var Qlfc = entityUser.Qualification;
                     if (Qlfc.Id > 0)
-                    {
-                        var OldEntity = _qualifyRepository.GetNoTracking(Qlfc.Id);
-
+                    { 
+                        //Get Odl one
+                        var OldEntity = _qualifyRepository.GetNoTracking(Qlfc.Id); 
                         objUserQualification = _qualifyRepository.Get(Qlfc.Id);
+
                         if (objUserQualification != null)
-                        {
-                            //var entityContact = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(entityUser.Qualification);
+                        { 
                             objUserQualification.Qualification = Qlfc.Qualification;
                             objUserQualification.Subject = Qlfc.Subject;
                             objUserQualification.Institute = Qlfc.Institute;
@@ -370,12 +373,11 @@ namespace Eltizam.Business.Core.ServiceImplementations
                             objUserQualification.IsActive = Qlfc.IsActive;
                             objUserQualification.ModifiedBy = entityUser.ModifiedBy;
 
-                            _qualifyRepository.UpdateAsync(objUserQualification);
+                            _qualifyRepository.UpdateGraph(objUserQualification, EntityState.Modified);
                             await _unitOfWork.SaveChangesAsync();
 
                             //Do Audit Log
-                            await _auditLogService.CreateAuditLog<MasterQualification>(AuditActionTypeEnum.Update,
-                                  OldEntity, objUserQualification, TableName.Master_Address, objUserQualification.Id);
+                            await _auditLogService.CreateAuditLog<MasterQualification>(AuditActionTypeEnum.Update, OldEntity, objUserQualification, MainTableName, MainTableKey);
                         }
                     }
                     else
@@ -383,16 +385,13 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         objUserQualification = _mapperFactory.Get<Master_QualificationModel, MasterQualification>(entityUser.Qualification);
                         objUserQualification.IsActive = entityUser.Qualification.IsActive;
                         objUserQualification.TableKeyId = objUser.Id;
-                        objUserQualification.TableName = TableName.Master_User; 
+                        objUserQualification.TableName = Enum.GetName(TableNameEnum.Master_User); 
                         objUserQualification.CreatedBy = entityUser.CreatedBy;
-
-                        //objUserQualification.CreatedDate = AppConstants.DateTime;
-                        //objUserQualification.ModifiedBy = entityUser.CreatedBy;
-                        //objUserQualification.ModifiedDate = AppConstants.DateTime;
+                         
                         _qualifyRepository.AddAsync(objUserQualification);
                         await _unitOfWork.SaveChangesAsync();
                     } 
-                }
+                } 
 
                 if (entityUser.uploadDocument != null)
                 {
@@ -401,20 +400,17 @@ namespace Eltizam.Business.Core.ServiceImplementations
                         objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
                         objUserDocument.IsActive = doc.IsActive;
                         objUserDocument.TableKeyId = objUser.Id;
-                        objUserDocument.TableName = TableName.Master_User;
+                        objUserDocument.TableName = Enum.GetName(TableNameEnum.Master_User);
                         objUserDocument.DocumentName = doc.DocumentName;
                         objUserDocument.FileName = doc.FileName;
                         objUserDocument.FilePath = doc.FilePath;
                         objUserDocument.FileType = doc.FileType; 
                         objUserDocument.CreatedBy = entityUser.CreatedBy;
-
-                        //objUserDocument.CreatedDate = AppConstants.DateTime;
-                        //objUserDocument.ModifiedBy = entityUser.CreatedBy;
-                        //objUserDocument.ModifiedDate = AppConstants.DateTime;
+                         
                         _documentRepository.AddAsync(objUserDocument);
-                    }
-                    await _unitOfWork.SaveChangesAsync();
-                }
+                        await _unitOfWork.SaveChangesAsync();
+                    } 
+                } 
             }
 
             return DBOperation.Success;
@@ -446,8 +442,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
             _repository.Remove(entityDepartment);
 
-            await _unitOfWork.SaveChangesAsync();
-
+            await _unitOfWork.SaveChangesAsync(); 
             return DBOperation.Success;
         }
 
