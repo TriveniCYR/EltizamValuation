@@ -1,9 +1,7 @@
-﻿using Eltizam.Api.Helpers.Response;
+﻿using Eltizam.Api.Filters;
+using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
-using Eltizam.Business.Core.ServiceImplementations;
-using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System.Net;
@@ -12,6 +10,7 @@ namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeAttribute]
     public class ValuationRequestStatusController : ControllerBase
     {
 

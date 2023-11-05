@@ -1,21 +1,17 @@
-﻿using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
+﻿using Eltizam.Api.Filters;
 using Eltizam.Api.Helpers.Response;
-using Eltizam.Business.Core.Implementation;
 using Eltizam.Business.Core.Interface;
-using Eltizam.Business.Core.ServiceImplementations;
-using Eltizam.Business.Models;
-using static Eltizam.Utility.Enums.GeneralEnum;
 using Eltizam.Data.DataAccess.Helper;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Api.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
-	public class FileUploadController : ControllerBase
+    [AuthorizeAttribute]
+    public class FileUploadController : ControllerBase
 	{
 		#region Properties
 

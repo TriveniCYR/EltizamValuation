@@ -1,4 +1,5 @@
-﻿using Eltizam.Api.Helpers.Response;
+﻿using Eltizam.Api.Filters;
+using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
@@ -10,7 +11,7 @@ namespace Eltizam.API.Controllers.Masters
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[AuthorizeAttribute]
+    [AuthorizeAttribute]
     public class MasterRoleController : ControllerBase
     {
         #region Properties

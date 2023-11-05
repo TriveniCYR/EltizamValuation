@@ -1,10 +1,8 @@
-﻿using Eltizam.Api.Helpers.Response;
+﻿using Eltizam.Api.Filters;
+using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
-using Eltizam.Business.Core.ServiceImplementations;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using static Eltizam.Utility.Enums.GeneralEnum;
@@ -13,6 +11,7 @@ namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeAttribute]
     public class ValuationRequestController : ControllerBase
     {
         #region Properties

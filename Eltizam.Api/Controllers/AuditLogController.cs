@@ -1,22 +1,16 @@
 ﻿using Eltizam.Api.Filters;
 using Eltizam.Api.Helpers.Response;
-using Eltizam.Business.Core.Implementation;
 using Eltizam.Business.Core.Interface;
-using Eltizam.Business.Core.ServiceImplementations;
 using Eltizam.Business.Models;
-using Eltizam.Resource;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
-using static Eltizam.Utility.Enums.GeneralEnum;
-using System.Net;
 using Eltizam.Data.DataAccess.Helper;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[AuthorizeAttribute]
+    [AuthorizeAttribute]
     public class AuditLogController : ControllerBase
     {
         #region Properties

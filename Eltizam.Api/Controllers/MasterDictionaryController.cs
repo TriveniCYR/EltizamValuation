@@ -1,5 +1,5 @@
-﻿using Eltizam.Api.Helpers.Response;
-using Eltizam.Business.Core.Implementation;
+﻿using Eltizam.Api.Filters;
+using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
@@ -13,6 +13,7 @@ namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeAttribute]
     public class MasterDictionaryController : ControllerBase
     {
         #region Properties
