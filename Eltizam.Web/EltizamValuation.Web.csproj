@@ -44,6 +44,7 @@
 
 	<ItemGroup>
 		<Folder Include="Views\User\" />
+		<Folder Include="wwwroot\js\Custom\AuditLog\" />
 		<Folder Include="wwwroot\Uploads\errorlogs\" />
 	</ItemGroup>
 

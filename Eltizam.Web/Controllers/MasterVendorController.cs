@@ -44,10 +44,8 @@ namespace EltizamValuation.Web.Controllers
                 return View();
             }
             catch (Exception e)
-            {
-
-                _helper.LogExceptions(e);
-                ViewBag.errormessage = Convert.ToString(e.StackTrace);
+            { 
+                _helper.LogExceptions(e); 
                 return View("Login");
             } 
         }

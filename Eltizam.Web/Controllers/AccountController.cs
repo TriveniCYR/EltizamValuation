@@ -88,7 +88,7 @@ namespace Eltizam.Web.Controllers
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                ViewBag.ErrorMessage = Convert.ToString(e.StackTrace);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
                  
                 return View(loginViewModel);
             }

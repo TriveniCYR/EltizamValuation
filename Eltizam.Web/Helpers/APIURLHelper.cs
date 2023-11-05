@@ -186,6 +186,7 @@ namespace Eltizam.Web.Helpers
         public static string GetAllModule = "api/MasterModule/GetAllModule";
 
         #endregion Module
+
         #region Dictionary Management
         public static string GetAllDictionary = "api/MasterDictionary/GetAll";
         public static string UpsertDictionary = "api/MasterDictionary/Upsert";
@@ -206,6 +207,12 @@ namespace Eltizam.Web.Helpers
 
         #endregion Valuation Request
 
+
+        #region AuditLog
+        public static string GetAllAudit = "api/AuditLog/GetAll";
+        public static string GetDetailsAudit = "api/AuditLog/GetLogDetailsByFilters"; 
+
+        #endregion AuditLog
 
     }
 }

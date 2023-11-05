@@ -14,14 +14,14 @@ namespace Eltizam.Business.Models
         public int? ParentTableKeyId { get; set; }
         public string? ParentTableName { get; set; }
         public string ActionType { get; set; }
-        public string Log { get; set; }
+        public string? Log { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
     }
     public class AuditLogModelResponse : AuditLogModel
     { 
         public string? CreatedByName { get; set; }
-        public List<AuditLogs> AuditLogListData { get; set; }
+        public List<AuditLogs>? AuditLogListData { get; set; }
     }
 
     public class AuditLogs

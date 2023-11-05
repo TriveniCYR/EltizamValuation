@@ -1,0 +1,59 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor 
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration 
+@{
+    ViewData["Title"] = "Audit Logs";
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+<!-- system user master -->
+<div class="flex">
+    <div class="w-100 position-relative">
+        <main class="w-100">
+            <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+                <h3 class="dashboardTitle">AUDIT LOGS</h3>
+                <div class="buttonArea flex align-item-center">
+                    <form asp-action="ClientManage" asp-controller="MasterClient" method="GET">
+                        <button class="flex align-item-center blueBtn">
+                            <img src="../assets/plus.svg" alt="plus"> Add New
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="scroll-x whiteWithPadding">
+                <table id="AuditLogTable" class="table table-bordered table-striped table-hover dataTable no-footer">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Created By</th>
+                            <th>Created Date</th>
+                            <th>Action Type</th>
+                            <th>Module Name</th> 
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+ 
+@section MyScripts {
+
+    @Html.Partial("_DataTablePartial")
+    <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/AuditLog/AuditLogs.js?v=@jsVersion"></script>
+
+    <script>
+        //#region Setup API Url
+        var AllAudit = "@Eltizam.Web.Helpers.APIURLHelper.GetAllAudit";
+        var DeleteClient = "@Eltizam.Web.Helpers.APIURLHelper.DeleteClient";
+    </script>
+}

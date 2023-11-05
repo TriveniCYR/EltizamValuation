@@ -66,8 +66,7 @@ namespace EltizamValuation.Web.Controllers
             }
             catch (Exception e)
             {
-                _helper.LogExceptions(e);
-                ViewBag.errormessage = Convert.ToString(e.StackTrace);
+                _helper.LogExceptions(e); 
                 ModelState.Clear();
                 return View(nameof(ValuationFees));
             }

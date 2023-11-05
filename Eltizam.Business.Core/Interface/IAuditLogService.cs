@@ -9,8 +9,8 @@ namespace Eltizam.Business.Core.Interface
         Task<bool> CreateAuditLog<TResult>(AuditActionTypeEnum auditActionType, TResult oldEntity, TResult newEntity,
                    string? PTName = null, int? PTId = null) where TResult : new();
 
-        Task<List<AuditLogModel>> GetAllAuditLog();
+        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null);
 
-        Task<AuditLogModel> GetById(int id); 
+        Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null);
     }
 }

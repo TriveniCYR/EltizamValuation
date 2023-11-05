@@ -80,10 +80,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     {
                         return getAll.Where(o => (bool)o.GetType().GetProperty("IsDeleted").GetValue(o) is false).AsEnumerable();
                     }
-                }
-
-                //var getAllFilter = getAll.Where(o => (bool)o.GetType().GetProperty("IsDeleted").GetValue(o) == false).ToList();
-                //return getAllFilter;
+                } 
             }
             catch (Exception ex)
             { }
@@ -108,8 +105,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 var props = o.GetType().GetProperties();
                 if (props.Any(p => p.Name is "IsDeleted"))
-                {
-
+                { 
                     var isDeleted = o.GetType().GetProperty("IsDeleted").GetValue(o);
                     if ((bool)isDeleted)
                     {
@@ -119,7 +115,8 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { }
+            { 
+            }
             return o;
         }
 
