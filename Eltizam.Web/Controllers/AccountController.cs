@@ -106,7 +106,7 @@ namespace Eltizam.Web.Controllers
 				new Claim("Id", Convert.ToString(oUserDetail.UserId)),
             };
 
-            //var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); 
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); 
             var identity       = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var principal = new ClaimsPrincipal(identity);

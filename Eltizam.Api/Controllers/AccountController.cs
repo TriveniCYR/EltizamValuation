@@ -1,5 +1,4 @@
-﻿using Eltizam.Api.Filters;
-using Eltizam.Api.Helpers.Response;
+﻿using Eltizam.Api.Helpers.Response;
 using Eltizam.Api.Middlewares;
 using Eltizam.Business.Core;
 using Eltizam.Business.Core.Interface;
@@ -10,13 +9,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System.Net;
-using static Eltizam.Utility.Enums.GeneralEnum; 
+using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Api.Controllers
 {
     [Route("api/[controller]")]
-	[ApiController]
-    [Filters.AuthorizeAttribute]
+	[ApiController] 
     public class AccountController : ControllerBase
 	{
 		#region Properties
