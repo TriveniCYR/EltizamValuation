@@ -15,7 +15,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string ReferenceNo { get; set; } = null!;
         public string? OtherReferenceNo { get; set; }
         public int ValuationModeId { get; set; }
-        public DateTime ValuationDate { get; set; }
+        public DateTime? ValuationDate { get; set; }
         public int? ValuationTimeFrame { get; set; }
         public int ClientId { get; set; }
         public int PropertyId { get; set; }
