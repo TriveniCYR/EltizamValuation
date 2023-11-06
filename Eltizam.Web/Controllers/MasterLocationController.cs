@@ -1,4 +1,5 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
@@ -54,13 +55,13 @@ namespace EltizamValuation.Web.Controllers
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
 
                 return View("Login");
-            } 
+            }
         }
 
 
 
         public IActionResult LocationById(int id)
-        { 
+        {
             MasterLocationEntity masterlocation;
             if (id == null || id <= 0)
             {
@@ -128,6 +129,11 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Fill audit logs field
+                if (masterlocation.Id == 0)
+                    masterlocation.CreatedBy = _helper.GetLoggedInUserId();
+                masterlocation.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

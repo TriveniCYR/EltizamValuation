@@ -214,7 +214,9 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
-
+                if (masterdictionary.Id == 0)
+                    masterdictionary.CreatedBy = _helper.GetLoggedInUserId();
+                masterdictionary.ModifiedBy = _helper.GetLoggedInUserId();
                 // masterdictionary.DictionaryId = 3;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);

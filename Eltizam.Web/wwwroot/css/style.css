@@ -433,7 +433,8 @@ footer {
 .sideNavDashboard .sideMenu ul li:hover div p,
 .sideNavDashboard .sideMenu ul li:hover .showMoreNav, .sideNavDashboard .sideMenu li.activeSideMenu .showMoreNav,
 .sideNavDashboard .sideMenu ul li:hover, .sideNavDashboard .sideMenu li.activeSideMenu,
-.sideNavDashboard .sideMenu li.activeSideMenu p {
+.sideNavDashboard .sideMenu li.activeSideMenu p,
+.sideNavDashboard .sideMenu ul li:hover a{
     color: var(--blue);
     font-weight: 700;
     background: var(--grey, linear-gradient(90deg, rgba(29, 63, 138, 0.10) 72.1%, rgba(29, 63, 138, 0.00) 138.85%));
@@ -2025,4 +2026,21 @@ div.dataTables_wrapper div.dataTables_filter {
     width: 330px;
     border: 1px solid var(--blue);
     z-index:99;
+}
+.dataTables_scrollBody table td {
+    border: none !important;
+}
+.footerAudit {
+    padding: 8px 20px;
+}
+
+    .footerAudit img {
+        width: 25px;
+    }
+
+.auditLog-acc.roundBorderBox {
+    padding: 16px;
+}
+.footerAuditContainer{
+    margin:0 24px;
 }
