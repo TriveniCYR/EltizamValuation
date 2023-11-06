@@ -74,10 +74,7 @@ function InitializeValutionRequestDataList() {
 
     var columnObject = [
         {
-            "data": "id", "name": "Id",
-            "render": function (data, type, row, data) {
-                return '<div class="checkboxColumn"><input type="checkbox" value="'+row.id+'"><span>'+row.id+'</span><div>';
-            }
+            "data": "id", "name": "Id"
         },
         {
             "data": "referenceNO", "name": "ReferenceNO"
@@ -198,12 +195,24 @@ function AssignRequest() {
     var approverId = $("#ApproverId").val();
     var remarks = $("#Remarks").val();
     var ids = '';
+
     $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () { 
         ids += this.value + ','; 
     });
-    debugger
-
     ids = ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
+    debugger
+    if (approverId === undefined || isNaN(parseInt(cityId))) {
+        toastr.error("Select approver.");
+        return false;
+    }
+    else if (remarks == '') {
+        toastr.error("Enter remarks.");
+    }
+    else if (ids.length > 0) {
+        toastr.error("Select atleast one row to approval.");
+        return false;
+    }
+
     modelReq.ApprovorId = parseInt(approverId);
     modelReq.RequestIds = ids;
     modelReq.Remarks = remarks;
