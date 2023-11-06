@@ -201,14 +201,14 @@ function AssignRequest() {
     });
     ids = ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
     debugger
-    if (approverId === undefined || isNaN(parseInt(cityId))) {
+    if (approverId === undefined || isNaN(parseInt(approverId))) {
         toastr.error("Select approver.");
         return false;
     }
     else if (remarks == '') {
         toastr.error("Enter remarks.");
     }
-    else if (ids.length > 0) {
+    else if (ids.length == 0) {
         toastr.error("Select atleast one row to approval.");
         return false;
     }
