@@ -7,6 +7,7 @@ using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using System;
 
 namespace EltizamValuation.Web.Controllers
 {
@@ -32,9 +33,8 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 //Check permissions
-                int roleId = _helper.GetLoggedInRoleId();
-                var hasAccess = CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId); 
-                if (!hasAccess) 
+                int roleId = _helper.GetLoggedInRoleId(); 
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home); 
 
                 return View();
@@ -58,11 +58,12 @@ namespace EltizamValuation.Web.Controllers
                 return View(masterUser);
             }
             else
-            {
+            { 
                 //Check permissions for Get
-                int roleId = _helper.GetLoggedInRoleId();
-                var hasAccess = CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId);
-                if (!hasAccess)
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+                int roleId = _helper.GetLoggedInRoleId(); 
+
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
@@ -99,9 +100,8 @@ namespace EltizamValuation.Web.Controllers
                     //Check permissions for Get
                     var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
 
-                    int roleId = _helper.GetLoggedInRoleId();
-                    var hasAccess = CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId);
-                    if (!hasAccess)
+                    int roleId = _helper.GetLoggedInRoleId(); 
+                    if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                         return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
 
@@ -153,9 +153,8 @@ namespace EltizamValuation.Web.Controllers
             //Check permissions for Get
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
 
-            int roleId = _helper.GetLoggedInRoleId();
-            var hasAccess = CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId);
-            if (!hasAccess)
+            int roleId = _helper.GetLoggedInRoleId(); 
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
             MasterUserModel masterUser;
