@@ -54,19 +54,19 @@ namespace Eltizam.Web.Controllers
                         string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                         var oUserDetail = JsonConvert.DeserializeObject<APIResponseEntity<UserSessionEntity>>(jsonResponse);
                         SetUserClaim(oUserDetail._object);
-                        HttpContext.Session.SetInt32(UserHelper.LogInRoleId, oUserDetail._object.RoleId);
 
-                       
-                        var roles = UtilityHelper.GetModuleRole<dynamic>(oUserDetail._object.RoleId);
+                        var roleId = oUserDetail._object.RoleId;
+                        var roles = UtilityHelper.GetModuleRole<dynamic>(roleId);
+
                         if (roles == null)
                         {
                             HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                            HttpResponseMessage resRoles = objapi.APICommunication(APIURLHelper.GetByPermisionRoleUsingRoleId + "/" + oUserDetail._object.RoleId, HttpMethod.Get, oUserDetail._object.UserToken).Result;
+                            HttpResponseMessage resRoles = objapi.APICommunication(APIURLHelper.GetByPermisionRoleUsingRoleId + "/" + roleId, HttpMethod.Get, oUserDetail._object.UserToken).Result;
                             if (resRoles.IsSuccessStatusCode)
                             {
                                 string rolJson = resRoles.Content.ReadAsStringAsync().Result;
                                 var data = JsonConvert.DeserializeObject<APIResponseEntity<IEnumerable<RolePermissionModel>>>(rolJson);
-                                UtilityHelper.AddModuleRole(oUserDetail._object.RoleId, data._object);
+                                UtilityHelper.AddModuleRole(roleId, data._object);
                                 roles = data._object;
                             }
                         }
@@ -101,12 +101,13 @@ namespace Eltizam.Web.Controllers
             var claims = new List<Claim>
             {
                 new Claim("UserName", oUserDetail.UserName),
-                new Claim("Email", oUserDetail.Email),
-			    new Claim("RoleId", Convert.ToString(oUserDetail.RoleId)),
-				new Claim("Id", Convert.ToString(oUserDetail.UserId)),
+                new Claim("FullName", oUserDetail.UserName),
+                new Claim("Email",    oUserDetail.Email),
+			    new Claim("RoleId",   oUserDetail.RoleId.ToString()),
+				new Claim("UserId",   oUserDetail.UserId.ToString()),
             };
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); 
+            //var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); 
             var identity       = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var principal = new ClaimsPrincipal(identity);

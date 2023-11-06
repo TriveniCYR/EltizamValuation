@@ -295,7 +295,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<MasterUser>(AuditActionTypeEnum.Update, OldEntity, objUser); 
+                    await _auditLogService.CreateAuditLog<MasterUser>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey); 
                 } 
             }
             else

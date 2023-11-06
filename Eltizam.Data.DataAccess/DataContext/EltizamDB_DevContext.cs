@@ -1,5 +1,8 @@
-﻿using Eltizam.Data.DataAccess.Entity;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Eltizam.Data.DataAccess.Entity;
 
 namespace Eltizam.Data.DataAccess.DataContext
 {
@@ -14,11 +17,11 @@ namespace Eltizam.Data.DataAccess.DataContext
         {
         }
 
-        public virtual DbSet<MasterAuditLog> MasterAuditLogs { get; set; }
         public virtual DbSet<Dictionary> Dictionaries { get; set; } = null!;
         public virtual DbSet<EmailLogHistory> EmailLogHistories { get; set; } = null!;
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; } = null!;
         public virtual DbSet<MasterAmenity> MasterAmenities { get; set; } = null!;
+        public virtual DbSet<MasterAuditLog> MasterAuditLogs { get; set; } = null!;
         public virtual DbSet<MasterCity> MasterCities { get; set; } = null!;
         public virtual DbSet<MasterClient> MasterClients { get; set; } = null!;
         public virtual DbSet<MasterClientContact> MasterClientContacts { get; set; } = null!;
@@ -63,7 +66,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=180.149.241.172;Initial Catalog=EltizamDB_Dev;Persist Security Info=True;User ID=eltizam_dbUser;pwd=eltizam234@#$;Connection Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;");
             }
         }
@@ -71,17 +74,6 @@ namespace Eltizam.Data.DataAccess.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("eltizam_dbUser");
-
-            modelBuilder.Entity<MasterAuditLog>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-
-                entity.ToTable("Master_AuditLog", "dbo");
-
-                entity.Property(e => e.ActionType).HasMaxLength(20);
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            });
 
             modelBuilder.Entity<Dictionary>(entity =>
             {
@@ -206,6 +198,21 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MasterAuditLog>(entity =>
+            {
+                entity.ToTable("Master_AuditLog", "dbo");
+
+                entity.Property(e => e.ActionType).HasMaxLength(20);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ParentTableName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TableName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<MasterCity>(entity =>
@@ -1194,7 +1201,7 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false)
                     .HasColumnName("ReferenceNO");
 
-                entity.Property(e => e.ValuationDate).HasColumnType("datetime");
+                entity.Property(e => e.ValuationDate).HasColumnType("date");
 
                 entity.Property(e => e.ValuerComment)
                     .HasMaxLength(500)
