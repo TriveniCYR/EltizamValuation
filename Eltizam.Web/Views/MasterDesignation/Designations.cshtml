@@ -8,24 +8,27 @@
 @inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 
-@model List<Eltizam.Business.Models.MasterDepartmentEntity>
+@model List<Eltizam.Business.Models.MasterDesignationEntity>
 @{
+    ViewData["Title"] = @MasterLocalizer["DesignationList"];
     ViewData["Title"] = @MasterLocalizer["DepartmentList"];
-    RolePermissionModel objPermssion = (RolePermissionModel)ViewBag._objPermission;
-    string IsAddAllow = (objPermssion.Add) ? "" : "display: none";
-    string IsEditAllow = (objPermssion.Edit) ? "" : "display: none";
-    string IsDeleteAllow = (objPermssion.Delete) ? "" : "display: none";
+    var objPermssion = (RolePermissionModel)ViewBag.Access;
+    string isAdd = (objPermssion.Add) ? "" : "display: none";
+    var isDelete = objPermssion.Delete ? 1 : 0;
+    var isEdit = objPermssion.Edit ? 1 : 0;
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+      
 }
 <div id="PlaceHolderHere"></div>
 <main>
     
-    <div class="flex  mt-20 mobile_flexColumn position-relative justify-between">
-        <h3 class="dashboardTitle">Department Master</h3>
-            <div class="buttonArea flex align-item-center">
+    <div class="flex mt-20 mobile_flexColumn position-relative justify-between">
+        <h3 class="dashboardTitle">Designation Master</h3>
+        <div class="buttonArea flex align-item-center">
             <button class="flex align-item-center blueBtn" id="addRole">
-                <a class="whiteAtag" style="@IsAddAllow" asp-action="DepartmentManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
+                <a class="whiteAtag" style="@isAdd" asp-action="DesignationManage"><img src="~/assets/plus.svg" alt="plus" /> @SharedLocalizer["Add New"]</a>
             </button>
+
 
             <button class="flex align-item-center lineBtn" id="importFile">
                 <img src="~/assets/file-import.svg" alt="file-import" />
@@ -33,12 +36,12 @@
             </button>
         </div>
     </div>
-    
+
     <div class="scroll-x">
-        <table id="DepartmentTable">
+        <table id="DesignationTable">
             <thead>
                 <tr>
-                    <th>@MasterLocalizer["Department Name"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+                    <th>@MasterLocalizer["Designation Name"]<img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
                     <th>@SharedLocalizer["Status"] <img src="~/assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
                     <th>@SharedLocalizer["Action"]</th>
                 </tr>
@@ -48,25 +51,26 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(module => item.Department)</td>
-                      
-                        <td>@Html.LabelFor(model => item.IsActive, (item.IsActive == 1) ? "Active" : "InActive", new { @style = (item.IsActive == 1) ? "color:green;" : "color:red;" })</td>
+                        <td>@Html.DisplayFor(module => item.Designation)</td>
 
+
+                        <td>@Html.LabelFor(model => item.IsActive, (item.IsActive == 1) ? "Active " : "InActive", new { @style = (item.IsActive == 1) ? "color:green;" : "color:red;" })</td>
+                       
                         <td class="position-relative">
                             <img src="~/assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
                             <div class="actionItem">
                                 <ul>
                                     <li class="viewRole">
                                         <img src="~/assets/view.svg" alt="view" />
-                                        <a title="View" asp-action="DepartmentView" asp-route-Id="@item.Id">View</a>
+                                        <a title="View" asp-action="DesignationView" asp-route-Id="@item.Id">View</a>
                                     </li>
                                     <li class="editRole">
                                         <img src="~/assets/edit.svg" alt="edit" />
-                                        <a title="Edit" asp-action="DepartmentManage" asp-route-Id="@item.Id"><span>Edit</span></a>
+                                        <a title="Edit" asp-action="DesignationManage" asp-route-Id="@item.Id"><span>Edit</span></a>
                                     </li>
                                     <li class="delete">
                                         <img src="~/assets/trash.svg" alt="trash" />
-                                        <a title="Delete" data-toggle="modal" data-target="#DeleteDepartmentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDepartment(@item.Id); return false;"><span>Delete</span></a>
+                                        <a title="Delete" data-toggle="modal" data-target="#DeleteDesignationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDesignation(@item.Id); return false;"><span>Delete</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -80,8 +84,8 @@
 
 </main>
 
-
-<div id="DeleteDepartmentModel" class="modal themeModal " role="dialog">
+@*DeleteFormulationModel*@
+<div id="DeleteDesignationModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -99,7 +103,7 @@
                 </div>
                 @Html.Hidden("ID")
                 <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteDepartment()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <button type="button" onclick="DeleteDesignation()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
                     <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
                 </div>
             </div>
@@ -111,12 +115,12 @@
 
     @Html.Partial("_DataTablePartial")
 
-    <script type="text/javascript" src="~/js/custom/Department/DepartmentManagement.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/Designation/DesignationManagement.js?v=@jsVersion"></script>
 
     <script>
 
-        var DeleteDepartmenteByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDepartmentById";
-        var DeleteLabel = "@SharedLocalizer["Delete"]";
+        var DeleteDesignationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDesignationById";
+       var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
         var StatusMessage = '@TempData["StatusMessage"]';

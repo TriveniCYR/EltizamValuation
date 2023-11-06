@@ -2,6 +2,7 @@
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -9,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class ValuationRequestController : Controller
+    public class ValuationRequestController : BaseController
     {
         #region Properties
 
@@ -28,7 +29,10 @@ namespace EltizamValuation.Web.Controllers
          
         [HttpGet]
         public IActionResult ValuationRequests()
-        {
+        {  //Check permissions
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }

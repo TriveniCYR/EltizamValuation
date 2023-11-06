@@ -2,14 +2,16 @@
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterClientController : Controller
+    public class MasterClientController : BaseController
     {
         #region Properties
 
@@ -28,7 +30,12 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult Clients()
         {
             try
-            {                
+            {
+
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 return View();
             }
             catch (Exception e)
@@ -43,6 +50,12 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult ClientManage(int? id)
         {
             MasterClientModel masterUser;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
                 masterUser = new MasterClientModel();
@@ -78,6 +91,13 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 if (masterUser.Document.Files != null)
                 {
                     List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
@@ -119,6 +139,12 @@ namespace EltizamValuation.Web.Controllers
         [Route("MasterClient/ClientDetail")]
         public IActionResult ClientDetail(int? id)
         {
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             MasterClientModel masterUser;
             if (id == null || id <= 0)
             {

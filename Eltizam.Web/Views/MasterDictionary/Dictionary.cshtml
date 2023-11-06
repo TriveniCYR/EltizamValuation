@@ -10,6 +10,10 @@
 @{
     ViewData["Title"] = @SharedLocalizer["Dictionary List"];
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    var objPermssion = (RolePermissionModel)ViewBag.Access;
+    var isAdd = objPermssion.Add ? 1 : 0;
+    var isDelete = objPermssion.Delete ? 1 : 0;
+    var isEdit = objPermssion.Edit ? 1 : 0;
 }
 <!-- system user master -->
 <div id="PlaceHolderHere"></div>
@@ -20,6 +24,8 @@
                 <h3 class="dashboardTitle">DICTIONARY MASTER</h3>
                
                 <div class="buttonArea flex align-item-center">
+                    <input type="hidden" id="isDeletePerm" value="@isDelete" />
+                    <input type="hidden" id="isAddPerm" value="@isAdd" />
                     <form asp-action="MasterDictionaryManage" asp-controller="MasterDictionary" method="GET">
                         <button class="flex align-item-center blueBtn" id="addRole">
                             <img src="../assets/plus.svg" alt="plus"> Add New

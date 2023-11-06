@@ -51,9 +51,14 @@ function ConfirmationDeleteDictionary(id) {
     $('#DeleteDictionaryChildModel #ID').val(id);
 }
 function DeleteRole() {
-    var tempInAtiveID = $('#DeleteDictionaryChildModel #ID').val();  
-    var url = DeleteDictionaryById + "/" + tempInAtiveID;
-    ajaxServiceMethod(BaseURL + url, 'POST', DeleteRoleByIdSuccess);
+    if (IsDeletePerm) {
+        var tempInAtiveID = $('#DeleteDictionaryChildModel #ID').val();
+        var url = DeleteDictionaryById + "/" + tempInAtiveID;
+        ajaxServiceMethod(BaseURL + url, 'POST', DeleteRoleByIdSuccess);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
 }
 function DeleteRoleByIdSuccess(data) {
     try {

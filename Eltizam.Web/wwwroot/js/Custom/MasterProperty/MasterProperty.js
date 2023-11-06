@@ -62,8 +62,13 @@ function ConfirmationDeleteProperty(id) {
     $('#DeletePropertyModel #Id').val(id);
 }
 function DeleteProperty() {
-    var tId = $('#DeletePropertyModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeletePropertyByIdUrl + "/" + tId, Delete, DeletePropertyByIdSuccess, DeletePropertyByIdError);
+    if (IsDeletePerm) {
+        var tId = $('#DeletePropertyModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeletePropertyByIdUrl + "/" + tId, Delete, DeletePropertyByIdSuccess, DeletePropertyByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
 }
 function DeletePropertyByIdSuccess(data) {
     try {

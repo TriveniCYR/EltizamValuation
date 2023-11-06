@@ -1,6 +1,9 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -8,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterPropertyTypeController : Controller
+    public class MasterPropertyTypeController : BaseController
     {
 
         #region Properties
@@ -29,7 +32,12 @@ namespace EltizamValuation.Web.Controllers
         [HttpGet]
         [Route("MasterPropertyType/PropertyTypes")]
         public IActionResult PropertyTypes()
-        { 
+        {
+
+            //Check permissions
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             return View();
         }
 
@@ -39,6 +47,13 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = masterPropertyType.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
@@ -74,6 +89,12 @@ namespace EltizamValuation.Web.Controllers
         [HttpGet] 
         public IActionResult PropertyTypeManage(int? id)
         {
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id != null)
             {
                 ViewData["IsEdit"] = true;
@@ -122,6 +143,12 @@ namespace EltizamValuation.Web.Controllers
             {
                 ViewData["IsEdit"] = true;
             }
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
             Master_PropertyTypeModel masterPropertyType;
             if (id == null || id <= 0)

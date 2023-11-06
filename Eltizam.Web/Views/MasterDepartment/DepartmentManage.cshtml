@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHttpContextAccessor HttpContextAccessor
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
-
+@using Eltizam.Utility.Models
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
@@ -11,6 +11,11 @@
 @model Eltizam.Business.Models.MasterDepartmentEntity
 @{
     ViewData["Title"] = @MasterLocalizer["DictionaryManage"];
+    var _header = " Department Master";
+    var _md = Model.Id > 0 ? "Edit" : "Add";
+    var objPermssion = (RolePermissionModel)ViewBag.Access;
+    var isAdd = objPermssion.Add ? 1 : 0;
+    var isEdit = objPermssion.Edit ? 1 : 0;
     string PageHeading = "";
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 
@@ -21,19 +26,7 @@
 <form asp-action="DepartmentManage">
     <main>
 
-        @{
-            bool isEdit = ViewData["IsEdit"] as bool? ?? false;
-        }
-
-        @if (isEdit)
-        {
-            <input type="hidden" asp -for="RoleId" />
-            PageHeading = MasterLocalizer["Update Department"].Value;
-        }
-        else
-        {
-            PageHeading = MasterLocalizer["Add Department"].Value;
-        }
+        <h3 class="dashboardTitle">@_md @_header</h3>
         <div class="whiteBoxShadow">
             <div class="heading position-relative">
                 <h3 class="dashboardTitle">@PageHeading</h3>
@@ -41,6 +34,9 @@
             <div class="bodyContent">
                 <div class="inputSearchs">
                     <form>
+
+                        <input type="hidden" id="isAddPerm" value="@isAdd" />
+                        <input type="hidden" id="isEditPerm" value="@isEdit" />
                         <div class="flex mb-28">
                             @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                             <label for="" class="w-50">
@@ -64,7 +60,7 @@
 
                         <div class="text-center buttonArea">
 
-                            <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
+                            <button type="submit" id="btnSaveEdit" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
                             <a class="greyBtn lineBtn formAbtn" asp-action="Department">@SharedLocalizer["Cancel"]</a>
                         </div>
                     </form>
@@ -78,4 +74,5 @@
 @section MyScripts {
 
     <script type="text/javascript" src="~/js/custom/Department/DepartmentManagement.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/custom\commonscript.js"></script>
 }     
