@@ -9,6 +9,7 @@ using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 using System;
@@ -32,11 +33,13 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterVendor> _repository { get; set; }
         private IRepository<MasterContact> _repositoryContact { get; set; }
         private IRepository<MasterAddress> _repositoryAddress { get; set; }
+        private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
+        private readonly string _dbConnection;
         #endregion Properties
 
         #region Constructor
-        public MasterVendorService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterVendorService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError, IAuditLogService auditLogService,
           IHelper helper,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
@@ -48,6 +51,8 @@ namespace Eltizam.Business.Core.Implementation
             _repositoryAddress = _unitOfWork.GetRepository<MasterAddress>();
             configuration = _configuration;
             _helper = helper;
+            _auditLogService = auditLogService;
+            _dbConnection = DatabaseConnection.ConnString;
         }
         #endregion Constructor
 
@@ -137,15 +142,22 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> AddUpdateMasterVendor(MasterVendorModel masterVendortModel)
         {
+            var By = _helper.GetLoggedInUser().UserId;
             // Create MasterClient and MasterClientContact objects.
             MasterVendor objVendor;
             MasterAddress objAddress;
             MasterContact objContact;
 
+            string MainTableName = Enum.GetName(TableNameEnum.Master_Vendor);
+            int MainTableKey = masterVendortModel.Id;
+
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (masterVendortModel.Id > 0)
             {
                 // Get the existing entity from the repository.
+                MasterVendor OldEntity = null;
+                OldEntity = _repository.GetNoTracking(masterVendortModel.Id);
+
                 objVendor = _repository.Get(masterVendortModel.Id);
 
                 // If the entity exists, update its properties.
@@ -158,11 +170,15 @@ namespace Eltizam.Business.Core.Implementation
                     objVendor.BusinessType = masterVendortModel.BusinessType;
                     objVendor.CompanyDescription = masterVendortModel.CompanyDescription;
                     objVendor.Status = masterVendortModel.Status;
-                    objVendor.ModifiedDate = AppConstants.DateTime;
-                    objVendor.ModifiedBy = masterVendortModel.CreatedBy;
+                    objVendor.ModifiedBy = masterVendortModel.ModifiedBy ?? By;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objVendor);
+
+                    _repository.UpdateGraph(objVendor, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<MasterVendor>(AuditActionTypeEnum.Update, OldEntity, objVendor);
                 }
                 //else if (objVendor != null)
                 //{
@@ -183,15 +199,13 @@ namespace Eltizam.Business.Core.Implementation
                 // Create a new MasterClient entity from the model for insertion.
                 objVendor = _mapperFactory.Get<MasterVendorModel, MasterVendor>(masterVendortModel);
                 objVendor.CreatedDate = AppConstants.DateTime;
-                objVendor.CreatedBy = masterVendortModel.CreatedBy;
-                objVendor.ModifiedDate = AppConstants.DateTime;
-                objVendor.ModifiedBy = masterVendortModel.CreatedBy;
+                objVendor.ModifiedBy = masterVendortModel.CreatedBy ?? By;
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objVendor);
+                // Save changes to the database asynchronously.
+                await _unitOfWork.SaveChangesAsync();
             }
 
-            // Save changes to the database asynchronously.
-            await _unitOfWork.SaveChangesAsync();
             // Check if objClient.Id is 0, which would indicate an error in saving.
             if (objVendor.Id == 0)
                 return DBOperation.Error;
@@ -200,6 +214,8 @@ namespace Eltizam.Business.Core.Implementation
             {
                 if (masterVendortModel.Address.Id > 0)
                 {
+                    var OldEntity = _repositoryAddress.GetNoTracking(masterVendortModel.Address.Id);
+
                     objAddress = _repositoryAddress.Get(masterVendortModel.Address.Id);
                     if (objAddress != null)
                     {
@@ -214,10 +230,19 @@ namespace Eltizam.Business.Core.Implementation
                         objAddress.StateId = entityAddress.StateId;
                         objAddress.CityId = entityAddress.CityId;
                         objAddress.PinNo = entityAddress.PinNo;
+                        objAddress.Email = entityAddress.Email;
+                        objAddress.AlternateEmail = entityAddress.AlternateEmail;
+                        objAddress.Phone = entityAddress.Phone;
+                        objAddress.AlternatePhone = entityAddress.AlternatePhone;
+                        objAddress.Landlinephone = entityAddress.Landlinephone;
                         objAddress.IsActive = entityAddress.IsActive;
-                        objAddress.ModifiedBy = entityAddress.CreatedBy;
-                        objAddress.ModifiedDate = AppConstants.DateTime;
+                        objAddress.ModifiedBy = masterVendortModel.ModifiedBy ?? By;
                         _repositoryAddress.UpdateAsync(objAddress);
+                        _repositoryAddress.UpdateGraph(objAddress, EntityState.Modified);
+                        await _unitOfWork.SaveChangesAsync();
+
+                        //Do Audit Log --AUDITLOGUSER
+                        await _auditLogService.CreateAuditLog<MasterAddress>(AuditActionTypeEnum.Update, OldEntity, objAddress, MainTableName, MainTableKey);
                     }
                 }
                 else
@@ -226,16 +251,15 @@ namespace Eltizam.Business.Core.Implementation
                     //objAddress.IsActive = masterVendortModel.IsActive;
                     objAddress.TableKeyId = objVendor.Id;
                     objAddress.TableName = "Master_Vendor";
-                    objAddress.CreatedBy = masterVendortModel.CreatedBy;
-                    objAddress.CreatedDate = AppConstants.DateTime;
-                    objAddress.ModifiedBy = masterVendortModel.CreatedBy;
-                    objAddress.ModifiedDate = AppConstants.DateTime;
+                    objAddress.CreatedBy = masterVendortModel.CreatedBy ?? By;
                     _repositoryAddress.AddAsync(objAddress);
-                }
-                await _unitOfWork.SaveChangesAsync();
+                    await _unitOfWork.SaveChangesAsync();
 
+                }
                 if (masterVendortModel.Contact.Id > 0)
                 {
+                    var OldEntity = _repositoryContact.GetNoTracking(masterVendortModel.Contact.Id);
+
                     objContact = _repositoryContact.Get(masterVendortModel.Contact.Id);
                     if (objContact != null)
                     {
@@ -247,9 +271,13 @@ namespace Eltizam.Business.Core.Implementation
                         objContact.Email = entityAddress.Email;
                         objContact.Mobile = entityAddress.Mobile;
                         objContact.Status = entityAddress.Status;
-                        objContact.ModifiedBy = entityAddress.CreatedBy;
-                        objContact.ModifiedDate = AppConstants.DateTime;
+                        objContact.ModifiedBy = masterVendortModel.ModifiedBy ?? By;
                         _repositoryContact.UpdateAsync(entityAddress);
+                        _repositoryAddress.UpdateGraph(objAddress, EntityState.Modified);
+                        await _unitOfWork.SaveChangesAsync();
+
+                        //Do Audit Log --AUDITLOGUSER
+                        await _auditLogService.CreateAuditLog<MasterContact>(AuditActionTypeEnum.Update, OldEntity, objContact, MainTableName, MainTableKey);
                     }
                 }
                 else
@@ -259,14 +287,11 @@ namespace Eltizam.Business.Core.Implementation
                     objContact.CreatedDate = AppConstants.DateTime;
                     objContact.TableKeyId = objVendor.Id;
                     objContact.TableName = "Master_Vendor";
-                    objContact.CreatedBy = masterVendortModel.CreatedBy;
-                    objContact.CreatedDate = AppConstants.DateTime;
-                    objContact.ModifiedDate = AppConstants.DateTime;
-                    objContact.ModifiedBy = masterVendortModel.CreatedBy;
+                    objContact.ModifiedBy = masterVendortModel.CreatedBy ?? By;
                     _repositoryContact.AddAsync(objContact);
+                    // Insert the new entity into the repository asynchronously.
+                    await _unitOfWork.SaveChangesAsync();
                 }
-                // Insert the new entity into the repository asynchronously.
-                await _unitOfWork.SaveChangesAsync();
             }
 
             return DBOperation.Success;

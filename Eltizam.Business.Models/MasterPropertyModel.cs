@@ -37,6 +37,7 @@ namespace Eltizam.Business.Models
         public string? ParkingBayNo { get; set; }
         public string? Description { get; set; }
         public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
         public string? Amenities { get; set; }
         public MasterPropertyDetailModel PropertyDetail { get; set; }
         public List<MasterAmenityListModel>? AmenityList { get; set; }
