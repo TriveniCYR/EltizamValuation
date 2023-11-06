@@ -208,7 +208,7 @@ function AssignRequest() {
     else if (remarks == '') {
         toastr.error("Enter remarks.");
     }
-    else if (ids.length > 0) {
+    else if (ids.length == 0) {
         toastr.error("Select atleast one row to approval.");
         return false;
     }
