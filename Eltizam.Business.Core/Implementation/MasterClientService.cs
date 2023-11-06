@@ -48,6 +48,7 @@ namespace Eltizam.Business.Core.Implementation
 
             _repository = _unitOfWork.GetRepository<MasterClient>();
             _repositoryAddress = _unitOfWork.GetRepository<MasterAddress>();
+            _repositoryContact = _unitOfWork.GetRepository<MasterContact>();
             _repositoryDocument = _unitOfWork.GetRepository<MasterDocument>();
             configuration = _configuration;
             _helper = helper;
