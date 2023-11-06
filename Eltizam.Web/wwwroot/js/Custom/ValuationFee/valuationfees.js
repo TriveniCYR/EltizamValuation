@@ -9,8 +9,13 @@ function ConfirmationDeleteValuationFees(id) {
     $('#DeleteValuationFeesModel #Id').val(id);
 }
 function DeleteValuationFees() {
-    var tempInAtiveID = $('#DeleteValuationFeesModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteValuationByIdUrl + "/" + tempInAtiveID, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+    if (IsDeletePerm) {
+        var tempInAtiveID = $('#DeleteValuationFeesModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeleteValuationByIdUrl + "/" + tempInAtiveID, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
 }
 
 function DeleteUserByIdSuccess(data) {

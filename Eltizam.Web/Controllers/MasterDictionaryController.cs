@@ -3,6 +3,7 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterDictionaryController : Controller
+    public class MasterDictionaryController : BaseController
     {
         #region Properties
 
@@ -33,6 +34,11 @@ namespace EltizamValuation.Web.Controllers
             ModelState.Clear();
             try
             {
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new APIRepository(_cofiguration); 
                 return View(); 
@@ -55,6 +61,12 @@ namespace EltizamValuation.Web.Controllers
             }
 
             MasterDictionaryEntity masterDictionaryEntity;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
                 masterDictionaryEntity = new MasterDictionaryEntity();
@@ -184,6 +196,12 @@ namespace EltizamValuation.Web.Controllers
         }
         public IActionResult DictionaryDetailsView(int id)
         {
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             MasterDictionaryDetailById model = new MasterDictionaryDetailById();
             HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
             ViewData["ParentId"] = id;
@@ -214,7 +232,16 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = masterdictionary.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
 
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+                if (masterdictionary.Id == 0)
+                    masterdictionary.CreatedBy = _helper.GetLoggedInUserId();
+                masterdictionary.ModifiedBy = _helper.GetLoggedInUserId();
                 // masterdictionary.DictionaryId = 3;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);

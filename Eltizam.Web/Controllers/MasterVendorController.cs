@@ -2,6 +2,7 @@
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -9,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterVendorController : Controller
+    public class MasterVendorController : BaseController
     {
         #region Properties
 
@@ -29,18 +30,10 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
-                //HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                //APIRepository objapi = new APIRepository(_cofiguration);
-                //MasterUserModel oUserList = new MasterUserModel();
-                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAll, HttpMethod.Post, token).Result;
-                //if (responseMessage.IsSuccessStatusCode)
-                //{
-                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                //    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterUserModel>>>(jsonResponse);
-                //    oUserList.Users = data._object;
-
-                //    return View();
-                //}
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 return View();
             }
             catch (Exception e)
@@ -53,6 +46,13 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult VendorManage(int? id)
         {
             MasterVendorModel masterUser;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
             if (id == null || id <= 0)
             {
                 masterUser = new MasterVendorModel();
@@ -92,6 +92,12 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 if (masterUser != null)
                 {
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
@@ -132,6 +138,12 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult VendorDetail(int? id)
         {
             MasterVendorModel masterUser;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
                 masterUser = new MasterVendorModel();

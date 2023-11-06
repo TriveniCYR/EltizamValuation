@@ -37,7 +37,7 @@ namespace EltizamValuation.Api.Controllers
         #region API Methods
          
         [HttpPost, Route("GetAll")]
-        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
+        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model, string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace EltizamValuation.Api.Controllers
 
                 //return _ObjectResponse.CreateData(list, (Int32)HttpStatusCode.OK);
 
-                string? TableName = null; DateTime? DateFrom = null; DateTime? DateTo = null;
+               // string? TableName = null; DateTime? DateFrom = null; DateTime? DateTo = null;
 
                 return _ObjectResponse.CreateData(await _auditLogService.GetAll(model, TableName, DateFrom, DateTo), (Int32)HttpStatusCode.OK);
             }
@@ -75,8 +75,19 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
-          
 
+        [HttpGet("GetAllAuditLogTableName")]
+        public async Task<IActionResult> GetAllAuditLogTableName()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _auditLogService.GetAllAuditLogTableName(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
     }
 }

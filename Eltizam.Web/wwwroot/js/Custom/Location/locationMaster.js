@@ -211,9 +211,14 @@ function ConfirmationDelete(id) {
     $('#DeleteLocationModel #ID').val(id);
 }
 function DeleteRole() { 
-    var tempInAtiveID = $('#DeleteLocationModel #ID').val();
-    var url = DeletLocationByIdUrl + "/" + tempInAtiveID;
-    ajaxServiceMethod(BaseURL + url, 'POST', DeleteRoleByIdSuccess); 
+    if (IsDeletePerm) {
+        var tempInAtiveID = $('#DeleteLocationModel #ID').val();
+        var url = DeletLocationByIdUrl + "/" + tempInAtiveID;
+        ajaxServiceMethod(BaseURL + url, 'POST', DeleteRoleByIdSuccess);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
 }
 function DeleteRoleByIdSuccess(data) {
     try {

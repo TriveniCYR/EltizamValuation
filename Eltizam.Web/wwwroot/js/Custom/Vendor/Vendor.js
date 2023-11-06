@@ -8,9 +8,14 @@ function ConfirmationDeleteVendor(id) {
     $('#DeleteVendorModel #Id').val(id);
 }
 function DeleteVendor() {
-     
-    var tempInAtiveID = $('#DeleteVendorModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteVendors + "/" + tempInAtiveID, 'POST', DeleteVendorByIdSuccess, DeleteVendorByIdError);
+    if (IsDeletePerm) {
+
+        var tempInAtiveID = $('#DeleteVendorModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeleteVendors + "/" + tempInAtiveID, 'POST', DeleteVendorByIdSuccess, DeleteVendorByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
 }
 function DeleteVendorByIdSuccess(data) {
     try {

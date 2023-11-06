@@ -7,10 +7,15 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
-
+@using Eltizam.Utility.Models
 @model Eltizam.Business.Models.MasterDesignationEntity
 @{
     ViewData["Title"] = @MasterLocalizer["DesignationManage"];
+    var _header = " Designation Master";
+    var _md = Model.Id > 0 ? "Edit" : "Add";
+    var objPermssion = (RolePermissionModel)ViewBag.Access;
+    var isAdd = objPermssion.Add ? 1 : 0;
+    var isEdit = objPermssion.Edit ? 1 : 0;
     string PageHeading = "";
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 
@@ -19,19 +24,7 @@
 <form asp-action="DesignationManage">
     <main>
 
-        @{
-            bool isEdit = ViewData["IsEdit"] as bool? ?? false;
-        }
-
-        @if (isEdit)
-        {
-            <input type="hidden" asp -for="RoleId" />
-            PageHeading = MasterLocalizer["Update Designation"].Value;
-        }
-        else
-        {
-            PageHeading = MasterLocalizer["Add Designation"].Value;
-        }
+       
         <div class="whiteBoxShadow">
             <div class="heading position-relative">
                 <h3 class="dashboardTitle">@PageHeading</h3>
@@ -39,6 +32,8 @@
             <div class="bodyContent">
                 <div class="inputSearchs">
                     <form>
+                        <input type="hidden" id="isAddPerm" value="@isAdd" />
+                        <input type="hidden" id="isEditPerm" value="@isEdit" />
                         @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                         <div class="flex mb-28">
                             <label for="" class="w-50">
@@ -64,7 +59,7 @@
 
                         <div class="text-center buttonArea">
                             @* <button type="submit" class="blueBtn">Save</button> *@
-                            <button type="submit" id="btnSaveRole" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
+                            <button type="submit" id="btnSaveEdit" class="bgBlue mr-12">@SharedLocalizer["Save"]</button>
                             <a class="greyBtn lineBtn formAbtn" asp-action="Designation">@SharedLocalizer["Cancel"]</a>
                         </div>
                     </form>

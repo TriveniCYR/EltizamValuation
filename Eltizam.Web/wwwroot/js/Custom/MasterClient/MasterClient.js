@@ -7,8 +7,14 @@ function ConfirmationDeleteClient(id) {
     $('#DeleteClientModel #Id').val(id);
 }
 function DeleteClient() {
-    var tempInAtiveID = $('#DeleteClientModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID, Post, DeleteClientByIdSuccess, DeleteClientByIdError);
+    debugger;
+    if (IsDeletePerm) {
+        var tempInAtiveID = $('#DeleteClientModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID, Post, DeleteClientByIdSuccess, DeleteClientByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
 }
 function DeleteClientByIdSuccess(data) {
     try {

@@ -1,4 +1,5 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
@@ -33,7 +34,11 @@ namespace Eltizam.Web.Controllers
         {
             ModelState.Clear();
             try
-            { 
+            {
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 return View();
             }
             catch (Exception e)
@@ -49,6 +54,12 @@ namespace Eltizam.Web.Controllers
             ViewBag.IsEdit = id != null;
             ViewBag.IsView= flag1 != null;
             MasterRoleEntity MasterRole = new MasterRoleEntity();
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
             if (id == null)
             {
@@ -149,6 +160,13 @@ namespace Eltizam.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = masterRole.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 masterRole.LoggedUserId = _helper.GetLoggedInUserId();
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
