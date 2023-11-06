@@ -14,6 +14,8 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string msgPasswordResetSuccessfully = "Password Reset successfully"; 
         public static string msgResetPasswordTokenExpired = "You link has been expired please go to forgot password page to reset your password again"; 
         public static string msgInvalidLink = "Invalid Link";
+        public static string AccessRestriction = "AccessRestriction";
+        public static string Home = "Home";
 
         public static string TableName = "TableName"; 
         public static string TableId = "TableId";

@@ -1,4 +1,5 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Web.Controllers;
@@ -25,10 +26,17 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
+
         public IActionResult Users()
         {
             try
             {
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                var hasAccess = CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId); 
+                if (!hasAccess) 
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home); 
+
                 return View();
             }
             catch (Exception e)
@@ -38,6 +46,7 @@ namespace EltizamValuation.Web.Controllers
                 return View("Login");
             }
         }
+         
 
         [HttpGet]
         public IActionResult UserManage(int? id)
@@ -50,6 +59,12 @@ namespace EltizamValuation.Web.Controllers
             }
             else
             {
+                //Check permissions for Get
+                int roleId = _helper.GetLoggedInRoleId();
+                var hasAccess = CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId);
+                if (!hasAccess)
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetUserById + "/" + id, HttpMethod.Get, token).Result;
@@ -57,7 +72,7 @@ namespace EltizamValuation.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse); 
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
 
                     //Get Footer info
                     var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_User));
@@ -65,7 +80,7 @@ namespace EltizamValuation.Web.Controllers
                     if (footerRes.IsSuccessStatusCode)
                     {
                         string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json); 
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
                     }
 
                     return View(data._object);
@@ -78,9 +93,18 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult UserManage(int id, MasterUserModel masterUser)
         {
             try
-            {
+            { 
                 if (masterUser != null)
                 {
+                    //Check permissions for Get
+                    var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                    int roleId = _helper.GetLoggedInRoleId();
+                    var hasAccess = CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId);
+                    if (!hasAccess)
+                        return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
                     masterUser.Email ??= masterUser.Address?.Email;
 
                     if (masterUser.Document != null && masterUser.Document.Files != null)
@@ -94,10 +118,10 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
 
                     //Fill audit logs field
-                    if (masterUser.Id == 0) 
-                        masterUser.CreatedBy = _helper.GetLoggedInUserId();  
-                    masterUser.ModifiedBy = _helper.GetLoggedInUserId(); 
-                } 
+                    if (masterUser.Id == 0)
+                        masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                    masterUser.ModifiedBy = _helper.GetLoggedInUserId();
+                }
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
@@ -107,16 +131,16 @@ namespace EltizamValuation.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]); 
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
                 }
-                else 
-                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);  
-                
+                else
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace); 
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
 
             return RedirectToAction("Users");
@@ -126,6 +150,14 @@ namespace EltizamValuation.Web.Controllers
         [Route("MasterUser/UserDetail")]
         public IActionResult UserDetail(int? id)
         {
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            var hasAccess = CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId);
+            if (!hasAccess)
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
             MasterUserModel masterUser;
             if (id == null || id <= 0)
             {

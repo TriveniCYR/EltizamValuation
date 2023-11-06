@@ -7,7 +7,7 @@ namespace Eltizam.Utility.Enums
     /// </summary>
     public enum ModulePermissionEnum
     { 
-        ResourceMaster = 1, 
+        UserMaster = 1, 
         RoleMaster = 2,
         ClientTypeMaster = 3,
         ClientMaster = 4,
