@@ -185,5 +185,14 @@ namespace Eltizam.Business.Core.Implementation
 
             return res; 
         }
+
+        public async Task<List<AuditLogTableModel>> GetAllAuditLogTableName()
+        {
+
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<AuditLogTableModel>(ProcedureMetastore.usp_AuditLog_GetTable,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+
+            return lstStf;
+        }
     }
 }

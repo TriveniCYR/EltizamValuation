@@ -71,5 +71,6 @@ namespace Eltizam.Business.Models
 
         //AuditLog
         public static string usp_AuditLog_SearchAllList = "usp_AuditLog_SearchAllList";
+        public static string usp_AuditLog_GetTable = "usp_AuditLog_GetTable";
     }
 }

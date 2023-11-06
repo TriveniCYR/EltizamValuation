@@ -5,6 +5,8 @@
 @inject IHttpContextAccessor HttpContextAccessor 
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration 
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@model Eltizam.Business.Models.AuditLogModel
 @{
     ViewData["Title"] = "Audit Logs";
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
@@ -20,6 +22,42 @@
                         <button class="flex align-item-center blueBtn">
                             <img src="../assets/plus.svg" alt="plus"> Add New
                         </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="accordion valueAdvance">
+
+                <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+                <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
+                <div class="accordion-content inputSearchs">
+
+                    <h3 class="text-center">Advanced Search</h3>
+                    <form>
+
+                        <label for="UserName">
+                            <p class="m-0">UserName</p>
+                            @Html.DropDownListFor(model => model.UserName, new List<SelectListItem> { }, new {  })
+                        </label>
+
+                        <div class="flex flex-start" style=" gap: 5px;">
+                            <label for="ParentTableName">
+                                <p class="m-0">TableName</p>
+                                @Html.DropDownListFor(model => model.ParentTableName, new List<SelectListItem> { }, new {  })
+                            </label>
+                            <label for="fromDate">
+                                From Date
+                                <input type="date" id="FromDate" name="FromDate" asp-for="FromDate">
+                            </label>
+                            <label for="toDate">
+                                To Date
+                                <input type="date" id="ToDate" name="ToDate" asp-for="ToDate">
+                            </label>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" class="blueBtn" onclick="InitializeValutionRequestDataList()">Search</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -50,10 +88,13 @@
     @Html.Partial("_DataTablePartial")
     <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/custom/AuditLog/AuditLogs.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/AuditLog/AuditLogsFilter.js?v=@jsVersion"></script>
 
     <script>
         //#region Setup API Url
         var AllAudit = "@Eltizam.Web.Helpers.APIURLHelper.GetAllAudit";
         var DeleteClient = "@Eltizam.Web.Helpers.APIURLHelper.DeleteClient";
+        var GetAuditTableNameList = "@Eltizam.Web.Helpers.APIURLHelper.GetAuditTableName";
+        var GetUserNameList = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
     </script>
 }

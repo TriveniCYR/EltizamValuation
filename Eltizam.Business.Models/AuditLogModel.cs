@@ -17,6 +17,11 @@ namespace Eltizam.Business.Models
         public string? Log { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
+
+        public string? UserName { get; set; }
+        
+        public string? FromDate { get; set; }
+        public string? ToDate { get; set; }
     }
     public class AuditLogModelResponse : AuditLogModel
     { 
