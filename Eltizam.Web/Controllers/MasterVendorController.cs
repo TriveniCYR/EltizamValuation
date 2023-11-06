@@ -97,6 +97,10 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     masterUser.Contact = (masterUser.Contact == null) ? null : masterUser.Contact;
                 }
+                if (masterUser.Id == 0)
+                masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                masterUser.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

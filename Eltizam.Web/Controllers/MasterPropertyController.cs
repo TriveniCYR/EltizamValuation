@@ -98,6 +98,10 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                if (masterProperty.Id == 0)
+                masterProperty.CreatedBy = _helper.GetLoggedInUserId();
+                masterProperty.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

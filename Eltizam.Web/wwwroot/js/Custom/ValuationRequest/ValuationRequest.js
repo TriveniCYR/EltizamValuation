@@ -74,7 +74,10 @@ function InitializeValutionRequestDataList() {
 
     var columnObject = [
         {
-            "data": "id", "name": "Id"
+            "data": "id", "name": "Id",
+            "render": function (data, type, row, data) {
+                return '<div class="checkboxColumn"><input type="checkbox" value="' + row.id + '"><span>' + row.id + '</span><div>';
+            }
         },
         {
             "data": "referenceNO", "name": "ReferenceNO"
