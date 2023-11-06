@@ -35,10 +35,10 @@ $(document).ready(function () {
         toastr.error(ErrorToaster);
     }
 
-    if (IsAddPerm) {
+    if (IsAddPerm === false) {
         $("#addNew").remove();
     }
-    if (IsEditPerm) {
+    if (IsEditPerm === false) {
         $("#btnSaveEdit").remove();
     }
 });
