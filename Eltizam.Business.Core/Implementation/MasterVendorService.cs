@@ -272,8 +272,8 @@ namespace Eltizam.Business.Core.Implementation
                         objContact.Mobile = entityAddress.Mobile;
                         objContact.Status = entityAddress.Status;
                         objContact.ModifiedBy = masterVendortModel.ModifiedBy ?? By;
-                        _repositoryContact.UpdateAsync(entityAddress);
-                        _repositoryAddress.UpdateGraph(objAddress, EntityState.Modified);
+                        _repositoryContact.UpdateAsync(objContact);
+                        _repositoryContact.UpdateGraph(objContact, EntityState.Modified);
                         await _unitOfWork.SaveChangesAsync();
 
                         //Do Audit Log --AUDITLOGUSER
