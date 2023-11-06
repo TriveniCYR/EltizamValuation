@@ -12,14 +12,22 @@ namespace Eltizam.Web.Controllers
     { 
         public bool CheckRoleAccess(ModulePermissionEnum enumP, PermissionEnum perEnum, int roleId)
         {
-            RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.UserMaster, roleId);
-            if (objPermssion == null || !(objPermssion.View || objPermssion.Add || objPermssion.Edit))
+            var hasAccess  = false;
+            bool view = perEnum == PermissionEnum.View;
+            bool add  = perEnum == PermissionEnum.Add;
+            bool edit = perEnum == PermissionEnum.Edit;
+
+            RolePermissionModel? objPermssion = UtilityHelper.GetCntrActionAccess((int)enumP, roleId);
+
+            if (objPermssion != null && (view == objPermssion.View) || 
+                                        (add  == objPermssion.Add)  ||
+                                        (edit == objPermssion.Edit))
             {
-               return false;
-            }
+                hasAccess = true;
+            } 
 
             ViewBag.Access = objPermssion;
-            return true;
+            return hasAccess;
         }
     }
 }
