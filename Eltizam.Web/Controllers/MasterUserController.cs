@@ -52,20 +52,21 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult UserManage(int? id)
         {
             MasterUserModel masterUser;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
             if (id == null || id <= 0)
             {
                 masterUser = new MasterUserModel();
                 return View(masterUser);
             }
             else
-            { 
-                //Check permissions for Get
-                var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
-                int roleId = _helper.GetLoggedInRoleId(); 
-
-                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
-                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-
+            {  
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetUserById + "/" + id, HttpMethod.Get, token).Result;
