@@ -201,7 +201,7 @@ function AssignRequest() {
     });
     ids = ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
     debugger
-    if (approverId === undefined || isNaN(parseInt(cityId))) {
+    if (approverId === undefined || isNaN(parseInt(approverId))) {
         toastr.error("Select approver.");
         return false;
     }
