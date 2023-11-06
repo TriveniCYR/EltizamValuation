@@ -15,10 +15,7 @@ namespace Eltizam.Web.Filters
 		public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
 		{
 			try
-			{
-				//string token = string.Empty;
-				//context.HttpContext.Request.Cookies.TryGetValue("EmcureNPDToken", out token);
-
+			{ 
 				var user = context.HttpContext.User;
 
 				if (!user.Identity.IsAuthenticated)
