@@ -1,6 +1,8 @@
-﻿using Eltizam.Business.Models;
+﻿using Eltizam.Business.Core.Interface;
+using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
@@ -17,15 +19,20 @@ namespace EltizamValuation.Web.Controllers
 
         private readonly IConfiguration _cofiguration;
         private readonly IStringLocalizer<Shared> _stringLocalizerShared;
+        private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
+        private readonly string _dbConnection;
 
         #endregion Properties
 
-        public MasterClientController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
+        public MasterClientController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IAuditLogService auditLogService, IHelper helper)
         {
             _cofiguration = configuration;
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
+            _auditLogService = auditLogService;
+
+            _dbConnection = DatabaseConnection.ConnString;
         }
         public IActionResult Clients()
         {
@@ -109,6 +116,11 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     //masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
                 }
+                //Fill audit logs field
+                if (masterUser.Id == 0)
+                masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                masterUser.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

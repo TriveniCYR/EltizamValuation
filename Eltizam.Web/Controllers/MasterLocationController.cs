@@ -46,13 +46,13 @@ namespace EltizamValuation.Web.Controllers
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
 
                 return View("Login");
-            } 
+            }
         }
 
 
 
         public IActionResult LocationById(int id)
-        { 
+        {
             MasterLocationEntity masterlocation;
 
             //Check permissions for Get
@@ -139,6 +139,11 @@ namespace EltizamValuation.Web.Controllers
                 int roleId = _helper.GetLoggedInRoleId();
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                //Fill audit logs field
+                if (masterlocation.Id == 0)
+                    masterlocation.CreatedBy = _helper.GetLoggedInUserId();
+                masterlocation.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

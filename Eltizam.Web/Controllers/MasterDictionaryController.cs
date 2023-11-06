@@ -238,6 +238,9 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
+                if (masterdictionary.Id == 0)
+                    masterdictionary.CreatedBy = _helper.GetLoggedInUserId();
+                masterdictionary.ModifiedBy = _helper.GetLoggedInUserId();
                 // masterdictionary.DictionaryId = 3;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);

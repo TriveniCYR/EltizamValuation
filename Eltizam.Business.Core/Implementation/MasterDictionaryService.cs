@@ -7,7 +7,9 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Data;
 using System.Data.SqlClient;
@@ -29,9 +31,10 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterDictionary> _repository { get; set; }
         private IRepository<MasterDictionaryDetail> _repositoryDetail { get; set; }
         private readonly IHelper _helper;
+        private readonly IAuditLogService _auditLogService;
 
         public MasterDictionaryService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, 
-                                 IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
+                                 IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration, IAuditLogService auditLogService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -40,6 +43,7 @@ namespace Eltizam.Business.Core.Implementation
             _repositoryDetail = _unitOfWork.GetRepository<MasterDictionaryDetail>();
             configuration = _configuration;
             _helper = helper;
+            _auditLogService = auditLogService;
         }
 
         // get all recoreds from Location list with sorting and pagination
@@ -102,9 +106,12 @@ namespace Eltizam.Business.Core.Implementation
         {
 
             MasterDictionaryDetail objDicitonary;
-
+            var By = _helper.GetLoggedInUser().UserId;
+            string MainTableName = Enum.GetName(TableNameEnum.Master_Location);
+            int MainTableKey = entitydictionary.Id;
             if (entitydictionary.Id > 0)
             {
+                MasterDictionaryDetail OldEntity = null;
                 objDicitonary = _repositoryDetail.Get(entitydictionary.Id);
                 var OldObjLocation = objDicitonary;
                 if (objDicitonary != null)
@@ -112,8 +119,13 @@ namespace Eltizam.Business.Core.Implementation
                     //   objLocation.LocationName = entityLocation.LocationName;
                     objDicitonary.Description = entitydictionary.Description;
                     objDicitonary.Sort = entitydictionary.Sort;
-                    objDicitonary.IsActive = entitydictionary.IsActive; 
+                    objDicitonary.IsActive = entitydictionary.IsActive;
+                    objDicitonary.ModifiedBy = entitydictionary.ModifiedBy ?? By;
                     _repositoryDetail.UpdateAsync(objDicitonary);
+                    _repositoryDetail.UpdateGraph(objDicitonary, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<MasterDictionaryDetail>(AuditActionTypeEnum.Update, OldEntity, objDicitonary, MainTableName, MainTableKey);
                 }
                 else
                 {
@@ -124,11 +136,13 @@ namespace Eltizam.Business.Core.Implementation
             {
                 objDicitonary = _mapperFactory.Get<MasterDictionaryDetailById, MasterDictionaryDetail>(entitydictionary);
                 objDicitonary.Description = entitydictionary.Description; 
-                objDicitonary.IsActive = entitydictionary.IsActive; 
+                objDicitonary.IsActive = entitydictionary.IsActive;
+                objDicitonary.CreatedBy = entitydictionary.CreatedBy;
 
                 _repositoryDetail.AddAsync(objDicitonary);
+                await _unitOfWork.SaveChangesAsync();
             }
-            await _unitOfWork.SaveChangesAsync();
+            //await _unitOfWork.SaveChangesAsync();
             if (objDicitonary.Id == 0)
                 return DBOperation.Error;
 

@@ -67,7 +67,11 @@ namespace EltizamValuation.Web.Controllers
 
             return View();
         }
-    }
+        public IActionResult AuditLog()
+        {
+            return View();
+        }
+        }
 }
 
 

@@ -9,6 +9,7 @@ using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -31,12 +32,13 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterClient> _repository { get; set; }
         private IRepository<MasterAddress> _repositoryAddress { get; set; }
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
+        private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
         private readonly string _dbConnection;
         #endregion Properties
 
         #region Constructor
-        public MasterClientService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterClientService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError, IAuditLogService auditLogService,
           IHelper helper,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
@@ -48,6 +50,7 @@ namespace Eltizam.Business.Core.Implementation
             _repositoryDocument = _unitOfWork.GetRepository<MasterDocument>();
             configuration = _configuration;
             _helper = helper;
+            _auditLogService = auditLogService;
 
             _dbConnection = DatabaseConnection.ConnString;
         }
@@ -146,15 +149,22 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> AddUpdateMasterClient(MasterClientModel master_ClientModel)
         {
+            var By = _helper.GetLoggedInUser().UserId;
             // Create MasterClient and MasterClientContact objects.
             MasterClient objClient;
             MasterAddress objAddress;
             MasterDocument objDocument;
 
+            string MainTableName = Enum.GetName(TableNameEnum.Master_Client);
+            int MainTableKey = master_ClientModel.Id;
+
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (master_ClientModel.Id > 0)
             {
                 // Get the existing entity from the repository.
+                MasterClient OldEntity = null;
+                OldEntity = _repository.GetNoTracking(master_ClientModel.Id);
+
                 objClient = _repository.Get(master_ClientModel.Id);
 
                 // If the entity exists, update its properties.
@@ -170,11 +180,16 @@ namespace Eltizam.Business.Core.Implementation
                     objClient.LicenseNumber = master_ClientModel.LicenseNumber;
                     objClient.IsActive = master_ClientModel.IsActive;
                     objClient.Logo = master_ClientModel.Logo;
-                    objClient.ModifiedDate = AppConstants.DateTime;
-                    objClient.ModifiedBy = master_ClientModel.CreatedBy;
+                    objClient.ModifiedDate = AppConstants.DateTime; 
+                    objClient.ModifiedBy = master_ClientModel.ModifiedBy ?? By;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objClient);
+
+                    _repository.UpdateGraph(objClient, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<MasterClient>(AuditActionTypeEnum.Update, OldEntity, objClient);
                 }
                 else
                 {
@@ -187,22 +202,11 @@ namespace Eltizam.Business.Core.Implementation
                 // Create a new MasterClient entity from the model for insertion.
                 objClient = _mapperFactory.Get<MasterClientModel, MasterClient>(master_ClientModel);
                 objClient.CreatedDate = AppConstants.DateTime;
-                objClient.CreatedBy = master_ClientModel.CreatedBy;
-                objClient.ModifiedDate = AppConstants.DateTime;
-                objClient.ModifiedBy = master_ClientModel.CreatedBy;
+                objClient.ModifiedBy = master_ClientModel.CreatedBy ?? By; 
 
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objClient);
-            }
-
-            try
-            {
-                // Save changes to the database asynchronously.
                 await _unitOfWork.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
 
             // Check if objClient.Id is 0, which would indicate an error in saving.
@@ -215,6 +219,9 @@ namespace Eltizam.Business.Core.Implementation
 
                 if (master_ClientModel.Address.Id > 0)
                 {
+                    //Get current Entiry --AUDITLOGUSER
+                    var OldEntity = _repositoryAddress.GetNoTracking(master_ClientModel.Address.Id);
+
                     objAddress = _repositoryAddress.Get(master_ClientModel.Address.Id);
                     if (objAddress != null)
                     {
@@ -234,9 +241,14 @@ namespace Eltizam.Business.Core.Implementation
                         objAddress.AlternatePhone = entityAddress.AlternatePhone;
                         objAddress.Landlinephone = entityAddress.Landlinephone;
                         objAddress.IsActive = entityAddress.IsActive;
-                        objAddress.ModifiedBy = entityAddress.CreatedBy;
-                        objAddress.ModifiedDate = AppConstants.DateTime;
+                        objAddress.ModifiedBy = master_ClientModel.ModifiedBy ?? By;
                         _repositoryAddress.UpdateAsync(entityAddress);
+
+                        _repositoryAddress.UpdateGraph(objAddress, EntityState.Modified);
+                        await _unitOfWork.SaveChangesAsync();
+
+                        //Do Audit Log --AUDITLOGUSER
+                        await _auditLogService.CreateAuditLog<MasterAddress>(AuditActionTypeEnum.Update, OldEntity, objAddress, MainTableName, MainTableKey);
                     }
                 }
                 else
@@ -245,10 +257,7 @@ namespace Eltizam.Business.Core.Implementation
                     objAddress = _mapperFactory.Get<MasterAddressEntity, MasterAddress>(master_ClientModel.Address);
                     objAddress.TableKeyId = objClient.Id; // Associate with the MasterClient entity.
                     objAddress.TableName = Enum.GetName(TableNameEnum.Master_Client);
-                    objAddress.CreatedDate = AppConstants.DateTime;
-                    objAddress.CreatedBy = master_ClientModel.CreatedBy;
-                    objAddress.ModifiedDate = AppConstants.DateTime;
-                    objAddress.ModifiedBy = master_ClientModel.CreatedBy;
+                    objAddress.CreatedBy = master_ClientModel.CreatedBy ?? By;
                     _repositoryAddress.AddAsync(objAddress);
                 }
                 // Insert the new entity into the repository asynchronously.
@@ -266,10 +275,7 @@ namespace Eltizam.Business.Core.Implementation
                         objDocument.FileName = doc.FileName;
                         objDocument.FilePath = doc.FilePath;
                         objDocument.FileType = doc.FileType;
-                        objDocument.CreatedBy = master_ClientModel.CreatedBy;
-                        objDocument.CreatedDate = AppConstants.DateTime;
-                        objDocument.ModifiedBy = master_ClientModel.CreatedBy;
-                        objDocument.ModifiedDate = AppConstants.DateTime;
+                        objDocument.CreatedBy = master_ClientModel.CreatedBy ?? By;
                         _repositoryDocument.AddAsync(objDocument);
                     }
                     await _unitOfWork.SaveChangesAsync();
