@@ -152,7 +152,7 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult UserDetail(int? id)
         {
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
             int roleId = _helper.GetLoggedInRoleId(); 
             if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))

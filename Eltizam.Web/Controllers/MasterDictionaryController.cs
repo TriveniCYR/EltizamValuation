@@ -233,7 +233,7 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 //Check permissions for Get
-                var action = masterdictionary.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+                var action = Id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
                 int roleId = _helper.GetLoggedInRoleId();
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))

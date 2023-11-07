@@ -34,6 +34,8 @@ namespace EltizamValuation.Web.Controllers
 
             _dbConnection = DatabaseConnection.ConnString;
         }
+        [HttpGet]
+        [Route("MasterClient/Clients")]
         public IActionResult Clients()
         {
             try
@@ -152,7 +154,7 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult ClientDetail(int? id)
         {
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
             int roleId = _helper.GetLoggedInRoleId();
             if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
