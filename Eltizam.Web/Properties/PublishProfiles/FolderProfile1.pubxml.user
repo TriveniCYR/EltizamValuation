@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Project\EltizamValuation\publish\webportal</_PublishTargetUrl>
-    <History>True|2023-11-07T15:25:47.0880589Z;True|2023-11-06T17:04:04.9266611+05:30;</History>
+    <History>True|2023-11-07T17:41:07.4469328Z;True|2023-11-07T23:00:49.9230752+05:30;True|2023-11-07T22:51:58.1340461+05:30;True|2023-11-07T22:31:14.0916010+05:30;True|2023-11-07T22:20:55.6362021+05:30;True|2023-11-07T20:55:47.0880589+05:30;True|2023-11-06T17:04:04.9266611+05:30;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>
