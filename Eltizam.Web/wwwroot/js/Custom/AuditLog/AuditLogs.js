@@ -5,7 +5,6 @@ $(document).ready(function () {
 
 function InitializeAuditLogList() {
     $("#AuditLogTable").dataTable().fnDestroy();
-    debugger
     
     var userName = $("#UserName").val();
     if (userName === undefined || isNaN(parseInt(userName))) {
@@ -40,7 +39,11 @@ function InitializeAuditLogList() {
             "data": "createdByName", "name": "Created User"
         },
         {
-            "data": "createdDate", "name": "Created Date"
+            "data": "createdDate", "name": "Created Date",
+
+             "render": function (data, type, row, data) {
+                 return moment(row.createdDate).format('DD-MMM-YYYY');
+            }
         },
         {
             "data": "actionType", "name": "Action Type"

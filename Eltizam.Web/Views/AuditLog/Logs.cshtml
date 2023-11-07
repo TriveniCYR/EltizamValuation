@@ -36,12 +36,14 @@
 
                     <h3 class="text-center">Advanced Search</h3>
                     <form>
-                              <label for="UserName">
-                            <p class="m-0">UserName</p>
-                            @Html.DropDownListFor(model => model.UserName, new List<SelectListItem> { }, new {  })
-                        </label>
+                            
 
                         <div class="flex flex-start">
+
+                            <label for="UserName">
+                                <p class="m-0">UserName</p>
+                                @Html.DropDownListFor(model => model.UserName, new List<SelectListItem> { }, new {  })
+                            </label>
                             <label for="ParentTableName">
                                 <p class="m-0">TableName</p>
                                 @Html.DropDownListFor(model => model.ParentTableName, new List<SelectListItem> { }, new {  })
