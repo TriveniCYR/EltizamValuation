@@ -524,5 +524,14 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
             return data;
         }
+
+        public async Task<List<MasterUserModel>> GetAllUserList()
+        {
+
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserModel>(ProcedureMetastore.usp_User_AllList,
+             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+
+            return lstStf;
+        }
     }
 }

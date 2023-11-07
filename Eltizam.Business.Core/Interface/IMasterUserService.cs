@@ -23,5 +23,7 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> Delete(int id);
         Task<DBOperation> ChangePassword(ChangePasswordModel changePasswordModel);
         Task<GlobalAuditFields?> GetGlobalAuditFields(int TableKeyId, string TableName);
+
+        Task<List<MasterUserModel>> GetAllUserList();
     }
 }

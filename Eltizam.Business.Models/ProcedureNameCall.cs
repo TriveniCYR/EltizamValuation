@@ -27,7 +27,8 @@ namespace Eltizam.Business.Models
         public static string usp_OwnershipType_SearchAllList = "usp_OwnershipType_SearchAllList";
         public static string usp_State_SearchAllList = "usp_State_SearchAllList";
         public static string usp_User_SearchAllList = "usp_User_SearchAllList";
-        
+        public static string usp_User_AllList = "usp_User_AllList";
+
         public static string usp_Country_SearchAllList = "usp_Country_SearchAllList";
         public static string usp_User_Search_GetUserList = "usp_User_Search_GetUserList";
         public static string usp_Dictionary_SearchAllList = "usp_Dictionary_SearchAllList";

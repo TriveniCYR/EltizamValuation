@@ -37,7 +37,7 @@ namespace EltizamValuation.Api.Controllers
         #region API Methods
          
         [HttpPost, Route("GetAll")]
-        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model, string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model, int? UserName, string? TableName = null,  DateTime? DateFrom = null, DateTime? DateTo = null)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace EltizamValuation.Api.Controllers
 
                // string? TableName = null; DateTime? DateFrom = null; DateTime? DateTo = null;
 
-                return _ObjectResponse.CreateData(await _auditLogService.GetAll(model, TableName, DateFrom, DateTo), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _auditLogService.GetAll(model, UserName, TableName, DateFrom, DateTo), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
