@@ -9,7 +9,7 @@ namespace Eltizam.Business.Models
     public class ValuationRequestModel
     {
         public int Id { get; set; }
-        public string ReferenceNo { get; set; } = null!;
+        public string? ReferenceNo { get; set; } = null!;
         public string? OtherReferenceNo { get; set; }
         public int ValuationModeId { get; set; }
         public DateTime ValuationDate { get; set; }
@@ -19,10 +19,10 @@ namespace Eltizam.Business.Models
         public int PropertyId { get; set; }
         public int PropertyTypeId { get; set; }
         public int PropertySubTypeId { get; set; }
-        public int OwnershipTypeId { get; set; }
-        public string PropertyName { get; set; }
-        public string UnitType { get; set; }
-        public string AdditionalUnits { get; set; }
+        public int? OwnershipTypeId { get; set; }
+        public string? PropertyName { get; set; }
+        public string? UnitType { get; set; }
+        public string? AdditionalUnits { get; set; }
         public int Furnished { get; set; }
         public string? ValuationPurpose { get; set; }
          public decimal? BuildUpAreaSqFt { get; set; }
@@ -31,6 +31,7 @@ namespace Eltizam.Business.Models
         public string? Parking { get; set; }
         public string? ParkingBayNo { get; set; }
         public string? Description { get; set; }
+        public string? PinCode { get; set; }
 
         public int StatusId { get; set; }
         public int? ApproverId { get; set; }

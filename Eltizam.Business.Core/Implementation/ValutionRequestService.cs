@@ -154,5 +154,55 @@ namespace Eltizam.Business.Core.Implementation
 
             return lstStf;
         }
+
+        public async Task<DBOperation> Upsert(ValuationRequestModel entityValuation)
+        {
+
+            ValuationRequest objValuation;
+
+            if (entityValuation.Id > 0)
+            {
+                objValuation = _repository.Get(entityValuation.Id);
+                var OldObjValuation = objValuation;
+                if (objValuation != null)
+                {
+                    objValuation.ReferenceNo = entityValuation.ReferenceNo;
+                    objValuation.OtherReferenceNo = entityValuation.OtherReferenceNo;
+                    objValuation.StatusId = entityValuation.StatusId;
+                    objValuation.ValuationTimeFrame = entityValuation.ValuationTimeFrame;
+                    objValuation.ApproverId = entityValuation.ApproverId;
+                    objValuation.ValuerId = entityValuation.ValuerId;
+                    objValuation.ValuationDate = entityValuation.ValuationDate;
+                    objValuation.ValuationModeId = entityValuation.ValuationModeId;
+                    objValuation.PropertyId = entityValuation.PropertyId;
+                    objValuation.ClientId = entityValuation.ClientId;
+                    //objValuation.ValuerId = entityValuation.ValuerId;
+
+                    //objValuation.CarpetAreaInSqMtr = entityValuation.CarpetAreaInSqMtr;
+
+                    objValuation.ModifiedDate = AppConstants.DateTime;
+                    objValuation.ModifiedBy = entityValuation.CreatedBy;
+                    _repository.UpdateAsync(objValuation);
+                }
+                else
+                {
+                    return DBOperation.NotFound;
+                }
+            }
+            else
+            {
+                objValuation = _mapperFactory.Get<ValuationRequestModel, ValuationRequest>(entityValuation);
+                objValuation.CreatedDate = AppConstants.DateTime;
+                objValuation.CreatedBy = entityValuation.CreatedBy;
+                objValuation.ModifiedDate = AppConstants.DateTime;
+                objValuation.ModifiedBy = entityValuation.CreatedBy;
+                _repository.AddAsync(objValuation);
+            }
+            await _unitOfWork.SaveChangesAsync();
+            if (objValuation.Id == 0)
+                return DBOperation.Error;
+
+            return DBOperation.Success;
+        }
     }
 }

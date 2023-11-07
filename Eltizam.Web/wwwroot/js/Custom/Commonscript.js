@@ -92,6 +92,31 @@ function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
     });
 }
 
+function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
+    $.ajax({
+        type: Get,
+        url: BaseURL + _url,
+        "datatype": "json",
+        success: function (response) {
+            var _dd = _retrunProperty;
+            _controlID.empty().append('<option selected="selected" value="0">-- select --</option>');
+            for (var i = 0; i < response.values.length; i++) {
+                _controlID.append($("<option></option>").val(response.values[i].id).html(response.values[i][_dd]));
+            }
+            if (_val != 0) {
+                _controlID.val(_val);
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
 
 
 // ======== IsActive list page color ============

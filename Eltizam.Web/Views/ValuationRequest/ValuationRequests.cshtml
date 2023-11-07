@@ -21,10 +21,14 @@
         <div class="flex justify-between mobile_flexColumn position-relative">
             <h3 class="dashboardTitle">Valuation List</h3>
             <div class="buttonArea flex align-item-center">
-
-                <button class="flex align-item-center blueBtn" id="addNew">
+                <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
+                    <button class="flex align-item-center blueBtn" id="addNew">
+                        <img src="~/assets/plus.svg" alt="plus"> Add New
+                    </button>
+                </form>
+               @*  <button class="flex align-item-center blueBtn" id="addNew">
                     <img src="~/assets/plus.svg" alt="plus"> Add New
-                </button>
+                </button> *@
 
                 <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()">
                     <img src="../assets/user-shield.svg" alt="user">
