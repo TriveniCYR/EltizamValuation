@@ -30,10 +30,21 @@
                     <p class="alert alert-danger">@err</p>
                 }
 
-                <label for="email">
-                    Email
-                    <input asp-for="Email" placeholder="enter email">
+                <label for="userId">
+                    Email ID
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter Email" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </label>
+
+               @*  <label for="password">
+                    Password
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter password" } })
+                    <img src="/assets/eye.svg" alt="show hide password button" class="showPassword" />
+                    <span class="forgetPassword">
+                        <a asp-controller="Account" asp-action="ForgetPassword" style="color: var(--blue); font-size:medium;">Forget password?</a>
+                    </span>
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </label> *@
 
                 <label for="password">
                     Password
