@@ -10,17 +10,13 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class Master_PropertyTypeModel
+    public class Master_PropertyTypeModel : GlobalAuditFields
     {
         public int Id { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Remote("CheckPropertTypeExists", "MasterPropertyType", ErrorMessage = "Email Address already exists in database.")]
         public string PropertyType { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public int? ModifiedBy { get; set; }
+        public bool IsActive { get; set; } 
         public string? SubTypes { get; set; }
         [IgnoreMap]
         public List<Master_PropertySubTypeModel> MasterPropertySubTypes { get; set; }

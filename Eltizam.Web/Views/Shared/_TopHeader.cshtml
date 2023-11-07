@@ -1,10 +1,10 @@
 ﻿@using Eltizam.Web.Helpers;
 
 @{
-    var _UId = @Context.Session.GetString(UserHelper.LoggedInUserId); 
-    var _UName = @Context.Session.GetString(UserHelper.LoggedInUserName); 
-    var _act = "/MasterUser/UserManage?id=" + _UId; 
-    //var username = User.Claims.FirstOrDefault(); 
+    var _UId = @Context.Session.GetString(UserHelper.LogInUserId); 
+    var _UName = @Context.Session.GetString(UserHelper.LogInUserName); 
+    var _URoleId = @Context.Session.GetString(UserHelper.LogInRoleId);
+    var _act = "/MasterUser/UserManage?id=" + _UId;  
 }
 
 @* @model Eltizam.Business.Models.ChangePasswordModel *@
@@ -17,7 +17,9 @@
         </div> 
 
         <div class="flex align-item-center position-relative" onclick="profileMenu()">
-            <input type="hidden" id="LoginUserId" value="@_UId" /> 
+            <input type="hidden" id="LogInUserId" value="@_UId" />
+            <input type="hidden" id="LogInRoleId" value="@_URoleId" />
+
             <p class="visible-in-web">@_UName</p>
             <img src="~/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" />
             <div id="profileMenu" class="actionItem" style="width: 80%;display: none;margin-left: 2em;">

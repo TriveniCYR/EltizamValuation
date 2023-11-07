@@ -1,15 +1,15 @@
-﻿using Eltizam.Api.Helpers.Response;
+﻿using Eltizam.Api.Filters;
+using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Data.DataAccess.Helper;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Eltizam.API.Controllers.Masters
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeAttribute]
     public class MasterModuleController : ControllerBase
     {
         #region Properties

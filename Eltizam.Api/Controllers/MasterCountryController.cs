@@ -8,11 +8,13 @@ using Microsoft.Extensions.Localization;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
 using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Api.Filters;
 
 namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeAttribute]
     public class MasterCountryController : ControllerBase
     {
         #region Properties

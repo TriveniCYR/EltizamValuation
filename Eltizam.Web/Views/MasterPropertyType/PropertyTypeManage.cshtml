@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Eltizam.Web.Controllers
+@using Eltizam.Utility.Models
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHttpContextAccessor HttpContextAccessor
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
@@ -10,6 +11,9 @@
 
 @model Eltizam.Business.Models.Master_PropertyTypeModel
 @{ 
+    var objPermssion = (RolePermissionModel)ViewBag.Access;
+    var isAdd = objPermssion.Add ? 1 : 0;
+    var isEdit = objPermssion.Edit ? 1 : 0;
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     Layout = "_Layout";
     var _md = (Model.Id) > 0 ? "Edit" : "Add";
@@ -77,7 +81,7 @@
                         </div>
                         <div class="text-right buttonArea bodyContent plr-0">
                             <a href='/MasterPropertyType/PropertyTypes'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a> 
-                            <button type="button" id="btnSaveRole" onclick="SavePropertyType()" class="bgBlue">Save</button>
+                            <button type="button" id="btnSaveEdit" onclick="SavePropertyType()" class="bgBlue">Save</button>
                         </div>
                     </div>
 

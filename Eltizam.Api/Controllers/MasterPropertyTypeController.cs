@@ -1,4 +1,5 @@
-﻿using Eltizam.Api.Helpers.Response;
+﻿using Eltizam.Api.Filters;
+using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
@@ -6,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
+
 namespace EltizamValuation.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeAttribute]
     public class MasterPropertyTypeController : ControllerBase
     {
         #region Properties

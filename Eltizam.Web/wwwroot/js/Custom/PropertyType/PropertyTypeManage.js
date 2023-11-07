@@ -4,12 +4,14 @@ function SavePropertyType() {
         'Id': $("#hdnPropertyId").val(),
         'PropertyType': $("#PropertyType").val(),
         'IsActive': $('#isActiveT')[0].checked,
+        'LogInUserId': LogInUserId,
         'MasterPropertySubTypes': []
     }  
 
     var Inputs = $(".addPropertyInputDynamic :input");  
     for (var i = 0; i < Inputs.length; i++) {
-        var objDynamic = {
+        var objDynamic =
+        {
             'Id': Inputs[i].id,
             'PropertySubType': Inputs[i].value,
         }

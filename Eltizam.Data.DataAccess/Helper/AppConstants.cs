@@ -14,6 +14,8 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string msgPasswordResetSuccessfully = "Password Reset successfully"; 
         public static string msgResetPasswordTokenExpired = "You link has been expired please go to forgot password page to reset your password again"; 
         public static string msgInvalidLink = "Invalid Link";
+        public static string AccessRestriction = "AccessRestriction";
+        public static string Home = "Home";
 
         public static string TableName = "TableName"; 
         public static string TableId = "TableId";
@@ -37,13 +39,5 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string P_RequestData = "@RequestData";
 
         public static DateTime DateTime = DateTime.Now;
-    }
-
-    public class TableName
-    {
-        public static string Master_User = "Master_User";
-        public static string Master_Client = "Master_Client";
-        public static string Master_Vendor = "Master_Vendor";
-        public static string Master_Dictionary = "Master_Dictionary"; 
-    }
+    } 
 }

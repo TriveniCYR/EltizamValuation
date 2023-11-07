@@ -1,4 +1,5 @@
-﻿@model Eltizam.Business.Models.MasterUserModel;
+﻿@using Eltizam.Utility.Models
+@model Eltizam.Business.Models.MasterUserModel;
 
 @inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
@@ -8,6 +9,10 @@
     var _header = " Resource Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
     ViewData["Title"] = _md + _header;
+
+    var objPermssion = (RolePermissionModel)ViewBag.Access;
+    var isAdd = objPermssion.Add ? 1 : 0;
+    var isEdit = objPermssion.Edit ? 1 : 0;
 }
 <!-- system user master -->
 @* <div class="flex">
@@ -33,11 +38,16 @@
                 </div>
 
                 <form asp-action="UserManage" method="POST" enctype="multipart/form-data">
+
+                    <input type="hidden" id="isAddPerm" value="@isAdd" />
+                    <input type="hidden" id="isEditPerm" value="@isEdit" />
+
+
                     <input type="hidden" id="hdnDeparment" value="@(Model == null ? 0 : Model.DepartmentId)" />
                     <input type="hidden" id="hdnDesignation" value="@(Model == null ? 0 : Model.DesignationId)" />
                     <input type="hidden" id="hdnRole" value="@(Model == null ? 0 : Model.RoleId)" />
                     <input type="hidden" id="hdnResourceType" value="@(Model == null ? 0 : Model.ResourceId)" />
-                    <input type="hidden" id="hdnGender" value="@(Model == null ? 0 : Model.Gender)" /> 
+                    <input type="hidden" id="hdnGender" value="@(Model == null ? 0 : Model.Gender)" />
                     @Html.HiddenFor(model => model.Email)
                     <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
 
@@ -68,30 +78,30 @@
                                 <div class="flex">
                                     <label for="FirstName">
                                         <p class="m-0">First Name<span class="text-danger">*</span></p>
-                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control",  @placeholder = @SharedLocalizer["First Name"] })
+                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = @SharedLocalizer["First Name"] })
                                         @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="MiddleName">
                                         Middle Name
-                                        @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
+                                        @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", @placeholder = @SharedLocalizer["Middle Name"] })
                                     </label>
                                 </div>
                                 <div class="flex">
                                     <label for="LastName">
                                         <p class="m-0">Last Name<span class="text-danger">*</span></p>
-                                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @placeholder = @SharedLocalizer["Last Name"] })
                                         @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="DepartmentId">
                                         <p class="m-0">Department<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.DepartmentId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Department"] })
+                                        @Html.DropDownListFor(model => model.DepartmentId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Department"] })
                                         @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex">
                                     <label for="DesignationId">
                                         <p class="m-0">Designation<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.DesignationId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Designation"] })
+                                        @Html.DropDownListFor(model => model.DesignationId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Designation"] })
                                         @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="DateOfBirth">
@@ -103,12 +113,12 @@
                                 <div class="flex">
                                     <label for="Gender">
                                         <p class="m-0">Gender<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Select Gender"] })
+                                        @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Select Gender"] })
                                         @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="ResourceId">
                                         <p class="m-0">Resource Type<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                                        @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer[" Select ResourceType"] })
                                         @Html.ValidationMessageFor(model => model.ResourceId, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -127,22 +137,22 @@
                                         </label>
                                     </div>
                                 }
-                                <div class="flex"> 
+                                <div class="flex">
                                     <label for="RoleId">
                                         <p class="m-0">Role<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Select Role"] })
+                                        @Html.DropDownListFor(model => model.RoleId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Select Role"] })
                                         @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="CompanyName">
                                         <p class="m-0">Company/Vendor Name<span class="text-danger">*</span></p>
-                                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Last Name"] })
+                                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", @placeholder = @SharedLocalizer["Last Name"] })
                                         @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex">
                                     <label for="LicenseNo">
                                         AD Municipality / License No
-                                        @Html.TextBoxFor(model => model.LicenseNo, new {  @class = "form-control",  @placeholder = @SharedLocalizer["License No"] })
+                                        @Html.TextBoxFor(model => model.LicenseNo, new { @class = "form-control", @placeholder = @SharedLocalizer["License No"] })
 
                                     </label>
                                 </div>
@@ -167,64 +177,64 @@
                                         <div class="flex">
                                             <label for="address1">
                                                 <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Address.Address1, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                                @Html.TextBoxFor(model => model.Address.Address1, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Address Line 1"] })
                                                 @Html.ValidationMessageFor(model => model.Address.Address1, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="address2">
                                                 Address Line 2
-                                                @Html.TextBoxFor(model => model.Address.Address2, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
+                                                @Html.TextBoxFor(model => model.Address.Address2, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Address Line 2"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="CountryId">
                                                 <p class="m-0">Country<span class="text-danger">*</span></p>
-                                                @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                                                @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.Address.CountryId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="StateId">
                                                 <p class="m-0">State<span class="text-danger">*</span></p>
-                                                @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                                                @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.Address.StateId, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="CityId">
                                                 <p class="m-0">City<span class="text-danger">*</span></p>
-                                                @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                                                @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.Address.CityId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="PinNo">
                                                 ZIP Code
-                                                @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                                @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Pin No"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Email">
                                                 <p class="m-0">Email<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Address.Email, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
+                                                @Html.TextBoxFor(model => model.Address.Email, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Email"] })
                                                 @Html.ValidationMessageFor(model => model.Address.Email, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="AlternateEmail">
                                                 Alternate Email
-                                                @Html.TextBoxFor(model => model.Address.AlternateEmail, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
+                                                @Html.TextBoxFor(model => model.Address.AlternateEmail, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Alternate Email"] })
                                                 @Html.ValidationMessageFor(model => model.Address.AlternateEmail, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Phone">
                                                 <p class="m-0">Phone<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Address.Phone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                                @Html.TextBoxFor(model => model.Address.Phone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Phone"] })
                                                 @Html.ValidationMessageFor(model => model.Address.Phone, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="AlternatePhone">
                                                 Alternate Phone
-                                                @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Alternate Phone"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="">
                                                 Landline phone
-                                                @Html.TextBoxFor(model => model.Address.Landlinephone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
+                                                @Html.TextBoxFor(model => model.Address.Landlinephone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Landline phone"] })
                                             </label>
                                         </div>
                                     </div>
@@ -254,31 +264,31 @@
                                         <div class="flex">
                                             <label for="Qualification">
                                                 <p class="m-0">Programme of Study/ Qualification<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Qualification.Qualification, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
+                                                @Html.TextBoxFor(model => model.Qualification.Qualification, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Qualification"] })
                                                 @Html.ValidationMessageFor(model => model.Qualification.Qualification, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="Subject">
                                                 <p class="m-0">Subject/Stream<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Qualification.Subject, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Subject"] })
+                                                @Html.TextBoxFor(model => model.Qualification.Subject, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Subject"] })
                                                 @Html.ValidationMessageFor(model => model.Qualification.Subject, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Institute">
                                                 <p class="m-0">Education Institute<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Qualification.Institute, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Institute"] })
+                                                @Html.TextBoxFor(model => model.Qualification.Institute, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Institute"] })
                                                 @Html.ValidationMessageFor(model => model.Qualification.Institute, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="year">
                                                 <p class="m-0">Year of Institute<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Qualification.YearOfInstitute, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Year"] })
+                                                @Html.TextBoxFor(model => model.Qualification.YearOfInstitute, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Year"] })
                                                 @Html.ValidationMessageFor(model => model.Qualification.YearOfInstitute, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="grade" class="w-100">
                                                 <p class="m-0">Grade/Percent/class<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Qualification.Grade, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Grade"] })
+                                                @Html.TextBoxFor(model => model.Qualification.Grade, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Grade"] })
                                                 @Html.ValidationMessageFor(model => model.Qualification.Grade, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
@@ -299,7 +309,7 @@
                                 <div class="flex mb-28">
                                     <label for="document">
                                         Documents Name
-                                        @Html.TextBoxFor(model => model.Document.DocumentName, new {@autocomplete = "off", @class = "form-control",  @placeholder = @SharedLocalizer["Document"] })
+                                        @Html.TextBoxFor(model => model.Document.DocumentName, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["Document"] })
                                     </label>
                                     <label for="atach">
                                         Attach Supporting Documents
@@ -342,8 +352,8 @@
                         </div>*@
                     </div>
                     <div class="text-right buttonArea bodyContent plr-0">
-                        <a href='/MasterUser/Users'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
-                        <button type="submit" id="btnSubmitUser" class="blueBtn" onclick="validations()">Save</button>
+                        <a href='/MasterUser/Users'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a> 
+                        <button type="submit" id="btnSaveEdit" class="blueBtn" onclick="validations()">Save</button>
                     </div>
                 </form>
             </div>
@@ -369,8 +379,7 @@
         var cityListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
 
 
-        $(document).ready(function(){
-           
+        $(document).ready(function () { 
             const selectElement = document.getElementById("RoleId");
             selectElement.addEventListener("change", function () {
                 debugger
@@ -382,7 +391,7 @@
             });
 
         })
-        function validations(){
+        function validations() {
             const selectElement = document.getElementById("RoleId");
             selectElement.classList.remove("input-validation-error");
         }

@@ -2,15 +2,15 @@
 {
     public class UserHelper
     {
-        public static string LoggedInUserEmailAddress = "LoggedInUserEmailAddress";
-        public static string LoggedInUserName = "LoggedInUserName";
-        public static string LoggedInUserId = "LoggedInUserId";
         public static string EltizamToken = "EltizamToken";
-        public static string LoggedInRoleId = "LoggedInRoleId";
-        public static string LoggedInBusId = "LoggedInBusId";
+
+        public static string LogInUserEmailAddress = "LoggedInUserEmailAddress";
+        public static string LogInUserName = "LoggedInUserName";
+        public static string LogInUserId = "LoggedInUserId"; 
+        public static string LogInRoleId = "LoggedInRoleId"; 
+
         public static string ErrorMessage = "ErrorMessage";
-        public static string SuccessMessage = "SuccessMessage";
-        public static string AssignedBusinessUnit = "AssignedBusinessUnit";
+        public static string SuccessMessage = "SuccessMessage"; 
         public static string IsManagement = "IsManagement";
     }
 }

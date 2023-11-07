@@ -2,58 +2,24 @@
 
 namespace Eltizam.Utility.Enums
 {
-    public enum ModuleEnum
-    {
-        UserManagement = 1,
-        RoleManagement = 2,
-        Dashboard = 3,
-        MasterManagement = 4,
-        PIDF = 5,
-        PBF = 6,
-        IPD = 7,
-        Finance = 8,
-        Medical = 9,
-        APIListManagement = 10,
-        Formulation = 11,
-        ManagementHOD = 12,
-        CommercialManagement = 15,
-        APIManagement =13
-    }
-
+    /// <summary>
+    /// Added by YReddy for storing all project enum details
+    /// </summary>
     public enum ModulePermissionEnum
-    {
-        [Description("Resourc Master")]
-        ResourceMaster = 1,
-		[Description("RoleMaster")]
+    { 
+        UserMaster = 1, 
         RoleMaster = 2,
-        ClientType = 3,
-        [Description("Designation Master")]
-        DesignationMaster = 4,
-        DepartmentMaster = 5,
-        LocationMaster = 6,
-        PropertyTypeMaster = 7,
-        ClientTypeManagement = 8,
-        PropertyMaster = 9,
-        ClientMaster = 13,       
-        ValutionFeesMaster = 14,
-        VendorMaster = 15,
-        //      Commercial = 15,
-        //      ManagementHOD = 16,
-        //      Project = 17,
-        //    [Description("Wish List")] 
+        ClientTypeMaster = 3,
+        ClientMaster = 4,
+        LocationMaster = 5,
+        PropertyTypeMaster = 6,  
+        PropertyMaster = 7, 
+        ValutionFeesMaster = 8,
+        VendorMaster = 9,
+        AuditLog = 10,
+        ValuationRequest = 11,
     }
 
-	public enum SubModulePermissionEnum
-    {
-        RnD = 1,
-        Clinical = 2,
-        Analytical = 3,
-        APIRnD = 4,
-        APIIPD = 12,
-        APICharter = 13,
-        APICharterSummary = 14,
-        RA = 15
-    }
 
     public enum PermissionEnum
     {
@@ -64,9 +30,88 @@ namespace Eltizam.Utility.Enums
         Delete = 4,
         Approve = 5
     }
-    public enum IPDPatenDetailsType
+
+    public enum AuditActionTypeEnum
     {
-        PatenDetailsForFormulation = 1,
-        PatientDetailsForAPI = 2,
+        Create = 1,
+        Update = 2,
+        Delete = 3
     }
+
+    public enum ObjectState
+    {
+        Detached = 0,
+        Unchanged = 1,
+        Deleted = 2,
+        Modified = 3,
+        Added = 4,
+        Processed = 5
+    }
+
+    /// <summary>
+    /// Enums for tables
+    /// To Read ID   -->  (int)(TableNameEnum.Master_User); 
+    /// To Read Name -->  Enum.GetName(TableNameEnum.Master_User);
+    /// To Read Desc -->  EnumHelper.GetDescription(TableNameEnum.Master_User);
+    /// </summary>
+    public enum TableNameEnum
+    {
+        [Description("Address Details")]
+        Master_Address = 1,
+        [Description("Contact Details")]
+        Master_Contact = 2,
+        [Description("Client Master")]
+        Master_Client = 3,
+        [Description("Clien Type Master")]
+        Master_ClientType = 4,
+        [Description("Dictionary Master")]
+        Master_Dictionary = 5,
+        [Description("Location Master")]
+        Master_Location = 6,
+        [Description("Property Master")]
+        Master_Property = 7,
+        [Description("Property Type Master")]
+        Master_PropertyType = 8,       
+        [Description("Role Master")]
+        Master_Role = 9,
+        [Description("Valuation Fee Master")]
+        Master_ValuationFee = 10,
+        [Description("Vendor Master")]
+        Master_Vendor = 11,
+        [Description("Resource Master")]
+        Master_User = 12,
+        [Description("Document")]
+        Document = 13,
+
+        [Description("Valuation Request")]
+        ValuationRequest = 25,
+    }
+
+
+    /// <summary>
+    /// Enum helper class to get details
+    /// </summary>
+    public static class EnumHelper
+    {  
+        public static string GetDescription<T>(this T enumValue)
+            where T : struct, IConvertible
+        {
+            if (!typeof(T).IsEnum)
+                return null;
+
+            var description = enumValue.ToString();
+            var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
+
+            if (fieldInfo != null)
+            {
+                var attrs = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), true);
+                if (attrs != null && attrs.Length > 0)
+                {
+                    description = ((DescriptionAttribute)attrs[0]).Description;
+                }
+            }
+
+            return description;
+        }
+    } 
 }

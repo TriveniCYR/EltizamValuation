@@ -1,9 +1,5 @@
 ﻿var tableId = "ResourceUserTable";
-$(document).ready(function () {
-    //BindDepartment();
-    //BindDesignation();
-    //BindRole();
-    //BindResourceType();
+$(document).ready(function () { 
     InitializeUserList();
 });
 
@@ -45,9 +41,14 @@ function BindResourceType() {
 function ConfirmationDeleteUser(id) {
     $('#DeleteUserModel #Id').val(id);
 }
-function DeleteUser() {
-    var tempInAtiveID = $('#DeleteUserModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteUserByIdUrl + "/" + tempInAtiveID, Post, DeleteUserByIdSuccess, DeleteUserByIdError);
+function DeleteUser() { 
+    if (IsDeletePerm) {
+        var tempInAtiveID = $('#DeleteUserModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeleteUserByIdUrl + "/" + tempInAtiveID, Post, DeleteUserByIdSuccess, DeleteUserByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    } 
 }
 function DeleteUserByIdSuccess(data) {
     try {

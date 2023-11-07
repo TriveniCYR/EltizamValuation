@@ -1,6 +1,9 @@
 ﻿using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterDictionaryController : Controller
+    public class MasterDictionaryController : BaseController
     {
         #region Properties
 
@@ -31,28 +34,24 @@ namespace EltizamValuation.Web.Controllers
             ModelState.Clear();
             try
             {
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new APIRepository(_cofiguration);
-                //List<MasterDictionaryEntity> oLocationList = new List<MasterDictionaryEntity>();
-                //HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllDictionary, HttpMethod.Post, token).Result;
-                //if (responseMessage.IsSuccessStatusCode)
-                //{
-                //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                //  //  var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterDictionaryEntity>>>(jsonResponse);
-                //    var data = JsonConvert.DeserializeObject<MasterDictionaryList>(jsonResponse);               
-                //    ViewData["locationList"] = oLocationList;
-                return View();
-                //  return View(oLocationListRoot);
-                //}
+                APIRepository objapi = new APIRepository(_cofiguration); 
+                return View(); 
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 return View("Login");
-            }
-            return View();
+            } 
         }
+
+
         [HttpGet]
         public IActionResult MasterDictionaryManage(int? id)
         {
@@ -62,6 +61,12 @@ namespace EltizamValuation.Web.Controllers
             }
 
             MasterDictionaryEntity masterDictionaryEntity;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
                 masterDictionaryEntity = new MasterDictionaryEntity();
@@ -78,6 +83,16 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterDictionaryEntity>>(jsonResponse);
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Dictionary));
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    }
+
                     if (data._object is null)
                         return NotFound();
 
@@ -181,6 +196,12 @@ namespace EltizamValuation.Web.Controllers
         }
         public IActionResult DictionaryDetailsView(int id)
         {
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             MasterDictionaryDetailById model = new MasterDictionaryDetailById();
             HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
             ViewData["ParentId"] = id;
@@ -211,7 +232,16 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = Id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+                if (masterdictionary.Id == 0)
+                    masterdictionary.CreatedBy = _helper.GetLoggedInUserId();
+                masterdictionary.ModifiedBy = _helper.GetLoggedInUserId();
                 // masterdictionary.DictionaryId = 3;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
@@ -239,6 +269,8 @@ namespace EltizamValuation.Web.Controllers
                 return RedirectToAction("DictionaryAllManage", new { Id = masterdictionary.DictionaryId });
             }
         }
+
+
         //[HttpPost]
         //public IActionResult DictionaryAllManage(int? Id, MasterDictionaryDetailById masterdictionary)
         //{
@@ -271,9 +303,7 @@ namespace EltizamValuation.Web.Controllers
         //        TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
         //        return RedirectToAction("DictionaryAllManage", new { Id = masterdictionary.DictionaryId });
         //    }
-        //}
-
-      
+        //} 
 
     }
 }

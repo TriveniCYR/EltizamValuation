@@ -1,5 +1,6 @@
 ﻿//Use this for entire project to bind the data 
 var BaseURL = $('#hdnAPIURL').val();
+var LogInUserId = $("LogInUserId").val() ?? 1;
 var Post = 'POST';
 var Get = 'GET';
 var Delete = 'DELETE';
@@ -14,6 +15,11 @@ var ShowMenuCache = "showMenuCache";
 
 var SucessMsg = "Request saved successfully.";
 var ErrorMsg = "Some error occurred while processing request.";
+var DeleteAccessDenied = "Delete permission not granted.";
+
+var IsDeletePerm = ($("#isDeletePerm").val() === "1" || $("#isDeletePerm").val() === 1);
+var IsAddPerm = ($("#isAddPerm").val() === "1" || $("#isAddPerm").val() === 1);   
+var IsEditPerm = ($("#isEditPerm").val() === "1" || $("#isEditPerm").val() === 1);   
 
 $(document).ready(function () {
     ErrorDev.hide();
@@ -27,6 +33,13 @@ $(document).ready(function () {
 
     if (ErrorToaster !== "" && ErrorToaster !== null) {
         toastr.error(ErrorToaster);
+    }
+
+    if (IsAddPerm === false) {
+        $("#addNew").remove();
+    }
+    if (IsEditPerm === false) {
+        $("#btnSaveEdit").remove();
     }
 });
 

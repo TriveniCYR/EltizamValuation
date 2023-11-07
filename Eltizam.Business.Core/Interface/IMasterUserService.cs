@@ -22,6 +22,6 @@ namespace Eltizam.Business.Core.Interface
         Task<List<MasterUserListModel>> GetApproverList(int id);
         Task<DBOperation> Delete(int id);
         Task<DBOperation> ChangePassword(ChangePasswordModel changePasswordModel);
-        Task<FooterDetails?> GetFooterDetails(int TableKeyId, string TableName);
+        Task<GlobalAuditFields?> GetGlobalAuditFields(int TableKeyId, string TableName);
     }
 }

@@ -120,32 +120,21 @@ namespace Eltizam.Business.Core.Implementation
                 if (type != null)
                 {
                     type.PropertyType = masterproperty.PropertyType;
-                    type.IsActive = masterproperty.IsActive;
-                    type.ModifiedDate = AppConstants.DateTime;
-                    type.ModifiedBy = masterproperty.ModifiedBy;
+                    type.IsActive = masterproperty.IsActive; 
+                    type.ModifiedBy = masterproperty.LogInUserId ?? masterproperty.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(type);
-                }
-                else
-                {
-                    // Return a not found operation if the entity does not exist.
-                    return DBOperation.NotFound;
-                }
+                } 
             }
             else
-            {
-                // Create a new Master_PropertyType entity from the model for insertion.
-                // type = _mapperFactory.Get<Master_PropertyTypeModel, MasterPropertyType>(masterproperty);
+            { 
                 type = new MasterPropertyType()
                 {
                     IsActive = masterproperty.IsActive,
-                    PropertyType = masterproperty.PropertyType
-                };
-                type.CreatedDate = AppConstants.DateTime;
-                type.CreatedBy = masterproperty.CreatedBy;
-                type.ModifiedDate = AppConstants.DateTime;
-                type.ModifiedBy = masterproperty.ModifiedBy;
+                    PropertyType = masterproperty.PropertyType,
+                    CreatedBy = masterproperty.LogInUserId ?? masterproperty.CreatedBy
+                };  
 
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(type);
@@ -172,49 +161,13 @@ namespace Eltizam.Business.Core.Implementation
                 SqlParameter[] _sqlParameter =
                 {
                     new SqlParameter(AppConstants.P_Id,             type.Id),
-                    new SqlParameter(AppConstants.P_CreatedBy,      type.CreatedBy),
+                    new SqlParameter(AppConstants.P_CreatedBy,      masterproperty.LogInUserId),
                     new SqlParameter(AppConstants.P_RequestData,    _Val)
                 };
 
-                await _repository.GetBySP(ProcedureMetastore.usp_PropertyType_UpsertSubTypes, CommandType.StoredProcedure, _sqlParameter);
-
-                //if (masterproperty.MasterPropertySubTypes != null)
-                //{
-                //    var subTypes = masterproperty.MasterPropertySubTypes;
-
-                //    foreach (var subType in subTypes)
-                //    { 
-                //        if (subType.Id > 0)
-                //        {
-                //            propertySubType = _subrepository.Get(subType.Id);
-                //            if (propertySubType != null)
-                //            {
-                //                var entitySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
-                //                propertySubType.PropertySubType = entitySubType.PropertySubType;
-
-
-                //                propertySubType.IsActive = entitySubType.IsActive;
-                //                propertySubType.ModifiedBy = entitySubType.CreatedBy;
-                //                propertySubType.ModifiedDate = AppConstants.DateTime;
-                //                _subrepository.UpdateAsync(propertySubType);
-                //            }
-                //        }
-                //        else
-                //        {
-                //            propertySubType = _mapperFactory.Get<Master_PropertySubTypeModel, MasterPropertySubType>(subType);
-                //            propertySubType.PropertySubType = Convert.ToString(subType.PropertySubType); 
-                //            propertySubType.PropertyTypeId = type.Id;
-                //            propertySubType.IsActive = masterproperty.IsActive;
-                //            propertySubType.CreatedBy = masterproperty.CreatedBy;
-                //            propertySubType.CreatedDate = AppConstants.DateTime;
-                //            propertySubType.ModifiedBy = masterproperty.CreatedBy;
-                //            propertySubType.ModifiedDate = AppConstants.DateTime;
-                //            _subrepository.AddAsync(propertySubType);
-                //        }
-                //        await _unitOfWork.SaveChangesAsync();
-                //    }
-                //}
+                await _repository.GetBySP(ProcedureMetastore.usp_PropertyType_UpsertSubTypes, CommandType.StoredProcedure, _sqlParameter); 
             }
+
             return DBOperation.Success;
         }
 

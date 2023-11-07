@@ -1,4 +1,6 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Models;
@@ -32,7 +34,11 @@ namespace Eltizam.Web.Controllers
         {
             ModelState.Clear();
             try
-            { 
+            {
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 return View();
             }
             catch (Exception e)
@@ -48,6 +54,13 @@ namespace Eltizam.Web.Controllers
             ViewBag.IsEdit = id != null;
             ViewBag.IsView= flag1 != null;
             MasterRoleEntity MasterRole = new MasterRoleEntity();
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
             if (id == null)
             {
@@ -75,10 +88,19 @@ namespace Eltizam.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
 
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterRoleEntity>>(jsonResponse);
-                    if (data._object is null)
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Role));
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
                     {
-                        return NotFound();
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
                     }
+
+                    if (data._object is null) 
+                        return NotFound(); 
+
                     List<MasterModuleEntity> _oListMasterModules = data._object.MasterModules.OrderBy(x => x.SortOrder).ToList();
                     data._object.MasterModules = _oListMasterModules;
                     return View(data._object);
@@ -88,16 +110,24 @@ namespace Eltizam.Web.Controllers
             return View();
         }
 
-        public IActionResult RoleView(int? roleId, string flag1)
+        public IActionResult RoleView(int? id, string flag1)
         {
-            ViewBag.IsEdit = roleId != null;
+            ViewBag.IsEdit = id != null;
             ViewBag.IsView = flag1 != null;
+
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
             MasterRoleEntity MasterRole = new MasterRoleEntity();
-            if (roleId == null)
+
+
+            if (id == null)
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllModule + "/" + roleId, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllModule + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -114,7 +144,7 @@ namespace Eltizam.Web.Controllers
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetRoleById + "/" + roleId, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetRoleById + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -139,6 +169,13 @@ namespace Eltizam.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = masterRole.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 masterRole.LoggedUserId = _helper.GetLoggedInUserId();
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);

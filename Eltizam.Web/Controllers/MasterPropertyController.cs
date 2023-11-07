@@ -1,6 +1,9 @@
 ﻿using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterPropertyController : Controller
+    public class MasterPropertyController : BaseController
     {
         #region Properties
 
@@ -30,6 +33,10 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 return View();
             }
             catch (Exception e)
@@ -43,6 +50,12 @@ namespace EltizamValuation.Web.Controllers
         [HttpGet]
         public IActionResult PropertyManage(int? id)
         {
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             MasterPropertyModel masterProperty;
             if (id == null || id <= 0)
             {
@@ -55,8 +68,19 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<List<MasterAmenityListModel>>(jsonResponse);
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Property));
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    }
+
                     if (data is null)
                         return NotFound();
+
                     masterProperty.AmenityList = data;
                     masterProperty.IsActive = true;
                 }
@@ -85,6 +109,16 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = masterProperty.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                if (masterProperty.Id == 0)
+                masterProperty.CreatedBy = _helper.GetLoggedInUserId();
+                masterProperty.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
@@ -115,6 +149,14 @@ namespace EltizamValuation.Web.Controllers
         [Route("MasterProperty/PropertyDetail")]
         public IActionResult PropertyDetail(int? id)
         {
+
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
             MasterPropertyModel masterProperty;
             if (id == null || id <= 0)
             {

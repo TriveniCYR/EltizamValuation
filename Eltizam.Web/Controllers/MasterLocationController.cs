@@ -1,5 +1,8 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility.Enums;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Humanizer.Localisation;
@@ -31,37 +34,33 @@ namespace EltizamValuation.Web.Controllers
             ModelState.Clear();
             try
             {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new APIRepository(_cofiguration);
-                List<MasterLocationEntity> oLocationList = new List<MasterLocationEntity>();
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllLocations, HttpMethod.Post, token).Result;
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;                    
-                    //  var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterLocationEntity>>>(jsonResponse);
-                     var data = JsonConvert.DeserializeObject<MasterLocationList>(jsonResponse);
-                    //MasterLocationList oLocationListRoot =data;
-                    oLocationList = data.data;
-                    ViewData["locationList"] = oLocationList;
-                    return View();
-                  //  return View(oLocationListRoot);
-                }
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                return View();
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
+
                 return View("Login");
             }
-            return View();
         }
 
 
 
         public IActionResult LocationById(int id)
         {
-
             MasterLocationEntity masterlocation;
+
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
                 masterlocation = new MasterLocationEntity();
@@ -77,6 +76,16 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Location));
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    }
+
                     if (data._object is null)
                         return NotFound();
 
@@ -89,6 +98,12 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult LocationManage(int? id, int Isview = 0)
         {
             MasterLocationEntity masterlocation;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
                 masterlocation = new MasterLocationEntity();
@@ -118,6 +133,17 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                //Fill audit logs field
+                if (masterlocation.Id == 0)
+                    masterlocation.CreatedBy = _helper.GetLoggedInUserId();
+                masterlocation.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

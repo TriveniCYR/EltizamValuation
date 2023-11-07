@@ -1,8 +1,11 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Models;
 using Eltizam.Utility.Utility;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -11,7 +14,7 @@ using System.Data;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class DepartmentController : Controller
+    public class MasterDepartmentController : BaseController
     {
 
         #region Properties
@@ -22,21 +25,22 @@ namespace EltizamValuation.Web.Controllers
 
         #endregion Properties
 
-        public DepartmentController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
+        public MasterDepartmentController(IConfiguration configuration, IStringLocalizer<Shared> stringLocalizerShared, IHelper helper)
         {
             _cofiguration = configuration;
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
 
-        public IActionResult Department()
+        public IActionResult Departments()
         {
             ModelState.Clear();
             try
             {
-                int rolId = _helper.GetLoggedInRoleId();
-                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
-                ViewBag._objPermission = objPermssion;
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new APIRepository(_cofiguration);
                 List<MasterDepartmentEntity> oRoleList = new List<MasterDepartmentEntity>();
@@ -62,11 +66,18 @@ namespace EltizamValuation.Web.Controllers
 
         
         [HttpPost]
-        [Route("Department/DepartmentManage")]
+        [Route("MasterDepartment/DepartmentManage")]
         public IActionResult DepartmentManage(int id, MasterDepartmentEntity masterDepartment)
         {
             try
-            { 
+            {
+                //Check permissions for Get
+                var action = masterDepartment.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
@@ -77,7 +88,7 @@ namespace EltizamValuation.Web.Controllers
                     TempData["StatusMessage"] = "Saved Successfully";
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     ModelState.Clear();
-                    return RedirectToAction(nameof(Department));
+                    return RedirectToAction(nameof(Departments));
                 }
                 else
                     TempData["StatusMessage"] = "Some Eror Occured";
@@ -87,10 +98,10 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 ModelState.Clear();
-                return View(nameof(Department));
+                return View(nameof(Departments));
             }
             ModelState.Clear();
-            return RedirectToAction(nameof(Department));
+            return RedirectToAction(nameof(Departments));
         }
 
        
@@ -106,6 +117,12 @@ namespace EltizamValuation.Web.Controllers
                 ViewData["IsView"] = true;
             }
             MasterDepartmentEntity masterDepartment;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
                 masterDepartment = new MasterDepartmentEntity();

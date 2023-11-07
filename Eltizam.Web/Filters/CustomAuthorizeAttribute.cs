@@ -15,32 +15,28 @@ namespace Eltizam.Web.Filters
 		public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
 		{
 			try
-			{
-				//string token = string.Empty;
-				//context.HttpContext.Request.Cookies.TryGetValue("EmcureNPDToken", out token);
-
+			{ 
 				var user = context.HttpContext.User;
 
 				if (!user.Identity.IsAuthenticated)
 					context.Result = new RedirectResult("~/Account/Login");
 				else
-				{
-
-
+				{ 
 					UserSessionEntity oUserLoggedInModel = UtilityHelper.GetUserFromClaims(user.Claims);
 
-					context.HttpContext.Session.SetString(UserHelper.LoggedInUserEmailAddress, oUserLoggedInModel.Email);
-					if (String.IsNullOrEmpty(context.HttpContext.Session.GetString(UserHelper.LoggedInUserName)))
+					context.HttpContext.Session.SetString(UserHelper.LogInUserEmailAddress, oUserLoggedInModel.Email);
+                    context.HttpContext.Session.SetInt32(UserHelper.LogInRoleId, oUserLoggedInModel.RoleId);
+
+                    if (String.IsNullOrEmpty(context.HttpContext.Session.GetString(UserHelper.LogInUserName)))
 					{
-						context.HttpContext.Session.SetString(UserHelper.LoggedInUserName, oUserLoggedInModel.UserName);
-					}
-					context.HttpContext.Session.SetInt32(UserHelper.LoggedInRoleId, oUserLoggedInModel.RoleId);
-					//context.HttpContext.Session.SetString(UserHelper.AssignedBusinessUnit, oUserLoggedInModel.AssignedBusinessUnit);
-					//context.HttpContext.Session.SetString(UserHelper.IsManagement, Convert.ToString(oUserLoggedInModel.IsManagement));
+						context.HttpContext.Session.SetString(UserHelper.LogInUserName, oUserLoggedInModel.UserName);
+					} 
+
 					if (oUserLoggedInModel.UserId > 0)
 					{
-						context.HttpContext.Session.SetString(UserHelper.LoggedInUserId, oUserLoggedInModel.UserId.ToString());
+						context.HttpContext.Session.SetString(UserHelper.LogInUserId, oUserLoggedInModel.UserId.ToString());
 					}
+
 					var roles = UtilityHelper.GetModuleRole<dynamic>(oUserLoggedInModel.RoleId);
 					if (roles == null)
 					{
@@ -74,9 +70,10 @@ namespace Eltizam.Web.Filters
 		{
 			try
 			{
-				if (context.HttpContext.Session.GetInt32(UserHelper.LoggedInRoleId) != null)
+				if (context.HttpContext.Session.GetInt32(UserHelper.LogInRoleId) != null)
 				{
-					int rolId = (int)context.HttpContext.Session.GetInt32(UserHelper.LoggedInRoleId);
+					int rolId = (int)context.HttpContext.Session.GetInt32(UserHelper.LogInRoleId);
+					
 					if (rolId > 0)
 					{
 						IEnumerable<RolePermissionModel> obj = UtilityHelper.GetModuleRole<dynamic>((Convert.ToInt32(rolId)));
@@ -86,6 +83,7 @@ namespace Eltizam.Web.Filters
 						if (obj != null)
 						{
 							RolePermissionModel objList = obj.Where(o => o.ControlName != null && o.ControlName.Trim() == Convert.ToString(controllerName).Trim()).FirstOrDefault();
+							
 							// || (!objList.Add && !objList.View && !objList.Edit && !objList.Delete && !objList.Approve)
 							if ((objList == null) && Convert.ToString(controllerName) != "Home" && Convert.ToString(controllerName) != "Notifications")
 								context.Result = new RedirectResult("~/Home/AccessRestriction");

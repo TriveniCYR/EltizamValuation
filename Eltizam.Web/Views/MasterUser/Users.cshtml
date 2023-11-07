@@ -10,6 +10,10 @@
 @{
     ViewData["Title"] = @SharedLocalizer["Resource List"];
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    var objPermssion = (RolePermissionModel)ViewBag.Access;
+    var isAdd = objPermssion.Add ? 1 : 0;
+    var isDelete = objPermssion.Delete ? 1 : 0;
+    var isEdit = objPermssion.Edit ? 1 : 0;
 }
 
 <!-- system user master -->
@@ -17,70 +21,19 @@
     <main class="w-100">
         <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
             <h3 class="dashboardTitle">RESOURCE MASTER</h3>
-            <div class="buttonArea flex align-item-center">
+            <div class="buttonArea flex align-item-center"> 
+
+                <input type="hidden" id="isDeletePerm" value="@isDelete" />
+                <input type="hidden" id="isAddPerm" value="@isAdd" /> 
 
                 <form asp-action="UserManage" asp-controller="MasterUser" method="GET">
-                    <button class="flex align-item-center blueBtn" id="addNew">
+                    <button  class="flex align-item-center blueBtn" id="addNew">
                         <img src="~/assets/plus.svg" alt="plus"> Add New
                     </button>
                 </form>
             </div>
         </div>
-       @*  <div class="accordion valueAdvance">
-            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
-            <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
-            <div class="accordion-content inputSearchs">
-                <h3 class="text-center">Advanced Search</h3>
-                <form>
-                    <div class="flex">
-                        <label for="userName">
-                            User Name
-                            <input type="text" id="UserName" placeholder="enter user id">
-                        </label>
-                        <label for="valuatorType">
-                            Valuator Type
-                            <select name="Valuator" id="ValuatorType">
-                                <option value="Valuator1">Valuator type1</option>
-                                <option value="Valuator2">Valuator type2</option>
-                                <option value="Valuator3">Valuator type3</option>
-                            </select>
-                        </label>
 
-                        <label for="ResourceId">
-                            Resource Type
-                            @Html.DropDownList("ResourceId", new List<SelectListItem>(),  new { @placeholder = @SharedLocalizer[" Select ResourceType"] })
-                        </label>
-
-                        <label for="RoleId">
-                            Role
-                            @Html.DropDownList("RoleId", new List<SelectListItem>(),  new { @placeholder = @SharedLocalizer[" Select Role"] })
-                        </label>
-                    </div>
-                    <div class="flex">
-                        <label for="fromDate">
-                            From Date
-                            <input type="date">
-                        </label>
-                        <label for="toDate">
-                            To Date
-                            <input type="date">
-                        </label>
-                        <label for="DesignationId">
-                            Designation
-                            @Html.DropDownList("DesignationId", new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Designation"] })
-                        </label>
-                        <label for="DepartmentId">
-                            Department
-                            @Html.DropDownList("DepartmentId", new List<SelectListItem>(),  new { @class = "form-control",  @placeholder = @SharedLocalizer["Department"] })
-
-                        </label>
-                    </div>
-                    <div class="text-center">
-                        <button type="button" class="blueBtn" onclick="InitializeUserList()">Search</button>
-                    </div>
-                </form>
-            </div>
-        </div> *@
         <div class="scroll-x whiteWithPadding">
             <table id="ResourceUserTable" class="table table-bordered table-striped table-hover">
                 <thead>
@@ -177,13 +130,13 @@
     </div>
 </div>
 
-@section MyScripts 
-{ 
-    //@Html.Partial("_DataTablePartial")
+@section MyScripts
+{
+            //@Html.Partial("_DataTablePartial")
 
     <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/custom/MasterUser/MasterUser.js?v=@jsVersion"></script>
-    <script> 
+    <script>
         //#region Setup API Url
         var AllUser = "@Eltizam.Web.Helpers.APIURLHelper.GetAll";
         var DeleteUserByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteUserById";
@@ -199,6 +152,6 @@
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
-         
+
     </script>
 } 

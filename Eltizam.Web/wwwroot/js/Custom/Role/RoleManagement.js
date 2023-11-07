@@ -54,8 +54,13 @@ function ConfirmationDeleteRole(id) {
     $('#DeleteRoleModel #Id').val(id);
 }
 function DeleteRole() {
-    var tid = $('#DeleteRoleModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteRoleByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+    if (IsDeletePerm) {
+        var tid = $('#DeleteRoleModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeleteRoleByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
 }
 function DeleteUserByIdSuccess(data) {
     try {

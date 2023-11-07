@@ -1,4 +1,5 @@
-﻿using Eltizam.Api.Helpers.Response;
+﻿using Eltizam.Api.Filters;
+using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
@@ -12,7 +13,7 @@ namespace Eltizam.API.Controllers.Masters
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[AuthorizeAttribute]
+    [AuthorizeAttribute]
     public class MasterUserController : ControllerBase
     {
         #region Properties
@@ -168,12 +169,12 @@ namespace Eltizam.API.Controllers.Masters
             }
         }
 
-        [HttpGet("GetFooterDetails/{id}/{tablename}")]
-        public async Task<IActionResult> GetFooterDetails(int id, string tablename)
+        [HttpGet("GetGlobalAuditFields/{id}/{tablename}")]
+        public async Task<IActionResult> GetGlobalAuditFields(int id, string tablename)
         {
             try
             {
-                var _user = await _MasterUserService.GetFooterDetails(id, tablename);
+                var _user = await _MasterUserService.GetGlobalAuditFields(id, tablename);
                 return _ObjectResponse.CreateData(_user, (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)

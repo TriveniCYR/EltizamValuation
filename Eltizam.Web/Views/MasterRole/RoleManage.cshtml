@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Eltizam.Web.Controllers
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Eltizam.Utility.Models
 @inject IHttpContextAccessor HttpContextAccessor
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
 
@@ -14,6 +15,9 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"]; 
     var _header = "Role Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
+    var objPermssion = (RolePermissionModel)ViewBag.Access;
+    var isAdd = objPermssion.Add ? 1 : 0;
+    var isEdit = objPermssion.Edit ? 1 : 0;
 }
 
 <div id="PlaceHolderHere"></div>
@@ -31,6 +35,8 @@
         <div class="bodyContent">
             <div class="inputSearchs p-0">
                 <form asp-action="RoleManage" autocomplete="off" asp-controller="MasterRole" method="post">
+                    <input type="hidden" id="isAddPerm" value="@isAdd" />
+                    <input type="hidden" id="isEditPerm" value="@isEdit" />
                     @Html.HiddenFor(m => m.Id)
                     <div>
                         <div class="flex">
@@ -96,7 +102,7 @@
                     </div> 
                     <div class="text-right buttonArea bodyContent plr-0">
                         <a href='/MasterRole/Roles'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
-                        <button type="submit" id="btnSaveRole" class="bgBlue">@SharedLocalizer["Save"]</button>
+                        <button type="submit" id="btnSaveEdit" class="bgBlue">@SharedLocalizer["Save"]</button>
                     </div>
                 </form>
             </div>

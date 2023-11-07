@@ -17,11 +17,11 @@ namespace Eltizam.Data.DataAccess.DataContext
         {
         }
 
-        public virtual DbSet<AuditLog> AuditLogs { get; set; } = null!;
         public virtual DbSet<Dictionary> Dictionaries { get; set; } = null!;
         public virtual DbSet<EmailLogHistory> EmailLogHistories { get; set; } = null!;
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; } = null!;
         public virtual DbSet<MasterAmenity> MasterAmenities { get; set; } = null!;
+        public virtual DbSet<MasterAuditLog> MasterAuditLogs { get; set; } = null!;
         public virtual DbSet<MasterCity> MasterCities { get; set; } = null!;
         public virtual DbSet<MasterClient> MasterClients { get; set; } = null!;
         public virtual DbSet<MasterClientContact> MasterClientContacts { get; set; } = null!;
@@ -74,25 +74,6 @@ namespace Eltizam.Data.DataAccess.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("eltizam_dbUser");
-
-            modelBuilder.Entity<AuditLog>(entity =>
-            {
-                entity.ToTable("Audit_Log", "dbo");
-
-                entity.Property(e => e.ActionDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ActionName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ModuleName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UserId)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-            });
 
             modelBuilder.Entity<Dictionary>(entity =>
             {
@@ -217,6 +198,21 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<MasterAuditLog>(entity =>
+            {
+                entity.ToTable("Master_AuditLog", "dbo");
+
+                entity.Property(e => e.ActionType).HasMaxLength(20);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ParentTableName)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TableName).HasMaxLength(100);
             });
 
             modelBuilder.Entity<MasterCity>(entity =>
@@ -1205,7 +1201,7 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false)
                     .HasColumnName("ReferenceNO");
 
-                entity.Property(e => e.ValuationDate).HasColumnType("datetime");
+                entity.Property(e => e.ValuationDate).HasColumnType("date");
 
                 entity.Property(e => e.ValuerComment)
                     .HasMaxLength(500)

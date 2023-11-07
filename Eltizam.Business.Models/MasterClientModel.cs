@@ -28,8 +28,10 @@ namespace Eltizam.Business.Models
         public DateTime TrnexpiryDate { get; set; }
         public bool IsActive { get; set; }
         public string? Logo { get; set; }
-        public int CreatedBy { get; set; }
+        public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
         public MasterAddressEntity? Address { get; set; }
+        public MasterContactModel? Contact { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
         public DocumentFilesModel? Document { get; set; }

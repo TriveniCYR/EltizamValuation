@@ -228,7 +228,7 @@ namespace Eltizam.Utility.Helpers
                 //Attachment
                 if (isAttachment == true)
                 {
-                    string tempAttachFile = wwwRootPath + "/wwwroot/document/EmcureProject Documentation.pdf";
+                    string tempAttachFile = wwwRootPath + "/wwwroot/document/Documentation.pdf";
                     System.Net.Mail.Attachment attachment;
                     attachment = new System.Net.Mail.Attachment(tempAttachFile);
                     mm.Attachments.Add(attachment);

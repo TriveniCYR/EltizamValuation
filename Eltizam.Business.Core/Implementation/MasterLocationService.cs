@@ -7,7 +7,9 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -31,9 +33,12 @@ namespace Eltizam.Business.Core.Implementation
 
         private IRepository<MasterLocation> _repository { get; set; }
         private readonly IHelper _helper;
+        private IRepository<EmailLogHistory> _emailLog { get; set; }
+        private readonly IAuditLogService _auditLogService;
+        private readonly int? _LoginUserId;
         public MasterLocationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
                                   IHelper helper,
-                                 Microsoft.Extensions.Configuration.IConfiguration _configuration)
+                                 Microsoft.Extensions.Configuration.IConfiguration _configuration, IAuditLogService auditLogService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -41,6 +46,7 @@ namespace Eltizam.Business.Core.Implementation
             _repository = _unitOfWork.GetRepository<MasterLocation>();
             configuration = _configuration;
             _helper = helper;
+            _auditLogService = auditLogService;
         }
 
         // get all recoreds from Location list with sorting and pagination
@@ -97,9 +103,13 @@ namespace Eltizam.Business.Core.Implementation
         {
 
             MasterLocation objLocation;
-
+            var By = _helper.GetLoggedInUser().UserId;
+            string MainTableName = Enum.GetName(TableNameEnum.Master_Location);
+            int MainTableKey = entityLocation.Id;
             if (entityLocation.Id > 0)
             {
+                MasterLocation OldEntity = null;
+                OldEntity = _repository.GetNoTracking(entityLocation.Id);
                 objLocation = _repository.Get(entityLocation.Id);
                 var OldObjLocation = objLocation;
                 if (objLocation != null)
@@ -113,10 +123,16 @@ namespace Eltizam.Business.Core.Implementation
                     objLocation.Longitude = entityLocation.Longitude;
                     objLocation.Status = entityLocation.Status;
                     objLocation.LocationName = entityLocation.LocationName;
-                    objLocation.ModifiedDate = AppConstants.DateTime;
-                    objLocation.ModifiedBy = entityLocation.CreatedBy;
+                  //  objLocation.ModifiedDate = AppConstants.DateTime;
+                    //objLocation.ModifiedBy = entityLocation.CreatedBy;
+                    objLocation.ModifiedBy = entityLocation.ModifiedBy ?? By;
 
                     _repository.UpdateAsync(objLocation);
+                    _repository.UpdateGraph(objLocation, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<MasterLocation>(AuditActionTypeEnum.Update, OldEntity, objLocation, MainTableName, MainTableKey);
                 }
                 else
                 {
@@ -136,13 +152,14 @@ namespace Eltizam.Business.Core.Implementation
                 objLocation.HomeCurrencyId = entityLocation.HomeCurrencyId;
                 objLocation.ForeignCurrencyId = entityLocation.ForeignCurrencyId;
                 objLocation.Status = entityLocation.Status;
-                objLocation.CreatedDate = AppConstants.DateTime;
+                //objLocation.CreatedDate = AppConstants.DateTime;
                 objLocation.CreatedBy = entityLocation.CreatedBy;
-                objLocation.ModifiedDate = AppConstants.DateTime;
-                objLocation.ModifiedBy = entityLocation.CreatedBy;
+              //  objLocation.ModifiedDate = AppConstants.DateTime;
+               // objLocation.ModifiedBy = entityLocation.CreatedBy;
                 _repository.AddAsync(objLocation);
+                await _unitOfWork.SaveChangesAsync();
             }
-            await _unitOfWork.SaveChangesAsync();
+          //  await _unitOfWork.SaveChangesAsync();
             if (objLocation.Id == 0)
                 return DBOperation.Error;
 

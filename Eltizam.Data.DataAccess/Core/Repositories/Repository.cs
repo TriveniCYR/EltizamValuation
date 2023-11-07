@@ -20,6 +20,13 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         protected readonly string _EntityName;
         protected readonly DateTime _currentSQLServerDate;
 
+        public static string CreatedBy = "CreatedBy";
+        public static string CreatedDate = "CreatedDate"; 
+        public static string ModifiedBy = "ModifiedBy";
+        public static string ModifiedDate = "ModifiedDate";
+        public static string IsDeleted = "IsDeleted";
+        public static string DeletedDate = "DeletedDate";
+
         public Repository(DbContext Context)
         {
             dbContext = Context ?? throw new ArgumentNullException(nameof(Context));
@@ -28,7 +35,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             _currentSQLServerDate = AppConstants.DateTime; //_commonService.GetSQLServerDate();
         }
 
-        #region Read
+        #region Read 
 
         public async Task<List<TEntity>> GetAllAsync()
         {
@@ -73,10 +80,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     {
                         return getAll.Where(o => (bool)o.GetType().GetProperty("IsDeleted").GetValue(o) is false).AsEnumerable();
                     }
-                }
-
-                //var getAllFilter = getAll.Where(o => (bool)o.GetType().GetProperty("IsDeleted").GetValue(o) == false).ToList();
-                //return getAllFilter;
+                } 
             }
             catch (Exception ex)
             { }
@@ -101,8 +105,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 var props = o.GetType().GetProperties();
                 if (props.Any(p => p.Name is "IsDeleted"))
-                {
-
+                { 
                     var isDeleted = o.GetType().GetProperty("IsDeleted").GetValue(o);
                     if ((bool)isDeleted)
                     {
@@ -112,7 +115,8 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { }
+            { 
+            }
             return o;
         }
 
@@ -227,7 +231,8 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { }
+            { 
+            }
             dbContext.Entry(o).State = EntityState.Detached;
             return o;
         }
@@ -363,32 +368,40 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         public void AddAsync(TEntity entity)
         {
             try
-            {
-                dbContext.Entry(entity).Property("CreatedDate").CurrentValue = _currentSQLServerDate;
+            { 
+                SetCommmonPropertiesWhileAdd(entity);
+            }
+            catch (Exception ex) 
+            { 
+            }
 
-            }
-            catch (Exception ex) { }
-            try
-            {
-                //if ((string)dbContext.Entry(entity).Property("IPAddress").CurrentValue == null || string.IsNullOrEmpty((string)dbContext.Entry(entity).Property("IPAddress").CurrentValue.ToString()) || (string)dbContext.Entry(entity).Property("IPAddress").CurrentValue.ToString() == "string")
-                //{
-                //    dbContext.Entry(entity).Property("IPAddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
-                //}
-            }
-            catch (Exception ex1) { }
-            try
-            {
-                //if ((string)dbContext.Entry(entity).Property("Ipaddress").CurrentValue == null || string.IsNullOrEmpty((string)dbContext.Entry(entity).Property("Ipaddress").CurrentValue.ToString()) || (string)dbContext.Entry(entity).Property("IPAddress").CurrentValue.ToString() == "string")
-                //{
-                //    dbContext.Entry(entity).Property("Ipaddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
-                //}
-            }
-            catch { }
+            //try
+            //{
+            //    //if ((string)dbContext.Entry(entity).Property("IPAddress").CurrentValue == null || string.IsNullOrEmpty((string)dbContext.Entry(entity).Property("IPAddress").CurrentValue.ToString()) || (string)dbContext.Entry(entity).Property("IPAddress").CurrentValue.ToString() == "string")
+            //    //{
+            //    //    dbContext.Entry(entity).Property("IPAddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
+            //    //}
+            //}
+            //catch (Exception ex1) 
+            //{
+            //}
+            //try
+            //{
+            //    //if ((string)dbContext.Entry(entity).Property("Ipaddress").CurrentValue == null || string.IsNullOrEmpty((string)dbContext.Entry(entity).Property("Ipaddress").CurrentValue.ToString()) || (string)dbContext.Entry(entity).Property("IPAddress").CurrentValue.ToString() == "string")
+            //    //{
+            //    //    dbContext.Entry(entity).Property("Ipaddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
+            //    //}
+            //}
+            //catch 
+            //{ 
+            //}
+            
             //Global Common Fields Update
             //dbContext.Entry(entity).Property("CreateDate").CurrentValue = _currentSQLServerDate;
             //dbContext.Entry(entity).Property("LastModifiedDate").CurrentValue = dbContext.Entry(entity).Property("CreateDate").CurrentValue;
             //dbContext.Entry(entity).Property("LastModifiedBy").CurrentValue = dbContext.Entry(entity).Property("CreatedBy").CurrentValue;
             //SetCommmonPropertiesWhileAdd(entity);
+
             dbContext.Set<TEntity>().AddAsync(entity);
         }
 
@@ -414,12 +427,16 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 //    dbContext.Entry(entity).Property("Ipaddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
                 //}
             }
-            catch { }
+            catch 
+            {
+            }
+
             //Global Common Fields Update
-            //dbContext.Entry(entity).Property("CreateDate").CurrentValue = _currentSQLServerDate;
-            //dbContext.Entry(entity).Property("LastModifiedDate").CurrentValue = dbContext.Entry(entity).Property("CreateDate").CurrentValue;
-            //dbContext.Entry(entity).Property("LastModifiedBy").CurrentValue = dbContext.Entry(entity).Property("CreatedBy").CurrentValue;
-            //SetCommmonPropertiesWhileAdd(entity);
+            dbContext.Entry(entity).Property("CreateDate").CurrentValue = _currentSQLServerDate;
+            dbContext.Entry(entity).Property("LastModifiedDate").CurrentValue = dbContext.Entry(entity).Property("CreateDate").CurrentValue;
+            dbContext.Entry(entity).Property("LastModifiedBy").CurrentValue = dbContext.Entry(entity).Property("CreatedBy").CurrentValue;
+            SetCommmonPropertiesWhileAdd(entity);
+
             dbContext.Set<TEntity>().Add(entity);
         }
 
@@ -446,34 +463,24 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             //Find Original Entity and Perform Audit
             TEntity originalEntity = GetOrignalEntity(entity);
-
-            ////Global Common Fields Update
-            //dbContext.Entry(entity).Property("Timestamp").CurrentValue = originalEntity.GetType().GetProperty("Timestamp").GetValue(originalEntity);
-            //dbContext.Entry(entity).Property("CreateDate").CurrentValue = originalEntity.GetType().GetProperty("CreateDate").GetValue(originalEntity);
-            //dbContext.Entry(entity).Property("CreatedBy").CurrentValue = originalEntity.GetType().GetProperty("CreatedBy").GetValue(originalEntity);
-            //dbContext.Entry(entity).Property("LastModifiedDate").CurrentValue = _currentSQLServerDate;
-
-            ////Marking Entity to Update & Ignore few fields
-            //dbContext.Entry(entity).State = EntityState.Modified;
-            //dbContext.Entry(entity).Property("CreateDate").IsModified = false;
-            //dbContext.Entry(entity).Property("CreatedBy").IsModified = false;
-
+             
             SetCommonPropertiesWhileUpdate(entity, originalEntity, IsCreatedDateUpdate);
-        }
+        } 
 
         public TEntity GetEntity(Expression<Func<TEntity, bool>> predicate)
         {
             var oEntity = dbContext.Set<TEntity>().Where(predicate).SingleOrDefault();
             try
             {
-                var isDeleted = oEntity.GetType().GetProperty("IsDeleted").GetValue(oEntity);
-                if ((bool)isDeleted)
+                var isDeleted = oEntity.GetType().GetProperty(IsDeleted)?.GetValue(oEntity);
+                if (isDeleted != null && (bool)isDeleted)
                 {
                     oEntity = null;
                 }
             }
-            catch (Exception exx)
-            { }
+            catch (Exception e)
+            { 
+            }
             //try
             //{
             //    var isActive = oEntity.GetType().GetProperty("IsActive").GetValue(oEntity);
@@ -484,6 +491,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             //}
             //catch (Exception exx)
             //{ }
+
             return oEntity;
         }
 
@@ -614,14 +622,14 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         /// Method to Update Parent and all child entities depending on the state of object.
         /// </summary>
         /// <param name="entity"></param>
-        public void UpdateGraph(TEntity entity)
+        public void UpdateGraph(TEntity entity, EntityState entityState)
         {
             dbContext.ChangeTracker.TrackGraph(entity, node =>
             {
                 var entry = node.Entry;
                 var childEntity = entry.Entity;
 
-                EntityState entityState = (EntityState)childEntity.GetType().GetProperty("EntityState").GetValue(childEntity);
+                // EntityState entityState = (EntityState)childEntity.GetType().GetProperty("EntityState").GetValue(childEntity);
 
                 switch (entityState)
                 {
@@ -646,53 +654,64 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
 
         private void SetCommmonPropertiesWhileAdd(object entity)
         {
-            dbContext.Entry(entity).Property("CreatedDate").CurrentValue = _currentSQLServerDate;
-            dbContext.Entry(entity).Property("ModifyDate").CurrentValue = _currentSQLServerDate;
-            dbContext.Entry(entity).Property("ModifyBy").CurrentValue = dbContext.Entry(entity).Property("CreatedBy").CurrentValue;
-            //dbContext.Entry(entity).Property("ModifiedDate").CurrentValue = _currentSQLServerDate;
-            //dbContext.Entry(entity).Property("ModifiedBy").CurrentValue = dbContext.Entry(entity).Property("CreatedBy").CurrentValue;
+            dbContext.Entry(entity).Property(CreatedDate).CurrentValue = _currentSQLServerDate;
+            dbContext.Entry(entity).Property(ModifiedBy).CurrentValue = dbContext.Entry(entity).Property(CreatedBy).CurrentValue;
+            dbContext.Entry(entity).Property(ModifiedDate).CurrentValue = _currentSQLServerDate; 
         }
 
         private void SetCommonPropertiesWhileUpdate(object entity, object oEntity, bool IsCreatedDateUpdate = false)
-        {
-            //Global Common Fields Update
-            //dbContext.Entry(entity).Property("Timestamp").CurrentValue = oEntity.GetType().GetProperty("Timestamp").GetValue(oEntity);
+        { 
             try
             {
                 if (!IsCreatedDateUpdate)
                 {
-                    dbContext.Entry(entity).Property("CreatedDate").CurrentValue = oEntity.GetType().GetProperty("CreatedDate").GetValue(oEntity);
-                }
-                dbContext.Entry(entity).Property("ModifyDate").CurrentValue = _currentSQLServerDate;
-            }
-            catch { }
-            ///Added try catch to bypass exception in case createdby column not found in table entity
-            ///as error was getting in TUVBooking -- Sumit Pathak 13_04_2020
-            try
-            {
-                dbContext.Entry(entity).Property("CreatedBy").CurrentValue = oEntity.GetType().GetProperty("CreatedBy").GetValue(oEntity);
-                if ((bool)dbContext.Entry(entity).Property("IsDeleted").CurrentValue == true)
-                {
-                    dbContext.Entry(entity).Property("DeletedDate").CurrentValue = _currentSQLServerDate;
-                }
-            }
-            catch { }
+                    dbContext.Entry(entity).Property(CreatedBy).CurrentValue = oEntity.GetType().GetProperty(CreatedBy)?.GetValue(oEntity);
+                    dbContext.Entry(entity).Property(CreatedDate).CurrentValue = oEntity.GetType().GetProperty(CreatedDate)?.GetValue(oEntity); 
 
-            //Marking Entity to Update & Ignore few fields
-            dbContext.Entry(entity).State = EntityState.Modified;
-            try
-            {
-                if (!IsCreatedDateUpdate)
-                {
-                    dbContext.Entry(entity).Property("CreatedDate").IsModified = false;
+                    //Marking Entity to Update & Ignore few fields
+                    dbContext.Entry(entity).Property(CreatedBy).IsModified = false;
+                    dbContext.Entry(entity).Property(CreatedDate).IsModified = false;
                 }
+
+                dbContext.Entry(entity).Property(ModifiedDate).CurrentValue = _currentSQLServerDate; 
             }
-            catch { }
+            catch (Exception e)
+            { 
+            }
+            
             try
             {
-                dbContext.Entry(entity).Property("CreatedBy").IsModified = false;
+                var delete = dbContext.Entry(entity).Property(IsDeleted);
+
+                if (delete != null && (bool)delete.CurrentValue == true)
+                {
+                    dbContext.Entry(entity).Property(DeletedDate).CurrentValue = _currentSQLServerDate;
+                } 
             }
-            catch (Exception ex) { }
+            catch (Exception e)
+            {
+            }
+
+            ////Marking Entity to Update & Ignore few fields
+            //dbContext.Entry(entity).State = EntityState.Modified;
+            //try
+            //{
+            //    if (!IsCreatedDateUpdate)
+            //    {
+            //        dbContext.Entry(entity).Property("CreatedDate").IsModified = false;
+            //    }
+            //}
+            //catch
+            //{ 
+            //} 
+
+            //try
+            //{
+            //    dbContext.Entry(entity).Property("CreatedBy").IsModified = false;
+            //}
+            //catch (Exception ex) 
+            //{
+            //}
         }
 
         private void New(object childEntity)

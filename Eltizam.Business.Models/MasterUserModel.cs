@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Eltizam.Business.Models
 {
-    public class MasterUserModel
+    public class MasterUserModel : GlobalAuditFields
     {
         public int Id { get; set; }
         public string? UserName { get; set; }
@@ -57,7 +57,7 @@ namespace Eltizam.Business.Models
         public string? ConfirmPassowrd { get; set; }
         public string? Email { get; set; }
 
-        public int CreatedBy { get; set; }
+        //public int CreatedBy { get; set; }
         public MasterUserAddressModel? Address { get; set; } = null;
         public MasterUserAddressModel? UpsertAddress { get; set; } = null;
         public Master_QualificationModel? Qualification { get; set; } = null;
@@ -66,14 +66,5 @@ namespace Eltizam.Business.Models
         public List<MasterDocumentModel>? uploadDocument { get; set; }
         public DocumentFilesModel? Document { get; set; }
     }
-
-    public class FooterDetails
-    {
-        public int? CreatedBy { get; set; }
-        public string? CreatedByName { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-        public string? ModifiedByName { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-    }
+     
 }

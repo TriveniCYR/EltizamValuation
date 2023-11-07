@@ -23,7 +23,7 @@ function BindApproverList() {
     var Approver = $("#ApproverId");
     var _val = "";
     var _rpname = "userName";
-    var currentUserId = "@ViewBag.CurrentUserId";
+    var currentUserId = LogInUserId;
     let ApproverListUrl = ApproverList + "/" + currentUserId
     BindDropdowns(ApproverListUrl, Approver, _rpname, _val);
 }

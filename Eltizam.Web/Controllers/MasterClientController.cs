@@ -1,13 +1,19 @@
-﻿using Eltizam.Business.Models;
+﻿using Eltizam.Business.Core.Interface;
+using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility;
+using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using System.Data;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterClientController : Controller
+    public class MasterClientController : BaseController
     {
         #region Properties
 
@@ -23,10 +29,17 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
+        [HttpGet]
+        [Route("MasterClient/Clients")]
         public IActionResult Clients()
         {
             try
-            {                
+            {
+
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 return View();
             }
             catch (Exception e)
@@ -41,6 +54,12 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult ClientManage(int? id)
         {
             MasterClientModel masterUser;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
                 masterUser = new MasterClientModel();
@@ -56,8 +75,15 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterClientModel>>(jsonResponse);
-                    if (data._object is null)
-                        return NotFound();
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Client));
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    }
 
                     return View(data._object);
                 }
@@ -69,6 +95,13 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 if (masterUser.Document.Files != null)
                 {
                     List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
@@ -80,6 +113,11 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     //masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
                 }
+                //Fill audit logs field
+                if (masterUser.Id == 0)
+                masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                masterUser.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
@@ -110,6 +148,12 @@ namespace EltizamValuation.Web.Controllers
         [Route("MasterClient/ClientDetail")]
         public IActionResult ClientDetail(int? id)
         {
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             MasterClientModel masterUser;
             if (id == null || id <= 0)
             {

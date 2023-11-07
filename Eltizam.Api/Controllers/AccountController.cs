@@ -1,22 +1,21 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Eltizam.Api.Helpers.Response;
+using Eltizam.Api.Middlewares;
+using Eltizam.Business.Core;
+using Eltizam.Business.Core.Interface;
+using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Resource;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System.Net;
-using Eltizam.Api.Helpers.Response;
-using Eltizam.Api.Middlewares;
-using Eltizam.Business.Core.Interface;
-using Eltizam.Business.Models;
-using Eltizam.Resource;
 using static Eltizam.Utility.Enums.GeneralEnum;
-using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Business.Core;
 
 namespace Eltizam.Api.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class AccountController : ControllerBase
+    [Route("api/[controller]")]
+	[ApiController] 
+    public class AccountController : ControllerBase
 	{
 		#region Properties
 

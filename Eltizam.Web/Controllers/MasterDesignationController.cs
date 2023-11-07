@@ -1,8 +1,11 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Models;
 using Eltizam.Utility.Utility;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -10,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterDesignationController : Controller
+    public class MasterDesignationController : BaseController
     {
 
         #region Properties
@@ -28,13 +31,15 @@ namespace EltizamValuation.Web.Controllers
             _helper = helper;
         }
 
-        public IActionResult Designation()
+        public IActionResult Designations()
         {
             ModelState.Clear();
             try
             {
-                int rolId = _helper.GetLoggedInRoleId();
-                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, rolId);
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, roleId);
                 ViewBag._objPermission = objPermssion;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new APIRepository(_cofiguration);
@@ -59,11 +64,17 @@ namespace EltizamValuation.Web.Controllers
         }
 
         [HttpPost]
-        [Route("Designation/DesignationManage")]
+        [Route("MasterDesignation/DesignationManage")]
         public IActionResult DesignationManage(int id, MasterDesignationEntity masterDesignation)
         {
             try
             {
+                //Check permissions for Get
+                var action = masterDesignation.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
@@ -75,7 +86,7 @@ namespace EltizamValuation.Web.Controllers
                     TempData["StatusMessage"] = "Saved Successfully";
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     ModelState.Clear();
-                    return RedirectToAction(nameof(Designation));
+                    return RedirectToAction(nameof(Designations));
                 }
                 else
                     TempData["StatusMessage"] = "Some Eror Occured";
@@ -85,10 +96,10 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 ModelState.Clear();
-                return View(nameof(Designation));
+                return View(nameof(Designations));
             }
             ModelState.Clear();
-            return RedirectToAction(nameof(Designation));
+            return RedirectToAction(nameof(Designations));
         }
 
         public IActionResult DesignationManage(int? id)
@@ -98,6 +109,14 @@ namespace EltizamValuation.Web.Controllers
                 ViewData["IsEdit"] = true;
             }
             MasterDesignationEntity masterDesignation;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
             if (id == null || id <= 0)
             {
                 masterDesignation = new MasterDesignationEntity();
@@ -123,13 +142,19 @@ namespace EltizamValuation.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Designation/DesignationView")]
+        [Route("MasterDesignation/DesignationView")]
         public IActionResult DesignationView(int? id)
         {
             if (id != null)
             {
                 ViewData["IsEdit"] = true;
             }
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             MasterDesignationEntity masterDesignation;
             if (id == null || id <= 0)
             {

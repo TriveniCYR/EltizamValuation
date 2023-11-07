@@ -1,5 +1,8 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -7,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class ValuationRequestController : Controller
+    public class ValuationRequestController : BaseController
     {
         #region Properties
 
@@ -23,14 +26,13 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+         
         [HttpGet]
         public IActionResult ValuationRequests()
-        {
+        {  //Check permissions
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }
@@ -71,6 +73,16 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.ValuationRequest));
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    } 
+
                     if (data._object is null)
                         return NotFound();
 

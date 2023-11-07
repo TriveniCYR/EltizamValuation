@@ -20,8 +20,9 @@ function PosttopHeader() {
     }  
 
     // Prepare the data to send to the server
-    var changePassword = {
-        UserId: $("LoginUserId").val(),
+    var changePassword =
+    {
+        UserId: LogInUserId,
         NewPassword: userPassword,
         ConfirmPassword: confirmPassword
     }; 

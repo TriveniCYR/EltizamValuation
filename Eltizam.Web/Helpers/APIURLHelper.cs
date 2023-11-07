@@ -15,7 +15,8 @@ namespace Eltizam.Web.Helpers
         public static string ResetPassword = "api/Account/ResetPassword";
         public static string Anonymous_CheckEmailAddressExists = "api/Account/CheckEmailAddressExists"; 
         public static string Anonymous_IsTokenValid = "api/Account/IsTokenValid";
-        public static string ChangePassword = "api/Account/ChangePassword";
+        public static string ChangePassword = "api/Account/ChangePassword"; 
+
         #region MasterCommon
 
         public static string GetDepartmentList = "api/MasterDepartment/GetDepartmentList";
@@ -40,7 +41,7 @@ namespace Eltizam.Web.Helpers
         public static string UpsertUser = "api/MasterUser/Upsert";
         public static string GetUserById = "api/MasterUser/GetById";
         public static string DeleteUserById = "api/MasterUser/Delete";
-        public static string GetFooterDetails = "api/MasterUser/GetFooterDetails";
+        public static string GetGlobalAuditFields = "api/MasterUser/GetGlobalAuditFields";
 
         #endregion User
 
@@ -185,6 +186,7 @@ namespace Eltizam.Web.Helpers
         public static string GetAllModule = "api/MasterModule/GetAllModule";
 
         #endregion Module
+
         #region Dictionary Management
         public static string GetAllDictionary = "api/MasterDictionary/GetAll";
         public static string UpsertDictionary = "api/MasterDictionary/Upsert";
@@ -207,6 +209,13 @@ namespace Eltizam.Web.Helpers
 
         #endregion Valuation Request
 
+
+        #region AuditLog
+        public static string GetAllAudit = "api/AuditLog/GetAll";
+        public static string GetDetailsAudit = "api/AuditLog/GetLogDetailsByFilters";
+        public static string GetAuditTableName = "api/AuditLog/GetAllAuditLogTableName";
+
+        #endregion AuditLog
 
     }
 }

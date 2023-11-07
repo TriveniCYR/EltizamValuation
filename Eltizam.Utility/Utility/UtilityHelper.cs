@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using Eltizam.Business.Models;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Models;
 
 namespace Eltizam.Utility.Utility
@@ -195,14 +196,16 @@ namespace Eltizam.Utility.Utility
 			return false;
 		}
 
-		public static RolePermissionModel GetCntrActionAccess(int ModuleId, int loginRoleId, int SubModuleId = 0)
+		public static RolePermissionModel? GetCntrActionAccess(int ModuleId, int loginRoleId, int SubModuleId = 0)
 		{
 			RolePermissionModel objList = new RolePermissionModel();
 			IEnumerable<RolePermissionModel> obj = UtilityHelper.GetModuleRole<dynamic>(loginRoleId);
 			if (obj != null)
 			{
-				objList = obj.Where(o => o.ControlName != null && o.ModuleId == ModuleId && (o.SubModuleId == SubModuleId || SubModuleId == 0)).FirstOrDefault();
-			}
+				objList = obj.Where(o => o.ControlName != null && o.ModuleId == ModuleId).FirstOrDefault();
+                // && (o.SubModuleId == SubModuleId || SubModuleId == 0) 
+            }
+
 			return objList;
 		}
 

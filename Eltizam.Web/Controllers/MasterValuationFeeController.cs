@@ -1,5 +1,9 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -7,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterValuationFeeController : Controller
+    public class MasterValuationFeeController : BaseController
     {
 
         #region Properties
@@ -29,7 +33,11 @@ namespace EltizamValuation.Web.Controllers
         {
             ModelState.Clear();
             try
-            { 
+            {
+                //Check permissions
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 return View();
             }
             catch (Exception e)
@@ -47,6 +55,13 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for Get
+                var action = masterValuationFeesModel.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
@@ -64,8 +79,7 @@ namespace EltizamValuation.Web.Controllers
             }
             catch (Exception e)
             {
-                _helper.LogExceptions(e);
-                ViewBag.errormessage = Convert.ToString(e.StackTrace);
+                _helper.LogExceptions(e); 
                 ModelState.Clear();
                 return View(nameof(ValuationFees));
             }
@@ -86,6 +100,12 @@ namespace EltizamValuation.Web.Controllers
                 ViewData["IsView"] = true;
             }
             MasterValuationFeesModel masterValuationFeesModel;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
 				masterValuationFeesModel = new MasterValuationFeesModel();
@@ -101,6 +121,17 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
+
+                    //Get FooterInfo
+                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_ValuationFee));
+                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    if (footerRes.IsSuccessStatusCode)
+                    {
+                        string json = footerRes.Content.ReadAsStringAsync().Result;
+                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    }
+
+
                     if (data._object is null)
                         return NotFound();
 
@@ -115,7 +146,13 @@ namespace EltizamValuation.Web.Controllers
 		public IActionResult ValuationFeesDetail(int? id)
 		{
 			MasterValuationFeesModel masterValuationFeesModel;
-			if (id == null || id <= 0)
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+            if (id == null || id <= 0)
 			{
 				masterValuationFeesModel = new MasterValuationFeesModel();
 				return RedirectToAction("MasterValuationFee");
