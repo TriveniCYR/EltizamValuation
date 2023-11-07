@@ -92,6 +92,8 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+
+
         [HttpPost]
         public IActionResult ClientManage(int id, MasterClientModel masterUser)
         {
@@ -101,8 +103,15 @@ namespace EltizamValuation.Web.Controllers
                 var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
 
                 int roleId = _helper.GetLoggedInRoleId();
-                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
+                //Fill audit logs field
+                if (masterUser.Id == 0)
+                    masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                masterUser.ModifiedBy = _helper.GetLoggedInUserId(); 
+
 
                 if (masterUser.Document.Files != null)
                 {
@@ -114,11 +123,7 @@ namespace EltizamValuation.Web.Controllers
                 {
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     //masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
-                }
-                //Fill audit logs field
-                if (masterUser.Id == 0)
-                masterUser.CreatedBy = _helper.GetLoggedInUserId();
-                //masterUser.ModifiedBy = _helper.GetLoggedInUserId();
+                } 
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);

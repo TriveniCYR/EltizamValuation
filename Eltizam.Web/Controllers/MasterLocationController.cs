@@ -141,6 +141,7 @@ namespace EltizamValuation.Web.Controllers
                 int roleId = _helper.GetLoggedInRoleId();
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 //Fill audit logs field
                 if (masterlocation.Id == 0)
                     masterlocation.CreatedBy = _helper.GetLoggedInUserId();

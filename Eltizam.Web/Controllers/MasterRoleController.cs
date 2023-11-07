@@ -178,6 +178,11 @@ namespace Eltizam.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
+                //Fill audit logs field
+                if (masterRole.Id == 0)
+                    masterRole.CreatedBy = _helper.GetLoggedInUserId();
+                masterRole.ModifiedBy = _helper.GetLoggedInUserId();
+
                 masterRole.LoggedUserId = _helper.GetLoggedInUserId();
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);

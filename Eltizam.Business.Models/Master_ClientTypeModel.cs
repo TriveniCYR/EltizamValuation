@@ -13,6 +13,6 @@ namespace Eltizam.Business.Models
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
 
-
+        public int? ModifiedBy { get; set; }
     }
 }

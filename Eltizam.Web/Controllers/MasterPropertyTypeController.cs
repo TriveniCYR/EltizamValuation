@@ -54,6 +54,11 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
+                //Fill audit logs field
+                if (masterPropertyType.Id == 0)
+                    masterPropertyType.CreatedBy = _helper.GetLoggedInUserId();
+                masterPropertyType.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

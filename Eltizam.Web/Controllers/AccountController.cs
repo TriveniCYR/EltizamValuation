@@ -1,4 +1,5 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Models;
@@ -298,8 +299,9 @@ namespace Eltizam.Web.Controllers
         {
             int rolId = _helper.GetLoggedInRoleId();
             passwordModel.UserId = rolId;
+
             try
-            {
+            { 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
