@@ -125,7 +125,7 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, int? UserName,string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
             string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
             string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
@@ -137,6 +137,7 @@ namespace Eltizam.Business.Core.Implementation
                 new System.Data.SqlClient.SqlParameter(AppConstants.P_SortColumn,         ColumnName),
                 new System.Data.SqlClient.SqlParameter(AppConstants.P_SortDirection,      SortDir),
                 new System.Data.SqlClient.SqlParameter(AppConstants.P_SearchText,         model.search?.value),
+                new System.Data.SqlClient.SqlParameter("@UserId",                      UserName),
                 new System.Data.SqlClient.SqlParameter("@TableName",                      TableName),
                 new System.Data.SqlClient.SqlParameter("@DateFrom",                       DateFrom),
                 new System.Data.SqlClient.SqlParameter("@DateTo",                         DateTo)

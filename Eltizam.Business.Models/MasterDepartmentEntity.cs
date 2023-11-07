@@ -12,6 +12,7 @@ namespace Eltizam.Business.Models
         public string Department { get; set; }
         public int IsActive { get; set; }
         public DateTime CreatedOn { get; set; }
-        public int CreatedBy { get; set; }
+        public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
     }
 }

@@ -54,6 +54,11 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
+                //Fill audit logs field
+                if (masterPropertyType.Id == 0)
+                    masterPropertyType.CreatedBy = _helper.GetLoggedInUserId();
+                masterPropertyType.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
@@ -118,14 +123,16 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<Master_PropertyTypeModel>>(jsonResponse);
 
-                    //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_PropertyType));
-                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    if (footerRes.IsSuccessStatusCode)
-                    {
-                        string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    }
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_PropertyType, _cofiguration, id);
+
+                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_PropertyType));
+                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    //if (footerRes.IsSuccessStatusCode)
+                    //{
+                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
+                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    //}
 
                     if (data._object is null)
                         return NotFound();
@@ -144,8 +151,7 @@ namespace EltizamValuation.Web.Controllers
                 ViewData["IsEdit"] = true;
             }
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
-
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
             int roleId = _helper.GetLoggedInRoleId();
             if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);

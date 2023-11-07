@@ -5,6 +5,7 @@
     var data = (GlobalAuditFields)ViewBag.FooterInfo;
     var href = "MasterUser/" + ((data == null || data.CreatedBy == null)   ? "Users" : "ManageUser?id=" + data.CreatedBy.ToString());
     var href2 = "MasterUser/" + ((data == null || data.ModifiedBy == null) ? "Users" : "ManageUser?id=" + data.ModifiedBy.ToString());
+    var href3 = "/AuditLog/AuditLogDetails?TableName=" + data?.TableName;
 }
 
 @*//Show footer for page if data exists*@
@@ -15,20 +16,23 @@
             <div class=" position-relative flex justify-between align-item-center">
                 <div>
                     <input type="hidden" id="CreatedBy" value="@data.CreatedBy" />
-                    <span>Created By</span> :
-                    <span class="greyBtn lineBtn formAbtn" href="@href">@data.CreatedByName</span>
+
+                    <span>Created By --> </span>
+                    <span class="lineBtn formAbtn" href="@href">@data.CreatedByName</span>
                     <br>
-                    <span style="padding-left:2.5em;"> Date</span> : <span>@data.CreatedDate</span>
+
+                    <span>Created Date --></span>  <span>@data.CreatedDate</span>
                 </div>
                 <div class="flex justify-between w-30 align-item-center">
                    <div> 
                         <input type="hidden" id="ModifiedBy" value="@data.ModifiedBy" />
-                        <span>Last Updated By</span> :
-                        <a class="greyBtn lineBtn formAbtn" href="@href2">@data.ModifiedByName</a> <br>
-                        <span style="padding-left:4.9em;">Date</span> : <span>@data.ModifiedDate</span>
+
+                        <span>Last Updated By --></span>
+                        <a class="lineBtn formAbtn" href="@href2">@data.ModifiedByName</a> <br>
+                        <span>Last Updated Date --></span><span>@data.ModifiedDate</span>
                     </div>
                     <div class="text-right">
-                        <a href='/AuditLog/AuditLog'>
+                        <a href="@href3">
                             <img src="~/assets/audit-icon-blue.svg" alt="audit-icon" class="iconColorBlue cursor-pointer">
                         </a>
                     </div>

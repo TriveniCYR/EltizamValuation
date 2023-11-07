@@ -29,6 +29,8 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
+        [HttpGet]
+        [Route("MasterClient/Clients")]
         public IActionResult Clients()
         {
             try
@@ -74,20 +76,24 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterClientModel>>(jsonResponse);
 
-                    //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Client));
-                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    if (footerRes.IsSuccessStatusCode)
-                    {
-                        string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    }
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_Client, _cofiguration, id);
+
+                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Client));
+                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    //if (footerRes.IsSuccessStatusCode)
+                    //{
+                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
+                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    //}
 
                     return View(data._object);
                 }
                 return NotFound();
             }
         }
+
+
         [HttpPost]
         public IActionResult ClientManage(int id, MasterClientModel masterUser)
         {
@@ -97,8 +103,15 @@ namespace EltizamValuation.Web.Controllers
                 var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
 
                 int roleId = _helper.GetLoggedInRoleId();
-                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
+                //Fill audit logs field
+                if (masterUser.Id == 0)
+                    masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                masterUser.ModifiedBy = _helper.GetLoggedInUserId(); 
+
 
                 if (masterUser.Document.Files != null)
                 {
@@ -110,11 +123,7 @@ namespace EltizamValuation.Web.Controllers
                 {
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     //masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
-                }
-                //Fill audit logs field
-                if (masterUser.Id == 0)
-                masterUser.CreatedBy = _helper.GetLoggedInUserId();
-                masterUser.ModifiedBy = _helper.GetLoggedInUserId();
+                } 
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
@@ -147,7 +156,7 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult ClientDetail(int? id)
         {
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
             int roleId = _helper.GetLoggedInRoleId();
             if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))

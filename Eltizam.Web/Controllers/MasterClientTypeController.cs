@@ -1,7 +1,9 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
+using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -9,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace EltizamValuation.Web.Controllers
 {
-    public class MasterClientTypeController : Controller
+    public class MasterClientTypeController : BaseController
     {
         #region Properties
 
@@ -45,6 +47,12 @@ namespace EltizamValuation.Web.Controllers
 
         public IActionResult ClientTypeManage(int? id)
         {
+            //Check permissions for Get
+            int roleId = _helper.GetLoggedInRoleId();
+            if (!CheckRoleAccess(ModulePermissionEnum.ClientTypeMaster, PermissionEnum.View, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
             Master_ClientTypeModel masterUser;
             if (id == null || id <= 0)
             {
@@ -52,7 +60,7 @@ namespace EltizamValuation.Web.Controllers
                 return View(masterUser);
             }
             else
-            {
+            { 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetClientTypeById + "/" + id, HttpMethod.Get, token).Result;
@@ -62,15 +70,9 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<Master_ClientTypeModel>>(jsonResponse);
 
-                    //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_ClientType));
-                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    if (footerRes.IsSuccessStatusCode)
-                    {
-                        string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    }
-
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_ClientType, _cofiguration, id);
+                     
                     if (data._object is null)
                         return NotFound();
 
@@ -86,6 +88,19 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                //Check permissions for post
+                var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                int roleId = _helper.GetLoggedInRoleId();
+                if (!CheckRoleAccess(ModulePermissionEnum.ClientTypeMaster, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
+                //Fill audit logs field
+                if (masterUser.Id == 0)
+                    masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                masterUser.ModifiedBy = _helper.GetLoggedInUserId();
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

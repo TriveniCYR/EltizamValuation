@@ -77,14 +77,16 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
 
-                    //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Location));
-                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    if (footerRes.IsSuccessStatusCode)
-                    {
-                        string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    }
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_Location, _cofiguration, id);
+
+                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Location));
+                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    //if (footerRes.IsSuccessStatusCode)
+                    //{
+                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
+                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    //}
 
                     if (data._object is null)
                         return NotFound();
@@ -134,11 +136,12 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 //Check permissions for Get
-                var action = masterlocation.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+                var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
                 int roleId = _helper.GetLoggedInRoleId();
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
                 //Fill audit logs field
                 if (masterlocation.Id == 0)
                     masterlocation.CreatedBy = _helper.GetLoggedInUserId();

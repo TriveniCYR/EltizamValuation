@@ -4,12 +4,25 @@ $(document).ready(function () {
 });
 
 function InitializeAuditLogList() {
-    var tableName = ""; 
-    var datefrom = "";
-    var dateto = "";
+    $("#AuditLogTable").dataTable().fnDestroy();
+    debugger
+    
+    var userName = $("#UserName").val();
+    if (userName === undefined || isNaN(parseInt(userName))) {
+        userName = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        userName = parseInt(userName);
+    }
 
-    var _appendURL = ""; // "?TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
-    var setDefaultOrder = [0, 'asc'];
+    var tableName = $("#ParentTableName").val() === undefined ? "" : $("#ParentTableName").val();
+   
+
+    var datefrom = $("#FromDate").val() === undefined ? "" : $("#FromDate").val();
+
+    var dateto = $("#ToDate").val() === undefined ? "" : $("#ToDate").val();
+   
+    var _appendURL = "?UserName=" + userName +"&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
+        var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
         "url": BaseURL + AllAudit + _appendURL,
         "type": "POST",

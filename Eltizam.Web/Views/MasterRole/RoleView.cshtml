@@ -37,12 +37,22 @@
                     <div class="required">
                         @if (Model.IsUserAssigned && Model.IsActive)
                         {
+                           
+@* 
+                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required disabled />
+                            <label class="label-switch" for="addLocation"></label>
+                            <span class="info-text"></span>
+ *@
                             @Html.CheckBoxFor(model => model.IsActive, new { @disabled="true",  @class = "checkbox-checked", @checked = "checked" })
                             @Html.Label(@SharedLocalizer["IsActive"])
                             <lable class="text-danger">@MasterLocalizer["CanNotInactiveRole"]</lable>
+
                         }
                         else
                         {
+                         @*    <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required disabled />
+                            <label class="label-switch" for="addLocation"></label>
+                            <span class="info-text"></span> *@
                             @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
                             @Html.Label(@SharedLocalizer["IsActive"])
                         }

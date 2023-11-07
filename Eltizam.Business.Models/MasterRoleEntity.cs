@@ -24,6 +24,8 @@ namespace Eltizam.Business.Models
         public bool IsDeleted { get; set; }
 
         public bool IsUserAssigned { get; set; }
+        public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public virtual List<MasterModuleEntity>? MasterModules { get; set; } 

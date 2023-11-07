@@ -183,6 +183,21 @@ namespace Eltizam.API.Controllers.Masters
             }
         }
 
+
+
+        [HttpGet("GetAllUserList")]
+        public async Task<IActionResult> GetAllUserList()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _MasterUserService.GetAllUserList(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         #endregion API Methods
     }
 }

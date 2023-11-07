@@ -62,9 +62,13 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
+                //Do fill audit fields
+                if (masterValuationFeesModel.Id == 0)
+                    masterValuationFeesModel.CreatedBy = _helper.GetLoggedInUserId();
+                masterValuationFeesModel.ModifiedBy = _helper.GetLoggedInUserId();
 
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration); 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuation, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterValuationFeesModel))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
@@ -122,14 +126,16 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
 
-                    //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_ValuationFee));
-                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    if (footerRes.IsSuccessStatusCode)
-                    {
-                        string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    }
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_ValuationFee, _cofiguration, id);
+
+                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_ValuationFee));
+                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    //if (footerRes.IsSuccessStatusCode)
+                    //{
+                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
+                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    //}
 
 
                     if (data._object is null)
@@ -146,7 +152,7 @@ namespace EltizamValuation.Web.Controllers
 		public IActionResult ValuationFeesDetail(int? id)
 		{
 			MasterValuationFeesModel masterValuationFeesModel;
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
             int roleId = _helper.GetLoggedInRoleId();
 
             if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
