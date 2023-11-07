@@ -204,5 +204,14 @@ namespace Eltizam.Business.Core.Implementation
 
             return DBOperation.Success;
         }
+
+        public async Task<ValuationRequestModel> GetById(int id)
+        {
+            var _ValuationEntity = new ValuationRequestModel();
+            _ValuationEntity = _mapperFactory.Get<ValuationRequest, ValuationRequestModel>(await _repository.GetAsync(id));
+
+            return _ValuationEntity;
+        }
     }
+
 }

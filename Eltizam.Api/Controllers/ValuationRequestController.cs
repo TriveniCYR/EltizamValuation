@@ -101,5 +101,22 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+        [HttpGet, Route("GetById/{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            try
+            {
+                var oValuationEntity = await _valutionServices.GetById(id);
+                if (oValuationEntity != null && oValuationEntity.Id > 0)
+                    return _ObjectResponse.Create(oValuationEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
     }
 }

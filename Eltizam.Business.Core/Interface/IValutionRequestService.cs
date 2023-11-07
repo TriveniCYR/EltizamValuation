@@ -15,5 +15,6 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> AssignApproverStatus(ApprovorStatusRequestModel model);
         Task<List<ValuationMethod>> GetAllValuationMethod();
         Task<DBOperation> Upsert(ValuationRequestModel entityUser);
+        Task<ValuationRequestModel> GetById(int id);
     }
 }

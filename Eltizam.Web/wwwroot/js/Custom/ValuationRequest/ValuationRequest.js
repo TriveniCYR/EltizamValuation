@@ -139,7 +139,7 @@ function InitializeValutionRequestDataList() {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                 html += '<li><a title="View" href="/MasterPropertyType/PropertyTypeDetail?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
-                html += '<li><a title="Edit" href="/MasterPropertyType/PropertyTypeManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
+                html += '<li><a title="Edit" href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
                 html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletePropertyTypeModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePropertyType(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                 html += '</ul></div>';
 

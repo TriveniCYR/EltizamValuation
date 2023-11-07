@@ -310,7 +310,7 @@ namespace Eltizam.Business.Core.Implementation
                     objContact = _mapperFactory.Get<MasterContactModel, MasterContact>(master_ClientModel.Contact);
                     objContact.CreatedDate = AppConstants.DateTime;
                     objContact.TableKeyId = objClient.Id;
-                    objContact.TableName = "Master_Vendor";
+                    objContact.TableName = Enum.GetName(TableNameEnum.Master_Client);
                     objContact.ModifiedBy = master_ClientModel.CreatedBy ?? By;
                     _repositoryContact.AddAsync(objContact);
                     // Insert the new entity into the repository asynchronously.
