@@ -14,5 +14,6 @@ namespace Eltizam.Business.Models
         public int IsActive { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
     }
 }

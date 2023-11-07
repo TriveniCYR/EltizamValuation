@@ -105,6 +105,8 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
                     masterUser.Contact = (masterUser.Contact == null) ? null : masterUser.Contact;
                 }
+
+                //Do fill audit fields
                 if (masterUser.Id == 0)
                     masterUser.CreatedBy = _helper.GetLoggedInUserId();
                 masterUser.ModifiedBy = _helper.GetLoggedInUserId();

@@ -62,9 +62,13 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
+                //Do fill audit fields
+                if (masterValuationFeesModel.Id == 0)
+                    masterValuationFeesModel.CreatedBy = _helper.GetLoggedInUserId();
+                masterValuationFeesModel.ModifiedBy = _helper.GetLoggedInUserId();
 
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration); 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuation, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterValuationFeesModel))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
