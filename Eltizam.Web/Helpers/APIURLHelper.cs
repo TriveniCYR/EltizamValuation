@@ -42,6 +42,7 @@ namespace Eltizam.Web.Helpers
         public static string GetUserById = "api/MasterUser/GetById";
         public static string DeleteUserById = "api/MasterUser/Delete";
         public static string GetGlobalAuditFields = "api/MasterUser/GetGlobalAuditFields";
+        public static string GetUserNameList = "api/MasterUser/GetAllUserList";
 
         #endregion User
 

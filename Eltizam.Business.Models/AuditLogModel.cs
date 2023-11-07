@@ -10,9 +10,9 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public int? TableKeyId { get; set; }
-        public string TableName { get; set; }
+        public string? TableName { get; set; }
         public int? ParentTableKeyId { get; set; }
-        public string? ParentTableName { get; set; }
+        public string ParentTableName { get; set; }
         public string ActionType { get; set; }
         public string? Log { get; set; }
         public int? CreatedBy { get; set; }
