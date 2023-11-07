@@ -77,13 +77,17 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
 
                     //Get Footer info
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_User));
-                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    if (footerRes.IsSuccessStatusCode)
-                    {
-                        string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    }
+                    FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
+                   
+                    /*
+                        var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_User));
+                        var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                        if (footerRes.IsSuccessStatusCode)
+                        {
+                            string json = footerRes.Content.ReadAsStringAsync().Result;
+                            ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                     }
+                    */
 
                     return View(data._object);
                 }
