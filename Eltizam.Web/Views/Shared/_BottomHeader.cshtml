@@ -5,6 +5,7 @@
     var data = (GlobalAuditFields)ViewBag.FooterInfo;
     var href = "MasterUser/" + ((data == null || data.CreatedBy == null)   ? "Users" : "ManageUser?id=" + data.CreatedBy.ToString());
     var href2 = "MasterUser/" + ((data == null || data.ModifiedBy == null) ? "Users" : "ManageUser?id=" + data.ModifiedBy.ToString());
+    var href3 = "AuditLog/AuditLogDetails?TableName=" + data.TableName;
 }
 
 @*//Show footer for page if data exists*@
@@ -28,7 +29,7 @@
                         <span style="padding-left:4.9em;">Date</span> : <span>@data.ModifiedDate</span>
                     </div>
                     <div class="text-right">
-                        <a href='/AuditLog/AuditLog'>
+                        <a href="@href3>
                             <img src="~/assets/audit-icon-blue.svg" alt="audit-icon" class="iconColorBlue cursor-pointer">
                         </a>
                     </div>

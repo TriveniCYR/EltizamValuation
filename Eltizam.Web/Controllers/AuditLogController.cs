@@ -43,10 +43,10 @@ namespace EltizamValuation.Web.Controllers
         }
 
 
-        [HttpGet] 
-        public IActionResult GetLogDetails(string TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
-        { 
-            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token); 
+        [HttpGet]
+        public IActionResult AuditLogDetails(string TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        {
+            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
 
             var url = string.Format("{0}?TableName={1}&Id={2}&TableKey={3}&DateFrom={4}&DateTo={5}&",
                                     APIURLHelper.GetDetailsAudit, TableName, Id, TableKey, DateFrom, DateTo);
@@ -67,11 +67,8 @@ namespace EltizamValuation.Web.Controllers
 
             return View();
         }
-        public IActionResult AuditLog()
-        {
-            return View();
-        }
-        }
+
+    }
 }
 
 
