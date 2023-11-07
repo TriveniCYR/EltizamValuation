@@ -520,6 +520,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
 
             var data = EltizamDBHelper.ExecuteSingleMappedReader<GlobalAuditFields>(ProcedureMetastore.usp_GetPageFooterDetails,
                        DatabaseConnection.ConnString, CommandType.StoredProcedure, p1);
+            data.TableName = TableName;
 
             return data;
         }

@@ -37,10 +37,10 @@ namespace EltizamValuation.Web.Controllers
                 return View();
             }
             catch (Exception e)
-            { 
-                _helper.LogExceptions(e); 
+            {
+                _helper.LogExceptions(e);
                 return View("Login");
-            } 
+            }
         }
 
         public IActionResult VendorManage(int? id)
@@ -69,14 +69,16 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterVendorModel>>(jsonResponse);
 
-                    //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Vendor));
-                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    if (footerRes.IsSuccessStatusCode)
-                    {
-                        string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    }
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_Vendor, _cofiguration, id);
+
+                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Vendor));
+                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    //if (footerRes.IsSuccessStatusCode)
+                    //{
+                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
+                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    //}
 
 
                     if (data._object is null)
@@ -104,7 +106,7 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.Contact = (masterUser.Contact == null) ? null : masterUser.Contact;
                 }
                 if (masterUser.Id == 0)
-                masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                    masterUser.CreatedBy = _helper.GetLoggedInUserId();
                 masterUser.ModifiedBy = _helper.GetLoggedInUserId();
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
@@ -139,7 +141,7 @@ namespace EltizamValuation.Web.Controllers
         {
             MasterVendorModel masterUser;
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Edit :PermissionEnum.View;
+            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
             int roleId = _helper.GetLoggedInRoleId();
             if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))

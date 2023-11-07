@@ -76,14 +76,16 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterClientModel>>(jsonResponse);
 
-                    //Get FooterInfo
-                    var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Client));
-                    var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    if (footerRes.IsSuccessStatusCode)
-                    {
-                        string json = footerRes.Content.ReadAsStringAsync().Result;
-                        ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    }
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_Client, _cofiguration, id);
+
+                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Client));
+                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+                    //if (footerRes.IsSuccessStatusCode)
+                    //{
+                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
+                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                    //}
 
                     return View(data._object);
                 }
@@ -116,7 +118,7 @@ namespace EltizamValuation.Web.Controllers
                 //Fill audit logs field
                 if (masterUser.Id == 0)
                 masterUser.CreatedBy = _helper.GetLoggedInUserId();
-                masterUser.ModifiedBy = _helper.GetLoggedInUserId();
+                //masterUser.ModifiedBy = _helper.GetLoggedInUserId();
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
