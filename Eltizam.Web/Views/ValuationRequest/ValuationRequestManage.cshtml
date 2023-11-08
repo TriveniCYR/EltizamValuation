@@ -13,7 +13,12 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
-    ViewData["Title"] = _md + _header; 
+    // var objPermssion = (RolePermissionModel)ViewBag.Access;
+    // var isAdd = objPermssion.Add ? 1 : 0;
+    // var isEdit = objPermssion.Edit ? 1 : 0;
+    ViewData["Title"] = _md + _header;
+    var htmlAttributes = true;
+
 }
 
 <div id="PlaceHolderHere"></div>
@@ -38,713 +43,758 @@
                 <h3 class="blueHeading">Valuation Details</h3>
                 <div class="inputSearchs">
                     <form asp-action="ValuationRequestManage">
-                        
+                        @*   <input type="hidden" id="isAddPerm" value="@isAdd" />
+                        <input type="hidden" id="isEditPerm" value="@isEdit" /> *@
+                        <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />
+                        @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                         <input type="hidden" id="hdnClientId" value="@(Model == null ? 0 : Model.ClientId)" />
+                        <input type="hidden" id="hdnApproverId" value="@(Model == null ? 0 : Model.ApproverId)" />
+                        <input type="hidden" id="hdnValuationModeId" value="@(Model == null ? 0 : Model.ValuationModeId)" />
+                        <input type="hidden" id="hdnValuerId" value="@(Model == null ? 0 : Model.ValuerId)" />
+                        <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.ClientTypeId)" />
+                        <input type="hidden" id="hdnClientName" value="@(Model == null ? 0 : Model.ClientName)" />
+                        @* <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
+                        <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
+                        <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.OwnershipTypeId)" /> *@
+                        @* <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.ClientTypeId)" /> *@
                         <div class="flex  mb-28">
-                            
+
                             <label for="" class="w-50">
                                 Valuation Reference no
-                                <input type="text" placeholder="12837187236" disabled>
+                                @Html.TextBoxFor(model => model.ReferenceNo, new {@disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Valuation Reference no"] })
+                                @*  <input type="text" placeholder="12837187236" disabled> *@
                             </label>
                             <label for="" class="w-50">
                                 Other Reference no
-                                <input type="text" placeholder="12837187236" disabled>
+                                @Html.TextBoxFor(model => model.OtherReferenceNo, new {@class = "form-control",  @placeholder = @SharedLocalizer["Other Reference no"] })
+                                @*  <input type="text" placeholder="12837187236" disabled> *@
                             </label>
-                            </div>
+                        </div>
                         <div class="flex  mb-28">
                             <label for="" class="w-50">
                                 Approver Name
-                                <input type="text" placeholder="Clyde" disabled>
+                                @Html.DropDownList("ApproverId", new List<SelectListItem> { }, new { @class = "form-control"})
+                                @*  <input type="text" placeholder="Clyde" disabled> *@
                             </label>
+                            <label for="" class="w-50">
+                                Valuer Name
+                                @Html.DropDownList("ValuerId", new List<SelectListItem> { }, new { @class = "form-control"})
+                                @* <input type="text" placeholder="Clyde" disabled> *@
+                            </label>
+
+                        </div>
+
+                        <div class="flex  mb-28">
                             <label for="" class="w-50">
                                 Valuation Status
-                                <input type="text" placeholder="Pending" disabled>
+                                @Html.DropDownListFor(model => model.StatusId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @* <input type="text" placeholder="Pending" disabled> *@
                             </label>
-                        </div>
-                        <div class="flex  mb-28">
                             <label for="" class="w-50">
                                 Valuation Date
-                                <input type="date">
+                                <input type="date" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
+                                @*  <input type="date"> *@
                             </label>
-                           @*  <label for="">
-                                Valuer Name
-                                <input type="text" placeholder="Clyde" disabled>
-                            </label> *@
-                            
+
+
+
+                        </div>
+
+                        <div class="flex  mb-28">
                             <label for="" class="bodyContent p-0 w-50">
                                 Method of Valuation
-                                    <div class="flex m-0 valuationType">
-                                        @Html.DropDownList("ValuationType", new List<SelectListItem>{
-                                        new SelectListItem{ Text="Internal", Value = "1" },
-                                        new SelectListItem{ Text="External", Value = "2" }}, new { @class = "form-control" })
+                                <div class="flex m-0 valuationType">
+                                    @Html.DropDownList("ValuationModeId", new List<SelectListItem>{ }, new { @class = "form-control" })
 
-                                    </div>
-                                
+                                </div>
+
                                 @* <div class="flex m-0 method">
-                                    <input type="radio" value="Internal" name="method" checked disabled />
-                                    <input type="radio" value="External" name="method" disabled />
+                                <input type="radio" value="Internal" name="method" checked disabled />
+                                <input type="radio" value="External" name="method" disabled />
                                 </div> *@
                             </label>
-                        </div>
-                        <div class="flex  mb-28">
                             <label for="" class="w-50">
                                 Valuation Time Frame
-                                <input type="text" placeholder="enter days">
+                                @Html.TextBoxFor(model => model.ValuationTimeFrame, new {@class = "form-control",  @placeholder = @SharedLocalizer["Valuation Time Frame"] })
+                                @* <input type="text" placeholder="enter days"> *@
                             </label>
 
                         </div>
-                    </form>
-                </div>
-                <h3 class="blueHeading">Client Details</h3>
-                <div class="inputSearchs">
-                    <form>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Client Type
-                                @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientByClientType(this.options[this.selectedIndex].value)"})
-                                @* <input type="text" placeholder="Bank" disabled> *@
-                            </label>
-                            <label for="" class="w-50">
-                                Clients
-                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control"})
-                                @*  <input type="text" placeholder="Client" disabled> *@
-                            </label>
-                           
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Company Name
-                                <input type="text" placeholder="ICICI Bank" disabled>
-                            </label>
-                            <label for="" class="w-50">
-                                Client Name
-                                <input type="text" placeholder="Jones" disabled>
-                            </label>
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
+
+
+                        <div class="roundBorderBox">
+                            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                <h3 class="blueHeading p-0">Client Details</h3>
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                            </div>
+                            <div class="inputSearchs">
+
+                                <input type="hidden" id="hdnCountry" value="@(Model == null ? 0 : Model.CountryId)" />
+                                <input type="hidden" id="hdnState" value="@(Model == null ? 0 : Model.StateId)" />
+                                <input type="hidden" id="hdnCity" value="@(Model == null ? 0 : Model.CityId)" />
+                                <div class="flex  mb-28">
+                                    <label for="" class="w-50">
+                                        Client Type
+                                        @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientByClientType(this.options[this.selectedIndex].value)"})
+                                        @* <input type="text" placeholder="Bank" disabled> *@
+                                    </label>
+                                    <label for="" class="w-50">
+                                        Clients
+                                        @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientDetailsByClientId(this.options[this.selectedIndex].value)"})
+                                        @*  <input type="text" placeholder="Client" disabled> *@
+                                    </label>
+
+                                </div>
+                                <div class="flex  mb-28">
+                                    <label for="" class="w-50">
+                                        Company Name
+                                        <input type="text" placeholder="ICICI Bank" disabled>
+                                    </label>
+                                    <label for="" class="w-50">
+                                        Client Name
+                                        @Html.TextBoxFor(model => model.ClientName, new {@disabled=htmlAttributes,@class = "form-control",  @placeholder = @SharedLocalizer["Client Name"] })
+                                        @*  <input type="text" placeholder="Jones" disabled> *@
+                                    </label>
+                                </div>
+                                @*  <div class="flex  mb-28">
+                                <label for="" class="w-50">
                                 Address Line 1
                                 <input type="text" placeholder="ABC" disabled>
-                            </label>
-                            <label for="" class="w-50">
+                                </label>
+                                <label for="" class="w-50">
                                 Address Line 2
                                 <input type="text" placeholder="DEF" disabled>
-                            </label>
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Pincode
-                                <input type="text" placeholder="234343" disabled>
-                            </label>
-                            <label for="" class="w-50">
-                                City
-                                <select name="city" disabled>
-                                    <option value="city1">ABC</option>
-                                    <option value="city2">DEF</option>
-                                    <option value="city3">GHI</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                State
-                                <input type="text" placeholder="ABC" disabled>
-                            </label>
-                            <label for="" class="w-50">
-                                Country
-                                <input type="text" placeholder="DEF" disabled>
-                            </label>
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                TRN Number
-                                <input type="text" placeholder="232423" disabled>
-                            </label>
-                            <label for="" class="w-50">
-                                TRN Expiry Date
-                                <input type="text" placeholder="11/14/2022" disabled>
-                            </label>
-                        </div>
+                                </label>
+                                </div> *@
+                                <div class="flex  mb-28">
+                                    <label for="" class="w-50">
+                                        Pincode
+                                        @Html.TextBoxFor(model => model.PinCode, new {@disabled=htmlAttributes,@class = "form-control",  @placeholder = @SharedLocalizer["Client Name"] })
+                                        @*  <input type="text" placeholder="234343" disabled> *@
+                                    </label>
+                                    <label for="" class="w-50">
+                                        Country
+                                        @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new {@disabled=htmlAttributes, @class = "form-control",@onchange = "BindState(this.options[this.selectedIndex].value)"})
+                                        @* <input type="text" placeholder="DEF" disabled> *@
+                                    </label>
 
-                        <div class="flex ">
-                            <label for="" class="w-50">
-                                License Number
-                                <input type="text" placeholder="234232" disabled>
-                            </label>
-                        </div>
-                    </form>
-                </div>
-                <h3 class="blueHeading">Contant Details</h3>
-                <div class="inputSearchs">
-                    <form>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Contact Person Name
-                                <input type="text" placeholder="ABC" disabled>
-                            </label>
-                            <label for="" class="w-50">
-                                Department
-                                <input type="text" placeholder="A" disabled>
-                            </label>
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Designation
-                                <input type="text" placeholder="B" disabled>
-                            </label>
-                        
-                            <label for="" class="w-50">
-                                Email ID
-                                <input type="email" placeholder="clyde@abc.com" disabled>
-                            </label>
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Phone Number
-                                <input type="text" placeholder="2876567" disabled>
-                            </label>
-                        </div>
-                    </form>
-                </div>
-                <h3 class="blueHeading">Property Details</h3>
-                <div class="inputSearchs">
-                    <form>
-                        <input type="hidden" id="hdnPropertyType" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
-                        <input type="hidden" id="hdnPropertySub" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
-                        <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
-                       @*  <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
-                        <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
-                        <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" /> *@
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Property Type Name
-                                @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value);"})
-                              @*   <input type="text" placeholder="ABC" disabled> *@
-                            </label>
-                            <label for="" class="w-50">
-                                Property SubType Name
-                                @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
-                            </label>
-                        </div>
-                        <div class="flex  mb-28">
-                            <label for="" class="w-50">
-                                Type of Ownership
-                                @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindPropertyDetail()"})
-                            </label>
+                                </div>
+                                <div class="flex  mb-28">
+                                    <label for="" class="w-50">
+                                        State
+                                        @Html.TextBoxFor(model => model.StateId, new {@disabled=htmlAttributes,@class = "form-control",  @placeholder = @SharedLocalizer["State Name"] })
+                                        @*   @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindCity(this.options[this.selectedIndex].value)"}) *@
+                                        @*  <input type="text" placeholder="ABC" disabled> *@
+                                    </label>
+                                    <label for="" class="w-50">
+                                        City
+                                        @Html.TextBoxFor(model => model.CityId, new {@disabled=htmlAttributes,@class = "form-control",  @placeholder = @SharedLocalizer["City Name"] })
+                                        @* @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control"}) *@
+                                        @*  <select name="city" disabled>
+                                        <option value="city1">ABC</option>
+                                        <option value="city2">DEF</option>
+                                        <option value="city3">GHI</option>
+                                        </select> *@
+                                    </label>
+                                </div>
+                                <div class="flex  mb-28">
+                                    <label for="" class="w-50">
+                                        TRN Number
+                                        @Html.TextBoxFor(model => model.Trnnumber, new {@disabled=htmlAttributes,@class = "form-control",  @placeholder = @SharedLocalizer["TRN Number"] })
+                                        @*   <input type="text" placeholder="232423" disabled> *@
+                                    </label>
+                                    <label for="" class="w-50">
+                                        TRN Expiry Date
+                                        <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" disabled="true">
+                                        @*  <input type="text" placeholder="11/14/2022" disabled> *@
+                                    </label>
+                                </div>
 
-                            <label for="" class="w-50">
-                                Property Name
-                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control"})
-                              @*   @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Property Name"] }) *@
-                               @*  @Html.ValidationMessageFor(model => model.PropertyName, "", new { @class = "text-danger" }) *@
-                            </label>
-                        </div>
-                        <div class="flex mb-28">
-                            <label for="" class="w-50">
-                                Unit Type
-                                @Html.DropDownListFor(model => model.UnitType, new List<SelectListItem> { }, new { @class = "form-control"})
-                             @*    @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
-                            </label>
-                            <label for="" class="w-50">
-                                Additional Units
-                                @Html.TextBoxFor(model => model.AdditionalUnits, new { @class = "form-control",  @placeholder = @SharedLocalizer["Additional Unit"] })
+                                <div class="flex ">
+                                    <label for="" class="w-50">
+                                        License Number
+                                        @Html.TextBoxFor(model => model.LicenseNumber, new {@disabled=htmlAttributes,@class = "form-control",  @placeholder = @SharedLocalizer["License Number"] })
+                                        @*  <input type="text" placeholder="234232" disabled> *@
+                                    </label>
+                                </div>
 
-                            </label>
-                        </div>
-                        <div class="flex mb-28">
-                            <label for=" class=" w-50"">
-                                <p class="m-0">
-                                    Furnished
-                                    <span class="text-danger">*</span>
-                                </p>
-                                @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @class = "form-control"})
-                                @* @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
-                            </label>
-                            <label for="" class="w-50">
-                                Purpose of Valuation
-                                @Html.TextBoxFor(model => model.ValuationPurpose, new { @class = "form-control",  @placeholder = @SharedLocalizer["Valuation Purpose"] })
+                                <h3>Addrress Details</h3>
+                                <div class="flex m-0">
+                                    <table class="multipleValueTable" id="NewAddressTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Address 1</th>
+                                                <th>Address 2</th>
+                                                <th>City</th>
+                                                <th>State</th>
+                                                <th>Country</th>
+                                                <th>Zip</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                            </label>
-                        </div> 
-                        <div class="flex mb-28">
-                            <label for="" class="w-50">
-                                <p class="m-0">
-                                    Built Up Area (Sq.Ft)
-                                    <span class="text-danger">*</span>
-                                </p>
-                                @Html.TextBoxFor(model => model.BuildUpAreaSqFt, new { @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Ft"] })
-                               @*  @Html.ValidationMessageFor(model => model.BuildUpAreaSqFt, "", new { @class = "text-danger" }) *@
-                            </label>
-                            <label for="" class="w-50">
-                                <p class="m-0">
-                                    Built up Area (Sq.Meter)
-                                    <span class="text-danger">*</span>
-                                </p>
-                                @Html.TextBoxFor(model => model.BuildUpAreaSqMtr, new { @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
-                              @*   @Html.ValidationMessageFor(model => model.BuildUpAreaSqMtr, "", new { @class = "text-danger" }) *@
-                            </label>
-                        </div>
-                        <div class="flex mb-28">
-                            <label for="" class="w-50">
-                                Age of construction
-                                @Html.TextBoxFor(model => model.AgeOfConstruction, new { @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
+                                            @* <tr>
+                                            <td>123 Main St</td>
+                                            <td>Apt 4B</td>
+                                            <td>New York</td>
+                                            <td>NY</td>
+                                            <td>country</td>
+                                            <td>NY</td>
+                                            </tr> *@
 
-                            </label>
-                            <label for="" class="w-50">
-                                Parking
-                                @Html.TextBoxFor(model => model.Parking, new { @class = "form-control",  @placeholder = @SharedLocalizer["Parking"] })
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                            </label>
-                        </div>
-                        <div class="flex mb-28">
-                            <label for="" class="w-50">
-                                Parking BAY Number
-                                @Html.TextBoxFor(model => model.ParkingBayNo, new { @class = "form-control",  @placeholder = @SharedLocalizer["Parking Bay No"] })
 
-                            </label>
-                            <label for="" class="w-50">
-                                Description
-                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control",  @placeholder = @SharedLocalizer["Description"] })
+                                <h3>Contact Details</h3>
+                                <div class="inputSearchs p-0">
+                                    <table class="multipleValueTable" id="NewContactTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Contact Person Name</th>
+                                                <th>Department</th>
+                                                <th>Designation</th>
+                                                <th>Email ID</th>
+                                                <th>Phone Number</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @*  <tr>
+                                            <td>Department</td>
+                                            <td>Apt 4B</td>
+                                            <td>New York</td>
+                                            <td>test@test.com</td>
+                                            <td>999999991</td>
+                                            </tr> *@
 
-                            </label>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
                         </div>
+                        <div class="roundBorderBox">
+                            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                <h3 class="blueHeading p-0">Property Details</h3>
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                            </div>
+                            <div class="inputSearchs">
 
-                    </form>
-                </div>
-                <h3 class="blueHeading"> Amenities</h3>
-                <div class="inputSearchs">
-                    <form>
-                        <div class="flex threeBox mb-28">
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" checked disabled>
-                                <p>Swimming pool </p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>On-site laundry facilities</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Conference room</p>
-                            </label>
+                                <input type="hidden" id="hdnPropertyType" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
+                                <input type="hidden" id="hdnPropertySub" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
+                                <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
+                                <input type="hidden" id="hdnPropertyId" value="@(Model.PropertyId)" />
+                                <input type="hidden" id="hdnPropertyName" value="@(Model == null ? 0 : Model.PropertyName)" />
+                                @*  <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
+                                <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
+                                <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" /> *@
+                                <div class="flex  mb-28">
+                                    <label for="" class="w-50">
+                                        Property Type Name
+                                        @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value);"})
+                                        @*   <input type="text" placeholder="ABC" disabled> *@
+                                    </label>
+                                    <label for="" class="w-50">
+                                        Property SubType Name
+                                        @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
+                                    </label>
+                                </div>
+                                <div class="flex  mb-28">
+                                    <label for="" class="w-50">
+                                        Type of Ownership
+                                        @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindPropertyDetail()"})
+                                    </label>
+
+                                    <label for="" class="w-50">
+                                        Property Name
+                                        @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)"})
+                                        @*   @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Property Name"] }) *@
+                                        @*  @Html.ValidationMessageFor(model => model.PropertyName, "", new { @class = "text-danger" }) *@
+                                    </label>
+                                </div>
+                                <div class="flex mb-28">
+                                    <label for="" class="w-50">
+                                        Unit Type
+                                        @Html.DropDownListFor(model => model.UnitType, new List<SelectListItem> { }, new {@disabled=htmlAttributes, @class = "form-control"})
+                                        @*    @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
+                                    </label>
+                                    <label for="" class="w-50">
+                                        Additional Units
+                                        @Html.TextBoxFor(model => model.AdditionalUnits, new {@disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Additional Unit"] })
+
+                                    </label>
+                                </div>
+                                <div class="flex mb-28">
+                                    <label for=" class=" w-50"">
+                                        <p class="m-0">
+                                            Furnished
+                                            <span class="text-danger">*</span>
+                                        </p>
+                                        @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new {@disabled=htmlAttributes, @class = "form-control"})
+                                        @* @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
+                                    </label>
+                                    <label for="" class="w-50">
+                                        Purpose of Valuation
+                                        @Html.TextBoxFor(model => model.ValuationPurpose, new {@disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Valuation Purpose"] })
+
+                                    </label>
+                                </div>
+                                <div class="flex mb-28">
+                                    <label for="" class="w-50">
+                                        <p class="m-0">
+                                            Built Up Area (Sq.Ft)
+                                            <span class="text-danger">*</span>
+                                        </p>
+                                        @Html.TextBoxFor(model => model.BuildUpAreaSqFt, new {@disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Ft"] })
+                                        @*  @Html.ValidationMessageFor(model => model.BuildUpAreaSqFt, "", new { @class = "text-danger" }) *@
+                                    </label>
+                                    <label for="" class="w-50">
+                                        <p class="m-0">
+                                            Built up Area (Sq.Meter)
+                                            <span class="text-danger">*</span>
+                                        </p>
+                                        @Html.TextBoxFor(model => model.BuildUpAreaSqMtr, new {@disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
+                                        @*   @Html.ValidationMessageFor(model => model.BuildUpAreaSqMtr, "", new { @class = "text-danger" }) *@
+                                    </label>
+                                </div>
+                                <div class="flex mb-28">
+                                    <label for="" class="w-50">
+                                        Age of construction
+                                        @Html.TextBoxFor(model => model.AgeOfConstruction, new {@disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
+
+                                    </label>
+                                    <label for="" class="w-50">
+                                        Parking
+                                        @Html.TextBoxFor(model => model.Parking, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Parking"] })
+
+                                    </label>
+                                </div>
+                                <div class="flex mb-28">
+                                    <label for="" class="w-50">
+                                        Parking BAY Number
+                                        @Html.TextBoxFor(model => model.ParkingBayNo, new {@disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Parking Bay No"] })
+
+                                    </label>
+                                    <label for="" class="w-50">
+                                        Description
+                                        @Html.TextBoxFor(model => model.Description, new {@disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Description"] })
+
+                                    </label>
+
+                                </div>
+                                <h3 class="blueHeading"> Amenities</h3>
+                                <div class="inputSearchs">
+                                    <div class="form">
+                                        <div class="flex mb-28 flex-start" id="amentiesdiv">
+                                            @{
+                                                if (Model.AmenityList != null)
+                                                {
+                                                    @for (int z = 0; z < Model.AmenityList.Count; z++)
+                                                    {
+                                                        <label for="" class="position-relative checkboxBtn w-30 mr-20">
+                                                            @Html.HiddenFor(m => m.AmenityList[z].Id)
+                                                            @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
+                                                            @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
+                                                            @Html.CheckBoxFor(model => Model.AmenityList[z].IsActive, new { @class = "checkbox-checked", @checked = "checked" })
+                                                            <p>@Model.AmenityList[z].AmenityName</p>
+                                                        </label>
+                                                    }
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+
                         </div>
-                        <div class="flex threeBox mb-28">
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>24-hour security or concierge service</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Fitness centre or gym</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Business centre</p>
-                            </label>
-                        </div>
-                        <div class="flex threeBox mb-28">
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Parking garage /valet parking</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>On-site maintenance staff</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Playground or recreation area</p>
-                            </label>
-                        </div>
-                        <div class="flex mb-28">
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Pet-friendly accommodations</p>
-                            </label>
-                            <label for="" class="position-relative checkboxBtn">
-                                <input type="checkbox" placeholder="enter first name" disabled>
-                                <p>Wi-Fi or high-speed internet access.</p>
-                            </label>
-                        </div>
+
+
 
                         <div class="text-center buttonArea bodyContent plr-0">
                             <button type="button" class="lineBtn greyBtn">Cancel</button>
-                            <button type="button" class="blueBtn">Next</button>
+                            <button type="submit" class="blueBtn">Save</button>
                         </div>
                     </form>
                 </div>
+
             </div>
 
-            <div id="profile2" class="tabcontent">
-                <h3 class="ptrl-20">Quotation Listing</h3>
-                <div class="scroll-x ptrl-20">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#Quotation</th>
-                                <th>Valuation Charges</th>
-                                <th>VAT <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                                <th>Other Charges</th>
-                                <th>Discount (%)</th>
-                                <th>Total Valuation Charge</th>
-                                <th>Creation Date</th>
-                                <th>Status <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="userPic" onClick="edit()"> 65790-45321</td>
-                                <td>1000</td>
-                                <td>5%</td>
-                                <td>1000</td>
-                                <td>5%</td>
-                                <td>2657</td>
-                                <td>12/09/2022</td>
-                                <td><span class="tableStatus blue">Submitted</span></td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onClick="edit()">
-                                                <a href="">
-                                                    <img src="../assets/view.svg" alt="view" />
-                                                    view
-                                                </a>
-                                            </li>
-                                            <li onClick="edit()">
-                                                <a href="">
-                                                    <img src="../assets/edit.svg" alt="edit" />
-                                                    Edit
-                                                </a>
-                                            </li>
-                                            <li class="delete">
-                                                <a href="">
-                                                    <img src="../assets/trash.svg" alt="trash" />
-                                                    Delete
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="userPic" onClick="edit()"> 65790-45321</td>
-                                <td>1000</td>
-                                <td>5%</td>
-                                <td>1000</td>
-                                <td>5%</td>
-                                <td>2657</td>
-                                <td>12/09/2022</td>
-                                <td><span class="tableStatus green">Confirm</span></td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onClick="edit()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onClick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="userPic" onClick="edit()"> 65790-45321</td>
-                                <td>1000</td>
-                                <td>5%</td>
-                                <td>1000</td>
-                                <td>5%</td>
-                                <td>2657</td>
-                                <td>12/09/2022</td>
-                                <td><span class="tableStatus orange">Pending</span></td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onClick="edit()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onClick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="userPic" onClick="edit()"> 65790-45321</td>
-                                <td>1000</td>
-                                <td>5%</td>
-                                <td>1000</td>
-                                <td>5%</td>
-                                <td>2657</td>
-                                <td>12/09/2022</td>
-                                <td><span class="tableStatus blue">Submitted</span></td>
-                                <td class="position-relative">
-                                    <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-                                    <div class="actionItem">
-                                        <ul>
-                                            <li onClick="edit()">
-                                                <img src="../assets/view.svg" alt="view" />
-                                                view
-                                            </li>
-                                            <li onClick="edit()">
-                                                <img src="../assets/edit.svg" alt="edit" />
-                                                Edit
-                                            </li>
-                                            <li class="delete">
-                                                <img src="../assets/trash.svg" alt="trash" />
-                                                Delete
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            @* <div id="profile2" class="tabcontent">
+            <h3 class="ptrl-20">Quotation Listing</h3>
+            <div class="scroll-x ptrl-20">
+            <table>
+            <thead>
+            <tr>
+            <th>#Quotation</th>
+            <th>Valuation Charges</th>
+            <th>VAT <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+            <th>Other Charges</th>
+            <th>Discount (%)</th>
+            <th>Total Valuation Charge</th>
+            <th>Creation Date</th>
+            <th>Status <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
+            <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td class="userPic" onClick="edit()"> 65790-45321</td>
+            <td>1000</td>
+            <td>5%</td>
+            <td>1000</td>
+            <td>5%</td>
+            <td>2657</td>
+            <td>12/09/2022</td>
+            <td><span class="tableStatus blue">Submitted</span></td>
+            <td class="position-relative">
+            <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+            <div class="actionItem">
+            <ul>
+            <li onClick="edit()">
+            <a href="">
+            <img src="../assets/view.svg" alt="view" />
+            view
+            </a>
+            </li>
+            <li onClick="edit()">
+            <a href="">
+            <img src="../assets/edit.svg" alt="edit" />
+            Edit
+            </a>
+            </li>
+            <li class="delete">
+            <a href="">
+            <img src="../assets/trash.svg" alt="trash" />
+            Delete
+            </a>
+            </li>
+            </ul>
+            </div>
+            </td>
+            </tr>
+            <tr>
+            <td class="userPic" onClick="edit()"> 65790-45321</td>
+            <td>1000</td>
+            <td>5%</td>
+            <td>1000</td>
+            <td>5%</td>
+            <td>2657</td>
+            <td>12/09/2022</td>
+            <td><span class="tableStatus green">Confirm</span></td>
+            <td class="position-relative">
+            <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+            <div class="actionItem">
+            <ul>
+            <li onClick="edit()">
+            <img src="../assets/view.svg" alt="view" />
+            view
+            </li>
+            <li onClick="edit()">
+            <img src="../assets/edit.svg" alt="edit" />
+            Edit
+            </li>
+            <li class="delete">
+            <img src="../assets/trash.svg" alt="trash" />
+            Delete
+            </li>
+            </ul>
+            </div>
+            </td>
+            </tr>
+            <tr>
+            <td class="userPic" onClick="edit()"> 65790-45321</td>
+            <td>1000</td>
+            <td>5%</td>
+            <td>1000</td>
+            <td>5%</td>
+            <td>2657</td>
+            <td>12/09/2022</td>
+            <td><span class="tableStatus orange">Pending</span></td>
+            <td class="position-relative">
+            <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+            <div class="actionItem">
+            <ul>
+            <li onClick="edit()">
+            <img src="../assets/view.svg" alt="view" />
+            view
+            </li>
+            <li onClick="edit()">
+            <img src="../assets/edit.svg" alt="edit" />
+            Edit
+            </li>
+            <li class="delete">
+            <img src="../assets/trash.svg" alt="trash" />
+            Delete
+            </li>
+            </ul>
+            </div>
+            </td>
+            </tr>
+            <tr>
+            <td class="userPic" onClick="edit()"> 65790-45321</td>
+            <td>1000</td>
+            <td>5%</td>
+            <td>1000</td>
+            <td>5%</td>
+            <td>2657</td>
+            <td>12/09/2022</td>
+            <td><span class="tableStatus blue">Submitted</span></td>
+            <td class="position-relative">
+            <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
+            <div class="actionItem">
+            <ul>
+            <li onClick="edit()">
+            <img src="../assets/view.svg" alt="view" />
+            view
+            </li>
+            <li onClick="edit()">
+            <img src="../assets/edit.svg" alt="edit" />
+            Edit
+            </li>
+            <li class="delete">
+            <img src="../assets/trash.svg" alt="trash" />
+            Delete
+            </li>
+            </ul>
+            </div>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+            </div>
+            *@
+            @*  <div id="profile3" class="tabcontent">
+            <h3 class="ptrl-20">Select Payment Mode</h3>
+            <div class="paymentOption">
+            <div class="payTab">
+            <button class="payTabLink" onclick="payTab(event, 'pay1')" id="defaultOpenPay">Cash</button>
+            <button class="payTabLink" onclick="payTab(event, 'pay2')">Cheque</button>
+            <button class="payTabLink" onclick="payTab(event, 'pay3')">Credit Card</button>
+            <button class="payTabLink" onclick="payTab(event, 'pay4')">Net Banking</button>
             </div>
 
-            <div id="profile3" class="tabcontent">
-                <h3 class="ptrl-20">Select Payment Mode</h3>
-                <div class="paymentOption">
-                    <div class="payTab">
-                        <button class="payTabLink" onclick="payTab(event, 'pay1')" id="defaultOpenPay">Cash</button>
-                        <button class="payTabLink" onclick="payTab(event, 'pay2')">Cheque</button>
-                        <button class="payTabLink" onclick="payTab(event, 'pay3')">Credit Card</button>
-                        <button class="payTabLink" onclick="payTab(event, 'pay4')">Net Banking</button>
-                    </div>
-
-                    <div id="pay1" class="payTabContent">
-                        <h3 class="ptrl-20">Add Cash Payment Details</h3>
-                        <div class="inputSearchs">
-                            <div class="tabSection">
-                                <div class="flex threeBox mb-28">
-                                    <label for="">
-                                        Transaction Status
-                                        <select>
-                                            <option value="completed">completed</option>
-                                            <option value="inprogress">inprogress</option>
-                                            <option value="failed">failed</option>
-                                        </select>
-                                    </label>
-                                    <label for="">
-                                        Amount
-                                        <input type="text" placeholder="enter the amount">
-                                    </label>
-                                    <label for="">
-                                        Date
-                                        <input type="date">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="pay2" class="payTabContent">
-                        <h3 class="ptrl-20">Add Cheque Payment Details</h3>
-                        <div class="inputSearchs">
-                            <div class="tabSection">
-
-                                <div class="flex threeBox mb-28">
-                                    <label for="">
-                                        Cheque Number
-                                        <input type="number" placeholder="enter cheque number">
-                                    </label>
-                                    <label for="">
-                                        Cheque Bank Name
-                                        <input type="text" placeholder="enter cheque number">
-                                    </label>
-                                    <label for="">
-                                        Cheque Date
-                                        <input type="date">
-                                    </label>
-                                </div>
-                                <div class="flex threeBox mb-28">
-
-                                    <label for="">
-                                        Cheque Recieved Date
-                                        <input type="date">
-                                    </label>
-                                    <label for="">
-                                        Amount
-                                        <input type="number" placeholder="enter the amount">
-                                    </label>
-                                    <label for="">
-                                        Transaction Status
-                                        <select>
-                                            <option value="completed">completed</option>
-                                            <option value="inprogress">inprogress</option>
-                                            <option value="failed">failed</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="pay3" class="payTabContent">
-                        <h3 class="ptrl-20">Add Credit Card Payment Details</h3>
-                        <div class="inputSearchs">
-                            <div class="tabSection">
-
-                                <div class="flex threeBox mb-28">
-                                    <label for="">
-                                        Transaction ID
-                                        <input type="number" placeholder="enter Transaction ID">
-                                    </label>
-                                    <label for="">
-                                        Transaction Status
-                                        <select>
-                                            <option value="completed">completed</option>
-                                            <option value="inprogress">inprogress</option>
-                                            <option value="failed">failed</option>
-                                        </select>
-                                    </label>
-                                    <label for="">
-                                        Amount
-                                        <input type="number" placeholder="enter the amount">
-                                    </label>
-                                </div>
-                                <div class="flex threeBox mb-28">
-                                    <label for="">
-                                        Credit Card Number
-                                        <input type="number" placeholder="enter credit card number">
-                                    </label>
-                                    <label for="">
-                                        Bank Name
-                                        <input type="text" placeholder="enter bank name">
-                                    </label>
-                                    <label for="">
-                                        Name on card
-                                        <input type="text" placeholder="enter name on card">
-                                    </label>
-                                </div>
-                                <div class="flex threeBox">
-                                    <label for="">
-                                        Expiry Date
-                                        <input type="date">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="pay4" class="payTabContent">
-                        <h3 class="ptrl-20">Add Net Banking Payment Details</h3>
-                        <div class="inputSearchs">
-                            <div class="tabSection">
-                                <div class="flex threeBox mb-28">
-                                    <label for="">
-                                        Transaction ID
-                                        <input type="number" placeholder="enter Transaction ID">
-                                    </label>
-                                    <label for="">
-                                        Bank Name
-                                        <input type="text" placeholder="enter banke name">
-                                    </label>
-                                    <label for="">
-                                        Accoubt Number
-                                        <input type="number" placeholder="enter acount number">
-                                    </label>
-
-                                </div>
-                                <div class="flex threeBox mb-28">
-
-                                    <label for="">
-                                        Amount
-                                        <input type="number" placeholder="enter the amount">
-                                    </label>
-                                    <label for="">
-                                        Transfer Date
-                                        <input type="date">
-                                    </label>
-                                    <label for="">
-                                        Transaction Status
-                                        <select>
-                                            <option value="completed">completed</option>
-                                            <option value="inprogress">inprogress</option>
-                                            <option value="failed">failed</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="blueHeading">Upload Supporting Documents</h3>
-                <div class="inputSearchs uploadDocBox">
-                    <div class="tabSection">
-                        <div class="flex mb-28">
-                            <label for="document">
-                                Documents Name
-                                <input type="text" placeholder="enter Documents Name">
-                            </label>
-                            <label for="atach">
-                                Attach Supporting Documents
-                                <div class="attachDoc">
-                                    <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
-                                    <input type="file" class="btn" value="Upload Photo" multiple />
-                                    <p>click to upload.</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="W-100">
-                            <div class="prevUpload roundBorderBox m-0">
-                                <h3>Previously uploaded</h3>
-                                <div class="flex">
-                                    <div class="prevUploadTab">
-                                        <div class="flex align-item-center m-0">
-                                            <img src="../assets/file.svg" alt="file" />
-                                            ABC
-                                        </div>
-                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                    </div>
-                                    <div class="prevUploadTab">
-                                        <div class="flex align-item-center m-0">
-                                            <img src="../assets/file.svg" alt="file" />
-                                            ABC
-                                        </div>
-                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                    </div>
-                                    <div class="prevUploadTab">
-                                        <div class="flex align-item-center m-0">
-                                            <img src="../assets/file.svg" alt="file" />
-                                            ABC
-                                        </div>
-                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                    </div>
-                                    <div class="prevUploadTab">
-                                        <div class="flex align-item-center m-0">
-                                            <img src="../assets/file.svg" alt="file" />
-                                            ABC
-                                        </div>
-                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="pay1" class="payTabContent">
+            <h3 class="ptrl-20">Add Cash Payment Details</h3>
+            <div class="inputSearchs">
+            <div class="tabSection">
+            <div class="flex threeBox mb-28">
+            <label for="">
+            Transaction Status
+            <select>
+            <option value="completed">completed</option>
+            <option value="inprogress">inprogress</option>
+            <option value="failed">failed</option>
+            </select>
+            </label>
+            <label for="">
+            Amount
+            <input type="text" placeholder="enter the amount">
+            </label>
+            <label for="">
+            Date
+            <input type="date">
+            </label>
             </div>
+            </div>
+            </div>
+            </div>
+            <div id="pay2" class="payTabContent">
+            <h3 class="ptrl-20">Add Cheque Payment Details</h3>
+            <div class="inputSearchs">
+            <div class="tabSection">
+
+            <div class="flex threeBox mb-28">
+            <label for="">
+            Cheque Number
+            <input type="number" placeholder="enter cheque number">
+            </label>
+            <label for="">
+            Cheque Bank Name
+            <input type="text" placeholder="enter cheque number">
+            </label>
+            <label for="">
+            Cheque Date
+            <input type="date">
+            </label>
+            </div>
+            <div class="flex threeBox mb-28">
+
+            <label for="">
+            Cheque Recieved Date
+            <input type="date">
+            </label>
+            <label for="">
+            Amount
+            <input type="number" placeholder="enter the amount">
+            </label>
+            <label for="">
+            Transaction Status
+            <select>
+            <option value="completed">completed</option>
+            <option value="inprogress">inprogress</option>
+            <option value="failed">failed</option>
+            </select>
+            </label>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div id="pay3" class="payTabContent">
+            <h3 class="ptrl-20">Add Credit Card Payment Details</h3>
+            <div class="inputSearchs">
+            <div class="tabSection">
+
+            <div class="flex threeBox mb-28">
+            <label for="">
+            Transaction ID
+            <input type="number" placeholder="enter Transaction ID">
+            </label>
+            <label for="">
+            Transaction Status
+            <select>
+            <option value="completed">completed</option>
+            <option value="inprogress">inprogress</option>
+            <option value="failed">failed</option>
+            </select>
+            </label>
+            <label for="">
+            Amount
+            <input type="number" placeholder="enter the amount">
+            </label>
+            </div>
+            <div class="flex threeBox mb-28">
+            <label for="">
+            Credit Card Number
+            <input type="number" placeholder="enter credit card number">
+            </label>
+            <label for="">
+            Bank Name
+            <input type="text" placeholder="enter bank name">
+            </label>
+            <label for="">
+            Name on card
+            <input type="text" placeholder="enter name on card">
+            </label>
+            </div>
+            <div class="flex threeBox">
+            <label for="">
+            Expiry Date
+            <input type="date">
+            </label>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div id="pay4" class="payTabContent">
+            <h3 class="ptrl-20">Add Net Banking Payment Details</h3>
+            <div class="inputSearchs">
+            <div class="tabSection">
+            <div class="flex threeBox mb-28">
+            <label for="">
+            Transaction ID
+            <input type="number" placeholder="enter Transaction ID">
+            </label>
+            <label for="">
+            Bank Name
+            <input type="text" placeholder="enter banke name">
+            </label>
+            <label for="">
+            Accoubt Number
+            <input type="number" placeholder="enter acount number">
+            </label>
+
+            </div>
+            <div class="flex threeBox mb-28">
+
+            <label for="">
+            Amount
+            <input type="number" placeholder="enter the amount">
+            </label>
+            <label for="">
+            Transfer Date
+            <input type="date">
+            </label>
+            <label for="">
+            Transaction Status
+            <select>
+            <option value="completed">completed</option>
+            <option value="inprogress">inprogress</option>
+            <option value="failed">failed</option>
+            </select>
+            </label>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <h3 class="blueHeading">Upload Supporting Documents</h3>
+            <div class="inputSearchs uploadDocBox">
+            <div class="tabSection">
+            <div class="flex mb-28">
+            <label for="document">
+            Documents Name
+            <input type="text" placeholder="enter Documents Name">
+            </label>
+            <label for="atach">
+            Attach Supporting Documents
+            <div class="attachDoc">
+            <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
+            <input type="file" class="btn" value="Upload Photo" multiple />
+            <p>click to upload.</p>
+            </div>
+            </label>
+            </div>
+            <div class="W-100">
+            <div class="prevUpload roundBorderBox m-0">
+            <h3>Previously uploaded</h3>
+            <div class="flex">
+            <div class="prevUploadTab">
+            <div class="flex align-item-center m-0">
+            <img src="../assets/file.svg" alt="file" />
+            ABC
+            </div>
+            <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+            </div>
+            <div class="prevUploadTab">
+            <div class="flex align-item-center m-0">
+            <img src="../assets/file.svg" alt="file" />
+            ABC
+            </div>
+            <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+            </div>
+            <div class="prevUploadTab">
+            <div class="flex align-item-center m-0">
+            <img src="../assets/file.svg" alt="file" />
+            ABC
+            </div>
+            <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+            </div>
+            <div class="prevUploadTab">
+            <div class="flex align-item-center m-0">
+            <img src="../assets/file.svg" alt="file" />
+            ABC
+            </div>
+            <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div> *@
 
         </div>
     </div>
 </main>
+<input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
 
@@ -757,16 +807,26 @@
 
         //#region Setup API Url
         // var ValuationFees = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuation";
-
-         var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";//GetAllPropertyType";
+        var GetAllValuationRequestStatus = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationRequestStatus";
+        var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";//GetAllPropertyType";
         var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
-         var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
+        var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
         var ClientByClientTypeId = "@Eltizam.Web.Helpers.APIURLHelper.GetClientByClientTypeId";
-         var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";//GetAllOwnershipType";
+        var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";//GetAllOwnershipType";
         var GetPropertyByFilters = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByFilters";//GetAllOwnershipType";
         var GetPropertyById = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyById";//GetAllOwnershipType";
+        var GetClientDetailById = "@Eltizam.Web.Helpers.APIURLHelper.GetClientById";//GetAllOwnershipType";
         // var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationFeeTypeList";//GetAllValuationFeeType";
-        
+        var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
+        var stateListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
+        var cityListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
+        var GetApproverList = "@Eltizam.Web.Helpers.APIURLHelper.GetApproverList";
+        var GetValuerList = "@Eltizam.Web.Helpers.APIURLHelper.GetApproverList";
+        var GetDictionaryWithSubDetails = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryWithSubDetails";
+        var ValuationRequestGetById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestGetById";
+
+
+
 
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]";

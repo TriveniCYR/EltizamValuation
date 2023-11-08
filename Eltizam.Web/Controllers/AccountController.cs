@@ -72,11 +72,11 @@ namespace Eltizam.Web.Controllers
                             }
                         }
 
-                        return RedirectToAction("Users", "MasterUser");
+                        return RedirectToAction("Dashboard", "Dashboard");
                     }
                     else
                     {
-                        TempData[UserHelper.ErrorMessage] = _stringLocalizer["InvalidUser"].Value; 
+                        TempData[UserHelper.ErrorMessage] = responseMessage.ReasonPhrase; 
                         return View(loginViewModel);
                     }
                 }
