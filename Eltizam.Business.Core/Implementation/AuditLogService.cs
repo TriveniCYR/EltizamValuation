@@ -156,7 +156,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
         { 
             var users = await _userrepository.GetAllAsync();
-
+            TableName ="MasterUser";
             var entityAuditLogs = await _repository.FindAllAsync(x =>
                                     (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
                                  && (TableKey == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))

@@ -4,7 +4,7 @@ $(document).ready(function () {
     BindCountry();
     BindPropertype();
     BindRequestStaus();
-        BindValutionMethod();
+    BindValutionMethod();
     BindApproverList();
 
 });
@@ -19,7 +19,6 @@ function assignToggle() {
 }
 
 function BindApproverList() {
-    debugger
     var Approver = $("#ApproverId");
     var _val = "";
     var _rpname = "userName";
@@ -64,7 +63,7 @@ function BindCity(id) {
 }
 
 function BindPropertype() {
-    
+
     var PropertyType = $("#PropertyTypeId");
     var _val = $('#hdnPropertyType').val();
     var _rpname = "propertyType";
@@ -72,7 +71,7 @@ function BindPropertype() {
 }
 
 function BindRequestStaus() {
-       var RequestStaus = $("#RequestStatusId");
+    var RequestStaus = $("#RequestStatusId");
     var _val = $('#hdnRequestStaus').val();
     var _rpname = "statusName";
     BindDropdowns(ValutionRequestStatusList, RequestStaus, _rpname, _val);

@@ -1,9 +1,15 @@
-﻿<main>
+﻿@using Eltizam.Business.Models;
+@model AuditData
+@{
+
+}
+
+<main>
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between">
-            <h3 class="dashboardTitle">Audit Log</h3>
+            <h3 class="dashboardTitle">View Audit Log</h3>
             <div class="hamburger">
-                <span onclick="addApprovalMaster()" class="cursor-pointer"> Audit Logs </span>
+                <span class="cursor-pointer">Audit Logs</span>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon">
                 <span>Audit Log</span>
             </div>
@@ -11,129 +17,135 @@
         <div class="bodyContent p-0">
             <div class="tabcontent m-0" style="display: block;">
                 <div class="auditLog-acc roundBorderBox">
-                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                        <p>Created By: <b>Yalla Reddy</b></p>
-                        <div class="flex align-item-center">
-                            <p style=" margin: 0 35px;">Created Date: <b>11/5/2023</b></p>
-                            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                        </div>
-                    </div>
-                    <div class="panel mt-28">
-                        <div class="flex m-0">
-                            <table class="multipleValueTable">
-                                <thead>
-                                    <tr>
-                                        <th>Time</th>
-                                        <th>Field Name</th>
-                                        <th>Old</th>
-                                        <th>New</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>10:11:43 PM</td>
-                                        <td>First Name</td>
-                                        <td>Yalla</td>
-                                        <td>Yallaa</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10:11:43 PM</td>
-                                        <td>First Name</td>
-                                        <td>Yalla</td>
-                                        <td>Yallaa</td>
-                                    </tr>
+                    @foreach (var auditLogResponse in Model._object)
+                    {
+                        DateTime? createdDatetime = auditLogResponse.CreatedDate;
+                        DateTime dateOnly = createdDatetime.Value.Date;
 
-                                </tbody>
-                            </table>
+                        <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                            <p>Created By: <b>@auditLogResponse.CreatedByName</b></p>
+                            <div class="flex align-item-center">
+
+                                <p style=" margin: 0 35px;">Created Date: <b>@dateOnly.ToString("dd-MM-yyyy")</b></p>
+
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                            </div>
                         </div>
-                    </div>
+                        DateTime? createdDate = auditLogResponse.CreatedDate;
+                        string time = createdDate?.ToString("HH:mm:ss");
+
+                        <div class="panel mt-28">
+                            <div class="flex m-0">
+                                <table class="multipleValueTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Changed Time</th>
+                                            <th>Field Name</th>
+                                            <th>Before Update</th>
+                                            <th>After Update</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var auditLog in auditLogResponse.AuditLogListData)
+                                        {
+                                            <tr>
+                                                <td>@time</td>
+                                                <td>@auditLog.PropertyName</td>
+                                                <td>@auditLog.OldValue</td>
+                                                <td>@auditLog.NewValue</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
                 </div>
-
             </div>
 
-             <div class="tabcontent m-0" style="display: block;">
-                <div class="auditLog-acc roundBorderBox">
-                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                        <p>Created By: <b>Yalla Reddy</b></p>
-                        <div class="flex align-item-center">
-                            <p style=" margin: 0 35px;">Created Date: <b>11/5/2023</b></p>
-                            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                        </div>
-                    </div>
-                    <div class="panel mt-28">
-                        <div class="flex m-0">
-                            <table class="multipleValueTable">
-                                <thead>
-                                    <tr>
-                                        <th>Time</th>
-                                        <th>Field Name</th>
-                                        <th>Old</th>
-                                        <th>New</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>10:11:43 PM</td>
-                                        <td>First Name</td>
-                                        <td>Yalla</td>
-                                        <td>Yallaa</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10:11:43 PM</td>
-                                        <td>First Name</td>
-                                        <td>Yalla</td>
-                                        <td>Yallaa</td>
-                                    </tr>
+            @*    <div class="tabcontent m-0" style="display: block;">
+            <div class="auditLog-acc roundBorderBox">
+            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+            <p>Created By: <b>Yalla Reddy</b></p>
+            <div class="flex align-item-center">
+            <p style=" margin: 0 35px;">Created Date: <b>11/5/2023</b></p>
+            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+            </div>
+            </div>
+            <div class="panel mt-28">
+            <div class="flex m-0">
+            <table class="multipleValueTable">
+            <thead>
+            <tr>
+            <th>Time</th>
+            <th>Field Name</th>
+            <th>Old</th>
+            <th>New</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>10:11:43 PM</td>
+            <td>First Name</td>
+            <td>Yalla</td>
+            <td>Yallaa</td>
+            </tr>
+            <tr>
+            <td>10:11:43 PM</td>
+            <td>First Name</td>
+            <td>Yalla</td>
+            <td>Yallaa</td>
+            </tr>
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
+            </tbody>
+            </table>
+            </div>
+            </div>
             </div>
 
-            <div class="tabcontent m-0" style="display: block;">
-                <div class="auditLog-acc roundBorderBox">
-                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                        <p>Created By: <b>Yalla Reddy</b></p>
-                        <div class="flex align-item-center">
-                            <p style=" margin: 0 35px;">Created Date: <b>11/5/2023</b></p>
-                            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                        </div>
-                    </div>
-                    <div class="panel mt-28">
-                        <div class="flex m-0">
-                            <table class="multipleValueTable">
-                                <thead>
-                                    <tr>
-                                        <th>Time</th>
-                                        <th>Field Name</th>
-                                        <th>Old</th>
-                                        <th>New</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>10:11:43 PM</td>
-                                        <td>First Name</td>
-                                        <td>Yalla</td>
-                                        <td>Yallaa</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10:11:43 PM</td>
-                                        <td>First Name</td>
-                                        <td>Yalla</td>
-                                        <td>Yallaa</td>
-                                    </tr>
+            </div> *@
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
+            @*  <div class="tabcontent m-0" style="display: block;">
+            <div class="auditLog-acc roundBorderBox">
+            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+            <p>Created By: <b>Yalla Reddy</b></p>
+            <div class="flex align-item-center">
+            <p style=" margin: 0 35px;">Created Date: <b>11/5/2023</b></p>
+            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
             </div>
+            </div>
+            <div class="panel mt-28">
+            <div class="flex m-0">
+            <table class="multipleValueTable">
+            <thead>
+            <tr>
+            <th>Time</th>
+            <th>Field Name</th>
+            <th>Old</th>
+            <th>New</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <td>10:11:43 PM</td>
+            <td>First Name</td>
+            <td>Yalla</td>
+            <td>Yallaa</td>
+            </tr>
+            <tr>
+            <td>10:11:43 PM</td>
+            <td>First Name</td>
+            <td>Yalla</td>
+            <td>Yallaa</td>
+            </tr>
+
+            </tbody>
+            </table>
+            </div>
+            </div>
+            </div>
+
+            </div> *@
         </div>
     </div>
 </main>
