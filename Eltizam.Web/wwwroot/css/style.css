@@ -1610,7 +1610,7 @@ label.roleswitch {
 
 .isActive {
     position: relative;
-    top: 40px;
+    top: 9px;
     left: 30px;
 }
 
@@ -1618,7 +1618,7 @@ label.roleswitch {
 .roleswitch .info-text:before {
     left: -105px;
     position: absolute;
-    top: 42px;
+    top: 50px;
 }
 
 .page-item.active .page-link {
