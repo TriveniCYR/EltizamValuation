@@ -11,10 +11,12 @@
 		<Content Remove="Views\MasterUser\AddResource.cshtml" />
 		<Content Remove="Views\MasterUser\EditResource.cshtml" />
 		<Content Remove="wwwroot\js\custom\masteruser\UserManage.js" />
+		<Content Remove="wwwroot\js\custom\valuationrequest\ValuationQuatationManage.js" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <_ContentIncludedByDefault Remove="wwwroot\js\custom\masteruser\UserManage.js" />
+	  <_ContentIncludedByDefault Remove="wwwroot\js\custom\valuationrequest\ValuationQuatationManage.js" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -53,6 +55,7 @@
 		<None Include="Views\MasterRole\RoleManage.cshtml" />
 		<None Include="Views\MasterRole\Roles.cshtml" />
 		<None Include="wwwroot\js\custom\masteruser\UserManage.js" />
+		<None Include="wwwroot\js\custom\valuationrequest\ValuationQuatationManage.js" />
 	</ItemGroup>
 
 	<PropertyGroup>
