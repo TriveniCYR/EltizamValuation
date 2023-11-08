@@ -1,6 +1,7 @@
 ﻿using Eltizam.Business.Models;
 using Eltizam.Resource;
 using Eltizam.Web.Helpers;
+using Microsoft.AspNet.SignalR.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
@@ -53,7 +54,16 @@ namespace EltizamValuation.Web.Controllers
 
             APIRepository objapi = new(_cofiguration);
             HttpResponseMessage responseMessage = objapi.APICommunication(url, HttpMethod.Get, token).Result;
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;                           
+                AuditData rootObject = JsonConvert.DeserializeObject<AuditData>(jsonResponse);
+                //if (data._object is null)
+                //    return NotFound();
 
+                //return View(data._object);
+                return View(rootObject);
+            }
             //if (responseMessage.IsSuccessStatusCode)
             //{
             //    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;

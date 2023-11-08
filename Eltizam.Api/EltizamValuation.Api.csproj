@@ -26,11 +26,6 @@
 		<ProjectReference Include="..\Eltizam.Business.Models\Eltizam.Business.Models.csproj" />
 		<ProjectReference Include="..\Eltizam.Resource\Eltizam.Resource.csproj" />
 		<ProjectReference Include="..\Eltizam.Utility\Eltizam.Utility.csproj" />
-		<ProjectReference Include="..\Eltizam.Web\EltizamValuation.Web.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="wwwroot\Uploads\errorlogs\" />
 	</ItemGroup>
 	
 	<PropertyGroup>

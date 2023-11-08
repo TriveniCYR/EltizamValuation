@@ -47,4 +47,12 @@ namespace Eltizam.Business.Models
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
     }
+    public class AuditData
+    {
+        public object _errorMessages { get; set; }
+        public List<AuditLogModelResponse> _object { get; set; }
+        public object _Message { get; set; }
+        public bool _Success { get; set; }
+        public object _ReturnToUrl { get; set; }
+    }
 }

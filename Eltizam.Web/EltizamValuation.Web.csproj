@@ -4,19 +4,46 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+
+		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+		<EnableDefaultContentItems>true</EnableDefaultContentItems>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+		<MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
 	</PropertyGroup>
+
+	<!--<ItemGroup>
+	  <Compile Remove="Views\User\**" />
+	  <Content Remove="Views\User\**" />
+	  <EmbeddedResource Remove="Views\User\**" />
+	  <None Remove="Views\User\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<Content Remove="Views\MasterRole\Roles1.cshtml" />
 		<Content Remove="Views\MasterUser\AddResource.cshtml" />
 		<Content Remove="Views\MasterUser\EditResource.cshtml" />
 		<Content Remove="wwwroot\js\custom\masteruser\UserManage.js" />
+	</ItemGroup>-->
+
+	<!--<ItemGroup>
+	  <_ContentIncludedByDefault Remove="wwwroot\js\custom\masteruser\UserManage.js" />
+	</ItemGroup>-->
+	
+	
+	<ItemGroup>
+		<_WebToolingArtifacts Remove="Properties\launchSettings.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="wwwroot\js\custom\masteruser\UserManage.js" />
+		<Content Include="Properties\launchSettings.json" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.15" />
@@ -42,8 +69,7 @@
 		<ProjectReference Include="..\Eltizam.Utility\Eltizam.Utility.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Views\User\" />
+	<!--<ItemGroup>
 		<Folder Include="wwwroot\js\Custom\AuditLog\" />
 		<Folder Include="wwwroot\Uploads\errorlogs\" />
 	</ItemGroup>
@@ -53,9 +79,6 @@
 		<None Include="Views\MasterRole\RoleManage.cshtml" />
 		<None Include="Views\MasterRole\Roles.cshtml" />
 		<None Include="wwwroot\js\custom\masteruser\UserManage.js" />
-	</ItemGroup>
-
-	<PropertyGroup>
-		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-	</PropertyGroup>
+	</ItemGroup>-->
+ 
 </Project>
