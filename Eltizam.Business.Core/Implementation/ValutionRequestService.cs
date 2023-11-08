@@ -8,6 +8,7 @@ using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Utility;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json.Linq;
@@ -183,6 +184,8 @@ namespace Eltizam.Business.Core.Implementation
                     objValuation.ModifiedDate = AppConstants.DateTime;
                     objValuation.ModifiedBy = entityValuation.CreatedBy;
                     _repository.UpdateAsync(objValuation);
+                    _repository.UpdateGraph(objValuation, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
                 }
                 else
                 {
@@ -209,8 +212,50 @@ namespace Eltizam.Business.Core.Implementation
         {
             var _ValuationEntity = new ValuationRequestModel();
             _ValuationEntity = _mapperFactory.Get<ValuationRequest, ValuationRequestModel>(await _repository.GetAsync(id));
+            //_ValuationEntity.ClientTypeId = 
 
+            //DbParameter[] osqlParameter1 =
+            //{
+            //        new DbParameter("PropertyId", id, SqlDbType.Int),
+            //    };
+            //var detailLocation = EltizamDBHelper.ExecuteSingleMappedReader<MasterPropertyDetailModel>(ProcedureMetastore.usp_PropertyLocation_GetLocationByPropertyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
+
+
+
+            DbParameter[] osqlParameter =
+           {
+                new DbParameter("Id", id, SqlDbType.Int),
+            };
+            var ValuationRequestDependencies = EltizamDBHelper.ExecuteMappedReader<ValuationRequestDependencies>(ProcedureMetastore.usp_ValuationRequest_GetDependencies, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
+            //var ValuationRequestDependencies = EltizamDBHelper.ExecuteMappedReader<ValuationRequestDependencies>(ProcedureMetastore.usp_ValuationRequest_GetDependencies, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
+            // return amenityList;
+            _ValuationEntity.ClientId = ValuationRequestDependencies[0].ClientId;
+            _ValuationEntity.ClientTypeId = ValuationRequestDependencies[0].ClientTypeId;
+            _ValuationEntity.ClientName = ValuationRequestDependencies[0].ClientName;
+            _ValuationEntity.PropertyTypeId = ValuationRequestDependencies[0].PropertyTypeId;
+            _ValuationEntity.PropertyName = ValuationRequestDependencies[0].PropertyType;
+            _ValuationEntity.PropertySubTypeId = ValuationRequestDependencies[0].PropertySubTypeId;
+            _ValuationEntity.PropertySubType = ValuationRequestDependencies[0].PropertySubType;
+            _ValuationEntity.OwnershipTypeId = ValuationRequestDependencies[0].OwnershipTypeId;
+            _ValuationEntity.OwnershipType = ValuationRequestDependencies[0].OwnershipType;
+            _ValuationEntity.PropertyId = ValuationRequestDependencies[0].PropertyId;
+            _ValuationEntity.PropertyName = ValuationRequestDependencies[0].PropertyName;
             return _ValuationEntity;
+        }
+
+
+        public async Task<DBOperation> Delete(int id)
+        {
+            var entityValuation= _repository.Get(x => x.Id == id);
+
+            if (entityValuation == null)
+                return DBOperation.NotFound;
+
+            _repository.Remove(entityValuation);
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return DBOperation.Success;
         }
     }
 

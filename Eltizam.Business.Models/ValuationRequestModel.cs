@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,10 @@ namespace Eltizam.Business.Models
         public int PropertyId { get; set; }
         public int PropertyTypeId { get; set; }
         public int PropertySubTypeId { get; set; }
+        public string? PropertySubType { get; set; }
         public int? OwnershipTypeId { get; set; }
         public string? PropertyName { get; set; }
+        public string? OwnershipType { get; set; }
         public string? UnitType { get; set; }
         public string? AdditionalUnits { get; set; }
         public int Furnished { get; set; }
@@ -32,6 +35,7 @@ namespace Eltizam.Business.Models
         public string? ParkingBayNo { get; set; }
         public string? Description { get; set; }
         public string? PinCode { get; set; }
+        public string? PropertyType { get; set; }
 
         public int StatusId { get; set; }
         public int? ApproverId { get; set; }
@@ -44,8 +48,10 @@ namespace Eltizam.Business.Models
         public int? ValuerId { get; set; }
         public string? ValuerComment { get; set; }
         public DateTime? ValuerUpdateDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? TrnexpiryDate { get; set; }
         public string? ClientName { get; set; }
+        public string? ClientType { get; set; }
         public int? CityId { get; set; }
         public int? StateId { get; set; }
         public int? CountryId { get; set; }

@@ -16,5 +16,6 @@ namespace Eltizam.Business.Core.Interface
         Task<List<ValuationMethod>> GetAllValuationMethod();
         Task<DBOperation> Upsert(ValuationRequestModel entityUser);
         Task<ValuationRequestModel> GetById(int id);
+        Task<DBOperation> Delete(int id);
     }
 }

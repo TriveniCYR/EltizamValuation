@@ -25,11 +25,13 @@
         <div class="flex justify-between mobile_flexColumn position-relative">
             <h3 class="dashboardTitle">Valuation List</h3>
             <div class="buttonArea flex align-item-center">
-
-                <button class="flex align-item-center blueBtn" id="addNew">
-                    <img src="~/assets/plus.svg" alt="plus"> Add New
-                </button>
-
+                <input type="hidden" id="isDeletePerm" value="@isDelete" />
+                <input type="hidden" id="isAddPerm" value="@isAdd" />
+                <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
+                    <button class="flex align-item-center blueBtn" id="addNew">
+                        <img src="~/assets/plus.svg" alt="plus"> Add New
+                    </button>
+                </form>
                 <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()">
                     <img src="../assets/user-shield.svg" alt="user">
                     ASSIGN
@@ -177,7 +179,7 @@
                 @Html.Hidden("Id")
                 <div class="buttonArea popup-btn">
                     <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
-                    <button type="button" onclick="DeletePropertyType()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                    <button type="button" onclick="DeleteValuationRequestType()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
                 </div>
             </div>
         </div>
@@ -206,6 +208,7 @@
           var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";
           var ValutionRequestStatusList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationRequestStatus";
            var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationMethod";
+        var ValuationRequestDeleteById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestDeleteById";
 
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";

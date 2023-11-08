@@ -35,6 +35,7 @@ $(document).ready(function () {
     BindValuationRequestStatus();
     GetValuationMethodLists();
     BindClientType();
+   // BindClientType();
     BindProperty();
     BindOwnership();
     BindUnitType();
@@ -42,6 +43,42 @@ $(document).ready(function () {
     BindCountry();
     GetApproverLists();
     GetValuerLists();
+    /*BindPropertyDetail();*/
+
+    if (document.location.href.includes('id'))
+    
+   /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/
+    {
+
+        debugger;
+      var  comingFromAPI  = document.getElementById('hdnClientTypeId').value;
+        var comingFromAPIClientId = document.getElementById('hdnClientId').value;
+        var comingFromAPIPropertyTypeId = document.getElementById('hdnPropertyType').value;
+        var comingFromAPIPropertyId = document.getElementById('hdnPropertyId').value;
+       
+      //var id =  document.getElementById('ClientTypeId').value
+       // $('ClientTypeId').val() = $('hdnClientTypeId').val();
+        var ss = document.getElementById('ClientTypeId').value = document.getElementById('hdnClientTypeId').value;
+        //document.getElementById('ClientName').value
+       // document.getElementById('ClientTypeId').value = ss;
+       // console.log(ss);
+       // console.log(document.getElementById('ClientTypeId').value);
+       //console.log(document.getElementById('hdnClientTypeId').value);
+       // document.getElementById("ClientTypeId").options[document.getElementById('hdnClientTypeId').value].selected = true;
+        /* document.getElementById("ClientTypeId").options[ss].selected = true;*/
+        /*$("#ClientTypeId").get(0).selectedIndex = document.getElementById('hdnClientTypeId').value;*/
+        
+        console.log($("#ClientTypeId").val(comingFromAPI));
+        
+        BindClientByClientType(comingFromAPI);
+        BindClientDetailsByClientId(comingFromAPIClientId);
+        BindPropertySub(comingFromAPIPropertyTypeId);
+        BindPropertyDetail();
+
+        BindPropertyDetailById(comingFromAPIPropertyId);
+
+    }
+
     var HdnCountryId = $('#hdnCountry').val();
     if (HdnCountryId) {
         BindState(HdnCountryId);
@@ -108,7 +145,7 @@ function BindClientType() {
     //alert("hello");
 
     var Client = $("#ClientTypeId");
-    var _val = $('#hdnClientType').val();
+    var _val = $('#hdnClientTypeId').val();
     var _rpname = "clientType";
 
     BindDropdowns(ClientTypeList, Client, _rpname, _val);
@@ -143,6 +180,7 @@ function BindClientByClientType(id) {
     var _rpname = "clientName";
 
     BindDropdowns(ClientByClientTypeId + '/' + id, clients, _rpname, _val);
+   
     //$.ajax({
     //    type: "GET",
     //    url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
@@ -261,17 +299,26 @@ function BindOwnership() {
 function BindPropertyDetail() {
     debugger;
     //alert("Detail");
+    if (document.location.href.includes('id')) {
+        var PropertyTypeId = document.getElementById("hdnPropertyType").value;
+        var PropertySubTypeId = document.getElementById("hdnPropertySub").value;
+        var OwnershipTypeId = document.getElementById("hdnOwnershipType").value;
 
-    var PropertyTypeId = document.getElementById("PropertyTypeId").value;
-    var PropertySubTypeId = document.getElementById("PropertySubTypeId").value;
-    var OwnershipTypeId = document.getElementById("OwnershipTypeId").value;
+    }
+    else {
+        var PropertyTypeId = document.getElementById("PropertyTypeId").value;
+        var PropertySubTypeId = document.getElementById("PropertySubTypeId").value;
+        var OwnershipTypeId = document.getElementById("OwnershipTypeId").value;
+    }
+
+   
 
     if ((PropertyTypeId == null || PropertyTypeId == "") && (PropertySubTypeId == null || PropertySubTypeId == "") && (OwnershipTypeId == null || OwnershipTypeId == "")) {
         alert("No id is passed");
         return false;
     }
     var Property = $("#PropertyId");
-    var _val = $('#hdnProperty').val();
+    var _val = $('#hdnPropertyId').val();
     var _rpname = "propertyName";
 
     //BindDropdowns(OwnershipTypeList, OwnershipType, _rpname, _val);
@@ -286,8 +333,8 @@ function BindPropertyDetail() {
             for (var i = 0; i < response.length; i++) {
                 Property.append($("<option></option>").val(response[i].id).html(response[i].propertyName));
             }
-            if ($('#hdnProperty').val() != 0) {
-                Property.val($('#hdnProperty').val());
+            if ($('#hdnPropertyId').val() != 0) {
+                Property.val($('#hdnPropertyId').val());
             }
         },
         failure: function (response) {
@@ -460,6 +507,9 @@ function BindClientDetailsByClientId(Id) {
             document.getElementById('ClientName').value = response._object.clientName;
             document.getElementById('LicenseNumber').value = response._object.licenseNumber;
             document.getElementById('TrnexpiryDate').value = response._object.trnexpiryDate;
+            //var FormateDated = new Date(response._object.trnexpiryDate)
+            //FormateDated.getDate() + FormateDated.getDay() + FormateDated.getFullYear();
+
             document.getElementById('Trnnumber').value = response._object.trnnumber;
             //document.getElementById('Trnnumber').value = response._object.address.address1;
             document.getElementById('CountryId').value = response._object.address.countryId;
@@ -607,5 +657,6 @@ function GetValuationMethodLists() {
     //});
 
 }
+
 
 

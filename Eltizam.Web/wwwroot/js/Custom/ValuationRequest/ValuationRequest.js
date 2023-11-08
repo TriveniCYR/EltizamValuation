@@ -140,7 +140,7 @@ function InitializeValutionRequestDataList() {
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                 html += '<li><a title="View" href="/MasterPropertyType/PropertyTypeDetail?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
                 html += '<li><a title="Edit" href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
-                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletePropertyTypeModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePropertyType(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletevalutionRequestModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteValuationRequest(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                 html += '</ul></div>';
 
                 return html;
@@ -157,13 +157,14 @@ function CheckAssignId(id, eve) {
     debugger
 }
 //#region Delete Role  
-function ConfirmationDeletePropertyType(id) {
+function ConfirmationDeleteValuationRequest(id) {
     debugger;
     $('#DeletevalutionRequestModel #Id').val(id);
 }
-function DeletePropertyType() {
+function DeleteValuationRequestType() {
     var tid = $('#DeletevalutionRequestModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+    debugger;
+    ajaxServiceMethod(BaseURL + ValuationRequestDeleteById + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
 }
 function DeleteUserByIdSuccess(data) {
     try {
