@@ -35,6 +35,8 @@
                     @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
+                    <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
+                    <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
                     <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                     <button class="payTabLink" onclick="payTab(event, 'pay1')" id="defaultOpenPay">Cash</button>
                     <button class="payTabLink" onclick="payTab(event, 'pay2')">Cheque</button>
@@ -94,11 +96,11 @@
                                 </label>
                                 <label for="">
                                     Amount
-                                    <input type="text" id="Amount" placeholder="enter the amount"  class="disabletxtbox">
+                                    <input type="text" id="ChequeAmount" placeholder="enter the amount"  class="disabletxtbox">
                                 </label>
                                 <label for="">
                                     Date
-                                    <input type="date" id="TransactionDate"  class="disabletxtbox">
+                                    <input type="date" id="ChequeTransactionDate" class="disabletxtbox">
                                 </label>
                             </div>
                             <div class="flex threeBox mb-28">
@@ -146,11 +148,11 @@
                                 </label>
                                 <label for="">
                                     Amount
-                                    <input type="text" id="Amount" placeholder="enter the amount" class="disabletxtbox">
+                                    <input type="text" id="CardAmount" placeholder="enter the amount" class="disabletxtbox">
                                 </label>
                                 <label for="">
                                     Date
-                                    <input type="date" id="TransactionDate" class="disabletxtbox">
+                                    <input type="date" id="CardTransactionDate" class="disabletxtbox">
                                 </label>
                             </div>
                             <div class="flex threeBox mb-28">
@@ -201,11 +203,11 @@
                                 </label>
                                 <label for="">
                                     Amount
-                                    <input type="text" id="Amount" placeholder="enter the amount" class="disabletxtbox">
+                                    <input type="text" id="BankAmount" placeholder="enter the amount" class="disabletxtbox">
                                 </label>
                                 <label for="">
                                     Date
-                                    <input type="date" id="TransactionDate" class="disabletxtbox">
+                                    <input type="date" id="BankTransactionDate" class="disabletxtbox">
                                 </label>
                             </div>
                             <div class="flex threeBox mb-28">

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     debugger
     if (document.location.href.includes('id')){
-        debugger        
+        debugger       
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
     }
@@ -32,11 +32,13 @@ function SaveCashInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
     let amouont = $("#Amount").val();
     let transactionDate = $("#TransactionDate").val();
+    let hdnReferenceNo = $("#hdnReferenceNo").val();
+    let hdnValuationRequestId = $("#hdnValuationRequestId").val();
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
-    InvoiceRequest.ReferenceNo = '656576';
-    InvoiceRequest.ValuationRequestId = 5;
+    InvoiceRequest.ReferenceNo = hdnReferenceNo;
+    InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
     InvoiceRequest.TransactionModeId = 1;
     SaveInvoice(InvoiceRequest);
 
@@ -44,17 +46,19 @@ function SaveCashInvoice() {
 
 function SaveChequeInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
-    let amouont = $("#Amount").val();
-    let transactionDate = $("#TransactionDate").val();
+    let amouont = $("#ChequeAmount").val();
+    let transactionDate = $("#ChequeTransactionDate").val();
     let chequeNumber = $("#ChequeNumber").val();
     let chequeBankName = $("#ChequeBankName").val();
     let chequeDate = $("#ChequeDate").val();
     let chequeRecievedDate = $("#ChequeRecievedDate").val();
+    let hdnReferenceNo = $("#hdnReferenceNo").val();
+    let hdnValuationRequestId = $("#hdnValuationRequestId").val();
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
-    InvoiceRequest.ReferenceNo = '6567576';
-    InvoiceRequest.ValuationRequestId = 5;
+    InvoiceRequest.ReferenceNo = hdnReferenceNo;
+    InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
     InvoiceRequest.TransactionModeId = 2;
     InvoiceRequest.CheckNumer = chequeNumber;
     InvoiceRequest.CheckBankName = chequeBankName;
@@ -63,18 +67,20 @@ function SaveChequeInvoice() {
 }
 function SaveCreditCardInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
-    let amouont = $("#Amount").val();
-    let transactionDate = $("#TransactionDate").val();
+    let amouont = $("#CardAmount").val();
+    let transactionDate = $("#CardTransactionDate").val();
     let transactionId = $("#TransactionId").val();
     let creditCardNumber = $("#CreditCardNumber").val();
     let bankName = $("#CardBankName").val();
     let nameOnCard = $("#NameOnCard").val();
     let expiryDate = $("#ExpiryDate").val();
+    let hdnReferenceNo = $("#hdnReferenceNo").val();
+    let hdnValuationRequestId = $("#hdnValuationRequestId").val();
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
-    InvoiceRequest.ReferenceNo = '65653786';
-    InvoiceRequest.ValuationRequestId = 5;
+    InvoiceRequest.ReferenceNo = hdnReferenceNo;
+    InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
     InvoiceRequest.TransactionModeId = 3;
     InvoiceRequest.CardNumber = creditCardNumber;
     InvoiceRequest.CardBankName = bankName;
@@ -85,16 +91,18 @@ function SaveCreditCardInvoice() {
 
 function SaveNetBankingInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
-    let amouont = $("#Amount").val();
-    let transactionDate = $("#TransactionDate").val();
+    let amouont = $("#BankAmount").val();
+    let transactionDate = $("#BankTransactionDate").val();
     let transactionId = $("#TransactionId").val();
     let bankName = $("#BankName").val();
     let accountNumber = $("#AccountNumber").val();
+    let hdnReferenceNo = $("#hdnReferenceNo").val();
+    let hdnValuationRequestId = $("#hdnValuationRequestId").val();
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
-    InvoiceRequest.ReferenceNo = '65657699';
-    InvoiceRequest.ValuationRequestId = 5;
+    InvoiceRequest.ReferenceNo = hdnReferenceNo;
+    InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
     InvoiceRequest.TransactionModeId = 4;
     InvoiceRequest.BankName = bankName;
     InvoiceRequest.AccountNumber = accountNumber;
@@ -135,10 +143,25 @@ function GetInvoiceDetail(id){
         "datatype": "json",
         success: function (response) {
             debugger
-            if(response._object != null){
+            if (response._object != null) {
+                let modeId = response._object.transactionModeId;
                 document.getElementById('TransactionStatusId').value = response._object.transactionStatusId;
-                document.getElementById('Amount').value = response._object.amount;
-                document.getElementById('TransactionDate').value = response._object.transactionDate;
+                if (modeId == 1) {
+                    document.getElementById('Amount').value = response._object.amount;
+                    document.getElementById('TransactionDate').value = response._object.transactionDate;
+                }
+                else if (modeId == 2) {
+                    document.getElementById('ChequeAmount').value = response._object.amount;
+                    document.getElementById('ChequeTransactionDate').value = response._object.transactionDate;
+                }
+                else if (modeId == 3) {
+                    document.getElementById('CardAmount').value = response._object.amount;
+                    document.getElementById('CardTransactionDate').value = response._object.transactionDate;
+                }
+                else if (modeId == 4) {
+                    document.getElementById('BankAmount').value = response._object.amount;
+                    document.getElementById('BankTransactionDate').value = response._object.transactionDate;
+                }
                 document.getElementById('ChequeNumber').value = response._object.checkNumer;
                 document.getElementById('ChequeBankName').value = response._object.checkBankName;
                 document.getElementById('ChequeDate').value = response._object.checkDate;

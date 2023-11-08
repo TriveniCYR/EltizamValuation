@@ -11,7 +11,7 @@
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
 }
-document.getElementById("defaultOpen").click();
+//document.getElementById("defaultOpen").click();
 
 function accordianToggle(header) {
     const item = header.nextElementSibling;
@@ -52,6 +52,8 @@ $(document).ready(function () {
     BindCountry();
     GetApproverLists();
     GetValuerLists();
+    BindQuatationList();
+    BindInvoiceList();
     /*BindPropertyDetail();*/
 
     if (document.location.href.includes('id'))
@@ -684,5 +686,82 @@ function GetValuationMethodLists() {
 
 }
 
+function BindQuatationList() {
+    debugger
+    let id = $('#hdnId').val();
+    $.ajax({
+        type: Get,
+        url: BaseURL + ValuationQuatationList + '?requestId=' + id,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            if (response != null) {
+                debugger
+                //destoryStaticDataTable('#QuatationTable');
+                //$('#QuatationTable tbody').html('');
+                $.each(response, function (index, object) {
+                    var html = '';
 
+                    html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+                    html += '<li><a title="View" href="/ValuationRequest/ValuationQuotationManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo +'"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    /*html += '<li><a title="Edit" href="/MasterVendor/VendorManage?id=' + object.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';*/
+                    html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteQuotationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationQuotationVendor(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                    html += '</ul></div>';
+
+                    $('#QuatationTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationFee + '</td><td>' + object.vat
+                        + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusId + '</td><td>' + html + '</td></tr>');
+                });
+                //StaticDataTable("#QuatationTable");
+            }
+
+
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
+function BindInvoiceList() {
+    let id = $('#hdnId').val();
+    $.ajax({
+        type: Get,
+        url: BaseURL + ValuationInvoiceList + '?requestId=' + id,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            if (response != null) {
+                debugger
+                //destoryStaticDataTable('#QuatationTable');
+                //$('#QuatationTable tbody').html('');
+                $.each(response, function (index, object) {
+                    var html = '';
+
+                    html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+                    html += '<li><a title="View" href="/ValuationRequest/ValuationInvoiceManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo +'"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    /*html += '<li><a title="Edit" href="/MasterVendor/VendorManage?id=' + object.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';*/
+                    html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationInvoiceVendor(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                    html += '</ul></div>';
+
+                    $('#InvoiceTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationRequestId + '</td><td>' + object.transactionModeId
+                        + '</td><td>' + object.transactionStatusId + '</td><td>' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                });
+                //StaticDataTable("#QuatationTable");
+            }
+
+
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
 
