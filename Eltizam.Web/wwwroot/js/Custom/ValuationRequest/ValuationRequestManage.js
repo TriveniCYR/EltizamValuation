@@ -13,6 +13,15 @@
 }
 document.getElementById("defaultOpen").click();
 
+function accordianToggle(header) {
+    const item = header.nextElementSibling;
+    if (item.style.display === 'block') {
+        item.style.display = 'none';
+    } else {
+        item.style.display = 'block';
+    }
+}
+
 // payemnt option JS here 
 function payTab(evt, payName) {
     var i, payTabContent, payTabLink;
@@ -394,8 +403,8 @@ function BindPropertyDetailById(Id) {
 
             for (i = 0; i < response._object.amenityList.length; i++) {
                 //var _id = response._object.amenityList[i].id
-                Amentiesdiv.append('<label for="" class="checkboxBtn w-30 mr-20">' +
-                    '<input checked="checked" class="position-relative checkbox-checked" data-val="true"   name="AmenityList[' + response._object.amenityList[i].id + '].IsActive" type="checkbox" text="[' + response._object.amenityList[i].amenityName + ']" value="true" ' + '<p> ' + response._object.amenityList[i].amenityName + '  </p>' +
+                Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
+                    '<input checked data-val="true"   name="AmenityList[' + response._object.amenityList[i].id + '].IsActive" type="checkbox" text="[' + response._object.amenityList[i].amenityName + ']" value="true"/> ' + '<p> ' + response._object.amenityList[i].amenityName + '  </p>' +
                     '</label>')
             }
 
@@ -495,6 +504,18 @@ function BindCity(id) {
     });
 }
 
+function formatDateTo_ddMMMyyyy(date) {
+    const months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+}
 function BindClientDetailsByClientId(Id) {
     // var Amentiesdiv = $("#amentiesdiv");
     $.ajax({
@@ -506,7 +527,12 @@ function BindClientDetailsByClientId(Id) {
             //alert(response);
             document.getElementById('ClientName').value = response._object.clientName;
             document.getElementById('LicenseNumber').value = response._object.licenseNumber;
-            document.getElementById('TrnexpiryDate').value = response._object.trnexpiryDate;
+            /* = response._object.trnexpiryDate;*/
+            const inputDateString = response._object.trnexpiryDate;
+            const inputDate = new Date(inputDateString);
+            const formattedDate = formatDateTo_ddMMMyyyy(inputDate);
+            document.getElementById('TrnexpiryDate').value = formattedDate;
+            console.log(formattedDate);
             //var FormateDated = new Date(response._object.trnexpiryDate)
             //FormateDated.getDate() + FormateDated.getDay() + FormateDated.getFullYear();
 
