@@ -44,6 +44,7 @@ namespace Eltizam.Business.Models
         //public string BuildingType { get; set; }
         public string? RegionName { get; set; }
         public string? StatesEmirates { get; set; }
+        public string? Description { get; set; }
     }
     public class MasterLocationList
     {

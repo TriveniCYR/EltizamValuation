@@ -196,6 +196,7 @@ namespace Eltizam.Web.Helpers
         public static string DeleteDictionaryById = "api/MasterDictionary/Delete";
         public static string UpsertMasterDictionary = "api/MasterDictionary/UpsertMasterDictionary";
         public static string GetDictionaryDetailsById = "api/MasterDictionary/GetDictionaryDetailsById";
+        public static string GetDictionaryDescriptionById = "api/MasterDictionary/GetDictionaryDescriptionById";
 
         #endregion Dictionary Management
 
