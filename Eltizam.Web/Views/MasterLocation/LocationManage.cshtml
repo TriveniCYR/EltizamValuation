@@ -6,8 +6,8 @@
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var objPermssion = (RolePermissionModel)ViewBag.Access;
-    var isAdd = objPermssion.Add ? 1 : 0;
-    var isEdit = objPermssion.Edit ? 1 : 0;
+    // var isAdd = objPermssion.Add ? 1 : 0;
+    // var isEdit = objPermssion.Edit ? 1 : 0;
     string PageHeading = "";
     if (ViewBag.IsView == 0)
     {
@@ -46,13 +46,13 @@
                         <input type="hidden" id="hdnId" value="@(Model.Id == null ? 0 : Model.Id)" />
                         <input type="hidden" id="hdnHomeCurrencyId" value="@(Model.HomeCurrencyId == null ? 0 : Model.HomeCurrencyId)" />
                         <input type="hidden" id="hdnForeignCurrencyId" value="@(Model.ForeignCurrencyId == null ? 0 : Model.ForeignCurrencyId)" />
-                        @Html.HiddenFor(model=>model.Id)                      
+                        @Html.HiddenFor(model=>model.Id)
                         <div class="flex">
                             <label for="CountryId" class="w-50">
                                 <p class="m-0">Country<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control disabletxtbox", @onchange = "BindState(this.options[this.selectedIndex].value)"})
                                 @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
-                            </label>    
+                            </label>
                             <label for="" class="w-50">
                                 Status
                                 @{
@@ -65,7 +65,7 @@
                             </label>
 
                         </div>
-                        <div class="flex">                        
+                        <div class="flex">
                             <label for="StateId" class="w-50">
                                 <p class="m-0">State<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control disabletxtbox",@onchange = "BindCity(this.options[this.selectedIndex].value)"})
@@ -93,21 +93,18 @@
                                 @Html.TextBoxFor(model => model.Longitude,  new { @class = "form-control disabletxtbox" })
                             </label>
                             <label for="Geo-coordinates" class="w-50">
-                                <p class="m-0">Home Currency<span class="text-danger">*</span></p>
-                               @*  @Html.TextBoxFor(model => model.HomeCurrencyId,  new { @class = "form-control disabletxtbox" }) *@
-                                @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>{},  new { @class = "form-control disabletxtbox"})
-                               @*  @Html.DropDownListFor(model => model.HomeCurrencyId, new SelectList(new List<SelectListItem>(), "Value", "Text", Model.HomeCurrencyId), new { @class = "form-control disabletxtbox" })*@
-                                @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" })
+                                <p class="m-0">Home Currency<span class="text-danger">*</span></p>                               
+                                 @Html.DropDownListFor(model => model.HomeCurrency, new List<SelectListItem>{},  new { @class = "form-control disabletxtbox"})
+                                @Html.ValidationMessageFor(model => model.HomeCurrency, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
                             <label for="Geo-coordinates" class="w-50">
                                 <p class="m-0">Foreign Currency<span class="text-danger">*</span></p>
-                                @*  @Html.TextBoxFor(model => model.ForeignCurrencyId,  new { @class = "form-control disabletxtbox" })*@
-                                 @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem> { },  new { @class = "form-control disabletxtbox" })
-                                @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" })
+                                 @Html.DropDownListFor(model => model.ForeignCurrency, new List<SelectListItem> { },  new { @class = "form-control disabletxtbox" })
+                                @Html.ValidationMessageFor(model => model.ForeignCurrency, "", new { @class = "text-danger" })
                             </label>
-                        </div> 
+                        </div>
                         <div class="flex">
                         </div>
                         <div class="text-right buttonArea bodyContent plr-0">
@@ -117,7 +114,6 @@
                                 <button type="submit" id="btnSaveEdit" class="bgBlue">Save</button>
 
                             }
-
                         </div>
                     </div>
                 </div>
@@ -130,21 +126,22 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/location/locationmanagement.js?v=@jsVersion"></script>
-   @*  <script type="text/javascript" src="~/js/custom/Location/LocationManagement.js?v=@jsVersion"></script> *@
+    @*  <script type="text/javascript" src="~/js/custom/Location/LocationManagement.js?v=@jsVersion"></script> *@
     <script>
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
         var stateListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
         var cityListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
+        var currencyUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryDescriptionById";
         $(document).ready(function () {
             BindCountry();
+            BindCurrencyHome();
+            BindCurrencyForeign();
             if (@ViewBag.IsView == 1) {
                 $(".disabletxtbox").prop("disabled", true);
                 $("#addLocation").prop("disabled", true);
                 // Disable the associated label element
                 $("label[for='addLocation']").addClass("disabled");
             }
-            var selectedHomeCurrencyId = $('#hdnHomeCurrencyId').val() //@Model.HomeCurrencyId;           
-            $("#HomeCurrencyId").text(selectedHomeCurrencyId);
             var HdnCountryId = $('#hdnCountry').val();
             if (HdnCountryId) {
                 BindState(HdnCountryId);
@@ -174,6 +171,20 @@
             var _rpname = "cityName";
 
             BindDropdowns(cityListUrl + '/' + id, city, _rpname, _val);
+        }
+        function BindCurrencyHome() {
+            var id = 7;
+            var currencyId = $("#HomeCurrency");
+            var _val = $('#hdnHomeCurrencyId').val();
+            var _rpname = "description";
+            BindDropdowns(currencyUrl + '/' + id, currencyId, _rpname, _val);
+        }
+        function BindCurrencyForeign() {           
+            var id = 7;
+            var currencyId = $("#ForeignCurrency");
+            var _val = $('#hdnForeignCurrencyId').val();
+            var _rpname = "description";
+            BindDropdowns(currencyUrl + '/' + id, currencyId, _rpname, _val);
         }
     </script>
 }

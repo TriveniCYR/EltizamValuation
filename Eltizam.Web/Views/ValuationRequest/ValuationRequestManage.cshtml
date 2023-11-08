@@ -45,6 +45,8 @@
                     <form asp-action="ValuationRequestManage">
                         @*   <input type="hidden" id="isAddPerm" value="@isAdd" />
                         <input type="hidden" id="isEditPerm" value="@isEdit" /> *@
+                        <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
+                        <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
                         <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />
                         @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                         <input type="hidden" id="hdnClientId" value="@(Model == null ? 0 : Model.ClientId)" />
@@ -425,151 +427,68 @@
 
             </div>
 
-            @* <div id="profile2" class="tabcontent">
-            <h3 class="ptrl-20">Quotation Listing</h3>
-            <div class="scroll-x ptrl-20">
-            <table>
-            <thead>
-            <tr>
-            <th>#Quotation</th>
-            <th>Valuation Charges</th>
-            <th>VAT <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-            <th>Other Charges</th>
-            <th>Discount (%)</th>
-            <th>Total Valuation Charge</th>
-            <th>Creation Date</th>
-            <th>Status <img src="../assets/arrow-down.svg" alt="arrow-down" class="downArrow" /></th>
-            <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <td class="userPic" onClick="edit()"> 65790-45321</td>
-            <td>1000</td>
-            <td>5%</td>
-            <td>1000</td>
-            <td>5%</td>
-            <td>2657</td>
-            <td>12/09/2022</td>
-            <td><span class="tableStatus blue">Submitted</span></td>
-            <td class="position-relative">
-            <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-            <div class="actionItem">
-            <ul>
-            <li onClick="edit()">
-            <a href="">
-            <img src="../assets/view.svg" alt="view" />
-            view
-            </a>
-            </li>
-            <li onClick="edit()">
-            <a href="">
-            <img src="../assets/edit.svg" alt="edit" />
-            Edit
-            </a>
-            </li>
-            <li class="delete">
-            <a href="">
-            <img src="../assets/trash.svg" alt="trash" />
-            Delete
-            </a>
-            </li>
-            </ul>
+            <div id="profile2" class="tabcontent">
+                <div class="buttonArea">
+                    <div class="flex justify-between align-item-center ptrl-20">
+                        <h3>Quotation Listing</h3>
+                        <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
+                            <button class="flex align-item-center blueBtn exportFile">
+                                <img src="../assets/plus.svg" alt="plus">
+                                Add New
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="scroll-x ptrl-20">
+                    <table id="QuatationTable">
+                        <thead>
+                            <tr>
+                                <th>#Quotation</th>
+                                <th>Valuation Charges</th>
+                                <th>VAT</th>
+                                <th>Other Charges</th>
+                                <th>Discount (%)</th>
+                                <th>Total Valuation Charge</th>
+                                <th>Creation Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            </td>
-            </tr>
-            <tr>
-            <td class="userPic" onClick="edit()"> 65790-45321</td>
-            <td>1000</td>
-            <td>5%</td>
-            <td>1000</td>
-            <td>5%</td>
-            <td>2657</td>
-            <td>12/09/2022</td>
-            <td><span class="tableStatus green">Confirm</span></td>
-            <td class="position-relative">
-            <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-            <div class="actionItem">
-            <ul>
-            <li onClick="edit()">
-            <img src="../assets/view.svg" alt="view" />
-            view
-            </li>
-            <li onClick="edit()">
-            <img src="../assets/edit.svg" alt="edit" />
-            Edit
-            </li>
-            <li class="delete">
-            <img src="../assets/trash.svg" alt="trash" />
-            Delete
-            </li>
-            </ul>
-            </div>
-            </td>
-            </tr>
-            <tr>
-            <td class="userPic" onClick="edit()"> 65790-45321</td>
-            <td>1000</td>
-            <td>5%</td>
-            <td>1000</td>
-            <td>5%</td>
-            <td>2657</td>
-            <td>12/09/2022</td>
-            <td><span class="tableStatus orange">Pending</span></td>
-            <td class="position-relative">
-            <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-            <div class="actionItem">
-            <ul>
-            <li onClick="edit()">
-            <img src="../assets/view.svg" alt="view" />
-            view
-            </li>
-            <li onClick="edit()">
-            <img src="../assets/edit.svg" alt="edit" />
-            Edit
-            </li>
-            <li class="delete">
-            <img src="../assets/trash.svg" alt="trash" />
-            Delete
-            </li>
-            </ul>
-            </div>
-            </td>
-            </tr>
-            <tr>
-            <td class="userPic" onClick="edit()"> 65790-45321</td>
-            <td>1000</td>
-            <td>5%</td>
-            <td>1000</td>
-            <td>5%</td>
-            <td>2657</td>
-            <td>12/09/2022</td>
-            <td><span class="tableStatus blue">Submitted</span></td>
-            <td class="position-relative">
-            <img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" />
-            <div class="actionItem">
-            <ul>
-            <li onClick="edit()">
-            <img src="../assets/view.svg" alt="view" />
-            view
-            </li>
-            <li onClick="edit()">
-            <img src="../assets/edit.svg" alt="edit" />
-            Edit
-            </li>
-            <li class="delete">
-            <img src="../assets/trash.svg" alt="trash" />
-            Delete
-            </li>
-            </ul>
-            </div>
-            </td>
-            </tr>
-            </tbody>
-            </table>
-            </div>
-            </div>
-            *@
+            <div id="profile3" class="tabcontent">
+                <div class="buttonArea">
+                    <div class="flex justify-between align-item-center ptrl-20">
+                        <h3>Invoice Listing</h3>
+                        <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
+                            <button class="flex align-item-center blueBtn exportFile">
+                                <img src="../assets/plus.svg" alt="plus">
+                                Add New
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="scroll-x ptrl-20">
+                    <table id="InvoiceTable">
+                        <thead>
+                            <tr>
+                                <th>#Invoice</th>
+                                <th>Valuation Request Id</th>
+                                <th>Transaction Model</th>
+                                <th>Transaction Status</th>
+                                <th>Amount</th>
+                                <th>Transaction Date</th>
+                                <th>Creation Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             @*  <div id="profile3" class="tabcontent">
             <h3 class="ptrl-20">Select Payment Mode</h3>
             <div class="paymentOption">
@@ -823,8 +742,10 @@
         var GetApproverList = "@Eltizam.Web.Helpers.APIURLHelper.GetApproverList";
         var GetValuerList = "@Eltizam.Web.Helpers.APIURLHelper.GetApproverList";
         var GetDictionaryWithSubDetails = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryWithSubDetails";
-        var ValuationRequestGetById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestGetById";
-
+        var ValuationRequestGetById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestGetById";        
+        var ValuationQuatationById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationQuatationById";
+        var ValuationInvoiceList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationInvoiceList";        
+        var ValuationQuatationList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationQuatationList";
 
 
 
@@ -833,6 +754,8 @@
 
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
+
+
     </script>
 
 }

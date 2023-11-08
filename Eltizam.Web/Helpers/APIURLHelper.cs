@@ -99,6 +99,14 @@ namespace Eltizam.Web.Helpers
 
         #endregion MasterOwnershipType
 
+        #region Quotation
+        public static string UpsertValuationQuatation = "api/ValuationQuatation/Upsert";
+        public static string ValuationQuatationById = "api/ValuationQuatation/GetQuatationById";
+        public static string UpsertValuationInvoice = "api/ValuationInvoice/Upsert";
+        public static string ValuationInvoiceById = "api/ValuationInvoice/GetInvoiceById";
+
+        #endregion Quotation
+
         #region Valuation Fees
         public static string UpsertValuation = "api/MasterValuationFees/Upsert";
         public static string GetAllValuation = "api/MasterValuationFees/GetAll";
@@ -196,6 +204,7 @@ namespace Eltizam.Web.Helpers
         public static string DeleteDictionaryById = "api/MasterDictionary/Delete";
         public static string UpsertMasterDictionary = "api/MasterDictionary/UpsertMasterDictionary";
         public static string GetDictionaryDetailsById = "api/MasterDictionary/GetDictionaryDetailsById";
+        public static string GetDictionaryDescriptionById = "api/MasterDictionary/GetDictionaryDescriptionById";
         public static string GetDictionaryWithSubDetails = "api/MasterDictionary/GetDictionaryWithSubDetails";
 
         #endregion Dictionary Management
@@ -206,6 +215,8 @@ namespace Eltizam.Web.Helpers
         public static string GetAllValuationRequestStatus = "api/ValuationRequestStatus/GetAll";
         public static string AssignApprover = "api/ValuationRequest/AssignApprover";
         public static string ValuationMethod = "api/ValuationRequest/GetAllValuationMethod";
+        public static string ValuationQuatationList = "api/ValuationQuatation/GetQuatationList";
+        public static string ValuationInvoiceList = "api/ValuationInvoice/GetInvoiceList";
         public static string UpsertValuationRequest = "api/ValuationRequest/Upsert";
         public static string ValuationRequestGetById = "api/ValuationRequest/GetById";
         public static string ValuationRequestDeleteById = "api/ValuationRequest/Delete";

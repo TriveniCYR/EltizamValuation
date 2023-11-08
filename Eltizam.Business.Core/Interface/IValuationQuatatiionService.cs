@@ -13,5 +13,6 @@ namespace Eltizam.Business.Core.Interface
         Task<List<ValuationQuatationListModel>> GetQuatationList(int requestId);
         Task<ValuationQuatationListModel> GetQuatationById(int id);
         Task<DBOperation> QuatationDelete(int id);
+        Task<DBOperation> Upsert(ValuationQuatationListModel entityQuatation);
     }
 }

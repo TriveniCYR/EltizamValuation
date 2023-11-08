@@ -36,12 +36,15 @@
 
 	<ItemGroup>
 		<Content Include="Properties\launchSettings.json" />
+		<Content Remove="wwwroot\js\custom\valuationrequest\ValuationQuatationManage.js" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+	  <_ContentIncludedByDefault Remove="wwwroot\js\custom\masteruser\UserManage.js" />
+	  <_ContentIncludedByDefault Remove="wwwroot\js\custom\valuationrequest\ValuationQuatationManage.js" />
 	</ItemGroup>
 	
 	<ItemGroup>

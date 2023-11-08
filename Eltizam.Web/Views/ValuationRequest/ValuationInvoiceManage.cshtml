@@ -1,0 +1,338 @@
+﻿@using Eltizam.Utility.Models
+@model Eltizam.Business.Models.ValuationInvoiceListModel;
+
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    var _header = " Valuation Invoice List";
+    var _md = ViewBag.IsView > 0 ? "View" : "Add";
+    ViewData["Title"] = _md + _header;
+
+    // var objPermssion = (RolePermissionModel)ViewBag.Access;
+    // var isAdd = objPermssion.Add ? 1 : 0;
+    // var isEdit = objPermssion.Edit ? 1 : 0;
+}
+<!-- system user master -->
+@* <div class="flex">
+    <div class="w-100 position-relative"> *@
+
+<main>
+    <div class="whiteBoxShadow">
+        <div class="heading position-relative flex justify-between">
+            <h3 class="dashboardTitle">@_md @_header</h3>
+            <div class="hamburger">
+                <a class="greyBtn lineBtn formAbtn" asp-action="Users">@_header</a>
+                <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                <span>@_md</span>
+            </div>
+        </div>
+        <div class="bodyContent">
+            <h3 class="ptrl-20">Select Payment Mode</h3>
+            <div class="paymentOption">
+                <div class="payTab">
+                    @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                    @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
+                    @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
+                    <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
+                    <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
+                    <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
+                    <button class="payTabLink" onclick="payTab(event, 'pay1')" id="defaultOpenPay">Cash</button>
+                    <button class="payTabLink" onclick="payTab(event, 'pay2')">Cheque</button>
+                    <button class="payTabLink" onclick="payTab(event, 'pay3')">Credit Card</button>
+                    <button class="payTabLink" onclick="payTab(event, 'pay4')">Net Banking</button>
+                </div>
+
+                <div id="pay1" class="payTabContent">
+                    <div class="flex buttonArea justify-between ptrl-20">
+                        <h3>Add Cash Payment Details</h3>
+                        @if (ViewBag.IsView != 1)
+                        {
+                        <button type="button" class="blueBtn" onclick="SaveCashInvoice()">Save</button>
+                        }
+                    </div>
+                    <div class="inputSearchs">
+                        <div class="tabSection">
+                            <div class="flex threeBox mb-28">
+                                <label for="">
+                                    Transaction Status
+                                    <select id="TransactionStatusId" class="disabletxtbox">
+                                        <option value="1">completed</option>
+                                        <option value="2">inprogress</option>
+                                        <option value="3">failed</option>
+                                    </select>
+                                </label>
+                                <label for="">
+                                    Amount
+                                    <input type="text" id="Amount" placeholder="enter the amount" class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Date
+                                    <input type="date" id="TransactionDate" class="disabletxtbox">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="pay2" class="payTabContent">
+                    <div class="flex buttonArea justify-between ptrl-20">
+                        <h3>Add Cheque Payment Details</h3>
+                        @if (ViewBag.IsView != 1)
+                        {
+                        <button type="button" class="blueBtn" onclick="SaveChequeInvoice()">Save</button>
+                        }
+                    </div>
+                    <div class="inputSearchs">
+                        <div class="tabSection">
+                            <div class="flex threeBox mb-28">
+                                <label for="">
+                                    Transaction Status
+                                    <select id="TransactionStatusId"  class="disabletxtbox">
+                                        <option value="1">completed</option>
+                                        <option value="2">inprogress</option>
+                                        <option value="3">failed</option>
+                                    </select>
+                                </label>
+                                <label for="">
+                                    Amount
+                                    <input type="text" id="ChequeAmount" placeholder="enter the amount"  class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Date
+                                    <input type="date" id="ChequeTransactionDate" class="disabletxtbox">
+                                </label>
+                            </div>
+                            <div class="flex threeBox mb-28">
+                                <label for="">
+                                    Cheque Number
+                                    <input type="number" id="ChequeNumber" placeholder="enter cheque number"  class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Cheque Bank Name
+                                    <input type="text" id="ChequeBankName" placeholder="enter cheque number"  class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Cheque Date
+                                    <input type="date" id="ChequeDate"  class="disabletxtbox">
+                                </label>
+                            </div>
+                            <div class="flex threeBox mb-28">
+                                <label for="">
+                                    Cheque Recieved Date
+                                    <input type="date" id="ChequeRecievedDate"  class="disabletxtbox">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="pay3" class="payTabContent">
+                    <div class="flex buttonArea justify-between ptrl-20">
+                        <h3>Add Credit Card Payment Details</h3>
+                        @if (ViewBag.IsView != 1)
+                        {
+                        <button type="button" class="blueBtn" onclick="SaveCreditCardInvoice()">Save</button>
+                        }
+                    </div>
+                    <div class="inputSearchs">
+                        <div class="tabSection">
+
+                            <div class="flex threeBox mb-28">
+                                <label for="">
+                                    Transaction Status
+                                    <select id="TransactionStatusId" class="disabletxtbox">
+                                        <option value="1">completed</option>
+                                        <option value="2">inprogress</option>
+                                        <option value="3">failed</option>
+                                    </select>
+                                </label>
+                                <label for="">
+                                    Amount
+                                    <input type="text" id="CardAmount" placeholder="enter the amount" class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Date
+                                    <input type="date" id="CardTransactionDate" class="disabletxtbox">
+                                </label>
+                            </div>
+                            <div class="flex threeBox mb-28">
+                                <label for="">
+                                    Transaction ID
+                                    <input type="number" id="TransactionId" placeholder="enter Transaction ID" class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Credit Card Number
+                                    <input type="number" id="CreditCardNumber" placeholder="enter credit card number" class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Bank Name
+                                    <input type="text" id="CardBankName" placeholder="enter bank name" class="disabletxtbox">
+                                </label>
+                            </div>
+                            <div class="flex threeBox mb-28">
+                                <label for="">
+                                    Name on card
+                                    <input type="text" id="NameOnCard" placeholder="enter name on card" class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Expiry Date
+                                    <input type="date" id="ExpiryDate" class="disabletxtbox">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="pay4" class="payTabContent">
+                    <div class="flex buttonArea justify-between ptrl-20">
+                        <h3>Add Net Banking Payment Details</h3>
+                        @if (ViewBag.IsView != 1)
+                        {
+                        <button type="button" class="blueBtn" onclick="SaveNetBankingInvoice()">Save</button>
+                        }
+                    </div>
+                    <div class="inputSearchs">
+                        <div class="tabSection">
+                            <div class="flex threeBox mb-28">
+                                <label for="">
+                                    Transaction Status
+                                    <select id="TransactionStatusId" class="disabletxtbox">
+                                        <option value="1">completed</option>
+                                        <option value="2">inprogress</option>
+                                        <option value="3">failed</option>
+                                    </select>
+                                </label>
+                                <label for="">
+                                    Amount
+                                    <input type="text" id="BankAmount" placeholder="enter the amount" class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Date
+                                    <input type="date" id="BankTransactionDate" class="disabletxtbox">
+                                </label>
+                            </div>
+                            <div class="flex threeBox mb-28">
+                                <label for="">
+                                    Transaction ID
+                                    <input type="number" id="TransactionId" placeholder="enter Transaction ID" class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Bank Name
+                                    <input type="text" id="BankName" placeholder="enter banke name" class="disabletxtbox">
+                                </label>
+                                <label for="">
+                                    Account Number
+                                    <input type="number" id="AccountNumber" placeholder="enter acount number" class="disabletxtbox">
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="blueHeading">Upload Supporting Documents</h3>
+            <div class="inputSearchs uploadDocBox">
+                <div class="tabSection">                    
+                @if (ViewBag.IsView != 1)
+                {
+                    <div class="flex mb-28">
+                        <label for="document">
+                            Documents Name
+                            <input type="text" placeholder="enter Documents Name">
+                        </label>
+                        <label for="atach">
+                            Attach Supporting Documents
+                            <div class="attachDoc">
+                                <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
+                                <input type="file" class="btn" value="Upload Photo" multiple />
+                                <p>click to upload.</p>
+                            </div>
+                        </label>
+                    </div>
+                    }
+                    <div class="W-100">
+                        <div class="prevUpload roundBorderBox m-0">
+                            <h3>Previously uploaded</h3>
+                            <div class="flex">
+                                <div class="prevUploadTab">
+                                    <div class="flex align-item-center m-0">
+                                        <img src="../assets/file.svg" alt="file" />
+                                        ABC
+                                    </div>
+                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                </div>
+                                <div class="prevUploadTab">
+                                    <div class="flex align-item-center m-0">
+                                        <img src="../assets/file.svg" alt="file" />
+                                        ABC
+                                    </div>
+                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                </div>
+                                <div class="prevUploadTab">
+                                    <div class="flex align-item-center m-0">
+                                        <img src="../assets/file.svg" alt="file" />
+                                        ABC
+                                    </div>
+                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                </div>
+                                <div class="prevUploadTab">
+                                    <div class="flex align-item-center m-0">
+                                        <img src="../assets/file.svg" alt="file" />
+                                        ABC
+                                    </div>
+                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.IsView != 1)
+                {
+                <div class="text-center ptrl-20 buttonArea">
+                    <button type="button" class="blueBtn">Save</button>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>
+@*  </div>
+</div> *@
+
+
+@section MyScripts {
+    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationInvoiceManage.js?v=@jsVersion"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            debugger
+            if (@ViewBag.IsView == 1) {
+                $(".disabletxtbox").prop("disabled", true);
+                // Disable the associated label element
+            }
+        });
+        // payemnt option JS here
+        function payTab(evt, payName) {
+            var i, payTabContent, payTabLink;
+            payTabContent = document.getElementsByClassName("payTabContent");
+            for (i = 0; i < payTabContent.length; i++) {
+                payTabContent[i].style.display = "none";
+            }
+            payTabLink = document.getElementsByClassName("payTabLink");
+            for (i = 0; i < payTabLink.length; i++) {
+                payTabLink[i].className = payTabLink[i].className.replace(" active", "");
+            }
+            document.getElementById(payName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        document.getElementById("defaultOpenPay").click();
+        // payment option JS ends
+
+
+        var ValuationInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationInvoiceById";
+        var UpsertValuationInvoice = "@Eltizam.Web.Helpers.APIURLHelper.UpsertValuationInvoice";
+
+
+    </script>
+}

@@ -17,6 +17,7 @@
     var isAdd = objPermssion.Add ? 1 : 0;
     var isDelete = objPermssion.Delete ? 1 : 0;
     var isEdit = objPermssion.Edit ? 1 : 0;
+    var roleId = objPermssion.RoleId;
 }
 
 
@@ -27,15 +28,22 @@
             <div class="buttonArea flex align-item-center">
                 <input type="hidden" id="isDeletePerm" value="@isDelete" />
                 <input type="hidden" id="isAddPerm" value="@isAdd" />
-                <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
+                @if (roleId != 2)
+                {
                     <button class="flex align-item-center blueBtn" id="addNew">
                         <img src="~/assets/plus.svg" alt="plus"> Add New
                     </button>
-                </form>
-                <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()">
-                    <img src="../assets/user-shield.svg" alt="user">
-                    ASSIGN
-                </button>
+                }
+
+                @if (roleId != 1)
+                {
+                    <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()">
+                        <img src="../assets/user-shield.svg" alt="user">
+                        ASSIGN
+                    </button>
+                }
+
+               
                 <div class="accordion-content inputSearchs" id="assignToggle" style="display:none">
                     <div class="flex justify-between">
                         <h3>Assign</h3>
@@ -61,6 +69,8 @@
         </div>
 
         <div class="accordion valueAdvance">
+
+
 
             <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
             <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
@@ -179,7 +189,7 @@
                 @Html.Hidden("Id")
                 <div class="buttonArea popup-btn">
                     <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
-                    <button type="button" onclick="DeleteValuationRequestType()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                    <button type="button" onclick="DeletePropertyType()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
                 </div>
             </div>
         </div>
@@ -208,7 +218,6 @@
           var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";
           var ValutionRequestStatusList = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationRequestStatus";
            var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationMethod";
-        var ValuationRequestDeleteById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestDeleteById";
 
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";

@@ -76,7 +76,7 @@ namespace Eltizam.Web.Controllers
                     }
                     else
                     {
-                        TempData[UserHelper.ErrorMessage] = _stringLocalizer["InvalidUser"].Value; 
+                        TempData[UserHelper.ErrorMessage] = responseMessage.ReasonPhrase; 
                         return View(loginViewModel);
                     }
                 }
