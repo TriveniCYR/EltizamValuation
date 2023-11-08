@@ -713,6 +713,59 @@
         </div>
     </div>
 </main>
+
+<div id="DeleteQuotationModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("Id")
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteQuotation()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="DeleteInvoiceModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("Id")
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteInvoice()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
@@ -746,7 +799,8 @@
         var ValuationQuatationById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationQuatationById";
         var ValuationInvoiceList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationInvoiceList";        
         var ValuationQuatationList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationQuatationList";
-
+        var DeleteQuotationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteQuotationById";
+        var DeleteInvoiceByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteInvoiceById";
 
 
         //#region Static Messae Init

@@ -102,8 +102,10 @@ namespace Eltizam.Web.Helpers
         #region Quotation
         public static string UpsertValuationQuatation = "api/ValuationQuatation/Upsert";
         public static string ValuationQuatationById = "api/ValuationQuatation/GetQuatationById";
+        public static string DeleteQuotationById = "api/ValuationQuatation/Delete";
         public static string UpsertValuationInvoice = "api/ValuationInvoice/Upsert";
         public static string ValuationInvoiceById = "api/ValuationInvoice/GetInvoiceById";
+        public static string DeleteInvoiceById = "api/ValuationInvoice/Delete";
 
         #endregion Quotation
 
