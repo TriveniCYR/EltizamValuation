@@ -38,7 +38,7 @@ namespace EltizamValuation.Web.Controllers
         }
         [HttpGet]
         public IActionResult ValuationRequestManage(int? id, string view)
-        {
+      {
             if (id != null)
             {
                
