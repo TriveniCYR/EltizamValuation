@@ -35,7 +35,7 @@
                                 @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Department Name"], @readonly = "readonly" } })
                                 @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
                             </label>
-                            <label for="" class="w-50 roleswitch">
+                            <label for="" class="w-50">
                                 Status
                                 @{
                                     bool isActive = Model.IsActive == 1; // Convert 1 to true, any other value to false

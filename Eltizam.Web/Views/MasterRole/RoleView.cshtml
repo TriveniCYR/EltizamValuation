@@ -26,14 +26,14 @@
         </div>
         <div class="container-fluid overflow-auto background-white-card">
             <div class="row">
-                <div class="col-md-12">
+                <div class="w-50">
                     <div class="form-group required">
-                        @Html.LabelFor(model => model.RoleName, new { @class = "control-label" })
+                        @Html.LabelFor(model => model.RoleName, new { @class = "control-label" }) <br/>    
                         @Html.DisplayFor(model => model.RoleName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["RoleName"] } })
                         
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="w-50">
                     <div class="required">
                         @if (Model.IsUserAssigned && Model.IsActive)
                         {
@@ -41,20 +41,30 @@
 @* 
                             <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required disabled />
                             <label class="label-switch" for="addLocation"></label>
-                            <span class="info-text"></span>
- *@
-                            @Html.CheckBoxFor(model => model.IsActive, new { @disabled="true",  @class = "checkbox-checked", @checked = "checked" })
+                            <span class="info-text"></span> *@
+                           @*  <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required disabled />
+                            <label class="label-switch" for="addLocation">Status</label> *@
+
+                            <label for="" class="w-50 roleswitch">
+                                Status
+
+                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required disabled />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text"></span>
+                            </label>
+
+                           @*  @Html.CheckBoxFor(model => model.IsActive, new { @disabled="true",  @class = "checkbox-checked", @checked = "checked" })
                             @Html.Label(@SharedLocalizer["IsActive"])
-                            <lable class="text-danger">@MasterLocalizer["CanNotInactiveRole"]</lable>
+                            <lable class="text-danger">@MasterLocalizer["CanNotInactiveRole"]</lable> *@
 
                         }
                         else
                         {
-                         @*    <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required disabled />
-                            <label class="label-switch" for="addLocation"></label>
-                            <span class="info-text"></span> *@
-                            @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
-                            @Html.Label(@SharedLocalizer["IsActive"])
+                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required disabled />
+                            <label class="label-switch" for="addLocation">Status</label>
+                            
+                           @*  @Html.CheckBoxFor(model => model.IsActive, new { @class = "checkbox-checked", @checked = "checked" })
+                            @Html.Label(@SharedLocalizer["IsActive"]) *@
                         }
                     </div>
 

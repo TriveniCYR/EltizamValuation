@@ -36,11 +36,12 @@ namespace EltizamValuation.Web.Controllers
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }
-
+        [HttpGet]
         public IActionResult ValuationRequestManage(int? id, string view)
         {
             if (id != null)
             {
+               
                 ViewData["IsEdit"] = true;
             }
 
@@ -50,20 +51,28 @@ namespace EltizamValuation.Web.Controllers
             }
             ValuationRequestModel valuationRequestModel;
             if (id == null || id <= 0)
-            { 
-                valuationRequestModel = new ValuationRequestModel(); 
+            {
+                ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
+                
+                valuationRequestModel = new ValuationRequestModel();
+                valuationRequestModel.ReferenceNo = "123";
+               // Master_PropertyTypeModel master_PropertyType = new Master_PropertyTypeModel();
+                //valuationRequestModel.master_PropertyType = master_PropertyType;
+
+
                 return View("ValuationRequestManage", valuationRequestModel);
             }
             else
             {
+                ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetValuationById + "/" + id, HttpMethod.Get, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationRequestGetById + "/" + id, HttpMethod.Get, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestModel>>(jsonResponse);
 
                     //Get Footer info
                     FooterInfo(TableNameEnum.ValuationRequest, _cofiguration, id);
@@ -83,6 +92,51 @@ namespace EltizamValuation.Web.Controllers
                 }
                 return NotFound();
             }
+        }
+
+        [HttpPost]
+        [Route("ValuationRequest/ValuationRequestManage")]
+        public IActionResult ValuationRequest(int id, ValuationRequestModel valuationRequestModel)
+        {
+            try
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                ValuationRequestModel valuationRequestModelNew = new ValuationRequestModel();
+                valuationRequestModelNew.Id = id;
+                valuationRequestModelNew.ApproverId = valuationRequestModel.ApproverId;
+                valuationRequestModelNew.ValuerId = valuationRequestModel.ValuerId;
+                valuationRequestModelNew.ValuationModeId = valuationRequestModel.ValuationModeId;
+                valuationRequestModelNew.ValuationTimeFrame = valuationRequestModel.ValuationTimeFrame;
+                valuationRequestModelNew.ValuationDate = valuationRequestModel.ValuationDate;
+                valuationRequestModelNew.StatusId = valuationRequestModel.StatusId;
+                valuationRequestModelNew.PropertyId = valuationRequestModel.PropertyId;
+                valuationRequestModelNew.ClientId = valuationRequestModel.ClientId;
+                valuationRequestModelNew.ReferenceNo = "123";
+                valuationRequestModelNew.OtherReferenceNo = valuationRequestModel.OtherReferenceNo;
+                //valuationRequestModelNew.ValuationDate = valuationRequestModel.ValuationDate;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    TempData["StatusMessage"] = "Saved Successfully";
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    ModelState.Clear();
+                    return RedirectToAction(nameof(ValuationRequests));
+                }
+                else
+                    TempData["StatusMessage"] = "Some Eror Occured";
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                ViewBag.errormessage = Convert.ToString(e.StackTrace);
+                ModelState.Clear();
+                return View(nameof(ValuationRequests));
+            }
+            ModelState.Clear();
+            return RedirectToAction(nameof(ValuationRequests));
         }
 
     }

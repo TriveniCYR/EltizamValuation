@@ -76,18 +76,18 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        //[HttpGet("GetAllAuditLogTableName")]
-        //public async Task<IActionResult> GetAllAuditLogTableName()
-        //{
-        //    try
-        //    {
-        //        return _ObjectResponse.CreateData(await _auditLogService.GetAllAuditLogTableName(), (Int32)HttpStatusCode.OK);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-        //    }
-        //}
+        [HttpGet("GetAllAuditLogTableName")]
+        public async Task<IActionResult> GetAllAuditLogTableName()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _auditLogService.GetAllAuditLogTableName(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
     }
 }
