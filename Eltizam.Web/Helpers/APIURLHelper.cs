@@ -196,6 +196,7 @@ namespace Eltizam.Web.Helpers
         public static string DeleteDictionaryById = "api/MasterDictionary/Delete";
         public static string UpsertMasterDictionary = "api/MasterDictionary/UpsertMasterDictionary";
         public static string GetDictionaryDetailsById = "api/MasterDictionary/GetDictionaryDetailsById";
+        public static string GetDictionaryWithSubDetails = "api/MasterDictionary/GetDictionaryWithSubDetails";
 
         #endregion Dictionary Management
 
@@ -205,6 +206,9 @@ namespace Eltizam.Web.Helpers
         public static string GetAllValuationRequestStatus = "api/ValuationRequestStatus/GetAll";
         public static string AssignApprover = "api/ValuationRequest/AssignApprover";
         public static string ValuationMethod = "api/ValuationRequest/GetAllValuationMethod";
+        public static string UpsertValuationRequest = "api/ValuationRequest/Upsert";
+        public static string ValuationRequestGetById = "api/ValuationRequest/GetById";
+        public static string ValuationRequestDeleteById = "api/ValuationRequest/Delete";
 
         #endregion Valuation Request
 

@@ -2042,5 +2042,9 @@ div.dataTables_wrapper div.dataTables_filter {
     padding: 16px;
 }
 .footerAuditContainer{
-    margin:0 24px;
+    margin:0 24px 20px;
+}
+
+div#amentiesdiv label {
+    margin: 0 0 16px 20px;
 }

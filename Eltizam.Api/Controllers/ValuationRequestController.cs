@@ -81,5 +81,59 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+        [HttpPost]
+        [Route("Upsert")]
+        public async Task<IActionResult> Upsert([FromBody] ValuationRequestModel oValuation)
+        {
+            try
+            {
+                DBOperation oResponse = await _valutionServices.Upsert(oValuation);
+                if (oResponse == DBOperation.Success)
+                {
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oValuation.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+                }
+                else
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpGet, Route("GetById/{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            try
+            {
+                var oValuationEntity = await _valutionServices.GetById(id);
+                if (oValuationEntity != null && oValuationEntity.Id > 0)
+                    return _ObjectResponse.Create(oValuationEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            try
+            {
+                DBOperation oResponse = await _valutionServices.Delete(id);
+                if (oResponse == DBOperation.Success)
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
     }
 }
