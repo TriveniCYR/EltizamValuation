@@ -1,0 +1,147 @@
+﻿@using Eltizam.Utility.Models;
+@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+
+@model Eltizam.Business.Models.ValuationQuatationListModel
+@{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    var _header = " Valuation Quotation List";
+    var _md = ViewBag.IsView > 0 ? "View" : "Add";
+    ViewData["Title"] = _md + _header;
+}
+
+<!-- system user master -->
+<div class="flex">
+    <div class="w-100 position-relative">
+        <main>
+            <div class="whiteBoxShadow">
+                <div class="profileHead flex justify-between align-item-center cursor-pointer">
+                    <h3 class="dashboardTitle">@_md @_header</h3>
+                    <div class="hamburger">
+                        <span onclick="valuationListingMaster()">Valuation Quotation List</span>
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                        <span>@_md @_header</span>
+                    </div>
+                </div>
+                <div class="bodyContent">
+                    <div class="inputSearchs uploadDocBox p-0">
+                        <form asp-action="ValuationQuotationManage" autocomplete="off" asp-controller="ValuationRequest" method="post">
+                            @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                            @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
+                            @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
+                            @Html.HiddenFor(model => model.StatusId, new { @class = "control-label" })
+                            <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
+                            <div class="flex">
+                                <label for="" class="w-50">
+                                    <p class="m-0">Valuation Fees (AED)<span class="text-danger">*</span></p>
+                                    @Html.EditorFor(model => model.ValuationFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox" ,@placeholder="enter Valuation Fees (AED)"} })
+                                    @Html.ValidationMessageFor(model => model.ValuationFee, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="" class="w-50">
+                                    <p class="m-0">VAT (Percent)<span class="text-danger">*</span></p>
+                                    @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox", @placeholder="enter VAT (Percent)"} })
+                                    @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
+                                </label>
+                            </div>
+                            <div class="flex">
+                                <label for="" class="w-50">
+                                    <p class="m-0">Other Charges<span class="text-danger">*</span></p>
+                                    @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox",placeholder="enter other chargesr" } })
+                                    @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="" class="w-50">
+                                    Valuation Instructor Charges
+                                    @Html.EditorFor(model => model.InstructorCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox",placeholder="enter Instructor chargesr" } })
+                                    @Html.ValidationMessageFor(model => model.InstructorCharges, "", new { @class = "text-danger" })
+                                </label>
+                            </div>
+                            <div class="flex mb-28">
+                                <label for="userName" class="w-50">
+                                    Discount (%)
+                                    @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox",placeholder="enter Discount" } })
+                                    @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+                                </label>
+                                <label for="userName" class="w-50">
+                                    <p class="m-0">Total evaluation Fees<span class="text-danger">*</span></p>
+                                    @Html.EditorFor(model => model.TotalFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox",@placeholder="enter Total Fees" } })
+                                    @Html.ValidationMessageFor(model => model.TotalFee, "", new { @class = "text-danger" })
+                                </label>
+                            </div>
+                            <div class="tabSection">
+
+                                <h3 class="mb-28">Upload Supporting Documents</h3>
+                                @if (ViewBag.IsView != 1)
+                                {
+                                    <div class="flex">
+                                        <label for="document" class="w-50">
+                                            Documents Name
+                                            <input type="text" placeholder="enter Documents Name">
+                                        </label>
+                                        <label for="atach" class="w-50">
+                                            Attach Supporting Documents
+                                            <div class="attachDoc">
+                                                <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
+                                                <input type="file" class="btn" value="Upload Photo" multiple />
+                                                <p>click to upload.</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                }
+                                <div class="prevUpload roundBorderBox m-0">
+
+                                    <h3>Previously uploaded</h3>
+                                    <div class="flex">
+                                        <div class="prevUploadTab">
+                                            <div class="flex align-item-center m-0">
+                                                <img src="../assets/file.svg" alt="file" />
+                                                ABC
+                                            </div>
+                                            <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center ptrl-20 buttonArea">
+                                <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                                @if (ViewBag.IsView != 1)
+                                {
+                                    <button type="submit" class="blueBtn">Save</button>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+@section MyScripts {
+    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationQuatationManage.js?v=@jsVersion"></script>
+    <script>
+
+        $(document).ready(function () {
+            debugger
+            if (@ViewBag.IsView == 1) {
+                $(".disabletxtbox").prop("disabled", true);
+                // Disable the associated label element
+            }
+        });
+
+        function sideNavToggle() {
+            var x = document.getElementById("sideNav");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+
+    </script>
+}

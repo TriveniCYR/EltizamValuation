@@ -59,7 +59,7 @@ namespace EltizamValuation.Api.Controllers
 
         [HttpPost]
         [Route("Upsert")]
-        public async Task<IActionResult> Upsert([FromBody] ValuationQuatationListModel model)
+        public async Task<IActionResult> Upsert(ValuationQuatationListModel model)
         {
             try
             {
