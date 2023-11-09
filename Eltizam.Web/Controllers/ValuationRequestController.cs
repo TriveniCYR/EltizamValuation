@@ -223,8 +223,8 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
-
-            return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId, view = 0 });
+            return RedirectToAction("ValuationRequests");
+            //return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId });
         }
         [HttpGet]
         public IActionResult ValuationInvoiceManage(int? id, int vId, string refNo)
