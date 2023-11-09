@@ -36,6 +36,8 @@
                 <div class="inputSearchs p-0">
                     <div class="tabSection">
                         <input type="hidden" id="hdnPropertyId" value="@(Model == null ? 0 : Model.Id)" />
+                        <input type="hidden" id="isAddPerm" value="@isAdd" />
+                        <input type="hidden" id="isEditPerm" value="@isEdit" />
                         @Html.HiddenFor(model=> model.IsActive)
                         <div class="flex">
                             <label for="" class="w-50">
