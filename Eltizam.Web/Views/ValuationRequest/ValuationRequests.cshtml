@@ -28,7 +28,7 @@
             <div class="buttonArea flex align-item-center">
                 <input type="hidden" id="isDeletePerm" value="@isDelete" />
                 <input type="hidden" id="isAddPerm" value="@isAdd" />
-                @if (roleId != 2)
+                @if (roleId != 2 && roleId != 3 )
                 {
                     <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
                         <button class="flex align-item-center blueBtn" id="addNew">
