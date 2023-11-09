@@ -11,7 +11,7 @@
 @model Eltizam.Business.Models.ValuationQuatationListModel
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = " Valuation Quotation List";
+    var _header = " Valuation Quotation";
     var _md = ViewBag.IsView > 0 ? "View" : "Add";
     ViewData["Title"] = _md + _header;
 }
@@ -107,11 +107,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center ptrl-20 buttonArea">
+                            <div class="text-right ptrl-20 buttonArea bodyContent">
                                 <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
                                 @if (ViewBag.IsView != 1)
                                 {
-                                    <button type="submit" class="blueBtn">Save</button>
+                                    <button type="submit" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;">
+                                        Save
+                                    </button>
                                 }
                             </div>
                         </form>

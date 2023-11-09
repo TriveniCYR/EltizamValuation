@@ -6,7 +6,7 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = " Valuation Invoice List";
+    var _header = " Valuation Invoice";
     var _md = ViewBag.IsView > 0 ? "View" : "Add";
     ViewData["Title"] = _md + _header;
 
@@ -49,13 +49,13 @@
                         <h3>Add Cash Payment Details</h3>
                         @if (ViewBag.IsView != 1)
                         {
-                        <button type="button" class="blueBtn" onclick="SaveCashInvoice()">Save</button>
+                            <button type="button" class="blueBtn" onclick="SaveCashInvoice()">Save</button>
                         }
                     </div>
                     <div class="inputSearchs">
                         <div class="tabSection">
-                            <div class="flex threeBox mb-28">
-                                <label for="">
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Transaction Status
                                     <select id="TransactionStatusId" class="disabletxtbox">
                                         <option value="1">completed</option>
@@ -63,15 +63,18 @@
                                         <option value="3">failed</option>
                                     </select>
                                 </label>
-                                <label for="">
+                                <label for="" class="w-50">
                                     Amount
                                     <input type="text" id="Amount" placeholder="enter the amount" class="disabletxtbox">
                                 </label>
-                                <label for="">
+                            </div>
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Date
                                     <input type="date" id="TransactionDate" class="disabletxtbox">
                                 </label>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -80,47 +83,49 @@
                         <h3>Add Cheque Payment Details</h3>
                         @if (ViewBag.IsView != 1)
                         {
-                        <button type="button" class="blueBtn" onclick="SaveChequeInvoice()">Save</button>
+                            <button type="button" class="blueBtn" onclick="SaveChequeInvoice()">Save</button>
                         }
                     </div>
                     <div class="inputSearchs">
                         <div class="tabSection">
-                            <div class="flex threeBox mb-28">
-                                <label for="">
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Transaction Status
-                                    <select id="TransactionStatusId"  class="disabletxtbox">
+                                    <select id="TransactionStatusId" class="disabletxtbox">
                                         <option value="1">Completed</option>
                                         <option value="2">Inprogress</option>
                                         <option value="3">Failed</option>
                                     </select>
                                 </label>
-                                <label for="">
+                                <label for="" class="w-50">
                                     Amount
-                                    <input type="text" id="ChequeAmount" placeholder="enter the amount"  class="disabletxtbox">
+                                    <input type="text" id="ChequeAmount" placeholder="enter the amount" class="disabletxtbox">
                                 </label>
-                                <label for="">
+                            </div>
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Date
                                     <input type="date" id="ChequeTransactionDate" class="disabletxtbox">
                                 </label>
-                            </div>
-                            <div class="flex threeBox mb-28">
-                                <label for="">
+                                <label for="" class="w-50">
                                     Cheque Number
-                                    <input type="number" id="ChequeNumber" placeholder="enter cheque number"  class="disabletxtbox">
-                                </label>
-                                <label for="">
-                                    Cheque Bank Name
-                                    <input type="text" id="ChequeBankName" placeholder="enter cheque number"  class="disabletxtbox">
-                                </label>
-                                <label for="">
-                                    Cheque Date
-                                    <input type="date" id="ChequeDate"  class="disabletxtbox">
+                                    <input type="number" id="ChequeNumber" placeholder="enter cheque number" class="disabletxtbox">
                                 </label>
                             </div>
-                            <div class="flex threeBox mb-28">
-                                <label for="">
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
+                                    Cheque Bank Name
+                                    <input type="text" id="ChequeBankName" placeholder="enter cheque number" class="disabletxtbox">
+                                </label>
+                                <label for="" class="w-50">
+                                    Cheque Date
+                                    <input type="date" id="ChequeDate" class="disabletxtbox">
+                                </label>
+                            </div>
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Cheque Recieved Date
-                                    <input type="date" id="ChequeRecievedDate"  class="disabletxtbox">
+                                    <input type="date" id="ChequeRecievedDate" class="disabletxtbox">
                                 </label>
                             </div>
                         </div>
@@ -131,14 +136,14 @@
                         <h3>Add Credit Card Payment Details</h3>
                         @if (ViewBag.IsView != 1)
                         {
-                        <button type="button" class="blueBtn" onclick="SaveCreditCardInvoice()">Save</button>
+                            <button type="button" class="blueBtn" onclick="SaveCreditCardInvoice()">Save</button>
                         }
                     </div>
                     <div class="inputSearchs">
                         <div class="tabSection">
 
-                            <div class="flex threeBox mb-28">
-                                <label for="">
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Transaction Status
                                     <select id="TransactionStatusId" class="disabletxtbox">
                                         <option value="1">completed</option>
@@ -146,35 +151,37 @@
                                         <option value="3">failed</option>
                                     </select>
                                 </label>
-                                <label for="">
+                                <label for="" class="w-50">
                                     Amount
                                     <input type="text" id="CardAmount" placeholder="enter the amount" class="disabletxtbox">
                                 </label>
-                                <label for="">
+                            </div>
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Date
                                     <input type="date" id="CardTransactionDate" class="disabletxtbox">
                                 </label>
-                            </div>
-                            <div class="flex threeBox mb-28">
-                                <label for="">
+                                <label for="" class="w-50">
                                     Transaction ID
                                     <input type="number" id="TransactionId" placeholder="enter Transaction ID" class="disabletxtbox">
                                 </label>
-                                <label for="">
+                            </div>
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Credit Card Number
                                     <input type="number" id="CreditCardNumber" placeholder="enter credit card number" class="disabletxtbox">
                                 </label>
-                                <label for="">
+                                <label for="" class="w-50">
                                     Bank Name
                                     <input type="text" id="CardBankName" placeholder="enter bank name" class="disabletxtbox">
                                 </label>
                             </div>
-                            <div class="flex threeBox mb-28">
-                                <label for="">
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Name on card
                                     <input type="text" id="NameOnCard" placeholder="enter name on card" class="disabletxtbox">
                                 </label>
-                                <label for="">
+                                <label for="" class="w-50">
                                     Expiry Date
                                     <input type="date" id="ExpiryDate" class="disabletxtbox">
                                 </label>
@@ -187,13 +194,13 @@
                         <h3>Add Net Banking Payment Details</h3>
                         @if (ViewBag.IsView != 1)
                         {
-                        <button type="button" class="blueBtn" onclick="SaveNetBankingInvoice()">Save</button>
+                            <button type="button" class="blueBtn" onclick="SaveNetBankingInvoice()">Save</button>
                         }
                     </div>
                     <div class="inputSearchs">
                         <div class="tabSection">
-                            <div class="flex threeBox mb-28">
-                                <label for="">
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Transaction Status
                                     <select id="TransactionStatusId" class="disabletxtbox">
                                         <option value="1">completed</option>
@@ -201,29 +208,30 @@
                                         <option value="3">failed</option>
                                     </select>
                                 </label>
-                                <label for="">
+                                <label for="" class="w-50">
                                     Amount
                                     <input type="text" id="BankAmount" placeholder="enter the amount" class="disabletxtbox">
                                 </label>
-                                <label for="">
+                            </div>
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Date
                                     <input type="date" id="BankTransactionDate" class="disabletxtbox">
                                 </label>
-                            </div>
-                            <div class="flex threeBox mb-28">
-                                <label for="">
+                                <label for="" class="w-50">
                                     Transaction ID
                                     <input type="number" id="TransactionId" placeholder="enter Transaction ID" class="disabletxtbox">
                                 </label>
-                                <label for="">
+                            </div>
+                            <div class="flex mb-28">
+                                <label for="" class="w-50">
                                     Bank Name
                                     <input type="text" id="BankName" placeholder="enter banke name" class="disabletxtbox">
                                 </label>
-                                <label for="">
+                                <label for="" class="w-50">
                                     Account Number
                                     <input type="number" id="AccountNumber" placeholder="enter acount number" class="disabletxtbox">
                                 </label>
-
                             </div>
                         </div>
                     </div>
@@ -232,23 +240,23 @@
 
             <h3 class="blueHeading">Upload Supporting Documents</h3>
             <div class="inputSearchs uploadDocBox">
-                <div class="tabSection">                    
-                @if (ViewBag.IsView != 1)
-                {
-                    <div class="flex mb-28">
-                        <label for="document">
-                            Documents Name
-                            <input type="text" placeholder="enter Documents Name">
-                        </label>
-                        <label for="atach">
-                            Attach Supporting Documents
-                            <div class="attachDoc">
-                                <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
-                                <input type="file" class="btn" value="Upload Photo" multiple />
-                                <p>click to upload.</p>
-                            </div>
-                        </label>
-                    </div>
+                <div class="tabSection">
+                    @if (ViewBag.IsView != 1)
+                    {
+                        <div class="flex mb-28">
+                            <label for="document" class="w-50">
+                                Documents Name
+                                <input type="text" placeholder="enter Documents Name">
+                            </label>
+                            <label for="atach" class="w-50">
+                                Attach Supporting Documents
+                                <div class="attachDoc">
+                                    <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
+                                    <input type="file" class="btn" value="Upload Photo" multiple />
+                                    <p>click to upload.</p>
+                                </div>
+                            </label>
+                        </div>
                     }
                     <div class="W-100">
                         <div class="prevUpload roundBorderBox m-0">
@@ -286,12 +294,14 @@
                         </div>
                     </div>
                 </div>
-                @if (ViewBag.IsView != 1)
+                @* @if (ViewBag.IsView != 1)
                 {
-                <div class="text-center ptrl-20 buttonArea">
-                    <button type="button" class="blueBtn">Save</button>
+                <div class="text-right ptrl-20 buttonArea bodyContent">
+                <button type="button" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;">
+                Save
+                </button>
                 </div>
-                }
+                } *@
             </div>
         </div>
     </div>
