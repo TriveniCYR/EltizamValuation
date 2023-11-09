@@ -1111,6 +1111,8 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false)
                     .HasColumnName("ReferenceNO");
 
+                entity.Property(e => e.TransactionDate).HasColumnType("datetime");
+
                 entity.HasOne(d => d.ValuationRequest)
                     .WithMany(p => p.ValuationInvoices)
                     .HasForeignKey(d => d.ValuationRequestId)

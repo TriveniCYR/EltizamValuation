@@ -22,6 +22,7 @@ namespace Eltizam.Business.Models
         
         public string? FromDate { get; set; }
         public string? ToDate { get; set; }
+        public string? CreatedDateFormatted { get; set; }
     }
     public class AuditLogModelResponse : AuditLogModel
     { 

@@ -26,6 +26,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifyBy { get; set; }
         public DateTime? ModifyDate { get; set; }
         public decimal? Balance { get; set; }
+        public DateTime? TransactionDate { get; set; }
 
         public virtual ValuationRequest ValuationRequest { get; set; } = null!;
     }

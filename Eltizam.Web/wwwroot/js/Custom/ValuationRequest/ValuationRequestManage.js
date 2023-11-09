@@ -52,6 +52,8 @@ $(document).ready(function () {
     BindCountry();
     GetApproverLists();
     GetValuerLists();
+    BindQuatationList();
+    BindInvoiceList();
     /*BindPropertyDetail();*/
 
     if (document.location.href.includes('id'))
@@ -566,8 +568,8 @@ function BindClientDetailsByClientId(Id) {
                 /*destoryStaticDataTable('#ClientTypeTable');*/
                 $('#NewAddressTable tbody').html('');
                 //$.each(data._object, function (index, object) { //  <td>' + object.ClientTypeCode + '</td>  <td>' + object.isdClientTypeCode + '</td>  
-                $('#NewAddressTable tbody').append(' <tr><td>' + response._object.address.address1 + '</td> <td>' + response._object.address.address2 + '</td><td>' + response._object.address.countryId
-                    + '</td><td>' + response._object.address.stateId + '</td><td>' + response._object.address.cityId + '</td><td>' + response._object.address.pinNo + '</td></tr>');
+                $('#NewAddressTable tbody').append(' <tr><td>' + response._object.address.address1 + '</td> <td>' + response._object.address.address2 + '</td><td>' + response._object.address.countryName
+                    + '</td><td>' + response._object.address.stateName + '</td><td>' + response._object.address.cityName + '</td><td>' + response._object.address.pinNo + '</td></tr>');
                // });
                // StaticDataTable("#ClientTypeTable");
             }
@@ -684,5 +686,145 @@ function GetValuationMethodLists() {
 
 }
 
+function BindQuatationList() {
+    debugger
+    let id = $('#hdnId').val();
+    $.ajax({
+        type: Get,
+        url: BaseURL + ValuationQuatationList + '?requestId=' + id,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            if (response != null) {
+                debugger
+                //destoryStaticDataTable('#QuatationTable');
+                //$('#QuatationTable tbody').html('');
+                $.each(response, function (index, object) {
+                    var html = '';
+
+                    html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+                    html += '<li><a title="View" href="/ValuationRequest/ValuationQuotationManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo +'"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    /*html += '<li><a title="Edit" href="/MasterVendor/VendorManage?id=' + object.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';*/
+                    html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteQuotationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteQuotation(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                    html += '</ul></div>';
+
+                    $('#QuatationTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationFee + '</td><td>' + object.vat
+                        + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
+                });
+                //StaticDataTable("#QuatationTable");
+            }
 
 
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
+function BindInvoiceList() {
+    let id = $('#hdnId').val();
+    $.ajax({
+        type: Get,
+        url: BaseURL + ValuationInvoiceList + '?requestId=' + id,
+        "datatype": "json",
+        success: function (response) {
+            debugger;
+            if (response != null) {
+                debugger
+                //destoryStaticDataTable('#QuatationTable');
+                //$('#QuatationTable tbody').html('');
+                $.each(response, function (index, object) {
+                    var html = '';
+
+                    html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+                    html += '<li><a title="View" href="/ValuationRequest/ValuationInvoiceManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo +'"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    /*html += '<li><a title="Edit" href="/MasterVendor/VendorManage?id=' + object.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';*/
+                    html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                    html += '</ul></div>';
+
+                    $('#InvoiceTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationRequestId + '</td><td>' + object.transactionModeId
+                        + '</td><td>' + object.transactionStatusId + '</td><td>' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                });
+                //StaticDataTable("#QuatationTable");
+            }
+
+
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
+
+//#region Delete Quotation
+function ConfirmationDeleteQuotation(id) {
+    $('#DeleteQuotationModel #Id').val(id);
+}
+function DeleteQuotation() {
+    if (IsDeletePerm) {
+        var tempInAtiveID = $('#DeleteQuotationModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeleteQuotationByIdUrl + "/" + tempInAtiveID, Post, DeleteQuotationByIdSuccess, DeleteQuotationByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
+}
+function DeleteQuotationByIdSuccess(data) {
+    try {
+        if (data._Success === true) {
+            toastr.success(RecordDelete);
+            //$('#' + tableId).DataTable().draw();
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+function DeleteQuotationByIdError(x, y, z) {
+    toastr.error(ErrorMessage);
+}
+//#endregion Delete Quotation
+
+
+//#region Delete Invoice
+function ConfirmationDeleteInvoice(id) {
+    $('#DeleteInvoiceModel #Id').val(id);
+}
+function DeleteInvoice() {
+    if (IsDeletePerm) {
+        var tempInAtiveID = $('#DeleteInvoiceModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeleteInvoiceByIdUrl + "/" + tempInAtiveID, Post, DeleteInvoiceByIdSuccess, DeleteInvoiceByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
+}
+function DeleteInvoiceByIdSuccess(data) {
+    try {
+        if (data._Success === true) {
+            toastr.success(RecordDelete);
+            //$('#' + tableId).DataTable().draw();
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+function DeleteInvoiceByIdError(x, y, z) {
+    toastr.error(ErrorMessage);
+}
+//#endregion Delete Invoice

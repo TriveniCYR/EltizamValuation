@@ -4,6 +4,7 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Microsoft.Extensions.Localization;
 using System;
@@ -47,7 +48,55 @@ namespace Eltizam.Business.Core.Implementation
             var allList = _repository.GetAllAsync(x => x.ValuationRequestId == requestId).Result.ToList();
             return _mapperFactory.GetList<ValuationInvoice, ValuationInvoiceListModel>(allList);
         }
+        public async Task<DBOperation> Upsert(ValuationInvoiceListModel entityInvoice)
+        {
 
+            ValuationInvoice objInvoice;
+
+            if (entityInvoice.Id > 0)
+            {
+                objInvoice = _repository.Get(entityInvoice.Id);
+
+                var OldObjDepartment = objInvoice;
+                if (objInvoice != null)
+                {
+                    objInvoice.ReferenceNo = entityInvoice.ReferenceNo;
+                    objInvoice.ValuationRequestId = entityInvoice.ValuationRequestId;
+                    objInvoice.TransactionModeId = entityInvoice.TransactionModeId;
+                    objInvoice.TransactionStatusId = entityInvoice.TransactionStatusId;
+                    objInvoice.Amount = entityInvoice.Amount;
+                    objInvoice.CheckNumer = entityInvoice.CheckNumer;
+                    objInvoice.CheckBankName = entityInvoice.CheckBankName;
+                    objInvoice.CheckDate = entityInvoice.CheckDate;
+                    objInvoice.CardNumber = entityInvoice.CardNumber;
+                    objInvoice.CardBankName = entityInvoice.CardBankName;
+                    objInvoice.CardHolderName = entityInvoice.CardHolderName;
+                    objInvoice.ExpireDate = entityInvoice.ExpireDate;
+                    objInvoice.AccountBankName = entityInvoice.AccountBankName;
+                    objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
+                    objInvoice.Note = entityInvoice.Note;
+                    objInvoice.ModifyDate = AppConstants.DateTime;
+                    objInvoice.ModifyBy = 1;
+                    _repository.UpdateAsync(objInvoice);
+                }
+                else
+                {
+                    return DBOperation.NotFound;
+                }
+            }
+            else
+            {
+                objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice);
+                objInvoice.CreatedDate = AppConstants.DateTime;
+                objInvoice.CreatedBy = 1;
+                _repository.AddAsync(objInvoice);
+            }
+            await _unitOfWork.SaveChangesAsync();
+            if (objInvoice.Id == 0)
+                return DBOperation.Error;
+
+            return DBOperation.Success;
+        }
         public async Task<ValuationInvoiceListModel> GetInvoiceById(int id)
         {
             var _quatationEntity = new ValuationInvoiceListModel();

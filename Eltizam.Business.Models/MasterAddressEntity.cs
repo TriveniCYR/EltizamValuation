@@ -42,5 +42,8 @@ namespace Eltizam.Business.Models
         public string? Landlinephone { get; set; }
         public bool IsActive { get; set; }
         public int? CreatedBy { get; set; }
+        public string? StateName { get; set; }
+        public string? CountryName { get; set; }
+        public string? CityName { get; set; }
     }
 }

@@ -23,6 +23,9 @@ namespace Eltizam.Business.Models
         public DateTime? ExpireDate { get; set; }
         public string? AccountBankName { get; set; }
         public string? AccountHolderName { get; set; }
+        public string? TransactionDate { get; set; }
         public string? Note { get; set; }
+        public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
     }
 }

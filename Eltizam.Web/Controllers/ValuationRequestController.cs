@@ -132,5 +132,179 @@ namespace EltizamValuation.Web.Controllers
             return RedirectToAction(nameof(ValuationRequests));
         }
 
+        [HttpGet]
+        public IActionResult ValuationQuotationManage(int? id, int vId, string refNo)
+        {
+            ValuationQuatationListModel quotation;
+            //Check permissions for Get
+            //var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            //int roleId = _helper.GetLoggedInRoleId();
+
+            //if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+            //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
+            if (id == null || id <= 0)
+            {
+                quotation = new ValuationQuatationListModel();
+                quotation.ValuationRequestId = vId;
+                quotation.ReferenceNo = refNo;
+                quotation.StatusId = 1;
+                ViewBag.IsView = 0;
+                return View(quotation);
+            }
+            else
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationQuatationById + "/" + id, HttpMethod.Get, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationQuatationListModel>>(jsonResponse);
+
+                    ViewBag.IsView = 1;
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
+
+                    return View(data._object);
+                }
+                return NotFound();
+            }
+        }
+        [HttpPost]
+        public IActionResult ValuationQuotationManage(int id, ValuationQuatationListModel masterQuotation)
+        {
+            try
+            {
+                //Check permissions for Get
+                //var action = masterQuotation.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                //int roleId = _helper.GetLoggedInRoleId();
+                //if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+                //masterUser.Email ??= masterUser.Address?.Email;
+                //if (masterUser.Document != null && masterUser.Document.Files != null)
+                //{
+                //    List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
+                //    masterUser.uploadDocument = docs;
+                //    masterUser.Document = null;
+                //}
+
+                //Fill audit logs field
+                if (masterQuotation.Id == 0)
+                    masterQuotation.CreatedBy = _helper.GetLoggedInUserId();
+                masterQuotation.ModifiedBy = _helper.GetLoggedInUserId();
+
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationQuatation, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterQuotation))).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                }
+                else
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+            }
+
+            return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId, view = 0 });
+        }
+        [HttpGet]
+        public IActionResult ValuationInvoiceManage(int? id, int vId, string refNo)
+        {
+            ValuationInvoiceListModel invoice;
+            //Check permissions for Get
+            //var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            //int roleId = _helper.GetLoggedInRoleId();
+
+            //if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+            //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
+            if (id == null || id <= 0)
+            {
+                invoice = new ValuationInvoiceListModel();
+                invoice.ValuationRequestId = vId;
+                invoice.ReferenceNo = refNo;
+                ViewBag.IsView = 0;
+                return View(invoice);
+            }
+            else
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationInvoiceById + "/" + id, HttpMethod.Get, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationInvoiceListModel>>(jsonResponse);
+
+                    ViewBag.IsView = 1;
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
+                    return View(data._object);
+                }
+                return NotFound();
+            }
+        }
+        [HttpPost]
+        public IActionResult ValuationInvoiceManage(int id, ValuationInvoiceListModel masterInvoice)
+        {
+            try
+            {
+                //Check permissions for Get
+                //var action = masterQuotation.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+
+                //int roleId = _helper.GetLoggedInRoleId();
+                //if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+                //masterUser.Email ??= masterUser.Address?.Email;
+                //if (masterUser.Document != null && masterUser.Document.Files != null)
+                //{
+                //    List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
+                //    masterUser.uploadDocument = docs;
+                //    masterUser.Document = null;
+                //}
+
+                //Fill audit logs field
+                if (masterInvoice.Id == 0)
+                    masterInvoice.CreatedBy = _helper.GetLoggedInUserId();
+                masterInvoice.ModifiedBy = _helper.GetLoggedInUserId();
+
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationInvoice, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterInvoice))).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                }
+                else
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+            }
+
+            return RedirectToAction("ValuationRequestManage");
+        }
     }
 }

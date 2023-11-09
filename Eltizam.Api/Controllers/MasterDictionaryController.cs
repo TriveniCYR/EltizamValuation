@@ -210,8 +210,32 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+        [HttpGet]
+        [Route("GetDictionaryDescriptionById/{id}")]
+        public async Task<IActionResult> GetDictionaryDescriptionById([FromRoute] int id)
+        {
+            try
+            {
 
+                var subtypes = _DictionaryService.GetMasterDictionaryDetailSubByIdAsync(id);
+                var res = subtypes.Result;
+                if (subtypes != null)
+                {
+                    // Assuming _ObjectResponse.Create takes three parameters: data, status code, and message.
+                    return _ObjectResponse.CreateData(res, (int)HttpStatusCode.OK);
+                }
+                else
+                {
+                    return _ObjectResponse.Create(null, (int)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+                }
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(null, (int)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
 
     }
+
 }
