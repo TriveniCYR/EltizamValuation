@@ -5,52 +5,47 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Localization;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class ValutionRequestService: IValutionRequestService
+    public class ValutionRequestService : IValutionRequestService
     {
         #region Properties
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
+        private readonly IConfiguration _configuration;
         private IRepository<ValuationRequest> _repository { get; set; }
-        //private IRepository<MasterPropertySubType> _subrepository { get; set; }
+        private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
+
         #endregion Properties
 
         #region Constructor
-        public ValutionRequestService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
-          IHelper helper,
-           Microsoft.Extensions.Configuration.IConfiguration _configuration)
+        public ValutionRequestService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
 
             _repository = _unitOfWork.GetRepository<ValuationRequest>();
-            configuration = _configuration;
-            _helper = helper; 
+            _configuration = configuration;
+            _helper = helper;
+
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
         }
         #endregion Constructor
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId, int propertyTypeId,int countryId, int stateId, int cityId, string? fromDate, string? toDate)
+
+
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId, int resourceId, int propertyTypeId, int countryId, int stateId, int cityId, string? fromDate, string? toDate)
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
             //string SortDir = model.order[0]?.dir;
@@ -68,13 +63,12 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter("PropertyName",                    propertyName),
                 new SqlParameter("ValuationStatus",                 requestStatusId),
                 new SqlParameter("ValuationMethod",                 resourceId),
-                  new SqlParameter("@PropertyTypeId",                 propertyTypeId),
+                new SqlParameter("@PropertyTypeId",                 propertyTypeId),
                 new SqlParameter("CountryId",                       countryId),
                 new SqlParameter("StateId",                         stateId),
                 new SqlParameter("CityId",                          cityId),
                 new SqlParameter("FromDate",                        fromDate),
-                new SqlParameter("ToDate",                          toDate),
-               
+                new SqlParameter("ToDate",                          toDate)
             };
 
             var Results = await _repository.GetBySP(ProcedureMetastore.usp_Valution_GetValuationList, CommandType.StoredProcedure, osqlParameter);
@@ -83,21 +77,21 @@ namespace Eltizam.Business.Core.Implementation
             var res = UtilityHelper.GetPaginationInfo(Results);
 
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<ValutionRequestListModel>());
-
             return oDataTableResponseModel;
         }
+
         public async Task<DBOperation> AssignApprover(AssignApprovorRequestModel model)
         {
             var VRIDs = model.RequestIds;
             if (model.ApprovorId > 0)
             {
-                if(VRIDs != null && VRIDs.Length > 0)
+                if (VRIDs != null && VRIDs.Length > 0)
                 {
                     int[] ids = VRIDs.Split(',').Select(int.Parse).ToArray();
 
-                    if(ids.Length > 0)
+                    if (ids.Length > 0)
                     {
-                        foreach(int id in ids)
+                        foreach (int id in ids)
                         {
                             var valuationEntity = _repository.Get(id);
                             valuationEntity.ApproverId = model.ApprovorId;
@@ -158,16 +152,21 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> Upsert(ValuationRequestModel entityValuation)
         {
-
             ValuationRequest objValuation;
+            var By = _helper.GetLoggedInUser().UserId;
+            string MainTableName = Enum.GetName(TableNameEnum.ValuationRequest);
+            int MainTableKey = entityValuation.Id;
 
             if (entityValuation.Id > 0)
             {
+                ValuationRequest OldEntity = null;
+                OldEntity = _repository.GetNoTracking(entityValuation.Id);
+
                 objValuation = _repository.Get(entityValuation.Id);
-                var OldObjValuation = objValuation;
+
                 if (objValuation != null)
                 {
-                    objValuation.ReferenceNo = entityValuation.ReferenceNo;
+                    objValuation.ReferenceNo = entityValuation.ReferenceNo ?? "";
                     objValuation.OtherReferenceNo = entityValuation.OtherReferenceNo;
                     objValuation.StatusId = entityValuation.StatusId;
                     objValuation.ValuationTimeFrame = entityValuation.ValuationTimeFrame;
@@ -177,15 +176,14 @@ namespace Eltizam.Business.Core.Implementation
                     objValuation.ValuationModeId = entityValuation.ValuationModeId;
                     objValuation.PropertyId = entityValuation.PropertyId;
                     objValuation.ClientId = entityValuation.ClientId;
-                    //objValuation.ValuerId = entityValuation.ValuerId;
 
-                    //objValuation.CarpetAreaInSqMtr = entityValuation.CarpetAreaInSqMtr;
-
-                    objValuation.ModifiedDate = AppConstants.DateTime;
-                    objValuation.ModifiedBy = entityValuation.CreatedBy;
                     _repository.UpdateAsync(objValuation);
                     _repository.UpdateGraph(objValuation, EntityState.Modified);
+
                     await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey);
                 }
                 else
                 {
@@ -194,14 +192,15 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
+                var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
+
                 objValuation = _mapperFactory.Get<ValuationRequestModel, ValuationRequest>(entityValuation);
-                objValuation.CreatedDate = AppConstants.DateTime;
-                objValuation.CreatedBy = entityValuation.CreatedBy;
-                objValuation.ModifiedDate = AppConstants.DateTime;
-                objValuation.ModifiedBy = entityValuation.CreatedBy;
+                objValuation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_ValuationRequest, lastReq?.Id);
+
                 _repository.AddAsync(objValuation);
+                await _unitOfWork.SaveChangesAsync();
             }
-            await _unitOfWork.SaveChangesAsync();
+
             if (objValuation.Id == 0)
                 return DBOperation.Error;
 
@@ -212,41 +211,37 @@ namespace Eltizam.Business.Core.Implementation
         {
             var _ValuationEntity = new ValuationRequestModel();
             _ValuationEntity = _mapperFactory.Get<ValuationRequest, ValuationRequestModel>(await _repository.GetAsync(id));
-            //_ValuationEntity.ClientTypeId = 
-
-            //DbParameter[] osqlParameter1 =
-            //{
-            //        new DbParameter("PropertyId", id, SqlDbType.Int),
-            //    };
-            //var detailLocation = EltizamDBHelper.ExecuteSingleMappedReader<MasterPropertyDetailModel>(ProcedureMetastore.usp_PropertyLocation_GetLocationByPropertyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
-
-
 
             DbParameter[] osqlParameter =
-           {
+            {
                 new DbParameter("Id", id, SqlDbType.Int),
             };
-            var ValuationRequestDependencies = EltizamDBHelper.ExecuteMappedReader<ValuationRequestDependencies>(ProcedureMetastore.usp_ValuationRequest_GetDependencies, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
-            //var ValuationRequestDependencies = EltizamDBHelper.ExecuteMappedReader<ValuationRequestDependencies>(ProcedureMetastore.usp_ValuationRequest_GetDependencies, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
-            // return amenityList;
-            _ValuationEntity.ClientId = ValuationRequestDependencies[0].ClientId;
-            _ValuationEntity.ClientTypeId = ValuationRequestDependencies[0].ClientTypeId;
-            _ValuationEntity.ClientName = ValuationRequestDependencies[0].ClientName;
-            _ValuationEntity.PropertyTypeId = ValuationRequestDependencies[0].PropertyTypeId;
-            _ValuationEntity.PropertyName = ValuationRequestDependencies[0].PropertyType;
-            _ValuationEntity.PropertySubTypeId = ValuationRequestDependencies[0].PropertySubTypeId;
-            _ValuationEntity.PropertySubType = ValuationRequestDependencies[0].PropertySubType;
-            _ValuationEntity.OwnershipTypeId = ValuationRequestDependencies[0].OwnershipTypeId;
-            _ValuationEntity.OwnershipType = ValuationRequestDependencies[0].OwnershipType;
-            _ValuationEntity.PropertyId = ValuationRequestDependencies[0].PropertyId;
-            _ValuationEntity.PropertyName = ValuationRequestDependencies[0].PropertyName;
+
+            var res = EltizamDBHelper.ExecuteMappedReader<ValuationRequestDependencies>(ProcedureMetastore.usp_ValuationRequest_GetDependencies,
+                      DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter).FirstOrDefault();
+
+            if (res != null)
+            {
+                _ValuationEntity.ClientId = res.ClientId;
+                _ValuationEntity.ClientTypeId = res.ClientTypeId;
+                _ValuationEntity.ClientName = res.ClientName;
+                _ValuationEntity.PropertyTypeId = res.PropertyTypeId;
+                _ValuationEntity.PropertyName = res.PropertyType;
+                _ValuationEntity.PropertySubTypeId = res.PropertySubTypeId;
+                _ValuationEntity.PropertySubType = res.PropertySubType;
+                _ValuationEntity.OwnershipTypeId = res.OwnershipTypeId;
+                _ValuationEntity.OwnershipType = res.OwnershipType;
+                _ValuationEntity.PropertyId = res.PropertyId;
+                _ValuationEntity.PropertyName = res.PropertyName;
+            }
+
             return _ValuationEntity;
         }
 
 
         public async Task<DBOperation> Delete(int id)
         {
-            var entityValuation= _repository.Get(x => x.Id == id);
+            var entityValuation = _repository.Get(x => x.Id == id);
 
             if (entityValuation == null)
                 return DBOperation.NotFound;

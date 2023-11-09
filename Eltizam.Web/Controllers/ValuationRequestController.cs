@@ -1,4 +1,5 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
@@ -29,36 +30,32 @@ namespace EltizamValuation.Web.Controllers
          
         [HttpGet]
         public IActionResult ValuationRequests()
-        {  //Check permissions
+        {  
+            //Check permissions
             int roleId = _helper.GetLoggedInRoleId();
             if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }
+
+
         [HttpGet]
         public IActionResult ValuationRequestManage(int? id, string view)
         {
-            if (id != null)
-            {
-               
-                ViewData["IsEdit"] = true;
-            }
+            if (id != null)  
+                ViewData["IsEdit"] = true; 
 
             if (view != null)
-            {
-                ViewData["IsView"] = true;
-            }
+                ViewData["IsView"] = true; 
+
             ValuationRequestModel valuationRequestModel;
             if (id == null || id <= 0)
             {
                 ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
                 
-                valuationRequestModel = new ValuationRequestModel();
-                valuationRequestModel.ReferenceNo = "123";
-               // Master_PropertyTypeModel master_PropertyType = new Master_PropertyTypeModel();
-                //valuationRequestModel.master_PropertyType = master_PropertyType;
-
+                valuationRequestModel = new ValuationRequestModel(); 
 
                 return View("ValuationRequestManage", valuationRequestModel);
             }
@@ -75,15 +72,7 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestModel>>(jsonResponse);
 
                     //Get Footer info
-                    FooterInfo(TableNameEnum.ValuationRequest, _cofiguration, id);
-
-                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.ValuationRequest));
-                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    //if (footerRes.IsSuccessStatusCode)
-                    //{
-                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
-                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    //} 
+                    FooterInfo(TableNameEnum.ValuationRequest, _cofiguration, id); 
 
                     if (data._object is null)
                         return NotFound();
@@ -96,45 +85,49 @@ namespace EltizamValuation.Web.Controllers
 
         [HttpPost]
         [Route("ValuationRequest/ValuationRequestManage")]
-        public IActionResult ValuationRequest(int id, ValuationRequestModel valuationRequestModel)
+        public IActionResult ValuationRequest(int id, ValuationRequestModel request)
         {
             try
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
-                ValuationRequestModel valuationRequestModelNew = new ValuationRequestModel();
-                valuationRequestModelNew.Id = id;
-                valuationRequestModelNew.ApproverId = valuationRequestModel.ApproverId;
-                valuationRequestModelNew.ValuerId = valuationRequestModel.ValuerId;
-                valuationRequestModelNew.ValuationModeId = valuationRequestModel.ValuationModeId;
-                valuationRequestModelNew.ValuationTimeFrame = valuationRequestModel.ValuationTimeFrame;
-                valuationRequestModelNew.ValuationDate = valuationRequestModel.ValuationDate;
-                valuationRequestModelNew.StatusId = valuationRequestModel.StatusId;
-                valuationRequestModelNew.PropertyId = valuationRequestModel.PropertyId;
-                valuationRequestModelNew.ClientId = valuationRequestModel.ClientId;
-                valuationRequestModelNew.ReferenceNo = "123";
-                valuationRequestModelNew.OtherReferenceNo = valuationRequestModel.OtherReferenceNo;
+                //ValuationRequestModel entity = new ValuationRequestModel();
+
+                request.Id = id;
+                //entity.ApproverId = request.ApproverId;
+                //entity.ValuerId = request.ValuerId;
+                //entity.ValuationModeId = request.ValuationModeId;
+                //entity.ValuationTimeFrame = request.ValuationTimeFrame;
+                //entity.ValuationDate = request.ValuationDate;
+                //entity.StatusId = request.StatusId;
+                //entity.PropertyId = request.PropertyId;
+                //entity.ClientId = request.ClientId;
+                //entity.ReferenceNo = request.ReferenceNo;
+                //entity.OtherReferenceNo = request.OtherReferenceNo;
+                //Fill audit logs field
+               
+                if (request.Id == 0)
+                    request.CreatedBy = _helper.GetLoggedInUserId();
+                request.ModifiedBy = _helper.GetLoggedInUserId();
+
                 //valuationRequestModelNew.ValuationDate = valuationRequestModel.ValuationDate;
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(request))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    TempData["StatusMessage"] = "Saved Successfully";
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    ModelState.Clear();
-                    return RedirectToAction(nameof(ValuationRequests));
+                    TempData[UserHelper.SuccessMessage] = AppConstants.ActionSuccess;
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result; 
                 }
                 else
-                    TempData["StatusMessage"] = "Some Eror Occured";
+                    TempData[UserHelper.ErrorMessage] = AppConstants.ActionFailed;
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                ViewBag.errormessage = Convert.ToString(e.StackTrace);
-                ModelState.Clear();
-                return View(nameof(ValuationRequests));
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace); 
             }
+
             ModelState.Clear();
             return RedirectToAction(nameof(ValuationRequests));
         }
