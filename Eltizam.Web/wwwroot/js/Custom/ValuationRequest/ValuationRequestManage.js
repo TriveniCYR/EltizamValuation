@@ -11,7 +11,7 @@
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
 }
-//document.getElementById("defaultOpen").click();
+document.getElementById("defaultOpen").click();
 
 function accordianToggle(header) {
     const item = header.nextElementSibling;
@@ -568,8 +568,8 @@ function BindClientDetailsByClientId(Id) {
                 /*destoryStaticDataTable('#ClientTypeTable');*/
                 $('#NewAddressTable tbody').html('');
                 //$.each(data._object, function (index, object) { //  <td>' + object.ClientTypeCode + '</td>  <td>' + object.isdClientTypeCode + '</td>  
-                $('#NewAddressTable tbody').append(' <tr><td>' + response._object.address.address1 + '</td> <td>' + response._object.address.address2 + '</td><td>' + response._object.address.countryId
-                    + '</td><td>' + response._object.address.stateId + '</td><td>' + response._object.address.cityId + '</td><td>' + response._object.address.pinNo + '</td></tr>');
+                $('#NewAddressTable tbody').append(' <tr><td>' + response._object.address.address1 + '</td> <td>' + response._object.address.address2 + '</td><td>' + response._object.address.countryName
+                    + '</td><td>' + response._object.address.stateName + '</td><td>' + response._object.address.cityName + '</td><td>' + response._object.address.pinNo + '</td></tr>');
                // });
                // StaticDataTable("#ClientTypeTable");
             }
