@@ -6,9 +6,11 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,8 +47,17 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<List<ValuationInvoiceListModel>> GetInvoiceList(int requestId)
         {
-            var allList = _repository.GetAllAsync(x => x.ValuationRequestId == requestId).Result.ToList();
-            return _mapperFactory.GetList<ValuationInvoice, ValuationInvoiceListModel>(allList);
+            DbParameter[] osqlParameter2 =
+            {
+                    new DbParameter("RequestId", requestId, SqlDbType.Int),
+                };
+
+            var invoiceList = EltizamDBHelper.ExecuteMappedReader<ValuationInvoiceListModel>(ProcedureMetastore.usp_Invoice_GetInvoiceByRequestId,
+                                DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
+
+            return invoiceList;
+            //var allList = _repository.GetAllAsync(x => x.ValuationRequestId == requestId).Result.ToList();
+            //return _mapperFactory.GetList<ValuationInvoice, ValuationInvoiceListModel>(allList);
         }
         public async Task<DBOperation> Upsert(ValuationInvoiceListModel entityInvoice)
         {
