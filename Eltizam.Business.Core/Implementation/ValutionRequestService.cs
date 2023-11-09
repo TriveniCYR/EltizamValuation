@@ -93,16 +93,24 @@ namespace Eltizam.Business.Core.Implementation
                     {
                         foreach (int id in ids)
                         {
+                            ValuationRequest OldEntity = null;
+                            OldEntity = _repository.GetNoTracking(id);
+                            var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
+
                             var valuationEntity = _repository.Get(id);
                             valuationEntity.ApproverId = model.ApprovorId;
                             valuationEntity.AssignRemark = model.Remarks;
-                            valuationEntity.ModifiedBy = _LoginUserId;
-                            valuationEntity.ModifiedDate = AppConstants.DateTime;
-                            _repository.UpdateAsync(valuationEntity);
-                        }
-                        await _unitOfWork.SaveChangesAsync();
-                    }
+                            valuationEntity.ModifiedBy = _LoginUserId; 
 
+                            _repository.UpdateAsync(valuationEntity);
+                            _repository.UpdateGraph(valuationEntity, EntityState.Modified);
+
+                            //Do Audit Log --AUDITLOG 
+                            await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, id);
+                        }
+
+                        await _unitOfWork.SaveChangesAsync();
+                    } 
                     return DBOperation.Success;
                 }
             }
@@ -119,15 +127,23 @@ namespace Eltizam.Business.Core.Implementation
             {
                 if (model.StatusId > 0)
                 {
+                    ValuationRequest OldEntity = null;
+                    OldEntity = _repository.GetNoTracking(model.ValuationRequestId);
+                    var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
+
+
                     var valuationEntity = _repository.Get(model.ValuationRequestId);
                     valuationEntity.ApproverId = model.ApprovorId;
                     valuationEntity.ApproverComment = model.ApprovorComment;
                     valuationEntity.StatusId = model.StatusId;
-                    valuationEntity.ModifiedBy = _LoginUserId;
-                    valuationEntity.ModifiedDate = AppConstants.DateTime;
+                    valuationEntity.ModifiedBy = _LoginUserId; 
                     _repository.UpdateAsync(valuationEntity);
+                    _repository.UpdateGraph(OldEntity, EntityState.Modified);
 
-                    await _unitOfWork.SaveChangesAsync();
+                    //Do Audit Log --AUDITLOG 
+                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);
+
+                    await _unitOfWork.SaveChangesAsync(); 
                 }
                 else
                 {
@@ -145,7 +161,7 @@ namespace Eltizam.Business.Core.Implementation
         {
 
             var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationMethod>(ProcedureMetastore.usp_ValuationMethod_AllList,
-             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+                          DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }
@@ -206,6 +222,7 @@ namespace Eltizam.Business.Core.Implementation
 
             return DBOperation.Success;
         }
+
 
         public async Task<ValuationRequestModel> GetById(int id)
         {

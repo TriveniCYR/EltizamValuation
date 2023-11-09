@@ -1,20 +1,27 @@
 ﻿@using Eltizam.Web.Helpers;
 
 @{
-    var _UId = @Context.Session.GetString(UserHelper.LogInUserId); 
-    var _UName = @Context.Session.GetString(UserHelper.LogInUserName); 
+    var _UId = @Context.Session.GetString(UserHelper.LogInUserId);
+    var _UName = @Context.Session.GetString(UserHelper.LogInUserName);
     var _URoleId = @Context.Session.GetString(UserHelper.LogInRoleId);
-    var _act = "/MasterUser/UserManage?id=" + _UId;  
+    var _act = "/MasterUser/UserManage?id=" + _UId;
+    var _notfi = "/Notification/Notifications?UserId=" + _UId;
 }
 
 @* @model Eltizam.Business.Models.ChangePasswordModel *@
 <header class="flex justify-between align-item-center">
-    <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()"><img src="~/assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" /> <img src="~/assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile"></div>
+    <div class="hamburger-icon cursor-pointer" onClick="sideNavToggle()">
+        <img src="~/assets/hamburger-icon.svg" alt="hamburger-icon" class="visible-in-web" />
+        <img src="~/assets/arrow-narrow-right.svg" alt="arrow-narrow-right" class="visible-in-mobile">
+    </div>
+
     <div class="user flex">
         <div class="position-relative notification">
-            <img src="~/assets/bell.svg" alt="bell" class="cursor-pointer" />
-            <span href="/Notification/Notifications"> 0 </span>
-        </div> 
+            <a href="@_notfi">
+                <img src="~/assets/bell.svg" alt="bell" class="cursor-pointer" />
+                <span> 0 </span>
+            </a>
+        </div>
 
         <div class="flex align-item-center position-relative" onclick="profileMenu()">
             <input type="hidden" id="LogInUserId" value="@_UId" />
@@ -29,9 +36,9 @@
                             Manage profile
                         </a>
                     </li>
-                    <li> 
-                       <a id="addRole">Change password</a>
-                     </li>
+                    <li>
+                        <a id="addRole">Change password</a>
+                    </li>
                     <li>
                         <form asp-action="Logout" asp-controller="Account" method="post">
                             <button class="dropdown-item" type="submit">
@@ -42,7 +49,7 @@
                 </ul>
             </div>
         </div>
-    </div>   
+    </div>
 </header>
 
 
@@ -57,21 +64,21 @@
                 <form>
                     <div class="flex text-left">
                         <label class="w-100" for="">
-                            New Password 
-                              <input id="NewPassword" type="password" placeholder="Enter Password">
-                            <div id="newPasswordError" class="error-message"></div> 
+                            New Password
+                            <input id="NewPassword" type="password" placeholder="Enter Password">
+                            <div id="newPasswordError" class="error-message"></div>
                         </label>
 
                     </div>
                     <div class="flex text-left">
                         <label class="w-100" for="">
-                            Confirm Password 
-                               <input id="ConfirmPassword" type="password" placeholder="Confirm New Password">
+                            Confirm Password
+                            <input id="ConfirmPassword" type="password" placeholder="Confirm New Password">
                             <div id="confirmPasswordError" class="error-message"></div>
                         </label>
                     </div>
 
-                    <div class="buttonArea centerBtn"> 
+                    <div class="buttonArea centerBtn">
                         <button type="button" onclick="PosttopHeader();" class="bgBlue">Submit</button>
                     </div>
                 </form>
@@ -79,6 +86,6 @@
         </div>
     </div>
 </div>
- 
+
 
 

@@ -87,7 +87,8 @@ namespace Eltizam.Business.Core.Implementation
                 await _roleModulePermission.AddUpdateRoleModulePermission(Permissions.ToList());
 
                 //Remove Cache
-                _memoryCache.Remove(AppConstants.MenusCache);
+                var menu = AppConstants.MenusCache + objRole.Id.ToString();
+                _memoryCache.Remove(menu);
             }
 
             #endregion Add Module Permsson
