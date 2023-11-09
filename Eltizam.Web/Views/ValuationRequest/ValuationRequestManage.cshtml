@@ -20,7 +20,7 @@
     ViewData["Title"] = _md + _header;
     var htmlAttributes = true;
     var roleId = objPermssion.RoleId;
-    string disabledAttribute = (roleId == 2) ? "disabled" : null;
+    // string disabledAttribute = (roleId == 2) ? "disabled" : null;
     
 }
 
@@ -74,19 +74,19 @@
                             </label>
                             <label for="" class="w-50">
                                 Other Reference no
-                                @Html.TextBoxFor(model => model.OtherReferenceNo, new {@class = "form-control",  @placeholder = @SharedLocalizer["Other Reference no"],@disabled = disabledAttribute })
+                                @Html.TextBoxFor(model => model.OtherReferenceNo, new {@class = "form-control",  @placeholder = @SharedLocalizer["Other Reference no"]})
                                 @*  <input type="text" placeholder="12837187236" disabled> *@
                             </label>
                         </div>
                         <div class="flex  mb-28">
                             <label for="" class="w-50">
                                 Approver Name
-                                @Html.DropDownList("ApproverId", new List<SelectListItem> { }, new { @class = "form-control",@disabled = disabledAttribute})
+                                @Html.DropDownList("ApproverId", new List<SelectListItem> { }, new { @class = "form-control"})
                                 @*  <input type="text" placeholder="Clyde" disabled> *@
                             </label>
                             <label for="" class="w-50">
                                 Valuer Name
-                                @Html.DropDownList("ValuerId", new List<SelectListItem> { }, new { @class = "form-control",@disabled = disabledAttribute})
+                                @Html.DropDownList("ValuerId", new List<SelectListItem> { }, new { @class = "form-control"})
                                 @* <input type="text" placeholder="Clyde" disabled> *@
                             </label>
 
@@ -106,7 +106,7 @@
                             </label>
                             <label for="" class="w-50">
                                 Valuation Date
-                                <input type="date" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate" disabled="@disabledAttribute">
+                                <input type="date" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
                                 @*  <input type="date"> *@
                             </label>
 
@@ -120,7 +120,7 @@
                                 <div class="flex m-0 valuationType">
 
                                     
-                                    @Html.DropDownList("ValuationModeId", new List<SelectListItem>{ }, new { @class = "form-control",@disabled = disabledAttribute})
+                                    @Html.DropDownList("ValuationModeId", new List<SelectListItem>{ }, new { @class = "form-control"})
 
                                 </div>
 
@@ -131,7 +131,7 @@
                             </label>
                             <label for="" class="w-50">
                                 Valuation Time Frame
-                                @Html.TextBoxFor(model => model.ValuationTimeFrame, new {@class = "form-control",  @placeholder = @SharedLocalizer["Valuation Time Frame"] ,@disabled = disabledAttribute})
+                                @Html.TextBoxFor(model => model.ValuationTimeFrame, new {@class = "form-control",  @placeholder = @SharedLocalizer["Valuation Time Frame"] })
                                 @* <input type="text" placeholder="enter days"> *@
                             </label>
 
@@ -151,12 +151,12 @@
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Client Type
-                                        @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientByClientType(this.options[this.selectedIndex].value)",@disabled = disabledAttribute})
+                                        @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientByClientType(this.options[this.selectedIndex].value)"})
                                         @* <input type="text" placeholder="Bank" disabled> *@
                                     </label>
                                     <label for="" class="w-50">
                                         Clients
-                                        @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientDetailsByClientId(this.options[this.selectedIndex].value)",@disabled = disabledAttribute})
+                                        @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientDetailsByClientId(this.options[this.selectedIndex].value)"})
                                         @*  <input type="text" placeholder="Client" disabled> *@
                                     </label>
 
@@ -308,23 +308,23 @@
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Property Type Name
-                                        @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value);",@disabled = disabledAttribute})
+                                        @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value);"})
                                         @*   <input type="text" placeholder="ABC" disabled> *@
                                     </label>
                                     <label for="" class="w-50">
                                         Property SubType Name
-                                        @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */@disabled = disabledAttribute})
+                                        @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
                                     </label>
                                 </div>
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Type of Ownership
-                                        @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindPropertyDetail()",@disabled = disabledAttribute})
+                                        @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindPropertyDetail()"})
                                     </label>
 
                                     <label for="" class="w-50">
                                         Property Name
-                                        @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)",@disabled = disabledAttribute})
+                                        @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)"})
                                         @*   @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Property Name"] }) *@
                                         @*  @Html.ValidationMessageFor(model => model.PropertyName, "", new { @class = "text-danger" }) *@
                                     </label>
@@ -802,6 +802,61 @@
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
 
     <script>
+
+
+        $(document).ready(function () {
+        var roleId = @roleId; // Make sure roleId is defined and has the correct value.
+
+        var inputElement1 = $('#ApproverId');
+        var inputElement2 = $('#OtherReferenceNo');
+        var inputElement3 = $('#ValuerId');
+        var inputElement4 = $('#StatusId');
+        var inputElement5 = $('#ApproverComment');
+        var inputElement6 = $('#ValuationDate');
+        var inputElement7 = $('#ValuationModeId');
+        var inputElement8 = $('#ClientTypeId');
+        var inputElement9 = $('#ClientId');
+        var inputElement10 = $('#ClientName');
+        var inputElement11 = $('#PropertyTypeId');
+        var inputElement12 = $('#PropertySubTypeId');
+        var inputElement13 = $('#OwnershipTypeId');
+         var inputElement14 = $('#PropertyId');
+          var inputElement15 = $('#ValuationTimeFrame');
+       
+        
+        if (roleId === 2) {
+            inputElement1.prop('disabled', true);
+             inputElement2.prop('disabled', true);
+              inputElement3.prop('disabled', true);
+               inputElement4.prop('disabled', true);
+                 inputElement5.prop('disabled', true);
+                  inputElement6 .prop('disabled', true);
+        inputElement7 .prop('disabled', true);
+        inputElement8 .prop('disabled', true);
+        inputElement9 .prop('disabled', true);
+        inputElement10.prop('disabled', true);
+        inputElement11 .prop('disabled', true);
+        inputElement12 .prop('disabled', true);
+        inputElement13 .prop('disabled', true);
+         inputElement14 .prop('disabled', true);
+         inputElement15 .prop('disabled', true);
+        } else {
+           inputElement1.prop('disabled', false);
+            inputElement2.prop('disabled', false);
+           inputElement3.prop('disabled', false);
+          inputElement4.prop('disabled', false);
+         inputElement5.prop('disabled', false);
+        inputElement7 . prop('disabled',false);
+        inputElement9 . prop('disabled', false);
+        inputElement10 . prop('disabled', false);
+        inputElement11 . prop('disabled', false);
+        inputElement12 . prop('disabled', false);
+        inputElement13 . prop('disabled', false);
+         inputElement14 . prop('disabled', false);
+          inputElement15 . prop('disabled', false);
+        }
+    });
+
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
