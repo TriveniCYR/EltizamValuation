@@ -1,1 +1,278 @@
-﻿<h1>Welcome</h1>
+﻿@model Eltizam.Business.Models.MasterClientModel;
+@using Eltizam.Utility.Models
+@inject IConfiguration Configuration 
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    var _header = "Dashboard"; 
+    ViewData["Title"] = _header; 
+}
+ 
+<main>
+    <div class="whiteBoxShadow">
+        <div class="heading position-relative flex justify-between">
+            <h3 class="dashboardTitle">@_header</h3> 
+        </div>
+        <div class="bodyContent">
+            @* <h3 class="dashboardTitle">Dashboard</h3>
+            <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
+                <div class="flex">
+                    <label class="searchBox position-relative">
+                        <div class="flex align-item-center">
+                            <img src="../assets/search.svg" alt="search">
+                            <input type="text" placeholder="Search for System" class="searchInput">
+                        </div>
+                        <button class="normalSearch">Search</button>
+                    </label>
+                </div>
+            </div> *@
+            <div class="whiteBoxShadow">
+                <div class="inputSearchs">
+                    <form action="">
+                        <div class="flex">
+                            <label for="userName">
+                                Client Name 1
+                                <input type="text">
+                            </label>
+                            <label for="userName" class="position-relative">
+                                Project Name 1
+                                <input type="text">
+                            </label>
+                            <label for="">
+                                From Date
+                                <input type="date">
+                            </label>
+                            <label for="">
+                                To Date
+                                <input type="date">
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="flex fourBox gap dashboard-status">
+                    <div class="dashboard-box">
+                        <p class="flex justify-center align-item-center">
+                            <img src="../assets/totalClientIcon.svg" alt="totalClientIcon">
+                            Total Client
+                        </p>
+                        <h3>20</h3>
+                    </div>
+                    <div class="dashboard-box">
+                        <p class="flex justify-center align-item-center">
+                            <img src="../assets/briefcase.svg" alt="briefcase">
+                            Total Project
+                        </p>
+                        <h3>50</h3>
+                    </div>
+                    <div class="dashboard-box">
+                        <p class="flex justify-center align-item-center">
+                            <img src="../assets/revenue.svg" alt="revenue">
+                            Total Revenue
+                        </p>
+                        <h3>45000</h3>
+                    </div>
+                    <div class="dashboard-box">
+                        <p class="flex justify-center align-item-center">
+                            <img src="../assets/currency-dollar.svg" alt="currency-dollar">
+                            Receivables
+                        </p>
+                        <h3>15000</h3>
+                    </div>
+                </div>
+                <div class="flex dashboard-status">
+                    <div class="roundBorderBox w-50">
+                        <div class="flex justify-between">
+                            <h3>Latest requests</h3>
+                            <a href="">View More</a>
+                        </div>
+                        <table class="dashboardTable">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Project Name</th>
+                                    <th>Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Altra Systems</td>
+                                    <td>Capital Governorate</td>
+                                    <td><span class="tableStatus orange">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Business 1 Consulting</td>
+                                    <td>Southern Governorate</td>
+                                    <td><span class="tableStatus orange">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Axiom Tech Solution</td>
+                                    <td>Kabul</td>
+                                    <td><span class="tableStatus orange">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Accentric Global</td>
+                                    <td>Badakhshan</td>
+                                    <td><span class="tableStatus orange">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Altra Systems</td>
+                                    <td>Capital Governorate</td>
+                                    <td><span class="tableStatus orange">Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="roundBorderBox w-50">
+                        <div class="flex justify-between">
+                            <h3>Latest Qutotation Sub</h3>
+                            <a href="">View More</a>
+                        </div>
+                        <table class="dashboardTable">
+                            <thead>
+                                <tr>
+                                    <th>Quotation</th>
+                                    <th>Project Name</th>
+                                    <th>Total Charges</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="flex dashboard-status">
+                    <div class="roundBorderBox w-50">
+                        <div class="flex justify-between">
+                            <h3>Top Projects in Valuation</h3>
+                            <a href="">View More</a>
+                        </div>
+                        <table class="dashboardTable">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Project Name</th>
+                                    <th>Valuer</th>
+                                    <th>Valuer</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Altra Systems</td>
+                                    <td>Capital Governorate</td>
+                                    <td>20000</td>
+                                </tr>
+                                <tr>
+                                    <td>Business 1 Consulting</td>
+                                    <td>Southern Governorate</td>
+                                    <td>20000</td>
+                                </tr>
+                                <tr>
+                                    <td>Axiom Tech Solution</td>
+                                    <td>Kabul</td>
+                                    <td>20000</td>
+                                </tr>
+                                <tr>
+                                    <td>Accentric Global</td>
+                                    <td>Badakhshan</td>
+                                    <td>20000</td>
+                                </tr>
+                                <tr>
+                                    <td>Altra Systems</td>
+                                    <td>Capital Governorate</td>
+                                    <td>20000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="roundBorderBox w-50">
+                        <div class="flex justify-between">
+                            <h3>Top Quatuons Due</h3>
+                            <a href="">View More</a>
+                        </div>
+                        <table class="dashboardTable">
+                            <thead>
+                                <tr>
+                                    <th>Quotation</th>
+                                    <th>Project Name</th>
+                                    <th>Valuer</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                                <tr>
+                                    <td>65790-45321</td>
+                                    <td>Capital Governorate</td>
+                                    <td>14000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="dashboardMapArea">
+                    <div class="flex flex-column dashboard-status p-0">
+                        <div class="roundBorderBox m-0 dashboard-box w-100">
+                            <p class="green">Completed Project</p>
+                            <h3 class="green">50%</h3>
+                        </div>
+                        <div class="roundBorderBox dashboard-box w-100">
+                            <p class="orange">Pending Project</p>
+                            <h3 class="orange">50%</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d29047.38622901107!2d54.395024!3d24.488115!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5e67b761b29483%3A0x56ed0c32d62d74fa!2sEltizam%20Asset%20Management%20Group!5e0!3m2!1sen!2sus!4v1699510530470!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+ 
+        </div> 
+    </div>
+</main> 
