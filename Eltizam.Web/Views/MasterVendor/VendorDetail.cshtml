@@ -106,11 +106,11 @@
                                         <div class="flex">
                                             <label for="CountryId">
                                                 CountryId
-                                                @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control"})
+                                                @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control", @onchange = "BindState(this.options[this.selectedIndex].value)"})
                                             </label>
                                             <label for="StateId">
                                                 State
-                                                @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control"})
+                                                @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control", @onchange = "BindCity(this.options[this.selectedIndex].value)"})
                                             </label>
                                         </div>
                                         <div class="flex">
@@ -168,7 +168,9 @@
                                     @* <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon" onClick="removeParentDiv(this)" /> *@
                                 </div>
                                 <div class="inputSearchs p-0">
-
+                                    
+                                    <input type="hidden" id="hdnDeparment" value="@(Model.Contact == null ? 0 : Model.Contact.DepartmentId)" />
+                                    <input type="hidden" id="hdnDesignation" value="@(Model.Contact == null ? 0 : Model.Contact.DesignationId)" />
                                     <div class="tabSection">
                                         @Html.HiddenFor(model => model.Contact.Id)
                                         <div class="flex">
@@ -178,13 +180,13 @@
                                             </label>
                                             <label for="Subject">
                                                 Department
-                                                @Html.TextBoxFor(model => model.Contact.Department, new {@autocomplete = "off", @disabled=htmlAttributes, @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Department"] })
+                                                @Html.DropDownListFor(model => model.Contact.DepartmentId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Department"] })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="Institute">
                                                 Designation
-                                                @Html.TextBoxFor(model => model.Contact.Designation, new {@autocomplete = "off", @disabled=htmlAttributes, @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Designation"] })
+                                                @Html.DropDownListFor(model => model.Contact.DesignationId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Designation"] })
                                             </label>
                                             <label for="year">
                                                 Email
@@ -220,7 +222,9 @@
     <script>
         //#region Setup API Url
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
-        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
-        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList"; 
+        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
+        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
+        var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
+        var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
     </script>
 }

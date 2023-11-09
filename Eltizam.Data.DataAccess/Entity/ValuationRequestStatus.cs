@@ -18,6 +18,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifyBy { get; set; }
         public DateTime? ModifyDate { get; set; }
         public string? ColorCode { get; set; }
+        public string? BackGroundColor { get; set; }
 
         public virtual ICollection<ValuationRequest> ValuationRequests { get; set; }
     }

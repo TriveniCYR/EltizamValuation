@@ -1,8 +1,14 @@
  
 $(document).ready(function () {
     BindCountry();
-    BindState();
-    BindCity();
+    var countryId = $('#hdnCountry').val();
+    if (countryId != null || countryId != 0) {
+        BindState(countryId);
+        var stateId = $('#hdnState').val();
+        BindCity(stateId);
+    }
+    BindDepartment();
+    BindDesignation();
 
     $('#Address_Phone').keypress(function (e) {
                 if ($('#Address_Phone').val() == '' && e.which == 48) {
@@ -116,70 +122,42 @@ function removeParentDivAddress(element) {
     }
 } 
 
+
 function BindCountry() {
+    debugger
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
-
-    BindDropdowns(CountryList, Country, _rpname, _val); 
+    BindDropdowns(CountryList, Country, _rpname, _val);
 }
 
-function BindState() {
+function BindState(id) {
     var State = $("#Address_StateId");
     var _val = $('#hdnState').val();
     var _rpname = "stateName";
 
-    BindDropdowns(StateList, State, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + StateList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        ;
-    //        State.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
-    //        }
-    //        if ($('#hdnState').val() != 0) {
-    //            State.val($('#hdnState').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    BindDropdowns(StateList + '/' + id, State, _rpname, _val);
 }
 
-function BindCity() {
+function BindCity(id) {
+
     var City = $("#Address_CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";
+    BindDropdowns(CityList + '/' + id, City, _rpname, _val);
+}
 
-    BindDropdowns(CityList, City, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + CityList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        ;
-    //        City.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
-    //        }
-    //        if ($('#hdnCity').val() != 0) {
-    //            City.val($('#hdnCity').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+function BindDepartment() {
+    var Department = $("#Contact_DepartmentId");
+    var _val = $('#hdnDeparment').val();
+    var _rpname = "department";
+
+    BindDropdowns(DepartmentList, Department, _rpname, _val);
+}
+function BindDesignation() {
+    var Designation = $("#Contact_DesignationId");
+    var _val = $('#hdnDesignation').val();
+    var _rpname = "designation";
+
+    BindDropdowns(DesignationList, Designation, _rpname, _val);
 }

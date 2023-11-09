@@ -188,12 +188,12 @@
                                         <div class="flex">
                                             <label for="CountryId">
                                                 <p class="m-0">Country<span class="text-danger">*</span></p>
-                                                @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @class = "form-control" })
+                                                @Html.DropDownListFor(model => model.Address.CountryId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindState(this.options[this.selectedIndex].value)" })
                                                 @Html.ValidationMessageFor(model => model.Address.CountryId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="StateId">
                                                 <p class="m-0">State<span class="text-danger">*</span></p>
-                                                @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @class = "form-control" })
+                                                @Html.DropDownListFor(model => model.Address.StateId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindCity(this.options[this.selectedIndex].value)" })
                                                 @Html.ValidationMessageFor(model => model.Address.StateId, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
@@ -368,15 +368,13 @@
     <script type="text/javascript" src="~/js/Custom/MasterUser/UserManage.js?v=@jsVersion"></script>
 
     <script>
-        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
-        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
         var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
         var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
         var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
         var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
-        var stateListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
-        var cityListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
+        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
+        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
 
 
         $(document).ready(function () { 

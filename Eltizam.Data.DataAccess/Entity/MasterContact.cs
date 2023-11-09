@@ -9,8 +9,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? TableKeyId { get; set; }
         public string? TableName { get; set; }
         public string? ContactPersonName { get; set; }
-        public string? Department { get; set; }
-        public string? Designation { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? DesignationId { get; set; }
         public string? Email { get; set; }
         public string? Mobile { get; set; }
         public int? Status { get; set; }

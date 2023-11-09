@@ -5,8 +5,13 @@ $(document).ready(function () {
     BindRole();
     BindResourceType();
     BindCountry();
-    BindState();
-    BindCity();
+    debugger
+    var countryId = $('#hdnCountry').val();
+    if (countryId != null || countryId != 0) {
+        BindState(countryId);
+        var stateId = $('#hdnState').val();
+        BindCity(stateId);
+    }
     BindGender();
 
     $('#Address_Phone').keypress(function (e) {
@@ -77,49 +82,27 @@ function BindResourceType() {
 }
 
 function BindCountry() {
-
+    debugger
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
     BindDropdowns(CountryList, Country, _rpname, _val);
 }
 
-function BindState() {
-
+function BindState(id) {
     var State = $("#Address_StateId");
     var _val = $('#hdnState').val();
     var _rpname = "stateName";
-    BindDropdowns(StateList, State, _rpname, _val);
 
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + StateList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //         ;
-    //        State.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
-    //        }
-    //        if ($('#hdnState').val() != 0) {
-    //            State.val($('#hdnState').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    BindDropdowns(StateList + '/' + id, State, _rpname, _val);
 }
 
-function BindCity() {    
+function BindCity(id) {
+
     var City = $("#Address_CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";
-    BindDropdowns(CityList, City, _rpname, _val);
+    BindDropdowns(CityList + '/' + id, City, _rpname, _val);
 }
 function BindGender() {
     var Gender = $("#Gender");

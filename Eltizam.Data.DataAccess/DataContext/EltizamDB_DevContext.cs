@@ -352,14 +352,6 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Department)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Designation)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Email)
                     .HasMaxLength(250)
                     .IsUnicode(false);
@@ -906,9 +898,9 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserName)
-                    .HasMaxLength(752)
+                    .HasMaxLength(501)
                     .IsUnicode(false)
-                    .HasComputedColumnSql("(((([FirstName]+' ')+[MiddleName])+' ')+[LastName])", false);
+                    .HasComputedColumnSql("(([FirstName]+' ')+[LastName])", false);
 
                 entity.HasOne(d => d.Department)
                     .WithMany(p => p.MasterUsers)
@@ -1238,6 +1230,8 @@ namespace Eltizam.Data.DataAccess.DataContext
             modelBuilder.Entity<ValuationRequestStatus>(entity =>
             {
                 entity.ToTable("ValuationRequestStatus", "dbo");
+
+                entity.Property(e => e.BackGroundColor).HasMaxLength(50);
 
                 entity.Property(e => e.ColorCode)
                     .HasMaxLength(100)

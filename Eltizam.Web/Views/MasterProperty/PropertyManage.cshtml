@@ -199,12 +199,12 @@
                                         <div class="flex">
                                             <label for="address1">
                                                 <p class="m-0">Country<span class="text-danger">*</span></p>
-                                                @Html.DropDownListFor(model => model.PropertyDetail.CountryId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                                                @Html.DropDownListFor(model => model.PropertyDetail.CountryId, new List<SelectListItem> { }, new {  @class = "form-control", @onchange = "BindState(this.options[this.selectedIndex].value)"})
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.CountryId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="address1">
                                                 <p class="m-0">Region<span class="text-danger">*</span></p>
-                                                @Html.DropDownListFor(model => model.PropertyDetail.StateId, new List<SelectListItem> { }, new {  @class = "form-control"})
+                                                @Html.DropDownListFor(model => model.PropertyDetail.StateId, new List<SelectListItem> { }, new {  @class = "form-control", @onchange = "BindCity(this.options[this.selectedIndex].value)"})
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.StateId, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
@@ -292,8 +292,8 @@
         var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
         var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
-        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateList";
-        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GetCityList";
+        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
+        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
 
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]";
