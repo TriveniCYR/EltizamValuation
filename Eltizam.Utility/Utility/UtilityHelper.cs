@@ -1,13 +1,9 @@
-﻿
-
+﻿using Eltizam.Business.Models;
+using Eltizam.Utility.Models;
 using System.Data;
-using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using Eltizam.Business.Models;
-using Eltizam.Utility.Enums;
-using Eltizam.Utility.Models;
 
 namespace Eltizam.Utility.Utility
 {
@@ -171,7 +167,7 @@ namespace Eltizam.Utility.Utility
         {
             if (_dict != null)
             {
-                return _dict.Remove(key);
+                return _dict.Remove(key); 
             }
             else
             {

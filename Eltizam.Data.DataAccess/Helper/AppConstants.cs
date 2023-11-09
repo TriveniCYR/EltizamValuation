@@ -33,19 +33,16 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string P_SortDirection = "@SortDirection";
         public static string P_SortColumn    = "@SortColumn";
         public static string P_PageSize      = "@PageSize";
-        public static string P_CurrentPageNumber = "@CurrentPageNumber";
-
+        public static string P_CurrentPageNumber = "@CurrentPageNumber"; 
         public static string P_Id = "@Id";
-        public static string P_CreatedBy = "@CreatedBy";
-        
-        public static string P_RequestData = "@RequestData";
-
+        public static string P_CreatedBy = "@CreatedBy"; 
+        public static string P_RequestData = "@RequestData"; 
         public static string CreatedBy = "CreatedBy";
         public static string ModifiedBy = "ModifiedBy";
+        public static string MenusCache = "MenusCache";
 
 
-        public static DateTime DateTime = DateTime.Now;
-
+        public static DateTime DateTime = DateTime.Now; 
         public static string DateFormat1 = DateTime.Now.ToString("dd-MMM-yyyy");
         public static string DateFormat2 = DateTime.Now.ToString("yyyymmdd");
 

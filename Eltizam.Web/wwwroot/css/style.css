@@ -2056,3 +2056,23 @@ div#amentiesdiv label {
 .valueReqTable td{
     padding:10px;
 }
+
+
+/* notification css here */
+.notificationInside span {
+    background: var(--error);
+    color: white;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    border-radius: 50%;
+    position: relative;
+    text-align: center;
+    left: -14px;
+    font-size: 10px;
+    top: -18px;
+}
+
+.notificationInside img {
+    transform: rotate(0deg);
+}
