@@ -21,7 +21,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         protected readonly DateTime _currentSQLServerDate;
 
         public static string CreatedBy = "CreatedBy";
-        public static string CreatedDate = "CreatedDate"; 
+        public static string CreatedDate = "CreatedDate";
         public static string ModifiedBy = "ModifiedBy";
         public static string ModifiedDate = "ModifiedDate";
         public static string IsDeleted = "IsDeleted";
@@ -32,7 +32,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             dbContext = Context ?? throw new ArgumentNullException(nameof(Context));
             dbSet = dbContext.Set<TEntity>();
             _EntityName = typeof(TEntity).Name;
-            _currentSQLServerDate = AppConstants.DateTime; //_commonService.GetSQLServerDate();
+            _currentSQLServerDate = DateTime.Now; //_commonService.GetSQLServerDate();
         }
 
         #region Read 
@@ -59,7 +59,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { 
+            {
             }
             return getAll;
         }
@@ -80,7 +80,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     {
                         return getAll.Where(o => (bool)o.GetType().GetProperty("IsDeleted").GetValue(o) is false).AsEnumerable();
                     }
-                } 
+                }
             }
             catch (Exception ex)
             { }
@@ -105,9 +105,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 var props = o.GetType().GetProperties();
                 if (props.Any(p => p.Name is "IsDeleted"))
-                { 
+                {
                     var isDeleted = o.GetType().GetProperty("IsDeleted").GetValue(o);
-                    if ((bool)isDeleted)
+                    if (isDeleted != null && (bool)isDeleted)
                     {
                         o = null;
                         throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
@@ -115,7 +115,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { 
+            {
             }
             return o;
         }
@@ -144,7 +144,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { 
+            {
             }
             return o;
         }
@@ -164,7 +164,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 if (props.Any(p => p.Name is "IsDeleted"))
                 {
                     var isDeleted = o.GetType().GetProperty("IsDeleted").GetValue(o);
-                    if ((bool)isDeleted)
+                    if (isDeleted != null && (bool)isDeleted)
                     {
                         o = null;
                         throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
@@ -172,7 +172,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { 
+            {
             }
 
             dbContext.Entry(o).State = EntityState.Detached;
@@ -202,7 +202,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { 
+            {
             }
 
             dbContext.Entry(o).State = EntityState.Detached;
@@ -223,7 +223,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 if (props.Any(p => p.Name is "IsDeleted"))
                 {
                     var isDeleted = o.GetType().GetProperty("IsDeleted").GetValue(o);
-                    if ((bool)isDeleted)
+                    if (isDeleted != null && (bool)isDeleted)
                     {
                         o = null;
                         throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
@@ -231,7 +231,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception exx)
-            { 
+            {
             }
             dbContext.Entry(o).State = EntityState.Detached;
             return o;
@@ -368,11 +368,11 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         public void AddAsync(TEntity entity)
         {
             try
-            { 
+            {
                 SetCommmonPropertiesWhileAdd(entity);
             }
-            catch (Exception ex) 
-            { 
+            catch (Exception ex)
+            {
             }
 
             //try
@@ -395,7 +395,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             //catch 
             //{ 
             //}
-            
+
             //Global Common Fields Update
             //dbContext.Entry(entity).Property("CreateDate").CurrentValue = _currentSQLServerDate;
             //dbContext.Entry(entity).Property("LastModifiedDate").CurrentValue = dbContext.Entry(entity).Property("CreateDate").CurrentValue;
@@ -427,7 +427,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 //    dbContext.Entry(entity).Property("Ipaddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
                 //}
             }
-            catch 
+            catch
             {
             }
 
@@ -463,9 +463,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             //Find Original Entity and Perform Audit
             TEntity originalEntity = GetOrignalEntity(entity);
-             
+
             SetCommonPropertiesWhileUpdate(entity, originalEntity, IsCreatedDateUpdate);
-        } 
+        }
 
         public TEntity GetEntity(Expression<Func<TEntity, bool>> predicate)
         {
@@ -479,7 +479,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 }
             }
             catch (Exception e)
-            { 
+            {
             }
             //try
             //{
@@ -656,29 +656,29 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         {
             dbContext.Entry(entity).Property(CreatedDate).CurrentValue = _currentSQLServerDate;
             dbContext.Entry(entity).Property(ModifiedBy).CurrentValue = dbContext.Entry(entity).Property(CreatedBy).CurrentValue;
-            dbContext.Entry(entity).Property(ModifiedDate).CurrentValue = _currentSQLServerDate; 
+            dbContext.Entry(entity).Property(ModifiedDate).CurrentValue = _currentSQLServerDate;
         }
 
         private void SetCommonPropertiesWhileUpdate(object entity, object oEntity, bool IsCreatedDateUpdate = false)
-        { 
+        {
             try
             {
                 if (!IsCreatedDateUpdate)
                 {
                     dbContext.Entry(entity).Property(CreatedBy).CurrentValue = oEntity.GetType().GetProperty(CreatedBy)?.GetValue(oEntity);
-                    dbContext.Entry(entity).Property(CreatedDate).CurrentValue = oEntity.GetType().GetProperty(CreatedDate)?.GetValue(oEntity); 
+                    dbContext.Entry(entity).Property(CreatedDate).CurrentValue = oEntity.GetType().GetProperty(CreatedDate)?.GetValue(oEntity);
 
                     //Marking Entity to Update & Ignore few fields
                     dbContext.Entry(entity).Property(CreatedBy).IsModified = false;
                     dbContext.Entry(entity).Property(CreatedDate).IsModified = false;
                 }
 
-                dbContext.Entry(entity).Property(ModifiedDate).CurrentValue = _currentSQLServerDate; 
+                dbContext.Entry(entity).Property(ModifiedDate).CurrentValue = _currentSQLServerDate;
             }
             catch (Exception e)
-            { 
+            {
             }
-            
+
             try
             {
                 var delete = dbContext.Entry(entity).Property(IsDeleted);
@@ -686,7 +686,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 if (delete != null && (bool)delete.CurrentValue == true)
                 {
                     dbContext.Entry(entity).Property(DeletedDate).CurrentValue = _currentSQLServerDate;
-                } 
+                }
             }
             catch (Exception e)
             {
@@ -1005,7 +1005,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                 if (o.GetType().GetProperty("IsDeleted") != null)
                 {
                     var isDeleted = o.GetType().GetProperty("IsDeleted").GetValue(o);
-                    if ((bool)isDeleted)
+                    if (isDeleted != null && (bool)isDeleted)
                     {
                         o = null;
                         throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));

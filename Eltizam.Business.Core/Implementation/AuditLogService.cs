@@ -61,7 +61,7 @@ namespace Eltizam.Business.Core.Implementation
             try
             {
                 //Get Last Modified
-                PropertyInfo pInfo = newEntity.GetType().GetProperty("ModifiedBy");
+                PropertyInfo pInfo = newEntity.GetType().GetProperty(AppConstants.ModifiedBy);
                 int logCreatedBy = Convert.ToInt32(pInfo.GetValue(newEntity, null)); // ?? _helper.GetLoggedInUser().UserId
 
                 //Get table Name, Id

@@ -103,6 +103,8 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }    
+
+
         public IActionResult DictionaryAllManage(int id, string? description)
         {
             ModelState.Clear();
@@ -225,10 +227,10 @@ namespace EltizamValuation.Web.Controllers
 
             }
             // return NotFound();
-            return View(model);
-
-
+            return View(model); 
         }
+
+
         [HttpPost]
         public IActionResult DictionaryDetailsManage(int? Id, MasterDictionaryDetailById masterdictionary)
         {

@@ -4,6 +4,7 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -14,7 +15,8 @@ namespace Eltizam.Business.Core.Implementation
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IMemoryCache _memoryCache;
+        private readonly IMemoryCache _memoryCache; 
+
         private IRepository<MasterModule> _repository { get; set; }
         private IRepository<MasterSubModule> _repositorySub { get; set; }
 
@@ -133,18 +135,17 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         public async Task<IEnumerable<RolePermissionModel>> GetByPermisionRoleUsingRoleId(int roleId)
-        {
-            var menus = "menus";
-
+        { 
             //Get from Cache first
-            var cacheData = _memoryCache.Get<IEnumerable<RolePermissionModel>>(menus);
+            var cacheData = _memoryCache.Get<IEnumerable<RolePermissionModel>>(AppConstants.MenusCache);
             if (cacheData != null)
             {
                 return cacheData;
             }
 
-            var Permissions = _mapperFactory.GetList<MasterRoleModulePermission, RoleModulePermissionEntity>((List<MasterRoleModulePermission>)
-                                await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId));
+            var per = await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId && xx.View == true);
+
+            var Permissions = _mapperFactory.GetList<MasterRoleModulePermission, RoleModulePermissionEntity>((List<MasterRoleModulePermission>)per);
 
             if (Permissions.Any())
             {
@@ -178,7 +179,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 //Do Cache
                 var expirationTime = DateTimeOffset.Now.AddMinutes(60.0);
-                _memoryCache.Set(menus, menuperm, expirationTime);
+                _memoryCache.Set(AppConstants.MenusCache, menuperm, expirationTime);
 
                 return menuperm;
             }

@@ -109,6 +109,8 @@ namespace Eltizam.Business.Core.Implementation
             var By = _helper.GetLoggedInUser().UserId;
             string MainTableName = Enum.GetName(TableNameEnum.Master_Location);
             int MainTableKey = entitydictionary.Id;
+
+
             if (entitydictionary.Id > 0)
             {
                 MasterDictionaryDetail OldEntity = null;
@@ -121,16 +123,14 @@ namespace Eltizam.Business.Core.Implementation
                     objDicitonary.Sort = entitydictionary.Sort;
                     objDicitonary.IsActive = entitydictionary.IsActive;
                     objDicitonary.ModifiedBy = entitydictionary.ModifiedBy ?? By;
+
                     _repositoryDetail.UpdateAsync(objDicitonary);
                     _repositoryDetail.UpdateGraph(objDicitonary, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
+                   
                     //Do Audit Log --AUDITLOGUSER
                     await _auditLogService.CreateAuditLog<MasterDictionaryDetail>(AuditActionTypeEnum.Update, OldEntity, objDicitonary, MainTableName, MainTableKey);
-                }
-                else
-                {
-                    return DBOperation.NotFound;
-                }
+                } 
             }
             else
             {
@@ -148,6 +148,8 @@ namespace Eltizam.Business.Core.Implementation
 
             return DBOperation.Success;
         }
+
+
         public async Task<DBOperation> Delete(int id)
         {
             var entityDictionary = _repositoryDetail.Get(x => x.Id == id);

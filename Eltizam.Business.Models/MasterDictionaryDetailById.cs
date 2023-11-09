@@ -13,8 +13,7 @@ namespace Eltizam.Business.Models
         [NotMapped]
         public int? Type { get; set; }
         public int? DictionaryId { get; set; }
-        public int ChildId { get; set; }
-        // public int Type { get; set; }
+        public int ChildId { get; set; } 
         public string? Description { get; set; }
         public string? ParentDescription { get; set; }
         public string? ChildDescription { get; set; }

@@ -6,19 +6,13 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
-using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -28,7 +22,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
+        private readonly IConfiguration configuration;
 
 
         private IRepository<MasterLocation> _repository { get; set; }
@@ -36,9 +30,8 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<EmailLogHistory> _emailLog { get; set; }
         private readonly IAuditLogService _auditLogService;
         private readonly int? _LoginUserId;
-        public MasterLocationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
-                                  IHelper helper,
-                                 Microsoft.Extensions.Configuration.IConfiguration _configuration, IAuditLogService auditLogService)
+
+        public MasterLocationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,  IHelper helper, IConfiguration _configuration, IAuditLogService auditLogService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -106,12 +99,13 @@ namespace Eltizam.Business.Core.Implementation
             var By = _helper.GetLoggedInUser().UserId;
             string MainTableName = Enum.GetName(TableNameEnum.Master_Location);
             int MainTableKey = entityLocation.Id;
+
             if (entityLocation.Id > 0)
             {
                 MasterLocation OldEntity = null;
                 OldEntity = _repository.GetNoTracking(entityLocation.Id);
-                objLocation = _repository.Get(entityLocation.Id);
-                var OldObjLocation = objLocation;
+                objLocation = _repository.Get(entityLocation.Id); 
+
                 if (objLocation != null)
                 {
                     //   objLocation.LocationName = entityLocation.LocationName;
@@ -123,7 +117,7 @@ namespace Eltizam.Business.Core.Implementation
                     objLocation.Longitude = entityLocation.Longitude;
                     objLocation.Status = entityLocation.Status;
                     objLocation.LocationName = entityLocation.LocationName;
-                  //  objLocation.ModifiedDate = AppConstants.DateTime;
+                    //objLocation.ModifiedDate = AppConstants.DateTime;
                     //objLocation.ModifiedBy = entityLocation.CreatedBy;
                     objLocation.ModifiedBy = entityLocation.ModifiedBy ?? By;
 
@@ -152,10 +146,8 @@ namespace Eltizam.Business.Core.Implementation
                 objLocation.HomeCurrencyId = entityLocation.HomeCurrencyId;
                 objLocation.ForeignCurrencyId = entityLocation.ForeignCurrencyId;
                 objLocation.Status = entityLocation.Status;
-                //objLocation.CreatedDate = AppConstants.DateTime;
-                objLocation.CreatedBy = entityLocation.CreatedBy;
-              //  objLocation.ModifiedDate = AppConstants.DateTime;
-               // objLocation.ModifiedBy = entityLocation.CreatedBy;
+                objLocation.CreatedBy = entityLocation.CreatedBy ?? By;
+
                 _repository.AddAsync(objLocation);
                 await _unitOfWork.SaveChangesAsync();
             }
