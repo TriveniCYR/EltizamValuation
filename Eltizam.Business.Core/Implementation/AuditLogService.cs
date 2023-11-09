@@ -153,16 +153,17 @@ namespace Eltizam.Business.Core.Implementation
 
             return resp;
         }
-        public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
             var users = await _userrepository.GetAllAsync();
-            TableName = "MasterUser";
+            //TableName = "MasterUser";
+
             var entityAuditLogs = await _repository.FindAllAsync(x =>
-                (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
-                && (TableKey == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
-                && (!DateFrom.HasValue || x.CreatedDate >= DateFrom)
-                && (!DateTo.HasValue || x.CreatedDate <= DateTo)
-                && (Id == null || x.Id == Id));
+                   (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
+                && (TableKey  == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
+                && (DateFrom  == null || x.CreatedDate >= DateFrom)
+                && (DateTo    == null || x.CreatedDate <= DateTo)
+                && (Id == null        || x.Id == Id));
 
             var res = new List<AuditLogModelResponse>();
             foreach (var log in entityAuditLogs)
