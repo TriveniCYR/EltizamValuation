@@ -709,7 +709,7 @@ function BindQuatationList() {
                     html += '</ul></div>';
 
                     $('#QuatationTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationFee + '</td><td>' + object.vat
-                        + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusId + '</td><td>' + html + '</td></tr>');
+                        + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
                 });
                 //StaticDataTable("#QuatationTable");
             }
