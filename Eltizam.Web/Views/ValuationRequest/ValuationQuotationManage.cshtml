@@ -11,7 +11,7 @@
 @model Eltizam.Business.Models.ValuationQuatationListModel
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = " Valuation Quotation List";
+    var _header = " Valuation Quotation";
     var _md = ViewBag.IsView > 0 ? "View" : "Add";
     ViewData["Title"] = _md + _header;
 }
