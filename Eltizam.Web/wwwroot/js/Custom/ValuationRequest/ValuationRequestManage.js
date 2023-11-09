@@ -40,25 +40,54 @@ function payTab(evt, payName) {
 // payment option JS ends
 
 $(document).ready(function () {
-    //debugger
-    //$('#comment').hide();
+    debugger
     
-    //$('#StatusId').on('change', function () {
-    //    debugger
-    //    var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/
-       
+    var roleId = document.getElementById('hdnRoleId').value;
+    var inputElement1 = $('#ApproverId');
+    var inputElement2 = $('#OtherReferenceNo');
+    var inputElement3 = $('#ValuerId');
+    var inputElement6 = $('#ValuationDate');
+    var inputElement7 = $('#ValuationModeId');
+    var inputElement8 = $('#ClientTypeId');
+    var inputElement9 = $('#ClientId');
+    var inputElement10 = $('#ClientName');
+    var inputElement11 = $('#PropertyTypeId');
+    var inputElement12 = $('#PropertySubTypeId');
+    var inputElement13 = $('#OwnershipTypeId');
+    var inputElement14 = $('#PropertyId');
+    var inputElement15 = $('#ValuationTimeFrame');
 
-    //    // Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
-    //    if (selectedOption === 'Rejected') {
-    //        $('#comment').show();
-    //    } else {
-    //        $('#comment').hide();
-    //    }
 
-    //});
+    if (roleId == 2 || roleId ==3) {
+        inputElement1.prop('disabled', true);
+        inputElement2.prop('disabled', true);
+        inputElement3.prop('disabled', true);
+        inputElement6.prop('disabled', true);
+        inputElement7.prop('disabled', true);
+        inputElement8.prop('disabled', true);
+        inputElement9.prop('disabled', true);
+        inputElement10.prop('disabled', true);
+        inputElement11.prop('disabled', true);
+        inputElement12.prop('disabled', true);
+        inputElement13.prop('disabled', true);
+        inputElement14.prop('disabled', true);
+        inputElement15.prop('disabled', true);
+    } else {
+        inputElement1.prop('disabled', false);
+        inputElement2.prop('disabled', false);
+        inputElement3.prop('disabled', false);
+        inputElement7.prop('disabled', false);
+        inputElement9.prop('disabled', false);
+        inputElement10.prop('disabled', false);
+        inputElement11.prop('disabled', false);
+        inputElement12.prop('disabled', false);
+        inputElement13.prop('disabled', false);
+        inputElement14.prop('disabled', false);
+        inputElement15.prop('disabled', false);
+    }
     
    
-    var roleId = document.getElementById('hdnRoleId').value;
+    
     if (roleId > 0) {
         BindValuationRequestStatus(roleId)
         
