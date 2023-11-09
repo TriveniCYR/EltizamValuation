@@ -57,8 +57,8 @@ namespace EltizamValuation.Api.Controllers
         }
          
 
-        [HttpGet, Route("GetLogDetailsByFilters")]
-        public async Task<IActionResult> GetById(string TableName, int? Id, int? TableKey, DateTime? DateFrom, DateTime? DateTo)
+        [HttpGet, Route("GetLogDetails")]
+        public async Task<IActionResult> GetLogDetails(string? TableName, int? Id, int? TableKey, DateTime? DateFrom, DateTime? DateTo)
         {
             try
             {

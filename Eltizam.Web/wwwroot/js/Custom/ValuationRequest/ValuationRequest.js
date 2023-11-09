@@ -124,22 +124,17 @@ function InitializeValutionRequestDataList() {
 
             "data": "statusName",
             "name": "Status",
-            "render": function (data, type, row, meta) {
-                var statusColorCode = row.colorCode;
-                var backGroundColor = row.backGroundColor;
-                // Define a custom CSS style based on the color code
-                //var statusStyle = "color: " + statusColorCode;
-                var statusStyle = "color: " + statusColorCode + "; background-color: " + backGroundColor;
-                return '<span style="' + statusStyle + '">' + data + '</span>';
-            }
-
-        },
-
+            "render": function (data, type, row, meta) { 
+                // Define a custom CSS style based on the color code 
+                var statusStyle = "color: " + row.colorCode + "; background-color: " + row.backGroundColor;
+                return '<span class="tableStatus" style="' + statusStyle + '">' + data + '</span>';
+            } 
+        }, 
         {
             "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                html += '<li><a title="View" href="/MasterPropertyType/PropertyTypeDetail?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                html += '<li><a title="View" href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
                 html += '<li><a title="Edit" href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
                 html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletevalutionRequestModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteValuationRequest(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                 html += '</ul></div>';
