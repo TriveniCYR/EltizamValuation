@@ -34,6 +34,7 @@ namespace Eltizam.Business.Core.Implementation
         //private IRepository<MasterPropertySubType> _subrepository { get; set; }
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
+
         #endregion Properties
 
         #region Constructor
@@ -257,6 +258,39 @@ namespace Eltizam.Business.Core.Implementation
 
             return DBOperation.Success;
         }
+
+
+        public async Task<DBOperation> ReviewerRequestStatus(ValutionRequestForApproverModel model)
+        {
+
+            var LoginUserId = _helper.GetLoggedInUser()?.UserId;
+            if (model.StatusId > 0 && model.Id > 0)
+            {
+                if (model.Id > 0)
+                {
+                    var valuationEntity = _repository.Get(model.Id);
+                    
+                    valuationEntity.StatusId = model.StatusId;
+                    valuationEntity.ModifiedBy = _LoginUserId;
+                    valuationEntity.ModifiedDate = AppConstants.DateTime;
+                    valuationEntity.ApproverComment= model.ApproverComment;
+                    _repository.UpdateAsync(valuationEntity);
+                    _repository.UpdateGraph(valuationEntity, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+                    
+                }
+                else
+                {
+                    return DBOperation.NotFound;
+                }
+            }
+            else
+            {
+                return DBOperation.NotFound;
+            }
+            return DBOperation.Success;
+        }
+
     }
 
 }

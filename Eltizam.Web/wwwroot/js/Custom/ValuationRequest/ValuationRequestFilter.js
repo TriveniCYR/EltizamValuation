@@ -71,7 +71,7 @@ function BindPropertype() {
 }
 
 function BindRequestStaus() {
-    var RequestStaus = $("#RequestStatusId");
+        var RequestStaus = $("#RequestStatusId");
     var _val = $('#hdnRequestStaus').val();
     var _rpname = "statusName";
     BindDropdowns(ValutionRequestStatusList, RequestStaus, _rpname, _val);

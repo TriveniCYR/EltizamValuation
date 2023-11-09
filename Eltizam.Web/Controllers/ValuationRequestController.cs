@@ -50,6 +50,12 @@ namespace EltizamValuation.Web.Controllers
                 ViewData["IsView"] = true;
             }
             ValuationRequestModel valuationRequestModel;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
                 ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
@@ -117,6 +123,46 @@ namespace EltizamValuation.Web.Controllers
                 valuationRequestModelNew.OtherReferenceNo = valuationRequestModel.OtherReferenceNo;
                 //valuationRequestModelNew.ValuationDate = valuationRequestModel.ValuationDate;
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    TempData["StatusMessage"] = "Saved Successfully";
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    ModelState.Clear();
+                    return RedirectToAction(nameof(ValuationRequests));
+                }
+                else
+                    TempData["StatusMessage"] = "Some Eror Occured";
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                ViewBag.errormessage = Convert.ToString(e.StackTrace);
+                ModelState.Clear();
+                return View(nameof(ValuationRequests));
+            }
+            ModelState.Clear();
+            return RedirectToAction(nameof(ValuationRequests));
+        }
+
+
+        [HttpPost]
+        [Route("ValuationRequest/ReviewerRequestStatus")]
+        public IActionResult ReviewerRequestStatus(int id, ValutionRequestForApproverModel appoveRequestModel)
+        {
+            try
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                ValutionRequestForApproverModel valuationRequestModelNew = new ValutionRequestForApproverModel();
+                valuationRequestModelNew.Id = id;
+                
+                valuationRequestModelNew.StatusId = appoveRequestModel.StatusId;
+                
+                valuationRequestModelNew.ApproverComment = appoveRequestModel.ApproverComment;
+               
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ReviewRequestStatus, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
