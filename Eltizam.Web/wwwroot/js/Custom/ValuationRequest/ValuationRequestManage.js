@@ -765,7 +765,7 @@ $('#approveStatus').on('click', function () {
 });
 
 
-}
+
 
 function BindQuatationList() {
     debugger
