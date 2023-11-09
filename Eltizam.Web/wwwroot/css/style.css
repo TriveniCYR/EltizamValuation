@@ -2076,3 +2076,84 @@ div#amentiesdiv label {
 .notificationInside img {
     transform: rotate(0deg);
 }
+
+
+/* Dashboard css starts here */
+.dashboard-status {
+    padding: 0 20px;
+    gap: 2%;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+    .dashboard-status .dashboard-box {
+        width: 23%;
+        height: 122px;
+        border: 1px solid var(--grey);
+        border-radius: 5px;
+        text-align: center;
+        padding: 10px 20px;
+    }
+
+        .dashboard-status .dashboard-box h3 {
+            font-size: 2em;
+            margin-top: 16px;
+            color: var(--blue);
+        }
+
+table.dashboardTable {
+    min-width: 100%;
+    box-shadow: none;
+    margin: 10px 0 0;
+}
+
+.dashboardTable th {
+    background: none;
+    color: var(--black);
+    text-align: left;
+    border: none;
+}
+
+.dashboardTable td {
+    border: none;
+    text-align: left;
+}
+
+.dashboardMapArea {
+    display: grid;
+    grid-template-columns: 30% 68%;
+    padding: 20px;
+    grid-gap: 2%;
+}
+
+    .dashboardMapArea .roundBorderBox {
+        height: 216px;
+        align-content: center;
+        display: grid;
+    }
+
+        .dashboardMapArea .roundBorderBox h3 {
+            font-size: 3em;
+            border: 5px solid;
+            width: 137px;
+            height: 137px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: auto;
+            margin-top: 10px;
+        }
+
+    .dashboardMapArea .dashboard-status p {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+.dashboard-status .green {
+    color: var(--green) !important;
+}
+
+.dashboard-status .orange {
+    color: var(--orange) !important;
+}
