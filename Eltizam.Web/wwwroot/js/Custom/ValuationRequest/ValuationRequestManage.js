@@ -40,6 +40,7 @@ function payTab(evt, payName) {
 // payment option JS ends
 
 $(document).ready(function () {
+    debugger
     
     var roleId = document.getElementById('hdnRoleId').value;
     var inputElement1 = $('#ApproverId');
@@ -57,7 +58,7 @@ $(document).ready(function () {
     var inputElement15 = $('#ValuationTimeFrame');
 
 
-    if (roleId == 2) {
+    if (roleId == 2 || roleId ==3) {
         inputElement1.prop('disabled', true);
         inputElement2.prop('disabled', true);
         inputElement3.prop('disabled', true);

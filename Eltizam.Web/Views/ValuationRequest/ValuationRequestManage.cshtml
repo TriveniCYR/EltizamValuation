@@ -435,16 +435,16 @@
                             <div class="text-center buttonArea bodyContent plr-0">
                                 <button type="button" class="lineBtn greyBtn">Cancel</button>
 
-                                @if (roleId != 2)
+                                @if (roleId == 4)
                                 {
                                     <button type="submit" class="blueBtn">Save</button>
 
                                 }
-                                @if (roleId == 2)
+                                @if (roleId == 2 || roleId == 3)
                                 {
 
                                     <button class="blueBtn" id="approveStatus">
-                                        Save
+                                        Savest
                                     </button>
                                 }
 
