@@ -30,7 +30,7 @@
         <div class="profileHead flex justify-between align-item-center cursor-pointer p-0">
             <h3 class="dashboardTitle">@_md @_header</h3>
             <div class="hamburger">
-                <span onclick="valuationListingMaster()">Valuation List</span>
+                <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md @_header</span>
             </div>
@@ -819,8 +819,8 @@
         var inputElement10 = $('#ClientName');
         var inputElement11 = $('#PropertyTypeId');
         var inputElement12 = $('#PropertySubTypeId');
-        var inputElement13 = $('#OwnershipTypeId');
-         var inputElement14 = $('#PropertyId');
+       // var inputElement13 = $('#OwnershipTypeId');
+         //var inputElement14 = $('#PropertyId');
           var inputElement15 = $('#ValuationTimeFrame');
        
         
@@ -837,8 +837,8 @@
         inputElement10.prop('disabled', true);
         inputElement11 .prop('disabled', true);
         inputElement12 .prop('disabled', true);
-        inputElement13 .prop('disabled', true);
-         inputElement14 .prop('disabled', true);
+       // inputElement13 .prop('disabled', true);
+       //  inputElement14 .prop('disabled', true);
          inputElement15 .prop('disabled', true);
         } else {
            inputElement1.prop('disabled', false);
@@ -851,8 +851,8 @@
         inputElement10 . prop('disabled', false);
         inputElement11 . prop('disabled', false);
         inputElement12 . prop('disabled', false);
-        inputElement13 . prop('disabled', false);
-         inputElement14 . prop('disabled', false);
+       // inputElement13 . prop('disabled', false);
+       //  inputElement14 . prop('disabled', false);
           inputElement15 . prop('disabled', false);
         }
     });

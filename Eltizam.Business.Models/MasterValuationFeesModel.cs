@@ -31,13 +31,13 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'ValuationFeeType' field is required.")]
         public int? ValuationFeeTypeId { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? ValuationFees { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? Vat { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+       // [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? OtherCharges { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+      //  [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? TotalValuationFees { get; set; }
         public string? ValuationFeeType { get; set; }
         public string? PropertyType { get; set; }
@@ -46,7 +46,7 @@ namespace Eltizam.Business.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? FixedvaluationFees { get; set; }
         public bool IsActive { get; set; }
         public List<Master_PropertyTypeModel>? propertyTypeViewModels { get; set; }

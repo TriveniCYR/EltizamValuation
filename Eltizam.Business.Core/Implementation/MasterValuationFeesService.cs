@@ -7,7 +7,9 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -27,7 +29,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private readonly string _dbConnection;
-
+        private readonly IAuditLogService _auditLogService;
         private IRepository<MasterValuationFee> _repository { get; set; }
         private readonly IHelper _helper;
         public MasterValuationFeesService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
@@ -78,11 +80,16 @@ namespace Eltizam.Business.Core.Implementation
         {
 
             MasterValuationFee objValuationFees;
+            string MainTableName = Enum.GetName(TableNameEnum.Master_ValuationFee);
+            int MainTableKey = entityValuationFees.Id;
 
             if (entityValuationFees.Id > 0)
             {
+                MasterValuationFee OldEntity = null;
+                OldEntity = _repository.GetNoTracking(entityValuationFees.Id);
+
                 objValuationFees = _repository.Get(entityValuationFees.Id);
-                var OldObjValuationFees = objValuationFees;
+                //var OldEntity = objValuationFees;
                 if (objValuationFees != null)
                 {
                     objValuationFees.PropertyTypeId = entityValuationFees.PropertyTypeId;
@@ -101,6 +108,13 @@ namespace Eltizam.Business.Core.Implementation
                     objValuationFees.ModifiedDate = AppConstants.DateTime;
                     objValuationFees.ModifiedBy = entityValuationFees.CreatedBy;
                     _repository.UpdateAsync(objValuationFees);
+                    _repository.UpdateGraph(objValuationFees, EntityState.Modified);
+
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<MasterValuationFee>(AuditActionTypeEnum.Update, OldEntity, objValuationFees, MainTableName, MainTableKey);
+
                 }
                 else
                 {
