@@ -51,6 +51,6 @@ namespace Eltizam.Data.DataAccess.Helper
 
 
         public static string ID_ValuationRequest = string.Format("VR{0}-", DateFormat2);
-        public static string ID_QuotationsRequest = string.Format("VR{0}-QT");
+        public static string ID_QuotationsRequest = string.Format("VR{0}-QT", DateFormat2);
     } 
 }
