@@ -32,6 +32,8 @@ namespace Eltizam.Business.Models
 
         public string? ColorCode { get; set; }
 
+        public string? BackGroundColor { get; set; }
+
         public string? ReferenceNO { get; set; }
 
         public int? CountryId { get; set; }

@@ -135,5 +135,18 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+        [HttpPost, Route("ReviewerRequestStatus")]
+        public async Task<IActionResult> ReviewerRequestStatus([FromBody] ValutionRequestForApproverModel model)
+        {
+            DBOperation oResponse = await _valutionServices.ReviewerRequestStatus(model);
+            if (oResponse == DBOperation.Success)
+            {
+                return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+            }
+            else
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        }
+
     }
 }

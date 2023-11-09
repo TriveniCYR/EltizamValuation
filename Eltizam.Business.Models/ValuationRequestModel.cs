@@ -57,6 +57,7 @@ namespace Eltizam.Business.Models
         public int? CountryId { get; set; }
         public string? Trnnumber { get; set; }
         public string? LicenseNumber { get; set; }
+       
         public List<MasterAmenityListModel>? AmenityList { get; set; }
         //public Master_ClientTypeModel? master_ClientType { get; set; }
         //public MasterPropertyModel? masterPropertyModel { get; set; }

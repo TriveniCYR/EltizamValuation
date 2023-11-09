@@ -52,15 +52,15 @@ function InitializeValutionRequestDataList() {
     } else {
         resourceId = parseInt(resourceId);
     }
-    
+
     var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val();
-    
+
     var toDate = $("#ToDate").val() === undefined ? "" : $("#ToDate").val();
-    
+
     var setDefaultOrder = [0, 'asc'];
     var ajaxObject = {
         "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
-        
+
         "type": "POST",
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
@@ -71,6 +71,7 @@ function InitializeValutionRequestDataList() {
 
 
     var columnObject = [
+
         {
             "data": "id", "name": "Id",
             "render": function (data, type, row, data) {
@@ -80,7 +81,7 @@ function InitializeValutionRequestDataList() {
         {
             "data": "referenceNO", "name": "ReferenceNO"
         },
-       
+
         {
             "data": "clientName", "name": "Client Name"
         },
@@ -120,13 +121,15 @@ function InitializeValutionRequestDataList() {
         },
 
         {
+
             "data": "statusName",
             "name": "Status",
             "render": function (data, type, row, meta) {
                 var statusColorCode = row.colorCode;
+                var backGroundColor = row.backGroundColor;
                 // Define a custom CSS style based on the color code
-                var statusStyle = "color: " + statusColorCode;
-                //var statusStyle = "background-color: " + statusColorCode + "; color: statusColorCode;";
+                //var statusStyle = "color: " + statusColorCode;
+                var statusStyle = "color: " + statusColorCode + "; background-color: " + backGroundColor;
                 return '<span style="' + statusStyle + '">' + data + '</span>';
             }
 

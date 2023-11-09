@@ -38,12 +38,12 @@ namespace EltizamValuation.Api.Controllers
         #endregion Constructor
         
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("GetAll/{roleId}")]
+        public async Task<IActionResult> GetAll(int roleId)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _RequestStatusService.GetAll(), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _RequestStatusService.GetAll(roleId), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -51,6 +51,18 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
+        [HttpGet("GetAllStatus")]
+        public async Task<IActionResult> GetAllStatus()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _RequestStatusService.GetAllStatus(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
 
     }
 }
