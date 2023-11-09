@@ -14,6 +14,7 @@ namespace Eltizam.Business.Models
         public string ReferenceNo { get; set; } = null!;
         public int ValuationRequestId { get; set; }
         public int StatusId { get; set; }
+        public string? StatusName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'ValuationFee' field is required.")]
         public decimal ValuationFee { get; set; }

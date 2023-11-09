@@ -34,6 +34,14 @@ function SaveCashInvoice() {
     let transactionDate = $("#TransactionDate").val();
     let hdnReferenceNo = $("#hdnReferenceNo").val();
     let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+    if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId))) {
+            toastr.error("Select Status.");
+            return false;
+        }
+    else if (amouont == '') {
+        toastr.error("Enter Amount.");
+        return false;
+    }
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
@@ -54,6 +62,22 @@ function SaveChequeInvoice() {
     let chequeRecievedDate = $("#ChequeRecievedDate").val();
     let hdnReferenceNo = $("#hdnReferenceNo").val();
     let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+    if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId))) {
+        toastr.error("Select Status.");
+        return false;
+    }
+    else if (amouont == '') {
+        toastr.error("Enter Amount.");
+        return false;
+    }
+    else if (chequeNumber == '') {
+        toastr.error("Enter Cheque No.");
+        return false;
+    }
+    else if (chequeBankName == '') {
+        toastr.error("Enter Bank Name.");
+        return false;
+    }
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
@@ -76,6 +100,26 @@ function SaveCreditCardInvoice() {
     let expiryDate = $("#ExpiryDate").val();
     let hdnReferenceNo = $("#hdnReferenceNo").val();
     let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+    if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId))) {
+        toastr.error("Select Status.");
+        return false;
+    }
+    else if (amouont == '') {
+        toastr.error("Enter Amount.");
+        return false;
+    }
+    else if (creditCardNumber == '') {
+        toastr.error("Enter Card Number.");
+        return false;
+    }
+    else if (bankName == '') {
+        toastr.error("Enter Bank Name.");
+        return false;
+    }
+    else if (nameOnCard == '') {
+        toastr.error("Enter Holder Name.");
+        return false;
+    }
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
@@ -98,6 +142,22 @@ function SaveNetBankingInvoice() {
     let accountNumber = $("#AccountNumber").val();
     let hdnReferenceNo = $("#hdnReferenceNo").val();
     let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+    if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId))) {
+        toastr.error("Select Status.");
+        return false;
+    }
+    else if (amouont == '') {
+        toastr.error("Enter Amount.");
+        return false;
+    }
+    else if (bankName == '') {
+        toastr.error("Enter Bank Name.");
+        return false;
+    }
+    else if (accountNumber == '') {
+        toastr.error("Enter Account Number.");
+        return false;
+    }
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;

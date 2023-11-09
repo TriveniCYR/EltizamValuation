@@ -1,11 +1,9 @@
 ﻿using Eltizam.Business.Models;
-using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
-using Humanizer.Localisation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
@@ -61,6 +59,8 @@ namespace EltizamValuation.Web.Controllers
 
             if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+
             if (id == null || id <= 0)
             {
                 masterlocation = new MasterLocationEntity();
@@ -106,6 +106,7 @@ namespace EltizamValuation.Web.Controllers
             int roleId = _helper.GetLoggedInRoleId();
             if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
             if (id == null || id <= 0)
             {
                 masterlocation = new MasterLocationEntity();
@@ -130,6 +131,8 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+
+
         [HttpPost]
         public IActionResult LocationManage(int id, MasterLocationEntity masterlocation)
         {

@@ -25,7 +25,7 @@ namespace Eltizam.Web.Controllers
         /// <param name="enumT"></param>
         /// <param name="_cofiguration"></param>
         /// <param name="id"></param>
-        public void FooterInfo( TableNameEnum enumT, IConfiguration _cofiguration, int? id)
+        public void FooterInfo(TableNameEnum enumT, IConfiguration _cofiguration, int? id)
         {
             if (id == null || id == 0)
                 return;
@@ -52,19 +52,20 @@ namespace Eltizam.Web.Controllers
         /// <returns></returns>
         public bool CheckRoleAccess(ModulePermissionEnum enumP, PermissionEnum perEnum, int roleId)
         {
-            var hasAccess  = false;
+            var hasAccess = false;
             bool view = perEnum == PermissionEnum.View;
-            bool add  = perEnum == PermissionEnum.Add;
+            bool add = perEnum == PermissionEnum.Add;
             bool edit = perEnum == PermissionEnum.Edit;
 
             RolePermissionModel? objPermssion = UtilityHelper.GetCntrActionAccess((int)enumP, roleId);
 
-            if (objPermssion != null && (view == objPermssion.View) || 
-                                        (add  == objPermssion.Add)  ||
-                                        (edit == objPermssion.Edit))
+            if (objPermssion != null)
             {
-                hasAccess = true;
-            } 
+                if ((view == objPermssion.View) || (add == objPermssion.Add) || (edit == objPermssion.Edit))
+                {
+                    hasAccess = true;
+                }
+            }
 
             ViewBag.Access = objPermssion;
             return hasAccess;

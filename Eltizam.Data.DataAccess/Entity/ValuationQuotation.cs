@@ -16,7 +16,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public decimal? Discount { get; set; }
         public decimal? TotalFee { get; set; }
         public string? Note { get; set; }
-        public int? CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public int? ModifyBy { get; set; }
         public DateTime? ModifyDate { get; set; }

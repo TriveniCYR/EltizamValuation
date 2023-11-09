@@ -222,6 +222,9 @@ namespace Eltizam.Web.Helpers
         public static string UpsertValuationRequest = "api/ValuationRequest/Upsert";
         public static string ValuationRequestGetById = "api/ValuationRequest/GetById";
         public static string ValuationRequestDeleteById = "api/ValuationRequest/Delete";
+        public static string ReviewRequestStatus = "api/ValuationRequest/ReviewerRequestStatus";
+        public static string GetRequestStatus = "api/ValuationRequestStatus/GetAllStatus";
+        
 
         #endregion Valuation Request
 

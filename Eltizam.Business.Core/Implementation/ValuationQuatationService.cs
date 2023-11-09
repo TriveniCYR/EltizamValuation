@@ -6,9 +6,12 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
+using Eltizam.Utility;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,8 +48,17 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<List<ValuationQuatationListModel>> GetQuatationList(int requestId)
         {
-            var allList = _repository.GetAllAsync(x => x.ValuationRequestId == requestId).Result.ToList();
-            return _mapperFactory.GetList<ValuationQuotation, ValuationQuatationListModel>(allList);
+            DbParameter[] osqlParameter2 =
+            {
+                    new DbParameter("RequestId", requestId, SqlDbType.Int),
+                };
+
+            var quottationList = EltizamDBHelper.ExecuteMappedReader<ValuationQuatationListModel>(ProcedureMetastore.usp_Quotation_GetQuotationByRequestId,
+                                DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
+
+            return quottationList;
+            //var allList = _repository.GetAllAsync(x => x.ValuationRequestId == requestId).Result.ToList();
+            //return _mapperFactory.GetList<ValuationQuotation, ValuationQuatationListModel>(allList);
         }
 
         public async Task<ValuationQuatationListModel> GetQuatationById(int id)

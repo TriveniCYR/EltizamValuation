@@ -40,11 +40,38 @@ function payTab(evt, payName) {
 // payment option JS ends
 
 $(document).ready(function () {
+    //debugger
+    //$('#comment').hide();
+    
+    //$('#StatusId').on('change', function () {
+    //    debugger
+    //    var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/
+       
+
+    //    // Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
+    //    if (selectedOption === 'Rejected') {
+    //        $('#comment').show();
+    //    } else {
+    //        $('#comment').hide();
+    //    }
+
+    //});
+    
+   
+    var roleId = document.getElementById('hdnRoleId').value;
+    if (roleId > 0) {
+        BindValuationRequestStatus(roleId)
+        
+
+    }
+
+   /* $('#StatusId').trigger('change');*/
+
     // BindProperty();
-    BindValuationRequestStatus();
+    //BindValuationRequestStatus();
     GetValuationMethodLists();
     BindClientType();
-   // BindClientType();
+    // BindClientType();
     BindProperty();
     BindOwnership();
     BindUnitType();
@@ -57,30 +84,31 @@ $(document).ready(function () {
     /*BindPropertyDetail();*/
 
     if (document.location.href.includes('id'))
+ 
     
-   /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/
-    {
+   /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/ {
 
-        debugger;
-      var  comingFromAPI  = document.getElementById('hdnClientTypeId').value;
+
+        var comingFromAPI = document.getElementById('hdnClientTypeId').value;
         var comingFromAPIClientId = document.getElementById('hdnClientId').value;
         var comingFromAPIPropertyTypeId = document.getElementById('hdnPropertyType').value;
         var comingFromAPIPropertyId = document.getElementById('hdnPropertyId').value;
-       
-      //var id =  document.getElementById('ClientTypeId').value
-       // $('ClientTypeId').val() = $('hdnClientTypeId').val();
+
+        //var id =  document.getElementById('ClientTypeId').value
+        // $('ClientTypeId').val() = $('hdnClientTypeId').val();
         var ss = document.getElementById('ClientTypeId').value = document.getElementById('hdnClientTypeId').value;
+       
         //document.getElementById('ClientName').value
-       // document.getElementById('ClientTypeId').value = ss;
-       // console.log(ss);
-       // console.log(document.getElementById('ClientTypeId').value);
-       //console.log(document.getElementById('hdnClientTypeId').value);
-       // document.getElementById("ClientTypeId").options[document.getElementById('hdnClientTypeId').value].selected = true;
+        // document.getElementById('ClientTypeId').value = ss;
+        // console.log(ss);
+        // console.log(document.getElementById('ClientTypeId').value);
+        //console.log(document.getElementById('hdnClientTypeId').value);
+        // document.getElementById("ClientTypeId").options[document.getElementById('hdnClientTypeId').value].selected = true;
         /* document.getElementById("ClientTypeId").options[ss].selected = true;*/
         /*$("#ClientTypeId").get(0).selectedIndex = document.getElementById('hdnClientTypeId').value;*/
-        
+
         console.log($("#ClientTypeId").val(comingFromAPI));
-        
+
         BindClientByClientType(comingFromAPI);
         BindClientDetailsByClientId(comingFromAPIClientId);
         BindPropertySub(comingFromAPIPropertyTypeId);
@@ -117,42 +145,50 @@ $(document).ready(function () {
     //if (HdnId) {
     //    BindPropertySub(HdnId);
     //}
+
+    
 });
 
-function BindValuationRequestStatus() {
-    /*alert("hello");*/
 
+var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/
+debugger
+
+//// Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
+//if (selectedOption === 'Rejected') {
+//    $('#comment').show();
+//} else {
+//    $('#comment').hide();
+//}
+
+
+//if (RoleId == 2) {
+//    BindValuationRequestStatus(RoleId);
+//}
+//function BindValuationRequestStatus() {
+//    /*alert("hello");*/
+//    debugger
+//    var RequestStatus = $("#StatusId");
+//    var _val = $('#hdnStatusId').val();
+//    var _rpname = "statusName";
+//    var roleId=document.getElementById('hdnRoleId').value
+
+//    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
+
+    
+//}
+
+function BindValuationRequestStatus(roleId) {
+    debugger
+    /*alert("hello");*/
+    debugger
     var RequestStatus = $("#StatusId");
     var _val = $('#hdnStatusId').val();
     var _rpname = "statusName";
-    debugger;
-    BindDropdowns(GetAllValuationRequestStatus, RequestStatus, _rpname, _val);
-    debugger;
-    //$.ajax({
-    //    type: "POST",
-    //    url: $('#hdnBaseURL').val() + PropertyList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
-    //        Property.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.data.length; i++) {
-    //            Property.append($("<option></option>").val(response.data[i].id).html(response.data[i].propertyType));
-    //        }
-    //        if ($('#hdnProperty').val() != 0) {
-    //            Property.val($('#hdnProperty').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+
+    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
 }
 function BindClientType() {
-    debugger;
+
     //alert("hello");
 
     var Client = $("#ClientTypeId");
@@ -185,13 +221,13 @@ function BindClientType() {
 }
 
 function BindClientByClientType(id) {
-    debugger;
+
     var clients = $("#ClientId");
     var _val = $('#hdnClientId').val();
     var _rpname = "clientName";
 
     BindDropdowns(ClientByClientTypeId + '/' + id, clients, _rpname, _val);
-   
+
     //$.ajax({
     //    type: "GET",
     //    url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
@@ -218,9 +254,9 @@ function BindProperty() {
     var Property = $("#PropertyTypeId");
     var _val = $('#hdnPropertyType').val();
     var _rpname = "propertyType";
-    debugger;
+
     BindDropdowns(PropertyList, Property, _rpname, _val);
-    debugger;
+
     //$.ajax({
     //    type: "POST",
     //    url: $('#hdnBaseURL').val() + PropertyList,
@@ -246,7 +282,7 @@ function BindProperty() {
 }
 
 function BindPropertySub(id) {
-    debugger;
+
     var PropertySubType = $("#PropertySubTypeId");
     var _val = $('#hdnPropertySub').val();
     var _rpname = "propertySubType";
@@ -274,7 +310,7 @@ function BindPropertySub(id) {
 
 
 function BindOwnership() {
-    debugger;
+
     //alert("hello");
 
     var OwnershipType = $("#OwnershipTypeId");
@@ -308,7 +344,7 @@ function BindOwnership() {
 
 
 function BindPropertyDetail() {
-    debugger;
+
     //alert("Detail");
     if (document.location.href.includes('id')) {
         var PropertyTypeId = document.getElementById("hdnPropertyType").value;
@@ -322,7 +358,7 @@ function BindPropertyDetail() {
         var OwnershipTypeId = document.getElementById("OwnershipTypeId").value;
     }
 
-   
+
 
     if ((PropertyTypeId == null || PropertyTypeId == "") && (PropertySubTypeId == null || PropertySubTypeId == "") && (OwnershipTypeId == null || OwnershipTypeId == "")) {
         alert("No id is passed");
@@ -338,7 +374,7 @@ function BindPropertyDetail() {
         url: BaseURL + GetPropertyByFilters + '/' + PropertyTypeId + '/' + PropertySubTypeId + '/' + OwnershipTypeId,
         "datatype": "json",
         success: function (response) {
-            debugger;
+
             //alert(response);
             Property.empty().append('<option selected="selected" value="0">Please select</option>');
             for (var i = 0; i < response.length; i++) {
@@ -386,7 +422,7 @@ function BindPropertyDetailById(Id) {
         url: BaseURL + GetPropertyById + '/' + Id,
         "datatype": "json",
         success: function (response) {
-            debugger;
+
             //alert(response);
             document.getElementById('UnitType').value = response._object.unitType;
             document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
@@ -447,11 +483,11 @@ function BindState(id) {
     //BindDropdowns(stateListUrl + '/' + id, state, _rpname, _val);
     $.ajax({
         type: "GET",
-        url: $('#hdnBaseURL').val() + stateListUrl + '/'+ id,
+        url: $('#hdnBaseURL').val() + stateListUrl + '/' + id,
         "datatype": "json",
         success: function (response) {
-            debugger;
-          /*  state.empty().append('<input type="text"  disabled>');*/
+
+            /*  state.empty().append('<input type="text"  disabled>');*/
             $("#StateId").val(function () {
                 return response[0].stateName;//this.value + number;
             });
@@ -484,7 +520,7 @@ function BindCity(id) {
         url: $('#hdnBaseURL').val() + cityListUrl + '/' + id,
         "datatype": "json",
         success: function (response) {
-            debugger;
+
             /*  state.empty().append('<input type="text"  disabled>');*/
             $("#CityId").val(function () {
                 return response[0].cityName;//this.value + number;
@@ -525,7 +561,7 @@ function BindClientDetailsByClientId(Id) {
         url: BaseURL + GetClientDetailById + '/' + Id,
         "datatype": "json",
         success: function (response) {
-            debugger;
+
             //alert(response);
             document.getElementById('ClientName').value = response._object.clientName;
             document.getElementById('LicenseNumber').value = response._object.licenseNumber;
@@ -563,7 +599,7 @@ function BindClientDetailsByClientId(Id) {
             // ViewBag.AmenityList = AmenityList;
 
             if (response._object.address != null) {
-               // $(".NewAddressTable tbody tr")
+                // $(".NewAddressTable tbody tr")
 
                 /*destoryStaticDataTable('#ClientTypeTable');*/
                 $('#NewAddressTable tbody').html('');
@@ -653,12 +689,11 @@ function GetValuerLists() {
 
 
 function GetValuationMethodLists() {
-    debugger;
     var statusId = $("#ValuationModeId");
     var _val = $('#hdnValuationModeId').val();
     var _rpname = "description";
     var description = "Valuation Method";
-   // var currentUserId = "@ViewBag.CurrentUserId";
+    // var currentUserId = "@ViewBag.CurrentUserId";
 
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?description=' + description, statusId, _rpname, _val);
     //$.ajax({
@@ -686,6 +721,52 @@ function GetValuationMethodLists() {
 
 }
 
+
+$('#approveStatus').on('click', function () {
+    debugger
+    var statusId = $("#StatusId").val();
+    var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
+    var Id = document.getElementById('Id').value;
+    var data = {
+        Id: Id,
+        StatusId: statusId,
+        ApproverComment: approverComment
+    };
+
+    var ValutionRequestForApproverModel = data;
+
+
+    debugger
+    $.ajax({
+        type: "POST", 
+        url: BaseURL + RequeStatusReview,
+        "datatype": "json",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+
+        data: JSON.stringify(ValutionRequestForApproverModel),
+        success: function (response) {
+            debugger
+            toastr.success(SucessMsg);
+            setTimeout(function () {
+                window.location.href = "/ValuationRequest/ValuationRequests";
+            }, 1000);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+});
+
+
+
+
 function BindQuatationList() {
     debugger
     let id = $('#hdnId').val();
@@ -709,7 +790,7 @@ function BindQuatationList() {
                     html += '</ul></div>';
 
                     $('#QuatationTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationFee + '</td><td>' + object.vat
-                        + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusId + '</td><td>' + html + '</td></tr>');
+                        + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
                 });
                 //StaticDataTable("#QuatationTable");
             }
@@ -747,8 +828,8 @@ function BindInvoiceList() {
                     html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                     html += '</ul></div>';
 
-                    $('#InvoiceTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationRequestId + '</td><td>' + object.transactionModeId
-                        + '</td><td>' + object.transactionStatusId + '</td><td>' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                    $('#InvoiceTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationRequestId + '</td><td>' + object.transactionMode
+                        + '</td><td>' + object.transactionStatusName + '</td><td>' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
                 });
                 //StaticDataTable("#QuatationTable");
             }
