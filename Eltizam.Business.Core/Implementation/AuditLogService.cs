@@ -12,6 +12,7 @@ using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Data;
+using System.Globalization;
 using System.Reflection;
 
 namespace Eltizam.Business.Core.Implementation
@@ -60,12 +61,12 @@ namespace Eltizam.Business.Core.Implementation
             try
             {
                 //Get Last Modified
-                PropertyInfo pInfo = newEntity.GetType().GetProperty("ModifiedBy");
+                PropertyInfo pInfo = newEntity.GetType().GetProperty(AppConstants.ModifiedBy);
                 int logCreatedBy = Convert.ToInt32(pInfo.GetValue(newEntity, null)); // ?? _helper.GetLoggedInUser().UserId
 
                 //Get table Name, Id
                 var TableName = typeof(TResult).Name;
-                var TableKeyId = Convert.ToInt32(GetPrimaryKey<TResult>(oldEntity)); 
+                var TableKeyId = Convert.ToInt32(GetPrimaryKey<TResult>(oldEntity));
 
                 //Save Audit Log
                 MasterAuditLog objAuditLog;
@@ -105,8 +106,8 @@ namespace Eltizam.Business.Core.Implementation
                           .Select(x => x.Name).Single();
 
             return (int)entity.GetType().GetProperty(keyName).GetValue(entity, null);
-        } 
-         
+        }
+
         public async Task<IEnumerable<MasterAuditLogWrapperEntity<AuditLog>>> GetByModuleId(int id, string tableName)
         {
             var entityAuditLog = await _repository.FindAllAsync(x => x.TableKeyId == id && x.TableName == tableName);
@@ -125,7 +126,7 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, int? UserName,string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, int? UserName, string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
             string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
             string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
@@ -152,17 +153,16 @@ namespace Eltizam.Business.Core.Implementation
 
             return resp;
         }
-
         public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
-        { 
+        {
             var users = await _userrepository.GetAllAsync();
-            TableName ="MasterUser";
+            TableName = "MasterUser";
             var entityAuditLogs = await _repository.FindAllAsync(x =>
-                                    (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
-                                 && (TableKey == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
-                                 && (DateFrom == null || x.CreatedDate >= DateFrom)
-                                 && (DateTo == null || x.CreatedDate <= DateTo)
-                                 && (Id == null || x.Id == Id));
+                (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
+                && (TableKey == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
+                && (!DateFrom.HasValue || x.CreatedDate >= DateFrom)
+                && (!DateTo.HasValue || x.CreatedDate <= DateTo)
+                && (Id == null || x.Id == Id));
 
             var res = new List<AuditLogModelResponse>();
             foreach (var log in entityAuditLogs)
@@ -170,7 +170,7 @@ namespace Eltizam.Business.Core.Implementation
                 var _AuditLogListData = JsonConvert.DeserializeObject<IEnumerable<AuditLogs>>(log.Log);
 
                 res.Add(new AuditLogModelResponse()
-                { 
+                {
                     ActionType = log.ActionType,
                     ParentTableKeyId = log.ParentTableKeyId,
                     ParentTableName = log.ParentTableName,
@@ -178,14 +178,109 @@ namespace Eltizam.Business.Core.Implementation
                     TableName = log.TableName,
                     Id = log.Id,
                     CreatedBy = log.CreatedBy,
-                    CreatedDate = log.CreatedDate,
-                    CreatedByName = users.Where(a=>a.Id == log.CreatedBy).First().UserName,
+                    CreatedDate = log.CreatedDate, // Include both date and time
+                    CreatedDateFormatted = log.CreatedDate?.ToString("yyyy-MM-dd HH:mm:ss"), // Formatted date and time
+                    CreatedByName = users.FirstOrDefault(a => a.Id == log.CreatedBy)?.UserName, // Use null-conditional operator
                     AuditLogListData = _AuditLogListData?.ToList(),
-                }); 
+                });
             }
 
-            return res; 
+            // Sort the res list by CreatedDate (including date and time)
+            var sortedLogs = res.OrderBy(log => log.CreatedDate).ToList();
+
+            // Group the sortedLogs list by date
+            var groupedLogs = sortedLogs.GroupBy(log => log.CreatedDate?.Date);
+
+            // Create a list of grouped results with time included as a formatted string
+            var resultsWithTime = new List<AuditLogModelResponse>();
+            foreach (var group in groupedLogs)
+            {
+                var firstLogInGroup = group.FirstOrDefault();
+                resultsWithTime.Add(new AuditLogModelResponse
+                {
+                    CreatedDate = group.Key,
+                    CreatedDateFormatted = group.Key?.ToString("yyyy-MM-dd HH:mm:ss"),
+                    CreatedByName = firstLogInGroup?.CreatedByName,
+                    AuditLogListData = group.SelectMany(item => item.AuditLogListData).ToList()
+                });
+            }
+            return resultsWithTime;
         }
+
+        //--Order by date and same time--
+        //public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        //{
+        //    var users = await _userrepository.GetAllAsync();
+        //    TableName = "MasterUser";
+        //    var entityAuditLogs = await _repository.FindAllAsync(x =>
+        //        (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
+        //        && (TableKey == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
+        //        && (!DateFrom.HasValue || x.CreatedDate >= DateFrom)
+        //        && (!DateTo.HasValue || x.CreatedDate <= DateTo)
+        //        && (Id == null || x.Id == Id));
+
+        //    var res = new List<AuditLogModelResponse>();
+        //    foreach (var log in entityAuditLogs)
+        //    {
+        //        var _AuditLogListData = JsonConvert.DeserializeObject<IEnumerable<AuditLogs>>(log.Log);
+
+        //        res.Add(new AuditLogModelResponse()
+        //        {
+        //            ActionType = log.ActionType,
+        //            ParentTableKeyId = log.ParentTableKeyId,
+        //            ParentTableName = log.ParentTableName,
+        //            TableKeyId = log.TableKeyId,
+        //            TableName = log.TableName,
+        //            Id = log.Id,
+        //            CreatedBy = log.CreatedBy,
+        //            CreatedDate = log.CreatedDate,
+        //            CreatedByName = users.FirstOrDefault(a => a.Id == log.CreatedBy)?.UserName,
+        //            AuditLogListData = _AuditLogListData?.ToList(),
+        //        });
+        //    }
+
+        //    // Sort the list by CreatedDate
+        //    var groupedLogs = res.GroupBy(log => log.CreatedDate).Select(group => new AuditLogModelResponse
+        //    {
+        //        CreatedDate = group.Key,
+        //        AuditLogListData = group.SelectMany(item => item.AuditLogListData).ToList()
+        //    }).ToList();
+        //    return groupedLogs;
+        //}
+
+        //public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        //{ 
+        //    var users = await _userrepository.GetAllAsync();
+        //    TableName ="MasterUser";
+        //    var entityAuditLogs = await _repository.FindAllAsync(x =>
+        //                            (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
+        //                         && (TableKey == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
+        //                         && (DateFrom == null || x.CreatedDate >= DateFrom)
+        //                         && (DateTo == null || x.CreatedDate <= DateTo)
+        //                         && (Id == null || x.Id == Id));
+
+        //    var res = new List<AuditLogModelResponse>();
+        //    foreach (var log in entityAuditLogs)
+        //    {
+        //        var _AuditLogListData = JsonConvert.DeserializeObject<IEnumerable<AuditLogs>>(log.Log);
+
+        //        res.Add(new AuditLogModelResponse()
+        //        { 
+        //            ActionType = log.ActionType,
+        //            ParentTableKeyId = log.ParentTableKeyId,
+        //            ParentTableName = log.ParentTableName,
+        //            TableKeyId = log.TableKeyId,
+        //            TableName = log.TableName,
+        //            Id = log.Id,
+        //            CreatedBy = log.CreatedBy,
+        //            CreatedDate = log.CreatedDate,
+        //            CreatedByName = users.Where(a=>a.Id == log.CreatedBy).First().UserName,
+        //            AuditLogListData = _AuditLogListData?.ToList(),
+        //        }); 
+        //    }
+
+        //    return res; 
+        //}
 
         public async Task<List<AuditLogTableModel>> GetAllAuditLogTableName()
         {

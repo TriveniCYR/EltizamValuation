@@ -1,0 +1,83 @@
+﻿
+ 
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+
+@{
+    ViewData["Title"] = @SharedLocalizer["Notifications List"];
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+}
+
+
+<body>
+    <!-- system user master -->
+    <div class="flex"> 
+        <div class="w-100 position-relative">
+            
+            <main>
+                <div class="whiteBoxShadow">
+                    <div class="heading position-relative flex justify-between ">
+                        <h3 class="dashboardTitle">Notifications</h3>
+                    </div>
+                    <div class="bodyContent">
+                        <!-- notifiaction 1 -->
+                        <div class="auditLog-acc roundBorderBox m-0 mb-28">
+                            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                <div class="flex notificationInside">
+                                    <img src="../assets/bell.svg" alt="bell" class="cursor-pointer">
+                                    <p>Notification Title</p>
+                                </div>
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                            </div>
+                            <div class="panel mt-28" style="display: none;">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. ....
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- notification 2 -->
+                        <div class="auditLog-acc roundBorderBox m-0 mb-28">
+                            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                <div class="flex notificationInside">
+                                    <img src="../assets/bell.svg" alt="bell" class="cursor-pointer">
+                                    <p>Notification Title</p>
+                                </div>
+                                <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                            </div>
+                            <div class="panel mt-28" style="display: none;">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. ....
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </main> 
+        </div>
+    </div>
+
+
+    <script>
+        // accordian function here
+        function accordianToggle(header) {
+            const item = header.nextElementSibling;
+            if (item.style.display === 'block') {
+                item.style.display = 'none';
+            } else {
+                item.style.display = 'block';
+            }
+        }
+        //accordian function end
+        document.addEventListener("DOMContentLoaded", () => {
+            const profileDetailsRedirect = document.getElementById("profileDetailsRedirect");
+
+            profileDetailsRedirect.addEventListener('click', () => {
+                window.location.href = 'file:///C:/Users/User/OneDrive/Desktop/workspace/Eltizam/Master_Resource/profile-details.html'
+            });
+        });
+         
+    </script>
+</body> 

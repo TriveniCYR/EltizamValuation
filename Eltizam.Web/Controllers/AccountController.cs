@@ -67,7 +67,10 @@ namespace Eltizam.Web.Controllers
                             {
                                 string rolJson = resRoles.Content.ReadAsStringAsync().Result;
                                 var data = JsonConvert.DeserializeObject<APIResponseEntity<IEnumerable<RolePermissionModel>>>(rolJson);
+                                
+                                UtilityHelper.RemoveModuleRole(roleId);
                                 UtilityHelper.AddModuleRole(roleId, data._object);
+
                                 roles = data._object;
                             }
                         }
@@ -76,7 +79,7 @@ namespace Eltizam.Web.Controllers
                     }
                     else
                     {
-                        TempData[UserHelper.ErrorMessage] = _stringLocalizer["InvalidUser"].Value; 
+                        TempData[UserHelper.ErrorMessage] = responseMessage.ReasonPhrase; 
                         return View(loginViewModel);
                     }
                 }
@@ -134,8 +137,11 @@ namespace Eltizam.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
+            var roleId = _helper.GetLoggedInRoleId();
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
+
+            UtilityHelper.RemoveModuleRole(roleId);
 
             HttpContext.Response.Cookies.Delete(UserHelper.EltizamToken); 
             return RedirectToAction("Login", "Account");

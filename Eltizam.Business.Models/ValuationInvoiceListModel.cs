@@ -12,7 +12,9 @@ namespace Eltizam.Business.Models
         public string ReferenceNo { get; set; } = null!;
         public int ValuationRequestId { get; set; }
         public int TransactionModeId { get; set; }
+        public string TransactionMode { get; set; }
         public int TransactionStatusId { get; set; }
+        public string TransactionStatusName { get; set; }
         public decimal Amount { get; set; }
         public string? CheckNumer { get; set; }
         public string? CheckBankName { get; set; }
@@ -23,6 +25,9 @@ namespace Eltizam.Business.Models
         public DateTime? ExpireDate { get; set; }
         public string? AccountBankName { get; set; }
         public string? AccountHolderName { get; set; }
+        public string? TransactionDate { get; set; }
         public string? Note { get; set; }
+        public int? CreatedBy { get; set; }
+        public int? ModifiedBy { get; set; }
     }
 }

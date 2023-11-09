@@ -6,6 +6,7 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility.Utility;
+using Microsoft.Extensions.Caching.Memory;
 using System.Data;
 using System.Data.SqlClient;
 using static Eltizam.Utility.Enums.GeneralEnum;
@@ -19,12 +20,14 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterRole> _repository { get; set; }
         private readonly IMasterRoleModulePermission _roleModulePermission;
         private IRepository<MasterUser> _Userrepository { get; set; }
+        private readonly IMemoryCache _memoryCache;
 
-        public MasterRoleService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IMasterRoleModulePermission roleModulePermission)
+        public MasterRoleService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IMasterRoleModulePermission roleModulePermission, IMemoryCache memoryCache)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
             _roleModulePermission = roleModulePermission;
+            _memoryCache = memoryCache;
             _repository = _unitOfWork.GetRepository<MasterRole>();
             _Userrepository = _unitOfWork.GetRepository<MasterUser>();
         }
@@ -33,6 +36,7 @@ namespace Eltizam.Business.Core.Implementation
         {
             MasterRole objRole;
             var LoggedUserId = masterRoleEntity.LoggedUserId;
+           
             if (masterRoleEntity.Id > 0) //Update existing user
             {
                 if (!masterRoleEntity.IsActive)
@@ -42,6 +46,7 @@ namespace Eltizam.Business.Core.Implementation
                         masterRoleEntity.IsActive = true;
                 }
                 objRole = _repository.Get(masterRoleEntity.Id);
+
                 var OldObjRole = objRole;
                 if (objRole != null)
                 {
@@ -63,6 +68,7 @@ namespace Eltizam.Business.Core.Implementation
                 objRole.CreatedBy = LoggedUserId;
                 objRole.CreatedDate = AppConstants.DateTime;
                 _repository.AddAsync(objRole);
+
                 await _unitOfWork.SaveChangesAsync();
             }
 
@@ -79,6 +85,10 @@ namespace Eltizam.Business.Core.Implementation
                 Permissions = Permissions.Select(xx => { xx.RoleId = objRole.Id; return xx; });
 
                 await _roleModulePermission.AddUpdateRoleModulePermission(Permissions.ToList());
+
+                //Remove Cache
+                var menu = AppConstants.MenusCache + objRole.Id.ToString();
+                _memoryCache.Remove(menu);
             }
 
             #endregion Add Module Permsson

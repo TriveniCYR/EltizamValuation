@@ -4,6 +4,7 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -15,6 +16,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
         private readonly IMemoryCache _memoryCache;
+
         private IRepository<MasterModule> _repository { get; set; }
         private IRepository<MasterSubModule> _repositorySub { get; set; }
 
@@ -134,17 +136,18 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<IEnumerable<RolePermissionModel>> GetByPermisionRoleUsingRoleId(int roleId)
         {
-            var menus = "menus";
+            var menu = AppConstants.MenusCache + roleId.ToString();
 
             //Get from Cache first
-            var cacheData = _memoryCache.Get<IEnumerable<RolePermissionModel>>(menus);
+            var cacheData = _memoryCache.Get<IEnumerable<RolePermissionModel>>(menu);
             if (cacheData != null)
             {
                 return cacheData;
             }
 
-            var Permissions = _mapperFactory.GetList<MasterRoleModulePermission, RoleModulePermissionEntity>((List<MasterRoleModulePermission>)
-                                await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId));
+            var per = await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId && xx.View == true);
+
+            var Permissions = _mapperFactory.GetList<MasterRoleModulePermission, RoleModulePermissionEntity>((List<MasterRoleModulePermission>)per);
 
             if (Permissions.Any())
             {
@@ -154,7 +157,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 var menuperm = (from p in Permissions
                                 join m in MasterModuleData on p.ModuleId equals m.ModuleId
-                                join s in MasterSubModuleData on p.SubModuleId equals s.SubModuleId 
+                                join s in MasterSubModuleData on p.SubModuleId equals s.SubModuleId
                                 into SubMS
                                 from SubM in SubMS.DefaultIfEmpty()
                                 where m.IsActive == true
@@ -173,12 +176,13 @@ namespace Eltizam.Business.Core.Implementation
                                     ModuleName = m.ModuleName,
                                     Icon = m.Icon,
                                     HoverIcon = m.HoverIcon,
-                                    ViewName = m.ViewName
+                                    ViewName = m.ViewName,
+                                    Sort = m.SortOrder
                                 }).ToList();
 
                 //Do Cache
                 var expirationTime = DateTimeOffset.Now.AddMinutes(60.0);
-                _memoryCache.Set(menus, menuperm, expirationTime);
+                _memoryCache.Set(menu, menuperm, expirationTime);
 
                 return menuperm;
             }

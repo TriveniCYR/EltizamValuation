@@ -1,12 +1,11 @@
 ﻿var tableId = "ValuationRequestTable";
 $(document).ready(function () {
-    InitializeValutionRequestDataList();
-
+    InitializeValutionRequestDataList(); 
 });
 
 //Load data into table
-function InitializeValutionRequestDataList() {
-    debugger;
+function InitializeValutionRequestDataList() { 
+   
     $("#ValuationRequestTable").dataTable().fnDestroy();
     var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
     var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
@@ -155,12 +154,10 @@ function InitializeValutionRequestDataList() {
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
 }
 
-function CheckAssignId(id, eve) {
-    debugger
+function CheckAssignId(id, eve) { 
 }
 //#region Delete Role  
-function ConfirmationDeleteValuationRequest(id) {
-    debugger;
+function ConfirmationDeleteValuationRequest(id) { 
     $('#DeletevalutionRequestModel #Id').val(id);
 }
 function DeleteValuationRequestType() {
@@ -191,37 +188,40 @@ $("#cbSelectAll").on("click", function () {
         this.checked = ischecked;
     });
 });
-function AssignRequest() {
 
-    var modelReq = {
-        'RequestIds': '',
-        'ApprovorId': 0,
-        'Remarks': ''
-    }
+
+function AssignRequest() { 
+   
     var approverId = $("#ApproverId").val();
     var remarks = $("#Remarks").val();
     var ids = '';
 
-    $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () {
-        ids += this.value + ',';
+    $("#ValuationRequestTable  tbody").find("input:checkbox:checked").each(function () { 
+        ids += this.value + ','; 
     });
     ids = ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
-    debugger
+
+
+     
     if (approverId === undefined || isNaN(parseInt(approverId))) {
-        toastr.error("Select approver.");
+        toastr.error("Please select approver.");
         return false;
     }
     else if (remarks == '') {
-        toastr.error("Enter remarks.");
-    }
-    else if (ids.length == 0) {
-        toastr.error("Select atleast one row to approval.");
+        toastr.error("Please add remarks comments.");
         return false;
     }
+    else if (ids.length == 0) {
+        toastr.error("Please select atleast one valuation request.");
+        return false;
+    } 
 
-    modelReq.ApprovorId = parseInt(approverId);
-    modelReq.RequestIds = ids;
-    modelReq.Remarks = remarks;
+    var modelReq = {
+        'RequestIds': ids,
+        'ApprovorId': parseInt(approverId),
+        'Remarks': remarks
+    } 
+
     $.ajax({
         type: "POST",
         url: BaseURL + AssignApproverUrl,
@@ -232,13 +232,17 @@ function AssignRequest() {
         },
         data: JSON.stringify(modelReq),
         success: function (response) {
-            window.location.href = "/ValuationRequest/ValuationRequests";
+            assignToggle();
+            toastr.success("Valuation Request(s) assinged to Approver.");
+
+            InitializeValutionRequestDataList();
+            /*window.location.href = "/ValuationRequest/ValuationRequests";*/
         },
         failure: function (response) {
-            toaster.error("Error is occured.")
+            toastr.error("Error is occured.")
         },
         error: function (response) {
-            toaster.error(response)
+            toastr.error(response)
             $("#loader").hide();
         }
     });

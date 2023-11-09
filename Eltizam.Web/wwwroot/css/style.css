@@ -2048,3 +2048,31 @@ div.dataTables_wrapper div.dataTables_filter {
 div#amentiesdiv label {
     margin: 0 0 16px 20px;
 }
+.valueReqTable th {
+    background-color: #ebf5ff;
+    padding: 10px;
+    color: black;
+}
+.valueReqTable td{
+    padding:10px;
+}
+
+
+/* notification css here */
+.notificationInside span {
+    background: var(--error);
+    color: white;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    border-radius: 50%;
+    position: relative;
+    text-align: center;
+    left: -14px;
+    font-size: 10px;
+    top: -18px;
+}
+
+.notificationInside img {
+    transform: rotate(0deg);
+}

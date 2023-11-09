@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
+using Eltizam.Business.Models;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -21,18 +22,18 @@ namespace EltizamValuation.Api.Controllers
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
-        private readonly IValuationInvoiceService _ValuationQuatatiionService;
+        private readonly IValuationInvoiceService _ValuationInvoiceService;
 
         #endregion Properties
 
         #region Constructor
-        public ValuationInvoiceController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IValuationInvoiceService ValuationQuatatiionService)
+        public ValuationInvoiceController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IValuationInvoiceService ValuationInvoiceService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
             _stringLocalizerError = stringLocalizerError;
             _ExceptionService = exceptionService;
-            _ValuationQuatatiionService = ValuationQuatatiionService;
+            _ValuationInvoiceService = ValuationInvoiceService;
         }
 
         #endregion Constructor
@@ -48,7 +49,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                return _ObjectResponse.CreateData(await _ValuationQuatatiionService.GetInvoiceList(RequestId), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _ValuationInvoiceService.GetInvoiceList(RequestId), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -56,12 +57,31 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("Upsert")]
+        public async Task<IActionResult> Upsert(ValuationInvoiceListModel model)
+        {
+            try
+            {
+                DBOperation oResponse = await _ValuationInvoiceService.Upsert(model);
+                if (oResponse == DBOperation.Success)
+                {
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (model.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+                }
+                else
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         [HttpGet, Route("GetInvoiceById/{id}")]
         public async Task<IActionResult> GetInvoiceById([FromRoute] int id)
         {
             try
             {
-                var quatationEntity = await _ValuationQuatatiionService.GetInvoiceById(id);
+                var quatationEntity = await _ValuationInvoiceService.GetInvoiceById(id);
                 if (quatationEntity != null && quatationEntity.Id > 0)
                     return _ObjectResponse.Create(quatationEntity, (Int32)HttpStatusCode.OK);
                 else
@@ -79,7 +99,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                DBOperation oResponse = await _ValuationQuatatiionService.InvoiceDelete(id);
+                DBOperation oResponse = await _ValuationInvoiceService.InvoiceDelete(id);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else

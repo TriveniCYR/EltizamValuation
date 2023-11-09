@@ -36,9 +36,12 @@ namespace Eltizam.Business.Core.Implementation
 
             objRoleModulePermission = _mapperFactory.GetList<RoleModulePermissionEntity, MasterRoleModulePermission>(roleModulePermissionEntitys);
 
-            foreach (var rolePermission in objRoleModulePermission)
+            foreach (var per in objRoleModulePermission)
             {
-                _repository.AddAsync(rolePermission);
+                if (per.View == false)
+                    per.View = (per.Add == true || per.Delete == true || per.Edit == true || per.Approve == true) ? true : false;
+
+                _repository.AddAsync(per);
                 await _unitOfWork.SaveChangesAsync();
             }
 
