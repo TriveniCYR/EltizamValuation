@@ -30,9 +30,11 @@
                 <input type="hidden" id="isAddPerm" value="@isAdd" />
                 @if (roleId != 2)
                 {
-                    <button class="flex align-item-center blueBtn" id="addNew">
-                        <img src="~/assets/plus.svg" alt="plus"> Add New
-                    </button>
+                    <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
+                        <button class="flex align-item-center blueBtn" id="addNew">
+                            <img src="~/assets/plus.svg" alt="plus"> Add New
+                        </button>
+                    </form>
                 }
 
                 @if (roleId != 1)
