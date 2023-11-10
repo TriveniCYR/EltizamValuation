@@ -110,12 +110,13 @@
                         <div class="flex">
                         </div>
                         <div class="text-right buttonArea bodyContent plr-0">
-                           @*  @if (ViewBag.IsView != 1)
-                            { *@
-                                <button type="submit" class="lineBtn greyBtn" id="resetLocation">Cancel</button>
+                            <a class="greyBtn lineBtn formAbtn" asp-action="Locations">@SharedLocalizer["Cancel"]</a>
+                            @if (ViewBag.IsView != 1)
+                            {
+                           
                                 <button type="submit" id="btnSaveEdit" class="bgBlue">Save</button>
 
-                           @*  } *@
+                            }
                         </div>
                     </div>
                 </div>
