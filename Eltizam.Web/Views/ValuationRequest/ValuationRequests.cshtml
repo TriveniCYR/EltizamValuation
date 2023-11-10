@@ -7,7 +7,7 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
-
+@using Eltizam.Utility.Enums
 
 @model Eltizam.Business.Models.ValutionRequestListModel
 @{
@@ -17,9 +17,12 @@
     var isAdd = objPermssion.Add ? 1 : 0;
     var isDelete = objPermssion.Delete ? 1 : 0;
     var isEdit = objPermssion.Edit ? 1 : 0;
+    var isApprove = objPermssion.Approve ? 1 : 0;
     var roleId = objPermssion.RoleId;
+   
+   
 }
-
+ 
 
 <div class="flex">
     <main class="w-100">
@@ -28,23 +31,31 @@
             <div class="buttonArea flex align-item-center">
                 <input type="hidden" id="isDeletePerm" value="@isDelete" />
                 <input type="hidden" id="isAddPerm" value="@isAdd" />
+                <input type="hidden" id="isApprovePerem" value="@isApprove" />
                 @if (roleId != 2 && roleId != 3 )
                 {
                     <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
-                        <button class="flex align-item-center blueBtn" id="addNew">
+                        <button class="flex align-item-center blueBtn mr-12" id="addNew">
                             <img src="~/assets/plus.svg" alt="plus"> Add New
                         </button>
                     </form>
                 }
 
-                @if (roleId != 1)
+
+                @* @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                 {
-                    <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()">
+                    <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">
                         <img src="../assets/user-shield.svg" alt="user">
                         ASSIGN
                     </button>
-                }
+                } *@
 
+                <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">
+                    <img src="../assets/user-shield.svg" alt="user">
+                    ASSIGN
+                </button>
+
+                
                
                 <div class="accordion-content inputSearchs" id="assignToggle" style="display:none">
                     <div class="flex justify-between">

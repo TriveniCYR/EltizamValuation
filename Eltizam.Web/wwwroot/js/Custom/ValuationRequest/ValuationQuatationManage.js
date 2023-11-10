@@ -3,7 +3,7 @@ $(document).ready(function () {
     document.getElementById('Vat').value = '';
 });
 $('#ValuationFee').keypress(function (e) {
-    debugger
+    
     if ($('#ValuationFee').val() == '' && (e.which == 48 || e.charCode == 46)) {
         return false;
     }

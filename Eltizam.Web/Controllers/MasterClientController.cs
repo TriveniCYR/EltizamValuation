@@ -38,7 +38,7 @@ namespace EltizamValuation.Web.Controllers
 
                 //Check permissions
                 int roleId = _helper.GetLoggedInRoleId();
-                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, PermissionEnum.View, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 return View();
             }
@@ -58,7 +58,7 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
             int roleId = _helper.GetLoggedInRoleId();
 
-            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
@@ -159,7 +159,7 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
             int roleId = _helper.GetLoggedInRoleId();
-            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             MasterClientModel masterUser;
             if (id == null || id <= 0)

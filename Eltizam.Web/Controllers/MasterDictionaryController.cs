@@ -36,7 +36,7 @@ namespace EltizamValuation.Web.Controllers
             {
                 //Check permissions
                 int roleId = _helper.GetLoggedInRoleId();
-                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                if (!CheckRoleAccess(ModulePermissionEnum.DictionaryMaster, PermissionEnum.View, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
@@ -65,7 +65,7 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
             int roleId = _helper.GetLoggedInRoleId();
 
-            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.DictionaryMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
@@ -204,7 +204,7 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
 
             int roleId = _helper.GetLoggedInRoleId();
-            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.DictionaryMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             MasterDictionaryDetailById model = new MasterDictionaryDetailById();
             HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
@@ -240,7 +240,7 @@ namespace EltizamValuation.Web.Controllers
                 var action = Id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
                 int roleId = _helper.GetLoggedInRoleId();
-                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                if (!CheckRoleAccess(ModulePermissionEnum.DictionaryMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
                 //Fill audit logs field

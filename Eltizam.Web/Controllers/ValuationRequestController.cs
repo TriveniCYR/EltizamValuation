@@ -33,7 +33,7 @@ namespace EltizamValuation.Web.Controllers
         {
             //Check permissions
             int roleId = _helper.GetLoggedInRoleId();
-            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, PermissionEnum.View, roleId,SubModuleEnum.ValuationRequest))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
@@ -55,7 +55,7 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
             int roleId = _helper.GetLoggedInRoleId();
 
-            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {

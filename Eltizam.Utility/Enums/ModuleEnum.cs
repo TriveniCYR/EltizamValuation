@@ -6,18 +6,39 @@ namespace Eltizam.Utility.Enums
     /// Added by YReddy for storing all project enum details
     /// </summary>
     public enum ModulePermissionEnum
-    { 
-        UserMaster = 1, 
+    {
+        Dashboard = 1,
         RoleMaster = 2,
-        ClientTypeMaster = 3,
-        ClientMaster = 4,
-        LocationMaster = 5,
-        PropertyTypeMaster = 6,  
-        PropertyMaster = 7, 
-        ValutionFeesMaster = 8,
-        VendorMaster = 9,
-        AuditLog = 10,
-        ValuationRequest = 11,
+        ResourceMaster = 3,
+        LocationMaster = 4,
+        DesignationMaster = 5,
+        DepartmentMaster = 6,
+        PropertyTypeMaster = 7,
+        PropertyMaster = 8,
+        ClientMaster = 9,
+        ValuationFeeMaster = 10,
+        VendorMaster = 11,
+        DictionaryMaster = 12,
+        ValuationRequest = 13,
+        AuditLog = 14,
+        UserMaster = 15,
+        ClientTypeMaster = 16,
+
+    }
+
+    public enum SubModuleEnum
+    {
+        ValuationRequest = 1,
+        ValuationQuotation = 2,
+        ValuationInvoice = 3
+    }
+
+    public enum RoleEnum
+    {
+        Requestor = 1,
+        Approver = 2,
+        Valuer = 3,
+        Admin = 4
     }
 
 
@@ -71,7 +92,7 @@ namespace Eltizam.Utility.Enums
         [Description("Property Master")]
         Master_Property = 7,
         [Description("Property Type Master")]
-        Master_PropertyType = 8,       
+        Master_PropertyType = 8,
         [Description("Role Master")]
         Master_Role = 9,
         [Description("Valuation Fee Master")]
@@ -92,7 +113,7 @@ namespace Eltizam.Utility.Enums
     /// Enum helper class to get details
     /// </summary>
     public static class EnumHelper
-    {  
+    {
         public static string GetDescription<T>(this T enumValue)
             where T : struct, IConvertible
         {
@@ -113,5 +134,5 @@ namespace Eltizam.Utility.Enums
 
             return description;
         }
-    } 
+    }
 }
