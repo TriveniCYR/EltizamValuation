@@ -35,16 +35,16 @@
             </div>
         </div>
         <div class="bodyContent">
-            <div class="inputSearchs p-0 ">
+            <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab">
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
                     <button class="tablinks" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
                     <button class="tablinks" onclick="profileTab(event, 'profile3')">Payment Details</button>
                 </div>
 
-                <div id="profile1" class="tabcontent">
+                <div id="profile1" class="tabcontent p-0">
                     <h3 class="blueHeading">Valuation Details</h3>
-                    <div class="inputSearchs">
+                    <div class="inputSearchs p-0">
                         <form asp-action="ValuationRequestManage">
                             @*   <input type="hidden" id="isAddPerm" value="@isAdd" />
                             <input type="hidden" id="isEditPerm" value="@isEdit" /> *@
@@ -65,6 +65,7 @@
                             <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
                             <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.OwnershipTypeId)" /> *@
                             @* <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.ClientTypeId)" /> *@
+                            <div class="ptrl-20">
                             <div class="flex  mb-28">
 
                             <label for="" class="w-50">
@@ -137,13 +138,13 @@
 
                             </div>
 
-
-                            <div class="roundBorderBox">
+                            </div>
+                            <div class="roundBorderBox ptrl-20">
                                 <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
                                     <h3 class="blueHeading p-0">Client Details</h3>
                                     <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                 </div>
-                                <div class="inputSearchs">
+                                <div class="inputSearchs p-0">
 
                                 <input type="hidden" id="hdnCountry" value="@(Model == null ? 0 : Model.CountryId)" />
                                 <input type="hidden" id="hdnState" value="@(Model == null ? 0 : Model.StateId)" />
@@ -290,12 +291,12 @@
                                 </div>
 
                             </div>
-                            <div class="roundBorderBox">
+                            <div class="roundBorderBox ptrl-20">
                                 <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
                                     <h3 class="blueHeading p-0">Property Details</h3>
                                     <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                 </div>
-                                <div class="inputSearchs">
+                                <div class="inputSearchs p-0">
 
                                 <input type="hidden" id="hdnPropertyType" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
                                 <input type="hidden" id="hdnPropertySub" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
@@ -399,8 +400,8 @@
                                         </label>
 
                                     </div>
-                                    <h3 class="blueHeading"> Amenities</h3>
-                                    <div class="inputSearchs">
+                                    <h3 class="blueHeading mb-16"> Amenities</h3>
+                                    <div class="inputSearchs p-0">
                                         <div class="form">
                                             <div class="flex mb-28 flex-start" id="amentiesdiv">
                                                 @{
@@ -432,13 +433,13 @@
 
 
 
-                            <div class="text-center buttonArea bodyContent plr-0">
+                            <div class="text-right buttonArea bodyContent">
                                 <button type="button" class="lineBtn greyBtn">Cancel</button>
 
                                 
                                 @if (roleId == (int)RoleEnum.Admin)
                                 {
-                                    <button type="submit" class="blueBtn">Save</button>
+                                    <button type="submit" class="blueBtn" style="width:100px">Save</button>
 
                                 }
                                
@@ -446,7 +447,7 @@
                                 @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                                 {
 
-                                    <button type="button" class="blueBtn" id="approveStatus">
+                                    <button type="button" class="blueBtn" id="approveStatus" style="width:100px">
                                         Save
                                     </button>
                                 }
@@ -461,17 +462,17 @@
 
                 <div id="profile2" class="tabcontent">
                     <div class="buttonArea">
-                        <div class="flex justify-between align-item-center ptrl-20">
+                        <div class="flex justify-between align-item-center plr-0">
                             <h3>Quotation Listing</h3>
                             <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
-                                <button class="flex align-item-center blueBtn exportFile">
+                                <button class="blueBtn" style="width:120px">
                                     <img src="../assets/plus.svg" alt="plus">
                                     Add New
                                 </button>
                             </a>
                         </div>
                     </div>
-                    <div class="scroll-x ptrl-20">
+                    <div class="scroll-x">
                         <table id="QuatationTable">
                             <thead>
                                 <tr>
@@ -493,17 +494,17 @@
                 </div>
                 <div id="profile3" class="tabcontent">
                     <div class="buttonArea">
-                        <div class="flex justify-between align-item-center ptrl-20">
+                        <div class="flex justify-between align-item-center p-0">
                             <h3>Invoice Listing</h3>
                             <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
-                                <button class="flex align-item-center blueBtn exportFile">
+                                <button class=" blueBtn " style="width:120px">
                                     <img src="../assets/plus.svg" alt="plus">
                                     Add New
                                 </button>
                             </a>
                         </div>
                     </div>
-                    <div class="scroll-x ptrl-20">
+                    <div class="scroll-x">
                         <table id="InvoiceTable">
                             <thead>
                                 <tr>
