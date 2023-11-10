@@ -14,6 +14,6 @@ namespace Eltizam.Business.Models
         public DateTime? EstimattionDate { get; set; }
         public string? BusinessType { get; set; }
         public string? CompanyDescription { get; set; }
-        public int? Status { get; set; }
+        public bool? Status { get; set; }
     }
 }

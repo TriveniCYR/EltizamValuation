@@ -11,7 +11,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? EstimattionDate { get; set; }
         public string? BusinessType { get; set; }
         public string? CompanyDescription { get; set; }
-        public int? Status { get; set; }
+        public bool? Status { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }

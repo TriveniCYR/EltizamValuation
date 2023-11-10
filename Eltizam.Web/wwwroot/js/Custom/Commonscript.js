@@ -23,7 +23,6 @@ var IsEditPerm = ($("#isEditPerm").val() === "1" || $("#isEditPerm").val() === 1
 var IsApprovePerem = ($("#isApprovePerem").val() === "1" || $("#isApprovePerem").val() === 1);  
 
 $(document).ready(function () {
-    debuuger
     ErrorDev.hide();
     readsideNavToggle();
     hideLoader(); 

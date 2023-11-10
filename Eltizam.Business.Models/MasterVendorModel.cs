@@ -21,7 +21,7 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? BusinessType { get; set; }
         public string? CompanyDescription { get; set; }
-        public int? Status { get; set; }
+        public bool Status { get; set; }
         public int? CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
         public MasterAddressEntity? Address { get; set; }

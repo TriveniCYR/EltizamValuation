@@ -14,39 +14,6 @@ $(document).ready(function () {
     }
     BindGender();
 
-    $('#Address_Phone').keypress(function (e) {
-        if ($('#Address_Phone').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#Address_Landlinephone').keypress(function (e) {
-        if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#Address_AlternatePhone').keypress(function (e) {
-        if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
 });
 
 function BindDepartment() {
@@ -114,6 +81,62 @@ function BindGender() {
     }
 }
 
+
+$('#Address_PinNo').keypress(function (e) {
+    if ($('#Address_PinNo').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#Address_Phone').keypress(function (e) {
+    if ($('#Address_Phone').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#Address_Landlinephone').keypress(function (e) {
+    if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#Address_AlternatePhone').keypress(function (e) {
+    if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#Qualification_YearOfInstitute').keypress(function (e) {
+    if ($('#Qualification_YearOfInstitute').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");

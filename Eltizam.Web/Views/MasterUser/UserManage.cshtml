@@ -289,7 +289,7 @@
                                             </label>
                                         </div>
                                         <div class="flex">
-                                            <label for="grade" class="w-100">
+                                            <label for="grade" class="w-50">
                                                 <p class="m-0">Grade/Percent/class<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Qualification.Grade, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Grade"] })
                                                 @Html.ValidationMessageFor(model => model.Qualification.Grade, "", new { @class = "text-danger" })
