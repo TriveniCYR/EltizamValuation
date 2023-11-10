@@ -470,9 +470,12 @@ function BindPropertyDetailById(Id) {
 
             for (i = 0; i < response._object.amenityList.length; i++) {
                 //var _id = response._object.amenityList[i].id
-                Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
-                    '<input checked data-val="true"   name="AmenityList[' + response._object.amenityList[i].id + '].IsActive" type="checkbox" text="[' + response._object.amenityList[i].amenityName + ']" value="true"/> ' + '<p> ' + response._object.amenityList[i].amenityName + '  </p>' +
-                    '</label>')
+                if (response._object.amenityList[i].isActive == true) {
+                    Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
+                        '<input checked data-val="true"   name="AmenityList[' + response._object.amenityList[i].id + '].IsActive" type="checkbox" text="[' + response._object.amenityList[i].amenityName + ']" value="true"/> ' + '<p> ' + response._object.amenityList[i].amenityName + '  </p>' +
+                        '</label>')
+                }
+                
             }
 
 
