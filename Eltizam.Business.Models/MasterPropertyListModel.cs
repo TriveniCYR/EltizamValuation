@@ -14,6 +14,6 @@ namespace Eltizam.Business.Models
         public string PropertySubType { get; set; }
         public string OwnershipType { get; set; }
         public string Location { get; set; }
-        public string IsActive { get; set; }
+        public bool IsActive { get; set; }
     }
 }

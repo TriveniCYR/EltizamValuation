@@ -17,6 +17,7 @@ namespace Eltizam.Business.Models
         public string? Address1 { get; set; }
         public string? Address2 { get; set; }
         public string? Address3 { get; set; }
+        [StringLength(10, MinimumLength = 5)]
         public string? PinNo { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'Country' field is required.")]
@@ -36,8 +37,11 @@ namespace Eltizam.Business.Models
         [MaxLength(50)]
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
         public string? AlternateEmail { get; set; }
+        [StringLength(12, MinimumLength = 9)]
         public string? Phone { get; set; }
+        [StringLength(12, MinimumLength = 9)]
         public string? AlternatePhone { get; set; }
+        [StringLength(12, MinimumLength = 9)]
         public string? Landlinephone { get; set; }
     }
 }

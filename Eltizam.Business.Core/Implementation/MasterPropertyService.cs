@@ -232,12 +232,11 @@ namespace Eltizam.Business.Core.Implementation
                             objLocation.ModifiedBy = _LoginUserId;
                             objLocation.ModifiedDate = AppConstants.DateTime;
                             _detailrepository.UpdateAsync(objLocation);
-                            _detailrepository.UpdateAsync(objLocation);
                             _detailrepository.UpdateGraph(objLocation, EntityState.Modified);
                             await _unitOfWork.SaveChangesAsync();
 
                             //Do Audit Log --AUDITLOGUSER
-                            await _auditLogService.CreateAuditLog<MasterPropertyLocation>(AuditActionTypeEnum.Update, OldEntity, objLocation, MainTableName, MainTableKey);
+                            //await _auditLogService.CreateAuditLog<MasterPropertyLocation>(AuditActionTypeEnum.Update, OldEntity, objLocation, MainTableName, MainTableKey);
                         }
                     }
                     else
@@ -264,7 +263,7 @@ namespace Eltizam.Business.Core.Implementation
                                 objAmenity.PropertyId = objProperty.Id;
                                 objAmenity.AmenityId = doc.AmenityId;
                                 objAmenity.IsActive = doc.IsActive;
-                                objAmenity.CreatedBy = _LoginUserId;
+                                objAmenity.ModifiedBy = _LoginUserId;
                                 objAmenity.ModifiedDate = AppConstants.DateTime;
                                 _amenityrepository.UpdateAsync(objAmenity);
                             }

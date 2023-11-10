@@ -91,34 +91,48 @@ $(document).ready(function () {
         }
     });
     $('#PropertyDetail_Longitude').on("keypress", function (e) {
-        var keypress = e.keyCode || e.which || e.charCode;
-        var key = String.fromCharCode(keypress);
-        var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
+        if ($('#PropertyDetail_Longitude').val() == '' && (e.which == 48 || e.charCode == 46)) {
+            return false;
+        }
+        else {
+            if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+                var keypress = e.keyCode || e.which || e.charCode;
+                var key = String.fromCharCode(keypress);
+                var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
 
-        var txt = $(this).val() + key;
-        if (!regEx.test(txt)) {
-            if (keypress != 8) {
-                e.preventDefault();
-            } else {
+                var txt = $(this).val() + key;
+                if (!regEx.test(txt)) {
+                    if (keypress != 8) {
+                        e.preventDefault();
+                    } else {
+                    }
+                } else {
+
+                }
             }
-        } else {
-
         }
     });
 
     $('#PropertyDetail_Latitude').on("keypress", function (e) {
-        var keypress = e.keyCode || e.which || e.charCode;
-        var key = String.fromCharCode(keypress);
-        var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
+        if ($('#PropertyDetail_Latitude').val() == '' && (e.which == 48 || e.charCode == 46)) {
+            return false;
+        }
+        else {
+            if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+                var keypress = e.keyCode || e.which || e.charCode;
+                var key = String.fromCharCode(keypress);
+                var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
 
-        var txt = $(this).val() + key;
-        if (!regEx.test(txt)) {
-            if (keypress != 8) {
-                e.preventDefault();
-            } else {
+                var txt = $(this).val() + key;
+                if (!regEx.test(txt)) {
+                    if (keypress != 8) {
+                        e.preventDefault();
+                    } else {
+                    }
+                } else {
+
+                }
             }
-        } else {
-
         }
     });
 });
