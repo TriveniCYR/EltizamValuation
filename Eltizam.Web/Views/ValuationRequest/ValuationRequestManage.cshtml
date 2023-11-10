@@ -46,8 +46,8 @@
                     <h3 class="blueHeading">Valuation Details</h3>
                     <div class="inputSearchs">
                         <form asp-action="ValuationRequestManage">
-                            @*   <input type="hidden" id="isAddPerm" value="@isAdd" />
-                            <input type="hidden" id="isEditPerm" value="@isEdit" /> *@
+                              <input type="hidden" id="isAddPerm" value="@isAdd" />
+                            <input type="hidden" id="isEditPerm" value="@isEdit" />
                             <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                             <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
                             <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />
