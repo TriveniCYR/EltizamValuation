@@ -53,8 +53,8 @@ $(document).ready(function () {
     var inputElement10 = $('#ClientName');
     var inputElement11 = $('#PropertyTypeId');
     var inputElement12 = $('#PropertySubTypeId');
-    var inputElement13 = $('#OwnershipTypeId');
-    var inputElement14 = $('#PropertyId');
+    //var inputElement13 = $('#OwnershipTypeId');
+    //var inputElement14 = $('#PropertyId');
     var inputElement15 = $('#ValuationTimeFrame');
 
 
@@ -69,8 +69,8 @@ $(document).ready(function () {
         inputElement10.prop('disabled', true);
         inputElement11.prop('disabled', true);
         inputElement12.prop('disabled', true);
-        inputElement13.prop('disabled', true);
-        inputElement14.prop('disabled', true);
+        //inputElement13.prop('disabled', true);
+        //inputElement14.prop('disabled', true);
         inputElement15.prop('disabled', true);
     } else {
         inputElement1.prop('disabled', false);
@@ -81,8 +81,8 @@ $(document).ready(function () {
         inputElement10.prop('disabled', false);
         inputElement11.prop('disabled', false);
         inputElement12.prop('disabled', false);
-        inputElement13.prop('disabled', false);
-        inputElement14.prop('disabled', false);
+        //inputElement13.prop('disabled', false);
+        //inputElement14.prop('disabled', false);
         inputElement15.prop('disabled', false);
     }
     
