@@ -25,7 +25,7 @@ namespace Eltizam.Utility.Utility
                         }
                         else if (prop.PropertyType == typeof(System.String))
                         {
-                           prop.SetValue(oUserLoggedInModel, item.Value);
+                            prop.SetValue(oUserLoggedInModel, item.Value);
                         }
                     }
                 }
@@ -167,7 +167,7 @@ namespace Eltizam.Utility.Utility
         {
             if (_dict != null)
             {
-                return _dict.Remove(key); 
+                return _dict.Remove(key);
             }
             else
             {
@@ -175,40 +175,40 @@ namespace Eltizam.Utility.Utility
             }
         }
 
-		public static bool GetMenuAccess(int ModuleId, int RoleId, int SubModuleId = 0)
-		{
-			IEnumerable<RolePermissionModel> objVal = GetModuleRole<IEnumerable<RolePermissionModel>>(RoleId);
-			if (objVal != null)
-			{
-				var _permissionObject = objVal.Where(o => o.ModuleId == ModuleId).FirstOrDefault();
-				if (_permissionObject != null && _permissionObject.RoleId > 0)
-				{
-					if (_permissionObject.View || _permissionObject.Edit || _permissionObject.Delete || _permissionObject.Add || _permissionObject.Approve)
-					{
-						return true;
-					}
-				}
-			}
-			return false;
-		}
+        public static bool GetMenuAccess(int ModuleId, int RoleId, int SubModuleId = 0)
+        {
+            IEnumerable<RolePermissionModel> objVal = GetModuleRole<IEnumerable<RolePermissionModel>>(RoleId);
+            if (objVal != null)
+            {
+                var _permissionObject = objVal.Where(o => o.ModuleId == ModuleId).FirstOrDefault();
+                if (_permissionObject != null && _permissionObject.RoleId > 0)
+                {
+                    if (_permissionObject.View || _permissionObject.Edit || _permissionObject.Delete || _permissionObject.Add || _permissionObject.Approve)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
-		public static RolePermissionModel? GetCntrActionAccess(int ModuleId, int loginRoleId, int SubModuleId = 0)
-		{
-			RolePermissionModel objList = new RolePermissionModel();
-			IEnumerable<RolePermissionModel> obj = UtilityHelper.GetModuleRole<dynamic>(loginRoleId);
-			if (obj != null)
-			{
-				objList = obj.Where(o => o.ControlName != null && o.ModuleId == ModuleId).FirstOrDefault();
-                // && (o.SubModuleId == SubModuleId || SubModuleId == 0) 
+        public static RolePermissionModel? GetCntrActionAccess(int ModuleId, int loginRoleId, int SubModuleId = 0)
+        {
+            RolePermissionModel objList = new RolePermissionModel();
+            IEnumerable<RolePermissionModel> obj = UtilityHelper.GetModuleRole<dynamic>(loginRoleId);
+            if (obj != null)
+            {
+                objList = obj.Where(o => o.ControlName != null && o.ModuleId == ModuleId && (o.SubModuleId == SubModuleId || SubModuleId == 0))
+                 .FirstOrDefault();
             }
 
-			return objList;
-		}
+            return objList;
+        }
 
         public static RolePermissionModel GetMenusByRole(int loginRoleId)
-        { 
+        {
             IEnumerable<RolePermissionModel> objList = UtilityHelper.GetModuleRole<dynamic>(loginRoleId);
-             
+
             return objList.First();
         }
 
@@ -216,7 +216,7 @@ namespace Eltizam.Utility.Utility
         {
             var TotalRecord = (dataTable != null && dataTable.Rows.Count > 0 ? Convert.ToInt32(dataTable.Rows[0]["TotalRecord"]) : 0);
             var TotalFilterCount = (dataTable != null && dataTable.Rows.Count > 0 ? Convert.ToInt32(dataTable.Rows[0]["TotalFilterCount"]) : 0);
-            
+
             return Tuple.Create(TotalRecord, TotalFilterCount);
         }
     }

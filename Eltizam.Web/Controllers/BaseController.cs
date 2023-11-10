@@ -6,6 +6,7 @@ using Eltizam.Web.Filters;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 
 namespace Eltizam.Web.Controllers
 {
@@ -50,18 +51,19 @@ namespace Eltizam.Web.Controllers
         /// <param name="perEnum"></param>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public bool CheckRoleAccess(ModulePermissionEnum enumP, PermissionEnum perEnum, int roleId)
+        public bool CheckRoleAccess(ModulePermissionEnum enumP, PermissionEnum perEnum, int roleId, SubModuleEnum  enumSM = 0)
         {
             var hasAccess = false;
             bool view = perEnum == PermissionEnum.View;
             bool add = perEnum == PermissionEnum.Add;
             bool edit = perEnum == PermissionEnum.Edit;
+            bool assign = perEnum == PermissionEnum.Approve;
 
-            RolePermissionModel? objPermssion = UtilityHelper.GetCntrActionAccess((int)enumP, roleId);
+            RolePermissionModel? objPermssion = UtilityHelper.GetCntrActionAccess((int)enumP, roleId, (int)enumSM);
 
             if (objPermssion != null)
             {
-                if ((view == objPermssion.View) || (add == objPermssion.Add) || (edit == objPermssion.Edit))
+                if ((view == objPermssion.View) || (add == objPermssion.Add) || (edit == objPermssion.Edit) || (assign == objPermssion.Approve))
                 {
                     hasAccess = true;
                 }

@@ -19,9 +19,11 @@ var DeleteAccessDenied = "Delete permission not granted.";
 
 var IsDeletePerm = ($("#isDeletePerm").val() === "1" || $("#isDeletePerm").val() === 1);
 var IsAddPerm = ($("#isAddPerm").val() === "1" || $("#isAddPerm").val() === 1);   
-var IsEditPerm = ($("#isEditPerm").val() === "1" || $("#isEditPerm").val() === 1);   
+var IsEditPerm = ($("#isEditPerm").val() === "1" || $("#isEditPerm").val() === 1); 
+var IsApprove = ($("#isApprove").val() === "1" || $("#isApprove").val() === 1);  
 
 $(document).ready(function () {
+   
     ErrorDev.hide();
     readsideNavToggle();
     hideLoader(); 
@@ -40,6 +42,9 @@ $(document).ready(function () {
     }
     if (IsEditPerm === false) {
         $("#btnSaveEdit").remove();
+    }
+    if (isApproverm === false) {
+        $("#isApprove").remove();
     }
 });
 
