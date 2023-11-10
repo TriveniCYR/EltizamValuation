@@ -37,7 +37,7 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 int roleId = _helper.GetLoggedInRoleId();
-                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, PermissionEnum.View, roleId))
+                if (!CheckRoleAccess(ModulePermissionEnum.DesignationMaster, PermissionEnum.View, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 RolePermissionModel objPermssion = UtilityHelper.GetCntrActionAccess((int)ModulePermissionEnum.RoleMaster, roleId);
                 ViewBag._objPermission = objPermssion;
@@ -73,7 +73,7 @@ namespace EltizamValuation.Web.Controllers
                 var action = masterDesignation.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
 
                 int roleId = _helper.GetLoggedInRoleId();
-                if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+                if (!CheckRoleAccess(ModulePermissionEnum.DesignationMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
                 //Fill audit logs field
@@ -118,7 +118,7 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
             int roleId = _helper.GetLoggedInRoleId();
 
-            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.DesignationMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
 
@@ -158,7 +158,7 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
 
             int roleId = _helper.GetLoggedInRoleId();
-            if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.DesignationMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             MasterDesignationEntity masterDesignation;
             if (id == null || id <= 0)
