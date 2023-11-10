@@ -891,6 +891,7 @@ function ConfirmationDeleteQuotation(id) {
     $('#DeleteQuotationModel #Id').val(id);
 }
 function DeleteQuotation() {
+    debugger
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteQuotationModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteQuotationByIdUrl + "/" + tempInAtiveID, Post, DeleteQuotationByIdSuccess, DeleteQuotationByIdError);
