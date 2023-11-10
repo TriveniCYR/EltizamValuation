@@ -20,6 +20,7 @@ namespace Eltizam.Business.Models
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
         public string? Email { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [StringLength(12, MinimumLength = 9)]
         public string? Mobile { get; set; }
         public int? Status { get; set; }
         public DateTime? CreatedDate { get; set; }

@@ -139,6 +139,7 @@
                                             <label for="PinNo">
                                                 ZIP Code
                                                 @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                                @Html.ValidationMessageFor(model => model.Address.PinNo, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
@@ -162,12 +163,14 @@
                                             <label for="AlternatePhone">
                                                 Alternate Phone
                                                 @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                @Html.ValidationMessageFor(model => model.Address.AlternatePhone, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="">
                                                 Landline phone
                                                 @Html.TextBoxFor(model => model.Address.Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Landline phone"] })
+                                                @Html.ValidationMessageFor(model => model.Address.Landlinephone, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                     </div>
@@ -198,9 +201,9 @@
                                 <div class="tabSection">
                                     @Html.HiddenFor(model => model.Contact.Id)
                                     <div class="flex">
-                                        <label for="Qualification">
+                                        <label for="ContactPersonName">
                                             Contact Person Name
-                                            @Html.TextBoxFor(model => model.Contact.ContactPersonName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Qualification"] })
+                                                @Html.TextBoxFor(model => model.Contact.ContactPersonName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Contact Person"] })
                                         </label>
                                         <label for="Subject">
                                                 Department

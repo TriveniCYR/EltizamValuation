@@ -1,4 +1,4 @@
- 
+
 $(document).ready(function () {
     BindCountry();
     var countryId = $('#hdnCountry').val();
@@ -11,38 +11,61 @@ $(document).ready(function () {
     BindDesignation();
 
     $('#Address_Phone').keypress(function (e) {
-                if ($('#Address_Phone').val() == '' && e.which == 48) {
-                    return false;
-                }
-                else {
-                    var charCode = (e.which) ? e.which : event.keyCode;
-                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                        return false;
-                    }
-                }
-            });
-            $('#Address_Landlinephone').keypress(function (e) {
-                if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
-                    return false;
-                }
-                else {
-                    var charCode = (e.which) ? e.which : event.keyCode;
-                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                        return false;
-                    }
-                }
-            });
-            $('#Address_AlternatePhone').keypress(function (e) {
-                if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
-                    return false;
-                }
-                else {
-                    var charCode = (e.which) ? e.which : event.keyCode;
-                    if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                        return false;
-                    }
-                }
-            });
+        if ($('#Address_Phone').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#Address_Landlinephone').keypress(function (e) {
+        if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#Address_AlternatePhone').keypress(function (e) {
+        if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#Contact_Mobile').keypress(function (e) {
+        if ($('#Contact_Mobile').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+
+    $('#Address_PinNo').keypress(function (e) {
+        if ($('#Address_PinNo').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
 });
 
 function profileTab(evt, cityName) {
@@ -75,7 +98,7 @@ function accordianToggle(header) {
     }
 }
 //accordian function end
- 
+
 
 function removeParentDiv(element) {
     const parentDiv = element.closest('.roundBorderBox');
@@ -120,7 +143,7 @@ function removeParentDivAddress(element) {
     if (parentDivAdd) {
         parentDivAdd.remove()
     }
-} 
+}
 
 
 function BindCountry() {

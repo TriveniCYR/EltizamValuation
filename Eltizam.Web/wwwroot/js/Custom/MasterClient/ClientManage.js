@@ -55,6 +55,29 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('#Contact_Mobile').keypress(function (e) {
+        if ($('#Contact_Mobile').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
+    $('#Address_PinNo').keypress(function (e) {
+        if ($('#Address_PinNo').val() == '' && e.which == 48) {
+            return false;
+        }
+        else {
+            var charCode = (e.which) ? e.which : event.keyCode;
+            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+                return false;
+            }
+        }
+    });
 });
 
 function profileTab(evt, cityName) {

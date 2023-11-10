@@ -15,6 +15,7 @@ namespace Eltizam.Business.Models
         public string? Address1 { get; set; }
         public string? Address2 { get; set; }
         public string? Address3 { get; set; }
+        [StringLength(10, MinimumLength = 5)]
         public string? PinNo { get; set; }
         public string? Landmark { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
