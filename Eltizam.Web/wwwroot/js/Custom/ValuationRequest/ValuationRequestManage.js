@@ -40,7 +40,7 @@ function payTab(evt, payName) {
 // payment option JS ends
 
 $(document).ready(function () {
-    debugger
+    
     
     var roleId = document.getElementById('hdnRoleId').value;
     var inputElement1 = $('#ApproverId');
