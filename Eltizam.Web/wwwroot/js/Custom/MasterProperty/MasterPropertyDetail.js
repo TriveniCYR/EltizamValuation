@@ -40,8 +40,12 @@ $(document).ready(function () {
     BindUnitType();
     BindFurnished();
     BindCountry();
-    BindState();
-    BindCity();
+    var countryId = $('#hdnCountry').val();
+    if (countryId != null || countryId != 0) {
+        BindState(countryId);
+        var stateId = $('#hdnState').val();
+        BindCity(stateId);
+    }
 });
 
 function BindProperty() {
@@ -195,25 +199,25 @@ function BindFurnished() {
 }
 
 function BindCountry() {
-
+    debugger
     var Country = $("#PropertyDetail_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
     BindDropdowns(CountryList, Country, _rpname, _val);
 }
 
-function BindState() {
-
+function BindState(id) {
     var State = $("#PropertyDetail_StateId");
     var _val = $('#hdnState').val();
     var _rpname = "stateName";
-    BindDropdowns(StateList, State, _rpname, _val);
+
+    BindDropdowns(StateList + '/' + id, State, _rpname, _val);
 }
 
-function BindCity() {
+function BindCity(id) {
 
     var City = $("#PropertyDetail_CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";
-    BindDropdowns(CityList, City, _rpname, _val);
+    BindDropdowns(CityList + '/' + id, City, _rpname, _val);
 }

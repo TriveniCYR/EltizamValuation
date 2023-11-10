@@ -16,7 +16,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public string FirstName { get; set; } = null!;
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
-        public string? UserName { get; set; }
         public string? Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public int? DepartmentId { get; set; }
@@ -37,6 +36,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? ForgotPasswordToken { get; set; }
         public int? ReportsTo { get; set; }
         public int? UserTypeId { get; set; }
+        public string? UserName { get; set; }
 
         public virtual MasterDepartment? Department { get; set; }
         public virtual MasterDesignation? Designation { get; set; }

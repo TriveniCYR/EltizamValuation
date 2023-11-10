@@ -266,8 +266,8 @@ namespace Eltizam.Business.Core.Implementation
                         var entityAddress = _mapperFactory.Get<MasterContactModel, MasterContact>(masterVendortModel.Contact);
 
                         objContact.ContactPersonName = entityAddress.ContactPersonName;
-                        objContact.Department = entityAddress.Department;
-                        objContact.Designation = entityAddress.Designation;
+                        objContact.DepartmentId = entityAddress.DepartmentId;
+                        objContact.DesignationId = entityAddress.DesignationId;
                         objContact.Email = entityAddress.Email;
                         objContact.Mobile = entityAddress.Mobile;
                         objContact.Status = entityAddress.Status;
