@@ -20,8 +20,7 @@
     ViewData["Title"] = _md + _header;
     var htmlAttributes = true;
     var roleId = objPermssion.RoleId;
-    // string disabledAttribute = (roleId == 2) ? "disabled" : null;
-    
+   
 }
 
 <div id="PlaceHolderHere"></div>
@@ -61,6 +60,7 @@
                             <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.ClientTypeId)" />
                             <input type="hidden" id="hdnClientName" value="@(Model == null ? 0 : Model.ClientName)" />
                             <input type="hidden" id="hdnRoleId" value=@roleId />
+                            <input type="hidden" id="roleEnum" value=@roleId />
                             @* <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
                             <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
                             <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.OwnershipTypeId)" /> *@
@@ -435,19 +435,21 @@
                             <div class="text-center buttonArea bodyContent plr-0">
                                 <button type="button" class="lineBtn greyBtn">Cancel</button>
 
-                                @if (roleId == 4)
+                                
+                                @if (roleId == (int)RoleEnum.Admin)
                                 {
                                     <button type="submit" class="blueBtn">Save</button>
 
                                 }
-                                @if (roleId == 2 || roleId == 3)
+                               
+
+                                @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                                 {
 
                                     <button type="button" class="blueBtn" id="approveStatus">
-                                        Savest
+                                        Save
                                     </button>
                                 }
-
 
                             </div>
                         </form>
