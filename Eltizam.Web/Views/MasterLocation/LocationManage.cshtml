@@ -52,7 +52,7 @@
                         <div class="flex">
                             <label for="CountryId" class="w-50">
                                 <p class="m-0">Country<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control disabletxtbox", @onchange = "BindState(this.options[this.selectedIndex].value)"})
+                                @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control  ", @onchange = "BindState(this.options[this.selectedIndex].value)"})
                                 @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">
@@ -70,49 +70,50 @@
                         <div class="flex">
                             <label for="StateId" class="w-50">
                                 <p class="m-0">State<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control disabletxtbox",@onchange = "BindCity(this.options[this.selectedIndex].value)"})
+                                @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control  ",@onchange = "BindCity(this.options[this.selectedIndex].value)"})
                                 @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
                             </label>
                             <label for="CityId" class="w-50">
                                 <p class="m-0">City / Emirates<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control disabletxtbox"})
+                                @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control  "})
                                 @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
                             <label for="resourceType" class="w-50">
                                 Sector / Zone
-                                @Html.TextBoxFor(model => model.Sector,  new { @class = "form-control disabletxtbox" })
+                                @Html.TextBoxFor(model => model.Sector,  new { @class = "form-control " })
                             </label>
                             <label for="Geo-coordinates" class="w-50">
                                 Latitude
-                                @Html.TextBoxFor(model => model.Latitude,  new { @class = "form-control disabletxtbox" })
+                                @Html.TextBoxFor(model => model.Latitude,  new { @class = "form-control  " })
                             </label>
                         </div>
                         <div class="flex">
                             <label for="" class="w-50">
                                 Longitude
-                                @Html.TextBoxFor(model => model.Longitude,  new { @class = "form-control disabletxtbox" })
+                                @Html.TextBoxFor(model => model.Longitude,  new { @class = "form-control  " })
                             </label>
                             <label for="Geo-coordinates" class="w-50">
                                 <p class="m-0">Home Currency<span class="text-danger">*</span></p>                               
-                                 @Html.DropDownListFor(model => model.HomeCurrency, new List<SelectListItem>{},  new { @class = "form-control disabletxtbox"})
-                                @Html.ValidationMessageFor(model => model.HomeCurrency, "", new { @class = "text-danger" })
+                                 @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>{},  new { @class = "form-control  "})
+                                @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
                             <label for="Geo-coordinates" class="w-50">
                                 <p class="m-0">Foreign Currency<span class="text-danger">*</span></p>
-                                 @Html.DropDownListFor(model => model.ForeignCurrency, new List<SelectListItem> { },  new { @class = "form-control disabletxtbox" })
-                                @Html.ValidationMessageFor(model => model.ForeignCurrency, "", new { @class = "text-danger" })
+                                 @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem> { },  new { @class = "form-control  " })
+                                @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
                         </div>
                         <div class="text-right buttonArea bodyContent plr-0">
+                            <a class="greyBtn lineBtn formAbtn" asp-action="Locations">@SharedLocalizer["Cancel"]</a>
                             @if (ViewBag.IsView != 1)
                             {
-                                <button type="submit" class="lineBtn greyBtn" id="resetLocation">Cancel</button>
+                           
                                 <button type="submit" id="btnSaveEdit" class="bgBlue">Save</button>
 
                             }
@@ -134,16 +135,24 @@
         var stateListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
         var cityListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
         var currencyUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryDescriptionById";
+        var LocationGetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllLocations";
         $(document).ready(function () {
+
             BindCountry();
             BindCurrencyHome();
             BindCurrencyForeign();
-            if (@ViewBag.IsView == 1) {
-                $(".disabletxtbox").prop("disabled", true);
-                $("#addLocation").prop("disabled", true);
-                // Disable the associated label element
-                $("label[for='addLocation']").addClass("disabled");
-            }
+            // if (@ViewBag.IsView == 1) {
+            //     $(". ").prop("disabled", true);
+            //     $("#addLocation").prop("disabled", true);
+            //     // Disable the associated label element
+            //     $("label[for='addLocation']").addClass("disabled");
+            // }
+            // if (@ViewBag.IsView == 2) {
+            //     $(". ").prop("disabled", false);
+            //     $("#addLocation").prop("disabled", false);
+            //     // Disable the associated label element
+            //     $("label[for='addLocation']").removeClass("disabled");
+            // }
             var HdnCountryId = $('#hdnCountry').val();
             if (HdnCountryId) {
                 BindState(HdnCountryId);
@@ -176,14 +185,14 @@
         }
         function BindCurrencyHome() {
             var id = 7;
-            var currencyId = $("#HomeCurrency");
+            var currencyId = $("#HomeCurrencyId");
             var _val = $('#hdnHomeCurrencyId').val();
             var _rpname = "description";
             BindDropdowns(currencyUrl + '/' + id, currencyId, _rpname, _val);
         }
         function BindCurrencyForeign() {           
             var id = 7;
-            var currencyId = $("#ForeignCurrency");
+            var currencyId = $("#ForeignCurrencyId");
             var _val = $('#hdnForeignCurrencyId').val();
             var _rpname = "description";
             BindDropdowns(currencyUrl + '/' + id, currencyId, _rpname, _val);
