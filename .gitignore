@@ -5,6 +5,8 @@
 /.vs
 /Eltizam.Api/obj/
 /Eltizam.Api/bin/
+/EltizamValuationWebApi/obj/
+/EltizamValuationWebApi/bin/
 /Eltizam.WebApi/obj/
 /Eltizam.WebApi/bin/
 /Eltizam.Business.Core/obj/
