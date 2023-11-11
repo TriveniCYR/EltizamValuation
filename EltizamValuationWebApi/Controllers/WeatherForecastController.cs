@@ -1,16 +1,12 @@
-using Eltizam.Business.Core;
-using Eltizam.Business.Core.Interface;
-using Eltizam.Resource;
 using Eltizam.WebApi.Filters;
-using Eltizam.WebApi.Helpers.Response;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 
 namespace Eltizam.WebApi.Controllers
 {
     [ApiController]
     [AuthorizeAttribute]
     [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         #region Properties

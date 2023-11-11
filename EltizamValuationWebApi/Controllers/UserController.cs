@@ -13,6 +13,7 @@ namespace Eltizam.WebApi.Controllers
     [ApiController]
     [AuthorizeAttribute]
     [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
