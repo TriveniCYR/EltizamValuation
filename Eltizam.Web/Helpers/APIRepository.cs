@@ -29,7 +29,7 @@ namespace Eltizam.Web.Helpers
                 // Pass the handler to httpclient(from you are calling api)
                 using (var client = new HttpClient(clientHandler))
                 {
-                    client.BaseAddress = new Uri(baseURL);
+                    client.BaseAddress = new Uri(baseURL); //"https://eltizamapi.aspnetdevelopment.in/"
                     if (!string.IsNullOrEmpty(token))
                         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
