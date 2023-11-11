@@ -29,7 +29,7 @@ namespace Eltizam.Business.Models
         public int CityId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.EmailAddress)]   
         [MaxLength(50)]
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
         public string? Email { get; set; }

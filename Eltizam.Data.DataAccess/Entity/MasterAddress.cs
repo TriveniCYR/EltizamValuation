@@ -26,6 +26,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
+        public int? AlternatePhoneExt { get; set; }
+        public int? PhoneExt { get; set; }
 
         public virtual MasterCity? City { get; set; }
     }

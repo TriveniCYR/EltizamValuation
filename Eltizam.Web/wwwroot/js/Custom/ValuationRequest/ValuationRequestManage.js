@@ -1,14 +1,33 @@
-﻿function profileTab(evt, cityName) {
+﻿//function profileTab(evt, cityName) {
+//    var i, tabcontent, tablinks;
+//    tabcontent = document.getElementsByClassName("tabcontent");
+//    for (i = 0; i < tabcontent.length; i++) {
+//        tabcontent[i].style.display = "none";
+//    }
+//    tablinks = document.getElementsByClassName("tablinks");
+//    for (i = 0; i < tablinks.length; i++) {
+//        tablinks[i].className = tablinks[i].className.replace(" active", "");
+//    }
+//    document.getElementById(cityName).style.display = "block";
+//    evt.currentTarget.className += " active";
+//}
+
+function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+        tabcontent[i].style.height = 0;
+        tabcontent[i].style.padding = 0;
+        tabcontent[i].style.border = "none";
+        tabcontent[i].style.marginTop = 0;
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    document.getElementById(cityName).style.display = "block";
+    document.getElementById(cityName).style.height = "auto";
+    document.getElementById(cityName).style.padding = "6px 12px";
+    document.getElementById(cityName).style.border = "1px solid var(--blue)";
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
@@ -40,8 +59,14 @@ function payTab(evt, payName) {
 // payment option JS ends
 
 $(document).ready(function () {
-    
-    
+
+    var RoleEnum = {
+        'Requestor': 1,
+        'Approver': 2,
+        'Valuer': 3,
+        'Admin': 4
+    };
+
     var roleId = document.getElementById('hdnRoleId').value;
     var inputElement1 = $('#ApproverId');
     var inputElement2 = $('#OtherReferenceNo');
@@ -53,12 +78,13 @@ $(document).ready(function () {
     var inputElement10 = $('#ClientName');
     var inputElement11 = $('#PropertyTypeId');
     var inputElement12 = $('#PropertySubTypeId');
-    //var inputElement13 = $('#OwnershipTypeId');
-    //var inputElement14 = $('#PropertyId');
+    var inputElement13 = $('#OwnershipTypeId');
+    var inputElement14 = $('#PropertyId');
     var inputElement15 = $('#ValuationTimeFrame');
 
 
-    if (roleId == 2 || roleId ==3) {
+
+    if (roleId == RoleEnum.Approver || roleId == RoleEnum.Valuer) {
         inputElement1.prop('disabled', true);
         inputElement2.prop('disabled', true);
         inputElement3.prop('disabled', true);
@@ -69,8 +95,8 @@ $(document).ready(function () {
         inputElement10.prop('disabled', true);
         inputElement11.prop('disabled', true);
         inputElement12.prop('disabled', true);
-        //inputElement13.prop('disabled', true);
-        //inputElement14.prop('disabled', true);
+        inputElement13.prop('disabled', true);
+        inputElement14.prop('disabled', true);
         inputElement15.prop('disabled', true);
     } else {
         inputElement1.prop('disabled', false);
@@ -81,20 +107,20 @@ $(document).ready(function () {
         inputElement10.prop('disabled', false);
         inputElement11.prop('disabled', false);
         inputElement12.prop('disabled', false);
-        //inputElement13.prop('disabled', false);
-        //inputElement14.prop('disabled', false);
+        inputElement13.prop('disabled', false);
+        inputElement14.prop('disabled', false);
         inputElement15.prop('disabled', false);
     }
-    
-   
-    
+
+
+
     if (roleId > 0) {
         BindValuationRequestStatus(roleId)
-        
+
 
     }
 
-   /* $('#StatusId').trigger('change');*/
+    /* $('#StatusId').trigger('change');*/
 
     // BindProperty();
     //BindValuationRequestStatus();
@@ -113,8 +139,8 @@ $(document).ready(function () {
     /*BindPropertyDetail();*/
 
     if (document.location.href.includes('id'))
- 
-    
+
+
    /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/ {
 
 
@@ -126,7 +152,7 @@ $(document).ready(function () {
         //var id =  document.getElementById('ClientTypeId').value
         // $('ClientTypeId').val() = $('hdnClientTypeId').val();
         var ss = document.getElementById('ClientTypeId').value = document.getElementById('hdnClientTypeId').value;
-       
+
         //document.getElementById('ClientName').value
         // document.getElementById('ClientTypeId').value = ss;
         // console.log(ss);
@@ -175,7 +201,7 @@ $(document).ready(function () {
     //    BindPropertySub(HdnId);
     //}
 
-    
+
 });
 
 
@@ -203,7 +229,7 @@ debugger
 
 //    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
 
-    
+
 //}
 
 function BindValuationRequestStatus(roleId) {
@@ -470,9 +496,12 @@ function BindPropertyDetailById(Id) {
 
             for (i = 0; i < response._object.amenityList.length; i++) {
                 //var _id = response._object.amenityList[i].id
-                Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
-                    '<input checked data-val="true"   name="AmenityList[' + response._object.amenityList[i].id + '].IsActive" type="checkbox" text="[' + response._object.amenityList[i].amenityName + ']" value="true"/> ' + '<p> ' + response._object.amenityList[i].amenityName + '  </p>' +
-                    '</label>')
+                if (response._object.amenityList[i].isActive == true) {
+                    Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
+                        '<input checked data-val="true"   name="AmenityList[' + response._object.amenityList[i].id + '].IsActive" type="checkbox" text="[' + response._object.amenityList[i].amenityName + ']" value="true"/> ' + '<p> ' + response._object.amenityList[i].amenityName + '  </p>' +
+                        '</label>')
+                }
+                
             }
 
 
@@ -635,8 +664,8 @@ function BindClientDetailsByClientId(Id) {
                 //$.each(data._object, function (index, object) { //  <td>' + object.ClientTypeCode + '</td>  <td>' + object.isdClientTypeCode + '</td>  
                 $('#NewAddressTable tbody').append(' <tr><td>' + response._object.address.address1 + '</td> <td>' + response._object.address.address2 + '</td><td>' + response._object.address.countryName
                     + '</td><td>' + response._object.address.stateName + '</td><td>' + response._object.address.cityName + '</td><td>' + response._object.address.pinNo + '</td></tr>');
-               // });
-               // StaticDataTable("#ClientTypeTable");
+                // });
+                // StaticDataTable("#ClientTypeTable");
             }
 
             if (response._object.address != null) {
@@ -767,7 +796,7 @@ $('#approveStatus').on('click', function () {
 
     debugger
     $.ajax({
-        type: "POST", 
+        type: "POST",
         url: BaseURL + RequeStatusReview,
         "datatype": "json",
         headers: {
@@ -813,7 +842,7 @@ function BindQuatationList() {
                     var html = '';
 
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                    html += '<li><a title="View" href="/ValuationRequest/ValuationQuotationManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo +'"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    html += '<li><a title="View" href="/ValuationRequest/ValuationQuotationManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
                     /*html += '<li><a title="Edit" href="/MasterVendor/VendorManage?id=' + object.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';*/
                     html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteQuotationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteQuotation(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                     html += '</ul></div>';
@@ -852,7 +881,7 @@ function BindInvoiceList() {
                     var html = '';
 
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                    html += '<li><a title="View" href="/ValuationRequest/ValuationInvoiceManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo +'"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    html += '<li><a title="View" href="/ValuationRequest/ValuationInvoiceManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
                     /*html += '<li><a title="Edit" href="/MasterVendor/VendorManage?id=' + object.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';*/
                     html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                     html += '</ul></div>';
@@ -881,6 +910,7 @@ function ConfirmationDeleteQuotation(id) {
     $('#DeleteQuotationModel #Id').val(id);
 }
 function DeleteQuotation() {
+    debugger
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteQuotationModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteQuotationByIdUrl + "/" + tempInAtiveID, Post, DeleteQuotationByIdSuccess, DeleteQuotationByIdError);

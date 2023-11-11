@@ -60,10 +60,28 @@ namespace Eltizam.Web.Helpers
 
         }
 
+        public class RolePermissionModelComparer : IEqualityComparer<RolePermissionModel>
+        {
+            public bool Equals(RolePermissionModel x, RolePermissionModel y)
+            {
+                // Implement your custom equality logic here
+                // For example, compare relevant properties like x.Property == y.Property
+                return x.ModuleId == y.ModuleId && x.ModuleName == y.ModuleName; // Adjust this based on your class properties
+            }
+
+            public int GetHashCode(RolePermissionModel obj)
+            {
+                // Implement your custom hash code calculation here
+                // Combine hash codes of relevant properties
+                return obj.ModuleId.GetHashCode() ^ obj.ModuleName.GetHashCode(); // Adjust this based on your class properties
+            }
+        }
+
         public List<RolePermissionModel> GetMenusByRole(int loginRoleId)
         {
-            IEnumerable<RolePermissionModel> objList = UtilityHelper.GetModuleRole<dynamic>(loginRoleId); 
-            return objList.ToList();
+            IEnumerable<RolePermissionModel> objList = UtilityHelper.GetModuleRole<dynamic>(loginRoleId);
+            //return objList.Distinct().ToList();
+            return objList.Distinct(new RolePermissionModelComparer()).ToList();
         }
     }
 }

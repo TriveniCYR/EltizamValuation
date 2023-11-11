@@ -32,7 +32,7 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? BuildUpAreaSqMtr { get; set; }
         public int? AgeOfConstruction { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public string? Parking { get; set; }
         public string? ParkingBayNo { get; set; }
         public string? Description { get; set; }

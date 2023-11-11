@@ -43,7 +43,7 @@
                                     </div>
                                     <label for="Status" class="w-50">
                                         Status
-                                        <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" disabled value="@Model.Status" @(Model.Status == 1 ? "checked" : "") />
+                                        <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" disabled asp-for="Status" />
                                         <label class="label-switch" for="addLocation"></label>
                                         <span class="info-text" style="top:-20px;"></span>
                                     </label>

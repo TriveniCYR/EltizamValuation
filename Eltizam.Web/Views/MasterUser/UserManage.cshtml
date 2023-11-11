@@ -206,6 +206,7 @@
                                             <label for="PinNo">
                                                 ZIP Code
                                                 @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Pin No"] })
+                                                @Html.ValidationMessageFor(model => model.Address.PinNo, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
@@ -229,12 +230,14 @@
                                             <label for="AlternatePhone">
                                                 Alternate Phone
                                                 @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                @Html.ValidationMessageFor(model => model.Address.AlternatePhone, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="">
                                                 Landline phone
                                                 @Html.TextBoxFor(model => model.Address.Landlinephone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Landline phone"] })
+                                                @Html.ValidationMessageFor(model => model.Address.Landlinephone, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                     </div>
@@ -286,7 +289,7 @@
                                             </label>
                                         </div>
                                         <div class="flex">
-                                            <label for="grade" class="w-100">
+                                            <label for="grade" class="w-50">
                                                 <p class="m-0">Grade/Percent/class<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Qualification.Grade, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Grade"] })
                                                 @Html.ValidationMessageFor(model => model.Qualification.Grade, "", new { @class = "text-danger" })

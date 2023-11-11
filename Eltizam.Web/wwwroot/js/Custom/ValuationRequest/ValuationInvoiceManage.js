@@ -28,6 +28,17 @@ var InvoiceRequest = {
 
 };
 
+$('#Amount').keypress(function (e) {
+    if ($('#Amount').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
 function SaveCashInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
     let amouont = $("#Amount").val();
@@ -42,6 +53,10 @@ function SaveCashInvoice() {
         toastr.error("Enter Amount.");
         return false;
     }
+    else if (transactionDate == '') {
+        toastr.error("Enter Transaction Date.");
+        return false;
+    }
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
@@ -52,6 +67,17 @@ function SaveCashInvoice() {
 
 }
 
+$('#ChequeAmount').keypress(function (e) {
+    if ($('#ChequeAmount').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
 function SaveChequeInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
     let amouont = $("#ChequeAmount").val();
@@ -68,6 +94,10 @@ function SaveChequeInvoice() {
     }
     else if (amouont == '') {
         toastr.error("Enter Amount.");
+        return false;
+    }
+    else if (transactionDate == '') {
+        toastr.error("Enter Transaction Date.");
         return false;
     }
     else if (chequeNumber == '') {
@@ -89,6 +119,18 @@ function SaveChequeInvoice() {
     InvoiceRequest.CheckDate = chequeDate;
     SaveInvoice(InvoiceRequest);
 }
+
+$('#CardAmount').keypress(function (e) {
+    if ($('#CardAmount').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
 function SaveCreditCardInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
     let amouont = $("#CardAmount").val();
@@ -106,6 +148,10 @@ function SaveCreditCardInvoice() {
     }
     else if (amouont == '') {
         toastr.error("Enter Amount.");
+        return false;
+    }
+    else if (transactionDate == '') {
+        toastr.error("Enter Transaction Date.");
         return false;
     }
     else if (creditCardNumber == '') {
@@ -133,6 +179,28 @@ function SaveCreditCardInvoice() {
     SaveInvoice(InvoiceRequest);
 }
 
+$('#BankAmount').keypress(function (e) {
+    if ($('#BankAmount').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#AccountNumber').keypress(function (e) {
+    if ($('#AccountNumber').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
 function SaveNetBankingInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
     let amouont = $("#BankAmount").val();
@@ -148,6 +216,10 @@ function SaveNetBankingInvoice() {
     }
     else if (amouont == '') {
         toastr.error("Enter Amount.");
+        return false;
+    }
+    else if (transactionDate == '') {
+        toastr.error("Enter Transaction Date.");
         return false;
     }
     else if (bankName == '') {
