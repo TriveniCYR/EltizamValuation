@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Eltizam.WebApi.props" />
+</Project>
