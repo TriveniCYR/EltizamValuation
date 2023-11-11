@@ -8,7 +8,7 @@ using System.Net;
 using ValuationWeb.Application.Features;
 
 namespace Eltizam.WebApi.Controllers
-{ 
+{
     [ApiController]
     [AuthorizeAttribute]
     [ApiVersion("1")]
@@ -72,6 +72,13 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
+        [HttpGet, Route("GetDate")]
+        public async Task<IActionResult> GetDate()
+        {
+            return _ObjectResponse.Create(DateTime.Now, (Int32)HttpStatusCode.OK);
+        }
+
+
         // get master City detail by id
         [HttpGet, Route("GetById/{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
@@ -99,7 +106,7 @@ namespace Eltizam.WebApi.Controllers
         // this is for delete master Designation detail by id
         [HttpPost("Upsert")]
         public async Task<IActionResult> Upsert(MasterCityUpsertCommand model)
-        { 
+        {
             var oCityEntity = await _mediator.Send(model);
 
             if (oCityEntity == Eltizam.Utility.Enums.GeneralEnum.DBOperation.Success)

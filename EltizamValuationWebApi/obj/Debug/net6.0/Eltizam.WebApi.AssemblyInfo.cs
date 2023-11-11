@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Eltizam.WebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f78c50d5946ed912289b86050c0de3e4b84b0de6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c64c8689dfb2df82356677376bbd68691a7b631a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Eltizam.WebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Eltizam.WebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
