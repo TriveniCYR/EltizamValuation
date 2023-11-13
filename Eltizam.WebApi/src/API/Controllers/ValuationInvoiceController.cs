@@ -11,7 +11,8 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class ValuationInvoiceController : ControllerBase
     {
