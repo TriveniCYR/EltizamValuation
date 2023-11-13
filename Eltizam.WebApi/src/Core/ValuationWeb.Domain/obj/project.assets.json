@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Microsoft.AspNetCore.JsonPatch/6.0.13": {
+      "Microsoft.AspNetCore.JsonPatch/6.0.8": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
@@ -19,10 +19,10 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Mvc.NewtonsoftJson/6.0.13": {
+      "Microsoft.AspNetCore.Mvc.NewtonsoftJson/6.0.8": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.JsonPatch": "6.0.13",
+          "Microsoft.AspNetCore.JsonPatch": "6.0.8",
           "Newtonsoft.Json": "13.0.1",
           "Newtonsoft.Json.Bson": "1.0.2"
         },
@@ -81,10 +81,10 @@
     }
   },
   "libraries": {
-    "Microsoft.AspNetCore.JsonPatch/6.0.13": {
-      "sha512": "wGbOwL1SF6ZmdVuLSKw4VLKuNYqY6aT/LEUXJRH0oMtpBhEZgolX38FXoogQQrKnELMUhL0C8nEq7BojbXD3/Q==",
+    "Microsoft.AspNetCore.JsonPatch/6.0.8": {
+      "sha512": "OihHbIG+WAxk0U3jwPxCgh2tQqpeODYis3D0SnwIshpkKoZFhifCwfDNcsTBoppx4Y6ic0dcxkGiHO5NZWtXiw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.jsonpatch/6.0.13",
+      "path": "microsoft.aspnetcore.jsonpatch/6.0.8",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -96,14 +96,14 @@
         "lib/net6.0/Microsoft.AspNetCore.JsonPatch.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.xml",
-        "microsoft.aspnetcore.jsonpatch.6.0.13.nupkg.sha512",
+        "microsoft.aspnetcore.jsonpatch.6.0.8.nupkg.sha512",
         "microsoft.aspnetcore.jsonpatch.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Mvc.NewtonsoftJson/6.0.13": {
-      "sha512": "uQQk5P4YyJFWc+rpGQCFeG583+30vSv6NmEWYB6sV/vZqAAtF2m93pwIBdKLvTzEF31ZDRHHK0B3NGXhW9taMw==",
+    "Microsoft.AspNetCore.Mvc.NewtonsoftJson/6.0.8": {
+      "sha512": "2imWU1FEnirRogFvtu+wV11xJuC0u7aNprpNQygQLTZvnSlaLPTJhUUrqskFVn6PRDv3kCE4peaBJKwseNv71w==",
       "type": "package",
-      "path": "microsoft.aspnetcore.mvc.newtonsoftjson/6.0.13",
+      "path": "microsoft.aspnetcore.mvc.newtonsoftjson/6.0.8",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -111,7 +111,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net6.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll",
         "lib/net6.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.xml",
-        "microsoft.aspnetcore.mvc.newtonsoftjson.6.0.13.nupkg.sha512",
+        "microsoft.aspnetcore.mvc.newtonsoftjson.6.0.8.nupkg.sha512",
         "microsoft.aspnetcore.mvc.newtonsoftjson.nuspec"
       ]
     },
@@ -259,7 +259,8 @@
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
@@ -319,17 +320,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-rc.2.23502.2\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "ValuationWeb.Domain depends on Microsoft.AspNetCore.Mvc.NewtonsoftJson (>= 6.0.8) but Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.8 was not found. An approximate best match of Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.13 was resolved.",
-      "libraryId": "Microsoft.AspNetCore.Mvc.NewtonsoftJson",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  }
 }

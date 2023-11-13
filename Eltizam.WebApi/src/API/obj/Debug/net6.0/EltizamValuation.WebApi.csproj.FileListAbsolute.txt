@@ -506,3 +506,4 @@ C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\AP
 C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\API\obj\Debug\net6.0\EltizamValuation.WebApi.pdb
 C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\API\obj\Debug\net6.0\EltizamValuation.WebApi.genruntimeconfig.cache
 C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\API\obj\Debug\net6.0\ref\EltizamValuation.WebApi.dll
+C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\API\bin\Debug\net6.0\EltizamValuation.WebApi.staticwebassets.runtime.json

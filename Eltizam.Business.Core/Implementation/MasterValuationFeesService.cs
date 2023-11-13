@@ -26,13 +26,13 @@ namespace Eltizam.Business.Core.Implementation
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
+        //private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private readonly string _dbConnection;
         private readonly IAuditLogService _auditLogService;
         private IRepository<MasterValuationFee> _repository { get; set; }
         private readonly IHelper _helper;
-        public MasterValuationFeesService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterValuationFeesService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
                                   IHelper helper,
                                  Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {

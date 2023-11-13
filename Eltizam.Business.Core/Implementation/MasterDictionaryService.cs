@@ -26,14 +26,14 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
-
+        private readonly int? _LoginUserId;
 
         private IRepository<MasterDictionary> _repository { get; set; }
         private IRepository<MasterDictionaryDetail> _repositoryDetail { get; set; }
         private readonly IHelper _helper;
         private readonly IAuditLogService _auditLogService;
 
-        public MasterDictionaryService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, 
+        public MasterDictionaryService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
                                  IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration, IAuditLogService auditLogService)
         {
             _unitOfWork = unitOfWork;
@@ -44,6 +44,7 @@ namespace Eltizam.Business.Core.Implementation
             configuration = _configuration;
             _helper = helper;
             _auditLogService = auditLogService;
+            _LoginUserId = _helper.GetLoggedInUser()?.UserId;
         }
 
         // get all recoreds from Location list with sorting and pagination
@@ -51,9 +52,8 @@ namespace Eltizam.Business.Core.Implementation
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
             string SortDir = model.order[0]?.dir;
-
             SqlParameter[] osqlParameter =
-            {
+{
                 new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
                 new SqlParameter(AppConstants.P_PageSize,           model.length),
                 new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
@@ -61,27 +61,27 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
             };
 
-            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Dictionary_SearchAllList, CommandType.StoredProcedure, osqlParameter); 
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Dictionary_SearchAllList, CommandType.StoredProcedure, osqlParameter);
 
             //Get Pagination information
-            var res = UtilityHelper.GetPaginationInfo(Results); 
+            var res = UtilityHelper.GetPaginationInfo(Results);
             DataTableResponseModel Res = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterDictionaryEntity>());
 
-            return Res; 
+            return Res;
         }
 
         public async Task<List<MasterDictionaryDetailById>> GetDictionaryDetailsByIdAsync(int id, string description)
-        {            
-            DbParameter[] osqlParameter = 
+        {
+            DbParameter[] osqlParameter =
             {
                 new DbParameter("Id", id, SqlDbType.Int),
                 new DbParameter("Description",description,SqlDbType.VarChar),
-            }; 
-            
-            var _Dictionary = EltizamDBHelper.ExecuteMappedReader<MasterDictionaryDetailById>(ProcedureMetastore.usp_Dictionary_GetById, 
-                              DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter); 
+            };
+
+            var _Dictionary = EltizamDBHelper.ExecuteMappedReader<MasterDictionaryDetailById>(ProcedureMetastore.usp_Dictionary_GetById,
+                              DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
             return _Dictionary;
-        } 
+        }
 
         public async Task<MasterDictionaryDetailById> GetDictionaryDetailsByIdAsync(int id)
         {
@@ -109,44 +109,53 @@ namespace Eltizam.Business.Core.Implementation
             var By = _helper.GetLoggedInUser().UserId;
             string MainTableName = Enum.GetName(TableNameEnum.Master_Location);
             int MainTableKey = entitydictionary.Id;
-
-
-            if (entitydictionary.Id > 0)
+            try
             {
-                MasterDictionaryDetail OldEntity = null;
-                objDicitonary = _repositoryDetail.Get(entitydictionary.Id);
-                var OldObjLocation = objDicitonary;
-                if (objDicitonary != null)
+                if (entitydictionary.Id > 0)
                 {
-                    //   objLocation.LocationName = entityLocation.LocationName;
+                    MasterDictionaryDetail OldEntity = null;
+                    objDicitonary = _repositoryDetail.Get(entitydictionary.Id);
+                    var OldObjLocation = objDicitonary;
+                    if (objDicitonary != null)
+                    {
+                        //   objLocation.LocationName = entityLocation.LocationName;
+                        objDicitonary.Description = entitydictionary.Description;
+                        objDicitonary.Sort = entitydictionary.Sort;
+                        objDicitonary.IsActive = entitydictionary.IsActive;
+                        objDicitonary.ModifiedBy = entitydictionary.ModifiedBy ?? By;
+
+                        _repositoryDetail.UpdateAsync(objDicitonary);
+                        _repositoryDetail.UpdateGraph(objDicitonary, EntityState.Modified);
+                        await _unitOfWork.SaveChangesAsync();
+
+                        //Do Audit Log --AUDITLOGUSER
+                        await _auditLogService.CreateAuditLog<MasterDictionaryDetail>(AuditActionTypeEnum.Update, OldEntity, objDicitonary, MainTableName, MainTableKey);
+                    }
+                }
+
+                else
+                {
+                    objDicitonary = _mapperFactory.Get<MasterDictionaryDetailById, MasterDictionaryDetail>(entitydictionary);
                     objDicitonary.Description = entitydictionary.Description;
-                    objDicitonary.Sort = entitydictionary.Sort;
                     objDicitonary.IsActive = entitydictionary.IsActive;
-                    objDicitonary.ModifiedBy = entitydictionary.ModifiedBy ?? By;
+                    objDicitonary.CreatedBy = entitydictionary.CreatedBy;
 
-                    _repositoryDetail.UpdateAsync(objDicitonary);
-                    _repositoryDetail.UpdateGraph(objDicitonary, EntityState.Modified);
+                    _repositoryDetail.AddAsync(objDicitonary);
                     await _unitOfWork.SaveChangesAsync();
-                   
-                    //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<MasterDictionaryDetail>(AuditActionTypeEnum.Update, OldEntity, objDicitonary, MainTableName, MainTableKey);
-                } 
+                }
+                //await _unitOfWork.SaveChangesAsync();
+                if (objDicitonary.Id == 0)
+                    return DBOperation.Error;
+
+                return DBOperation.Success;
             }
-            else
+            catch (Exception ex)
             {
-                objDicitonary = _mapperFactory.Get<MasterDictionaryDetailById, MasterDictionaryDetail>(entitydictionary);
-                objDicitonary.Description = entitydictionary.Description; 
-                objDicitonary.IsActive = entitydictionary.IsActive;
-                objDicitonary.CreatedBy = entitydictionary.CreatedBy;
 
-                _repositoryDetail.AddAsync(objDicitonary);
-                await _unitOfWork.SaveChangesAsync();
+                throw ex;
             }
-            //await _unitOfWork.SaveChangesAsync();
-            if (objDicitonary.Id == 0)
-                return DBOperation.Error;
 
-            return DBOperation.Success;
+
         }
 
 
@@ -183,7 +192,7 @@ namespace Eltizam.Business.Core.Implementation
                 // If the entity exists, update its properties.
                 if (objmasterDictionary != null)
                 {
-                    objmasterDictionary.Description = entity.Description; 
+                    objmasterDictionary.Description = entity.Description;
                     objmasterDictionary.IsActive = Convert.ToInt32(entity.IsActive);
                     objmasterDictionary.ModifiedBy = entity.LogInUserId;
 
