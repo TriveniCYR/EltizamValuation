@@ -1,6 +1,5 @@
 ﻿using Eltizam.Business.Core.Implementation;
 using Eltizam.Business.Core.Interface;
-using Eltizam.Business.Core.ServiceImplementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
