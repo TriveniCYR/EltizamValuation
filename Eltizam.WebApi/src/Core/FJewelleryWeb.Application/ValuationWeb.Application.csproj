@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Helper\**" />
+    <Compile Remove="Models\Cache\**" />
+    <Compile Remove="Models\Login\**" />
+    <EmbeddedResource Remove="Helper\**" />
+    <EmbeddedResource Remove="Models\Cache\**" />
+    <EmbeddedResource Remove="Models\Login\**" />
+    <None Remove="Helper\**" />
+    <None Remove="Models\Cache\**" />
+    <None Remove="Models\Login\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Features\Users\Queries\GetUserListWithPagination\GetUserListWithPaginationVm.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Models\Login\AuthenticateUserResponse.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="FluentValidation" Version="10.3.6" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.6" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="6.0.1" />
+    <!--<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.8" />-->
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Text.Json" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Responses\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--<ProjectReference Include="..\FJewelleryWeb.Domain\ValuationWeb.Domain.csproj" />-->
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\Core\FJewelleryWeb.Application\obj\Debug\net6.0\ValuationWeb.Application.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\Core\FJewelleryWeb.Application\obj\Debug\net6.0\ValuationWeb.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\Core\FJewelleryWeb.Application\obj\Debug\net6.0\ValuationWeb.Application.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\Core\FJewelleryWeb.Application\obj\Debug\net6.0\ValuationWeb.Application.AssemblyInfo.cs
+C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\Core\FJewelleryWeb.Application\obj\Debug\net6.0\ValuationWeb.Application.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\Core\FJewelleryWeb.Application\obj\Debug\net6.0\ValuationWeb.Application.sourcelink.json
