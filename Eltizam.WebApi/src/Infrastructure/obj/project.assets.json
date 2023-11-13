@@ -77,31 +77,6 @@
           }
         }
       },
-      "Dapper/2.0.78": {
-        "type": "package",
-        "compile": {
-          "lib/net5.0/Dapper.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net5.0/Dapper.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-      "Dapper.SqlBuilder/2.0.78": {
-        "type": "package",
-        "dependencies": {
-          "Dapper": "2.0.78"
-        },
-        "compile": {
-          "lib/net5.0/Dapper.SqlBuilder.dll": {}
-        },
-        "runtime": {
-          "lib/net5.0/Dapper.SqlBuilder.dll": {}
-        }
-      },
       "FluentValidation/10.3.6": {
         "type": "package",
         "compile": {
@@ -3570,23 +3545,6 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "Eltizam.Business.Core/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "AutoMapper": "9.0.0",
-          "Dapper.SqlBuilder": "2.0.78",
-          "Eltizam.Business.Models": "1.0.0",
-          "Eltizam.Data.DataAccess": "1.0.0",
-          "SqlTableDependency": "8.5.8"
-        },
-        "compile": {
-          "bin/placeholder/Eltizam.Business.Core.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Eltizam.Business.Core.dll": {}
-        }
-      },
       "Eltizam.Business.Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -3655,8 +3613,9 @@
         "dependencies": {
           "AutoMapper": "10.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.1",
-          "Eltizam.Business.Core": "1.0.0",
           "Eltizam.Business.Models": "1.0.0",
+          "Eltizam.Data.DataAccess": "1.0.0",
+          "Eltizam.Utility": "1.0.0",
           "FluentValidation": "10.3.6",
           "FluentValidation.DependencyInjectionExtensions": "10.3.6",
           "MediatR.Extensions.Microsoft.DependencyInjection": "9.0.0",
@@ -3757,37 +3716,6 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
-      ]
-    },
-    "Dapper/2.0.78": {
-      "sha512": "vLPwL2HZXp/DN17Eu7sg6GMEj02alq7jcy6atn5Gv8i96b9Hu1UoxlCrhInUPfSFLQQiD8O7pdWAE1fdUEO/1Q==",
-      "type": "package",
-      "path": "dapper/2.0.78",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "dapper.2.0.78.nupkg.sha512",
-        "dapper.nuspec",
-        "lib/net461/Dapper.dll",
-        "lib/net461/Dapper.xml",
-        "lib/net5.0/Dapper.dll",
-        "lib/net5.0/Dapper.xml",
-        "lib/netstandard2.0/Dapper.dll",
-        "lib/netstandard2.0/Dapper.xml"
-      ]
-    },
-    "Dapper.SqlBuilder/2.0.78": {
-      "sha512": "07LHm+/YOLyFieN51mjwrrVPKX3q0k7RxG+8zi/5MKjy7mWid/DRlRFNgvcCffEcjLjkbgEdITHkKTKSxSmPnw==",
-      "type": "package",
-      "path": "dapper.sqlbuilder/2.0.78",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "dapper.sqlbuilder.2.0.78.nupkg.sha512",
-        "dapper.sqlbuilder.nuspec",
-        "lib/net461/Dapper.SqlBuilder.dll",
-        "lib/net5.0/Dapper.SqlBuilder.dll",
-        "lib/netstandard2.0/Dapper.SqlBuilder.dll"
       ]
     },
     "FluentValidation/10.3.6": {
@@ -9906,40 +9834,35 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
-    "Eltizam.Business.Core/1.0.0": {
-      "type": "project",
-      "path": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Business.Core/Eltizam.Business.Core.csproj",
-      "msbuildProject": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Business.Core/Eltizam.Business.Core.csproj"
-    },
     "Eltizam.Business.Models/1.0.0": {
       "type": "project",
-      "path": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Business.Models/Eltizam.Business.Models.csproj",
-      "msbuildProject": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Business.Models/Eltizam.Business.Models.csproj"
+      "path": "../../../Eltizam.Business.Models/Eltizam.Business.Models.csproj",
+      "msbuildProject": "../../../Eltizam.Business.Models/Eltizam.Business.Models.csproj"
     },
     "Eltizam.Data.DataAccess/1.0.0": {
       "type": "project",
-      "path": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Data.DataAccess/Eltizam.Data.DataAccess.csproj",
-      "msbuildProject": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Data.DataAccess/Eltizam.Data.DataAccess.csproj"
+      "path": "../../../Eltizam.Data.DataAccess/Eltizam.Data.DataAccess.csproj",
+      "msbuildProject": "../../../Eltizam.Data.DataAccess/Eltizam.Data.DataAccess.csproj"
     },
     "Eltizam.Resource/1.0.0": {
       "type": "project",
-      "path": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Resource/Eltizam.Resource.csproj",
-      "msbuildProject": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Resource/Eltizam.Resource.csproj"
+      "path": "../../../Eltizam.Resource/Eltizam.Resource.csproj",
+      "msbuildProject": "../../../Eltizam.Resource/Eltizam.Resource.csproj"
     },
     "Eltizam.Utility/1.0.0": {
       "type": "project",
-      "path": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Utility/Eltizam.Utility.csproj",
-      "msbuildProject": "../../YallaReddyNeo/Eltizam.Valuation/Eltizam.Utility/Eltizam.Utility.csproj"
+      "path": "../../../Eltizam.Utility/Eltizam.Utility.csproj",
+      "msbuildProject": "../../../Eltizam.Utility/Eltizam.Utility.csproj"
     },
     "ValuationWeb.Application/1.0.0": {
       "type": "project",
-      "path": "../src/Core/FJewelleryWeb.Application/ValuationWeb.Application.csproj",
-      "msbuildProject": "../src/Core/FJewelleryWeb.Application/ValuationWeb.Application.csproj"
+      "path": "../Core/ValuationWeb.Application/ValuationWeb.Application.csproj",
+      "msbuildProject": "../Core/ValuationWeb.Application/ValuationWeb.Application.csproj"
     },
     "ValuationWeb.Domain/1.0.0": {
       "type": "project",
-      "path": "../src/Core/FJewelleryWeb.Domain/ValuationWeb.Domain.csproj",
-      "msbuildProject": "../src/Core/FJewelleryWeb.Domain/ValuationWeb.Domain.csproj"
+      "path": "../Core/ValuationWeb.Domain/ValuationWeb.Domain.csproj",
+      "msbuildProject": "../Core/ValuationWeb.Domain/ValuationWeb.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -9959,11 +9882,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\source\\repos\\API\\FJewellery\\ValuationWeb.Persistence.csproj",
+      "projectUniqueName": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Infrastructure\\ValuationWeb.Persistence.csproj",
       "projectName": "ValuationWeb.Persistence",
-      "projectPath": "C:\\Users\\user\\source\\repos\\API\\FJewellery\\ValuationWeb.Persistence.csproj",
+      "projectPath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Infrastructure\\ValuationWeb.Persistence.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\source\\repos\\API\\FJewellery\\obj\\",
+      "outputPath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9979,11 +9902,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\user\\source\\repos\\API\\src\\Core\\FJewelleryWeb.Application\\ValuationWeb.Application.csproj": {
-              "projectPath": "C:\\Users\\user\\source\\repos\\API\\src\\Core\\FJewelleryWeb.Application\\ValuationWeb.Application.csproj"
+            "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Core\\ValuationWeb.Application\\ValuationWeb.Application.csproj": {
+              "projectPath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Core\\ValuationWeb.Application\\ValuationWeb.Application.csproj"
             },
-            "C:\\Users\\user\\source\\repos\\API\\src\\Core\\FJewelleryWeb.Domain\\ValuationWeb.Domain.csproj": {
-              "projectPath": "C:\\Users\\user\\source\\repos\\API\\src\\Core\\FJewelleryWeb.Domain\\ValuationWeb.Domain.csproj"
+            "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Core\\ValuationWeb.Domain\\ValuationWeb.Domain.csproj": {
+              "projectPath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Core\\ValuationWeb.Domain\\ValuationWeb.Domain.csproj"
             }
           }
         }

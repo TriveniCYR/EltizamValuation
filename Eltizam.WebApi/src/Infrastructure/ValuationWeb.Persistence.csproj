@@ -4,7 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-  </PropertyGroup> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Repositories\UserRepository.cs" />
+  </ItemGroup> 
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.8" />
@@ -15,13 +19,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-  </ItemGroup>
-
- 
+  </ItemGroup> 
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Core\FJewelleryWeb.Application\ValuationWeb.Application.csproj" />
-    <ProjectReference Include="..\src\Core\FJewelleryWeb.Domain\ValuationWeb.Domain.csproj" />
+    <ProjectReference Include="..\Core\ValuationWeb.Application\ValuationWeb.Application.csproj" />
+    <ProjectReference Include="..\Core\ValuationWeb.Domain\ValuationWeb.Domain.csproj" />
   </ItemGroup>
 
 </Project>

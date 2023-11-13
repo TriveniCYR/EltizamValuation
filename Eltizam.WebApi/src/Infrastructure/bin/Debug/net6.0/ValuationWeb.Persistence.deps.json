@@ -79,25 +79,6 @@
           }
         }
       },
-      "Dapper/2.0.78": {
-        "runtime": {
-          "lib/net5.0/Dapper.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.78.45418"
-          }
-        }
-      },
-      "Dapper.SqlBuilder/2.0.78": {
-        "dependencies": {
-          "Dapper": "2.0.78"
-        },
-        "runtime": {
-          "lib/net5.0/Dapper.SqlBuilder.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.78.45418"
-          }
-        }
-      },
       "FluentValidation/10.3.6": {
         "runtime": {
           "lib/net6.0/FluentValidation.dll": {
@@ -1882,18 +1863,6 @@
           "System.Xml.XPath": "4.3.0"
         }
       },
-      "Eltizam.Business.Core/1.0.0": {
-        "dependencies": {
-          "AutoMapper": "10.1.1",
-          "Dapper.SqlBuilder": "2.0.78",
-          "Eltizam.Business.Models": "1.0.0",
-          "Eltizam.Data.DataAccess": "1.0.0",
-          "SqlTableDependency": "8.5.8"
-        },
-        "runtime": {
-          "Eltizam.Business.Core.dll": {}
-        }
-      },
       "Eltizam.Business.Models/1.0.0": {
         "dependencies": {
           "AutoMapper": "10.1.1",
@@ -1940,8 +1909,9 @@
         "dependencies": {
           "AutoMapper": "10.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.1",
-          "Eltizam.Business.Core": "1.0.0",
           "Eltizam.Business.Models": "1.0.0",
+          "Eltizam.Data.DataAccess": "1.0.0",
+          "Eltizam.Utility": "1.0.0",
           "FluentValidation": "10.3.6",
           "FluentValidation.DependencyInjectionExtensions": "10.3.6",
           "MediatR.Extensions.Microsoft.DependencyInjection": "9.0.0",
@@ -2001,20 +1971,6 @@
       "sha512": "sha512-EycyMsb6rD2PK9P0SyibFfEhvWWttdrYhyPF4f41uzdB/44yQlV+2Wehxyg489Rj6gbPvSPgbKq0xsHJBhipZA==",
       "path": "azure.identity/1.6.0",
       "hashPath": "azure.identity.1.6.0.nupkg.sha512"
-    },
-    "Dapper/2.0.78": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-vLPwL2HZXp/DN17Eu7sg6GMEj02alq7jcy6atn5Gv8i96b9Hu1UoxlCrhInUPfSFLQQiD8O7pdWAE1fdUEO/1Q==",
-      "path": "dapper/2.0.78",
-      "hashPath": "dapper.2.0.78.nupkg.sha512"
-    },
-    "Dapper.SqlBuilder/2.0.78": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-07LHm+/YOLyFieN51mjwrrVPKX3q0k7RxG+8zi/5MKjy7mWid/DRlRFNgvcCffEcjLjkbgEdITHkKTKSxSmPnw==",
-      "path": "dapper.sqlbuilder/2.0.78",
-      "hashPath": "dapper.sqlbuilder.2.0.78.nupkg.sha512"
     },
     "FluentValidation/10.3.6": {
       "type": "package",
@@ -3429,11 +3385,6 @@
       "sha512": "sha512-jw9oHHEIVW53mHY9PgrQa98Xo2IZ0ZjrpdOTmtvk+Rvg4tq7dydmxdNqUvJ5YwjDqhn75mBXWttWjiKhWP53LQ==",
       "path": "system.xml.xpath.xdocument/4.3.0",
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
-    },
-    "Eltizam.Business.Core/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "Eltizam.Business.Models/1.0.0": {
       "type": "project",

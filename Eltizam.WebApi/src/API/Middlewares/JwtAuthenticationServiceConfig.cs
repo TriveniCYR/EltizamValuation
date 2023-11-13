@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿ 
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -35,17 +35,17 @@ namespace Eltizam.WebApi.Middlewares
                 IssuerSigningKey = signingKey
             };
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(configureOptions =>
-            {
-                configureOptions.RequireHttpsMetadata = false;
-                configureOptions.SaveToken = true;
-                //configureOptions.ClaimsIssuer = configuration["jwt:issuer"].ToString();
-                configureOptions.TokenValidationParameters = tokenValidationParams;
-            });
+            //services.AddAuthentication(options =>
+            //{
+            //    //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    //options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(configureOptions =>
+            //{
+            //    configureOptions.RequireHttpsMetadata = false;
+            //    configureOptions.SaveToken = true;
+            //    //configureOptions.ClaimsIssuer = configuration["jwt:issuer"].ToString();
+            //    configureOptions.TokenValidationParameters = tokenValidationParams;
+            //});
         }
 
         public static UserSessionEntity ValidateToken(UserSessionEntity userEntity,

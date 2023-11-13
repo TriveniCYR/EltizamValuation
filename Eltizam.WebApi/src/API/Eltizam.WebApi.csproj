@@ -13,6 +13,10 @@
     <None Remove="Services\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\UserController.cs" />
+  </ItemGroup>
+
 
 
 	<ItemGroup>
@@ -51,13 +55,16 @@
 	</ItemGroup>
 
 
+
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\API\src\Infrastructure\FJewelleryWeb.Identity\ValuationWeb.Identity.csproj" />
-		<ProjectReference Include="..\..\..\API\src\Infrastructure\FJewelleryWeb.Infrastructure\ValuationWeb.Infrastructure.csproj" />
-		<ProjectReference Include="..\Eltizam.Business.Core\Eltizam.Business.Core.csproj" />
-		<ProjectReference Include="..\Eltizam.Business.Models\Eltizam.Business.Models.csproj" />
-		<ProjectReference Include="..\Eltizam.Resource\Eltizam.Resource.csproj" />
-		<ProjectReference Include="..\Eltizam.Utility\Eltizam.Utility.csproj" />
+	  <ProjectReference Include="..\..\..\Eltizam.Business.Core\Eltizam.Business.Core.csproj" />
+	  <ProjectReference Include="..\..\..\Eltizam.Business.Models\Eltizam.Business.Models.csproj" />
+	  <ProjectReference Include="..\..\..\Eltizam.Data.DataAccess\Eltizam.Data.DataAccess.csproj" />
+	  <ProjectReference Include="..\..\..\Eltizam.Resource\Eltizam.Resource.csproj" />
+	  <ProjectReference Include="..\..\..\Eltizam.Utility\Eltizam.Utility.csproj" />
+	  <ProjectReference Include="..\Core\ValuationWeb.Application\ValuationWeb.Application.csproj" />
+	  <ProjectReference Include="..\Core\ValuationWeb.Domain\ValuationWeb.Domain.csproj" />
+	  <ProjectReference Include="..\Infrastructure\ValuationWeb.Persistence.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup>

@@ -13,14 +13,12 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using ValuationWeb.Api.Extensions;
 using ValuationWeb.Application;
-using ValuationWeb.Application.Profiles;
-using ValuationWeb.Identity.Models;
+using ValuationWeb.Domain.ViewModel;
 using ValuationWeb.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);

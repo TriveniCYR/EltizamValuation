@@ -1,12 +1,6 @@
 ﻿using Eltizam.WebApi.Filters;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using ValuationWeb.Application.Features.Users.Commands.CreateUser;
-using ValuationWeb.Application.Features.Users.Commands.DeleteUserById;
-using ValuationWeb.Application.Features.Users.Commands.UpdateUser;
-using ValuationWeb.Application.Features.Users.Queries.GetEncryptDecryptPassword;
-using ValuationWeb.Application.Features.Users.Queries.GetUserDetail;
-using ValuationWeb.Application.Features.Users.Queries.GetUserListWithPagination;
+using Microsoft.AspNetCore.Mvc; 
 
 namespace Eltizam.WebApi.Controllers
 {

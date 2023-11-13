@@ -27,7 +27,7 @@ namespace ValuationWeb.Persistence
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IBranchRepository, BranchRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMasterCityRepository, MasterCityRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>(); 
 
