@@ -4,6 +4,10 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    string url = @Configuration.GetSection("Apiconfig")["baseurl"];
+    string ext = string.Format("api/v{0}", @Configuration.GetSection("Apiconfig")["version"]);
+
+    string finalURL = url + ext;
 }
 
 <!DOCTYPE html>
@@ -76,7 +80,7 @@
             @Html.Partial("_BottomHeader")
         </div>
 
-        <input type="hidden" id="hdnAPIURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
+        <input type="hidden" id="hdnAPIURL" value="@finalURL" />
         <input type="hidden" id="hdnWebBaseURL" />
         <input type="hidden" id="successToaster" value="@TempData[Eltizam.Web.Helpers.UserHelper.SuccessMessage]" />
         <input type="hidden" id="errorToaster" value="@TempData[Eltizam.Web.Helpers.UserHelper.ErrorMessage]" />
