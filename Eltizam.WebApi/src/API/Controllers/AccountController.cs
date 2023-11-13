@@ -81,28 +81,28 @@ namespace Eltizam.WebApi.Controllers
 			}
 		}
 
-        [AllowAnonymous]
-        [HttpPost, Route("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel forgotPasswordViewModel)
-        {
-            try
-            {
-                var _forgotPasswordOperation = await _MasterUserService.ForgotPassword(forgotPasswordViewModel);
+        //[AllowAnonymous]
+        //[HttpPost, Route("ForgotPassword")]
+        //public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel forgotPasswordViewModel)
+        //{
+        //    try
+        //    {
+        //        var _forgotPasswordOperation = await _MasterUserService.ForgotPassword(forgotPasswordViewModel);
 
-                if (_forgotPasswordOperation == DBOperation.Success)
-                    return _ObjectResponse.Create(_forgotPasswordOperation, (Int32)HttpStatusCode.OK);
-                else if (_forgotPasswordOperation == DBOperation.NotFound)
-                {
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
-                }
-                return _ObjectResponse.Create(null, (Int32)HttpStatusCode.InternalServerError, "Internal Server Error");
-            }
-            catch (Exception ex)
-            {
-                await _ExceptionService.LogException(ex);
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-            }
-        }
+        //        if (_forgotPasswordOperation == DBOperation.Success)
+        //            return _ObjectResponse.Create(_forgotPasswordOperation, (Int32)HttpStatusCode.OK);
+        //        else if (_forgotPasswordOperation == DBOperation.NotFound)
+        //        {
+        //            return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+        //        }
+        //        return _ObjectResponse.Create(null, (Int32)HttpStatusCode.InternalServerError, "Internal Server Error");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await _ExceptionService.LogException(ex);
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
 
         [AllowAnonymous]
         [HttpPost, Route("ResetPassword")]
