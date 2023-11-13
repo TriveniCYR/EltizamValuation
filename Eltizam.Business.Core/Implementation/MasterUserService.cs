@@ -17,7 +17,7 @@ using System.Data;
 using System.Data.SqlClient;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
-namespace Eltizam.Business.Core.ServiceImplementations
+namespace Eltizam.Business.Core.Implementation
 {
     public class MasterUserService : IMasterUserService
     {
@@ -167,9 +167,9 @@ namespace Eltizam.Business.Core.ServiceImplementations
         }
 
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
-        { 
-            string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
-            string SortDir = model.order[0]?.dir; 
+        {
+            string ColumnName = "Id"; //model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
+            string SortDir = "ASC"; //model.order[0]?.dir; 
             SqlParameter[] osqlParameter =
             {
                 new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
