@@ -104,9 +104,9 @@ namespace Eltizam.Business.Core.Implementation
             var d1 = await _repository.GetAsync(id);
 
             var d = _repository.Get(id);
-            //var dd = _mapper.Map<MasterCityEntity>(d);
+            var dd = _mapper.Map<MasterCityEntity>(d);
 
-            //var _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(d); 
+            var _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(d); 
             return d;
         }
 
