@@ -95,6 +95,17 @@ namespace Eltizam.Business.Core.Implementation
             return _CityEntity;
         }
 
+        public async Task<MasterCity?> GetById1(int id)
+        {
+            // var _CityEntity = new MasterCityEntity();
+            // var d = await _repository.GetAsync(id);
+
+            var d = _repository.Get(id);
+
+            //var _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(d); 
+            return d;
+        }
+
         public async Task<DBOperation> Upsert(MasterCityEntity entityCity)
         { 
             try

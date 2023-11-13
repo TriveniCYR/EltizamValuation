@@ -1,4 +1,5 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Eltizam.Business.Core.Interface
 
         Task<DBOperation> Upsert(MasterCityEntity entityUser);
         Task<MasterCityEntity> GetById(int id);
+        Task<MasterCity?> GetById1(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> Delete(int id);
         Task<List<MasterCityEntity>> GetCityList();

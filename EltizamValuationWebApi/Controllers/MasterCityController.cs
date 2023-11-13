@@ -100,9 +100,10 @@ namespace Eltizam.WebApi.Controllers
         {
             try
             {
-               // var val = await _cityServices.GetById(id);
-               // return _ObjectResponse.Create(val, (Int32)HttpStatusCode.OK);
+                var val = await _cityServices.GetById1(id);
+                // return _ObjectResponse.Create(val, (Int32)HttpStatusCode.OK);
 
+                var md = _mapper.Map<MasterCityEntity>(val);
 
                 var cmd = new MasterCityGetByIdCommand()
                 {

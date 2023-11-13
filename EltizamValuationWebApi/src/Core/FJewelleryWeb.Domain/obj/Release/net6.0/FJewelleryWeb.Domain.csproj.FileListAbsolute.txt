@@ -1,0 +1,12 @@
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\bin\Release\net6.0\FJewelleryWeb.Domain.deps.json
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\bin\Release\net6.0\FJewelleryWeb.Domain.dll
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\bin\Release\net6.0\FJewelleryWeb.Domain.pdb
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\obj\Release\net6.0\FJewelleryWeb.Domain.csproj.AssemblyReference.cache
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\obj\Release\net6.0\FJewelleryWeb.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\obj\Release\net6.0\FJewelleryWeb.Domain.AssemblyInfoInputs.cache
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\obj\Release\net6.0\FJewelleryWeb.Domain.AssemblyInfo.cs
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\obj\Release\net6.0\FJewelleryWeb.Domain.csproj.CoreCompileInputs.cache
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\obj\Release\net6.0\FJewelleryWeb.Domain.dll
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\obj\Release\net6.0\refint\FJewelleryWeb.Domain.dll
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\obj\Release\net6.0\FJewelleryWeb.Domain.pdb
+D:\YallaReddy\WebProjects\FJewelleryWebTFS\FJewelleryAPI\src\Core\FJewelleryWeb.Domain\obj\Release\net6.0\ref\FJewelleryWeb.Domain.dll
