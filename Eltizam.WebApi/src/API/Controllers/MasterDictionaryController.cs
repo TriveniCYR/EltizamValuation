@@ -3,7 +3,6 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using Eltizam.WebApi.Filters;
 using Eltizam.WebApi.Helpers.Response;
 using System.Net;
@@ -21,18 +20,16 @@ namespace Eltizam.WebApi.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         private readonly IMasterDictionaryService _DictionaryService;
 
         #endregion Properties
         #region Constructor
-        public MasterDictionaryController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IMasterDictionaryService DictionaryService)
+        public MasterDictionaryController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, IMasterDictionaryService DictionaryService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
-            _stringLocalizerError = stringLocalizerError;
             _ExceptionService = exceptionService;
             _DictionaryService = DictionaryService;
         }
@@ -84,7 +81,7 @@ namespace Eltizam.WebApi.Controllers
         public async Task<IActionResult> GetDictionaryWithSubDetails(int? id = null, string? description = null, string? code = null)
         {
             try
-            { 
+            {
                 var masterDictionary = await _DictionaryService.GetDictionaryWithSubDetailsAsync(id, description, code);
 
                 if (masterDictionary != null)
