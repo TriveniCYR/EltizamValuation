@@ -1,6 +1,5 @@
 ﻿using Eltizam.Business.Core.Implementation;
 using Eltizam.Business.Core.Interface;
-using Eltizam.Business.Core.ServiceImplementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
@@ -29,11 +28,15 @@ namespace ValuationWeb.Persistence
                     break;
             }
 
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+			services.AddScoped<IMasterLocationService, MasterLocationService>();
+			services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IBranchRepository, BranchRepository>();
             //services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMasterCityRepository, MasterCityRepository>();
             services.AddScoped<IMasterCityService, MasterCityService>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddTransient<IMasterUserService, MasterUserService>();
+            services.AddTransient<IMasterDictionaryService, MasterDictionaryService>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddTransient<IMasterUserService, MasterUserService>();
             services.AddTransient<IMasterRoleService, MasterRoleService>();

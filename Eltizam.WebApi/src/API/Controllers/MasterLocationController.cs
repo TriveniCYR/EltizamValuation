@@ -21,7 +21,7 @@ namespace Eltizam.WebApi.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
+       // private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         private readonly IMasterLocationService _LocationService;
@@ -29,11 +29,11 @@ namespace Eltizam.WebApi.Controllers
         #endregion Properties
 
         #region Constructor
-        public MasterLocationController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IMasterLocationService LocationService)
+        public MasterLocationController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, IMasterLocationService LocationService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
-            _stringLocalizerError = stringLocalizerError;
+         //   _stringLocalizerError = stringLocalizerError;
             _ExceptionService = exceptionService;
             _LocationService = LocationService;
         }
