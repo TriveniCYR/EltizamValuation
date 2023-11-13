@@ -100,7 +100,7 @@ namespace Eltizam.Business.Core.Implementation
                             var valuationEntity = _repository.Get(id);
                             valuationEntity.ApproverId = model.ApprovorId;
                             valuationEntity.AssignRemark = model.Remarks;
-                            valuationEntity.ModifiedBy = _LoginUserId; 
+                            valuationEntity.ModifiedBy = _LoginUserId;
 
                             _repository.UpdateAsync(valuationEntity);
                             _repository.UpdateGraph(valuationEntity, EntityState.Modified);
@@ -110,7 +110,7 @@ namespace Eltizam.Business.Core.Implementation
                         }
 
                         await _unitOfWork.SaveChangesAsync();
-                    } 
+                    }
                     return DBOperation.Success;
                 }
             }
@@ -136,14 +136,14 @@ namespace Eltizam.Business.Core.Implementation
                     valuationEntity.ApproverId = model.ApprovorId;
                     valuationEntity.ApproverComment = model.ApprovorComment;
                     valuationEntity.StatusId = model.StatusId;
-                    valuationEntity.ModifiedBy = _LoginUserId; 
+                    valuationEntity.ModifiedBy = _LoginUserId;
                     _repository.UpdateAsync(valuationEntity);
                     _repository.UpdateGraph(OldEntity, EntityState.Modified);
 
                     //Do Audit Log --AUDITLOG 
                     await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);
 
-                    await _unitOfWork.SaveChangesAsync(); 
+                    await _unitOfWork.SaveChangesAsync();
                 }
                 else
                 {
@@ -172,55 +172,63 @@ namespace Eltizam.Business.Core.Implementation
             var By = _helper.GetLoggedInUser().UserId;
             string MainTableName = Enum.GetName(TableNameEnum.ValuationRequest);
             int MainTableKey = entityValuation.Id;
-
-            if (entityValuation.Id > 0)
+            try
             {
-                ValuationRequest OldEntity = null;
-                OldEntity = _repository.GetNoTracking(entityValuation.Id);
-
-                objValuation = _repository.Get(entityValuation.Id);
-
-                if (objValuation != null)
+                if (entityValuation.Id > 0)
                 {
-                    objValuation.ReferenceNo = entityValuation.ReferenceNo ?? "";
-                    objValuation.OtherReferenceNo = entityValuation.OtherReferenceNo;
-                    objValuation.StatusId = entityValuation.StatusId;
-                    objValuation.ValuationTimeFrame = entityValuation.ValuationTimeFrame;
-                    objValuation.ApproverId = entityValuation.ApproverId;
-                    objValuation.ValuerId = entityValuation.ValuerId;
-                    objValuation.ValuationDate = entityValuation.ValuationDate;
-                    objValuation.ValuationModeId = entityValuation.ValuationModeId;
-                    objValuation.PropertyId = entityValuation.PropertyId;
-                    objValuation.ClientId = entityValuation.ClientId;
+                    ValuationRequest OldEntity = null;
+                    OldEntity = _repository.GetNoTracking(entityValuation.Id);
 
-                    _repository.UpdateAsync(objValuation);
-                    _repository.UpdateGraph(objValuation, EntityState.Modified);
+                    objValuation = _repository.Get(entityValuation.Id);
 
-                    await _unitOfWork.SaveChangesAsync();
+                    if (objValuation != null)
+                    {
+                        objValuation.ReferenceNo = entityValuation.ReferenceNo ?? "";
+                        objValuation.OtherReferenceNo = entityValuation.OtherReferenceNo;
+                        objValuation.StatusId = entityValuation.StatusId;
+                        objValuation.ValuationTimeFrame = entityValuation.ValuationTimeFrame;
+                        objValuation.ApproverId = entityValuation.ApproverId;
+                        objValuation.ValuerId = entityValuation.ValuerId;
+                        objValuation.ValuationDate = entityValuation.ValuationDate;
+                        objValuation.ValuationModeId = entityValuation.ValuationModeId;
+                        objValuation.PropertyId = entityValuation.PropertyId;
+                        objValuation.ClientId = entityValuation.ClientId;
 
-                    //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey);
+                        _repository.UpdateAsync(objValuation);
+                        _repository.UpdateGraph(objValuation, EntityState.Modified);
+
+                        await _unitOfWork.SaveChangesAsync();
+
+                        //Do Audit Log --AUDITLOGUSER
+                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey);
+                    }
+                    else
+                    {
+                        return DBOperation.NotFound;
+                    }
                 }
                 else
                 {
-                    return DBOperation.NotFound;
+                    var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
+
+                    objValuation = _mapperFactory.Get<ValuationRequestModel, ValuationRequest>(entityValuation);
+                    objValuation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_ValuationRequest, lastReq?.Id);
+
+                    _repository.AddAsync(objValuation);
+                    await _unitOfWork.SaveChangesAsync();
                 }
+
+                if (objValuation.Id == 0)
+                    return DBOperation.Error;
+
+                return DBOperation.Success;
             }
-            else
+            catch (Exception ex)
             {
-                var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
 
-                objValuation = _mapperFactory.Get<ValuationRequestModel, ValuationRequest>(entityValuation);
-                objValuation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_ValuationRequest, lastReq?.Id);
-
-                _repository.AddAsync(objValuation);
-                await _unitOfWork.SaveChangesAsync();
+                throw ex;
             }
 
-            if (objValuation.Id == 0)
-                return DBOperation.Error;
-
-            return DBOperation.Success;
         }
 
 
@@ -280,15 +288,15 @@ namespace Eltizam.Business.Core.Implementation
                 if (model.Id > 0)
                 {
                     var valuationEntity = _repository.Get(model.Id);
-                    
+
                     valuationEntity.StatusId = model.StatusId;
                     valuationEntity.ModifiedBy = _LoginUserId;
                     valuationEntity.ModifiedDate = AppConstants.DateTime;
-                    valuationEntity.ApproverComment= model.ApproverComment;
+                    valuationEntity.ApproverComment = model.ApproverComment;
                     _repository.UpdateAsync(valuationEntity);
                     _repository.UpdateGraph(valuationEntity, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
-                    
+
                 }
                 else
                 {
