@@ -28,7 +28,6 @@ namespace Eltizam.Business.Core.Implementation
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<MasterVendor> _repository { get; set; }
         private IRepository<MasterContact> _repositoryContact { get; set; }
@@ -39,7 +38,7 @@ namespace Eltizam.Business.Core.Implementation
         #endregion Properties
 
         #region Constructor
-        public MasterVendorService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError, IAuditLogService auditLogService,
+        public MasterVendorService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IAuditLogService auditLogService,
           IHelper helper,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
