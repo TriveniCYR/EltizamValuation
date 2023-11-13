@@ -1,16 +1,16 @@
-﻿using Eltizam.Api.Filters;
-using Eltizam.Api.Helpers.Response;
-using Eltizam.Business.Core.Interface;
+﻿using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
-using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Microsoft.AspNetCore.Mvc;
+using Eltizam.WebApi.Filters;
+using Eltizam.WebApi.Helpers.Response;
 using System.Net;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
-namespace Eltizam.API.Controllers.Masters
+namespace Eltizam.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [AuthorizeAttribute]
     public class MasterRoleController : ControllerBase
@@ -54,7 +54,7 @@ namespace Eltizam.API.Controllers.Masters
         public async Task<IActionResult> InsertUpdateRole(MasterRoleEntity oRole)
         {
             try
-            { 
+            {
                 DBOperation oResponse = await _MasterRoleService.AddUpdateRole(oRole);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oRole.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));

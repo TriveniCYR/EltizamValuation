@@ -5,6 +5,14 @@
 /.vs
 /Eltizam.Api/obj/
 /Eltizam.Api/bin/
+/Eltizam.WebApi/obj/
+/Eltizam.WebApi/bin/
+/Eltizam.WebApi/src/API/bin/
+/Eltizam.WebApi/src/API/obj/
+/Eltizam.WebApi/src/ValuationWeb.Application/bin/
+/Eltizam.WebApi/src/ValuationWeb.Application/obj/
+/Eltizam.WebApi/src/ValuationWeb.Domain/bin/
+/Eltizam.WebApi/src/ValuationWeb.Domain/obj/
 /EltizamValuationWebApi/obj/
 /EltizamValuationWebApi/bin/
 /Eltizam.WebApi/obj/

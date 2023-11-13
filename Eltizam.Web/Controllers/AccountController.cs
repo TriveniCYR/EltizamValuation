@@ -38,7 +38,7 @@ namespace Eltizam.Web.Controllers
             var dd = new LoginViewModel();
 
             /* 
-                HttpResponseMessage responseMessage = objapi.APICommunication("api/v1/MasterCity/GetDate", HttpMethod.Get, string.Empty).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication("MasterCity/GetDate", HttpMethod.Get, string.Empty).Result;
                 string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
 
            
@@ -51,7 +51,7 @@ namespace Eltizam.Web.Controllers
                     IsActive = 1
                 };
                 var rer = new StringContent(JsonConvert.SerializeObject(d));
-                HttpResponseMessage responseMessage1 = objapi.APICommunication("api/v1/MasterCity/Upsert", HttpMethod.Post, string.Empty, rer).Result;
+                HttpResponseMessage responseMessage1 = objapi.APICommunication("/MasterCity/Upsert", HttpMethod.Post, string.Empty, rer).Result;
                 string jsonResponse1 = responseMessage1.Content.ReadAsStringAsync().Result;
 
             */

@@ -6,6 +6,7 @@ namespace Eltizam.Web.Helpers
     public class APIRepository
     {
         public static string baseURL;
+        public static string baseURL_v1;
         private IConfiguration Configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -13,6 +14,7 @@ namespace Eltizam.Web.Helpers
         {
             Configuration = configuration;
             baseURL = Configuration.GetSection("Apiconfig").GetSection("baseurl").Value;
+            baseURL_v1 = Configuration.GetSection("Apiconfig").GetSection("baseurlv1").Value;
             // _httpContextAccessor = httpContextAccessor;
         }
 
@@ -29,7 +31,9 @@ namespace Eltizam.Web.Helpers
                 // Pass the handler to httpclient(from you are calling api)
                 using (var client = new HttpClient(clientHandler))
                 {
-                    client.BaseAddress = new Uri(baseURL); //"https://eltizamapi.aspnetdevelopment.in/"
+                    client.BaseAddress = new Uri(baseURL);
+                   // client.BaseAddress = new Uri(baseURL_v1);
+
                     if (!string.IsNullOrEmpty(token))
                         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
