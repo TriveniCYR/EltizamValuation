@@ -11,8 +11,10 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-	[ApiController] 
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiController]
+    [AuthorizeAttribute]
     public class AccountController : ControllerBase
 	{
 		#region Properties

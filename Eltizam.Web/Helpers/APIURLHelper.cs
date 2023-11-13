@@ -6,11 +6,11 @@ namespace Eltizam.Web.Helpers
     {
         public static IConfiguration Configuration;
 
-        public static string LoginURL = "/Account/Login";
-        public static string ValidateToken = "/Account/ValidateToken";
-        public static string GetBusinessUnit = "/Account/GetAllBusinessUnit";
-        public static string GetRegion = "/Account/GetAllRegion";
-        public static string GetCurrency = "/Account/GetAllCurrency"; 
+        public static string LoginURL = "Account/Login";
+        public static string ValidateToken = "Account/ValidateToken";
+        public static string GetBusinessUnit = "Account/GetAllBusinessUnit";
+        public static string GetRegion = "Account/GetAllRegion";
+        public static string GetCurrency = "Account/GetAllCurrency"; 
         public static string ForgotPassword = "Account/ForgotPassword";
         public static string ResetPassword = "Account/ResetPassword";
         public static string Anonymous_CheckEmailAddressExists = "Account/CheckEmailAddressExists"; 
