@@ -51,3 +51,5 @@ obj/
 /Eltizam.WebApi/src/Infrastructure/obj/
 /Eltizam.WebApi/src/Infrastructure/bin/**
 /Eltizam.WebApi/src/Infrastructure/obj/** 
+**/bin/Debug/
+**/bin/Release/
