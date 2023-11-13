@@ -43,6 +43,12 @@ namespace ValuationWeb.Persistence
             services.AddTransient<IMasterRoleModulePermission, MasterRoleModulePermissionService>();
             services.AddTransient<IMemoryCache, MemoryCache>();
             services.AddTransient<IMasterModuleService, MasterModuleService>();
+            services.AddTransient<IValutionRequestService, ValutionRequestService>();
+            services.AddTransient<IMasterValuationFeesService, MasterValuationFeesService>();
+            services.AddTransient<IMasterValuationFeeTypeService, MasterValuationFeeTypeService>();
+            services.AddTransient<IMasterPropertyService, MasterPropertyService>();
+            services.AddTransient<IMasterPropertyTypeService, MasterPropertyTypeService>();
+            services.AddTransient<IMasterPropertySubTypeService, MasterPropertySubTypeService>();
             return services;
         }
     }

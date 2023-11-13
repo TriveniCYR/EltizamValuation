@@ -21,7 +21,7 @@ namespace Eltizam.WebApi.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
+        //private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         private readonly IMasterValuationFeeTypeService _ValuationFeeTypeService;
@@ -29,11 +29,11 @@ namespace Eltizam.WebApi.Controllers
         #endregion Properties
 
         #region Constructor
-        public MasterValuationFeeTypeController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IMasterValuationFeeTypeService ValuationFeeTypeService)
+        public MasterValuationFeeTypeController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, IMasterValuationFeeTypeService ValuationFeeTypeService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
-            _stringLocalizerError = stringLocalizerError;
+            //_stringLocalizerError = stringLocalizerError;
             _ExceptionService = exceptionService;
             _ValuationFeeTypeService = ValuationFeeTypeService;
         }

@@ -13,17 +13,17 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    internal class MasterValuationFeeTypeService : IMasterValuationFeeTypeService
+    public class MasterValuationFeeTypeService : IMasterValuationFeeTypeService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
+        //private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private readonly string _dbConnection;
 
         private IRepository<MasterValuationFeeType> _repository { get; set; }
         private readonly IHelper _helper;
-        public MasterValuationFeeTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterValuationFeeTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
                                              IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
