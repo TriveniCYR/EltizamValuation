@@ -17,7 +17,7 @@ using System.Data;
 using System.Data.SqlClient;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
-namespace Eltizam.Business.Core.ServiceImplementations
+namespace Eltizam.Business.Core.Implementation
 {
     public class MasterUserService : IMasterUserService
     {

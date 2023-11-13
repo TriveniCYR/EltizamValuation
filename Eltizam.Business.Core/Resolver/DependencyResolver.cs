@@ -6,7 +6,6 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Eltizam.Business.Core.ServiceImplementations;
 using Eltizam.Data.DataAccess.DataContext;
 
 namespace Eltizam.Business.Core.Resolver

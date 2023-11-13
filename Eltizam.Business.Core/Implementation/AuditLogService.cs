@@ -63,7 +63,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 //Get Last Modified
                 PropertyInfo pInfo = newEntity.GetType().GetProperty(AppConstants.ModifiedBy);
-                int logCreatedBy = Convert.ToInt32(pInfo.GetValue(newEntity, null)); // ?? _helper.GetLoggedInUser().UserId
+                int logCreatedBy = Convert.ToInt32(pInfo.GetValue(newEntity, null)); 
 
                 //Get table Name, Id
                 var TableName = typeof(TResult).Name;
@@ -82,16 +82,9 @@ namespace Eltizam.Business.Core.Implementation
                     ParentTableName = PTName?.Replace("_", ""),
                 };
 
-                if (entityAudit.Log != "[]")
-                {
-                    //objAuditLog = _mapperFactory.Get<AuditLogModel, MasterAuditLog>(entityAuditLog);
+                if (entityAudit.Log != "[]")  
+                    AddAuditLog(entityAudit);  
 
-                    _repository.AddAsync(entityAudit);
-                    await _unitOfWork.SaveChangesAsync();
-
-                    if (entityAudit.Id == 0)
-                        return false; // DBOperation.Error;
-                }
                 return true; // DBOperation.Success;
             }
             catch (Exception ex)
@@ -99,6 +92,22 @@ namespace Eltizam.Business.Core.Implementation
                 await _ExceptionService.LogException(ex);
                 return false; // DBOperation.Error;
             }
+        }
+
+        public void AddAuditLog(MasterAuditLog log)
+        {
+            DbParameter[] dbParameters =
+            {
+                 new DbParameter("TableKeyId",             log.TableKeyId, SqlDbType.Int),
+                 new DbParameter("TableName",              log.TableName, SqlDbType.VarChar),
+                 new DbParameter("ParentTableKeyId",       log.ParentTableKeyId, SqlDbType.Int),
+                 new DbParameter("ParentTableName",        log.ParentTableName, SqlDbType.VarChar),
+                 new DbParameter("Log",                    log.Log, SqlDbType.VarChar),
+                 new DbParameter("ActionType",             log.ActionType, SqlDbType.Int),
+                 new DbParameter("CreatedBy",              log.CreatedBy, SqlDbType.Int) 
+            };
+
+            EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_AuditLog_Add, _dbConnection, CommandType.StoredProcedure, dbParameters);
         }
 
         public virtual int GetPrimaryKey<T>(T entity)

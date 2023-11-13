@@ -1,5 +1,5 @@
 ﻿using Eltizam.Business.Core.Interface;
-using Eltizam.Business.Core.ServiceImplementations;
+using Eltizam.Business.Core.Implementation;
 using Eltizam.Utility;
 using Eltizam.WebApi.Filter;
 
