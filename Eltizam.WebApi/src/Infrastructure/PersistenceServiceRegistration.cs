@@ -29,7 +29,8 @@ namespace ValuationWeb.Persistence
                     break;
             }
 
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+			services.AddScoped<IMasterLocationService, MasterLocationService>();
+			services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IBranchRepository, BranchRepository>();
             //services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMasterCityRepository, MasterCityRepository>();
