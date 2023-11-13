@@ -17,7 +17,7 @@ namespace Eltizam.WebApi.Controllers
     [AuthorizeAttribute]
     [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class MasterCityController : ControllerBase
+    public class MasterCityTestController : ControllerBase
     {
         #region Properties
 
@@ -32,7 +32,7 @@ namespace Eltizam.WebApi.Controllers
 
         #region Constructor 
 
-        public MasterCityController(IMediator mediator, IResponseHandler<dynamic> ObjectResponse, IMapper mapper, IMasterCityService cityService, 
+        public MasterCityTestController(IMediator mediator, IResponseHandler<dynamic> ObjectResponse, IMapper mapper, IMasterCityService cityService, 
                                     IMasterCityRepository cityrepository)
         {
             _mediator = mediator;
