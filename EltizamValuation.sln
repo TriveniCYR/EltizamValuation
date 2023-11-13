@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{4A7162
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D6721C8A-1729-4D85-92B5-84FE22CE9A91}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eltizam.WebApi", "Eltizam.WebApi\src\API\Eltizam.WebApi.csproj", "{9C1BB29F-A64E-4CAC-BAF5-62143171984A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EltizamValuation.WebApi", "Eltizam.WebApi\src\API\EltizamValuation.WebApi.csproj", "{9C1BB29F-A64E-4CAC-BAF5-62143171984A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{E7E0DEF7-BDC3-499F-8AFD-68F149E9BFCE}"
 EndProject
