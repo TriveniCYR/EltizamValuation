@@ -130,13 +130,28 @@ namespace Eltizam.WebApi.Controllers
             var entity = new MasterCityEntity()
             {
                 CityName = model.CityName,
-                StateId = model.StateId,
+                StateId = 1,
                 IsActive = 1,
                 CountryId = model.CountryId,
             };
 
             var ent = _mapper.Map<MasterCity>(entity);
             var val = _cityServices.Upsert(entity);
+            return _ObjectResponse.Create(val, (Int32)HttpStatusCode.OK);
+
+            //var oCityEntity = await _mediator.Send(model);
+
+            //if (oCityEntity == Eltizam.Utility.Enums.GeneralEnum.DBOperation.Success)
+            //    return _ObjectResponse.Create(oCityEntity, (Int32)HttpStatusCode.OK);
+            //else
+            //    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+        }
+
+        // this is for delete master Designation detail by id
+        [HttpPost("Upsert1")]
+        public async Task<IActionResult> Upsert1(MasterCityEntity model)
+        {  
+            var val = _cityServices.Upsert(model);
             return _ObjectResponse.Create(val, (Int32)HttpStatusCode.OK);
 
             //var oCityEntity = await _mediator.Send(model);

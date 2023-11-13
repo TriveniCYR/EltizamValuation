@@ -6,13 +6,10 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Localization;
 using System.Data;
 using System.Data.SqlClient;
 using static Eltizam.Utility.Enums.GeneralEnum;
@@ -23,20 +20,19 @@ namespace Eltizam.Business.Core.Implementation
     {
         private readonly IUnitOfWork _unitOfWork; 
         private readonly IMapperFactory _mapperFactory;
-        private readonly IMapper _mapper;
+      //  private readonly IMapper _mapper;
         private readonly IAuditLogService _auditLogService;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private readonly string _dbConnection;
 
         private IRepository<MasterCity> _repository { get; set; }
         private readonly IHelper _helper;
-        public MasterCityService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IAuditLogService auditLogService, //IStringLocalizer<Errors> stringLocalizerError,
-                                 IHelper helper, IMapper mapper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
+        public MasterCityService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IAuditLogService auditLogService, //IStringLocalizer<Errors> stringLocalizerError, IMapper mapper, 
+                                 IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
-            _auditLogService = auditLogService;
-            _mapper = mapper;
+            _auditLogService = auditLogService; 
 
             _repository = _unitOfWork.GetRepository<MasterCity>();
             configuration = _configuration;
@@ -91,11 +87,10 @@ namespace Eltizam.Business.Core.Implementation
             // var d = await _repository.GetAsync(id);
 
             var d = _repository.Get(id);
-            var dd = _mapper.Map<MasterCityEntity>(d);
+            //var dd = _mapper.Map<MasterCityEntity>(d);
 
-            //var _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(d);
-
-            return dd;
+            var _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(d); 
+            return _CityEntity;
         }
 
         public async Task<MasterCity?> GetById1(int id)
@@ -104,7 +99,7 @@ namespace Eltizam.Business.Core.Implementation
             var d1 = await _repository.GetAsync(id);
 
             var d = _repository.Get(id);
-            var dd = _mapper.Map<MasterCityEntity>(d);
+           // var dd = _mapper.Map<MasterCityEntity>(d);
 
             var _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(d); 
             return d;
@@ -122,8 +117,7 @@ namespace Eltizam.Business.Core.Implementation
                     var MainTableName = Enum.GetName(TableNameEnum.Master_Client);
                     var MainTableKey = entityCity.Id; 
                     MasterCity OldEntity = null;
-                    OldEntity = _repository.GetNoTracking(entityCity.Id);
-
+                    OldEntity = _repository.GetNoTracking(entityCity.Id); 
 
                     objCity = _repository.Get(entityCity.Id); 
                     if (objCity != null)
@@ -136,12 +130,12 @@ namespace Eltizam.Business.Core.Implementation
                         objCity.ModifiedDate = AppConstants.DateTime;
                         objCity.ModifiedBy = entityCity.CreatedBy;
 
-                        _repository.UpdateAsync(objCity);
-
+                        _repository.UpdateAsync(objCity); 
                         _repository.UpdateGraph(objCity, EntityState.Modified);
+                        await _unitOfWork.SaveChangesAsync(); 
 
                         //Do Audit Log --AUDITLOGUSER
-                       // await _auditLogService.CreateAuditLog<MasterCity>(AuditActionTypeEnum.Update, OldEntity, objCity, MainTableName, MainTableKey);
+                        _auditLogService.CreateAuditLog<MasterCity>(AuditActionTypeEnum.Update, OldEntity, objCity, MainTableName, MainTableKey);
                     }
                     else
                     {
@@ -161,9 +155,11 @@ namespace Eltizam.Business.Core.Implementation
                     objCity.CreatedBy = entityCity.CreatedBy;
                     objCity.ModifiedDate = AppConstants.DateTime;
                     objCity.ModifiedBy = entityCity.CreatedBy;
+
                     _repository.AddAsync(objCity);
+                    await _unitOfWork.SaveChangesAsync(); 
                 }
-                await _unitOfWork.SaveChangesAsync();
+               
                 if (objCity.Id == 0)
                     return DBOperation.Error;
 
