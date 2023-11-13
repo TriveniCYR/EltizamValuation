@@ -16,7 +16,7 @@ function BindAuditLogTableName() {
 
     $.ajax({
         type: Get,
-        url: $('#hdnAPIURL').val() + GetAuditTableNameList,
+        url: BaseURL + GetAuditTableNameList,
         "datatype": "json",
         success: function (response) {
             
