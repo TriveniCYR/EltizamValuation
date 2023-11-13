@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Eltizam.Data.DataAccess.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eltizam.Data.DataAccess.Core.UnitOfWork
 {

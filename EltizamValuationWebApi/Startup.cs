@@ -16,7 +16,7 @@ namespace Eltizam.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            DatabaseConnection.ConnString = Configuration.GetSection("ConnectionStrings:ConnectionString").Value;
+            DatabaseConnection.ConnString = Configuration.GetSection("ConnectionStrings:EltizamDBConn").Value; 
 
             services.AddScoped<IMasterUserService, MasterUserService>();
 

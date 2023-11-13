@@ -8,12 +8,13 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using Eltizam.Utility;
 using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Data.DataAccess.DataContext;
 
 namespace Eltizam.Data.DataAccess.Core.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext dbContext;
+        protected readonly EltizamDBContext dbContext;
         protected readonly DbSet<TEntity> dbSet;
         protected bool IsCacheEnable;
         public TEntity originalEntity { get; set; }
@@ -27,9 +28,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         public static string IsDeleted = "IsDeleted";
         public static string DeletedDate = "DeletedDate";
 
-        public Repository(DbContext Context)
+        public Repository(EltizamDBContext Context)
         {
-            dbContext = Context ?? throw new ArgumentNullException(nameof(Context));
+            dbContext = Context ??  throw new ArgumentNullException(nameof(Context));
             dbSet = dbContext.Set<TEntity>();
             _EntityName = typeof(TEntity).Name;
             _currentSQLServerDate = DateTime.Now; //_commonService.GetSQLServerDate();

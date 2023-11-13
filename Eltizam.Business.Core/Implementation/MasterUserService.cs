@@ -29,7 +29,7 @@ namespace Eltizam.Business.Core.ServiceImplementations
         private IRepository<MasterQualification> _qualifyRepository { get; set; }
         private IRepository<MasterDocument> _documentRepository { get; set; }
         private IRepository<EmailLogHistory> _emailLog { get; set; }
-       private readonly IAuditLogService _auditLogService;
+        private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
 

@@ -5,17 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Eltizam.Data.DataAccess.Core.Repositories;
+using Eltizam.Data.DataAccess.DataContext;
 
 
 namespace Eltizam.Data.DataAccess.Core.UnitOfWork
 {
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
-        private readonly DbContext _context;
+        private EltizamDBContext _context;
         private bool disposed = false;
         private Dictionary<Type, object> repositories;
 
-        public UnitOfWork(DbContext Context)
+        public UnitOfWork(EltizamDBContext Context)
         {
             _context = Context;
         }
@@ -34,7 +35,7 @@ namespace Eltizam.Data.DataAccess.Core.UnitOfWork
 
             var type = typeof(TEntity);
             if (!repositories.ContainsKey(type))
-            {
+            { 
                 repositories[type] = new Repository<TEntity>(_context);
             }
 

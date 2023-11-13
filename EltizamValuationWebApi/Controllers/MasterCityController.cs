@@ -1,10 +1,14 @@
-﻿using Eltizam.Business.Models;
+﻿using AutoMapper;
+using Eltizam.Business.Core.Interface;
+using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.WebApi.Filters;
 using Eltizam.WebApi.Helpers.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using ValuationWeb.Application.Contracts.Persistence;
 using ValuationWeb.Application.Features;
 
 namespace Eltizam.WebApi.Controllers
@@ -20,15 +24,22 @@ namespace Eltizam.WebApi.Controllers
         private readonly IConfiguration _configuration;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
         private readonly IMediator _mediator;
+        private readonly IMasterCityService _cityServices;
+        private readonly IMasterCityRepository _cityrepository;
+        private readonly IMapper _mapper;
 
         #endregion Properties
 
         #region Constructor 
 
-        public MasterCityController(IMediator mediator, IResponseHandler<dynamic> ObjectResponse)
+        public MasterCityController(IMediator mediator, IResponseHandler<dynamic> ObjectResponse, IMapper mapper, IMasterCityService cityService, 
+                                    IMasterCityRepository cityrepository)
         {
             _mediator = mediator;
             _ObjectResponse = ObjectResponse;
+            _cityServices = cityService;
+            _cityrepository = cityrepository;
+            _mapper = mapper;
         }
 
         #endregion Constructor
@@ -54,17 +65,21 @@ namespace Eltizam.WebApi.Controllers
         {
             try
             {
-                var cmd = new MasterCityGetAllCommand()
-                {
-                    length = model.length,
-                    draw = model.draw,
-                    start = model.start,
-                    searchText = model.search?.value
-                };
+                var ress = _cityServices.GetAll(model);
 
-                var res = await _mediator.Send(cmd);
+                return _ObjectResponse.CreateData(ress, (Int32)HttpStatusCode.OK);
 
-                return _ObjectResponse.CreateData(res, (Int32)HttpStatusCode.OK);
+                //var cmd = new MasterCityGetAllCommand()
+                //{
+                //    length = model.length,
+                //    draw = model.draw,
+                //    start = model.start,
+                //    searchText = model.search?.value
+                //};
+
+                //var res = await _mediator.Send(cmd);
+
+                // return _ObjectResponse.CreateData(res, (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -85,6 +100,10 @@ namespace Eltizam.WebApi.Controllers
         {
             try
             {
+               // var val = await _cityServices.GetById(id);
+               // return _ObjectResponse.Create(val, (Int32)HttpStatusCode.OK);
+
+
                 var cmd = new MasterCityGetByIdCommand()
                 {
                     Id = id
@@ -107,12 +126,24 @@ namespace Eltizam.WebApi.Controllers
         [HttpPost("Upsert")]
         public async Task<IActionResult> Upsert(MasterCityUpsertCommand model)
         {
-            var oCityEntity = await _mediator.Send(model);
+            var entity = new MasterCityEntity()
+            {
+                CityName = model.CityName,
+                StateId = model.StateId,
+                IsActive = 1,
+                CountryId = model.CountryId,
+            };
 
-            if (oCityEntity == Eltizam.Utility.Enums.GeneralEnum.DBOperation.Success)
-                return _ObjectResponse.Create(oCityEntity, (Int32)HttpStatusCode.OK);
-            else
-                return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            var ent = _mapper.Map<MasterCity>(entity);
+            var val = _cityServices.Upsert(entity);
+            return _ObjectResponse.Create(val, (Int32)HttpStatusCode.OK);
+
+            //var oCityEntity = await _mediator.Send(model);
+
+            //if (oCityEntity == Eltizam.Utility.Enums.GeneralEnum.DBOperation.Success)
+            //    return _ObjectResponse.Create(oCityEntity, (Int32)HttpStatusCode.OK);
+            //else
+            //    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
         }
 
         // this is for delete master Designation detail by id

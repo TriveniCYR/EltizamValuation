@@ -8,6 +8,8 @@ namespace Eltizam.Data.DataAccess.Helper
 {
     public class AppConstants
     {
+        public static string ConnectionStringkey = "ConnectionStrings:EltizamDBConn";
+
         public static string msgLinkToResetpasswordSentOnEmail = "Forgot password link sent to the given email successfully."; 
         public static string SomeErrorOccurred = "Some error occurred"; 
         public static string msgEmailAddressNotExistIndatabase = "Entered email address is not found"; 
@@ -50,4 +52,9 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string ID_ValuationRequest = string.Format("VR{0}-", DateFormat2);
         public static string ID_QuotationsRequest = string.Format("VR{0}-QT", DateFormat2);
     } 
+
+    public class AppSettings
+    {
+        public static string ConnString = "ConnectionStrings:EltizamDBConn";
+    }
 }

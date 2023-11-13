@@ -3,6 +3,7 @@ using Eltizam.Business.Core.ModelMapper;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
+using Eltizam.Data.DataAccess.DataContext;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
@@ -26,19 +27,19 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private readonly IHelper _helper;
         private readonly IExceptionService _ExceptionService;
-        protected readonly DbContext dbContext;
+        protected readonly EltizamDBContext dbContext;
         private readonly string _dbConnection;
         private IRepository<MasterAuditLog> _repository { get; set; }
-        private IRepository<MasterUser> _userrepository { get; set; }
+        //private IRepository<MasterUser> _userrepository { get; set; }
 
-        public AuditLogService(DbContext Context, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IExceptionService exceptionService)
+        public AuditLogService(EltizamDBContext Context, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IExceptionService exceptionService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
             _repository = _unitOfWork.GetRepository<MasterAuditLog>();
             _helper = helper;
             _ExceptionService = exceptionService;
-            _userrepository = _unitOfWork.GetRepository<MasterUser>(); ;
+           // _userrepository = _unitOfWork.GetRepository<MasterUser>(); ;
 
             dbContext = Context ?? throw new ArgumentNullException(nameof(Context));
             _dbConnection = DatabaseConnection.ConnString;
@@ -70,7 +71,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 //Save Audit Log
                 MasterAuditLog objAuditLog;
-                var entityAuditLog = new AuditLogModel()
+                var entityAudit = new MasterAuditLog()
                 {
                     CreatedBy = logCreatedBy,
                     ActionType = Enum.GetName(typeof(AuditActionTypeEnum), auditActionType),
@@ -81,14 +82,14 @@ namespace Eltizam.Business.Core.Implementation
                     ParentTableName = PTName?.Replace("_", ""),
                 };
 
-                if (entityAuditLog.Log != "[]")
+                if (entityAudit.Log != "[]")
                 {
-                    objAuditLog = _mapperFactory.Get<AuditLogModel, MasterAuditLog>(entityAuditLog);
+                    //objAuditLog = _mapperFactory.Get<AuditLogModel, MasterAuditLog>(entityAuditLog);
 
-                    _repository.AddAsync(objAuditLog);
+                    _repository.AddAsync(entityAudit);
                     await _unitOfWork.SaveChangesAsync();
 
-                    if (objAuditLog.Id == 0)
+                    if (entityAudit.Id == 0)
                         return false; // DBOperation.Error;
                 }
                 return true; // DBOperation.Success;
@@ -155,7 +156,7 @@ namespace Eltizam.Business.Core.Implementation
         }
         public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
-            var users = await _userrepository.GetAllAsync();
+            var users = await _repository.GetAllAsync();
             //TableName = "MasterUser";
 
             var entityAuditLogs = await _repository.FindAllAsync(x =>
@@ -181,7 +182,7 @@ namespace Eltizam.Business.Core.Implementation
                     CreatedBy = log.CreatedBy,
                     CreatedDate = log.CreatedDate, // Include both date and time
                     CreatedDateFormatted = log.CreatedDate?.ToString("yyyy-MM-dd HH:mm:ss"), // Formatted date and time
-                    CreatedByName = users.FirstOrDefault(a => a.Id == log.CreatedBy)?.UserName, // Use null-conditional operator
+                    CreatedByName = "",// users.FirstOrDefault(a => a.Id == log.CreatedBy), // Use null-conditional operator
                     AuditLogListData = _AuditLogListData?.ToList(),
                 });
             }

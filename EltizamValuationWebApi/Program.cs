@@ -1,14 +1,25 @@
+using AutoMapper;
+using Eltizam.Business.Core;
+using Eltizam.Business.Core.Implementation;
+using Eltizam.Business.Core.Interface;
+using Eltizam.Business.Core.ModelMapper;
+using Eltizam.Data.DataAccess.Core.UnitOfWork;
+using Eltizam.Data.DataAccess.DataContext;
+using Eltizam.Utility;
 using Eltizam.WebApi.Helpers.Response;
 using Eltizam.WebApi.Middlewares;
 using Eltizam.WebApi.SwaggerHelper;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using ValuationWeb.Api.Extensions;
 using ValuationWeb.Application;
+using ValuationWeb.Application.Profiles;
 using ValuationWeb.Identity.Models;
 using ValuationWeb.Persistence;
 
@@ -86,11 +97,30 @@ builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+var connectionString = builder.Configuration.GetConnectionString("EltizamDBConn");
+builder.Services.AddDbContext<EltizamDBContext>(x => x.UseSqlServer(connectionString));
+DatabaseConnection.ConnString = connectionString;
+
+//Add services here 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IMapperFactory, MapperFactory>();
+builder.Services.AddScoped<IMapper, Mapper>();
+builder.Services.AddScoped<IHelper, Helper>();
+builder.Services.AddScoped<IExceptionService, ExceptionService>();
+builder.Services.AddScoped<IAuditLogService, AuditLogService>(); 
+//builder.Services.AddScoped<IStringLocalizer, StringLocalizer>();
+
+builder.Services.AddScoped<IMasterCityService, MasterCityService>();
+//builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
+
+
+//builder.Services.AddDbContextFactory<DbContext, EltizamDBContext>(builder => builder.UseSqlServer(connectionString));
+
 var app = builder.Build();
-
-//app.Services.GetService<MasterCityService>();
-//app.Services.GetService<ExceptionService>();
-
+ 
 using (var scope = app.Services.CreateScope())
 {
     try

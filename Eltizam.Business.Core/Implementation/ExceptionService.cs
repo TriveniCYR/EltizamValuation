@@ -16,12 +16,12 @@ namespace Eltizam.Business.Core.Implementation
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
+        //private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<MasterException> _repository { get; set; }
         private readonly IHelper _helper;
 
-        public ExceptionService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public ExceptionService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, //IStringLocalizer<Errors> stringLocalizerError,
                                  Microsoft.Extensions.Configuration.IConfiguration _configuration, IHelper helper)
         {
             _unitOfWork = unitOfWork;
