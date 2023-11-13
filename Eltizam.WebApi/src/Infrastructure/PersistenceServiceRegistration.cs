@@ -2,6 +2,7 @@
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Core.ServiceImplementations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -36,6 +37,12 @@ namespace ValuationWeb.Persistence
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddTransient<IMasterUserService, MasterUserService>();
             services.AddTransient<IMasterDictionaryService, MasterDictionaryService>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddTransient<IMasterUserService, MasterUserService>();
+            services.AddTransient<IMasterRoleService, MasterRoleService>();
+            services.AddTransient<IMasterRoleModulePermission, MasterRoleModulePermissionService>();
+            services.AddTransient<IMemoryCache, MemoryCache>();
+            services.AddTransient<IMasterModuleService, MasterModuleService>();
             return services;
         }
     }
