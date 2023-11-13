@@ -28,7 +28,6 @@ namespace Eltizam.Business.Core.Implementation
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
@@ -43,7 +42,7 @@ namespace Eltizam.Business.Core.Implementation
         #endregion Properties
 
         #region Constructor
-        public MasterPropertyService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError, IAuditLogService auditLogService,
+        public MasterPropertyService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IAuditLogService auditLogService,
                                      IHelper helper, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
@@ -117,8 +116,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
 
-            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
-            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+            string ColumnName = "Id";// (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
+            string SortDir = "Asc"; // (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
             SqlParameter[] osqlParameter =
             {
@@ -150,7 +149,7 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> AddUpdateMasterProperty(MasterPropertyModel masterproperty)
         {
-            var By = _helper.GetLoggedInUser().UserId;
+            var By = 1;
             // Create a Master_PropertyType object.
             MasterProperty objProperty;
             MasterPropertyLocation objLocation;
