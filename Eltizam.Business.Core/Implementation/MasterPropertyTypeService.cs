@@ -20,7 +20,7 @@ namespace Eltizam.Business.Core.Implementation
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
+        //private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<MasterPropertyType> _repository { get; set; }
         private IRepository<MasterPropertySubType> _subrepository { get; set; }
@@ -28,7 +28,7 @@ namespace Eltizam.Business.Core.Implementation
         #endregion Properties
 
         #region Constructor
-        public MasterPropertyTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterPropertyTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
           IHelper helper,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
