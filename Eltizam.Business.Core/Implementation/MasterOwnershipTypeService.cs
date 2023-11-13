@@ -24,7 +24,7 @@ namespace Eltizam.Business.Core.Implementation
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
+        //private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
 
 

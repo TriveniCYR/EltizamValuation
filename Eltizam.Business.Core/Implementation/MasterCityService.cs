@@ -23,6 +23,7 @@ namespace Eltizam.Business.Core.Implementation
     {
         private readonly IUnitOfWork _unitOfWork; 
         private readonly IMapperFactory _mapperFactory;
+        private readonly IMapper _mapper;
         private readonly IAuditLogService _auditLogService;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private readonly string _dbConnection;
@@ -30,11 +31,12 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterCity> _repository { get; set; }
         private readonly IHelper _helper;
         public MasterCityService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IAuditLogService auditLogService, //IStringLocalizer<Errors> stringLocalizerError,
-                                 IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
+                                 IHelper helper, IMapper mapper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
             _auditLogService = auditLogService;
+            _mapper = mapper;
 
             _repository = _unitOfWork.GetRepository<MasterCity>();
             configuration = _configuration;
@@ -89,18 +91,20 @@ namespace Eltizam.Business.Core.Implementation
             // var d = await _repository.GetAsync(id);
 
             var d = _repository.Get(id);
+            var dd = _mapper.Map<MasterCityEntity>(d);
 
-            var _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(d);
+            //var _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(d);
 
-            return _CityEntity;
+            return dd;
         }
 
         public async Task<MasterCity?> GetById1(int id)
         {
             // var _CityEntity = new MasterCityEntity();
-            // var d = await _repository.GetAsync(id);
+            var d1 = await _repository.GetAsync(id);
 
             var d = _repository.Get(id);
+            //var dd = _mapper.Map<MasterCityEntity>(d);
 
             //var _CityEntity = _mapperFactory.Get<MasterCity, MasterCityEntity>(d); 
             return d;
@@ -137,7 +141,7 @@ namespace Eltizam.Business.Core.Implementation
                         _repository.UpdateGraph(objCity, EntityState.Modified);
 
                         //Do Audit Log --AUDITLOGUSER
-                        await _auditLogService.CreateAuditLog<MasterCity>(AuditActionTypeEnum.Update, OldEntity, objCity, MainTableName, MainTableKey);
+                       // await _auditLogService.CreateAuditLog<MasterCity>(AuditActionTypeEnum.Update, OldEntity, objCity, MainTableName, MainTableKey);
                     }
                     else
                     {

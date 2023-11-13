@@ -2,6 +2,7 @@
 using Eltizam.Api.Helpers.Response;
 using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -53,7 +54,7 @@ namespace Eltizam.API.Controllers.Masters
         public async Task<IActionResult> InsertUpdateRole(MasterRoleEntity oRole)
         {
             try
-            {
+            { 
                 DBOperation oResponse = await _MasterRoleService.AddUpdateRole(oRole);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oRole.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
