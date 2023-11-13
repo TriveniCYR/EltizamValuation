@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "07o0kMQ79ho1d4vvjJXQUlPNuXYoxEj4lT9LEDYcEVVVNP9HxxWNti1f357boPYX0ianQ9CaGoZoJdVChm7MuQ==",
+  "dgSpecHash": "TusFL1QLlrc/PziTgbeCycU6buSNtA2QdBFrqjeO9HPcrQhXBqJI6MvmMgL/SN+8Exi4Smue7BEMKOMsx4GLog==",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Infrastructure\\ValuationWeb.Persistence.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\dapper\\2.0.78\\dapper.2.0.78.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\dapper.sqlbuilder\\2.0.78\\dapper.sqlbuilder.2.0.78.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\fluentvalidation\\10.3.6\\fluentvalidation.10.3.6.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.3.6\\fluentvalidation.dependencyinjectionextensions.10.3.6.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

@@ -77,6 +77,31 @@
           }
         }
       },
+      "Dapper/2.0.78": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Dapper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Dapper.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Dapper.SqlBuilder/2.0.78": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "2.0.78"
+        },
+        "compile": {
+          "lib/net5.0/Dapper.SqlBuilder.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Dapper.SqlBuilder.dll": {}
+        }
+      },
       "FluentValidation/10.3.6": {
         "type": "package",
         "compile": {
@@ -3545,6 +3570,23 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "Eltizam.Business.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "AutoMapper": "9.0.0",
+          "Dapper.SqlBuilder": "2.0.78",
+          "Eltizam.Business.Models": "1.0.0",
+          "Eltizam.Data.DataAccess": "1.0.0",
+          "SqlTableDependency": "8.5.8"
+        },
+        "compile": {
+          "bin/placeholder/Eltizam.Business.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Eltizam.Business.Core.dll": {}
+        }
+      },
       "Eltizam.Business.Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -3716,6 +3758,37 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "Dapper/2.0.78": {
+      "sha512": "vLPwL2HZXp/DN17Eu7sg6GMEj02alq7jcy6atn5Gv8i96b9Hu1UoxlCrhInUPfSFLQQiD8O7pdWAE1fdUEO/1Q==",
+      "type": "package",
+      "path": "dapper/2.0.78",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dapper.2.0.78.nupkg.sha512",
+        "dapper.nuspec",
+        "lib/net461/Dapper.dll",
+        "lib/net461/Dapper.xml",
+        "lib/net5.0/Dapper.dll",
+        "lib/net5.0/Dapper.xml",
+        "lib/netstandard2.0/Dapper.dll",
+        "lib/netstandard2.0/Dapper.xml"
+      ]
+    },
+    "Dapper.SqlBuilder/2.0.78": {
+      "sha512": "07LHm+/YOLyFieN51mjwrrVPKX3q0k7RxG+8zi/5MKjy7mWid/DRlRFNgvcCffEcjLjkbgEdITHkKTKSxSmPnw==",
+      "type": "package",
+      "path": "dapper.sqlbuilder/2.0.78",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dapper.sqlbuilder.2.0.78.nupkg.sha512",
+        "dapper.sqlbuilder.nuspec",
+        "lib/net461/Dapper.SqlBuilder.dll",
+        "lib/net5.0/Dapper.SqlBuilder.dll",
+        "lib/netstandard2.0/Dapper.SqlBuilder.dll"
       ]
     },
     "FluentValidation/10.3.6": {
@@ -9834,6 +9907,11 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "Eltizam.Business.Core/1.0.0": {
+      "type": "project",
+      "path": "../../../Eltizam.Business.Core/Eltizam.Business.Core.csproj",
+      "msbuildProject": "../../../Eltizam.Business.Core/Eltizam.Business.Core.csproj"
+    },
     "Eltizam.Business.Models/1.0.0": {
       "type": "project",
       "path": "../../../Eltizam.Business.Models/Eltizam.Business.Models.csproj",
@@ -9867,6 +9945,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "Eltizam.Business.Core >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 6.0.8",
       "Microsoft.EntityFrameworkCore >= 6.0.22",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.21",
@@ -9902,6 +9981,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+            "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.Business.Core\\Eltizam.Business.Core.csproj": {
+              "projectPath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.Business.Core\\Eltizam.Business.Core.csproj"
+            },
             "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Core\\ValuationWeb.Application\\ValuationWeb.Application.csproj": {
               "projectPath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Core\\ValuationWeb.Application\\ValuationWeb.Application.csproj"
             },

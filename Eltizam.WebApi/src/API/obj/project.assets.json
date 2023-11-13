@@ -5244,6 +5244,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "Eltizam.Business.Core": "1.0.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "6.0.8",
           "Microsoft.EntityFrameworkCore": "6.0.22",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.21",
@@ -13707,9 +13708,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\Eltizam.WebApi.csproj",
-      "projectName": "Eltizam.WebApi",
-      "projectPath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\Eltizam.WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\EltizamValuation.WebApi.csproj",
+      "projectName": "EltizamValuation.WebApi",
+      "projectPath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\EltizamValuation.WebApi.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\obj\\",
       "projectStyle": "PackageReference",
@@ -13877,7 +13878,7 @@
       "code": "NU1603",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Eltizam.WebApi depends on Microsoft.AspNetCore.Mvc.NewtonsoftJson (>= 6.0.8) but Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.8 was not found. An approximate best match of Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.13 was resolved.",
+      "message": "EltizamValuation.WebApi depends on Microsoft.AspNetCore.Mvc.NewtonsoftJson (>= 6.0.8) but Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.8 was not found. An approximate best match of Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.13 was resolved.",
       "libraryId": "Microsoft.AspNetCore.Mvc.NewtonsoftJson",
       "targetGraphs": [
         "net6.0"

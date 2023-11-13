@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Eltizam.Business.Core.Implementation;
+using Eltizam.Business.Core.Interface;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -29,6 +31,7 @@ namespace ValuationWeb.Persistence
             services.AddScoped<IBranchRepository, BranchRepository>();
             //services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMasterCityRepository, MasterCityRepository>();
+            services.AddScoped<IMasterCityService, MasterCityService>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>(); 
 
             return services;

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "12fFqi+pxtPmqP0Ej2hMa53IySU9Cw9DlB8sLjT1NqchgmtKtVuY9XfrWg2NCIM5t4dFLbir68L96DK+osybAQ==",
+  "dgSpecHash": "HnGyJJQRCbuz1GTWZ7B6rGpRnr5j37Pee0gBPz9+K9Ycx9x7yn5GOo47ZGSlbAcwCQm7LBr1yKDkxhKPUUX71A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\Eltizam.WebApi.csproj",
+  "projectFilePath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\EltizamValuation.WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
@@ -285,7 +285,7 @@
       "code": "NU1603",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Eltizam.WebApi depends on Microsoft.AspNetCore.Mvc.NewtonsoftJson (>= 6.0.8) but Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.8 was not found. An approximate best match of Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.13 was resolved.",
+      "message": "EltizamValuation.WebApi depends on Microsoft.AspNetCore.Mvc.NewtonsoftJson (>= 6.0.8) but Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.8 was not found. An approximate best match of Microsoft.AspNetCore.Mvc.NewtonsoftJson 6.0.13 was resolved.",
       "libraryId": "Microsoft.AspNetCore.Mvc.NewtonsoftJson",
       "targetGraphs": [
         "net6.0"

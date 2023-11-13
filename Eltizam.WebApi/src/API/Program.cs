@@ -109,7 +109,7 @@ builder.Services.AddScoped<IExceptionService, ExceptionService>();
 builder.Services.AddScoped<IAuditLogService, AuditLogService>(); 
 //builder.Services.AddScoped<IStringLocalizer, StringLocalizer>();
 
-builder.Services.AddScoped<IMasterCityService, MasterCityService>();
+//builder.Services.AddScoped<IMasterCityService, MasterCityService>();
 //builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
