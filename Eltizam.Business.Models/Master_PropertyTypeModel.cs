@@ -1,12 +1,8 @@
-﻿using AutoMapper;
-using Eltizam.Resource.Resources;
+﻿using Eltizam.Resource.Resources;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Eltizam.Business.Models
 {
@@ -18,7 +14,7 @@ namespace Eltizam.Business.Models
         public string PropertyType { get; set; }
         public bool IsActive { get; set; } 
         public string? SubTypes { get; set; }
-        [IgnoreMap]
+        [NotMapped]
         public List<Master_PropertySubTypeModel> MasterPropertySubTypes { get; set; }
     }
 

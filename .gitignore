@@ -3,6 +3,8 @@
 ################################################################################
 
 /.vs
+[Oo]bj
+[Bb]in
 /Eltizam.Api/obj/
 /Eltizam.Api/bin/
 /Eltizam.WebApi/obj/
