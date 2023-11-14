@@ -11,7 +11,8 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [AuthorizeAttribute]
     public class MasterDepartmentController : ControllerBase
@@ -20,7 +21,6 @@ namespace Eltizam.WebApi.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         private readonly IMasterDepartmentService _DepartmentService;
@@ -28,11 +28,10 @@ namespace Eltizam.WebApi.Controllers
         #endregion Properties
 
         #region Constructor
-        public MasterDepartmentController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IMasterDepartmentService DepartmentService)
+        public MasterDepartmentController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, IMasterDepartmentService DepartmentService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
-            _stringLocalizerError = stringLocalizerError;
             _ExceptionService = exceptionService;
             _DepartmentService = DepartmentService;
         }

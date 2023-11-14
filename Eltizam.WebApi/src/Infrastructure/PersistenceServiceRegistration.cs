@@ -34,11 +34,17 @@ namespace ValuationWeb.Persistence
             //services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMasterCityRepository, MasterCityRepository>();
             services.AddScoped<IMasterCityService, MasterCityService>();
+            services.AddScoped<IMasterCountryService, MasterCountryService>();
+            services.AddScoped<IMasterStateService, MasterStateService>();
+            services.AddScoped<IMasterDepartmentService, MasterDepartmentService>();
+            services.AddScoped<IMasterDesignationService, MasterDesignationService>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddTransient<IMasterUserService, MasterUserService>();
             services.AddTransient<IMasterDictionaryService, MasterDictionaryService>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-            services.AddTransient<IMasterUserService, MasterUserService>();
+            services.AddTransient<IMasterClientService, MasterClientService>();
+            services.AddTransient<IMasterClientTypeService, MasterClientTypeService>();
+            services.AddTransient<IMasterVendorService, MasterVendorService>();
             services.AddTransient<IMasterRoleService, MasterRoleService>();
             services.AddTransient<IMasterRoleModulePermission, MasterRoleModulePermissionService>();
             services.AddTransient<IMemoryCache, MemoryCache>();

@@ -25,14 +25,13 @@ namespace Eltizam.Business.Core.Implementation
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<MasterClientType> _repository { get; set; }
         private readonly IHelper _helper;
         #endregion Properties
 
         #region Constructor
-        public MasterClientTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterClientTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
           IHelper helper,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {

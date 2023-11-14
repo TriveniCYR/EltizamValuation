@@ -5,7 +5,7 @@
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     string url = @Configuration.GetSection("Apiconfig")["baseurl"];
-    string ext = string.Format("api/v{0}", @Configuration.GetSection("Apiconfig")["version"]);
+    string ext = string.Format("api/v{0}/", @Configuration.GetSection("Apiconfig")["version"]);
 
     string finalURL = url + ext;
 }

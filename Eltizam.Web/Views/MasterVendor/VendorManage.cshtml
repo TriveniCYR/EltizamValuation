@@ -101,7 +101,7 @@
                                 <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
                                 <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" />
                                 @Html.HiddenFor(model => model.Address.Id)
-                                <div class="addMoreAddress roundBorderBox">
+                                <div class="addMoreAddress">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
                                         <p>Mailing Address Section</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
