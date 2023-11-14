@@ -5,6 +5,7 @@
 /.vs
 [Oo]bj
 [Bb]in
+/Eltizam.Web/wwwroot/Uploads/errorlogs/ 
 /Eltizam.Api/obj/
 /Eltizam.Api/bin/
 /Eltizam.WebApi/obj/
@@ -31,4 +32,13 @@
 /Eltizam.Utility/bin/
 /Eltizam.Web/obj/
 /Eltizam.Web/bin/
-/Eltizam.Web/wwwroot/Uploads/errorlogs/ 
+/Eltizam.WebApi/src/API/bin/**
+/Eltizam.WebApi/src/API/bin/Debug
+/Eltizam.WebApi/src/API/bin/Debug/net6.0/**
+/Eltizam.WebApi/src/API/obj/**
+/Eltizam.WebApi/src/API/obj/Debug/**
+/Eltizam.WebApi/src/API/obj/Debug/net6.0/**
+/Eltizam.WebApi/src/API/obj/Debug/net6.0/*
+/Eltizam.WebApi/src/API/bin/Debug/net6.0/ 
+**/bin/*
+**/obj/*
