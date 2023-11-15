@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class MasterPropertyModel
+    public class MasterPropertyModel:GlobalAuditFields
     {
         public int Id { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -36,8 +36,7 @@ namespace Eltizam.Business.Models
         public string? Parking { get; set; }
         public string? ParkingBayNo { get; set; }
         public string? Description { get; set; }
-        public int? CreatedBy { get; set; }
-        public int? ModifiedBy { get; set; }
+      
         public string? Amenities { get; set; }
         public MasterPropertyDetailModel PropertyDetail { get; set; }
         public List<MasterAmenityListModel>? AmenityList { get; set; }

@@ -107,7 +107,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (detailLocation != null)
                 {
                     _userEntity.PropertyDetail = detailLocation;
-                } 
+                }
             }
 
             return _userEntity;
@@ -117,7 +117,7 @@ namespace Eltizam.Business.Core.Implementation
         {
 
             string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
-            string SortDir =  (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
 
             SqlParameter[] osqlParameter =
             {
@@ -149,7 +149,6 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> AddUpdateMasterProperty(MasterPropertyModel masterproperty)
         {
-            var By = 1;
             // Create a Master_PropertyType object.
             MasterProperty objProperty;
             MasterPropertyLocation objLocation;
@@ -165,7 +164,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 objProperty = _repository.Get(masterproperty.Id);
                 if (objProperty != null)
-                { 
+                {
                     objProperty.PropertyName = masterproperty.PropertyName;
                     objProperty.PropertyTypeId = masterproperty.PropertyTypeId;
                     objProperty.PropertySubTypeId = masterproperty.PropertySubTypeId;
@@ -181,8 +180,8 @@ namespace Eltizam.Business.Core.Implementation
                     objProperty.Parking = masterproperty.Parking;
                     objProperty.ParkingBayNo = masterproperty.ParkingBayNo;
                     objProperty.Description = masterproperty.Description;
-                    objProperty.ModifiedBy = _LoginUserId;
-                    
+                    objProperty.ModifiedBy = masterproperty.ModifiedBy;
+
                     _repository.UpdateAsync(objProperty);
 
                     _repository.UpdateGraph(objProperty, EntityState.Modified);
@@ -197,7 +196,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 objProperty = _mapperFactory.Get<MasterPropertyModel, MasterProperty>(masterproperty);
                 objProperty.IsActive = masterproperty.IsActive;
-                objProperty.ModifiedBy = _LoginUserId;
+                objProperty.CreatedBy = masterproperty.CreatedBy;
                 _repository.AddAsync(objProperty);
                 await _unitOfWork.SaveChangesAsync();
             }
@@ -228,7 +227,7 @@ namespace Eltizam.Business.Core.Implementation
                             objLocation.Address2 = entityLocation.Address2;
                             objLocation.Pincode = entityLocation.Pincode;
                             objLocation.Landmark = entityLocation.Landmark;
-                            objLocation.ModifiedBy = _LoginUserId;
+                            objLocation.ModifiedBy = entityLocation.ModifiedBy;
                             objLocation.ModifiedDate = AppConstants.DateTime;
                             _detailrepository.UpdateAsync(objLocation);
                             _detailrepository.UpdateGraph(objLocation, EntityState.Modified);
@@ -242,7 +241,7 @@ namespace Eltizam.Business.Core.Implementation
                     {
                         objLocation = _mapperFactory.Get<MasterPropertyDetailModel, MasterPropertyLocation>(masterproperty.PropertyDetail);
                         objLocation.PropertyId = objProperty.Id;
-                        objLocation.CreatedBy = _LoginUserId;
+                        objLocation.CreatedBy = objProperty.CreatedBy;
                         objLocation.CreatedDate = AppConstants.DateTime;
                         _detailrepository.AddAsync(objLocation);
                     }
@@ -262,7 +261,7 @@ namespace Eltizam.Business.Core.Implementation
                                 objAmenity.PropertyId = objProperty.Id;
                                 objAmenity.AmenityId = doc.AmenityId;
                                 objAmenity.IsActive = doc.IsActive;
-                                objAmenity.ModifiedBy = _LoginUserId;
+                                objAmenity.ModifiedBy = objProperty.ModifiedBy;
                                 objAmenity.ModifiedDate = AppConstants.DateTime;
                                 _amenityrepository.UpdateAsync(objAmenity);
                             }
@@ -273,7 +272,7 @@ namespace Eltizam.Business.Core.Implementation
                             objAmenity.PropertyId = objProperty.Id;
                             objAmenity.AmenityId = doc.AmenityId;
                             objAmenity.IsActive = doc.IsActive;
-                            objAmenity.CreatedBy = _LoginUserId;
+                            objAmenity.CreatedBy = objProperty.CreatedBy;
                             objAmenity.CreatedDate = AppConstants.DateTime;
                             _amenityrepository.AddAsync(objAmenity);
                         }
@@ -310,7 +309,7 @@ namespace Eltizam.Business.Core.Implementation
             // Create a new Master_PropertyTypeModel instance.
             var _PropertFilter = new List<MasterPropertyModel>();
 
-            var res = _repository.GetAllAsync(x => x.PropertyTypeId == PropertyTypeId 
+            var res = _repository.GetAllAsync(x => x.PropertyTypeId == PropertyTypeId
             && x.PropertySubTypeId == SubPropertyTypeId &&
             x.OwnershipTypeId == OwnershipTypeId && x.IsActive == true).Result.ToList();
 
