@@ -163,7 +163,7 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> AddUpdateMasterClient(MasterClientModel master_ClientModel)
         {
-            var By = _helper.GetLoggedInUser().UserId;
+            
             // Create MasterClient and MasterClientContact objects.
             MasterClient objClient;
             MasterAddress objAddress;
@@ -196,7 +196,7 @@ namespace Eltizam.Business.Core.Implementation
                     objClient.IsActive = master_ClientModel.IsActive;
                     objClient.Logo = master_ClientModel.Logo;
                     objClient.ModifiedDate = AppConstants.DateTime; 
-                    objClient.ModifiedBy = master_ClientModel.ModifiedBy ?? By;
+                    objClient.ModifiedBy = master_ClientModel.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objClient);
@@ -217,7 +217,7 @@ namespace Eltizam.Business.Core.Implementation
                 // Create a new MasterClient entity from the model for insertion.
                 objClient = _mapperFactory.Get<MasterClientModel, MasterClient>(master_ClientModel);
                 objClient.CreatedDate = AppConstants.DateTime;
-                objClient.ModifiedBy = master_ClientModel.CreatedBy ?? By; 
+                objClient.CreatedBy = master_ClientModel.CreatedBy; 
 
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objClient);
@@ -256,7 +256,7 @@ namespace Eltizam.Business.Core.Implementation
                         objAddress.AlternatePhone = entityAddress.AlternatePhone;
                         objAddress.Landlinephone = entityAddress.Landlinephone;
                         objAddress.IsActive = entityAddress.IsActive;
-                        objAddress.ModifiedBy = master_ClientModel.ModifiedBy ?? By;
+                        objAddress.ModifiedBy = master_ClientModel.ModifiedBy;
                         _repositoryAddress.UpdateAsync(objAddress);
 
                         _repositoryAddress.UpdateGraph(objAddress, EntityState.Modified);
@@ -272,7 +272,7 @@ namespace Eltizam.Business.Core.Implementation
                     objAddress = _mapperFactory.Get<MasterAddressEntity, MasterAddress>(master_ClientModel.Address);
                     objAddress.TableKeyId = objClient.Id; // Associate with the MasterClient entity.
                     objAddress.TableName = Enum.GetName(TableNameEnum.Master_Client);
-                    objAddress.CreatedBy = master_ClientModel.CreatedBy ?? By;
+                    objAddress.CreatedBy = master_ClientModel.CreatedBy;
                     _repositoryAddress.AddAsync(objAddress);
                     // Insert the new entity into the repository asynchronously.
                     await _unitOfWork.SaveChangesAsync();
@@ -294,7 +294,7 @@ namespace Eltizam.Business.Core.Implementation
                         objContact.Email = entityAddress.Email;
                         objContact.Mobile = entityAddress.Mobile;
                         objContact.Status = entityAddress.Status;
-                        objContact.ModifiedBy = master_ClientModel.ModifiedBy ?? By;
+                        objContact.ModifiedBy = master_ClientModel.ModifiedBy;
                         _repositoryContact.UpdateAsync(objContact);
                         _repositoryContact.UpdateGraph(objContact, EntityState.Modified);
                         await _unitOfWork.SaveChangesAsync();
@@ -310,7 +310,7 @@ namespace Eltizam.Business.Core.Implementation
                     objContact.CreatedDate = AppConstants.DateTime;
                     objContact.TableKeyId = objClient.Id;
                     objContact.TableName = Enum.GetName(TableNameEnum.Master_Client);
-                    objContact.ModifiedBy = master_ClientModel.CreatedBy ?? By;
+                    objContact.ModifiedBy = master_ClientModel.CreatedBy;
                     _repositoryContact.AddAsync(objContact);
                     // Insert the new entity into the repository asynchronously.
                     await _unitOfWork.SaveChangesAsync();
@@ -327,7 +327,7 @@ namespace Eltizam.Business.Core.Implementation
                         objDocument.FileName = doc.FileName;
                         objDocument.FilePath = doc.FilePath;
                         objDocument.FileType = doc.FileType;
-                        objDocument.CreatedBy = master_ClientModel.CreatedBy ?? By;
+                        objDocument.CreatedBy = master_ClientModel.CreatedBy;
                         _repositoryDocument.AddAsync(objDocument);
                     }
                     await _unitOfWork.SaveChangesAsync();
