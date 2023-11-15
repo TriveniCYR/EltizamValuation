@@ -291,8 +291,7 @@
                         </div>
                     </div>
                     <div class="text-right buttonArea bodyContent plr-0">
-                        <a href='/MasterUser/Users'> <button type="button" class="lineBtn greyBtn">Cancel</button></a>
-                       @*  <button type="submit" class="blueBtn">Save</button> *@
+                        <a href='/MasterUser/Users'> <button type="button" class="lineBtn greyBtn">Cancel</button></a> 
                     </div>
                 </form>
             </div>
@@ -300,11 +299,8 @@
     </div>
 </main>
 @*  </div>
-</div> *@
-
-
-<input type="hidden" id="hdnBaseURL" value="@Configuration.GetSection("Apiconfig")["baseurl"]" />
-
+</div> *@ 
+ 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/MasterUser/UserManage.js?v=@jsVersion"></script>
 
