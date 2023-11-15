@@ -27,12 +27,12 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private readonly IHelper _helper;
         private readonly IExceptionService _ExceptionService;
-        protected readonly EltizamDBContext dbContext;
+        protected readonly EltizamDB_DevContext dbContext;
         private readonly string _dbConnection;
         private IRepository<MasterAuditLog> _repository { get; set; }
         //private IRepository<MasterUser> _userrepository { get; set; }
 
-        public AuditLogService(EltizamDBContext Context, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IExceptionService exceptionService)
+        public AuditLogService(EltizamDB_DevContext Context, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IExceptionService exceptionService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;

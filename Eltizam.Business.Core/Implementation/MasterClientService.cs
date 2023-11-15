@@ -357,26 +357,21 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.NotFound;
             else
             {
-                DbParameter[] osqlParameter = 
-                {
-                 new DbParameter(AppConstants.TableKeyId, id,                      SqlDbType.Int),
-                 new DbParameter(AppConstants.TableName,  Enum.GetName(TableNameEnum.Master_Client), SqlDbType.VarChar),
-                };
+                var entityLocation = _repositoryAddress.Get(x => x.TableKeyId == id && x.TableName == "Master_Client");
+                if (entityLocation != null)
+                    _repositoryAddress.Remove(entityLocation);
 
-                int result = EltizamDBHelper.ExecuteSingleMappedReader<int>(ProcedureMetastore.usp_Client_DeleteContactByClientId, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
-                if (result > 0)
-                {
+                var entityContact = _repositoryContact.Get(x => x.TableKeyId == id && x.TableName == "Master_Client");
+                if (entityContact != null)
+                    _repositoryContact.Remove(entityContact);
 
-                }
+                _repository.Remove(entityUser);
+
+                await _unitOfWork.SaveChangesAsync();
+
+                // Return a success operation indicating successful deletion.
+                return DBOperation.Success;
             }
-            // Remove the entity from the repository.
-            _repository.Remove(entityUser);
-
-            // Save changes to the database asynchronously.
-            await _unitOfWork.SaveChangesAsync();
-
-            // Return a success operation indicating successful deletion.
-            return DBOperation.Success;
         }
 
         public async Task<List<MasterClientModel>> GetMasterClientByClientTypeIdAsync(int ClientTypeId)

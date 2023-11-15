@@ -24,12 +24,13 @@
                 <div class="profileHead flex justify-between align-item-center cursor-pointer p-0">
                     <h3 class="dashboardTitle">@_md @_header</h3>
                     <div class="hamburger">
-                        <span onclick="valuationListingMaster()">Valuation Quotation List</span>
+                        <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
                         <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                         <span>@_md @_header</span>
                     </div>
                 </div>
                 <div class="bodyContent">
+                    <h3>Valuation Request Id : @Html.DisplayFor(model => model.ValuationRequestId)  &  ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)</h3>
                     <div class="inputSearchs uploadDocBox p-0">
                         <form asp-action="ValuationQuotationManage" autocomplete="off" asp-controller="ValuationRequest" method="post">
                             @Html.HiddenFor(model => model.Id, new { @class = "control-label" })

@@ -304,15 +304,23 @@ namespace Eltizam.Business.Core.Implementation
             // If the entity does not exist, return a not found operation.
             if (entityUser == null)
                 return DBOperation.NotFound;
+            else
+            {
+                var entityLocation = _repositoryAddress.Get(x => x.TableKeyId == id && x.TableName == "Master_Vendor");
+                if (entityLocation != null)
+                    _repositoryAddress.Remove(entityLocation);
 
-            // Remove the entity from the repository.
-            _repository.Remove(entityUser);
+                var entityContact = _repositoryContact.Get(x => x.TableKeyId == id && x.TableName == "Master_Vendor");
+                if (entityContact != null)
+                    _repositoryContact.Remove(entityContact);
 
-            // Save changes to the database asynchronously.
-            await _unitOfWork.SaveChangesAsync();
+                _repository.Remove(entityUser);
 
-            // Return a success operation indicating successful deletion.
-            return DBOperation.Success;
+                await _unitOfWork.SaveChangesAsync();
+
+                // Return a success operation indicating successful deletion.
+                return DBOperation.Success;
+            }
         }
 
 
