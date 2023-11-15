@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class MasterVendorModel
+    public class MasterVendorModel : GlobalAuditFields
     {
         public int Id { get; set; }
 
@@ -22,8 +22,6 @@ namespace Eltizam.Business.Models
         public string? BusinessType { get; set; }
         public string? CompanyDescription { get; set; }
         public bool Status { get; set; }
-        public int? CreatedBy { get; set; }
-        public int? ModifiedBy { get; set; }
         public MasterAddressEntity? Address { get; set; }
         public MasterContactModel? Contact { get; set; }
     }

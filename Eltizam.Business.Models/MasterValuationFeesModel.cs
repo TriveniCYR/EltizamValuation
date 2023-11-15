@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class MasterValuationFeesModel
+    public class MasterValuationFeesModel: GlobalAuditFields
     {
         public int Id { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -42,10 +42,8 @@ namespace Eltizam.Business.Models
         public string? ValuationFeeType { get; set; }
         public string? PropertyType { get; set; }
         public string? ClientType { get; set; }
-        public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int? ModifiedBy { get; set; }
         //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? FixedvaluationFees { get; set; }
         public bool IsActive { get; set; }
