@@ -121,7 +121,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     type.PropertyType = masterproperty.PropertyType;
                     type.IsActive = masterproperty.IsActive; 
-                    type.ModifiedBy = masterproperty.LogInUserId ?? masterproperty.ModifiedBy;
+                    type.ModifiedBy = masterproperty.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(type);
@@ -133,7 +133,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     IsActive = masterproperty.IsActive,
                     PropertyType = masterproperty.PropertyType,
-                    CreatedBy = masterproperty.LogInUserId ?? masterproperty.CreatedBy
+                    CreatedBy = masterproperty.CreatedBy
                 };  
 
                 // Insert the new entity into the repository asynchronously.

@@ -51,27 +51,38 @@
                                 <div class="flex flex-start align-item-center required isActive m-0">
                                     @if (Model.IsUserAssigned && Model.IsActive)
                                     {
-                                        <label for="" class="w-50">
+                                        @* <label for="" class="w-50">
                                             Status
 
                                             <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required />
                                             <label class="label-switch" for="addLocation"></label>
+                                            <span class="info-text"></span>
+                                        </label> *@
+                                        <label for="IsActive" class="w-50">
+                                            Status
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                            <label class="label-switch" for="IsActive"></label>
                                             <span class="info-text"></span>
                                         </label>
 
                                     }
                                     else
                                     {
-                                        
+                                        <label for="IsActive" class="w-50">
+                                            Status
+                                            <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                            <label class="label-switch" for="IsActive"></label>
+                                            <span class="info-text"></span>
+                                        </label>
                                        
 
-                                        <label for="" class="w-50">
+                                      @*   <label for="" class="w-50">
                                             Status
 
                                             <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required />
                                             <label class="label-switch" for="addLocation"></label>
                                             <span class="info-text"></span>
-                                        </label>
+                                        </label> *@
                                     }
                                 </div>
 

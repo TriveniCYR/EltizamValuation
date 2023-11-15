@@ -141,8 +141,7 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> AddUpdateMasterVendor(MasterVendorModel masterVendortModel)
         {
-            var By = _helper.GetLoggedInUser().UserId;
-            // Create MasterClient and MasterClientContact objects.
+           // Create MasterClient and MasterClientContact objects.
             MasterVendor objVendor;
             MasterAddress objAddress;
             MasterContact objContact;
@@ -169,7 +168,7 @@ namespace Eltizam.Business.Core.Implementation
                     objVendor.BusinessType = masterVendortModel.BusinessType;
                     objVendor.CompanyDescription = masterVendortModel.CompanyDescription;
                     objVendor.Status = masterVendortModel.Status;
-                    objVendor.ModifiedBy = masterVendortModel.ModifiedBy ?? By;
+                    objVendor.ModifiedBy = masterVendortModel.ModifiedBy;
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objVendor);
@@ -198,7 +197,7 @@ namespace Eltizam.Business.Core.Implementation
                 // Create a new MasterClient entity from the model for insertion.
                 objVendor = _mapperFactory.Get<MasterVendorModel, MasterVendor>(masterVendortModel);
                 objVendor.CreatedDate = AppConstants.DateTime;
-                objVendor.ModifiedBy = masterVendortModel.CreatedBy ?? By;
+                objVendor.CreatedBy = masterVendortModel.CreatedBy;
                 // Insert the new entity into the repository asynchronously.
                 _repository.AddAsync(objVendor);
                 // Save changes to the database asynchronously.
@@ -235,7 +234,7 @@ namespace Eltizam.Business.Core.Implementation
                         objAddress.AlternatePhone = entityAddress.AlternatePhone;
                         objAddress.Landlinephone = entityAddress.Landlinephone;
                         objAddress.IsActive = entityAddress.IsActive;
-                        objAddress.ModifiedBy = masterVendortModel.ModifiedBy ?? By;
+                        objAddress.ModifiedBy = masterVendortModel.ModifiedBy;
                         _repositoryAddress.UpdateAsync(objAddress);
                         _repositoryAddress.UpdateGraph(objAddress, EntityState.Modified);
                         await _unitOfWork.SaveChangesAsync();
@@ -250,7 +249,7 @@ namespace Eltizam.Business.Core.Implementation
                     //objAddress.IsActive = masterVendortModel.IsActive;
                     objAddress.TableKeyId = objVendor.Id;
                     objAddress.TableName = "Master_Vendor";
-                    objAddress.CreatedBy = masterVendortModel.CreatedBy ?? By;
+                    objAddress.CreatedBy = masterVendortModel.CreatedBy;
                     _repositoryAddress.AddAsync(objAddress);
                     await _unitOfWork.SaveChangesAsync();
 
@@ -270,7 +269,7 @@ namespace Eltizam.Business.Core.Implementation
                         objContact.Email = entityAddress.Email;
                         objContact.Mobile = entityAddress.Mobile;
                         objContact.Status = entityAddress.Status;
-                        objContact.ModifiedBy = masterVendortModel.ModifiedBy ?? By;
+                        objContact.ModifiedBy = masterVendortModel.ModifiedBy;
                         _repositoryContact.UpdateAsync(objContact);
                         _repositoryContact.UpdateGraph(objContact, EntityState.Modified);
                         await _unitOfWork.SaveChangesAsync();
@@ -286,7 +285,7 @@ namespace Eltizam.Business.Core.Implementation
                     objContact.CreatedDate = AppConstants.DateTime;
                     objContact.TableKeyId = objVendor.Id;
                     objContact.TableName = "Master_Vendor";
-                    objContact.ModifiedBy = masterVendortModel.CreatedBy ?? By;
+                    objContact.ModifiedBy = masterVendortModel.CreatedBy;
                     _repositoryContact.AddAsync(objContact);
                     // Insert the new entity into the repository asynchronously.
                     await _unitOfWork.SaveChangesAsync();

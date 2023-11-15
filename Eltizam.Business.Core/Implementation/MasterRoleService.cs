@@ -6,6 +6,7 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility.Utility;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Data;
 using System.Data.SqlClient;
@@ -51,10 +52,11 @@ namespace Eltizam.Business.Core.Implementation
                 if (objRole != null)
                 {
                     objRole = _mapperFactory.Get<MasterRoleEntity, MasterRole>(masterRoleEntity);
-                    objRole.ModifiedBy = LoggedUserId;
+                    objRole.ModifiedBy = masterRoleEntity.ModifiedBy;
                     objRole.ModifiedDate = AppConstants.DateTime;
+                    objRole.IsActive = masterRoleEntity.IsActive;
                     _repository.UpdateAsync(objRole);
-
+                    _repository.UpdateGraph(objRole, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
                 }
                 else
@@ -65,8 +67,9 @@ namespace Eltizam.Business.Core.Implementation
             else //add new user
             {
                 objRole = _mapperFactory.Get<MasterRoleEntity, MasterRole>(masterRoleEntity);
-                objRole.CreatedBy = LoggedUserId;
+                objRole.CreatedBy = masterRoleEntity.CreatedBy;
                 objRole.CreatedDate = AppConstants.DateTime;
+                objRole.IsActive = masterRoleEntity.IsActive;
                 _repository.AddAsync(objRole);
 
                 await _unitOfWork.SaveChangesAsync();
