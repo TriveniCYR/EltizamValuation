@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class MasterLocationEntity
+    public class MasterLocationEntity: GlobalAuditFields
     {
         public int Id { get; set; }
         public string? LocationName { get; set; }
@@ -29,9 +29,7 @@ namespace Eltizam.Business.Models
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-        public int? ModifiedBy { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'HomeCurrency' field is required.")]
         public int HomeCurrencyId { get; set; }
@@ -45,6 +43,7 @@ namespace Eltizam.Business.Models
         public string? RegionName { get; set; }
         public string? StatesEmirates { get; set; }
         public string? Description { get; set; }
+        public bool IsActive { get; set; }
     }
     public class MasterLocationList
     {

@@ -31,7 +31,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IAuditLogService _auditLogService;
         private readonly int? _LoginUserId;
 
-        public MasterLocationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,  IHelper helper, IConfiguration _configuration, IAuditLogService auditLogService)
+        public MasterLocationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration _configuration, IAuditLogService auditLogService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -96,7 +96,6 @@ namespace Eltizam.Business.Core.Implementation
         {
 
             MasterLocation objLocation;
-            var By = _helper.GetLoggedInUser().UserId;
             string MainTableName = Enum.GetName(TableNameEnum.Master_Location);
             int MainTableKey = entityLocation.Id;
 
@@ -104,7 +103,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 MasterLocation OldEntity = null;
                 OldEntity = _repository.GetNoTracking(entityLocation.Id);
-                objLocation = _repository.Get(entityLocation.Id); 
+                objLocation = _repository.Get(entityLocation.Id);
 
                 if (objLocation != null)
                 {
@@ -117,9 +116,9 @@ namespace Eltizam.Business.Core.Implementation
                     objLocation.Longitude = entityLocation.Longitude;
                     objLocation.Status = entityLocation.Status;
                     objLocation.LocationName = entityLocation.LocationName;
-                    //objLocation.ModifiedDate = AppConstants.DateTime;
-                    //objLocation.ModifiedBy = entityLocation.CreatedBy;
-                    objLocation.ModifiedBy = entityLocation.ModifiedBy ?? By;
+                    objLocation.ModifiedDate = AppConstants.DateTime;
+                    objLocation.IsActive = entityLocation.IsActive;
+                    objLocation.ModifiedBy = entityLocation.ModifiedBy;
 
                     _repository.UpdateAsync(objLocation);
                     _repository.UpdateGraph(objLocation, EntityState.Modified);
@@ -146,12 +145,12 @@ namespace Eltizam.Business.Core.Implementation
                 objLocation.HomeCurrencyId = entityLocation.HomeCurrencyId;
                 objLocation.ForeignCurrencyId = entityLocation.ForeignCurrencyId;
                 objLocation.Status = entityLocation.Status;
-                objLocation.CreatedBy = entityLocation.CreatedBy ?? By;
-
+                objLocation.CreatedBy = entityLocation.CreatedBy;
+                objLocation.IsActive = entityLocation.IsActive;
                 _repository.AddAsync(objLocation);
                 await _unitOfWork.SaveChangesAsync();
             }
-          //  await _unitOfWork.SaveChangesAsync();
+            //  await _unitOfWork.SaveChangesAsync();
             if (objLocation.Id == 0)
                 return DBOperation.Error;
 
