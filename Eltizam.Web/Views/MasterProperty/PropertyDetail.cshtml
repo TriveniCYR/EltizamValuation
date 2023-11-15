@@ -163,12 +163,14 @@
                                         {
                                             @for (int z = 0; z < Model.AmenityList.Count; z++)
                                             {
-                                                <label for="" class="position-relative checkboxBtn w-30 mr-20">
+                                                var amt = @Model.AmenityList[z];
+                                                <label for="" class="position-relative checkboxBtn w-30">
                                                     @Html.HiddenFor(m => m.AmenityList[z].Id)
                                                     @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
                                                     @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
                                                     @Html.CheckBoxFor(model => Model.AmenityList[z].IsActive, new { @disabled=htmlAttributes, @class = "checkbox-checked", @checked = "checked" })
-                                                    <p>@Model.AmenityList[z].AmenityName</p>
+                                                    <p>@amt.AmenityName</p>
+                                                    <img src="/assets/@amt.Icon" class="amenitiesIcon"/>
                                                 </label>
                                             }
                                         }

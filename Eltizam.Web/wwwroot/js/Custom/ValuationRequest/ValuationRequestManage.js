@@ -488,18 +488,16 @@ function BindPropertyDetailById(Id) {
             document.getElementById('AgeOfConstruction').value = response._object.ageOfConstruction;
             document.getElementById('Parking').value = response._object.parking;
             document.getElementById('ParkingBayNo').value = response._object.parkingBayNo;
-            document.getElementById('Description').value = response._object.description;
-            //AmenityList = {}
-            var AmenityList = response._object.amenityList;
-            // ViewBag.AmenityList = AmenityList;
-
+            document.getElementById('Description').value = response._object.description; 
+            var AmenityList = response._object.amenityList;  
 
             for (i = 0; i < response._object.amenityList.length; i++) {
                 //var _id = response._object.amenityList[i].id
                 if (response._object.amenityList[i].isActive == true) {
+                    var ob = response._object.amenityList[i];
                     Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
-                        '<input checked data-val="true"   name="AmenityList[' + response._object.amenityList[i].id + '].IsActive" type="checkbox" text="[' + response._object.amenityList[i].amenityName + ']" value="true"/> ' + '<p> ' + response._object.amenityList[i].amenityName + '  </p>' +
-                        '</label>')
+                        '<input checked data-val="true"   name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
+                        '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
                 }
                 
             }

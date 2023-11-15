@@ -410,55 +410,41 @@
                                                     {
                                                         @for (int z = 0; z < Model.AmenityList.Count; z++)
                                                         {
+                                                            var amt = @Model.AmenityList[z];
                                                             <label for="" class="position-relative checkboxBtn w-30 mr-20">
                                                                 @Html.HiddenFor(m => m.AmenityList[z].Id)
                                                                 @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
                                                                 @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
                                                                 @Html.CheckBoxFor(model => Model.AmenityList[z].IsActive, new { @class = "checkbox-checked", @checked = "checked" })
-                                                                <p>@Model.AmenityList[z].AmenityName</p>
+                                                                <p>@amt.AmenityName</p>
+                                                                <img src="/assets/@amt.Icon" class="amenitiesIcon">
                                                             </label>
                                                         }
                                                     }
                                                 }
                                             </div>
-                                        </div>
-
-
-
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-
-
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div> 
 
                             <div class="text-right buttonArea bodyContent">
-                                <button type="button" class="lineBtn greyBtn">Cancel</button>
-
+                                <button type="button" class="lineBtn greyBtn">Cancel</button> 
 
                                 @if (roleId == (int)RoleEnum.Admin)
                                 {
-                                    <button type="submit" class="blueBtn" style="width:100px">Save</button>
-
-                                }
-
+                                    <button type="submit" class="blueBtn" style="width:100px">Save</button> 
+                                } 
 
                                 @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
-                                {
-
+                                { 
                                     <button type="button" class="blueBtn" id="approveStatus" style="width:100px">
                                         Save
                                     </button>
-                                }
-
+                                } 
                             </div>
-                        </form>
-
-                    </div>
-
-
+                        </form> 
+                    </div> 
                 </div>
 
                 <div id="profile2" class="tabcontent">
