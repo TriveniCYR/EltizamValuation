@@ -448,15 +448,26 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> Delete(int id)
         {
-            var entityDepartment = _repository.Get(x => x.Id == id);
-
-            if (entityDepartment == null)
+            var entityUser = _repository.Get(x => x.Id == id);
+            if (entityUser == null)
                 return DBOperation.NotFound;
+            else
+            {
+                var entityLocation = _addressRepository.Get(x => x.TableKeyId == id && x.TableName == "Master_User");
+                if (entityLocation != null)
+                    _addressRepository.Remove(entityLocation);
 
-            _repository.Remove(entityDepartment);
+                var entityContact = _documentRepository.Get(x => x.TableKeyId == id && x.TableName == "Master_User");
+                if (entityContact != null)
+                    _documentRepository.Remove(entityContact);
 
-            await _unitOfWork.SaveChangesAsync(); 
-            return DBOperation.Success;
+                _repository.Remove(entityUser);
+
+                await _unitOfWork.SaveChangesAsync();
+
+                // Return a success operation indicating successful deletion.
+                return DBOperation.Success;
+            }
         }
 
         public async Task<DBOperation> ChangePassword(ChangePasswordModel entityUser)
