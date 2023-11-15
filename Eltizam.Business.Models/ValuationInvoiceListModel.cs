@@ -26,6 +26,11 @@ namespace Eltizam.Business.Models
         public string? AccountBankName { get; set; }
         public string? AccountHolderName { get; set; }
         public DateTime? TransactionDate { get; set; }
+        public DateTime? ChequeTransactionDate { get; set; }
+        public DateTime? CardTransactionDate { get; set; }
+        public DateTime? BankTransactionDate { get; set; }
+        public int? TransactionId { get; set; }
+        public DateTime? ChequeRecievedDate { get; set; }
         public string? Note { get; set; }
         public int? CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }

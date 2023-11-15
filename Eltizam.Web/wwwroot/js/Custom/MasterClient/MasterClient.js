@@ -6,7 +6,7 @@ $(document).ready(function () {
 function ConfirmationDeleteClient(id) {
     $('#DeleteClientModel #Id').val(id);
 }
-function DeleteClient() {
+function DeletedClient() {
     debugger;
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteClientModel #Id').val();
@@ -17,6 +17,7 @@ function DeleteClient() {
     }
 }
 function DeleteClientByIdSuccess(data) {
+    debugger
     try {
         if (data._Success === true) {
             toastr.success(RecordDelete);

@@ -539,7 +539,7 @@ function BindState(id) {
     //BindDropdowns(stateListUrl + '/' + id, state, _rpname, _val);
     $.ajax({
         type: "GET",
-        url: $('#hdnBaseURL').val() + stateListUrl + '/' + id,
+        url: BaseURL + stateListUrl + '/' + id,
         "datatype": "json",
         success: function (response) {
 
@@ -568,12 +568,12 @@ function BindCity(id) {
     var city = $("#CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";
-
+    debugger
     /*  BindDropdowns(cityListUrl + '/' + id, city, _rpname, _val);*/
 
     $.ajax({
         type: "GET",
-        url: $('#hdnBaseURL').val() + cityListUrl + '/' + id,
+        url: BaseURL + cityListUrl + '/' + id,
         "datatype": "json",
         success: function (response) {
 

@@ -3,40 +3,19 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Eltizam.Data.DataAccess.Entity;
-using Microsoft.Extensions.Configuration;
 
 namespace Eltizam.Data.DataAccess.DataContext
 {
-    public partial class EltizamDBContext : DbContext
+    public partial class EltizamDB_DevContext : DbContext
     {
-        public EltizamDBContext()
+        public EltizamDB_DevContext()
         {
         }
 
-        public EltizamDBContext(DbContextOptions<EltizamDBContext> options)
+        public EltizamDB_DevContext(DbContextOptions<EltizamDB_DevContext> options)
             : base(options)
         {
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=180.149.241.172;Initial Catalog=EltizamDB_Dev;Persist Security Info=True;User ID=eltizam_dbUser;pwd=eltizam234@#$;Connection Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;");
-            }
-        }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    var configuration = new ConfigurationBuilder()
-        //        .SetBasePath(Directory.GetCurrentDirectory())
-        //        .AddJsonFile("appsettings.json")
-        //        .Build();
-
-        //    var connectionString = configuration.GetConnectionString("AppDb");
-        //    optionsBuilder.UseSqlServer(connectionString);
-        //}
 
         public virtual DbSet<Dictionary> Dictionaries { get; set; } = null!;
         public virtual DbSet<EmailLogHistory> EmailLogHistories { get; set; } = null!;
@@ -83,7 +62,14 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<ValuationRequest> ValuationRequests { get; set; } = null!;
         public virtual DbSet<ValuationRequestStatus> ValuationRequestStatuses { get; set; } = null!;
 
-        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=180.149.241.172;Initial Catalog=EltizamDB_Dev;Persist Security Info=True;User ID=eltizam_dbUser;pwd=eltizam234@#$;Connection Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1103,6 +1089,8 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.CheckNumer)
                     .HasMaxLength(500)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ChequeRecievedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 

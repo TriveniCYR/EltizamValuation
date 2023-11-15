@@ -2,8 +2,6 @@
 @model Eltizam.Business.Models.ValuationInvoiceListModel;
 
 @inject IConfiguration Configuration
-@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
-@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Invoice";
@@ -29,6 +27,7 @@
             </div>
         </div>
         <div class="bodyContent">
+            <h3>Valuation Request Id : @Html.DisplayFor(model => model.ValuationRequestId)  &  ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)</h3>
             <h3 class="ptrl-20">Select Payment Mode</h3>
             <div class="paymentOption">
                 <div class="payTab">
@@ -47,10 +46,10 @@
                 <div id="pay1" class="payTabContent">
                     <div class="flex buttonArea justify-between ptrl-20">
                         <h3>Add Cash Payment Details</h3>
-                        @if (ViewBag.IsView != 1)
+                        @* @if (ViewBag.IsView != 1)
                         {
                             <button type="button" class="blueBtn" onclick="SaveCashInvoice()">Save</button>
-                        }
+                        } *@
                     </div>
                     <div class="inputSearchs">
                         <div class="tabSection">
@@ -72,6 +71,8 @@
                                 <label for="" class="w-50">
                                     <p class="m-0">Date<span class="text-danger">*</span></p>
                                     <input type="date" id="TransactionDate" class="disabletxtbox">
+                                    @* <input type="date" id="TransactionDate" name="TransactionDate" asp-for="TransactionDate" class="disabletxtbox"> *@
+
                                 </label>
                             </div>
 
@@ -106,6 +107,7 @@
                                 <label for="" class="w-50">
                                     <p class="m-0">Date<span class="text-danger">*</span></p>
                                     <input type="date" id="ChequeTransactionDate" class="disabletxtbox">
+                                    @* <input type="date" id="ChequeTransactionDate" name="ChequeTransactionDate" asp-for="ChequeTransactionDate" class="disabletxtbox"> *@
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Cheque Number<span class="text-danger">*</span></p>
@@ -159,11 +161,11 @@
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Date<span class="text-danger">*</span></p>
-                                    <input type="date" id="CardTransactionDate" class="disabletxtbox">
+                                    <input type="date" id="CardTransactionDate" name="CardTransactionDate">
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Transaction ID<span class="text-danger">*</span></p>
-                                    <input type="number" id="TransactionId" placeholder="enter Transaction ID" class="disabletxtbox">
+                                    <input type="number" id="CardTransactionId" placeholder="enter Transaction ID" class="disabletxtbox">
                                 </label>
                             </div>
                             <div class="flex mb-28">
@@ -217,10 +219,13 @@
                                 <label for="" class="w-50">
                                     <p class="m-0">Date<span class="text-danger">*</span></p>
                                     <input type="date" id="BankTransactionDate" class="disabletxtbox">
+
+                                    @* <input type="date" id="BankTransactionDate" name="BankTransactionDate" asp-for="BankTransactionDate" class="disabletxtbox"> *@
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Transaction ID<span class="text-danger">*</span></p>
-                                    <input type="number" id="TransactionId" placeholder="enter Transaction ID" class="disabletxtbox">
+                                    <input type="number" id="BankingTransactionId" placeholder="enter Transaction ID" class="disabletxtbox">
+
                                 </label>
                             </div>
                             <div class="flex mb-28">
@@ -302,6 +307,15 @@
                 </button>
                 </div>
                 } *@
+                <div class="text-right ptrl-20 buttonArea bodyContent plr-0">
+                    <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                    @if (Model.Id == 0)
+                    {
+                        <button type="button" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="SaveCashInvoice()">
+                            Save
+                        </button>
+                    }
+                </div>
             </div>
         </div>
     </div>

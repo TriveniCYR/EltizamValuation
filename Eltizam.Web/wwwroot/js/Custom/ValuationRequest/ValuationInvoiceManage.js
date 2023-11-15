@@ -24,6 +24,8 @@ var InvoiceRequest = {
     'ExpireDate': '',
     'AccountBankName': '',
     'AccountHolderName': '',
+    'TransactionId': '',
+    'ChequeRecievedDate': '',
     'Note': ''
 
 };
@@ -100,6 +102,10 @@ function SaveChequeInvoice() {
         toastr.error("Enter Transaction Date.");
         return false;
     }
+    else if (chequeRecievedDate == '') {
+        toastr.error("Enter Cheque Recieved Date.");
+        return false;
+    }
     else if (chequeNumber == '') {
         toastr.error("Enter Cheque No.");
         return false;
@@ -117,6 +123,7 @@ function SaveChequeInvoice() {
     InvoiceRequest.CheckNumer = chequeNumber;
     InvoiceRequest.CheckBankName = chequeBankName;
     InvoiceRequest.CheckDate = chequeDate;
+    InvoiceRequest.ChequeRecievedDate = chequeRecievedDate;
     SaveInvoice(InvoiceRequest);
 }
 
@@ -135,7 +142,7 @@ function SaveCreditCardInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
     let amouont = $("#CardAmount").val();
     let transactionDate = $("#CardTransactionDate").val();
-    let transactionId = $("#TransactionId").val();
+    let transactionId = $("#CardTransactionId").val();
     let creditCardNumber = $("#CreditCardNumber").val();
     let bankName = $("#CardBankName").val();
     let nameOnCard = $("#NameOnCard").val();
@@ -166,6 +173,10 @@ function SaveCreditCardInvoice() {
         toastr.error("Enter Holder Name.");
         return false;
     }
+    else if (transactionId == '') {
+        toastr.error("Enter Transaction Id.");
+        return false;
+    }
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
@@ -176,6 +187,7 @@ function SaveCreditCardInvoice() {
     InvoiceRequest.CardBankName = bankName;
     InvoiceRequest.CardHolderName = nameOnCard;
     InvoiceRequest.ExpireDate = expiryDate;
+    InvoiceRequest.TransactionId = transactionId;
     SaveInvoice(InvoiceRequest);
 }
 
@@ -205,7 +217,7 @@ function SaveNetBankingInvoice() {
     let transactionStatusId = $("#TransactionStatusId").val();
     let amouont = $("#BankAmount").val();
     let transactionDate = $("#BankTransactionDate").val();
-    let transactionId = $("#TransactionId").val();
+    let transactionId = $("#BankingTransactionId").val();
     let bankName = $("#BankName").val();
     let accountNumber = $("#AccountNumber").val();
     let hdnReferenceNo = $("#hdnReferenceNo").val();
@@ -230,6 +242,10 @@ function SaveNetBankingInvoice() {
         toastr.error("Enter Account Number.");
         return false;
     }
+    else if (transactionId == '') {
+        toastr.error("Enter Transaction Id.");
+        return false;
+    }
     InvoiceRequest.TransactionDate = transactionDate;
     InvoiceRequest.Amount = amouont;
     InvoiceRequest.TransactionStatusId = transactionStatusId;
@@ -238,6 +254,7 @@ function SaveNetBankingInvoice() {
     InvoiceRequest.TransactionModeId = 4;
     InvoiceRequest.BankName = bankName;
     InvoiceRequest.AccountNumber = accountNumber;
+    InvoiceRequest.TransactionId = transactionId;
     SaveInvoice(InvoiceRequest);
 }
 
@@ -285,14 +302,17 @@ function GetInvoiceDetail(id){
                 else if (modeId == 2) {
                     document.getElementById('ChequeAmount').value = response._object.amount;
                     document.getElementById('ChequeTransactionDate').value = response._object.transactionDate;
+                    document.getElementById('ChequeRecievedDate').value = response._object.chequeRecievedDate;
                 }
                 else if (modeId == 3) {
                     document.getElementById('CardAmount').value = response._object.amount;
                     document.getElementById('CardTransactionDate').value = response._object.transactionDate;
+                    document.getElementById('CardTransactionId').value = response._object.TransactionId;
                 }
                 else if (modeId == 4) {
                     document.getElementById('BankAmount').value = response._object.amount;
                     document.getElementById('BankTransactionDate').value = response._object.transactionDate;
+                    document.getElementById('BankingTransactionId').value = response._object.TransactionId;
                 }
                 document.getElementById('ChequeNumber').value = response._object.checkNumer;
                 document.getElementById('ChequeBankName').value = response._object.checkBankName;
@@ -319,4 +339,16 @@ function GetInvoiceDetail(id){
             $("#loader").hide();
         }
     });
+}
+function formatDateTo_ddMMMyyyy(date) {
+    const months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
 }
