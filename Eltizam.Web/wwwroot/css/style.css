@@ -2166,3 +2166,47 @@ table.dashboardTable {
 #profileMenu li:hover i {
     color: white;
 }
+
+
+.checkboxColumn {
+    display: flex;
+    padding: 19px 15px;
+    justify-content: space-around;
+}
+
+table.multipleValueTable {
+    /* width: auto; */
+    margin-top: 10px;
+    /* min-width: 50%; */
+    border: 1px solid var(--greyText);
+}
+
+    table.multipleValueTable th, table.multipleValueTable td {
+        /* background: white;
+    color: var(--black); */
+        border: 1px solid var(--greyText);
+        border-bottom: 0;
+        border-top: 0;
+        padding: 10px 0;
+    }
+
+    table.multipleValueTable th {
+        background-color: #ebf5ff;
+        color: var(--black);
+        border-bottom: 1px solid var(--greyText);
+    }
+
+
+/* amenities Icon */
+.amenitiesIcon {
+    position: absolute;
+    right: 18px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    filter: brightness(0.5);
+}
+
+.checkboxBtn input[type="checkbox"]:checked ~ .amenitiesIcon {
+    filter: none;
+}
