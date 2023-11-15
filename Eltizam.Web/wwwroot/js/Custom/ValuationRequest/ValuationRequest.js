@@ -72,33 +72,25 @@ function InitializeValutionRequestDataList() {
 
     var columnObject = [
 
-
         {
             "data": "id", "name": "Id",
-            "render": function (data, type, row, meta) {
-                return '<div class="checkboxColumn"><input type="checkbox" value="' + row.id + '"><span>' + row.id + '</span></div>';
+            "render": function (data, type, row, data) {
+                return '<div class="checkboxColumn"><input type="checkbox" value="' + row.id + '"><div>';
             }
         },
-
-       
         {
             "data": "referenceNO", "name": "ReferenceNO"
         },
 
-
-       
-       
         {
             "data": "clientName", "name": "Client Name"
         },
-       
         {
             "data": "clientType", "name": "Client Type"
         },
         {
             "data": "location", "name": "Location"
         },
-       
         {
             "data": "propertyName", "name": "Property Use Type"
         },

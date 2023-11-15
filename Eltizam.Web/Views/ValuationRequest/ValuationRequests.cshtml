@@ -32,7 +32,7 @@
                 <input type="hidden" id="isDeletePerm" value="@isDelete" />
                 <input type="hidden" id="isAddPerm" value="@isAdd" />
                 <input type="hidden" id="isApprovePerem" value="@isApprove" />
-                @if (roleId != 2 && roleId != 3)
+                @if (roleId == (int)RoleEnum.Admin)
                 {
                     <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
                         <button class="flex align-item-center blueBtn mr-12" id="addNew">
@@ -158,7 +158,7 @@
                 <table id="ValuationRequestTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                           <th>@MasterLocalizer["Id"] </th>
+                            <th>@MasterLocalizer["Id"] </th>
                             <th>@MasterLocalizer["Val No#"] </th>
                             <th>@MasterLocalizer["Client Name"] </th>
                             <th>@MasterLocalizer["Client Type"] </th>
