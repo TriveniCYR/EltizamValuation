@@ -82,8 +82,13 @@ function ConfirmationDeleteLocation(id) {
     $('#DeleteLocationModel #Id').val(id);
 }
 function DeleteLocation() {
-    var tid = $('#DeleteLocationModel #Id').val();
-    ajaxServiceMethod(BaseURL + DeleteLocationByIdUrl + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+    if (IsDeletePerm) {
+        var tid = $('#DeleteLocationModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeleteLocationByIdUrl + "/" + tid, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
 }
 function DeleteUserByIdSuccess(data) {
     try {
