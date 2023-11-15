@@ -497,7 +497,7 @@ function BindPropertyDetailById(Id) {
                     var ob = response._object.amenityList[i];
                     Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
                         '<input checked data-val="true"   name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
-                        '<img src="/assets/"' + ob.icon + '" class="amenitiesIcon" /> </label>')
+                        '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
                 }
                 
             }

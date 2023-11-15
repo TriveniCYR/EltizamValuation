@@ -178,7 +178,7 @@
                                              @for (int z = 0; z < Model.AmenityList.Count; z++)
                                             {
                                                 var amt = @Model.AmenityList[z];
-                                                <label for="" class="position-relative checkboxBtn w-30 mr-20">
+                                                <label for="" class="position-relative checkboxBtn w-30">
                                                     @Html.HiddenFor(m => m.AmenityList[z].Id)
                                                     @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
                                                     @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
