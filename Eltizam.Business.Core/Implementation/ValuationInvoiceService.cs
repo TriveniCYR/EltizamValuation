@@ -7,7 +7,6 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
-using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,7 +22,6 @@ namespace Eltizam.Business.Core.Implementation
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<ValuationInvoice> _repository;
         private readonly IHelper _helper;
@@ -31,7 +29,7 @@ namespace Eltizam.Business.Core.Implementation
         #endregion Properties
 
         #region Constructor
-        public ValuationInvoiceService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public ValuationInvoiceService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
           IHelper helper,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {

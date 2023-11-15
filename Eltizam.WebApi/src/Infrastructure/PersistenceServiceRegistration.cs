@@ -55,6 +55,11 @@ namespace ValuationWeb.Persistence
             services.AddTransient<IMasterPropertyService, MasterPropertyService>();
             services.AddTransient<IMasterPropertyTypeService, MasterPropertyTypeService>();
             services.AddTransient<IMasterPropertySubTypeService, MasterPropertySubTypeService>();
+            services.AddTransient<IValuationRequestStatusService, ValuationRequestStatusService>();
+            services.AddTransient<IValuationQuatationService, ValuationQuatationService>();
+            services.AddTransient<IValuationInvoiceService, ValuationInvoiceService>();
+            services.AddTransient<IMasterOwnershipTypeService, MasterOwnershipTypeService>();
+            services.AddTransient<IAuditLogService, AuditLogService>();
             return services;
         }
     }

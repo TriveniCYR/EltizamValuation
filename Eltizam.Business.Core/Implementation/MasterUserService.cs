@@ -246,7 +246,7 @@ namespace Eltizam.Business.Core.Implementation
         /// <returns></returns>
         public async Task<DBOperation> Upsert(MasterUserModel entityUser)
         {
-            var By = _helper.GetLoggedInUser().UserId;
+            //var By = _helper.GetLoggedInUser().UserId;
             if (!string.IsNullOrEmpty(entityUser.Password) && entityUser.Id <= 0)
             {
                 entityUser.Password = UtilityHelper.GenerateSHA256String(entityUser.Password);
@@ -287,7 +287,7 @@ namespace Eltizam.Business.Core.Implementation
                     objUser.IsActive = entityUser.IsActive; 
                     objUser.RoleId = entityUser.RoleId; 
                     objUser.Email = entityUser.Address?.Email ?? entityUser.Email;
-                    objUser.ModifiedBy = entityUser.ModifiedBy ?? By;
+                    objUser.ModifiedBy = entityUser.ModifiedBy;
 
                     
                     _repository.UpdateAsync(objUser);  
@@ -302,7 +302,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 objUser = _mapperFactory.Get<MasterUserModel, MasterUser>(entityUser);
                 objUser.IsActive = entityUser.IsActive;
-                objUser.CreatedBy = entityUser.CreatedBy ?? By;
+                objUser.CreatedBy = entityUser.CreatedBy;
 
                 _repository.AddAsync(objUser);
                 await _unitOfWork.SaveChangesAsync();
@@ -341,7 +341,7 @@ namespace Eltizam.Business.Core.Implementation
                             objUserAddress.AlternatePhone = entityAddress.AlternatePhone;
                             objUserAddress.Landlinephone = entityAddress.Landlinephone;
                             objUserAddress.IsActive = entityAddress.IsActive; 
-                            objUserAddress.ModifiedBy = entityUser.ModifiedBy ?? By;
+                            objUserAddress.ModifiedBy = entityUser.ModifiedBy;
 
                             _addressRepository.UpdateAsync(objUserAddress);
                             _addressRepository.UpdateGraph(objUserAddress, EntityState.Modified);
@@ -357,7 +357,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserAddress.IsActive = entityUser.IsActive;
                         objUserAddress.TableKeyId = objUser.Id;
                         objUserAddress.TableName = Enum.GetName(TableNameEnum.Master_User);
-                        objUserAddress.CreatedBy = entityUser.CreatedBy ?? By;
+                        objUserAddress.CreatedBy = entityUser.CreatedBy;
 
                         _addressRepository.AddAsync(objUserAddress);
                         await _unitOfWork.SaveChangesAsync();
@@ -382,7 +382,7 @@ namespace Eltizam.Business.Core.Implementation
                             objUserQualification.Grade = Qlfc.Grade;
                             objUserQualification.YearOfInstitute = Qlfc.YearOfInstitute;
                             objUserQualification.IsActive = Qlfc.IsActive;
-                            objUserQualification.ModifiedBy = entityUser.ModifiedBy ?? By;
+                            objUserQualification.ModifiedBy = entityUser.ModifiedBy;
 
 
                             _qualifyRepository.UpdateAsync(objUserQualification);
@@ -399,7 +399,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserQualification.IsActive = entityUser.Qualification.IsActive;
                         objUserQualification.TableKeyId = objUser.Id;
                         objUserQualification.TableName = Enum.GetName(TableNameEnum.Master_User); 
-                        objUserQualification.CreatedBy = entityUser.CreatedBy ?? By;
+                        objUserQualification.CreatedBy = entityUser.CreatedBy;
 
                         _qualifyRepository.AddAsync(objUserQualification);
                         await _unitOfWork.SaveChangesAsync();
@@ -418,7 +418,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserDocument.FileName = doc.FileName;
                         objUserDocument.FilePath = doc.FilePath;
                         objUserDocument.FileType = doc.FileType; 
-                        objUserDocument.CreatedBy = entityUser.CreatedBy ?? By;
+                        objUserDocument.CreatedBy = entityUser.CreatedBy;
 
                         _documentRepository.AddAsync(objUserDocument);
                         await _unitOfWork.SaveChangesAsync();

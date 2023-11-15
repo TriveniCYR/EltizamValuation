@@ -8,7 +8,6 @@ using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Utility;
-using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,7 +29,7 @@ namespace Eltizam.Business.Core.Implementation
 
         private IRepository<MasterOwnershipType> _repository { get; set; }
         private readonly IHelper _helper;
-        public MasterOwnershipTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public MasterOwnershipTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
                                   IHelper helper,
                                  Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {

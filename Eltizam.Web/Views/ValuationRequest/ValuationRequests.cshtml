@@ -19,10 +19,10 @@
     var isEdit = objPermssion.Edit ? 1 : 0;
     var isApprove = objPermssion.Approve ? 1 : 0;
     var roleId = objPermssion.RoleId;
-   
-   
+
+
 }
- 
+
 
 <div class="flex">
     <main class="w-100">
@@ -32,7 +32,7 @@
                 <input type="hidden" id="isDeletePerm" value="@isDelete" />
                 <input type="hidden" id="isAddPerm" value="@isAdd" />
                 <input type="hidden" id="isApprovePerem" value="@isApprove" />
-                @if (roleId != 2 && roleId != 3 )
+                @if (roleId != 2 && roleId != 3)
                 {
                     <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
                         <button class="flex align-item-center blueBtn mr-12" id="addNew">
@@ -44,10 +44,10 @@
 
                 @* @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                 {
-                    <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">
-                        <img src="../assets/user-shield.svg" alt="user">
-                        ASSIGN
-                    </button>
+                <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">
+                <img src="../assets/user-shield.svg" alt="user">
+                ASSIGN
+                </button>
                 } *@
 
                 <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">
@@ -55,8 +55,8 @@
                     ASSIGN
                 </button>
 
-                
-               
+
+
                 <div class="accordion-content inputSearchs" id="assignToggle" style="display:none">
                     <div class="flex justify-between">
                         <h3>Assign</h3>
@@ -90,35 +90,35 @@
             <div class="accordion-content inputSearchs">
 
                 <h3 class="text-center">Advanced Search</h3>
-                <form> 
+                <form>
                     <div class="flex">
                         <label for="userName">
                             User Name
                             @Html.TextBoxFor(model => model.UserName, new {   @placeholder = @SharedLocalizer["User Name"] })
                         </label>
                         <label for="ClientName">
-                            Client Name 
+                            Client Name
                             @Html.TextBoxFor(model => model.ClientName, new {   @placeholder = @SharedLocalizer["ClientName"] })
                         </label>
                         <label for="PropertyName">
-                            Property Name 
+                            Property Name
                             @Html.TextBoxFor(model => model.PropertyName, new {  @placeholder = @SharedLocalizer["PropertyName"] })
                         </label>
                         <label for="">
                             <p class="m-0">
-                                Property Type 
+                                Property Type
                             </p>
-                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { }) 
+                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { })
                         </label>
 
                     </div>
-                    <div class="flex"> 
+                    <div class="flex">
                         <label for="Method of Valuation">
                             <p class="m-0">Method of Valuation</p>
                             @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new {  @placeholder = @SharedLocalizer[" Select ResourceType"] })
                         </label>
                         <label for="">
-                            <p class="m-0">Request Status </p> 
+                            <p class="m-0">Request Status </p>
                             @Html.DropDownListFor(model => model.RequestStatusId, new List<SelectListItem> { }, new { })
 
                         </label>
@@ -130,9 +130,9 @@
                             <p class="m-0">Emirate/State</p>
                             @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @onchange = "BindCity(this.options[this.selectedIndex].value)" })
                         </label>
-                        </div>
+                    </div>
 
-                      <div class="flex flex-start" style=" gap: 5px;">  
+                    <div class="flex flex-start" style=" gap: 5px;">
                         <label for="CityId">
                             <p class="m-0">City</p>
                             @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new {  })
@@ -144,8 +144,8 @@
                         <label for="toDate">
                             To Date
                             <input type="date" id="ToDate" name="ToDate" asp-for="ToDate">
-                        </label> 
-                    </div> 
+                        </label>
+                    </div>
 
                     <div class="text-center">
                         <button type="button" class="blueBtn" onclick="InitializeValutionRequestDataList()">Search</button>
@@ -158,11 +158,11 @@
                 <table id="ValuationRequestTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>@MasterLocalizer["Id"] </th>
+                           <th>@MasterLocalizer["Id"] </th>
                             <th>@MasterLocalizer["Val No#"] </th>
-                            <th>@MasterLocalizer["Location"] </th>
                             <th>@MasterLocalizer["Client Name"] </th>
-                            <th>@MasterLocalizer["Property Name"] </th> 
+                            <th>@MasterLocalizer["Client Type"] </th>
+                            <th>@MasterLocalizer["Location"] </th>
                             <th>@MasterLocalizer["Property Use Type"]</th>
                             <th>@MasterLocalizer["Val. Purpose"]</th>
                             <th>@MasterLocalizer["Val. Method"]</th>
@@ -214,23 +214,23 @@
     {
     @Html.Partial("_DataTablePartial")
     <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
-    
+
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequest.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestFilter.js?v=@jsVersion"></script> 
+    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestFilter.js?v=@jsVersion"></script>
 
 
     <script>
 
-       
+
         var ApproverList = "@Eltizam.Web.Helpers.APIURLHelper.GetApproverList";
-         var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
+        var RoleList = "@Eltizam.Web.Helpers.APIURLHelper.GetRoleList";
         var GetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllValuationRequest";
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
-         var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
-         var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
-          var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";
+        var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
+        var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
+        var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";
         var ValutionRequestStatusList = "@Eltizam.Web.Helpers.APIURLHelper.GetRequestStatus";
-           var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationMethod";
+        var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationMethod";
 
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";

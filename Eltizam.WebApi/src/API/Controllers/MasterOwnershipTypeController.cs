@@ -3,7 +3,6 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using Eltizam.WebApi.Filters;
 using Eltizam.WebApi.Helpers.Response;
 using System.Net;
@@ -22,7 +21,6 @@ namespace Eltizam.WebApi.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         private readonly IMasterOwnershipTypeService _OwnershipTypeService;
@@ -30,11 +28,10 @@ namespace Eltizam.WebApi.Controllers
         #endregion Properties
 
         #region Constructor
-        public MasterOwnershipTypeController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IMasterOwnershipTypeService OwnershipTypeService)
+        public MasterOwnershipTypeController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, IMasterOwnershipTypeService OwnershipTypeService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
-            _stringLocalizerError = stringLocalizerError;
             _ExceptionService = exceptionService;
             _OwnershipTypeService = OwnershipTypeService;
         }

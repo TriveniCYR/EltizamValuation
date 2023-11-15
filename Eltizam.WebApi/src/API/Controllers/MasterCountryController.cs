@@ -3,7 +3,6 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using Eltizam.WebApi.Filters;
 using Eltizam.WebApi.Helpers.Response;
 using System.Net;

@@ -5,7 +5,6 @@ using Eltizam.Resource;
 using Eltizam.WebApi.Filters;
 using Eltizam.WebApi.Helpers.Response;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using System.Net;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
@@ -20,7 +19,6 @@ namespace Eltizam.WebApi.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         private readonly IValuationInvoiceService _ValuationInvoiceService;
@@ -28,12 +26,11 @@ namespace Eltizam.WebApi.Controllers
         #endregion Properties
 
         #region Constructor
-        public ValuationInvoiceController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IStringLocalizer<Errors> stringLocalizerError, IExceptionService exceptionService, IValuationInvoiceService ValuationInvoiceService)
+        public ValuationInvoiceController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse,  IExceptionService exceptionService, IValuationInvoiceService ValuationInvoiceService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
-            _stringLocalizerError = stringLocalizerError;
-            _ExceptionService = exceptionService;
+             _ExceptionService = exceptionService;
             _ValuationInvoiceService = ValuationInvoiceService;
         }
 

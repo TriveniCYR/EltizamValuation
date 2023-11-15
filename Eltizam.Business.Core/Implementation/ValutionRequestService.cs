@@ -106,7 +106,7 @@ namespace Eltizam.Business.Core.Implementation
                             _repository.UpdateGraph(valuationEntity, EntityState.Modified);
 
                             //Do Audit Log --AUDITLOG 
-                            await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, id);
+                            //await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, id);
                         }
 
                         await _unitOfWork.SaveChangesAsync();
@@ -169,7 +169,6 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> Upsert(ValuationRequestModel entityValuation)
         {
             ValuationRequest objValuation;
-            var By = _helper.GetLoggedInUser().UserId;
             string MainTableName = Enum.GetName(TableNameEnum.ValuationRequest);
             int MainTableKey = entityValuation.Id;
             try
@@ -193,7 +192,7 @@ namespace Eltizam.Business.Core.Implementation
                         objValuation.ValuationModeId = entityValuation.ValuationModeId;
                         objValuation.PropertyId = entityValuation.PropertyId;
                         objValuation.ClientId = entityValuation.ClientId;
-
+                        objValuation.ModifiedBy = entityValuation.ModifiedBy;
                         _repository.UpdateAsync(objValuation);
                         _repository.UpdateGraph(objValuation, EntityState.Modified);
 
@@ -212,8 +211,9 @@ namespace Eltizam.Business.Core.Implementation
                     var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
 
                     objValuation = _mapperFactory.Get<ValuationRequestModel, ValuationRequest>(entityValuation);
+                    objValuation.CreatedBy= (int)entityValuation.CreatedBy;
                     objValuation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_ValuationRequest, lastReq?.Id);
-
+                    
                     _repository.AddAsync(objValuation);
                     await _unitOfWork.SaveChangesAsync();
                 }

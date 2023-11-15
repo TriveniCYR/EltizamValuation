@@ -11,7 +11,7 @@ namespace Eltizam.WebApi.Controllers
     [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [AuthorizeAttribute]
+    //[AuthorizeAttribute]
     public class AuditLogController : ControllerBase
     {
         #region Properties

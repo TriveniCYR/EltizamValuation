@@ -8,7 +8,6 @@ using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,15 +23,14 @@ namespace Eltizam.Business.Core.Implementation
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly IStringLocalizer<Errors> _stringLocalizerError;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
+       private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<ValuationQuotation> _repository { get; set; }
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
         #endregion Properties
 
         #region Constructor
-        public ValuationQuatationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IStringLocalizer<Errors> stringLocalizerError,
+        public ValuationQuatationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
           IHelper helper,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {

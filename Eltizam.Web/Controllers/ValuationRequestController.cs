@@ -99,8 +99,7 @@ namespace EltizamValuation.Web.Controllers
                 APIRepository objapi = new(_cofiguration);
 
                 //ValuationRequestModel entity = new ValuationRequestModel();
-
-                request.Id = id;
+                               request.Id = id;
                 //entity.ApproverId = request.ApproverId;
                 //entity.ValuerId = request.ValuerId;
                 //entity.ValuationModeId = request.ValuationModeId;
