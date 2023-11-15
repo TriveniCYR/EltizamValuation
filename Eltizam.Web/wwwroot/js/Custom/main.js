@@ -313,7 +313,7 @@ function ApproveRejectConfirm() {
                 screenId: $('#hdnStatusscreenId').val(),
                 comment: $('#txtStatusComment').val()
             };
-            ajaxServiceMethod($('#hdnBaseURL').val() + ApproveRejectDeletePidf, 'POST', SaveApproveRejectSuccess, SaveApproveRejectError, JSON.stringify(objIds));
+            ajaxServiceMethod(BaseURL + ApproveRejectDeletePidf, 'POST', SaveApproveRejectSuccess, SaveApproveRejectError, JSON.stringify(objIds));
         }
         $('#ApproveRejectModel').modal('hide');
     }

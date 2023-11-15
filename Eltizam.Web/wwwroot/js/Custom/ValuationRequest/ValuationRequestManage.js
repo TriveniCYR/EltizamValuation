@@ -205,8 +205,7 @@ $(document).ready(function () {
 });
 
 
-var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/
-debugger
+var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/  
 
 //// Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
 //if (selectedOption === 'Rejected') {
@@ -220,8 +219,7 @@ debugger
 //    BindValuationRequestStatus(RoleId);
 //}
 //function BindValuationRequestStatus() {
-//    /*alert("hello");*/
-//    debugger
+//    /*alert("hello");*/ 
 //    var RequestStatus = $("#StatusId");
 //    var _val = $('#hdnStatusId').val();
 //    var _rpname = "statusName";
@@ -232,20 +230,14 @@ debugger
 
 //}
 
-function BindValuationRequestStatus(roleId) {
-    debugger
-    /*alert("hello");*/
-    debugger
+function BindValuationRequestStatus(roleId) { 
     var RequestStatus = $("#StatusId");
     var _val = $('#hdnStatusId').val();
     var _rpname = "statusName";
 
     BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
 }
-function BindClientType() {
-
-    //alert("hello");
-
+function BindClientType() { 
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientTypeId').val();
     var _rpname = "clientType";
@@ -255,8 +247,7 @@ function BindClientType() {
     //    type: "GET",
     //    url: $('#hdnBaseURL').val() + ClientTypeList,
     //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
+    //    success: function (response) { 
     //        Client.empty().append('<option selected="selected" value="0">Please select</option>');
     //        for (var i = 0; i < response._object.length; i++) {
     //            Client.append($("<option></option>").val(response._object[i].id).html(response._object[i].clientType));
@@ -287,8 +278,7 @@ function BindClientByClientType(id) {
     //    type: "GET",
     //    url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
     //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
+    //    success: function (response) { 
 
     //        PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
 
@@ -316,8 +306,7 @@ function BindProperty() {
     //    type: "POST",
     //    url: $('#hdnBaseURL').val() + PropertyList,
     //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
+    //    success: function (response) { 
     //        Property.empty().append('<option selected="selected" value="0">Please select</option>');
     //        for (var i = 0; i < response.data.length; i++) {
     //            Property.append($("<option></option>").val(response.data[i].id).html(response.data[i].propertyType));
@@ -347,11 +336,8 @@ function BindPropertySub(id) {
     //    type: "GET",
     //    url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
     //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
-
-    //        PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));
-
+    //    success: function (response) { 
+    //        PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));  
     //    },
     //    failure: function (response) {
     //        alert(response.responseText);
@@ -364,10 +350,7 @@ function BindPropertySub(id) {
 }
 
 
-function BindOwnership() {
-
-    //alert("hello");
-
+function BindOwnership() { 
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
     var _rpname = "ownershipType";
@@ -377,8 +360,7 @@ function BindOwnership() {
     //    type: "POST",
     //    url: $('#hdnBaseURL').val() + OwnershipTypeList,
     //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
+    //    success: function (response) { 
     //        OwnershipType.empty().append('<option selected="selected" value="0">Please select</option>');
     //        for (var i = 0; i < response.data.length; i++) {
     //            OwnershipType.append($("<option></option>").val(response.data[i].id).html(response.data[i].ownershipType));
@@ -398,9 +380,7 @@ function BindOwnership() {
 }
 
 
-function BindPropertyDetail() {
-
-    //alert("Detail");
+function BindPropertyDetail() { 
     if (document.location.href.includes('id')) {
         var PropertyTypeId = document.getElementById("hdnPropertyType").value;
         var PropertySubTypeId = document.getElementById("hdnPropertySub").value;
@@ -498,21 +478,8 @@ function BindPropertyDetailById(Id) {
                     Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
                         '<input checked data-val="true"   name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
                         '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
-                }
-                
-            }
-
-
-            //AmenityList = response._object.amenityList;
-
-            //$("#UnitType").val = response.unitType;
-            //Property.empty().append('<option selected="selected" value="0">Please select</option>');
-            //for (var i = 0; i < response.length; i++) {
-            //    Property.append($("<option></option>").val(response[i].id).html(response[i].propertyName));
-            //}
-            //if ($('#hdnProperty').val() != 0) {
-            //    Property.val($('#hdnProperty').val());
-            //}
+                } 
+            } 
         },
         failure: function (response) {
             alert(response.responseText);
@@ -535,21 +502,15 @@ function BindState(id) {
     var state = $("#StateId");
     var _val = $('#hdnState').val();
     var _rpname = "stateName";
-
-    //BindDropdowns(stateListUrl + '/' + id, state, _rpname, _val);
+     
     $.ajax({
         type: "GET",
-        url: $('#hdnBaseURL').val() + stateListUrl + '/' + id,
+        url: BaseURL + stateListUrl + '/' + id,
         "datatype": "json",
-        success: function (response) {
-
-            /*  state.empty().append('<input type="text"  disabled>');*/
+        success: function (response) { 
             $("#StateId").val(function () {
                 return response[0].stateName;//this.value + number;
-            });
-            //for (var i = 0; i < response.values.length; i++) {
-            //    state.append().val(response.values[i].id).html(response.values[i].description);
-            //}
+            }); 
             if ($('#hdnState').val() != 0) {
                 state.val($('#hdnState').val());
             }
@@ -568,22 +529,15 @@ function BindCity(id) {
     var city = $("#CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";
-
-    /*  BindDropdowns(cityListUrl + '/' + id, city, _rpname, _val);*/
-
+     
     $.ajax({
         type: "GET",
-        url: $('#hdnBaseURL').val() + cityListUrl + '/' + id,
+        url: BaseURL + cityListUrl + '/' + id,
         "datatype": "json",
-        success: function (response) {
-
-            /*  state.empty().append('<input type="text"  disabled>');*/
+        success: function (response) {  
             $("#CityId").val(function () {
-                return response[0].cityName;//this.value + number;
-            });
-            //for (var i = 0; i < response.values.length; i++) {
-            //    state.append().val(response.values[i].id).html(response.values[i].description);
-            //}
+                return response[0].cityName; 
+            }); 
             if ($('#hdnCity').val() != 0) {
                 state.val($('#hdnCity').val());
             }
@@ -610,25 +564,20 @@ function formatDateTo_ddMMMyyyy(date) {
 
     return `${day}-${month}-${year}`;
 }
-function BindClientDetailsByClientId(Id) {
-    // var Amentiesdiv = $("#amentiesdiv");
+
+function BindClientDetailsByClientId(Id) { 
     $.ajax({
         type: Get,
         url: BaseURL + GetClientDetailById + '/' + Id,
         "datatype": "json",
-        success: function (response) {
-
-            //alert(response);
+        success: function (response) { 
             document.getElementById('ClientName').value = response._object.clientName;
-            document.getElementById('LicenseNumber').value = response._object.licenseNumber;
-            /* = response._object.trnexpiryDate;*/
+            document.getElementById('LicenseNumber').value = response._object.licenseNumber; 
+
             const inputDateString = response._object.trnexpiryDate;
             const inputDate = new Date(inputDateString);
             const formattedDate = formatDateTo_ddMMMyyyy(inputDate);
-            document.getElementById('TrnexpiryDate').value = formattedDate;
-            console.log(formattedDate);
-            //var FormateDated = new Date(response._object.trnexpiryDate)
-            //FormateDated.getDate() + FormateDated.getDay() + FormateDated.getFullYear();
+            document.getElementById('TrnexpiryDate').value = formattedDate; 
 
             document.getElementById('Trnnumber').value = response._object.trnnumber;
             //document.getElementById('Trnnumber').value = response._object.address.address1;
@@ -642,44 +591,21 @@ function BindClientDetailsByClientId(Id) {
             }
             //document.getElementById('StateId').value = response._object.address.stateId;
             //document.getElementById('CityId').value = response._object.address.cityId;
-            document.getElementById('PinCode').value = response._object.address.pinNo;
-            //document.getElementById('Trnnumber').value = response._object.trnnumber;
-            //document.getElementById('Trnnumber').value = response._object.trnnumber;
-            //document.getElementById('BuildUpAreaSqMtr').value = response._object.buildUpAreaSqMtr;
-            //document.getElementById('AgeOfConstruction').value = response._object.ageOfConstruction;
-            //document.getElementById('Parking').value = response._object.parking;
-            //document.getElementById('ParkingBayNo').value = response._object.parkingBayNo;
-            //document.getElementById('Description').value = response._object.description;
-            ////AmenityList = {}
-            // var AmenityList = response._object.amenityList;
-            // ViewBag.AmenityList = AmenityList;
+            document.getElementById('PinCode').value = response._object.address.pinNo; 
 
-            if (response._object.address != null) {
-                // $(".NewAddressTable tbody tr")
-
-                /*destoryStaticDataTable('#ClientTypeTable');*/
+            if (response._object.address != null) { 
                 $('#NewAddressTable tbody').html('');
                 //$.each(data._object, function (index, object) { //  <td>' + object.ClientTypeCode + '</td>  <td>' + object.isdClientTypeCode + '</td>  
                 $('#NewAddressTable tbody').append(' <tr><td>' + response._object.address.address1 + '</td> <td>' + response._object.address.address2 + '</td><td>' + response._object.address.countryName
                     + '</td><td>' + response._object.address.stateName + '</td><td>' + response._object.address.cityName + '</td><td>' + response._object.address.pinNo + '</td></tr>');
-                // });
-                // StaticDataTable("#ClientTypeTable");
+ 
             }
 
-            if (response._object.address != null) {
-                // $(".NewAddressTable tbody tr")
-
-                /*destoryStaticDataTable('#ClientTypeTable');*/
-                $('#NewContactTable tbody').html('');
-                //$.each(data._object, function (index, object) { //  <td>' + object.ClientTypeCode + '</td>  <td>' + object.isdClientTypeCode + '</td>  
+            if (response._object.address != null) { 
+                $('#NewContactTable tbody').html('');  
                 $('#NewContactTable tbody').append(' <tr><td>' + response._object.contact.contactPersonName + '</td> <td>' + response._object.contact.department + '</td><td>' + response._object.contact.designation
                     + '</td><td>' + response._object.contact.email + '</td><td>' + response._object.contact.mobile + '</td></tr>');
-                // });
-                // StaticDataTable("#ClientTypeTable");
             }
-
-
-
         },
         failure: function (response) {
             alert(response.responseText);
@@ -778,8 +704,7 @@ function GetValuationMethodLists() {
 }
 
 
-$('#approveStatus').on('click', function () {
-    debugger
+$('#approveStatus').on('click', function () { 
     var statusId = $("#StatusId").val();
     var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
     var Id = document.getElementById('Id').value;
@@ -787,12 +712,9 @@ $('#approveStatus').on('click', function () {
         Id: Id,
         StatusId: statusId,
         ApproverComment: approverComment
-    };
+    }; 
+    var ValutionRequestForApproverModel = data; 
 
-    var ValutionRequestForApproverModel = data;
-
-
-    debugger
     $.ajax({
         type: "POST",
         url: BaseURL + RequeStatusReview,
@@ -803,8 +725,7 @@ $('#approveStatus').on('click', function () {
         },
 
         data: JSON.stringify(ValutionRequestForApproverModel),
-        success: function (response) {
-            debugger
+        success: function (response) { 
             toastr.success(SucessMsg);
             setTimeout(function () {
                 window.location.href = "/ValuationRequest/ValuationRequests";
@@ -823,19 +744,14 @@ $('#approveStatus').on('click', function () {
 
 
 
-function BindQuatationList() {
-    debugger
+function BindQuatationList() { 
     let id = $('#hdnId').val();
     $.ajax({
         type: Get,
         url: BaseURL + ValuationQuatationList + '?requestId=' + id,
         "datatype": "json",
-        success: function (response) {
-            debugger;
-            if (response != null) {
-                debugger
-                //destoryStaticDataTable('#QuatationTable');
-                //$('#QuatationTable tbody').html('');
+        success: function (response) { 
+            if (response != null) { 
                 $.each(response, function (index, object) {
                     var html = '';
 
@@ -849,9 +765,7 @@ function BindQuatationList() {
                         + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
                 });
                 //StaticDataTable("#QuatationTable");
-            }
-
-
+            } 
         },
         failure: function (response) {
             alert(response.responseText);
@@ -869,12 +783,8 @@ function BindInvoiceList() {
         type: Get,
         url: BaseURL + ValuationInvoiceList + '?requestId=' + id,
         "datatype": "json",
-        success: function (response) {
-            debugger;
-            if (response != null) {
-                debugger
-                //destoryStaticDataTable('#QuatationTable');
-                //$('#QuatationTable tbody').html('');
+        success: function (response) { 
+            if (response != null) { 
                 $.each(response, function (index, object) {
                     var html = '';
 
@@ -886,11 +796,8 @@ function BindInvoiceList() {
 
                     $('#InvoiceTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationRequestId + '</td><td>' + object.transactionMode
                         + '</td><td>' + object.transactionStatusName + '</td><td>' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
-                });
-                //StaticDataTable("#QuatationTable");
-            }
-
-
+                }); 
+            } 
         },
         failure: function (response) {
             alert(response.responseText);
@@ -907,8 +814,7 @@ function BindInvoiceList() {
 function ConfirmationDeleteQuotation(id) {
     $('#DeleteQuotationModel #Id').val(id);
 }
-function DeleteQuotation() {
-    debugger
+function DeleteQuotation() { 
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteQuotationModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteQuotationByIdUrl + "/" + tempInAtiveID, Post, DeleteQuotationByIdSuccess, DeleteQuotationByIdError);
