@@ -97,7 +97,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 var connectionString = builder.Configuration.GetConnectionString("EltizamDBConn");
-builder.Services.AddDbContext<EltizamDBContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddDbContext<EltizamDB_DevContext>(x => x.UseSqlServer(connectionString));
 DatabaseConnection.ConnString = connectionString;
 
 //Add services here 
