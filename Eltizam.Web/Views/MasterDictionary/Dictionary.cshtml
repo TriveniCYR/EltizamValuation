@@ -27,12 +27,10 @@
                     <input type="hidden" id="isDeletePerm" value="@isDelete" />
                     <input type="hidden" id="isAddPerm" value="@isAdd" />
                     <form asp-action="MasterDictionaryManage" asp-controller="MasterDictionary" method="GET">
-                        <button class="flex align-item-center blueBtn" id="addRole">
+                        <button class="flex align-item-center blueBtn" id="addNew">
                             <img src="../assets/plus.svg" alt="plus"> Add New
                         </button>
-                   </form> 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  
+                   </form>  
                 </div>
             </div>
             <div class="scroll-x whiteWithPadding">
@@ -55,7 +53,7 @@
         <div class="popup-overlay" id="popup-delete-overlay">
             <div class="popup">
                 <div class="content text-center">
-                    <div class="popup-head">Delete User</div>
+                    <div class="popup-head">Delete Dictionary</div>
                     <div class="popup-action">
                         <p>Are you sure you want to delete?</p>
                         <div class="buttonArea popup-btn">
@@ -122,86 +120,15 @@
             </div>
         </div>
     </div>
-</div>
-<!-- popup add location model -->
-<div class="popup-overlay w-800Popup" id="popup-addRole-overlay">
-    <div class="popup">
-        <div class="content text-center">
-            <div class="popup-head position-relative">
-                Add Location
-                <img src="../assets/x.svg" alt="x" id="closePopup" class="addRoleClose">
-            </div>
-            <div class="popup-action inputSearchs">
-                <form id="locationForm">
-                    <div class="flex">
-                        <label for="countryName">
-                            country Name
-                            <select name="countryName" id="countryName" required>
-                                <option value="countryName1">Country Name1</option>
-                                <option value="countryName2">Country Name2</option>
-                                <option value="countryName3">Country Name3</option>
-                            </select>
-                        </label>
-                        <label for="regionMaster">
-                            Region Master
-                            <select name="regionMaster" id="regionMaster" required>
-                                <option value="regionMaster1">regionMaster1</option>
-                                <option value="regionMaster2">regionMaster2</option>
-                                <option value="regionMaster3">regionMaster3</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="flex">
-                        <label for="roleType">
-                            States / Emirates
-                            <select name="States" id="States" required>
-                                <option value="States1">States / Emirates 1</option>
-                                <option value="States2">States / Emirates 2</option>
-                                <option value="States3">States / Emirates 3</option>
-                            </select>
-                        </label>
-                        <label for="resourceType">
-                            Sector / Zone
-                            <select name="zone" id="zone" required>
-                                <option value="zone1">zone 1</option>
-                                <option value="zone2">zone 2</option>
-                                <option value="zone3">zone 3</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="flex">
-                        <label for="">
-                            Building Projects
-                            <input type="text" placeholder="Enter Building Projects" required>
-                        </label>
-                        <label for="">
-                            Geo-cordinates
-                            <input type="text" placeholder="enter Geo-cordinates" required>
-                        </label>
-                    </div>
-                    <div class="flex">
-                        <label for="resourceType">
-                            Status
-                            <input class='input-switch' type="checkbox" id="addLocation" required />
-                            <label class="label-switch" for="addLocation"></label>
-                            <span class="info-text"></span>
-                        </label>
-                    </div>
-                </form>
-                <div class="buttonArea centerBtn">
-                    <button class="lineBtn" id="resetLocation">Reset</button>
-                    <button class="bgBlue">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</div> 
+
 @section MyScripts {
     @Html.Partial("_DataTablePartial")
     <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
     <script type="text/javascript" src="~/js/custom/dictionary/masterdictionary.js?v=@jsVersion"></script>
+   
     <script>
         //#region Setup API Url
         var AllDictionary = "@Eltizam.Web.Helpers.APIURLHelper.GetAllDictionary";  
     </script>
-    }
+}
