@@ -91,7 +91,7 @@ namespace Eltizam.WebApi.Controllers
         }
 
         [HttpPost("DeleteClient/{id}")]
-        public async Task<IActionResult> Deletey([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try
             {
