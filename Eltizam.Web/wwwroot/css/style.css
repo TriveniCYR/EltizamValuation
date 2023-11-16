@@ -860,6 +860,7 @@ table .userPic {
     padding: 8px 10px;
     outline: none;
     margin-top: 5px;
+    background: none;
 }
 
 .inputSearchs button.blueBtn {
