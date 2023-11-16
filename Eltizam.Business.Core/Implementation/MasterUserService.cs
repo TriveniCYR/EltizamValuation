@@ -492,13 +492,16 @@ namespace Eltizam.Business.Core.Implementation
                     objUser.ModifiedBy = _LoginUserId;
                     objUser.ModifiedDate = AppConstants.DateTime;
                     _repository.UpdateAsync(objUser);
+                    _repository.UpdateGraph(objUser, EntityState.Modified);
+
+                    await _unitOfWork.SaveChangesAsync();
                 }
                 else
                 {
                     return DBOperation.NotFound;
                 }
             }
-            await _unitOfWork.SaveChangesAsync();
+            
             return DBOperation.Success;
         }
 
