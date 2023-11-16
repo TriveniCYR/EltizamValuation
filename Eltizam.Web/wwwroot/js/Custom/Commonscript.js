@@ -20,6 +20,13 @@ var DeleteAccessDenied = "Delete permission not granted.";
 var IsDeletePerm = ($("#isDeletePerm").val() === "1" || $("#isDeletePerm").val() === 1);
 var IsAddPerm = ($("#isAddPerm").val() === "1" || $("#isAddPerm").val() === 1);   
 var IsEditPerm = ($("#isEditPerm").val() === "1" || $("#isEditPerm").val() === 1); 
+
+var IsAddPermQt = ($("#isAddPermQuotation").val() === "1" || $("#isAddPermQuotation").val() === 1);
+var IsEditPermQt = ($("#isEditPermQuotation").val() === "1" || $("#isEditPermQuotation").val() === 1);
+
+var IsAddPermIn = ($("#isAddPermInvoice").val() === "1" || $("#isAddPermInvoice").val() === 1);
+var IsEditPermIn = ($("#isEditPermInvoice").val() === "1" || $("#isEditPermInvoice").val() === 1);
+
 var IsApprovePerem = ($("#isApprovePerem").val() === "1" || $("#isApprovePerem").val() === 1);  
 
 $(document).ready(function () {
@@ -44,6 +51,22 @@ $(document).ready(function () {
     }
     if (IsApprovePerem === false) {
         $("#isApprove").remove();
+    }
+
+
+
+    if (IsAddPermQt === false) {
+        $("#addNewQt").remove();
+    }
+    if (IsEditPermQt === false) {
+        $("#btnSaveEditQt").remove();
+    }
+
+    if (IsAddPermIn === false) {
+        $("#addNewIn").remove();
+    }
+    if (IsEditPermIn === false) {
+        $("#btnSaveEditIn").remove();
     }
 });
 
