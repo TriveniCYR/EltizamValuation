@@ -125,76 +125,12 @@
 </form>
 
 @section MyScripts {
-    <script type="text/javascript" src="~/js/custom/location/locationmanagement.js?v=@jsVersion"></script>
-    @*  <script type="text/javascript" src="~/js/custom/Location/LocationManagement.js?v=@jsVersion"></script> *@
+    <script type="text/javascript" src="~/js/custom/location/locationmanagement.js?v=@jsVersion"></script> 
     <script>
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
         var stateListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
         var cityListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
         var currencyUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryDescriptionById";
-        var LocationGetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllLocations";
-        $(document).ready(function () {
-
-            BindCountry();
-            BindCurrencyHome();
-            BindCurrencyForeign();
-            // if (@ViewBag.IsView == 1) {
-            //     $(". ").prop("disabled", true);
-            //     $("#addLocation").prop("disabled", true);
-            //     // Disable the associated label element
-            //     $("label[for='addLocation']").addClass("disabled");
-            // }
-            // if (@ViewBag.IsView == 2) {
-            //     $(". ").prop("disabled", false);
-            //     $("#addLocation").prop("disabled", false);
-            //     // Disable the associated label element
-            //     $("label[for='addLocation']").removeClass("disabled");
-            // }
-            var HdnCountryId = $('#hdnCountry').val();
-            if (HdnCountryId) {
-                BindState(HdnCountryId);
-            }
-            var HdnStateId = $('#hdnState').val();
-            if (HdnStateId) {
-                BindCity(HdnStateId);
-            }
-        });
-        function BindCountry() {
-            var countryId = $("#CountryId");
-            var _val = $('#hdnCountry').val();
-            var _rpname = "countryName";
-
-            BindDropdowns(CountryList, countryId, _rpname, _val);
-        }
-        function BindState(id) {
-            var state = $("#StateId");
-            var _val = $('#hdnState').val();
-            var _rpname = "stateName";
-
-            BindDropdowns(stateListUrl + '/' + id, state, _rpname, _val);
-        }
-        function BindCity(id) {
-            var city = $("#CityId");
-            var _val = $('#hdnCity').val();
-            var _rpname = "cityName";
-
-            BindDropdowns(cityListUrl + '/' + id, city, _rpname, _val);
-        }
-        function BindCurrencyHome() {
-            debugger
-             var id = 7;
-            var currencyId = $("#HomeCurrencyId");
-            var _val = $('#hdnHomeCurrencyId').val();
-            var _rpname = "description";
-            BindDropdowns(currencyUrl + '/' + id, currencyId, _rpname, _val);
-        }
-        function BindCurrencyForeign() {
-            debugger
-            var id = 7;
-            var currencyId = $("#ForeignCurrencyId");
-            var _val = $('#hdnForeignCurrencyId').val();
-            var _rpname = "description";
-            BindDropdowns(currencyUrl + '/' + id, currencyId, _rpname, _val);
-        }
+        var LocationGetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllLocations"; 
     </script>
 }

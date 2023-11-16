@@ -15,25 +15,25 @@
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
-  
+
     var isAdd = objPermssion.Add ? 1 : 0;
     var isEdit = objPermssion.Edit ? 1 : 0;
     var isApprove = objPermssion.Approve ? 1 : 0;
     var roleId = objPermssion.RoleId;
-    var subModuleId = objPermssion.SubModuleId; 
+    var subModuleId = objPermssion.SubModuleId;
 
-    var objPermssionQt = (RolePermissionModel)ViewBag.QuotationAccess; 
+    var objPermssionQt = (RolePermissionModel)ViewBag.QuotationAccess;
     var isAddQt = objPermssionQt.Add ? 1 : 0;
     var isEditQt = objPermssionQt.Edit ? 1 : 0;
     var isViewQt = objPermssionQt.View ? 1 : 0;
 
     var objPermssionIn = (RolePermissionModel)ViewBag.InvoiceAccess;
     var isAddIn = objPermssionIn.Add ? 1 : 0;
-    var isEditIn = objPermssionIn.Edit ? 1 : 0; 
+    var isEditIn = objPermssionIn.Edit ? 1 : 0;
     var isViewIn = objPermssionIn.View ? 1 : 0;
     ViewData["Title"] = _md + _header;
-    var htmlAttributes = true; 
- }
+    var htmlAttributes = true;
+}
 
 <div id="PlaceHolderHere"></div>
 <main class="">
@@ -49,7 +49,7 @@
         <div class="bodyContent">
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab">
-                    <button class="tablinks"  onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
+                    <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
                     <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
                     <button class="tablinks" style="display: @(objPermssionIn.View ? "block" : "none")" onclick="profileTab(event, 'profile3')">Payment Details</button>
                 </div>
@@ -79,7 +79,7 @@
                             <input type="hidden" id="hdnClientTypeId" value="@(Model == null ? 0 : Model.ClientTypeId)" />
                             <input type="hidden" id="hdnClientName" value="@(Model == null ? 0 : Model.ClientName)" />
                             <input type="hidden" id="hdnRoleId" value=@roleId />
-                            <input type="hidden" id="roleEnum" value=@roleId /> 
+                            <input type="hidden" id="roleEnum" value=@roleId />
                             <div class="ptrl-20">
                                 <div class="flex  mb-28">
 
@@ -124,21 +124,21 @@
                                         Valuation Date
                                         <input type="date" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
                                         @*  <input type="date"> *@
-                                    </label> 
+                                    </label>
                                 </div>
 
                                 <div class="flex  mb-28">
                                     <label for="" class="bodyContent p-0 w-50">
                                         Method of Valuation
-                                        <div class="flex m-0 valuationType"> 
-                                            @Html.DropDownList("ValuationModeId", new List<SelectListItem> { }, new { @class = "form-control" }) 
-                                        </div> 
+                                        <div class="flex m-0 valuationType">
+                                            @Html.DropDownList("ValuationModeId", new List<SelectListItem> { }, new { @class = "form-control" })
+                                        </div>
                                     </label>
                                     <label for="" class="w-50">
                                         Valuation Time Frame
                                         @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
                                         @* <input type="text" placeholder="enter days"> *@
-                                    </label> 
+                                    </label>
                                 </div>
 
                             </div>
@@ -176,16 +176,6 @@
                                             @*  <input type="text" placeholder="Jones" disabled> *@
                                         </label>
                                     </div>
-                                    @*  <div class="flex  mb-28">
-                                    <label for="" class="w-50">
-                                    Address Line 1
-                                    <input type="text" placeholder="ABC" disabled>
-                                    </label>
-                                    <label for="" class="w-50">
-                                    Address Line 2
-                                    <input type="text" placeholder="DEF" disabled>
-                                    </label>
-                                    </div> *@
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
                                             Pincode
@@ -195,38 +185,27 @@
                                         <label for="" class="w-50">
                                             Country
                                             @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control", @onchange = "BindState(this.options[this.selectedIndex].value)" })
-                                            @* <input type="text" placeholder="DEF" disabled> *@
-                                        </label>
 
+                                        </label>
                                     </div>
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
                                             State
                                             @Html.TextBoxFor(model => model.StateId, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["State Name"] })
-                                            @*   @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control",@onchange = "BindCity(this.options[this.selectedIndex].value)"}) *@
-                                            @*  <input type="text" placeholder="ABC" disabled> *@
                                         </label>
                                         <label for="" class="w-50">
                                             City
                                             @Html.TextBoxFor(model => model.CityId, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["City Name"] })
-                                            @* @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control"}) *@
-                                            @*  <select name="city" disabled>
-                                            <option value="city1">ABC</option>
-                                            <option value="city2">DEF</option>
-                                            <option value="city3">GHI</option>
-                                            </select> *@
                                         </label>
                                     </div>
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
                                             TRN Number
                                             @Html.TextBoxFor(model => model.Trnnumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["TRN Number"] })
-                                            @*   <input type="text" placeholder="232423" disabled> *@
                                         </label>
                                         <label for="" class="w-50">
                                             TRN Expiry Date
-                                            <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" disabled="true">
-                                            @*  <input type="text" placeholder="11/14/2022" disabled> *@
+                                            <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" disabled="disabled">
                                         </label>
                                     </div>
 
@@ -234,7 +213,6 @@
                                         <label for="" class="w-50">
                                             License Number
                                             @Html.TextBoxFor(model => model.LicenseNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["License Number"] })
-                                            @*  <input type="text" placeholder="234232" disabled> *@
                                         </label>
                                     </div>
 
@@ -248,20 +226,10 @@
                                                     <th>City</th>
                                                     <th>State</th>
                                                     <th>Country</th>
-                                                    <th>Zip</th>
+                                                    <th>Zip / PO Box</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
-                                                @* <tr>
-                                                <td>123 Main St</td>
-                                                <td>Apt 4B</td>
-                                                <td>New York</td>
-                                                <td>NY</td>
-                                                <td>country</td>
-                                                <td>NY</td>
-                                                </tr> *@
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -280,14 +248,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @*  <tr>
-                                                <td>Department</td>
-                                                <td>Apt 4B</td>
-                                                <td>New York</td>
-                                                <td>test@test.com</td>
-                                                <td>999999991</td>
-                                                </tr> *@
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -306,9 +266,6 @@
                                     <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
                                     <input type="hidden" id="hdnPropertyId" value="@(Model.PropertyId)" />
                                     <input type="hidden" id="hdnPropertyName" value="@(Model == null ? 0 : Model.PropertyName)" />
-                                    @*  <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
-                                    <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
-                                    <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" /> *@
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
                                             Property Type Name
@@ -459,13 +416,13 @@
                     </div>
                 </div>
 
-              
+
                 <div id="profile2" class="tabcontent">
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center plr-0">
-                          
-                            <h3 >Quotation Listing</h3>
-                            <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo"> 
+
+                            <h3>Quotation Listing</h3>
+                            <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
                                 <button id="addNewQt" class="blueBtn" style="width:120px">
                                     <img src="../assets/plus.svg" alt="plus">
                                     Add New
@@ -493,21 +450,20 @@
                         </table>
                     </div>
                 </div>
+
+
                 <div id="profile3" class="tabcontent">
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center p-0">
                             <h3>Invoice Listing</h3>
                             <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
-
                                 <button class=" blueBtn " style="width:120px" id="addNewIn">
-                                        <img src="../assets/plus.svg" alt="plus">
-                                        Add New
-                                    </button>
-
+                                    <img src="../assets/plus.svg" alt="plus">
+                                    Add New
+                                </button> 
                             </a>
                         </div>
-                    </div>
-
+                    </div> 
 
                     <div class="scroll-x">
                         <table id="InvoiceTable" class="table-striped">
@@ -526,229 +482,7 @@
                             <tbody>
                             </tbody>
                         </table>
-                    </div>
-
-                    @*  <div id="profile3" class="tabcontent">
-                    <h3 class="ptrl-20">Select Payment Mode</h3>
-                    <div class="paymentOption">
-                    <div class="payTab">
-                    <button class="payTabLink" onclick="payTab(event, 'pay1')" id="defaultOpenPay">Cash</button>
-                    <button class="payTabLink" onclick="payTab(event, 'pay2')">Cheque</button>
-                    <button class="payTabLink" onclick="payTab(event, 'pay3')">Credit Card</button>
-                    <button class="payTabLink" onclick="payTab(event, 'pay4')">Net Banking</button>
-                    </div>
-
-                    <div id="pay1" class="payTabContent">
-                    <h3 class="ptrl-20">Add Cash Payment Details</h3>
-                    <div class="inputSearchs">
-                    <div class="tabSection">
-                    <div class="flex threeBox mb-28">
-                    <label for="">
-                    Transaction Status
-                    <select>
-                    <option value="completed">completed</option>
-                    <option value="inprogress">inprogress</option>
-                    <option value="failed">failed</option>
-                    </select>
-                    </label>
-                    <label for="">
-                    Amount
-                    <input type="text" placeholder="enter the amount">
-                    </label>
-                    <label for="">
-                    Date
-                    <input type="date">
-                    </label>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    <div id="pay2" class="payTabContent">
-                    <h3 class="ptrl-20">Add Cheque Payment Details</h3>
-                    <div class="inputSearchs">
-                    <div class="tabSection">
-
-                    <div class="flex threeBox mb-28">
-                    <label for="">
-                    Cheque Number
-                    <input type="number" placeholder="enter cheque number">
-                    </label>
-                    <label for="">
-                    Cheque Bank Name
-                    <input type="text" placeholder="enter cheque number">
-                    </label>
-                    <label for="">
-                    Cheque Date
-                    <input type="date">
-                    </label>
-                    </div>
-                    <div class="flex threeBox mb-28">
-
-                    <label for="">
-                    Cheque Recieved Date
-                    <input type="date">
-                    </label>
-                    <label for="">
-                    Amount
-                    <input type="number" placeholder="enter the amount">
-                    </label>
-                    <label for="">
-                    Transaction Status
-                    <select>
-                    <option value="completed">completed</option>
-                    <option value="inprogress">inprogress</option>
-                    <option value="failed">failed</option>
-                    </select>
-                    </label>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    <div id="pay3" class="payTabContent">
-                    <h3 class="ptrl-20">Add Credit Card Payment Details</h3>
-                    <div class="inputSearchs">
-                    <div class="tabSection">
-
-                    <div class="flex threeBox mb-28">
-                    <label for="">
-                    Transaction ID
-                    <input type="number" placeholder="enter Transaction ID">
-                    </label>
-                    <label for="">
-                    Transaction Status
-                    <select>
-                    <option value="completed">completed</option>
-                    <option value="inprogress">inprogress</option>
-                    <option value="failed">failed</option>
-                    </select>
-                    </label>
-                    <label for="">
-                    Amount
-                    <input type="number" placeholder="enter the amount">
-                    </label>
-                    </div>
-                    <div class="flex threeBox mb-28">
-                    <label for="">
-                    Credit Card Number
-                    <input type="number" placeholder="enter credit card number">
-                    </label>
-                    <label for="">
-                    Bank Name
-                    <input type="text" placeholder="enter bank name">
-                    </label>
-                    <label for="">
-                    Name on card
-                    <input type="text" placeholder="enter name on card">
-                    </label>
-                    </div>
-                    <div class="flex threeBox">
-                    <label for="">
-                    Expiry Date
-                    <input type="date">
-                    </label>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    <div id="pay4" class="payTabContent">
-                    <h3 class="ptrl-20">Add Net Banking Payment Details</h3>
-                    <div class="inputSearchs">
-                    <div class="tabSection">
-                    <div class="flex threeBox mb-28">
-                    <label for="">
-                    Transaction ID
-                    <input type="number" placeholder="enter Transaction ID">
-                    </label>
-                    <label for="">
-                    Bank Name
-                    <input type="text" placeholder="enter banke name">
-                    </label>
-                    <label for="">
-                    Accoubt Number
-                    <input type="number" placeholder="enter acount number">
-                    </label>
-
-                    </div>
-                    <div class="flex threeBox mb-28">
-
-                    <label for="">
-                    Amount
-                    <input type="number" placeholder="enter the amount">
-                    </label>
-                    <label for="">
-                    Transfer Date
-                    <input type="date">
-                    </label>
-                    <label for="">
-                    Transaction Status
-                    <select>
-                    <option value="completed">completed</option>
-                    <option value="inprogress">inprogress</option>
-                    <option value="failed">failed</option>
-                    </select>
-                    </label>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-
-                    <h3 class="blueHeading">Upload Supporting Documents</h3>
-                    <div class="inputSearchs uploadDocBox">
-                    <div class="tabSection">
-                    <div class="flex mb-28">
-                    <label for="document">
-                    Documents Name
-                    <input type="text" placeholder="enter Documents Name">
-                    </label>
-                    <label for="atach">
-                    Attach Supporting Documents
-                    <div class="attachDoc">
-                    <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
-                    <input type="file" class="btn" value="Upload Photo" multiple />
-                    <p>click to upload.</p>
-                    </div>
-                    </label>
-                    </div>
-                    <div class="W-100">
-                    <div class="prevUpload roundBorderBox m-0">
-                    <h3>Previously uploaded</h3>
-                    <div class="flex">
-                    <div class="prevUploadTab">
-                    <div class="flex align-item-center m-0">
-                    <img src="../assets/file.svg" alt="file" />
-                    ABC
-                    </div>
-                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                    </div>
-                    <div class="prevUploadTab">
-                    <div class="flex align-item-center m-0">
-                    <img src="../assets/file.svg" alt="file" />
-                    ABC
-                    </div>
-                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                    </div>
-                    <div class="prevUploadTab">
-                    <div class="flex align-item-center m-0">
-                    <img src="../assets/file.svg" alt="file" />
-                    ABC
-                    </div>
-                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                    </div>
-                    <div class="prevUploadTab">
-                    <div class="flex align-item-center m-0">
-                    <img src="../assets/file.svg" alt="file" />
-                    ABC
-                    </div>
-                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    </div> *@
-
+                    </div> 
                 </div>
             </div>
         </div>
@@ -811,8 +545,8 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
 
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
@@ -857,7 +591,7 @@
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
         var isViewQt = objPermssionQt.View ? true : false;
-      
+
 
     </script>
 
