@@ -25,11 +25,12 @@
     var objPermssionQt = (RolePermissionModel)ViewBag.QuotationAccess; 
     var isAddQt = objPermssionQt.Add ? 1 : 0;
     var isEditQt = objPermssionQt.Edit ? 1 : 0;
+    var isViewQt = objPermssionQt.View ? 1 : 0;
 
     var objPermssionIn = (RolePermissionModel)ViewBag.InvoiceAccess;
     var isAddIn = objPermssionIn.Add ? 1 : 0;
     var isEditIn = objPermssionIn.Edit ? 1 : 0; 
-
+    var isViewIn = objPermssionIn.View ? 1 : 0;
     ViewData["Title"] = _md + _header;
     var htmlAttributes = true; 
  }
@@ -48,9 +49,9 @@
         <div class="bodyContent">
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab">
-                    <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
-                    <button class="tablinks" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
-                    <button class="tablinks" onclick="profileTab(event, 'profile3')">Payment Details</button>
+                    <button class="tablinks"  onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
+                    <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
+                    <button class="tablinks" style="display: @(objPermssionIn.View ? "block" : "none")" onclick="profileTab(event, 'profile3')">Payment Details</button>
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
@@ -447,10 +448,12 @@
                     </div>
                 </div>
 
+              
                 <div id="profile2" class="tabcontent">
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center plr-0">
-                            <h3>Quotation Listing</h3>
+                          
+                            <h3 >Quotation Listing</h3>
                             <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo"> 
                                 <button id="addNewQt" class="blueBtn" style="width:120px">
                                     <img src="../assets/plus.svg" alt="plus">
@@ -842,10 +845,8 @@
 
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
-
-
-
-
+        var isViewQt = objPermssionQt.View ? true : false;
+      
 
     </script>
 
