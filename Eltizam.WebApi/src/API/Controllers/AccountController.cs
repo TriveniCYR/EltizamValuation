@@ -157,9 +157,9 @@ namespace Eltizam.WebApi.Controllers
                 await _ExceptionService.LogException(ex);
                 return false;
             }
-        }      
-        
-        /*
+        }
+
+
         [AllowAnonymous]
         [HttpPost, Route("ChangePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePasswordModel)
@@ -202,25 +202,27 @@ namespace Eltizam.WebApi.Controllers
                 response.Errors = new List<string> { ex.StackTrace };
                 return StatusCode(500, response);
             }
-            //try
-            //{              
-            //    var changeOperation = await _MasterUserService.ChangePassword(changePasswordModel);
-            //    if (changeOperation == DBOperation.Success)
-            //        return _ObjectResponse.Create(changeOperation, (Int32)HttpStatusCode.OK);
-            //    else if (changeOperation == DBOperation.NotFound)
-            //    {
-            //        return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
-            //    }
-            //    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.InternalServerError, "Internal Server Error");
-            //}
-            //catch (Exception ex)
-            //{
-            //    await _ExceptionService.LogException(ex);
-            //    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-            //}
-        }
-        */
-        #endregion API Methods
 
+            /*
+                //try
+                //{              
+                //    var changeOperation = await _MasterUserService.ChangePassword(changePasswordModel);
+                //    if (changeOperation == DBOperation.Success)
+                //        return _ObjectResponse.Create(changeOperation, (Int32)HttpStatusCode.OK);
+                //    else if (changeOperation == DBOperation.NotFound)
+                //    {
+                //        return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+                //    }
+                //    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.InternalServerError, "Internal Server Error");
+                //}
+                //catch (Exception ex)
+                //{
+                //    await _ExceptionService.LogException(ex);
+                //    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                //} 
+            */
+        }
+
+        #endregion API Methods 
     }
 }
