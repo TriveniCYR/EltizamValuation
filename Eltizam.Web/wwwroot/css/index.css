@@ -81,7 +81,7 @@ tfoot,
 th,
 thead,
 tr {
-  border: 1px solid #0000001e !important;
+  border: none !important;
 }
 
 .table thead th {

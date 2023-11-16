@@ -1,7 +1,5 @@
 $(document).ready(function () {
-    debugger
     if (document.location.href.includes('id')){
-        debugger       
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
     }

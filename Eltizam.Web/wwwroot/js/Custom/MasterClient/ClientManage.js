@@ -148,8 +148,7 @@ function removeParentDivAddress(element) {
 
 
 function BindClientType() {
-    debugger
-    
+
     var ClientType = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
     var _rpname = "clientType";
@@ -158,7 +157,7 @@ function BindClientType() {
 }
 
 function BindCountry() {
-    debugger
+  
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";

@@ -106,7 +106,7 @@
                                     </label>
                                     <label for="DateOfBirth">
                                         <p class="m-0">Date of Birth<span class="text-danger">*</span></p>
-                                        <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth">
+                                        <input type="text" id="DateOfBirth" class="formatted-date-input" name="DateOfBirth" asp-for="DateOfBirth">
                                         @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -379,7 +379,7 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/Custom/MasterUser/UserManage.js?v=@jsVersion"></script>
-
+    
     <script>
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
         var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";

@@ -460,7 +460,7 @@
                         </div>
                     </div>
                     <div class="scroll-x">
-                        <table id="QuatationTable">
+                        <table id="QuatationTable" class="table-striped">
                             <thead>
                                 <tr>
                                     <th>#Quotation</th>
@@ -484,18 +484,19 @@
                         <div class="flex justify-between align-item-center p-0">
                             <h3>Invoice Listing</h3>
                             <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
-                                @if (roleId == (int)RoleEnum.Admin)
-                                {
-                                    <button class=" blueBtn " style="width:120px">
+
+                                <button class=" blueBtn " style="width:120px" id="addNewIn">
                                         <img src="../assets/plus.svg" alt="plus">
                                         Add New
                                     </button>
-                                }
+
                             </a>
                         </div>
                     </div>
+
+
                     <div class="scroll-x">
-                        <table id="InvoiceTable">
+                        <table id="InvoiceTable" class="table-striped">
                             <thead>
                                 <tr>
                                     <th>#Invoice</th>
@@ -512,6 +513,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     @*  <div id="profile3" class="tabcontent">
                     <h3 class="ptrl-20">Select Payment Mode</h3>
                     <div class="paymentOption">
@@ -795,7 +797,8 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
-
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
 
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";

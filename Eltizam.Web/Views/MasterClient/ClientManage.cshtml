@@ -106,7 +106,7 @@
                                             TRN Expire Date
                                             <span class="text-danger">*</span>
                                         </p>
-                                        <input type="date" id="TrnexpiryDate" name="TrnexpiryDate" asp-for="TrnexpiryDate">
+                                        <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" class="formatted-date-input" asp-for="TrnexpiryDate">
                                         @Html.ValidationMessageFor(model => model.TrnexpiryDate, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -348,10 +348,7 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/MasterClient/ClientManage.js?v=@jsVersion"></script>
-
     <script>
-
-        debugger
         //#region Setup API Url
         var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetClientTypeList";
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
