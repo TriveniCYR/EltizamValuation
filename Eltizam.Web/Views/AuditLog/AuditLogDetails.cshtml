@@ -1,7 +1,8 @@
 ﻿@using Eltizam.Business.Models;
 @model AuditData
-@{
-
+@{ 
+    var _header = "Audit Log Details"; 
+    ViewData["Title"] = _header;
 }
 
 <main>
@@ -17,22 +18,21 @@
         <div class="bodyContent p-0">
             <div class="tabcontent m-0" style="display: block;">
                 <div class="auditLog-acc roundBorderBox">
-                    @foreach (var auditLogResponse in Model._object)
+                    @foreach (var res in Model._object)
                     {
-                        DateTime? createdDatetime = auditLogResponse.CreatedDate;
-                        DateTime dateOnly = createdDatetime.Value.Date;
+                       @*  DateTime? createdDatetime = auditLogResponse.CreatedDate;
+                        DateTime dateOnly = createdDatetime.Value.Date; *@
 
                         <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                            <p>Created By: <b>@auditLogResponse.CreatedByName</b></p>
+                            <p>Created By: <b>@res.CreatedByName</b></p>
                             <div class="flex align-item-center">
-
-                                <p style=" margin: 0 35px;">Created Date: <b>@dateOnly.ToString("dd-MM-yyyy")</b></p>
+                                <p style=" margin: 0 35px;">Created Date: <b>@res.CreatedDate?.ToString("dd/MMM/yyyy")</b></p>
 
                                 <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                             </div>
                         </div>
-                        DateTime? createdDate = auditLogResponse.CreatedDate;
-                        string time = createdDate?.ToString("HH:mm:ss");
+                       @*  DateTime? createdDate = auditLogResponse.CreatedDate;
+                        string time = createdDate?.ToString("HH:mm:ss"); *@
 
                         <div class="panel mt-28">
                             <div class="flex m-0">
@@ -46,14 +46,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var auditLog in auditLogResponse.AuditLogListData)
+                                        @foreach (var a in res.AuditLogListData)
                                         {
-                                            <tr>
-                                                <td>@time</td>
-                                                <td>@auditLog.PropertyName</td>
-                                                <td>@auditLog.OldValue</td>
-                                                <td>@auditLog.NewValue</td>
-                                            </tr>
+                                           // @if (a.PropertyName != "Id" && a.PropertyName != "CreatedBy" && a.PropertyName != "CreatedDate" && a.PropertyName != "ModifiedBy" && a.PropertyName != "ModifiedDate")
+                                            {
+                                                <tr>
+                                                    <td>@res.CreatedDate</td>
+                                                    <td>@a.PropertyName</td>
+                                                    <td>@a.OldValue</td>
+                                                    <td>@a.NewValue</td>
+                                                </tr>
+                                            }
                                         }
                                     </tbody>
                                 </table>

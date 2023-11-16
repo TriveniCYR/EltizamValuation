@@ -205,6 +205,8 @@ namespace Eltizam.Utility.Utility
             return objList;
         }
 
+
+
         public static RolePermissionModel GetMenusByRole(int loginRoleId)
         {
             IEnumerable<RolePermissionModel> objList = UtilityHelper.GetModuleRole<dynamic>(loginRoleId);

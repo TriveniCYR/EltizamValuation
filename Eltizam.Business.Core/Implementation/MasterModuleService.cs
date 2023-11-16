@@ -145,7 +145,7 @@ namespace Eltizam.Business.Core.Implementation
                 return cacheData;
             }
 
-            var per = await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId && xx.View == true);
+            var per = await _repositoryRolePermission.FindAllAsync(xx => xx.RoleId == roleId);
 
             var Permissions = _mapperFactory.GetList<MasterRoleModulePermission, RoleModulePermissionEntity>((List<MasterRoleModulePermission>)per);
 
