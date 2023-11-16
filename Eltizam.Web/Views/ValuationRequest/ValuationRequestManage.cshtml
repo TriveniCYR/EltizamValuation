@@ -484,13 +484,12 @@
                         <div class="flex justify-between align-item-center p-0">
                             <h3>Invoice Listing</h3>
                             <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
-                                @if (roleId == (int)RoleEnum.Admin)
-                                {
-                                    <button class=" blueBtn " style="width:120px">
+
+                                <button class=" blueBtn " style="width:120px" id="addNewIn">
                                         <img src="../assets/plus.svg" alt="plus">
                                         Add New
                                     </button>
-                                }
+
                             </a>
                         </div>
                     </div>
