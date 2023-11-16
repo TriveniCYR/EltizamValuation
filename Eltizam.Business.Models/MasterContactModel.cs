@@ -25,6 +25,7 @@ namespace Eltizam.Business.Models
         [StringLength(12, MinimumLength = 9)]
         public string? Mobile { get; set; }
         public int? Status { get; set; }
+        public string? MobileExt { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }

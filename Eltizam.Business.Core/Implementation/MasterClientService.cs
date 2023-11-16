@@ -31,6 +31,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterClient> _repository { get; set; }
         private IRepository<MasterAddress> _repositoryAddress { get; set; }
         private IRepository<MasterContact> _repositoryContact { get; set; }
+        private IRepository<ValuationRequest> _repositoryValuation { get; set; }
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
@@ -48,6 +49,7 @@ namespace Eltizam.Business.Core.Implementation
             _repository = _unitOfWork.GetRepository<MasterClient>();
             _repositoryAddress = _unitOfWork.GetRepository<MasterAddress>();
             _repositoryContact = _unitOfWork.GetRepository<MasterContact>();
+            _repositoryValuation = _unitOfWork.GetRepository<ValuationRequest>();
             _repositoryDocument = _unitOfWork.GetRepository<MasterDocument>();
             configuration = _configuration;
             _helper = helper;
@@ -252,6 +254,7 @@ namespace Eltizam.Business.Core.Implementation
                         objAddress.PinNo = entityAddress.PinNo;
                         objAddress.Email = entityAddress.Email;
                         objAddress.AlternateEmail = entityAddress.AlternateEmail;
+                        objAddress.PhoneExt = entityAddress.PhoneExt;
                         objAddress.Phone = entityAddress.Phone;
                         objAddress.AlternatePhone = entityAddress.AlternatePhone;
                         objAddress.Landlinephone = entityAddress.Landlinephone;
@@ -293,6 +296,7 @@ namespace Eltizam.Business.Core.Implementation
                         objContact.DesignationId = entityAddress.DesignationId;
                         objContact.Email = entityAddress.Email;
                         objContact.Mobile = entityAddress.Mobile;
+                        objContact.MobileExt = entityAddress.MobileExt;
                         objContact.Status = entityAddress.Status;
                         objContact.ModifiedBy = master_ClientModel.ModifiedBy;
                         _repositoryContact.UpdateAsync(objContact);
@@ -357,6 +361,13 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.NotFound;
             else
             {
+
+                var entityValuation = _repositoryValuation.GetAll().Where(x => x.ClientId == id).ToList();
+                if (entityValuation.Count > 0)
+                {
+                    return DBOperation.AlreadyExist;
+                }
+
                 var entityLocation = _repositoryAddress.Get(x => x.TableKeyId == id && x.TableName == "Master_Client");
                 if (entityLocation != null)
                     _repositoryAddress.Remove(entityLocation);

@@ -230,6 +230,7 @@ namespace Eltizam.Business.Core.Implementation
                         objAddress.PinNo = entityAddress.PinNo;
                         objAddress.Email = entityAddress.Email;
                         objAddress.AlternateEmail = entityAddress.AlternateEmail;
+                        objAddress.PhoneExt = entityAddress.PhoneExt;
                         objAddress.Phone = entityAddress.Phone;
                         objAddress.AlternatePhone = entityAddress.AlternatePhone;
                         objAddress.Landlinephone = entityAddress.Landlinephone;
@@ -267,6 +268,7 @@ namespace Eltizam.Business.Core.Implementation
                         objContact.DepartmentId = entityAddress.DepartmentId;
                         objContact.DesignationId = entityAddress.DesignationId;
                         objContact.Email = entityAddress.Email;
+                        objContact.MobileExt = entityAddress.MobileExt;
                         objContact.Mobile = entityAddress.Mobile;
                         objContact.Status = entityAddress.Status;
                         objContact.ModifiedBy = masterVendortModel.ModifiedBy;
