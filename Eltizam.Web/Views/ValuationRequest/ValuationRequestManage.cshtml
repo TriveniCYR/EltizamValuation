@@ -19,18 +19,20 @@
     var isAdd = objPermssion.Add ? 1 : 0;
     var isEdit = objPermssion.Edit ? 1 : 0;
 
-    var isAddQt = objPermssion.Add ? 1 : 0;
-    var isEditQt = objPermssion.Edit ? 1 : 0;
-
-    var isAddIn = objPermssion.Add ? 1 : 0;
-    var isEditIn = objPermssion.Edit ? 1 : 0;
-   
-    
-    ViewData["Title"] = _md + _header;
-    var htmlAttributes = true;
     var roleId = objPermssion.RoleId;
     var subModuleId = objPermssion.SubModuleId; 
-}
+
+    var objPermssionQt = (RolePermissionModel)ViewBag.QuotationAccess; 
+    var isAddQt = objPermssionQt.Add ? 1 : 0;
+    var isEditQt = objPermssionQt.Edit ? 1 : 0;
+
+    var objPermssionIn = (RolePermissionModel)ViewBag.InvoiceAccess;
+    var isAddIn = objPermssionIn.Add ? 1 : 0;
+    var isEditIn = objPermssionIn.Edit ? 1 : 0; 
+
+    ViewData["Title"] = _md + _header;
+    var htmlAttributes = true; 
+ }
 
 <div id="PlaceHolderHere"></div>
 <main class="">

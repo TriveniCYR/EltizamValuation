@@ -57,12 +57,17 @@ namespace EltizamValuation.Web.Controllers
 
             if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+            //Get module wise permissions
+            ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
+            ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
+            ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+
             if (id == null || id <= 0)
             {
-                ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
+                ViewBag.CurrentUserId = _helper.GetLoggedInUserId(); 
 
-                valuationRequestModel = new ValuationRequestModel();
-
+                valuationRequestModel = new ValuationRequestModel(); 
                 return View("ValuationRequestManage", valuationRequestModel);
             }
             else
