@@ -199,7 +199,9 @@ namespace Eltizam.Business.Core.Implementation
                         await _unitOfWork.SaveChangesAsync();
 
                         //Do Audit Log --AUDITLOGUSER
-                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey);
+                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey); 
+
+                        //Notification
                     }
                     else
                     {
