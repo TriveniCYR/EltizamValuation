@@ -288,19 +288,7 @@
  
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/MasterClient/ClientDetail.js?v=@jsVersion"></script>
-    <script>
-
-        // accordian function here
-        function accordianToggle(header) {
-            const item = header.nextElementSibling;
-            if (item.style.height === 'auto') {
-                item.style.height = 0;
-            } else {
-                item.style.height = 'auto';
-            }
-        }
-        //accordian function end
-
+    <script> 
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
