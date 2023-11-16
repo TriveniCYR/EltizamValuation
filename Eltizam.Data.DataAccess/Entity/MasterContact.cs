@@ -18,6 +18,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
-        public int? MobileExt { get; set; }
+        public string? MobileExt { get; set; }
     }
 }

@@ -27,19 +27,21 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private readonly IHelper _helper;
         private readonly IExceptionService _ExceptionService;
-        protected readonly EltizamDBContext dbContext;
+        protected readonly EltizamDB_DevContext dbContext;
         private readonly string _dbConnection;
         private IRepository<MasterAuditLog> _repository { get; set; }
+        private IRepository<MasterUser> _user { get; set; }
         //private IRepository<MasterUser> _userrepository { get; set; }
 
-        public AuditLogService(EltizamDBContext Context, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IExceptionService exceptionService)
+        public AuditLogService(EltizamDB_DevContext Context, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IExceptionService exceptionService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
             _repository = _unitOfWork.GetRepository<MasterAuditLog>();
             _helper = helper;
             _ExceptionService = exceptionService;
-           // _userrepository = _unitOfWork.GetRepository<MasterUser>(); ;
+            _user = _unitOfWork.GetRepository<MasterUser>();
+            // _userrepository = _unitOfWork.GetRepository<MasterUser>(); ;
 
             dbContext = Context ?? throw new ArgumentNullException(nameof(Context));
             _dbConnection = DatabaseConnection.ConnString;
@@ -63,7 +65,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 //Get Last Modified
                 PropertyInfo pInfo = newEntity.GetType().GetProperty(AppConstants.ModifiedBy);
-                int logCreatedBy = Convert.ToInt32(pInfo.GetValue(newEntity, null)); 
+                int logCreatedBy = Convert.ToInt32(pInfo.GetValue(newEntity, null));
 
                 //Get table Name, Id
                 var TableName = typeof(TResult).Name;
@@ -82,8 +84,8 @@ namespace Eltizam.Business.Core.Implementation
                     ParentTableName = PTName?.Replace("_", ""),
                 };
 
-                if (entityAudit.Log != "[]")  
-                    AddAuditLog(entityAudit);  
+                if (entityAudit.Log != "[]")
+                    AddAuditLog(entityAudit);
 
                 return true; // DBOperation.Success;
             }
@@ -104,7 +106,7 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("ParentTableName",        log.ParentTableName, SqlDbType.VarChar),
                  new DbParameter("Log",                    log.Log, SqlDbType.VarChar),
                  new DbParameter("ActionType",             log.ActionType, SqlDbType.Int),
-                 new DbParameter("CreatedBy",              log.CreatedBy, SqlDbType.Int) 
+                 new DbParameter("CreatedBy",              log.CreatedBy, SqlDbType.Int)
             };
 
             EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_AuditLog_Add, _dbConnection, CommandType.StoredProcedure, dbParameters);
@@ -148,7 +150,7 @@ namespace Eltizam.Business.Core.Implementation
                 new System.Data.SqlClient.SqlParameter(AppConstants.P_SortColumn,         ColumnName),
                 new System.Data.SqlClient.SqlParameter(AppConstants.P_SortDirection,      SortDir),
                 new System.Data.SqlClient.SqlParameter(AppConstants.P_SearchText,         model.search?.value),
-                new System.Data.SqlClient.SqlParameter("@UserId",                      UserName),
+                new System.Data.SqlClient.SqlParameter("@UserId",                         UserName),
                 new System.Data.SqlClient.SqlParameter("@TableName",                      TableName),
                 new System.Data.SqlClient.SqlParameter("@DateFrom",                       DateFrom),
                 new System.Data.SqlClient.SqlParameter("@DateTo",                         DateTo)
@@ -165,23 +167,25 @@ namespace Eltizam.Business.Core.Implementation
         }
         public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
-            var users = await _repository.GetAllAsync();
+           // var users = await _repository.GetAllAsync();
             //TableName = "MasterUser";
 
             var entityAuditLogs = await _repository.FindAllAsync(x =>
                    (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
-                && (TableKey  == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
-                && (DateFrom  == null || x.CreatedDate >= DateFrom)
-                && (DateTo    == null || x.CreatedDate <= DateTo)
-                && (Id == null        || x.Id == Id));
+                && (TableKey == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
+                && (DateFrom == null || x.CreatedDate >= DateFrom)
+                && (DateTo == null || x.CreatedDate <= DateTo)
+                && (Id == null || x.Id == Id));
 
             var res = new List<AuditLogModelResponse>();
             foreach (var log in entityAuditLogs)
             {
                 var _AuditLogListData = JsonConvert.DeserializeObject<IEnumerable<AuditLogs>>(log.Log);
 
+                var usr = _user.GetAll().Where(a => a.Id == log.CreatedBy).FirstOrDefault();
                 res.Add(new AuditLogModelResponse()
                 {
+                   
                     ActionType = log.ActionType,
                     ParentTableKeyId = log.ParentTableKeyId,
                     ParentTableName = log.ParentTableName,
@@ -191,31 +195,33 @@ namespace Eltizam.Business.Core.Implementation
                     CreatedBy = log.CreatedBy,
                     CreatedDate = log.CreatedDate, // Include both date and time
                     CreatedDateFormatted = log.CreatedDate?.ToString("yyyy-MM-dd HH:mm:ss"), // Formatted date and time
-                    CreatedByName = "",// users.FirstOrDefault(a => a.Id == log.CreatedBy), // Use null-conditional operator
+                    CreatedByName = usr.FirstName + ' ' + usr.LastName, // Use null-conditional operator
                     AuditLogListData = _AuditLogListData?.ToList(),
-                });
+                }); 
             }
 
-            // Sort the res list by CreatedDate (including date and time)
-            var sortedLogs = res.OrderBy(log => log.CreatedDate).ToList();
+            //// Sort the res list by CreatedDate (including date and time)
+            //var sortedLogs = res.OrderBy(log => log.CreatedDate).ToList();
 
-            // Group the sortedLogs list by date
-            var groupedLogs = sortedLogs.GroupBy(log => log.CreatedDate?.Date);
+            //// Group the sortedLogs list by date
+            //var groupedLogs = sortedLogs.GroupBy(log => log.CreatedDate?.Date);
 
-            // Create a list of grouped results with time included as a formatted string
-            var resultsWithTime = new List<AuditLogModelResponse>();
-            foreach (var group in groupedLogs)
-            {
-                var firstLogInGroup = group.FirstOrDefault();
-                resultsWithTime.Add(new AuditLogModelResponse
-                {
-                    CreatedDate = group.Key,
-                    CreatedDateFormatted = group.Key?.ToString("yyyy-MM-dd HH:mm:ss"),
-                    CreatedByName = firstLogInGroup?.CreatedByName,
-                    AuditLogListData = group.SelectMany(item => item.AuditLogListData).ToList()
-                });
-            }
-            return resultsWithTime;
+            //// Create a list of grouped results with time included as a formatted string
+            //var resultsWithTime = new List<AuditLogModelResponse>();
+            //foreach (var group in groupedLogs)
+            //{
+            //    var firstLogInGroup = group.FirstOrDefault();
+            //    resultsWithTime.Add(new AuditLogModelResponse
+            //    {
+            //        CreatedDate = group.Key,
+            //        CreatedDateFormatted = group.Key?.ToString("yyyy-MM-dd HH:mm:ss"),
+            //        CreatedByName = firstLogInGroup?.CreatedByName,
+            //        AuditLogListData = group.SelectMany(item => item.AuditLogListData).ToList()
+            //    });
+            //}
+            //return resultsWithTime;
+
+            return res;
         }
 
         //--Order by date and same time--

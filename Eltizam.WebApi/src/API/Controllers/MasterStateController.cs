@@ -5,7 +5,6 @@ using Eltizam.Resource;
 using Microsoft.AspNetCore.Mvc;
 using Eltizam.WebApi.Filters;
 using Eltizam.WebApi.Helpers.Response;
-using Microsoft.Extensions.Localization;
 using System.Net;
 using static Eltizam.Utility.Enums.GeneralEnum;
 

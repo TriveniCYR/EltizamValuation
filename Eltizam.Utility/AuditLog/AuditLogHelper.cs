@@ -18,9 +18,11 @@ namespace Eltizam.Utility.AuditLog
             List<AuditLog> auditlog = new();
             compare.Compare(Old, New, out IEnumerable<Difference> differences);
 
+            string AuditLog_ExcludeFields = "Id,ModifiedBy,ModifiedDate";
+
             foreach (var diff in differences)
-            {
-                if (!diff.MemberPath.Contains("CreatedDate") && !diff.MemberPath.Contains("ModifiedDate"))
+            { 
+                if (!AuditLog_ExcludeFields.ToLower().Contains(diff.MemberPath.ToLower()))
                 {
                     auditlog.Add(new AuditLog
                     {
