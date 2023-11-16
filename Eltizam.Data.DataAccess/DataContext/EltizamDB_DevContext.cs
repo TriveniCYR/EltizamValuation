@@ -6,13 +6,13 @@ using Eltizam.Data.DataAccess.Entity;
 
 namespace Eltizam.Data.DataAccess.DataContext
 {
-    public partial class EltizamDBContext : DbContext
+    public partial class EltizamDB_DevContext : DbContext
     {
-        public EltizamDBContext()
+        public EltizamDB_DevContext()
         {
         }
 
-        public EltizamDBContext(DbContextOptions<EltizamDBContext> options)
+        public EltizamDB_DevContext(DbContextOptions<EltizamDB_DevContext> options)
             : base(options)
         {
         }
@@ -167,6 +167,10 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PhoneExt)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PinNo)
@@ -358,6 +362,10 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.Mobile)
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MobileExt)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");

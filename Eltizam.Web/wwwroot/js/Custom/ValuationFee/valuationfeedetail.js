@@ -93,7 +93,6 @@ function BindProperty() {
 }
 
 function BindPropertySub(id) {
-    debugger;
     var PropertySubType = $("#PropertySubTypeId");
     var _val = $('#hdnPropertySub').val();
     var _rpname = "propertySubType";
@@ -120,7 +119,6 @@ function BindPropertySub(id) {
 }
 
 function BindClient() {
-    debugger;
     //alert("hello");
     
     var Client = $("#ClientTypeId");

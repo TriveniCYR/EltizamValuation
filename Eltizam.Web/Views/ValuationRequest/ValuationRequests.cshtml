@@ -19,6 +19,13 @@
     var isEdit = objPermssion.Edit ? 1 : 0;
     var isApprove = objPermssion.Approve ? 1 : 0;
     var roleId = objPermssion.RoleId;
+    var objPermssionQt = (RolePermissionModel)ViewBag.QuotationAccess;
+    var isAddQt = objPermssionQt.Add ? 1 : 0;
+    var isEditQt = objPermssionQt.Edit ? 1 : 0;
+
+    var objPermssionIn = (RolePermissionModel)ViewBag.InvoiceAccess;
+    var isAddIn = objPermssionIn.Add ? 1 : 0;
+    var isEditIn = objPermssionIn.Edit ? 1 : 0;
 
 
 }
@@ -32,16 +39,16 @@
                 <input type="hidden" id="isDeletePerm" value="@isDelete" />
                 <input type="hidden" id="isAddPerm" value="@isAdd" />
                 <input type="hidden" id="isApprovePerem" value="@isApprove" />
-                @if (roleId == (int)RoleEnum.Admin)
-                {
+                <input type="hidden" id="isAddPermQuotation" value="@isAddQt" />
+                <input type="hidden" id="isEditPermQuotation" value="@isEditQt" />
+                <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
+                <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
                     <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
-                        <button class="flex align-item-center blueBtn mr-12" id="addNew">
+                        <button class="flex align-item-center blueBtn mr-12" id="addNewQt">
                             <img src="~/assets/plus.svg" alt="plus"> Add New
                         </button>
                     </form>
-                }
-
-
+                
                 @* @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                 {
                 <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">

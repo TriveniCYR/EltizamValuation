@@ -98,6 +98,8 @@ namespace Eltizam.WebApi.Controllers
                 DBOperation oResponse = await _clientServices.DeleteClient(id);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
+                else if (oResponse == DBOperation.AlreadyExist)
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.OK, "Please deactivated valuation attached with this Client");
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }

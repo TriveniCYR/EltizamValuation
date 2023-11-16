@@ -10,7 +10,7 @@ $(document).ready(function () {
     }
     BindDepartment();
     BindDesignation();
-
+    BindCountryCode();
     $('#Address_Phone').keypress(function (e) {
         if ($('#Address_Phone').val() == '' && e.which == 48) {
             return false;
@@ -148,8 +148,7 @@ function removeParentDivAddress(element) {
 
 
 function BindClientType() {
-    debugger
-    
+
     var ClientType = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
     var _rpname = "clientType";
@@ -158,7 +157,7 @@ function BindClientType() {
 }
 
 function BindCountry() {
-    debugger
+  
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
@@ -194,6 +193,39 @@ function BindDesignation() {
     var _rpname = "designation";
 
     BindDropdowns(DesignationList, Designation, _rpname, _val);
+}
+
+function BindCountryCode() {
+    var CountryCode = $("#Address_PhoneExt");
+    var CountryCodeExt = $("#Contact_MobileExt");
+    var _val = $('#hdnPhoneExt').val();
+    var _valExt = $('#hdnMobileExt').val();
+
+    $.ajax({
+        type: "GET",
+        url: BaseURL + CountryList,
+        "datatype": "json",
+        success: function (response) {
+            debugger
+            CountryCode.empty().append('<option selected="selected" value="">select</option>');
+            CountryCodeExt.empty().append('<option selected="selected" value="">select</option>');
+            for (var i = 0; i < response.length; i++) {
+                CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                CountryCodeExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+            }
+            if (_val != "" || _valExt != "") {
+                CountryCode.val(_val);
+                CountryCodeExt.val(_valExt);
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
 }
 
 // accordian function here

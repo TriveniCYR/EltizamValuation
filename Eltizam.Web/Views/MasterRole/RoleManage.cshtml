@@ -11,8 +11,8 @@
 
 @model Eltizam.Business.Models.MasterRoleEntity
 @{
-    ViewData["Title"] = @MasterLocalizer["Role Manage"]; 
-    string jsVersion = @Configuration.GetSection("StaticJS")["version"]; 
+    ViewData["Title"] = @MasterLocalizer["Role Manage"];
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = "Role Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
     var objPermssion = (RolePermissionModel)ViewBag.Access;
@@ -52,12 +52,12 @@
                                     @if (Model.IsUserAssigned && Model.IsActive)
                                     {
                                         @* <label for="" class="w-50">
-                                            Status
+                                    Status
 
-                                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required />
-                                            <label class="label-switch" for="addLocation"></label>
-                                            <span class="info-text"></span>
-                                        </label> *@
+                                    <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required />
+                                    <label class="label-switch" for="addLocation"></label>
+                                    <span class="info-text"></span>
+                                    </label> *@
                                         <label for="IsActive" class="w-50">
                                             Status
                                             <input class='input-switch' type="checkbox" asp-for="IsActive" />
@@ -74,15 +74,15 @@
                                             <label class="label-switch" for="IsActive"></label>
                                             <span class="info-text"></span>
                                         </label>
-                                       
 
-                                      @*   <label for="" class="w-50">
-                                            Status
 
-                                            <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required />
-                                            <label class="label-switch" for="addLocation"></label>
-                                            <span class="info-text"></span>
-                                        </label> *@
+                                        @*   <label for="" class="w-50">
+                                    Status
+
+                                    <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="1" @(Model.IsActive ? "checked" : "") required />
+                                    <label class="label-switch" for="addLocation"></label>
+                                    <span class="info-text"></span>
+                                    </label> *@
                                     }
                                 </div>
 
@@ -94,7 +94,7 @@
                                     <thead>
                                         <tr>
                                             <th>Module</th>
-                                            @* <th>Sub Module</th>*@
+                                            <th>Sub Module</th>
                                             <th> <input type="checkbox" id="chkView" class="checkbox-checked" /> View</th>
                                             <th> <input type="checkbox" id="chkAdd" class="checkbox-checked" /> Add</th>
                                             <th><input type="checkbox" id="chkEdit" class="checkbox-checked" /> Edit</th>
@@ -112,19 +112,56 @@
                                             @Html.HiddenFor(m => m.MasterModules[i].RoleModulePermission.RoleId)
                                             <tr>
                                                 <td>@Model.MasterModules[i].ModuleName</td>
-                                                @*    <td></td>*@
+                                                <td></td>
                                                 <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
                                                 <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })</td>
                                                 <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Edit, new { @class = "checkbox-checked", @checked = "checked" })</td>
                                                 <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Delete, new { @class = "checkbox-checked", @checked = "checked" })</td>
                                                 <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Approve, new { @class = "checkbox-checked", @checked = "checked" })</td>
                                             </tr>
+
+                                            @for (int j = 0; j < Model.MasterModules[i].MasterSubModules.Count; j++)
+                                            {
+
+                                                @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].SubModuleName)
+                                                @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].ModuleId)
+                                                @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].SubModuleId)
+                                                @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].RoleModulePermission.SubModuleId)
+                                                @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].RoleModulePermission.ModuleId)
+                                                @Html.HiddenFor(m => m.MasterModules[i].MasterSubModules[j].RoleModulePermission.RoleId)
+                                                <tr>
+                                                    <td></td>
+                                                    <td>@Model.MasterModules[i].MasterSubModules[j].SubModuleName</td>
+                                                    <td> @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Edit, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Delete, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Approve, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                    <td>
+                                                        @if (
+                                                       Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationRequest &&
+                                                       Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationQuotation &&
+                                                       Model.MasterModules[i].MasterSubModules[j].SubModuleId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationInvoice
+                                                       )
+                                                        {
+                                                            @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })
+                                                        }
+                                                    </td>
+
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+
+                                                @*-----------*@
+                                            }
                                         }
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div class="text-right buttonArea bodyContent plr-0">
                         <a href='/MasterRole/Roles'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
                         <button type="submit" id="btnSaveEdit" class="bgBlue">@SharedLocalizer["Save"]</button>
@@ -134,8 +171,8 @@
         </div>
     </div>
 </main>
- 
 
-@section MyScripts { 
-    <script type="text/javascript" src="~/js/custom/Role/RoleManage.js?v=@jsVersion"></script> 
+
+@section MyScripts {
+    <script type="text/javascript" src="~/js/custom/Role/RoleManage.js?v=@jsVersion"></script>
 }

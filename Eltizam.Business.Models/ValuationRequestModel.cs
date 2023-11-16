@@ -13,6 +13,7 @@ namespace Eltizam.Business.Models
         public string? ReferenceNo { get; set; } = null!;
         public string? OtherReferenceNo { get; set; }
         public int ValuationModeId { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ValuationDate { get; set; }
         public int? ValuationTimeFrame { get; set; }
         public int ClientId { get; set; }

@@ -36,10 +36,10 @@ namespace EltizamValuation.Web.Controllers
             if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, PermissionEnum.View, roleId,SubModuleEnum.ValuationRequest))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-            ////Get module wise permissions
-            //ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
-            //ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
-            //ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+            //Get module wise permissions
+            ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
+            ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
+            ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
 
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();

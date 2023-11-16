@@ -73,7 +73,7 @@
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Date<span class="text-danger">*</span></p>
-                                    <input type="date" id="TransactionDate" class="disabletxtbox">
+                                    <input type="text" id="TransactionDate" class="disabletxtbox formatted-date-input">
                                     @* <input type="date" id="TransactionDate" name="TransactionDate" asp-for="TransactionDate" class="disabletxtbox"> *@
 
                                 </label>
@@ -109,7 +109,7 @@
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Date<span class="text-danger">*</span></p>
-                                    <input type="date" id="ChequeTransactionDate" class="disabletxtbox">
+                                    <input type="text" id="ChequeTransactionDate" class="disabletxtbox formatted-date-input">
                                     @* <input type="date" id="ChequeTransactionDate" name="ChequeTransactionDate" asp-for="ChequeTransactionDate" class="disabletxtbox"> *@
                                 </label>
                                 <label for="" class="w-50">
@@ -124,13 +124,13 @@
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Cheque Date<span class="text-danger">*</span></p>
-                                    <input type="date" id="ChequeDate" class="disabletxtbox">
+                                    <input type="text" id="ChequeDate" class="disabletxtbox formatted-date-input">
                                 </label>
                             </div>
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Cheque Recieved Date<span class="text-danger">*</span></p>
-                                    <input type="date" id="ChequeRecievedDate" class="disabletxtbox">
+                                    <input type="text" id="ChequeRecievedDate" class="disabletxtbox formatted-date-input">
                                 </label>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Date<span class="text-danger">*</span></p>
-                                    <input type="date" id="CardTransactionDate" name="CardTransactionDate">
+                                    <input type="text" id="CardTransactionDate" name="CardTransactionDate" class="formatted-date-input">
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Transaction ID<span class="text-danger">*</span></p>
@@ -188,7 +188,7 @@
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Expiry Date<span class="text-danger">*</span></p>
-                                    <input type="date" id="ExpiryDate" class="disabletxtbox">
+                                    <input type="text" id="ExpiryDate" class="disabletxtbox formatted-date-input">
                                 </label>
                             </div>
                         </div>
@@ -221,7 +221,7 @@
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Date<span class="text-danger">*</span></p>
-                                    <input type="date" id="BankTransactionDate" class="disabletxtbox">
+                                    <input type="text" id="BankTransactionDate" class="disabletxtbox formatted-date-input">
 
                                     @* <input type="date" id="BankTransactionDate" name="BankTransactionDate" asp-for="BankTransactionDate" class="disabletxtbox"> *@
                                 </label>
@@ -329,6 +329,8 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationInvoiceManage.js?v=@jsVersion"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
 

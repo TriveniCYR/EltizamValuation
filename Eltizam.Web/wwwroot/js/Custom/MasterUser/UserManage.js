@@ -5,6 +5,7 @@ $(document).ready(function () {
     BindRole();
     BindResourceType();
     BindCountry();
+    BindCountryCode();
     debugger
     var countryId = $('#hdnCountry').val();
     if (countryId != null || countryId != 0) {
@@ -80,7 +81,33 @@ function BindGender() {
         Gender.val($('#hdnGender').val());
     }
 }
+function BindCountryCode() {
+    var CountryCode = $("#Address_PhoneExt");
+    var _val = $('#hdnPhoneExt').val();
 
+    $.ajax({
+        type: "GET",
+        url: BaseURL + CountryList,
+        "datatype": "json",
+        success: function (response) {
+            debugger
+            CountryCode.empty().append('<option selected="selected" value="">select</option>');
+            for (var i = 0; i < response.length; i++) {
+                CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+            }
+            if (_val != "") {
+                CountryCode.val(_val);
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
 
 $('#Address_PinNo').keypress(function (e) {
     if ($('#Address_PinNo').val() == '' && e.which == 48) {

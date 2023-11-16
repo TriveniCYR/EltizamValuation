@@ -94,6 +94,12 @@ $(document)
         }
     });
 
+document.addEventListener('DOMContentLoaded', function () {
+    flatpickr('.formatted-date-input', {
+        dateFormat: 'd-M-Y',
+    });
+});
+
 function showLoader() {
     $('#loading-wrapper').show();
 }

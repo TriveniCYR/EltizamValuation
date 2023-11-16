@@ -106,7 +106,7 @@
                                             TRN Expire Date
                                             <span class="text-danger">*</span>
                                         </p>
-                                        <input type="date" id="TrnexpiryDate" name="TrnexpiryDate" asp-for="TrnexpiryDate">
+                                        <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" class="formatted-date-input" asp-for="TrnexpiryDate">
                                         @Html.ValidationMessageFor(model => model.TrnexpiryDate, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -131,6 +131,7 @@
                                 <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
                                 <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
                                 <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" />
+                                <input type="hidden" id="hdnPhoneExt" value="@(Model.Address == null ? 0 : Model.Address.PhoneExt)" />
                                 @Html.HiddenFor(model => model.Address.Id)
                                 <div class="addMoreAddress">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
@@ -186,11 +187,20 @@
                                             </label>
                                         </div>
                                         <div class="flex">
-                                            <label for="Phone">
+                                            <label for="phone">                                                
+                                                    <p class="m-0">Phone<span class="text-danger">*</span></p>
+                                                    <div class="flex align-item-center flex-start m-0">
+                                                    @Html.DropDownListFor(model => model.Address.PhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
+
+                                                        @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked", @style = "width: 85%", @placeholder = @SharedLocalizer["Phone"] })
+                                                        @Html.ValidationMessageFor(model => model.Address.Phone, "", new { @class = "text-danger" })
+                                                    </div>
+                                            </label>
+                                           @*  <label for="Phone">
                                                 <p class="m-0">Phone<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
                                                 @Html.ValidationMessageFor(model => model.Address.Phone, "", new { @class = "text-danger" })
-                                            </label>
+                                            </label> *@
                                             <label for="AlternatePhone">
                                                 Alternate Phone
                                                 @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
@@ -227,6 +237,7 @@
                                     
                                     <input type="hidden" id="hdnDeparment" value="@(Model.Contact == null ? 0 : Model.Contact.DepartmentId)" />
                                     <input type="hidden" id="hdnDesignation" value="@(Model.Contact == null ? 0 : Model.Contact.DesignationId)" />
+                                    <input type="hidden" id="hdnMobileExt" value="@(Model.Contact == null ? 0 : Model.Contact.MobileExt)" />
                                     <div class="tabSection">
                                         @Html.HiddenFor(model => model.Contact.Id)
                                         <div class="flex">
@@ -253,8 +264,12 @@
                                         <div class="flex">
                                             <label for="grade" class="w-50">
                                                 <p class="m-0">Phone Number<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Contact.Mobile, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone Number"] })
-                                                @Html.ValidationMessageFor(model => model.Contact.Mobile, "", new { @class = "text-danger" })
+                                                <div class="flex align-item-center flex-start m-0">
+                                                    @Html.DropDownListFor(model => model.Contact.MobileExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
+
+                                                    @Html.TextBoxFor(model => model.Contact.Mobile, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone Number"] })
+                                                    @Html.ValidationMessageFor(model => model.Contact.Mobile, "", new { @class = "text-danger" })
+                                                </div>
                                             </label>
                                         </div>
                                     </div>
@@ -328,10 +343,9 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/MasterClient/ClientManage.js?v=@jsVersion"></script>
-
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-
-        debugger
         //#region Setup API Url
         var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetClientTypeList";
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
