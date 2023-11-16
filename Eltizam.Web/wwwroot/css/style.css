@@ -1863,7 +1863,9 @@ div.dataTables_wrapper div.dataTables_filter {
 }
 
 .accordianDetails {
-    background-color: #EBF5FF;
+   /* background-color: #EBF5FF;*/
+    background-color: var(--blue);
+    color:white;
     padding: 10px;
     border-radius: 5px;
     align-items: center;
