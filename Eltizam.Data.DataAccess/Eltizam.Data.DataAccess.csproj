@@ -30,8 +30,4 @@
     <ProjectReference Include="..\Eltizam.Utility\Eltizam.Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DataContext\" />
-  </ItemGroup>
-
 </Project>
