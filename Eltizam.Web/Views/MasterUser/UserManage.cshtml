@@ -168,6 +168,7 @@
                                 <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
                                 <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" />
                                 <input type="hidden" id="hdnPhoneExt" value="@(Model.Address == null ? 0 : Model.Address.PhoneExt)" />
+                                <input type="hidden" id="hdnAlternatePhoneExt" value="@(Model.Address == null ? 0 : Model.Address.AlternatePhoneExt)" />
                                 @Html.HiddenFor(model => model.Address.Id)
                                 <div class="addMoreAddress roundBorderBox">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
@@ -226,15 +227,6 @@
                                             <label for="Phone">
                                                 <p class="m-0">Phone<span class="text-danger">*</span></p>
                                                 <div class="flex align-item-center flex-start m-0">
-                                                    @* <select id="countryCode" style="border-right: 0;">
-                                                        <option value="+1">+91</option>
-                                                        <option value="+91">+1</option>
-                                                        <option value="+91">+92</option>
-                                                        <option value="+91">+93</option>
-                                                        <option value="+91">+94</option>
-                                                        <option value="+91">+95</option>
-                                                        <!-- Add more country codes as needed -->
-                                                    </select> *@
                                                     @Html.DropDownListFor(model => model.Address.PhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
 
                                                     @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked", @style = "width: 85%", @placeholder = @SharedLocalizer["Phone"] })
@@ -243,8 +235,12 @@
                                             </label>
                                             <label for="AlternatePhone">
                                                 Alternate Phone
-                                                @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Alternate Phone"] })
-                                                @Html.ValidationMessageFor(model => model.Address.AlternatePhone, "", new { @class = "text-danger" })
+                                                <div class="flex align-item-center flex-start m-0">
+                                                    @Html.DropDownListFor(model => model.Address.AlternatePhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
+
+                                                    @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                    @Html.ValidationMessageFor(model => model.Address.AlternatePhone, "", new { @class = "text-danger" })
+                                                </div>
                                             </label>
                                         </div>
                                         <div class="flex">
@@ -383,8 +379,7 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/Custom/MasterUser/UserManage.js?v=@jsVersion"></script>
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
     <script>
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
         var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
