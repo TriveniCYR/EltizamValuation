@@ -289,7 +289,6 @@ function BindFurnished() {
 
 
 function BindCountry() {
-    debugger
     var Country = $("#PropertyDetail_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";

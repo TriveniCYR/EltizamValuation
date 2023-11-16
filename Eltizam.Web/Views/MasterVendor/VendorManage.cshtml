@@ -74,7 +74,7 @@
                                 <div class="flex">
                                     <label for="EstimattionDate">
                                         <p class="m-0">Estimation Date<span class="text-danger">*</span></p>
-                                        <input type="date" id="EstimattionDate" name="EstimattionDate" asp-for="EstimattionDate">
+                                        <input type="text" id="EstimattionDate" class="formatted-date-input" name="EstimattionDate" asp-for="EstimattionDate">
                                         @Html.ValidationMessageFor(model => model.EstimattionDate, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="BusinessTypeId">
@@ -251,6 +251,8 @@
 @section MyScripts {
 
     <script type="text/javascript" src="~/js/custom/Vendor/VendorManage.js?v=@jsVersion"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
         //#region Setup API Url

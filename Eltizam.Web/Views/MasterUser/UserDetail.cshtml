@@ -86,7 +86,7 @@
                                     </label>
                                     <label for="DateOfBirth">
                                         Date of Birth
-                                        <input type="date" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth" class="form-control" disabled />
+                                        <input type="text" id="DateOfBirth" name="DateOfBirth" asp-for="DateOfBirth" class="form-control formatted-date-input" disabled />
                                     </label>
                                 </div>
                                 <div class="flex">
@@ -303,7 +303,8 @@
  
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/MasterUser/UserManage.js?v=@jsVersion"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
         var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";

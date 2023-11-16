@@ -62,7 +62,7 @@
                                 <div class="flex">
                                     <label for="EstimattionDate">
                                         Estimation Date
-                                        <input type="date" id="EstimattionDate" name="EstimattionDate" asp-for="EstimattionDate" disabled />
+                                        <input type="text" id="EstimattionDate" class="formatted-date-input" name="EstimattionDate" asp-for="EstimattionDate" disabled />
                                     </label>
                                     <label for="BusinessTypeId">
                                         Business Type
@@ -218,7 +218,8 @@
 @section MyScripts {
 
     <script type="text/javascript" src="~/js/custom/Vendor/VendorDetail.js?v=@jsVersion"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         //#region Setup API Url
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
