@@ -58,7 +58,7 @@ namespace Eltizam.WebApi.Controllers
         }
          
 
-        [HttpGet, Route("GetLogDetails")]
+        [HttpGet, Route("GetLogDetailsByFilters")]
         public async Task<IActionResult> GetLogDetails(string? TableName, int? Id, int? TableKey, DateTime? DateFrom, DateTime? DateTo)
         {
             try
