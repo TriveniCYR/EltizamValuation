@@ -149,6 +149,10 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
+                entity.Property(e => e.AlternatePhoneExt)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Email)
