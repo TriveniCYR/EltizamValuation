@@ -11,9 +11,7 @@ namespace Eltizam.Business.Models
     public class ChangePasswordModel
     {
         public int UserId { get; set; }
-        //[Required]
-        //public string OldPassword { get; set; }
-
+        
         [Display(Name = "Password")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$", ErrorMessage = "A password must have Minimum 8, " +
            "Maximum 16 characters,at least one number,at least one upper case,at least one lower case," +
@@ -21,12 +19,12 @@ namespace Eltizam.Business.Models
         [DataType(DataType.Password)]
         public string? NewPassword { get; set; }
 
-        [NotMapped]
-        //[Required(ErrorMessage = "Confirm Password required")]
+        [NotMapped] 
         [CompareAttribute("NewPassword", ErrorMessage = "Password and Confirm Password doesn't match.")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
+
     public class ApiResponse
     {
         public bool Success { get; set; }

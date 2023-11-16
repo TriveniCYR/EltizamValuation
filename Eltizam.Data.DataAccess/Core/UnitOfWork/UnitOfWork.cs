@@ -12,11 +12,11 @@ namespace Eltizam.Data.DataAccess.Core.UnitOfWork
 {
     public class UnitOfWork : IDisposable, IUnitOfWork
     {
-        private EltizamDB_DevContext _context;
+        private EltizamDBContext _context;
         private bool disposed = false;
         private Dictionary<Type, object> repositories;
 
-        public UnitOfWork(EltizamDB_DevContext Context)
+        public UnitOfWork(EltizamDBContext Context)
         {
             _context = Context;
         }

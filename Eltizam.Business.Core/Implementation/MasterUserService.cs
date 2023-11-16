@@ -471,15 +471,13 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         public async Task<DBOperation> ChangePassword(ChangePasswordModel entityUser)
-        { 
-            var userId = _helper.GetLoggedInUser()?.UserId ?? 1; 
-            entityUser.UserId = userId;
-
+        {   
             if (entityUser.UserId >= 0 && entityUser.NewPassword == entityUser.ConfirmPassword)
             {
                 entityUser.NewPassword = Utility.Utility.UtilityHelper.GenerateSHA256String(entityUser.NewPassword);
                 entityUser.ConfirmPassword = entityUser.NewPassword;
             }
+
             MasterUser objUser;
             if (entityUser.UserId > 0)
             {
@@ -492,13 +490,16 @@ namespace Eltizam.Business.Core.Implementation
                     objUser.ModifiedBy = _LoginUserId;
                     objUser.ModifiedDate = AppConstants.DateTime;
                     _repository.UpdateAsync(objUser);
+                    _repository.UpdateGraph(objUser, EntityState.Modified);
+
+                    await _unitOfWork.SaveChangesAsync();
                 }
                 else
                 {
                     return DBOperation.NotFound;
                 }
             }
-            await _unitOfWork.SaveChangesAsync();
+            
             return DBOperation.Success;
         }
 

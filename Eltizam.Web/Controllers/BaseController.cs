@@ -72,5 +72,18 @@ namespace Eltizam.Web.Controllers
             ViewBag.Access = objPermssion;
             return hasAccess;
         }
+
+        /// <summary>
+        /// Added by YReddy on 11/07/2023 for Check Rolewise Access
+        /// </summary>
+        /// <param name="enumP"></param>
+        /// <param name="perEnum"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public RolePermissionModel GetRoleAccessValuations(ModulePermissionEnum enumP, int roleId, SubModuleEnum enumSM = 0)
+        {  
+            var objPermssion = UtilityHelper.GetCntrActionAccess((int)enumP, roleId, (int)enumSM);
+            return objPermssion;
+        }
     }
 }

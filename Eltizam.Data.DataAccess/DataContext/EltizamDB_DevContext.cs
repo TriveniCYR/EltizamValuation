@@ -6,13 +6,13 @@ using Eltizam.Data.DataAccess.Entity;
 
 namespace Eltizam.Data.DataAccess.DataContext
 {
-    public partial class EltizamDB_DevContext : DbContext
+    public partial class EltizamDBContext : DbContext
     {
-        public EltizamDB_DevContext()
+        public EltizamDBContext()
         {
         }
 
-        public EltizamDB_DevContext(DbContextOptions<EltizamDB_DevContext> options)
+        public EltizamDBContext(DbContextOptions<EltizamDBContext> options)
             : base(options)
         {
         }
