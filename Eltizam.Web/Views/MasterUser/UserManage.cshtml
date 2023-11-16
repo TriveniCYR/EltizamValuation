@@ -167,6 +167,7 @@
                                 <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
                                 <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
                                 <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" />
+                                <input type="hidden" id="hdnPhoneExt" value="@(Model.Address == null ? 0 : Model.Address.PhoneExt)" />
                                 @Html.HiddenFor(model => model.Address.Id)
                                 <div class="addMoreAddress roundBorderBox">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
@@ -224,8 +225,21 @@
                                         <div class="flex">
                                             <label for="Phone">
                                                 <p class="m-0">Phone<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.Address.Phone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Phone"] })
-                                                @Html.ValidationMessageFor(model => model.Address.Phone, "", new { @class = "text-danger" })
+                                                <div class="flex align-item-center flex-start m-0">
+                                                    @* <select id="countryCode" style="border-right: 0;">
+                                                        <option value="+1">+91</option>
+                                                        <option value="+91">+1</option>
+                                                        <option value="+91">+92</option>
+                                                        <option value="+91">+93</option>
+                                                        <option value="+91">+94</option>
+                                                        <option value="+91">+95</option>
+                                                        <!-- Add more country codes as needed -->
+                                                    </select> *@
+                                                    @Html.DropDownListFor(model => model.Address.PhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
+
+                                                    @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked", @style = "width: 85%", @placeholder = @SharedLocalizer["Phone"] })
+                                                    @Html.ValidationMessageFor(model => model.Address.Phone, "", new { @class = "text-danger" })
+                                                </div>
                                             </label>
                                             <label for="AlternatePhone">
                                                 Alternate Phone

@@ -338,6 +338,7 @@ namespace Eltizam.Business.Core.Implementation
                             objUserAddress.Email = entityAddress.Email;
                             objUserAddress.AlternateEmail = entityAddress.AlternateEmail;
                             objUserAddress.Phone = entityAddress.Phone;
+                            objUserAddress.PhoneExt = entityAddress.PhoneExt;
                             objUserAddress.AlternatePhone = entityAddress.AlternatePhone;
                             objUserAddress.Landlinephone = entityAddress.Landlinephone;
                             objUserAddress.IsActive = entityAddress.IsActive; 

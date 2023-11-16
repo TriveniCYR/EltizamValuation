@@ -40,6 +40,7 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [StringLength(12, MinimumLength = 9)]
         public string? Phone { get; set; }
+        public string? PhoneExt { get; set; }
         [StringLength(12, MinimumLength = 9)]
         public string? AlternatePhone { get; set; }
         [StringLength(12, MinimumLength = 9)]

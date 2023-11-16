@@ -114,7 +114,7 @@ function InitializeUserList() {
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                 html += '<li><a title="View" href="/MasterUser/UserDetail?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
                 html += '<li><a title="Edit" href="/MasterUser/UserManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
-                html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                /*html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteUserModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteUser(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';*/
                 html += '</ul></div>';
 
                 return html;
