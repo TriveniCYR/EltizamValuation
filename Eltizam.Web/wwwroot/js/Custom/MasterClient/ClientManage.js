@@ -196,10 +196,13 @@ function BindDesignation() {
     BindDropdowns(DesignationList, Designation, _rpname, _val);
 }
 
+
 function BindCountryCode() {
     var CountryCode = $("#Address_PhoneExt");
+    var AlternatePhoneExt = $("#Address_AlternatePhoneExt");
     var CountryCodeExt = $("#Contact_MobileExt");
     var _val = $('#hdnPhoneExt').val();
+    var _valAlternate = $('#hdnAlternatePhoneExt').val();
     var _valExt = $('#hdnMobileExt').val();
 
     $.ajax({
@@ -210,13 +213,16 @@ function BindCountryCode() {
             debugger
             CountryCode.empty().append('<option selected="selected" value="">select</option>');
             CountryCodeExt.empty().append('<option selected="selected" value="">select</option>');
+            AlternatePhoneExt.empty().append('<option selected="selected" value="">select</option>');
             for (var i = 0; i < response.length; i++) {
                 CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
                 CountryCodeExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                AlternatePhoneExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
             }
             if (_val != "" || _valExt != "") {
                 CountryCode.val(_val);
                 CountryCodeExt.val(_valExt);
+                AlternatePhoneExt.val(_valAlternate);
             }
         },
         failure: function (response) {

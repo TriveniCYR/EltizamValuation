@@ -340,6 +340,7 @@ namespace Eltizam.Business.Core.Implementation
                             objUserAddress.Phone = entityAddress.Phone;
                             objUserAddress.PhoneExt = entityAddress.PhoneExt;
                             objUserAddress.AlternatePhone = entityAddress.AlternatePhone;
+                            objUserAddress.AlternatePhoneExt = entityAddress.AlternatePhoneExt;
                             objUserAddress.Landlinephone = entityAddress.Landlinephone;
                             objUserAddress.IsActive = entityAddress.IsActive; 
                             objUserAddress.ModifiedBy = entityUser.ModifiedBy;
