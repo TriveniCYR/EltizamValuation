@@ -1,5 +1,7 @@
 ﻿@using Eltizam.Utility.Models
 @model Eltizam.Business.Models.ValuationInvoiceListModel;
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 
 @inject IConfiguration Configuration
 @{
@@ -21,7 +23,7 @@
         <div class="heading position-relative flex justify-between">
             <h3 class="dashboardTitle">@_md @_header</h3>
             <div class="hamburger">
-                <a class="greyBtn lineBtn formAbtn" asp-action="Users">@_header</a>
+                <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md</span>
             </div>
@@ -37,10 +39,11 @@
                     <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
                     <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
                     <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
-                    <button class="payTabLink" onclick="payTab(event, 'pay1')" id="defaultOpenPay">Cash</button>
-                    <button class="payTabLink" onclick="payTab(event, 'pay2')">Cheque</button>
-                    <button class="payTabLink" onclick="payTab(event, 'pay3')">Credit Card</button>
-                    <button class="payTabLink" onclick="payTab(event, 'pay4')">Net Banking</button>
+                    <input type="hidden" id="hdnTabId" value="0" />
+                    <button class="payTabLink" onclick="payTab(event, 'pay1', 1)" id="defaultOpenPay">Cash</button>
+                    <button class="payTabLink" onclick="payTab(event, 'pay2', 2)">Cheque</button>
+                    <button class="payTabLink" onclick="payTab(event, 'pay3', 3)">Credit Card</button>
+                    <button class="payTabLink" onclick="payTab(event, 'pay4', 4)">Net Banking</button>
                 </div>
 
                 <div id="pay1" class="payTabContent">
@@ -82,10 +85,10 @@
                 <div id="pay2" class="payTabContent">
                     <div class="flex buttonArea justify-between ptrl-20">
                         <h3>Add Cheque Payment Details</h3>
-                        @if (ViewBag.IsView != 1)
+                        @* @if (ViewBag.IsView != 1)
                         {
                             <button type="button" class="blueBtn" onclick="SaveChequeInvoice()">Save</button>
-                        }
+                        } *@
                     </div>
                     <div class="inputSearchs">
                         <div class="tabSection">
@@ -136,10 +139,10 @@
                 <div id="pay3" class="payTabContent">
                     <div class="flex buttonArea justify-between ptrl-20">
                         <h3>Add Credit Card Payment Details</h3>
-                        @if (ViewBag.IsView != 1)
+                        @* @if (ViewBag.IsView != 1)
                         {
                             <button type="button" class="blueBtn" onclick="SaveCreditCardInvoice()">Save</button>
-                        }
+                        } *@
                     </div>
                     <div class="inputSearchs">
                         <div class="tabSection">
@@ -194,10 +197,10 @@
                 <div id="pay4" class="payTabContent">
                     <div class="flex buttonArea justify-between ptrl-20">
                         <h3>Add Net Banking Payment Details</h3>
-                        @if (ViewBag.IsView != 1)
+                        @* @if (ViewBag.IsView != 1)
                         {
                             <button type="button" class="blueBtn" onclick="SaveNetBankingInvoice()">Save</button>
-                        }
+                        } *@
                     </div>
                     <div class="inputSearchs">
                         <div class="tabSection">
@@ -311,7 +314,7 @@
                     <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
                     @if (Model.Id == 0)
                     {
-                        <button type="button" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="SaveCashInvoice()">
+                        <button type="button" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="SaveInvoice()">
                             Save
                         </button>
                     }
@@ -337,7 +340,8 @@
             }
         });
         // payemnt option JS here
-        function payTab(evt, payName) {
+        function payTab(evt, payName, num) {
+            document.getElementById('hdnTabId').value = num;
             var i, payTabContent, payTabLink;
             payTabContent = document.getElementsByClassName("payTabContent");
             for (i = 0; i < payTabContent.length; i++) {
