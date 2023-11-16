@@ -80,7 +80,7 @@ namespace Eltizam.Web.Helpers
         public List<RolePermissionModel> GetMenusByRole(int loginRoleId)
         {
             IEnumerable<RolePermissionModel> objList = UtilityHelper.GetModuleRole<dynamic>(loginRoleId);
-            //return objList.Distinct().ToList();
+            //return objList.ToList();
             return objList.Distinct(new RolePermissionModelComparer()).ToList();
         }
     }
