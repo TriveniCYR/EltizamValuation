@@ -48,14 +48,14 @@
         </div>
         <div class="bodyContent">
             <div class="profileTabSection inputSearchs p-0 ">
-                <div class="tab">
+                <div class="tab flex flex-start m-0">
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
                     <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
                     <button class="tablinks" style="display: @(objPermssionIn.View ? "block" : "none")" onclick="profileTab(event, 'profile3')">Payment Details</button>
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
-                    <h3 class="blueHeading">Valuation Details</h3>
+                    <h3 class="ptrl-20">Valuation Details</h3>
                     <div class="inputSearchs p-0">
                         <form asp-action="ValuationRequestManage">
                             <input type="hidden" id="isAddPerm" value="@isAdd" />
@@ -145,7 +145,7 @@
                             </div>
                             <div class="roundBorderBox ptrl-20">
                                 <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                    <h3 class="blueHeading p-0">Client Details</h3>
+                                    <p>Client Details</p>
                                     <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                 </div>
                                 <div class="inputSearchs p-0">
@@ -257,7 +257,7 @@
                             </div>
                             <div class="roundBorderBox ptrl-20">
                                 <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                    <h3 class="blueHeading p-0">Property Details</h3>
+                                    <p>Property Details</p>
                                     <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                 </div>
                                 <div class="inputSearchs p-0">
