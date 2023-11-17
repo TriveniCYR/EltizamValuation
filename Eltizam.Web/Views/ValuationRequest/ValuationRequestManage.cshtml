@@ -124,7 +124,7 @@
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50 m-0">
                                         <p class="m-0">Valuation Date<span class="text-danger">*</span></p>
-                                        <input type="date" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
+                                        <input type="text" class="formatted-date-input" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
                                         @Html.ValidationMessageFor(model => model.ValuationDate, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="" class="bodyContent p-0 w-50">
