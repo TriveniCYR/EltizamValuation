@@ -156,9 +156,8 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
-
         [HttpGet("GetApproverList/{id}/{roleName}")]
-        public async Task<IActionResult> GetApproverList([FromRoute] int id, string roleName)
+        public async Task<IActionResult> GetApproverList([FromRoute] int id, string? roleName)
         {
             try
             {
