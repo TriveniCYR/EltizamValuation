@@ -142,25 +142,7 @@ namespace Eltizam.Business.Core.Implementation
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterClientListModel>());
 
             return oDataTableResponseModel;
-            // Get the column name and sort direction for data table sorting.
-            //var _dbParams = new[]
-            // {
-            //     new DbParameter("ClientId", 0,SqlDbType.Int),
-            //     new DbParameter("PageSize", model.length, SqlDbType.Int),
-            //     new DbParameter("PageNumber", model.start, SqlDbType.Int),
-            //     new DbParameter("OrderClause", "ClientName", SqlDbType.VarChar),
-            //     new DbParameter("ReverseSort", 1, SqlDbType.Int)
-            // };
-
-            //int _count = 0;
-            //var lstStf = FJDBHelper.ExecuteMappedReaderWithOutputParameter<Master_ClientModel>(ProcedureNameCall.usp_Client_SearchAllList,
-
-            // DatabaseConnection.EltizamDatabaseConnection, out _count, CommandType.StoredProcedure, _dbParams);
-
-
-            //DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, _count, 0, lstStf);
-
-            //return oDataTableResponseModel;
+           
         }
 
         public async Task<DBOperation> AddUpdateMasterClient(MasterClientModel master_ClientModel)
@@ -391,8 +373,8 @@ namespace Eltizam.Business.Core.Implementation
             // Create a new Master_PropertyTypeModel instance.
             var _Clients = new List<MasterClientModel>();
 
-            var res = _repository.GetAllAsync(x => x.ClientTypeId == ClientTypeId && x.IsActive == true).Result.ToList();
-
+            //var res = _repository.GetAllAsync(x => x.ClientTypeId == ClientTypeId && x.IsActive == true).Result.ToList();
+            var res = _repository.GetAllAsync(x => (x.ClientTypeId == ClientTypeId || ClientTypeId == 0) && x.IsActive == true).Result.ToList();
             // Use a mapper to map the data from the repository to the model asynchronously.
             _Clients = _mapperFactory.GetList<MasterClient, MasterClientModel>(res);
 

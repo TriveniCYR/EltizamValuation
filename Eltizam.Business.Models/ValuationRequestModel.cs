@@ -34,7 +34,6 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'Ownership Type' field is required.")]
         public int? OwnershipTypeId { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? PropertyName { get; set; }
         public string? OwnershipType { get; set; }
         public string? UnitType { get; set; }
@@ -49,7 +48,8 @@ namespace Eltizam.Business.Models
         public string? Description { get; set; }
         public string? PinCode { get; set; }
         public string? PropertyType { get; set; }
-
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Status' field is required.")]
         public int StatusId { get; set; }
         public int? ApproverId { get; set; }
         public string? ApproverComment { get; set; }

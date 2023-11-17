@@ -309,9 +309,14 @@ namespace Eltizam.Business.Core.Implementation
             // Create a new Master_PropertyTypeModel instance.
             var _PropertFilter = new List<MasterPropertyModel>();
 
-            var res = _repository.GetAllAsync(x => x.PropertyTypeId == PropertyTypeId
-            && x.PropertySubTypeId == SubPropertyTypeId &&
-            x.OwnershipTypeId == OwnershipTypeId && x.IsActive == true).Result.ToList();
+            //var res = _repository.GetAllAsync(x => x.PropertyTypeId == PropertyTypeId
+            //&& x.PropertySubTypeId == SubPropertyTypeId &&
+            //x.OwnershipTypeId == OwnershipTypeId && x.IsActive == true).Result.ToList();
+            var res = _repository.GetAllAsync(x => (x.PropertyTypeId == PropertyTypeId || PropertyTypeId == 0)
+                                  && (x.PropertySubTypeId == SubPropertyTypeId || SubPropertyTypeId == 0)
+                                  && (x.OwnershipTypeId == OwnershipTypeId || OwnershipTypeId == 0)
+                                  && x.IsActive == true)
+                                .Result.ToList();
 
             // Use a mapper to map the data from the repository to the model asynchronously.
             _PropertFilter = _mapperFactory.GetList<MasterProperty, MasterPropertyModel>(res);

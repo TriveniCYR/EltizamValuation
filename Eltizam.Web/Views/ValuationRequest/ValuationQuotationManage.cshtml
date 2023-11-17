@@ -30,7 +30,18 @@
                     </div>
                 </div>
                 <div class="bodyContent">
-                    <h3>Valuation Request Id : @Html.DisplayFor(model => model.ValuationRequestId)  &  ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)</h3>
+                    <div class="whiteBoxShadow m-0 ">
+                        <div class="bodyContent footerAudit">
+                            <div class=" position-relative flex justify-between align-item-center">
+                                <h4 class="m-0">
+                                    Valuation Request Id : @Html.DisplayFor(model => model.ValuationRequestId)
+                                </h4>
+                                <h4 class="m-0">
+                                    ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
                     <div class="inputSearchs uploadDocBox p-0">
                         <form asp-action="ValuationQuotationManage" autocomplete="off" asp-controller="ValuationRequest" method="post">
                             @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
