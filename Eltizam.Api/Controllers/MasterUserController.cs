@@ -161,7 +161,7 @@ namespace Eltizam.API.Controllers.Masters
         {
             try
             {
-                return _ObjectResponse.CreateData(await _MasterUserService.GetApproverList(id), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _MasterUserService.GetApproverList(id, ""), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
