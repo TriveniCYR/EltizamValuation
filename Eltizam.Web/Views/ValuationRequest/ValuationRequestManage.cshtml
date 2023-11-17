@@ -48,14 +48,14 @@
         </div>
         <div class="bodyContent">
             <div class="profileTabSection inputSearchs p-0 ">
-                <div class="tab">
+                <div class="tab flex flex-start m-0">
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
                     <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
                     <button class="tablinks" style="display: @(objPermssionIn.View ? "block" : "none")" onclick="profileTab(event, 'profile3')">Payment Details</button>
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
-                    <h3 class="blueHeading">Valuation Details</h3>
+                    <h3 class="ptrl-20">Valuation Details</h3>
                     <div class="inputSearchs p-0">
                         <form asp-action="ValuationRequestManage">
                             <input type="hidden" id="isAddPerm" value="@isAdd" />
@@ -124,7 +124,7 @@
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50 m-0">
                                         <p class="m-0">Valuation Date<span class="text-danger">*</span></p>
-                                        <input type="date" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
+                                        <input type="text" class="formatted-date-input" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
                                         @Html.ValidationMessageFor(model => model.ValuationDate, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="" class="bodyContent p-0 w-50">
@@ -145,7 +145,7 @@
                             </div>
                             <div class="roundBorderBox ptrl-20">
                                 <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                    <h3 class="blueHeading p-0">Client Details</h3>
+                                    <p>Client Details</p>
                                     <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                 </div>
                                 <div class="inputSearchs p-0">
@@ -257,7 +257,7 @@
                             </div>
                             <div class="roundBorderBox ptrl-20">
                                 <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                    <h3 class="blueHeading p-0">Property Details</h3>
+                                    <p>Property Details</p>
                                     <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                 </div>
                                 <div class="inputSearchs p-0">
@@ -290,7 +290,7 @@
                                             <p class="m-0">Property Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)" })
                                             @*   @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Property Name"] }) *@
-                                            @Html.ValidationMessageFor(model => model.PropertyId, "", new { @class = "text-danger" })
+                                            @* @Html.ValidationMessageFor(model => model.PropertyId, "", new { @class = "text-danger" }) *@
                                         </label>
                                     </div>
                                     <div class="flex mb-28">

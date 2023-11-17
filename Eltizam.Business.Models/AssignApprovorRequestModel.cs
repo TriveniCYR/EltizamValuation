@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class AssignApprovorRequestModel
+    public class AssignApprovorRequestModel : GlobalAuditFields
     {
         public string? RequestIds { get; set; }
         public int ApprovorId { get; set; }
-        public string Remarks { get; set; }
+        public string Remarks { get; set; } 
     }
 }

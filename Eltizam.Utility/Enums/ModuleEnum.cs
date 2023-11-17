@@ -106,6 +106,13 @@ namespace Eltizam.Utility.Enums
 
         [Description("Valuation Request")]
         ValuationRequest = 25,
+
+        [Description("Comparable Evidence")]
+        Comparable_Evidence = 14,
+
+
+        [Description("Valuation Assessement")]
+        Valuation_Assessement = 15,
     }
 
 

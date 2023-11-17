@@ -29,7 +29,18 @@
             </div>
         </div>
         <div class="bodyContent">
-            <h3>Valuation Request Id : @Html.DisplayFor(model => model.ValuationRequestId)  &  ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)</h3>
+            <div class="whiteBoxShadow m-0 ">
+                <div class="bodyContent footerAudit">
+                    <div class=" position-relative flex justify-between align-item-center">
+                        <h4 class="m-0">
+                            Valuation Request Id : @Html.DisplayFor(model => model.ValuationRequestId)
+                        </h4>
+                        <h4 class="m-0">
+                            ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)
+                        </h4>
+                    </div>
+                </div>
+            </div>
             <h3 class="ptrl-20">Select Payment Mode</h3>
             <div class="paymentOption">
                 <div class="payTab">

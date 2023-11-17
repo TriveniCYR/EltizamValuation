@@ -502,7 +502,7 @@ main {
 
     main .dashboardTitle {
         font-family: Calibri;
-        font-size: 18px;
+        font-size: 20px;
         font-style: normal;
         font-weight: 700;
         line-height: 120%;
@@ -861,7 +861,7 @@ table .userPic {
     padding: 8px 10px;
     outline: none;
     margin-top: 5px;
-    background: none;
+    background: white;
 }
 
 .inputSearchs button.blueBtn {
@@ -1509,12 +1509,13 @@ table.popupTable {
 }
 
 .blueHeading {
-    background-color: #EBF5FF;
+    background-color: #576aa0;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 120%;
     padding: 15px 12px;
+    color: white;
 }
 
 .addProperty .tabcontent {
@@ -1864,15 +1865,18 @@ div.dataTables_wrapper div.dataTables_filter {
 }
 
 .accordianDetails {
-   /* background-color: #EBF5FF;*/
-    background-color: var(--blue);
-    color:white;
+    /* background-color: #EBF5FF;*/
+    background-color: #576aa0;
+    color: white;
     padding: 10px;
     border-radius: 5px;
     align-items: center;
     cursor: pointer;
 }
-
+.accordianDetails p {
+    color: white;
+    margin-bottom: 0;
+}
 .accordianErrorDetails, accordianErrorDetails {
     background-color: #dc3545 !important;
     padding: 10px;
@@ -1894,6 +1898,7 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .accordianDetails img {
     transform: rotate(90deg);
+    filter: invert(1);
 }
 
 /* dynamic input on add more property description */  
@@ -2195,9 +2200,10 @@ table.multipleValueTable {
     }
 
     table.multipleValueTable th {
-        background-color: #ebf5ff;
+        background-color: #576aa0;
         color: var(--black);
         border-bottom: 1px solid var(--greyText);
+        color:white;
     }
 
 

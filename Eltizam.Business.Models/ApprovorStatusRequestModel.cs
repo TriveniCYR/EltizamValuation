@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class ApprovorStatusRequestModel
+    public class ApprovorStatusRequestModel : GlobalAuditFields
     {
         public int ValuationRequestId { get; set; }
         public int ApprovorId { get; set; }

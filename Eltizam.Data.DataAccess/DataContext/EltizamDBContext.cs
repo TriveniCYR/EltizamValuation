@@ -17,6 +17,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         {
         }
 
+        public virtual DbSet<ComparableEvidence> ComparableEvidences { get; set; } = null!;
         public virtual DbSet<Dictionary> Dictionaries { get; set; } = null!;
         public virtual DbSet<EmailLogHistory> EmailLogHistories { get; set; } = null!;
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; } = null!;
@@ -56,6 +57,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterValuationFee> MasterValuationFees { get; set; } = null!;
         public virtual DbSet<MasterValuationFeeType> MasterValuationFeeTypes { get; set; } = null!;
         public virtual DbSet<MasterVendor> MasterVendors { get; set; } = null!;
+        public virtual DbSet<ValuationAssesment> ValuationAssesments { get; set; } = null!;
         public virtual DbSet<ValuationInvoice> ValuationInvoices { get; set; } = null!;
         public virtual DbSet<ValuationQuotation> ValuationQuotations { get; set; } = null!;
         public virtual DbSet<ValuationQuotationStatus> ValuationQuotationStatuses { get; set; } = null!;
@@ -74,6 +76,30 @@ namespace Eltizam.Data.DataAccess.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("eltizam_dbUser");
+
+            modelBuilder.Entity<ComparableEvidence>(entity =>
+            {
+                entity.ToTable("Comparable_Evidence", "dbo");
+
+                entity.Property(e => e.AddtionalComments).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.RateSqFt).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Remarks).HasMaxLength(250);
+
+                entity.Property(e => e.Type).HasMaxLength(50);
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.ComparableEvidences)
+                    .HasForeignKey(d => d.RequestId)
+                    .HasConstraintName("FK_Comparable_Evidence_ValuationRequest");
+            });
 
             modelBuilder.Entity<Dictionary>(entity =>
             {
@@ -1062,6 +1088,20 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.VendorName)
                     .HasMaxLength(250)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ValuationAssesment>(entity =>
+            {
+                entity.ToTable("ValuationAssesment", "dbo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.ValuationAssesments)
+                    .HasForeignKey(d => d.RequestId)
+                    .HasConstraintName("FK_ValuationAssesment_ValuationRequest");
             });
 
             modelBuilder.Entity<ValuationInvoice>(entity =>
