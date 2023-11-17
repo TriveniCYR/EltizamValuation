@@ -2214,3 +2214,17 @@ table.multipleValueTable {
 .checkboxBtn input[type="checkbox"]:checked ~ .amenitiesIcon {
     filter: none;
 }
+
+/*/ search button on dashboard /*/
+.inputSearchs form .dashboardSearch label {
+    width: 20%;
+}
+
+.dashboardSearch .blueBtn {
+    margin-bottom: 10px;
+    width: 75px;
+}
+
+.inputSearchs form .dashboardSearch {
+    align-items: end;
+}
