@@ -110,9 +110,9 @@
 
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
-                                        Valuation Status
+                                        <p class="m-0">Valuation Status<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.StatusId, new List<SelectListItem> { }, new { @class = "form-control" })
-                                        @* <input type="text" placeholder="Pending" disabled> *@
+                                        @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
                                     </label>
 
                                     <label for="" class="w-50 m-0" id="comment">
@@ -120,20 +120,21 @@
                                         @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer[""] })
                                         @*  <input type="text" placeholder="12837187236" disabled> *@
                                     </label>
-                                    <label for="" class="w-50">
-                                        Valuation Date
-                                        <input type="date" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
-                                        @*  <input type="date"> *@
-                                    </label>
                                 </div>
-
                                 <div class="flex  mb-28">
+                                    <label for="" class="w-50 m-0">
+                                        <p class="m-0">Valuation Date<span class="text-danger">*</span></p>
+                                        <input type="date" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
+                                        @Html.ValidationMessageFor(model => model.ValuationDate, "", new { @class = "text-danger" })
+                                    </label>
                                     <label for="" class="bodyContent p-0 w-50">
                                         Method of Valuation
                                         <div class="flex m-0 valuationType">
                                             @Html.DropDownList("ValuationModeId", new List<SelectListItem> { }, new { @class = "form-control" })
                                         </div>
                                     </label>
+                                </div>
+                                <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Valuation Time Frame
                                         @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
@@ -154,14 +155,14 @@
                                     <input type="hidden" id="hdnCity" value="@(Model == null ? 0 : Model.CityId)" />
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
-                                            Client Type
+                                            <p class="m-0">Client Type<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientByClientType(this.options[this.selectedIndex].value)" })
-                                            @* <input type="text" placeholder="Bank" disabled> *@
+                                            @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
                                         </label>
                                         <label for="" class="w-50">
-                                            Clients
+                                            <p class="m-0">Clients<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientDetailsByClientId(this.options[this.selectedIndex].value)" })
-                                            @*  <input type="text" placeholder="Client" disabled> *@
+                                            @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
                                         </label>
 
                                     </div>
@@ -171,9 +172,9 @@
                                             <input type="text" placeholder="ICICI Bank" disabled>
                                         </label>
                                         <label for="" class="w-50">
-                                            Client Name
+                                            <p class="m-0">Clients<span class="text-danger">*</span></p>
                                             @Html.TextBoxFor(model => model.ClientName, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Client Name"] })
-                                            @*  <input type="text" placeholder="Jones" disabled> *@
+                                            @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
                                     <div class="flex  mb-28">
@@ -306,7 +307,6 @@
                                         <label for=" class=" w-50"">
                                             <p class="m-0">
                                                 Furnished
-                                                <span class="text-danger">*</span>
                                             </p>
                                             @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control" })
                                             @* @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
@@ -321,7 +321,6 @@
                                         <label for="" class="w-50">
                                             <p class="m-0">
                                                 Built Up Area (Sq.Ft)
-                                                <span class="text-danger">*</span>
                                             </p>
                                             @Html.TextBoxFor(model => model.BuildUpAreaSqFt, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Area in Sq Ft"] })
                                             @*  @Html.ValidationMessageFor(model => model.BuildUpAreaSqFt, "", new { @class = "text-danger" }) *@
@@ -329,7 +328,6 @@
                                         <label for="" class="w-50">
                                             <p class="m-0">
                                                 Built up Area (Sq.Meter)
-                                                <span class="text-danger">*</span>
                                             </p>
                                             @Html.TextBoxFor(model => model.BuildUpAreaSqMtr, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
                                             @*   @Html.ValidationMessageFor(model => model.BuildUpAreaSqMtr, "", new { @class = "text-danger" }) *@
