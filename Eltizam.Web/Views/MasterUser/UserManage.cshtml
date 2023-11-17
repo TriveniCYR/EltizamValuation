@@ -206,8 +206,8 @@
                                                 @Html.ValidationMessageFor(model => model.Address.CityId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="PinNo">
-                                                ZIP Code
-                                                @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Pin No"] })
+                                                Zip / PO Box
+                                                @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Zip / PO Box"] })
                                                 @Html.ValidationMessageFor(model => model.Address.PinNo, "", new { @class = "text-danger" })
                                             </label>
                                         </div>

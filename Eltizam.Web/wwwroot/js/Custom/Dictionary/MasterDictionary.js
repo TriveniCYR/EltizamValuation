@@ -30,7 +30,7 @@ function InitializeDictionaryList() {
             } 
         },
         {
-            "data": "id", "name": "Action", "render": function (data, type, row, meta) {
+            "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                 html += '<li><a title="View" href="/MasterDictionary/DictionaryAllManage?id=' + row.id + '&description=' + row.description +'"><img src="../assets/view.svg" alt="view" />View</a></li>';

@@ -34,7 +34,7 @@
 <div class="flex">
     <main class="w-100">
         <div class="flex justify-between mobile_flexColumn position-relative">
-            <h3 class="dashboardTitle">Valuation List</h3>
+            <h3 class="dashboardTitle">VALUATION REQUESTS</h3>
             <div class="buttonArea flex align-item-center">
                 <input type="hidden" id="isDeletePerm" value="@isDelete" />
                 <input type="hidden" id="isAddPerm" value="@isAdd" />
@@ -44,25 +44,15 @@
                 <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
                 <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
                     <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
-                        <button class="flex align-item-center blueBtn mr-12" id="addNewQt">
+                    <button class="flex align-item-center blueBtn mr-12" id="addNew">
                             <img src="~/assets/plus.svg" alt="plus"> Add New
                         </button>
                     </form>
                 
-                @* @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
-                {
-                <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">
-                <img src="../assets/user-shield.svg" alt="user">
-                ASSIGN
-                </button>
-                } *@
-
                 <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">
                     <img src="../assets/user-shield.svg" alt="user">
-                    ASSIGN
-                </button>
-
-
+                    Assign to Approver
+                </button> 
 
                 <div class="accordion-content inputSearchs" id="assignToggle" style="display:none">
                     <div class="flex justify-between">
@@ -77,7 +67,7 @@
                             </label>
                             <label for="valuatorType" class="w-100">
                                 Alternate Approver
-                                @Html.DropDownList("ApproverId", new List<SelectListItem>{},  new { @class = "form-control disabletxtbox"})
+                                @Html.DropDownList("ApproverId", new List<SelectListItem> { }, new { @class = "form-control disabletxtbox" })
                             </label>
                         </div>
                         <div class="text-center">
@@ -101,15 +91,15 @@
                     <div class="flex">
                         <label for="userName">
                             User Name
-                            @Html.TextBoxFor(model => model.UserName, new {   @placeholder = @SharedLocalizer["User Name"] })
+                            @Html.TextBoxFor(model => model.UserName, new { @placeholder = @SharedLocalizer["User Name"] })
                         </label>
                         <label for="ClientName">
                             Client Name
-                            @Html.TextBoxFor(model => model.ClientName, new {   @placeholder = @SharedLocalizer["ClientName"] })
+                            @Html.TextBoxFor(model => model.ClientName, new { @placeholder = @SharedLocalizer["ClientName"] })
                         </label>
                         <label for="PropertyName">
                             Property Name
-                            @Html.TextBoxFor(model => model.PropertyName, new {  @placeholder = @SharedLocalizer["PropertyName"] })
+                            @Html.TextBoxFor(model => model.PropertyName, new { @placeholder = @SharedLocalizer["PropertyName"] })
                         </label>
                         <label for="">
                             <p class="m-0">
@@ -122,7 +112,7 @@
                     <div class="flex">
                         <label for="Method of Valuation">
                             <p class="m-0">Method of Valuation</p>
-                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(),  new {  @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(), new { @placeholder = @SharedLocalizer[" Select ResourceType"] })
                         </label>
                         <label for="">
                             <p class="m-0">Request Status </p>
@@ -131,7 +121,7 @@
                         </label>
                         <label for="CountryId">
                             <p class="m-0">Country</p>
-                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> {}, new { @onchange = "BindState(this.options[this.selectedIndex].value)" })
+                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @onchange = "BindState(this.options[this.selectedIndex].value)" })
                         </label>
                         <label for="StateId">
                             <p class="m-0">Emirate/State</p>
@@ -142,14 +132,14 @@
                     <div class="flex flex-start" style=" gap: 5px;">
                         <label for="CityId">
                             <p class="m-0">City</p>
-                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new {  })
+                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { })
                         </label>
                         <label for="fromDate">
-                            From Date
+                            From
                             <input type="date" id="FromDate" name="FromDate" asp-for="FromDate">
                         </label>
                         <label for="toDate">
-                            To Date
+                            To
                             <input type="date" id="ToDate" name="ToDate" asp-for="ToDate">
                         </label>
                     </div>
@@ -218,7 +208,7 @@
 
 
 @section MyScripts
-    {
+{
     @Html.Partial("_DataTablePartial")
     <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
 

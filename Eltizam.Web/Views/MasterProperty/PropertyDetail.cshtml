@@ -248,14 +248,13 @@
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Address2, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Address2"] })
 
                                             </label>
-                                            <label for="address2">
-                                                ZIP Code
+                                            <label for="zip">
+                                                Zip / PO Box
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Pincode, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Pincode"] })
-
-                                            </label>
+                                             </label>
                                         </div>
                                         <div class="flex">
-                                            <label for="address2">
+                                            <label for="landmark">
                                                 Landmark
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Landmark, new { @disabled=htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Landmark"] })
 

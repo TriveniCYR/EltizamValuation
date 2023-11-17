@@ -136,8 +136,8 @@
                                                 @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control"})
                                             </label>
                                             <label for="PinNo">
-                                                Pin Code
-                                                @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @disabled=htmlAttributes, @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                                Zip / PO Box
+                                                @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @disabled = htmlAttributes, @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Zip / PO Box"] })
                                             </label>
                                         </div>
                                         <div class="flex">
@@ -288,19 +288,7 @@
  
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/MasterClient/ClientDetail.js?v=@jsVersion"></script>
-    <script>
-
-        // accordian function here
-        function accordianToggle(header) {
-            const item = header.nextElementSibling;
-            if (item.style.height === 'auto') {
-                item.style.height = 0;
-            } else {
-                item.style.height = 'auto';
-            }
-        }
-        //accordian function end
-
+    <script> 
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
