@@ -40,9 +40,13 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [StringLength(12, MinimumLength = 9)]
         public string? Phone { get; set; }
-        public string? PhoneExt { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'PhoneExt' field is required.")]
+        public string PhoneExt { get; set; }
         [StringLength(12, MinimumLength = 9)]
         public string? AlternatePhone { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'AlternatePhoneExt' field is required.")]
         public string? AlternatePhoneExt { get; set; }
         [StringLength(12, MinimumLength = 9)]
         public string? Landlinephone { get; set; }

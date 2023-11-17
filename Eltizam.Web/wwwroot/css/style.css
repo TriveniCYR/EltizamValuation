@@ -2215,16 +2215,20 @@ table.multipleValueTable {
     filter: none;
 }
 
-/*/ search button on dashboard /*/
+/* search button on dashboard */
 .inputSearchs form .dashboardSearch label {
     width: 20%;
 }
 
 .dashboardSearch .blueBtn {
     margin-bottom: 10px;
-    width: 75px;
+    width: 75px !important;
 }
 
 .inputSearchs form .dashboardSearch {
     align-items: end;
+}
+.phoneWithDrop {
+    display: grid !important;
+    grid-template-columns: 80px 1fr;
 }

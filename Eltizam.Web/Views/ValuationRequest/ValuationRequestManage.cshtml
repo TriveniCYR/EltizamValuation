@@ -120,11 +120,6 @@
                                         @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer[""] })
                                         @*  <input type="text" placeholder="12837187236" disabled> *@
                                     </label>
-                                    <label for="" class="w-50">
-                                        Valuation Date
-                                        <input type="text" class="formatted-date-input" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
-                                        @*  <input type="date"> *@
-                                    </label>
                                 </div>
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50 m-0">
@@ -162,7 +157,7 @@
                                         <label for="" class="w-50">
                                             <p class="m-0">Client Type<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientByClientType(this.options[this.selectedIndex].value)" })
-                                            @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" })
                                         </label>
                                         <label for="" class="w-50">
                                             <p class="m-0">Clients<span class="text-danger">*</span></p>
@@ -174,7 +169,7 @@
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
                                             Company Name
-                                            <input type="text" placeholder="ICICI Bank" disabled>
+                                            <input type="text" placeholder="" disabled>
                                         </label>
                                         <label for="" class="w-50">
                                             <p class="m-0">Clients<span class="text-danger">*</span></p>
@@ -274,26 +269,28 @@
                                     <input type="hidden" id="hdnPropertyName" value="@(Model == null ? 0 : Model.PropertyName)" />
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
-                                            Property Type Name
+                                            <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value);" })
-                                            @*   <input type="text" placeholder="ABC" disabled> *@
+                                            @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" })
                                         </label>
                                         <label for="" class="w-50">
-                                            Property SubType Name
+                                            <p class="m-0">Property SubType<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
+                                            @Html.ValidationMessageFor(model => model.PropertySubTypeId, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
-                                            Type of Ownership
+                                            <p class="m-0">Type of Ownership<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertyDetail()" })
+                                            @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" })
                                         </label>
 
                                         <label for="" class="w-50">
-                                            Property Name
+                                            <p class="m-0">Property Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)" })
                                             @*   @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Property Name"] }) *@
-                                            @*  @Html.ValidationMessageFor(model => model.PropertyName, "", new { @class = "text-danger" }) *@
+                                            @Html.ValidationMessageFor(model => model.PropertyId, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
                                     <div class="flex mb-28">
