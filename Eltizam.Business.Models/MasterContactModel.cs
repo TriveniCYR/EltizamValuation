@@ -25,6 +25,8 @@ namespace Eltizam.Business.Models
         [StringLength(12, MinimumLength = 9)]
         public string? Mobile { get; set; }
         public int? Status { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'MobileExt' field is required.")]
         public string? MobileExt { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }

@@ -194,16 +194,16 @@
                                         <div class="flex">
                                             <label for="Phone">
                                                 <p class="m-0">Phone<span class="text-danger">*</span></p>
-                                                <div class="flex align-item-center flex-start m-0">
+                                                <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                     @Html.DropDownListFor(model => model.Address.PhoneExt, new List<SelectListItem> { }, new {@disabled=htmlAttributes, @class = "", @style="border-right: 0" })
 
-                                                    @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off",@disabled=htmlAttributes, @class = "form-control checkbox-checked", @style = "width: 85%", @placeholder = @SharedLocalizer["Phone"] })
+                                                    @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off",@disabled=htmlAttributes, @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Phone"] })
                                                     
                                                 </div>
                                             </label>
                                             <label for="AlternatePhone">
                                                 Alternate Phone
-                                                <div class="flex align-item-center flex-start m-0">
+                                                <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                     @Html.DropDownListFor(model => model.Address.AlternatePhoneExt, new List<SelectListItem> { }, new {@disabled=htmlAttributes, @class = "", @style="border-right: 0" })
 
                                                     @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @disabled=htmlAttributes, @class= "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })

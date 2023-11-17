@@ -159,21 +159,25 @@
                                         <div class="flex">
                                             <label for="Phone">
                                                 <p class="m-0">Phone<span class="text-danger">*</span></p>
-                                                <div class="flex align-item-center flex-start m-0">
+                                                <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                     @Html.DropDownListFor(model => model.Address.PhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
 
-                                                    @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked", @style = "width: 85%", @placeholder = @SharedLocalizer["Phone"] })
-                                                    @Html.ValidationMessageFor(model => model.Address.Phone, "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Phone"] })
+
                                                 </div>
+                                                @Html.ValidationMessageFor(model => model.Address.Phone, "", new { @class = "text-danger" })
+                                                @Html.ValidationMessageFor(model => model.Address.PhoneExt, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="AlternatePhone">
                                                 Alternate Phone
-                                                <div class="flex align-item-center flex-start m-0">
+                                                <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                     @Html.DropDownListFor(model => model.Address.AlternatePhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
 
-                                                    @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
-                                                    @Html.ValidationMessageFor(model => model.Address.AlternatePhone, "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(model => model.Address.AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Alternate Phone"] })
+
                                                 </div>
+                                                @Html.ValidationMessageFor(model => model.Address.AlternatePhone, "", new { @class = "text-danger" })
+                                                @Html.ValidationMessageFor(model => model.Address.AlternatePhoneExt, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
@@ -235,12 +239,14 @@
                                     <div class="flex">
                                         <label for="grade" class="w-50">
                                             <p class="m-0">Phone Number<span class="text-danger">*</span></p>
-                                            <div class="flex align-item-center flex-start m-0">
+                                                <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                 @Html.DropDownListFor(model => model.Contact.MobileExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
 
                                                 @Html.TextBoxFor(model => model.Contact.Mobile, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone Number"] })
-                                                @Html.ValidationMessageFor(model => model.Contact.Mobile, "", new { @class = "text-danger" })
+                                                
                                             </div>
+                                                @Html.ValidationMessageFor(model => model.Contact.MobileExt, "", new { @class = "text-danger" })
+                                                @Html.ValidationMessageFor(model => model.Contact.Mobile, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
                                 </div>

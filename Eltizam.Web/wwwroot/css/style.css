@@ -2228,3 +2228,7 @@ table.multipleValueTable {
 .inputSearchs form .dashboardSearch {
     align-items: end;
 }
+.phoneWithDrop {
+    display: grid !important;
+    grid-template-columns: 80px 1fr;
+}
