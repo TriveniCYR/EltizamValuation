@@ -290,7 +290,7 @@
                                             <p class="m-0">Property Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)" })
                                             @*   @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Property Name"] }) *@
-                                            @Html.ValidationMessageFor(model => model.PropertyId, "", new { @class = "text-danger" })
+                                            @* @Html.ValidationMessageFor(model => model.PropertyId, "", new { @class = "text-danger" }) *@
                                         </label>
                                     </div>
                                     <div class="flex mb-28">
