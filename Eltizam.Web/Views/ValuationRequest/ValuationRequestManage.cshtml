@@ -18,7 +18,7 @@
 
     var isAdd = objPermssion.Add ? 1 : 0;
     var isEdit = objPermssion.Edit ? 1 : 0;
-
+    var isApprove = objPermssion.Approve ? 1 : 0;
     var roleId = objPermssion.RoleId;
     var subModuleId = objPermssion.SubModuleId;
 
@@ -64,6 +64,7 @@
                             <input type="hidden" id="isEditPermQuotation" value="@isEditQt" />
                             <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
                             <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
+                            <input type="hidden" id="isApprovePerm" value="@isApprove" />
 
                             <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                             <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
@@ -389,17 +390,27 @@
                             <div class="text-right buttonArea bodyContent">
                                 <button type="button" class="lineBtn greyBtn">Cancel</button>
 
-                                @if (roleId == (int)RoleEnum.Admin)
+                               @*  @if (roleId == (int)RoleEnum.Admin)
                                 {
                                     <button type="submit" class="blueBtn" style="width:100px">Save</button>
                                 }
 
                                 @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                                 {
-                                    <button type="button" class="blueBtn" id="approveStatus" style="width:100px">
+                                    <button type="button" class="blueBtn" id="isApprove" style="width:100px">
                                         Save
                                     </button>
-                                }
+                                } *@
+
+
+                                <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
+                               @*  <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">Save</button> *@
+                                @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
+                                {
+                                    <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
+                                        Save
+                                    </button>
+                                } 
                             </div>
                         </form>
                     </div>

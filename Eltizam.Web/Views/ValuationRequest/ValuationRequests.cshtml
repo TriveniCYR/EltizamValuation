@@ -43,20 +43,12 @@
                 <input type="hidden" id="isEditPermQuotation" value="@isEditQt" />
                 <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
                 <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
-                <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
-                    <button class="flex align-item-center blueBtn mr-12" id="addNewQt">
-                        <img src="~/assets/plus.svg" alt="plus"> Add New
-                    </button>
-                </form>
-
-                @* @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
-                {
-                <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">
-                <img src="../assets/user-shield.svg" alt="user">
-                ASSIGN
-                </button>
-                } *@
-
+                    <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
+                    <button class="flex align-item-center blueBtn mr-12" id="addNew">
+                            <img src="~/assets/plus.svg" alt="plus"> Add New
+                        </button>
+                    </form>
+                
                 <button class="flex align-item-center lineBtn exportFile" onclick="assignToggle()" id="isApprove">
                     <img src="../assets/user-shield.svg" alt="user">
                     Assign to Approver

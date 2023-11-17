@@ -652,9 +652,9 @@ function GetApproverLists() {
     var statusId = $("#ApproverId");
     var _val = $('#hdnApproverId').val();
     var _rpname = "userName";
-    var currentUserId = "@ViewBag.CurrentUserId";
+    var currentUserId = LogInUserId;
 
-    BindDropdowns(GetApproverList + '/' + currentUserId, statusId, _rpname, _val);
+    BindDropdowns(GetApproverList + '/' + currentUserId+'/Approver', statusId, _rpname, _val);
 
 }
 
@@ -663,9 +663,9 @@ function GetValuerLists() {
     var statusId = $("#ValuerId");
     var _val = $('#hdnValuerId').val();
     var _rpname = "userName";
-    var currentUserId = "@ViewBag.CurrentUserId";
+    var currentUserId = LogInUserId;
 
-    BindDropdowns(GetValuerList + '/' + currentUserId, statusId, _rpname, _val);
+    BindDropdowns(GetValuerList + '/' + currentUserId + '/Valuer', statusId, _rpname, _val);
 
 }
 
@@ -704,7 +704,7 @@ function GetValuationMethodLists() {
 }
 
 
-$('#approveStatus').on('click', function () { 
+$('#btnSaveApprove').on('click', function () { 
     var statusId = $("#StatusId").val();
     var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
     var Id = document.getElementById('Id').value;
