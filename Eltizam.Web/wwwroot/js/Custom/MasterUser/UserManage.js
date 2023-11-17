@@ -83,7 +83,9 @@ function BindGender() {
 }
 function BindCountryCode() {
     var CountryCode = $("#Address_PhoneExt");
+    var AlternatePhone = $("#Address_AlternatePhoneExt");
     var _val = $('#hdnPhoneExt').val();
+    var _valAlter = $('#hdnAlternatePhoneExt').val();
 
     $.ajax({
         type: "GET",
@@ -92,11 +94,14 @@ function BindCountryCode() {
         success: function (response) {
             debugger
             CountryCode.empty().append('<option selected="selected" value="">select</option>');
+            AlternatePhone.empty().append('<option selected="selected" value="">select</option>');
             for (var i = 0; i < response.length; i++) {
                 CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                AlternatePhone.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
             }
-            if (_val != "") {
+            if (_val != "" || _valAlter != "") {
                 CountryCode.val(_val);
+                AlternatePhone.val(_valAlter);
             }
         },
         failure: function (response) {

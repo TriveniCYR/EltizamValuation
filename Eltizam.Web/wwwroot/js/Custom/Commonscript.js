@@ -27,7 +27,7 @@ var IsEditPermQt = ($("#isEditPermQuotation").val() === "1" || $("#isEditPermQuo
 var IsAddPermIn = ($("#isAddPermInvoice").val() === "1" || $("#isAddPermInvoice").val() === 1);
 var IsEditPermIn = ($("#isEditPermInvoice").val() === "1" || $("#isEditPermInvoice").val() === 1);
 
-var IsApprovePerem = ($("#isApprovePerem").val() === "1" || $("#isApprovePerem").val() === 1);  
+var IsApprovePerem = ($("#isApprovePerm").val() === "1" || $("#isApprovePerm").val() === 1);  
 
 $(document).ready(function () {
     ErrorDev.hide();
@@ -50,7 +50,8 @@ $(document).ready(function () {
         $("#btnSaveEdit").remove();
     }
     if (IsApprovePerem === false) {
-        $("#isApprove").remove();
+
+        $("#btnSaveApprove").remove();
     }
 
 

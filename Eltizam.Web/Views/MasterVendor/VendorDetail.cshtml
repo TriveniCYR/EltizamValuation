@@ -86,6 +86,8 @@
                                 <input type="hidden" id="hdnCountry" value="@(Model.Address == null ? 0 : Model.Address.CountryId)" />
                                 <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
                                 <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" />
+                                <input type="hidden" id="hdnPhoneExt" value="@(Model.Address == null ? 0 : Model.Address.PhoneExt)" />
+                                <input type="hidden" id="hdnAlternatePhoneExt" value="@(Model.Address == null ? 0 : Model.Address.AlternatePhoneExt)" />
                                 @Html.HiddenFor(model => model.Address.Id)
                                 <div class="addMoreAddress roundBorderBox">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
@@ -119,8 +121,8 @@
                                                 @Html.DropDownListFor(model => model.Address.CityId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control"})
                                             </label>
                                             <label for="PinNo">
-                                                Pin Code
-                                                @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @disabled=htmlAttributes, @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                                Zip / PO Box
+                                                @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @disabled = htmlAttributes, @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Zip / PO Box"] })
                                             </label>
                                         </div>
                                         <div class="flex">
@@ -135,12 +137,22 @@
                                         </div>
                                         <div class="flex">
                                             <label for="Phone">
-                                                Phone
-                                                @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off", @disabled=htmlAttributes, @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone"] })
+                                                <p class="m-0">Phone<span class="text-danger">*</span></p>
+                                                <div class="flex align-item-center flex-start m-0">
+                                                    @Html.DropDownListFor(model => model.Address.PhoneExt, new List<SelectListItem> { }, new {@disabled=htmlAttributes, @class = "", @style="border-right: 0" })
+
+                                                    @Html.TextBoxFor(model => model.Address.Phone, new {@autocomplete = "off",@disabled=htmlAttributes, @class = "form-control checkbox-checked", @style = "width: 85%", @placeholder = @SharedLocalizer["Phone"] })
+                                                   
+                                                </div>
                                             </label>
                                             <label for="AlternatePhone">
                                                 Alternate Phone
-                                                @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @disabled=htmlAttributes, @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                <div class="flex align-item-center flex-start m-0">
+                                                    @Html.DropDownListFor(model => model.Address.AlternatePhoneExt, new List<SelectListItem> { }, new {@disabled=htmlAttributes, @class = "", @style="border-right: 0" })
+
+                                                    @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @disabled=htmlAttributes, @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
+
+                                                </div>
                                             </label>
                                         </div>
                                         <div class="flex">
@@ -171,6 +183,7 @@
                                     
                                     <input type="hidden" id="hdnDeparment" value="@(Model.Contact == null ? 0 : Model.Contact.DepartmentId)" />
                                     <input type="hidden" id="hdnDesignation" value="@(Model.Contact == null ? 0 : Model.Contact.DesignationId)" />
+                                    <input type="hidden" id="hdnMobileExt" value="@(Model.Contact == null ? 0 : Model.Contact.MobileExt)" />
                                     <div class="tabSection">
                                         @Html.HiddenFor(model => model.Contact.Id)
                                         <div class="flex">
@@ -194,9 +207,14 @@
                                             </label>
                                         </div>
                                         <div class="flex">
-                                            <label for="grade" class="w-50">
-                                                Phone Number
-                                                @Html.TextBoxFor(model => model.Contact.Mobile, new {@autocomplete = "off", @disabled=htmlAttributes, @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone Number"] })
+                                            <label for="grade" class="w-50">                                                
+                                            <p class="m-0">Phone Number<span class="text-danger">*</span></p>
+                                            <div class="flex align-item-center flex-start m-0">
+                                                    @Html.DropDownListFor(model => model.Contact.MobileExt, new List<SelectListItem> { }, new {@disabled=htmlAttributes,  @class = "", @style="border-right: 0" })
+
+                                                    @Html.TextBoxFor(model => model.Contact.Mobile, new {@autocomplete = "off",@disabled=htmlAttributes,  @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Phone Number"] })
+                                                
+                                            </div>
                                             </label>
                                         </div>
                                     </div>

@@ -233,6 +233,7 @@ namespace Eltizam.Business.Core.Implementation
                         objAddress.PhoneExt = entityAddress.PhoneExt;
                         objAddress.Phone = entityAddress.Phone;
                         objAddress.AlternatePhone = entityAddress.AlternatePhone;
+                        objAddress.AlternatePhoneExt = entityAddress.AlternatePhoneExt;
                         objAddress.Landlinephone = entityAddress.Landlinephone;
                         objAddress.IsActive = entityAddress.IsActive;
                         objAddress.ModifiedBy = masterVendortModel.ModifiedBy;

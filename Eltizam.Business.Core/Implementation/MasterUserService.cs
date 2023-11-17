@@ -340,6 +340,7 @@ namespace Eltizam.Business.Core.Implementation
                             objUserAddress.Phone = entityAddress.Phone;
                             objUserAddress.PhoneExt = entityAddress.PhoneExt;
                             objUserAddress.AlternatePhone = entityAddress.AlternatePhone;
+                            objUserAddress.AlternatePhoneExt = entityAddress.AlternatePhoneExt;
                             objUserAddress.Landlinephone = entityAddress.Landlinephone;
                             objUserAddress.IsActive = entityAddress.IsActive; 
                             objUserAddress.ModifiedBy = entityUser.ModifiedBy;
@@ -504,11 +505,12 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<List<MasterUserListModel>> GetApproverList(int id)
+        public async Task<List<MasterUserListModel>> GetApproverList(int id, string roleName)
         {
             DbParameter[] osqlParameter1 = 
             {
-                 new DbParameter("UserId", id, SqlDbType.Int)
+                 new DbParameter("UserId", id, SqlDbType.Int),
+                 new DbParameter("RoleName", roleName, SqlDbType.VarChar)
             };
 
             var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserListModel>(ProcedureMetastore.usp_Approver_AllList,

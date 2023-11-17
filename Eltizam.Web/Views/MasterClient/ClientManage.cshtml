@@ -132,6 +132,7 @@
                                 <input type="hidden" id="hdnState" value="@(Model.Address == null ? 0 : Model.Address.StateId)" />
                                 <input type="hidden" id="hdnCity" value="@(Model.Address == null ? 0 : Model.Address.CityId)" />
                                 <input type="hidden" id="hdnPhoneExt" value="@(Model.Address == null ? 0 : Model.Address.PhoneExt)" />
+                                <input type="hidden" id="hdnAlternatePhoneExt" value="@(Model.Address == null ? 0 : Model.Address.AlternatePhoneExt)" />
                                 @Html.HiddenFor(model => model.Address.Id)
                                 <div class="addMoreAddress">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
@@ -169,8 +170,8 @@
                                                 @Html.ValidationMessageFor(model => model.Address.CityId, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="PinNo">
-                                                ZIP Code
-                                                @Html.TextBoxFor(model => model.Address.PinNo, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Pin No"] })
+                                                Zip / PO Box
+                                                @Html.TextBoxFor(model => model.Address.PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Zip / PO Box"] })
                                                 @Html.ValidationMessageFor(model => model.Address.PinNo, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
@@ -203,8 +204,12 @@
                                             </label> *@
                                             <label for="AlternatePhone">
                                                 Alternate Phone
-                                                @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Phone"] })
-                                                @Html.ValidationMessageFor(model => model.Address.AlternatePhone, "", new { @class = "text-danger" })
+                                                <div class="flex align-item-center flex-start m-0">
+                                                    @Html.DropDownListFor(model => model.Address.AlternatePhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
+
+                                                    @Html.TextBoxFor(model => model.Address.AlternatePhone, new {@autocomplete = "off", @class = "form-control checkbox-checked", @style = "width: 85%", @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                    @Html.ValidationMessageFor(model => model.Address.AlternatePhone, "", new { @class = "text-danger" })
+                                                </div>
                                             </label>
                                         </div>
                                         <div class="flex">
