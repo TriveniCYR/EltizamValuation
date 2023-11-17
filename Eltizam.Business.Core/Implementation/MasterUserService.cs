@@ -505,11 +505,12 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<List<MasterUserListModel>> GetApproverList(int id)
+        public async Task<List<MasterUserListModel>> GetApproverList(int id, string roleName)
         {
             DbParameter[] osqlParameter1 = 
             {
-                 new DbParameter("UserId", id, SqlDbType.Int)
+                 new DbParameter("UserId", id, SqlDbType.Int),
+                 new DbParameter("RoleName", roleName, SqlDbType.VarChar)
             };
 
             var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserListModel>(ProcedureMetastore.usp_Approver_AllList,
