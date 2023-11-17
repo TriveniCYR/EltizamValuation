@@ -7,6 +7,8 @@ namespace Eltizam.Data.DataAccess.Entity
     {
         public ValuationRequest()
         {
+            ComparableEvidences = new HashSet<ComparableEvidence>();
+            ValuationAssesments = new HashSet<ValuationAssesment>();
             ValuationInvoices = new HashSet<ValuationInvoice>();
             ValuationQuotations = new HashSet<ValuationQuotation>();
         }
@@ -36,6 +38,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public virtual MasterClient Client { get; set; } = null!;
         public virtual MasterProperty Property { get; set; } = null!;
         public virtual ValuationRequestStatus Status { get; set; } = null!;
+        public virtual ICollection<ComparableEvidence> ComparableEvidences { get; set; }
+        public virtual ICollection<ValuationAssesment> ValuationAssesments { get; set; }
         public virtual ICollection<ValuationInvoice> ValuationInvoices { get; set; }
         public virtual ICollection<ValuationQuotation> ValuationQuotations { get; set; }
     }
