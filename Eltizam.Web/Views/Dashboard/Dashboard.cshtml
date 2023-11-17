@@ -30,19 +30,19 @@
                 <div class="flex dashboardSearch">
                     <label for="userName">
                         Client
-                        <input type="text">
+                        <select id="Client_Name"></select>
                     </label>
                     <label for="userName" class="position-relative">
                        Property
-                        <input type="text">
+                        <select id="Property_name"></select>
                     </label>
                     <label for="">
                         From
-                        <input type="date">
+                        <input type="text" class="formatted-date-input">
                     </label>
                     <label for="">
                         To
-                        <input type="date">
+                        <input type="text" class="formatted-date-input">
                     </label>
                     <button class="blueBtn">Search</button>
                 </div>
@@ -273,3 +273,12 @@
         </div>
     </div>
 </main> 
+@section MyScripts {
+    <script type="text/javascript" src="~/js/Custom/Dashboard/Dashboard.js?v=@jsVersion"></script>
+        <script> 
+            //#region Setup API Url
+        var AllClient = "@Eltizam.Web.Helpers.APIURLHelper.GetClientByClientTypeId";
+        var AllProperty = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByFilters";
+        </script>
+
+}
