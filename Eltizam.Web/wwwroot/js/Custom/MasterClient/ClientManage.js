@@ -209,7 +209,6 @@ function BindCountryCode() {
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            debugger
             CountryCode.empty().append('<option selected="selected" value="">select</option>');
             CountryCodeExt.empty().append('<option selected="selected" value="">select</option>');
             AlternatePhoneExt.empty().append('<option selected="selected" value="">select</option>');

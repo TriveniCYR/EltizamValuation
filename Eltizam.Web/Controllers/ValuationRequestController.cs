@@ -8,6 +8,7 @@ using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using System;
 
 namespace EltizamValuation.Web.Controllers
 {
@@ -57,7 +58,9 @@ namespace EltizamValuation.Web.Controllers
 
             ValuationRequestModel valuationRequestModel;
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit ;
+
+            //var action =id == null? PermissionEnum.Add:true? PermissionEnum.Edit: PermissionEnum.View;
             int roleId = _helper.GetLoggedInRoleId();
 
             if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
@@ -152,12 +155,37 @@ namespace EltizamValuation.Web.Controllers
         {
             ValuationQuatationListModel quotation;
             //Check permissions for Get
-            //var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
-            //int roleId = _helper.GetLoggedInRoleId();
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
+            
 
-            //if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
-            //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            int roleId = _helper.GetLoggedInRoleId();
 
+            if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+            //Get module wise permissions
+            ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
+            ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
+            ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+
+            
+              // Assuming ViewBag.QuotationAccess is an object with a property View (boolean)
+            bool hasQuatationViewAccess = ViewBag.QuotationAccess?.View ?? false;
+            bool hasQuatationEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
+            bool hasQuatationAddAccess = ViewBag.QuotationAccess?.Add ?? false;
+
+            if (action == PermissionEnum.View && !hasQuatationViewAccess)
+            {
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
+            else if (action == PermissionEnum.Edit && !hasQuatationEditAccess)
+            {
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
+            else if (action == PermissionEnum.Add && !hasQuatationAddAccess)
+            {
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
 
             if (id == null || id <= 0)
             {
@@ -194,21 +222,39 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 //Check permissions for Get
-                //var action = masterQuotation.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
 
-                //int roleId = _helper.GetLoggedInRoleId();
-                //if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
-                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-                //masterUser.Email ??= masterUser.Address?.Email;
-                //if (masterUser.Document != null && masterUser.Document.Files != null)
-                //{
-                //    List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
-                //    masterUser.uploadDocument = docs;
-                //    masterUser.Document = null;
-                //}
+                int roleId = _helper.GetLoggedInRoleId();
 
-                //Fill audit logs field
+                if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+                //Get module wise permissions
+                ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
+                ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
+                ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+
+
+                // Assuming ViewBag.QuotationAccess is an object with a property View (boolean)
+                bool hasQuatationViewAccess = ViewBag.QuotationAccess?.View ?? false;
+                bool hasQuatationEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
+                bool hasQuatationAddAccess = ViewBag.QuotationAccess?.Add ?? false;
+
+                if (action == PermissionEnum.View && !hasQuatationViewAccess)
+                {
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                }
+                else if (action == PermissionEnum.Edit && !hasQuatationEditAccess)
+                {
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                }
+                else if (action == PermissionEnum.Add && !hasQuatationAddAccess)
+                {
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                }
+
+
                 if (masterQuotation.Id == 0)
                     masterQuotation.CreatedBy = _helper.GetLoggedInUserId();
                 masterQuotation.ModifiedBy = _helper.GetLoggedInUserId();
@@ -239,12 +285,41 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult ValuationInvoiceManage(int? id, int vId, string refNo)
         {
             ValuationInvoiceListModel invoice;
-            //Check permissions for Get
-            //var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
-            //int roleId = _helper.GetLoggedInRoleId();
 
-            //if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
-            //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
+
+
+            int roleId = _helper.GetLoggedInRoleId();
+
+            if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+            //Get module wise permissions
+            ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
+            ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
+            ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+
+
+            
+            bool hasInvoiceViewAccess = ViewBag.QuotationAccess?.View ?? false;
+            bool hasInvoiceEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
+            bool hasInvoiceAddAccess = ViewBag.QuotationAccess?.Add ?? false;
+
+            if (action == PermissionEnum.View && !hasInvoiceViewAccess)
+            {
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
+            else if (action == PermissionEnum.Edit && !hasInvoiceEditAccess)
+            {
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
+            else if (action == PermissionEnum.Add && !hasInvoiceAddAccess)
+            {
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
+
 
 
             if (id == null || id <= 0)
@@ -280,19 +355,37 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 //Check permissions for Get
-                //var action = masterQuotation.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
 
-                //int roleId = _helper.GetLoggedInRoleId();
-                //if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
-                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-                //masterUser.Email ??= masterUser.Address?.Email;
-                //if (masterUser.Document != null && masterUser.Document.Files != null)
-                //{
-                //    List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
-                //    masterUser.uploadDocument = docs;
-                //    masterUser.Document = null;
-                //}
+                int roleId = _helper.GetLoggedInRoleId();
+
+                if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+                //Get module wise permissions
+                ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
+                ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
+                ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+
+
+               
+                bool hasInvoiceViewAccess = ViewBag.QuotationAccess?.View ?? false;
+                bool hasInvoiceEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
+                bool hasInvoiceAddAccess = ViewBag.QuotationAccess?.Add ?? false;
+
+                if (action == PermissionEnum.View && !hasInvoiceViewAccess)
+                {
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                }
+                else if (action == PermissionEnum.Edit && !hasInvoiceEditAccess)
+                {
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                }
+                else if (action == PermissionEnum.Add && !hasInvoiceAddAccess)
+                {
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                }
 
                 //Fill audit logs field
                 if (masterInvoice.Id == 0)
@@ -329,6 +422,8 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

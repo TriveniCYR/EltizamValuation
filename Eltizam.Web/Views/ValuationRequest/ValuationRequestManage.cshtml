@@ -120,6 +120,11 @@
                                         @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer[""] })
                                         @*  <input type="text" placeholder="12837187236" disabled> *@
                                     </label>
+                                    <label for="" class="w-50">
+                                        Valuation Date
+                                        <input type="text" class="formatted-date-input" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
+                                        @*  <input type="date"> *@
+                                    </label>
                                 </div>
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50 m-0">

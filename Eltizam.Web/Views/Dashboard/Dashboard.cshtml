@@ -1,53 +1,50 @@
 ﻿@model Eltizam.Business.Models.MasterClientModel;
 @using Eltizam.Utility.Models
-@inject IConfiguration Configuration 
+@inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = "Dashboard"; 
-    ViewData["Title"] = _header; 
+    var _header = "Dashboard";
+    ViewData["Title"] = _header;
 }
- 
+
 <main>
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between">
-            <h3 class="dashboardTitle">@_header</h3> 
+            <h3 class="dashboardTitle">@_header</h3>
         </div>
         <div class="bodyContent">
             @* <h3 class="dashboardTitle">Dashboard</h3>
             <div class="flex justify-between mb-28 mobile_flexColumn position-relative">
-                <div class="flex">
-                    <label class="searchBox position-relative">
-                        <div class="flex align-item-center">
-                            <img src="../assets/search.svg" alt="search">
-                            <input type="text" placeholder="Search for System" class="searchInput">
-                        </div>
-                        <button class="normalSearch">Search</button>
-                    </label>
-                </div>
+            <div class="flex">
+            <label class="searchBox position-relative">
+            <div class="flex align-item-center">
+            <img src="../assets/search.svg" alt="search">
+            <input type="text" placeholder="Search for System" class="searchInput">
+            </div>
+            <button class="normalSearch">Search</button>
+            </label>
+            </div>
             </div> *@
             <div class="whiteBoxShadow">
-                <div class="inputSearchs">
-                    <form action="">
-                        <div class="flex">
-                            <label for="userName">
-                                Client Name 1
-                                <input type="text">
-                            </label>
-                            <label for="userName" class="position-relative">
-                                Project Name 1
-                                <input type="text">
-                            </label>
-                            <label for="">
-                                From
-                                <input type="text" class="formatted-date-input">
-                            </label>
-                            <label for="">
-                                To
-                                <input type="text" class="formatted-date-input">
-                            </label>
-                        </div>
-                    </form>
+                <div class="flex dashboardSearch">
+                    <label for="userName">
+                        Client
+                        <input type="text">
+                    </label>
+                    <label for="userName" class="position-relative">
+                       Property
+                        <input type="text">
+                    </label>
+                    <label for="">
+                        From
+                        <input type="date">
+                    </label>
+                    <label for="">
+                        To
+                        <input type="date">
+                    </label>
+                    <button class="blueBtn">Search</button>
                 </div>
                 <div class="flex fourBox gap dashboard-status">
                     <div class="dashboard-box">
@@ -272,7 +269,7 @@
                     </div>
                 </div>
             </div>
- 
-        </div> 
+
+        </div>
     </div>
 </main> 
