@@ -5,7 +5,7 @@ $(document).ready(function () {
     BindPropertype();
     BindRequestStaus();
     BindValutionMethod();
-    BindApproverList();
+    BindApproverList(); 
 
 });
 
@@ -23,7 +23,7 @@ function BindApproverList() {
     var _val = "";
     var _rpname = "userName";
     var currentUserId = LogInUserId;
-    let ApproverListUrl = ApproverList + "/" + currentUserId
+    let ApproverListUrl = ApproverList + "/" + currentUserId+"/Approver"
     BindDropdowns(ApproverListUrl, Approver, _rpname, _val);
 }
 

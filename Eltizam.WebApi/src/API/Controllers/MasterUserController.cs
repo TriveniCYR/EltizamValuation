@@ -157,12 +157,12 @@ namespace Eltizam.WebApi.Controllers
         }
 
 
-        [HttpGet("GetApproverList/{id}")]
-        public async Task<IActionResult> GetApproverList([FromQuery] int id)
+        [HttpGet("GetApproverList/{id}/{roleName}")]
+        public async Task<IActionResult> GetApproverList([FromRoute] int id, string roleName)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _MasterUserService.GetApproverList(id), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _MasterUserService.GetApproverList(id, roleName), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
