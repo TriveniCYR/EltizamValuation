@@ -7,7 +7,6 @@ function ConfirmationDeleteClient(id) {
     $('#DeleteClientModel #Id').val(id);
 }
 function DeletedClient() {
-    debugger;
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteClientModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID, Post, DeleteClientByIdSuccess, DeleteClientByIdError);
@@ -17,7 +16,6 @@ function DeletedClient() {
     }
 }
 function DeleteClientByIdSuccess(data) {
-    debugger
     try {
         if (data._Success === true) {
             toastr.success(RecordDelete);

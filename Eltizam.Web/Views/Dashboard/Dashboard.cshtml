@@ -29,14 +29,14 @@
             <div class="whiteBoxShadow">
                 <div class="inputSearchs">
                     <form action="">
-                        <div class="flex dashboardSearch"> 
+                        <div class="flex dashboardSearch">
                             <label for="userName">
                                 Client
-                                <input type="text">
+                                <select id="Client_Name"></select>
                             </label>
                             <label for="userName" class="position-relative">
                                 Property
-                                <input type="text">
+                                <select id="Property_name"></select>
                             </label>
                             <label for="">
                                 From
@@ -47,9 +47,10 @@
                                 <input type="text" class="formatted-date-input">
                             </label>
                             <button class="blueBtn">Search</button>
-                        </div> 
+                        </div>
                     </form>
                 </div>
+         
                 <div class="flex fourBox gap dashboard-status">
                     <div class="dashboard-box">
                         <p class="flex justify-center align-item-center">
@@ -277,3 +278,12 @@
         </div>
     </div>
 </main> 
+@section MyScripts {
+    <script type="text/javascript" src="~/js/Custom/Dashboard/Dashboard.js?v=@jsVersion"></script>
+        <script> 
+            //#region Setup API Url
+        var AllClient = "@Eltizam.Web.Helpers.APIURLHelper.GetClientByClientTypeId";
+        var AllProperty = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByFilters";
+        </script>
+
+}
