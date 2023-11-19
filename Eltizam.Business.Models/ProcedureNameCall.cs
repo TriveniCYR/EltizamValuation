@@ -79,5 +79,12 @@ namespace Eltizam.Business.Models
         public static string usp_AuditLog_GetTable = "usp_AuditLog_GetTable";
         public static string usp_AuditLog_Add = "usp_AuditLog_Add";
         public static string usp_ValuationRequest_GetDependencies = "usp_ValuationRequest_GetDependencies";
+
+        // Dahsboard
+        public static string usp_ValuationRequest_GetLatestRequest = "usp_ValuationRequest_GetLatestRequest";
+        public static string usp_ValuationRequest_GetLatestQuotation = "usp_ValuationRequest_GetLatestQuotation";
+        public static string usp_ValuationRequest_GetTopValuation = "usp_ValuationRequest_GetTopValuation";
+        public static string usp_ValuationRequest_GetTopQuotationDue = "usp_ValuationRequest_GetTopQuotationDue";
+
     }
 }
