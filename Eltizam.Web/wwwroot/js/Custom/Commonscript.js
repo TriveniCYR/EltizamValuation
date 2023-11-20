@@ -101,6 +101,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    var tdElements = document.querySelectorAll('.formatted-td-date-input');
+
+    tdElements.forEach(function (tdElement) {
+        var originalDate = new Date(tdElement.textContent);
+        var formattedDate = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+        tdElement.textContent = formattedDate;
+    });
+});
+
 function showLoader() {
     $('#loading-wrapper').show();
 }

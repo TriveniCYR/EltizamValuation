@@ -119,7 +119,8 @@ namespace Eltizam.Business.Core.Implementation
                     objLocation.ModifiedDate = AppConstants.DateTime;
                     objLocation.IsActive = entityLocation.IsActive;
                     objLocation.ModifiedBy = entityLocation.ModifiedBy;
-
+                    objLocation.HomeCurrencyId = entityLocation.HomeCurrencyId;
+                    objLocation.ForeignCurrencyId = entityLocation.ForeignCurrencyId;
                     _repository.UpdateAsync(objLocation);
                     _repository.UpdateGraph(objLocation, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
