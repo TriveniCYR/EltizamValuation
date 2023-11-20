@@ -54,7 +54,8 @@ namespace EltizamValuation.WebApi.Controllers
         /// <response code="500">Internal Server</response>
 
         [HttpPost]
-        public async Task<IActionResult> Dashboard([FromBody] DashboardFilterModel model)
+        [Route("DashboardData")]
+        public async Task<IActionResult> DashboardData([FromBody] DashboardFilterModel model)
         {
             try
             {
