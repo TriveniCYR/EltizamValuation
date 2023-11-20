@@ -106,8 +106,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     tdElements.forEach(function (tdElement) {
         var originalDate = new Date(tdElement.textContent);
-        var formattedDate = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
-        tdElement.textContent = formattedDate;
+        var datePart = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        var timePart = originalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+        var formattedDate = datePart + ' ' + timePart;
+        tdElement.textContent = formattedDate.replace(/\s/g, '-').toLowerCase();
     });
 });
 
