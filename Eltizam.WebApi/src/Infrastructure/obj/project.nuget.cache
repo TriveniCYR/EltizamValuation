@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "dHN1ZL/+6h0xQrqFtHJe96TDP9gHezILEB+KQCQnVjmg6vcsNbY5irbSU0yrmdbaUY1QtHucfBNmDUNRQSl/hg==",
+  "dgSpecHash": "jDgGP3DVX31rtBeX4IH0ubBZLyNnaxp0SGyryYIUjTI+DlLOmyFLy6pjyrbOu9a++TzFqcDHsSse/v9eRl8Uug==",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\Infrastructure\\ValuationWeb.Persistence.csproj",
   "expectedPackageFiles": [
@@ -141,7 +141,7 @@
     "C:\\Users\\user\\.nuget\\packages\\system.componentmodel.annotations\\4.5.0\\system.componentmodel.annotations.4.5.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.console\\4.3.0\\system.console.4.3.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\system.data.sqlclient\\4.8.3\\system.data.sqlclient.4.8.3.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.data.sqlclient\\4.8.5\\system.data.sqlclient.4.8.5.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.diagnostics.debug\\4.3.0\\system.diagnostics.debug.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.1\\system.diagnostics.diagnosticsource.6.0.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.diagnostics.fileversioninfo\\4.3.0\\system.diagnostics.fileversioninfo.4.3.0.nupkg.sha512",

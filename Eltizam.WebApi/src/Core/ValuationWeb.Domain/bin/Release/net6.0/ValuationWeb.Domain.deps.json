@@ -8,35 +8,35 @@
     ".NETCoreApp,Version=v6.0": {
       "ValuationWeb.Domain/1.0.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "6.0.13",
+          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "6.0.8",
           "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
           "ValuationWeb.Domain.dll": {}
         }
       },
-      "Microsoft.AspNetCore.JsonPatch/6.0.13": {
+      "Microsoft.AspNetCore.JsonPatch/6.0.8": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
           "lib/net6.0/Microsoft.AspNetCore.JsonPatch.dll": {
-            "assemblyVersion": "6.0.13.0",
-            "fileVersion": "6.0.1322.58013"
+            "assemblyVersion": "6.0.8.0",
+            "fileVersion": "6.0.822.36316"
           }
         }
       },
-      "Microsoft.AspNetCore.Mvc.NewtonsoftJson/6.0.13": {
+      "Microsoft.AspNetCore.Mvc.NewtonsoftJson/6.0.8": {
         "dependencies": {
-          "Microsoft.AspNetCore.JsonPatch": "6.0.13",
+          "Microsoft.AspNetCore.JsonPatch": "6.0.8",
           "Newtonsoft.Json": "13.0.1",
           "Newtonsoft.Json.Bson": "1.0.2"
         },
         "runtime": {
           "lib/net6.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll": {
-            "assemblyVersion": "6.0.13.0",
-            "fileVersion": "6.0.1322.58013"
+            "assemblyVersion": "6.0.8.0",
+            "fileVersion": "6.0.822.36316"
           }
         }
       },
@@ -68,19 +68,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.AspNetCore.JsonPatch/6.0.13": {
+    "Microsoft.AspNetCore.JsonPatch/6.0.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wGbOwL1SF6ZmdVuLSKw4VLKuNYqY6aT/LEUXJRH0oMtpBhEZgolX38FXoogQQrKnELMUhL0C8nEq7BojbXD3/Q==",
-      "path": "microsoft.aspnetcore.jsonpatch/6.0.13",
-      "hashPath": "microsoft.aspnetcore.jsonpatch.6.0.13.nupkg.sha512"
+      "sha512": "sha512-OihHbIG+WAxk0U3jwPxCgh2tQqpeODYis3D0SnwIshpkKoZFhifCwfDNcsTBoppx4Y6ic0dcxkGiHO5NZWtXiw==",
+      "path": "microsoft.aspnetcore.jsonpatch/6.0.8",
+      "hashPath": "microsoft.aspnetcore.jsonpatch.6.0.8.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Mvc.NewtonsoftJson/6.0.13": {
+    "Microsoft.AspNetCore.Mvc.NewtonsoftJson/6.0.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-uQQk5P4YyJFWc+rpGQCFeG583+30vSv6NmEWYB6sV/vZqAAtF2m93pwIBdKLvTzEF31ZDRHHK0B3NGXhW9taMw==",
-      "path": "microsoft.aspnetcore.mvc.newtonsoftjson/6.0.13",
-      "hashPath": "microsoft.aspnetcore.mvc.newtonsoftjson.6.0.13.nupkg.sha512"
+      "sha512": "sha512-2imWU1FEnirRogFvtu+wV11xJuC0u7aNprpNQygQLTZvnSlaLPTJhUUrqskFVn6PRDv3kCE4peaBJKwseNv71w==",
+      "path": "microsoft.aspnetcore.mvc.newtonsoftjson/6.0.8",
+      "hashPath": "microsoft.aspnetcore.mvc.newtonsoftjson.6.0.8.nupkg.sha512"
     },
     "Microsoft.CSharp/4.7.0": {
       "type": "package",
