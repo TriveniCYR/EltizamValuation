@@ -1,0 +1,17 @@
+{"Timestamp":"2023-11-16T09:55:06.6515404+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T09:55:34.3861048+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T10:02:57.8270569+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T10:07:45.5205595+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T10:08:13.7586057+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T11:15:57.1970874+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T11:28:02.9573164+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T13:39:10.4498788+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T13:47:47.2681274+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T14:16:48.1525390+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T14:40:25.3688619+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T14:42:45.3783541+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T15:03:22.0646753+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T15:41:35.6928433+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T16:33:58.4332474+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T19:46:10.3941716+05:30","Level":"Information","MessageTemplate":"Application Starting"}
+{"Timestamp":"2023-11-16T21:51:02.5279004+05:30","Level":"Information","MessageTemplate":"Application Starting"}

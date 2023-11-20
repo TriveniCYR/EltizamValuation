@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "GnKm2zqyd7ktLqKFnQ2XFunB7wfqeojR+pCXkki7ZfE=",
-  "Source": "Eltizam.WebApi",
-  "BasePath": "_content/Eltizam.WebApi",
+  "Hash": "UcgG4U3gNuc1EEAO8i+mVDQdDTVE83WY1AY36SA2deA=",
+  "Source": "EltizamValuation.WebApi",
+  "BasePath": "_content/EltizamValuation.WebApi",
   "Mode": "Default",
   "ManifestType": "Publish",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "EltizamValuation.WebApi\\wwwroot",
+      "Source": "EltizamValuation.WebApi",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\wwwroot\\",
+      "BasePath": "_content/EltizamValuation.WebApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\wwwroot\\Uploads\\HTMLTemplates\\ForgotPassword.html",
+      "SourceId": "EltizamValuation.WebApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\source\\repos\\YallaReddyNeo\\Eltizam.Valuation\\Eltizam.WebApi\\src\\API\\wwwroot\\",
+      "BasePath": "_content/EltizamValuation.WebApi",
+      "RelativePath": "Uploads/HTMLTemplates/ForgotPassword.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\HTMLTemplates\\ForgotPassword.html"
+    }
+  ]
 }

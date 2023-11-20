@@ -18,6 +18,7 @@ namespace Eltizam.Business.Models
         public string? Location { get; set; }
 
         public string? PropertyName { get; set; }
+        public string? PropertyType { get; set; }
 
         public DateTime? ValuationDate { get; set; }
         public string? ValuationPurpose { get; set; }
