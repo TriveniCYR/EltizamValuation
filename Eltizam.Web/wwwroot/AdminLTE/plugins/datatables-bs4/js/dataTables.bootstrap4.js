@@ -69,8 +69,17 @@ DataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, bu
 	var classes = settings.oClasses;
 	var lang    = settings.oLanguage.oPaginate;
 	var aria = settings.oLanguage.oAria.paginate || {};
-	var btnDisplay, btnClass, counter=0;
+	var btnDisplay, btnClass, counter = 0;
+	var tableLenght = settings.aoData.length;
 
+	var tableScroll = document.querySelector('.dataTables_scroll');
+	if (tableLenght > 10) {
+		//document.getElementsByClassName('dataTables_scroll').classList.add('scroll-y');
+		tableScroll.classList.add('scroll-y');
+	}
+	else {
+		tableScroll.classList.remove('scroll-y');
+	}
 	var attach = function( container, buttons ) {
 		var i, ien, node, button;
 		var clickHandler = function ( e ) {
