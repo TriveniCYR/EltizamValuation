@@ -46,9 +46,9 @@
                 <span>@_md @_header</span>
             </div>
         </div>
-        <div class="bodyContent">
+        <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
-                <div class="tab flex flex-start m-0">
+                <div class="tab flex flex-start m-0 ptrl-20">
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
                     <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
                     <button class="tablinks" style="display: @(objPermssionIn.View ? "block" : "none")" onclick="profileTab(event, 'profile3')">Payment Details</button>
@@ -493,6 +493,18 @@
 
 
                 <div id="profile2" class="tabcontent">
+                    <div class="whiteBoxShadow m-0 ">
+                        <div class="bodyContent footerAudit">
+                            <div class=" position-relative flex justify-between align-item-center">
+                                <h4 class="m-0">
+                                    Valuation Request Id : @Html.DisplayFor(model => model.Id)
+                                </h4>
+                                <h4 class="m-0">
+                                    ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center plr-0">
 
@@ -528,6 +540,18 @@
 
 
                 <div id="profile3" class="tabcontent">
+                    <div class="whiteBoxShadow m-0 ">
+                        <div class="bodyContent footerAudit">
+                            <div class=" position-relative flex justify-between align-item-center">
+                                <h4 class="m-0">
+                                    Valuation Request Id : @Html.DisplayFor(model => model.Id)
+                                </h4>
+                                <h4 class="m-0">
+                                    ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center p-0">
                             <h3>Invoice Listing</h3>
@@ -662,35 +686,27 @@
                                     <div class="W-100">
                                         <div class="prevUpload roundBorderBox m-0">
                                             <h3>Previously uploaded</h3>
-                                            <div class="flex">
-                                                <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
-                                                <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
-                                                <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
-                                                <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
+                                            <div class="scroll-x">
+                                                <table class="table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>File Name</th>
+                                                            <th>DateUpdate </th>
+                                                            <th>Uploaded By</th>
+                                                            <th>Download</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>                                                        
+                                                         <tr>
+                                                            <td>Image123</td>
+                                                            <td>2023-Oct-10 </td>
+                                                            <td>Admin</td>
+                                                            <td><a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
+                                                            <td><a title="Delete"><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

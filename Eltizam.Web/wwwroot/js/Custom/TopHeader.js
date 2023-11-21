@@ -1,4 +1,23 @@
-﻿var ChangePasswordUrl = $("#ChangePasswordUrl").val();
+﻿window.onscroll = function () {
+    showScrollToTopButton();
+};
+
+function showScrollToTopButton() {
+    const button = document.getElementById("scrollToTop");
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        button.style.display = "block";
+    } else {
+        button.style.display = "none";
+    }
+}
+
+// Scroll to the top when the button is clicked
+function scrollToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+var ChangePasswordUrl = $("#ChangePasswordUrl").val();
 
 function PosttopHeader() {
     debugger

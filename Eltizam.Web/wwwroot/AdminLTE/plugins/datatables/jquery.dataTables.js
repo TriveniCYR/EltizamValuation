@@ -14610,7 +14610,7 @@
 		"sLengthSelect": "",
 	
 		/* Scrolling */
-		"sScrollWrapper": "dataTables_scroll",
+		"sScrollWrapper": "dataTables_scroll scroll-y",
 		"sScrollHead": "dataTables_scrollHead",
 		"sScrollHeadInner": "dataTables_scrollHeadInner",
 		"sScrollBody": "dataTables_scrollBody",

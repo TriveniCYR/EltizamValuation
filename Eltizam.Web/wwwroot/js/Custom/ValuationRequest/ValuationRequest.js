@@ -127,7 +127,7 @@ function InitializeValutionRequestDataList() {
             "name": "Status",
             "render": function (data, type, row, meta) { 
                 // Define a custom CSS style based on the color code 
-                var statusStyle = "color: " + row.colorCode + "; background-color: " + row.backGroundColor;
+                var statusStyle = "color: " + row.colorCode + "; background-color: " + row.backGroundColor + ";border: 1px solid" + row.colorCode
                 return '<span class="tableStatus" style="' + statusStyle + '">' + data + '</span>';
             } 
         }, 

@@ -692,11 +692,13 @@ table .tableStatus {
     table .tableStatus.green {
         background-color: var(--lightGreen);
         color: var(--green);
+        border: 1px solid var(--green);
     }
 
     table .tableStatus.red {
         background-color: var(--lightRed);
         color: var(--error);
+        border: 1px solid var(--error);
     }
 
 table .activeDots {
@@ -2040,6 +2042,7 @@ div.dataTables_wrapper div.dataTables_filter {
 }
 .dataTables_scrollBody table td {
     border: none !important;
+    border-bottom: 1px solid var(--blue) !important;
 }
 .footerAudit {
     padding: 8px 20px;
@@ -2237,4 +2240,85 @@ table.multipleValueTable {
 .phoneWithDrop {
     display: grid !important;
     grid-template-columns: 80px 1fr;
+}
+.scroll-y {
+    height: 600px;
+    overflow-y: auto;
+}
+
+
+    /* Chrome, Edge, and Safari */
+    .scroll-y::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .scroll-y::-webkit-scrollbar-thumb {
+        background-color: #3498db;
+    }
+
+    .scroll-y::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+
+/* Firefox */
+.scroll-y {
+    scrollbar-width: thin;
+    scrollbar-color: var(--blue) #f1f1f1;
+}
+
+    /* Firefox */
+    .scroll-y::-moz-scrollbar {
+        width: 8px;
+    }
+
+    .scroll-y::-moz-scrollbar-thumb {
+        background-color: var(--blue);
+    }
+
+    .scroll-y::-moz-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+
+/* Edge */
+.scroll-y {
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.fileInputTogetName {
+    display: none;
+}
+
+.fileInput {
+    background: #576aa0!important;
+    width: 320px;
+    color: white;
+    position: relative;
+}
+
+    .fileInput:after {
+        content: ' click to upload \2191';
+        position: absolute;
+        right: 10px;
+    }
+
+    .fileInput::-webkit-file-upload-button {
+        display: none;
+    }
+
+.yesNoToggle {
+    width: 96px;
+}
+#scrollToTop {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 1;
 }
