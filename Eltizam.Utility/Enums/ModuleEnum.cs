@@ -113,6 +113,10 @@ namespace Eltizam.Utility.Enums
 
         [Description("Valuation Assessement")]
         Valuation_Assessement = 15,
+
+        [Description("Site Description")]
+        SiteDescription = 16,
+
     }
 
 

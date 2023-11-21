@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ValuationWeb.Domain
-build_property.ProjectDir = C:\Users\user\source\repos\API\src\Core\FJewelleryWeb.Domain\
+build_property.ProjectDir = C:\Users\user\source\repos\YallaReddyNeo\Eltizam.Valuation\Eltizam.WebApi\src\Core\ValuationWeb.Domain\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

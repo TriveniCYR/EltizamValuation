@@ -25,13 +25,12 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IConfiguration _configuration;
         private IRepository<ValuationRequest> _repository { get; set; }
         private readonly IAuditLogService _auditLogService;
-        private readonly IHelper _helper;
-        private readonly int? _LoginUserId;
+        private readonly IHelper _helper; 
 
         #endregion Properties
 
         #region Constructor
-        public ValutionRequestService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration configuration)
+        public ValutionRequestService(IAuditLogService auditLogService, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -40,7 +39,7 @@ namespace Eltizam.Business.Core.Implementation
             _configuration = configuration;
             _helper = helper;
 
-            _LoginUserId = _helper.GetLoggedInUser()?.UserId;
+            _auditLogService = auditLogService; 
         }
         #endregion Constructor
 
@@ -48,8 +47,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId, int resourceId, int propertyTypeId, int countryId, int stateId, int cityId, string? fromDate, string? toDate)
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
-            //string SortDir = model.order[0]?.dir;
-            string SortDir = "asc";
+            string SortDir = model.order[0]?.dir;
+          //  string SortDir = "asc";
 
             SqlParameter[] osqlParameter =
             {
@@ -100,13 +99,13 @@ namespace Eltizam.Business.Core.Implementation
                             var valuationEntity = _repository.Get(id);
                             valuationEntity.ApproverId = model.ApprovorId;
                             valuationEntity.AssignRemark = model.Remarks;
-                            valuationEntity.ModifiedBy = _LoginUserId;
+                            valuationEntity.ModifiedBy = model.LogInUserId; 
 
                             _repository.UpdateAsync(valuationEntity);
                             _repository.UpdateGraph(valuationEntity, EntityState.Modified);
 
                             //Do Audit Log --AUDITLOG 
-                            //await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, id);
+                            await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, id);
                         }
 
                         await _unitOfWork.SaveChangesAsync();
@@ -129,21 +128,56 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     ValuationRequest OldEntity = null;
                     OldEntity = _repository.GetNoTracking(model.ValuationRequestId);
-                    var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
-
+                    var TableName = Enum.GetName(TableNameEnum.ValuationRequest); 
 
                     var valuationEntity = _repository.Get(model.ValuationRequestId);
                     valuationEntity.ApproverId = model.ApprovorId;
                     valuationEntity.ApproverComment = model.ApprovorComment;
                     valuationEntity.StatusId = model.StatusId;
-                    valuationEntity.ModifiedBy = _LoginUserId;
+                    valuationEntity.ModifiedBy = model.LogInUserId;
+
                     _repository.UpdateAsync(valuationEntity);
                     _repository.UpdateGraph(OldEntity, EntityState.Modified);
 
-                    //Do Audit Log --AUDITLOG 
-                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);
-
                     await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOG 
+                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);  
+                }
+                else
+                {
+                    return DBOperation.NotFound;
+                }
+            }
+            else
+            {
+                return DBOperation.NotFound;
+            }
+            return DBOperation.Success;
+        }
+
+        public async Task<DBOperation> ReviewerRequestStatus(ValutionRequestForApproverModel model)
+        {
+            if (model.StatusId > 0 && model.Id > 0)
+            {
+                if (model.Id > 0)
+                {
+                    ValuationRequest OldEntity = null;
+                    OldEntity = _repository.GetNoTracking(model.Id);
+
+                    var valuationEntity = _repository.Get(model.Id);
+                    var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
+
+                    valuationEntity.StatusId = model.StatusId;
+                    valuationEntity.ModifiedBy = model.LogInUserId;
+                    valuationEntity.ApproverComment = model.ApproverComment;
+
+                    _repository.UpdateAsync(valuationEntity);
+                    _repository.UpdateGraph(valuationEntity, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOG 
+                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.Id);
                 }
                 else
                 {
@@ -199,9 +233,7 @@ namespace Eltizam.Business.Core.Implementation
                         await _unitOfWork.SaveChangesAsync();
 
                         //Do Audit Log --AUDITLOGUSER
-                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey); 
-
-                        //Notification
+                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey);  
                     }
                     else
                     {
@@ -260,6 +292,9 @@ namespace Eltizam.Business.Core.Implementation
                 _ValuationEntity.OwnershipType = res.OwnershipType;
                 _ValuationEntity.PropertyId = res.PropertyId;
                 _ValuationEntity.PropertyName = res.PropertyName;
+                _ValuationEntity.LocationCountryId = res.LocationCountryId;
+                _ValuationEntity.LocationStateId = res.LocationStateId;
+                _ValuationEntity.LocationCityId = res.LocationCityId;
             }
 
             return _ValuationEntity;
@@ -278,40 +313,6 @@ namespace Eltizam.Business.Core.Implementation
             await _unitOfWork.SaveChangesAsync();
 
             return DBOperation.Success;
-        }
-
-
-        public async Task<DBOperation> ReviewerRequestStatus(ValutionRequestForApproverModel model)
-        {
-
-            var LoginUserId = _helper.GetLoggedInUser()?.UserId;
-            if (model.StatusId > 0 && model.Id > 0)
-            {
-                if (model.Id > 0)
-                {
-                    var valuationEntity = _repository.Get(model.Id);
-
-                    valuationEntity.StatusId = model.StatusId;
-                    valuationEntity.ModifiedBy = _LoginUserId;
-                    valuationEntity.ModifiedDate = AppConstants.DateTime;
-                    valuationEntity.ApproverComment = model.ApproverComment;
-                    _repository.UpdateAsync(valuationEntity);
-                    _repository.UpdateGraph(valuationEntity, EntityState.Modified);
-                    await _unitOfWork.SaveChangesAsync();
-
-                }
-                else
-                {
-                    return DBOperation.NotFound;
-                }
-            }
-            else
-            {
-                return DBOperation.NotFound;
-            }
-            return DBOperation.Success;
-        }
-
-    }
-
+        } 
+    } 
 }

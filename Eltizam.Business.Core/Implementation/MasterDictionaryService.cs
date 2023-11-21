@@ -16,6 +16,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Dapper.SqlMapper;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -104,8 +105,9 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> AddUpdateMasterDictionary(MasterDictionaryDetailById entitydictionary)
         {
-
+           
             MasterDictionaryDetail objDicitonary;
+          
             var By = _helper.GetLoggedInUser().UserId;
             string MainTableName = Enum.GetName(TableNameEnum.Master_Location);
             int MainTableKey = entitydictionary.Id;
@@ -180,6 +182,15 @@ namespace Eltizam.Business.Core.Implementation
         /// <returns></returns>
         public async Task<DBOperation> MasterDictionaryAddUpdate(MasterDictionaryEntity entity)
         {
+            if (entity != null && entity.Description != null)
+            {
+                var result = IsDictionaryDescriptionExists(entity.Description);
+                if (result)
+                {
+                    return DBOperation.AlreadyExist;
+                }
+            }
+
             // Create a Master_PropertyType object.
             MasterDictionary objmasterDictionary;
 
@@ -243,6 +254,11 @@ namespace Eltizam.Business.Core.Implementation
                 await _repository.GetBySP(ProcedureMetastore.usp_MasterDictionary_UpsertDictionaryDetails, CommandType.StoredProcedure, _sqlParameter);
             }
             return DBOperation.Success;
+        }
+        private bool IsDictionaryDescriptionExists(string description)
+        {
+            return _repository.GetAll()
+                .Any(dictionary => dictionary.Description == description);
         }
 
         public async Task<MasterDictionaryEntity> GetMasterDictionaryDetailByIdAsync(int id)

@@ -132,6 +132,7 @@ $(document).ready(function () {
     BindUnitType();
     BindFurnished();
     BindCountry();
+    BindLocationCountry();
     GetApproverLists();
     GetValuerLists();
     BindQuatationList();
@@ -181,6 +182,15 @@ $(document).ready(function () {
     if (HdnStateId) {
         BindCity(HdnStateId);
     }
+
+    //var HdnLocationCountryId = $('#hdnLocationCountryId').val();
+    //if (HdnLocationCountryId) {
+    //    BindLocationState(HdnLocationCountryId);
+    //}
+    //var HdnLocationStateId = $('#hdnLocationStateId').val();
+    //if (HdnLocationStateId) {
+    //    BindLocationCity(HdnLocationStateId);
+    //}
     //BindValuationFeeType();
 
     /////For Dropdown Change
@@ -479,7 +489,22 @@ function BindPropertyDetailById(Id) {
                         '<input checked data-val="true"   name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
                         '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
                 } 
-            } 
+            }
+            debugger
+            var PropertyDetails = response._object.propertyDetail;  
+            document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
+            document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
+            document.getElementById('PropertyDetail_CityId').value = PropertyDetails.cityId;
+            document.getElementById('PropertyDetail_Zone').value = PropertyDetails.zone;
+            document.getElementById('PropertyDetail_BuildingProject').value = PropertyDetails.buildingProject;
+            document.getElementById('PropertyDetail_Latitude').value = PropertyDetails.latitude;
+            document.getElementById('PropertyDetail_Longitude').value = PropertyDetails.longitude;
+            document.getElementById('PropertyDetail_Address1').value = PropertyDetails.address1;
+            document.getElementById('PropertyDetail_Address2').value = PropertyDetails.address2;
+            document.getElementById('PropertyDetail_Pincode').value = PropertyDetails.pincode;
+            document.getElementById('PropertyDetail_Landmark').value = PropertyDetails.landmark;
+            BindLocationState(PropertyDetails.countryId);
+            BindLocationCity(PropertyDetails.stateId);
         },
         failure: function (response) {
             alert(response.responseText);
@@ -494,6 +519,14 @@ function BindPropertyDetailById(Id) {
 function BindCountry() {
     var countryId = $("#CountryId");
     var _val = $('#hdnCountry').val();
+    var _rpname = "countryName";
+
+    BindDropdowns(CountryList, countryId, _rpname, _val);
+}
+
+function BindLocationCountry() {
+    var countryId = $("#PropertyDetail_CountryId");
+    var _val = $('#hdnLocationCountryId').val();
     var _rpname = "countryName";
 
     BindDropdowns(CountryList, countryId, _rpname, _val);
@@ -525,6 +558,35 @@ function BindState(id) {
     });
 
 }
+
+function BindLocationState(id) {
+    var state = $("#PropertyDetail_StateId");
+    var _val = $('#hdnLocationStateId').val();
+    var _rpname = "stateName";
+
+    $.ajax({
+        type: "GET",
+        url: BaseURL + stateListUrl + '/' + id,
+        "datatype": "json",
+        success: function (response) {
+            state.empty().append('<option selected="selected" value="0">-- select --</option>');
+            for (var i = 0; i < response.length; i++) {
+                state.append($("<option></option>").val(response[i].id).html(response[i].stateName));
+            }
+            if ($('#hdnLocationStateId').val() != 0) {
+                state.val($('#hdnLocationStateId').val());
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+
+}
 function BindCity(id) {
     var city = $("#CityId");
     var _val = $('#hdnCity').val();
@@ -540,6 +602,34 @@ function BindCity(id) {
             }); 
             if ($('#hdnCity').val() != 0) {
                 state.val($('#hdnCity').val());
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
+function BindLocationCity(id) {
+    var city = $("#PropertyDetail_CityId");
+    var _val = $('#hdnLocationCityId').val();
+    var _rpname = "cityName";
+
+    $.ajax({
+        type: "GET",
+        url: BaseURL + cityListUrl + '/' + id,
+        "datatype": "json",
+        success: function (response) {
+            city.empty().append('<option selected="selected" value="0">-- select --</option>');
+            for (var i = 0; i < response.length; i++) {
+                city.append($("<option></option>").val(response[i].id).html(response[i].cityName));
+            }
+            if ($('#hdnLocationCityId').val() != 0) {
+                city.val($('#hdnLocationCityId').val());
             }
         },
         failure: function (response) {

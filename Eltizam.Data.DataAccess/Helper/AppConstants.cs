@@ -27,9 +27,10 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string InsertSuccess = "Data inserted successfully";
         public static string UpdateSuccess = "Data updated successfully";
         public static string DeleteSuccess = "Data deleted successfully";
-        public static string BadRequest = "Bad Reques";
+        public static string BadRequest = "Bad Request";
         public static string ActionSuccess = "Action performed successfully.";
         public static string ActionFailed = "Action failed.";
+        public static string DuplicateRecordFound = "Duplicate Record Found";
 
         public static string P_SearchText   = "@SearchText";
         public static string P_SortDirection = "@SortDirection";

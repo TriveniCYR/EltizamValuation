@@ -52,6 +52,9 @@
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
                     <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
                     <button class="tablinks" style="display: @(objPermssionIn.View ? "block" : "none")" onclick="profileTab(event, 'profile3')">Payment Details</button>
+                    <button class="tablinks" onclick="profileTab(event, 'profile4')" id="defaultOpen">Site description</button>                    
+                    <button class="tablinks" onclick="profileTab(event, 'profile5')">Comparable evidences</button>
+                    <button class="tablinks" onclick="profileTab(event, 'profile6')">Valuation Assessement</button>
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
@@ -124,7 +127,7 @@
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50 m-0">
                                         <p class="m-0">Valuation Date<span class="text-danger">*</span></p>
-                                        <input type="date" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
+                                        <input type="text" class="formatted-date-input" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
                                         @Html.ValidationMessageFor(model => model.ValuationDate, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="" class="bodyContent p-0 w-50">
@@ -384,6 +387,78 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <h3 class="blueHeading mb-16"> Property Location</h3>
+                                    <div class="inputSearchs p-0">
+                                        <input type="hidden" id="hdnLocationCountryId" value="@(Model == null ? 0 : Model.LocationCountryId)" />
+                                        <input type="hidden" id="hdnLocationStateId" value="@(Model == null ? 0 : Model.LocationStateId)" />
+                                        <input type="hidden" id="hdnLocationCityId" value="@(Model == null ? 0 : Model.LocationCityId)" />
+                                        <div class="flex  mb-28">
+                                            <label for="CountryId" class="w-50">
+                                                Country
+                                                @Html.DropDownListFor(model => model.PropertyDetail.CountryId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control", @onchange = "BindLocationState(this.options[this.selectedIndex].value)"})
+                                                
+                                            </label>
+                                            <label for="StateId" class="w-50">
+                                                State
+                                                @Html.DropDownListFor(model => model.PropertyDetail.StateId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control", @onchange = "BindLocationCity(this.options[this.selectedIndex].value)"})
+                                               
+                                            </label>
+                                        </div>
+                                        <div class="flex  mb-28" class="w-50">
+                                            <label for="CityId">
+                                                City
+                                                @Html.DropDownListFor(model => model.PropertyDetail.CityId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control"})
+                                                
+                                            </label>
+                                            <label for="Zone" class="w-50">
+                                                Sector /Zone
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Zone, new {@disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Zone"] })
+                                                
+                                            </label>
+                                        </div>
+                                        <div class="flex mb-28">
+                                            <label for="address2" class="w-50">
+                                                <p class="m-0">Building Projects<span class="text-danger">*</span></p>
+                                                @Html.TextBoxFor(model => model.PropertyDetail.BuildingProject, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Zone"] })
+                                                
+                                            </label>
+                                            <label for="address2" class="w-50">
+                                                Latitude
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Latitude, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Latitude"] })
+
+                                            </label>
+                                        </div>
+                                        <div class="flex mb-28">
+                                            <label for="address2" class="w-50">
+                                                Longitude
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Longitude, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Longitude"] })
+
+                                            </label>
+                                            <label for="" class="w-50">
+                                                <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Address1, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Address1"] })
+                                                
+                                            </label>
+                                        </div>
+                                        <div class="flex mb-28">
+                                            <label for="" class="w-50">
+                                                Address Line 2
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Address2, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Address2"] })
+
+                                            </label>
+                                            <label for="address2" class="w-50">
+                                                Zip / PO Box
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Pincode, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Pincode"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex mb-28">
+                                            <label for="address2" class="w-50">
+                                                Landmark
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Landmark, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Landmark"] })
+
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -483,6 +558,346 @@
                             </tbody>
                         </table>
                     </div> 
+                </div>
+
+                <div id="profile4" class="tabcontent">
+                    <h3 class="ptrl-20">Structural Information</h3>
+                    <div class="inputSearchs">
+                        <form >
+                            <div class="flex">
+                                <label for="">
+                                    Location
+                                    <input type="text" id="SiteLocation">
+                                </label>
+                                <label for="">
+                                    Internal Area
+                                    <input type="text" id="SiteInternalArea">
+                                </label>
+                            </div>
+                            <div class="flex">
+                                <label for="">
+                                    External Area
+                                    <input type="text" id="SiteExternalArea">
+                                </label>
+                                <label for="">
+                                    Floor
+                                    <input type="text" id="SiteFloor">
+                                </label>
+                            </div>
+                            <div class="flex">
+                                <label for="">
+                                    Room
+                                    <input type="text" id="SiteRoom">
+                                </label>
+                                <label for="">
+                                    Bedrooms
+                                    <input type="text" id="SiteBedrooms">
+                                </label>
+                            </div>
+                            <div class="flex">
+                                <label for="">
+                                    Storage
+                                    <input type="text" id="SiteStorage">
+                                </label>
+                                <label>
+                                    Quantity
+                                    <input type="text"  id="SiteQuantity">
+                                </label>
+                            </div>
+                            <div class="flex">
+
+                                <label>
+                                    Additional Comment
+                                    <input type="text"  id="SiteAdditionalComment">
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="inputSearchs p-0">
+                        <div class="tabSection ptrl-20">
+                            <div class="addMoreAddress roundBorderBox m-0">
+                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                    <p>External Information</p>
+                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                </div>
+                                <div class="panel" style="display: none;">
+                                    <div class="flex">
+                                        <label for="" class="w-100">
+                                            Property Condition
+                                            <input type="text" placeholder="enter address line 1" id="SitePropertyCondition">
+                                        </label>
+                                    </div>
+                                    <div class="flex">
+                                        <label for="" class="w-100">
+                                            Additional Notes
+                                            <input type="text" placeholder="enter address line 2"  id="SiteAdditionalNotes">
+                                        </label>
+                                    </div>
+                                    <div class="flex">
+                                        <label for="" class="w-100">
+                                            Others
+                                            <input type="text" placeholder="enter other" id="SiteOthers">
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="inputSearchs p-0">
+                        <div class="tabSection ptrl-20">
+                            <div class="addMoreAddress roundBorderBox m-0">
+                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                    <p>Upload Supporting Documents</p>
+                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                </div>
+                                <div class="panel" style="display: none;">
+                                    <div class="flex">
+                                        <label for="" class="w-100">
+                                            <input type="file" class="fileInput" multiple onchange="displayFileNames(this)">
+                                            <input type="text" class="fileNames" readonly placeholder="file names">
+                                        </label>
+                                    </div>
+                                    <div class="W-100">
+                                        <div class="prevUpload roundBorderBox m-0">
+                                            <h3>Previously uploaded</h3>
+                                            <div class="flex">
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="text-right buttonArea bodyContent plr-0">
+                        <button type="submit" class="blueBtn mr-12">Save</button>
+                    </div>
+                </div>
+
+                <div id="profile5" class="tabcontent">
+                    <h3 class="ptrl-20">Comparable Evidences</h3>
+                    <div class="inputSearchs">
+                        <form>                            
+                            <div class="flex">
+                                <label for="">
+                                    Type
+                                    <input type="text">
+                                </label>
+                                <label>
+                                    Size
+                                    <input type="text">
+                                </label>
+                            </div>
+                            <div class="flex">
+                                <label>
+                                    Remarks
+                                    <input type="text">
+                                </label>
+                                <label>
+                                    Rate (Sq.Ft)
+                                    <input type="text">
+                                </label>
+                            </div>
+                            <div class="flex">
+                                <label>
+                                    Price
+                                    <input type="text">
+                                </label>
+                                <label>
+                                    Additional Comments
+                                    <input type="text">
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="inputSearchs p-0">
+                        <div class="tabSection ptrl-20">
+                            <div class="addMoreAddress roundBorderBox m-0">
+                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                    <p>Upload Supporting Documents</p>
+                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                </div>
+                                <div class="panel" style="display: none;">
+                                    <div class="flex">
+                                        <label for="" class="w-100">
+                                            <input type="file" class="fileInput" multiple onchange="displayFileNames(this)">
+                                            <input type="text" class="fileNames" readonly placeholder="file names">
+                                        </label>
+                                    </div>
+                                    <div class="W-100">
+                                        <div class="prevUpload roundBorderBox m-0">
+                                            <h3>Previously uploaded</h3>
+                                            <div class="flex">
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="text-right buttonArea bodyContent plr-0">
+                        <button type="submit" class="blueBtn mr-12">Save</button>
+                    </div>
+                </div>
+
+                <div id="profile6" class="tabcontent">
+                    <h3 class="ptrl-20">Valuation Evidences</h3>
+                    <div class="inputSearchs">
+                        <form>
+                            <div class="flex">
+                                <label for="">
+                                    Market Value
+                                    <input type="text">
+                                </label>
+                                <label for="">
+                                    Market Rent
+                                    <input type="text">
+                                </label>
+                            </div>
+                            <div class="flex">
+                                <label for="">
+                                    Life of Building
+                                    <input type="text">
+                                </label>
+                                <label for="">
+                                    Annual Maintainance Cost
+                                    <input type="text">
+                                </label>
+                            </div>
+                            <div class="flex fourBox flex-start">
+                                <label>
+                                    Insurance
+                                    <span class="flex yesNoToggle">
+                                        <input type="radio" name="answer" value="yes" onclick="toggleInput('yes')"> Yes &nbsp; &nbsp;
+
+                                        <input type="radio" name="answer" value="no" onclick="toggleInput('no')"> No
+                                    </span>
+                                </label>
+                                <label id="yesInput" for="yesField" style="display: none;">
+                                    Insurance details
+                                    <input type="text" id="yesField" name="yesField">
+                                </label>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="inputSearchs p-0">
+                        <div class="tabSection ptrl-20">
+                            <div class="addMoreAddress roundBorderBox m-0">
+                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                    <p>Upload Supporting Documents</p>
+                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                </div>
+                                <div class="panel" style="display: none;">
+                                    <div class="flex">
+                                        <label for="" class="w-100">
+                                            <input type="file" class="fileInput" multiple onchange="displayFileNames(this)">
+                                            <input type="text" class="fileNames" readonly placeholder="file names">
+                                        </label>
+                                    </div>
+                                    <div class="W-100">
+                                        <div class="prevUpload roundBorderBox m-0">
+                                            <h3>Previously uploaded</h3>
+                                            <div class="flex">
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                                <div class="prevUploadTab">
+                                                    <div class="flex align-item-center m-0">
+                                                        <img src="../assets/file.svg" alt="file" />
+                                                        ABC
+                                                    </div>
+                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="text-right buttonArea bodyContent plr-0">
+                        <button type="submit" class="blueBtn mr-12">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
