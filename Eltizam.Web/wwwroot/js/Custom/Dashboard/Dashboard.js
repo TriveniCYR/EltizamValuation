@@ -38,8 +38,9 @@ function submitFilterForm() {
     var formDataObject = {
         PropertyId: $('#PropertyId').val(),
         ClientId: $('#ClientId').val(),
-        FromDate: $('#FromDate').val(),
-        ToDate: $('#ToDate').val()
+        FromDate: $('#FromDate').val() =="" ? "":flatpickr.formatDate(new Date($('#FromDate').val()), 'Y-m-d'), 
+        ToDate: $('#ToDate').val() == "" ? "" : flatpickr.formatDate(new Date($('#ToDate').val()), 'Y-m-d')
+         
     };
 
     var formDataJson = JSON.stringify(formDataObject);
@@ -65,7 +66,6 @@ function submitFilterFormSuccess(data) {
                 '<td>' + request.clientName + '</td>' +
                 '<td>' + request.propertyName + '</td>' +
                 '<td>' + request.valRefNum + '</td>' +
-                '<td class="formatted-td-date-input">' + request.valuationDate + '</td>' +
                 '<td>' + request.status + '</td>' +
                 '</tr>';
             latestRequestsTableBody.append(rowHtml);

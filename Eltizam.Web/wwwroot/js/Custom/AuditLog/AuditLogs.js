@@ -20,8 +20,7 @@ function InitializeAuditLogList() {
 
     var dateto = $("#ToDate").val() === undefined ? "" : $("#ToDate").val();
    
-    var _appendURL = "?UserName=" + userName +"&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
-        var setDefaultOrder = [0, 'asc'];
+    var _appendURL = "?UserName=" + userName +"&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto; 
     var ajaxObject = {
         "url": BaseURL + AllAudit + _appendURL,
         "type": "POST",

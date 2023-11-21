@@ -2322,3 +2322,10 @@ table.multipleValueTable {
     font-size: 16px;
     z-index: 1;
 }
+
+table.latestRequestsTable,
+table.latestQuotationsTable,
+table.topValuationsTable,
+table.topQuotationDuesTable {
+    min-width: auto;
+}

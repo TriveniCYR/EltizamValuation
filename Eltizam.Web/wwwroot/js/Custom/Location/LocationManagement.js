@@ -4,8 +4,7 @@ $(document).ready(function () {
 });
 
 //Load data into table
-function InitializeLocationDataList() {
-    var setDefaultOrder = [0, 'asc'];
+function InitializeLocationDataList() { 
     var ajaxObject = {
         "url": BaseURL + LocationGetAll,
         "type": "POST",

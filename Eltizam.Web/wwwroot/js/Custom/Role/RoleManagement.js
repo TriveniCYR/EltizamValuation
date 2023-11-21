@@ -4,8 +4,7 @@ $(document).ready(function () {
 });
 
 //Load data into table
-function InitializeRoleDataList() {
-    var setDefaultOrder = [0, 'asc'];
+function InitializeRoleDataList() { 
     var ajaxObject = {
         "url": BaseURL + RoleGetAll,
         "type": "POST",
