@@ -330,11 +330,11 @@
                                     </label>
                                     <label for="atach">
                                         Attach Supporting Documents
-                                        <div class="attachDoc">
+                                        @* <div class="attachDoc">
                                             <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
                                             <input type="file" asp-for="Document.Files" multiple />
                                             <p>click to upload.</p>
-                                        </div>
+                                        </div> *@
                                     </label>
                                 </div>
                                 <div class="W-100">
@@ -350,7 +350,7 @@
                                                             <img src="../assets/file.svg" alt="file" />
                                                             <span>@docs.DocumentName</span>
                                                         </div>
-                                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                        <a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
 
                                                     </div>
                                                 }

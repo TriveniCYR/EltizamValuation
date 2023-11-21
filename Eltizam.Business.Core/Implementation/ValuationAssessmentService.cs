@@ -24,6 +24,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<ComparableEvidence> _repository { get; set; }
         private IRepository<ValuationAssesment> _valutionrepository { get; set; }
+        private IRepository<SiteDescription> _siteRepository { get; set; }
         private IRepository<MasterAddress> _addressRepository { get; set; }
 
         private IRepository<MasterDocument> _documentRepository { get; set; }
@@ -40,6 +41,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
             _repository = _unitOfWork.GetRepository<ComparableEvidence>();
+            _siteRepository = _unitOfWork.GetRepository<SiteDescription>();
             _valutionrepository = _unitOfWork.GetRepository<ValuationAssesment>();
             _addressRepository = _unitOfWork.GetRepository<MasterAddress>();
 
@@ -49,53 +51,57 @@ namespace Eltizam.Business.Core.Implementation
             _auditLogService = auditLogService;
         }
 
-        public async Task<DBOperation> EvidenceUpsert(ComparableEvidenceModel evidence)
-            {
+        public async Task<DBOperation> SideDescriptionUpsert(SiteDescriptionModel model)
+        {
 
-                ComparableEvidence objUser;
-                MasterAddress objUserAddress;
-                MasterQualification objUserQualification;
+                SiteDescription objUser;
                 MasterDocument objUserDocument;
 
-                string MainTableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
-                int MainTableKey = evidence.Id;
+                string MainTableName = Enum.GetName(TableNameEnum.SiteDescription);
+                int MainTableKey = model.Id;
 
                 //User details
-                if (evidence.Id > 0)
+                if (model.Id > 0)
                 {
                     //Get current Entiry --AUDITLOGUSER
-                    ComparableEvidence OldEntity = null;
-                    OldEntity = _repository.GetNoTracking(evidence.Id);
+                    SiteDescription OldEntity = null;
+                    OldEntity = _siteRepository.GetNoTracking(model.Id);
 
-                    objUser = _repository.Get(evidence.Id);
+                    objUser = _siteRepository.Get(model.Id);
 
                     if (objUser != null)
                     {
-                        objUser.Type = evidence.Type;
-                        objUser.Size = evidence.Size;
-                        objUser.Remarks = evidence.Remarks;
-                        objUser.RateSqFt = evidence.RateSqFt;
-                        objUser.Price = evidence.Price;
+                        objUser.Location = model.Location;
+                        objUser.InternalArea = model.InternalArea;
+                        objUser.ExternalArea = model.ExternalArea;
+                        objUser.Floor = model.Floor;
+                        objUser.Room = model.Room;
+                        objUser.Bedrooms = model.Bedrooms;
+                        objUser.Storage = model.Storage;
+                        objUser.Quantity = model.Quantity;
+                        objUser.AdditionComment = model.AdditionComment;
+                        objUser.PropertyCondition = model.PropertyCondition;
+                        objUser.AdditionalNotes = model.AdditionalNotes;
+                        objUser.Others = model.Others;
 
-                        objUser.ModifiedBy = evidence.ModifiedBy;
+                        objUser.ModifiedBy = model.ModifiedBy;
 
 
-                        _repository.UpdateAsync(objUser);
-                        _repository.UpdateGraph(objUser, EntityState.Modified);
+                        _siteRepository.UpdateAsync(objUser);
+                        _siteRepository.UpdateGraph(objUser, EntityState.Modified);
                         await _unitOfWork.SaveChangesAsync();
 
                         //Do Audit Log --AUDITLOGUSER
-                        await _auditLogService.CreateAuditLog<ComparableEvidence>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
+                        await _auditLogService.CreateAuditLog<SiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
                     }
                 }
                 else
                 {
-                    objUser = _mapperFactory.Get<ComparableEvidenceModel, ComparableEvidence>(evidence);
+                    objUser = _mapperFactory.Get<SiteDescriptionModel, SiteDescription>(model);
 
-                    objUser.CreatedBy = evidence.CreatedBy;
-                    objUser.IsActive = evidence.IsActive;
+                    objUser.CreatedBy = model.CreatedBy;
 
-                _repository.AddAsync(objUser);
+                    _siteRepository.AddAsync(objUser);
                     await _unitOfWork.SaveChangesAsync();
                 }
 
@@ -104,63 +110,19 @@ namespace Eltizam.Business.Core.Implementation
                     return DBOperation.Error;
                 else
                 {
-                    //Address details
-                    if (evidence.Address != null)
+                    if (model.uploadDocument != null)
                     {
-                        if (evidence.Address.Id > 0)
-                        {
-                            //Get current Entiry --AUDITLOGUSER
-                            var OldEntity = _addressRepository.GetNoTracking(evidence.Address.Id);
-                            objUserAddress = _addressRepository.Get(evidence.Address.Id);
-
-                            if (objUserAddress != null)
-                            {
-                                var entityAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(evidence.Address);
-
-                                objUserAddress.Address1 = entityAddress.Address1;
-                                objUserAddress.Address2 = entityAddress.Address2;
-                                objUserAddress.CountryId = entityAddress.CountryId;
-                                objUserAddress.StateId = entityAddress.StateId; ;
-                                objUserAddress.CityId = entityAddress.CityId;
-                                objUserAddress.PinNo = entityAddress.PinNo;
-                                objUserAddress.IsActive = entityAddress.IsActive;
-                                objUserAddress.ModifiedBy = evidence.ModifiedBy;
-
-                                _addressRepository.UpdateAsync(objUserAddress);
-                                _addressRepository.UpdateGraph(objUserAddress, EntityState.Modified);
-                                await _unitOfWork.SaveChangesAsync();
-
-                                //Do Audit Log --AUDITLOGUSER
-                                await _auditLogService.CreateAuditLog<MasterAddress>(AuditActionTypeEnum.Update, OldEntity, objUserAddress, MainTableName, MainTableKey);
-                            }
-                        }
-                        else
-                        {
-                            objUserAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(evidence.Address);
-                            //objUserAddress.IsActive = evidence.IsActive;
-                            objUserAddress.TableKeyId = objUser.Id;
-                            objUserAddress.TableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
-                            objUserAddress.CreatedBy = evidence.CreatedBy;
-
-                            _addressRepository.AddAsync(objUserAddress);
-                            await _unitOfWork.SaveChangesAsync();
-                        }
-                    }
-
-
-                    if (evidence.uploadDocument != null)
-                    {
-                        foreach (var doc in evidence.uploadDocument)
+                        foreach (var doc in model.uploadDocument)
                         {
                             objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
                             objUserDocument.IsActive = doc.IsActive;
                             objUserDocument.TableKeyId = objUser.Id;
-                            objUserDocument.TableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
+                            objUserDocument.TableName = Enum.GetName(TableNameEnum.SiteDescription);
                             objUserDocument.DocumentName = doc.DocumentName;
                             objUserDocument.FileName = doc.FileName;
                             objUserDocument.FilePath = doc.FilePath;
                             objUserDocument.FileType = doc.FileType;
-                            objUserDocument.CreatedBy = evidence.CreatedBy;
+                            objUserDocument.CreatedBy = model.CreatedBy;
 
                             _documentRepository.AddAsync(objUserDocument);
                             await _unitOfWork.SaveChangesAsync();
@@ -170,6 +132,127 @@ namespace Eltizam.Business.Core.Implementation
 
                 return DBOperation.Success;
             }
+        public async Task<DBOperation> EvidenceUpsert(ComparableEvidenceModel evidence)
+        {
+
+            ComparableEvidence objUser;
+            MasterAddress objUserAddress;
+            MasterQualification objUserQualification;
+            MasterDocument objUserDocument;
+
+            string MainTableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
+            int MainTableKey = evidence.Id;
+
+            //User details
+            if (evidence.Id > 0)
+            {
+                //Get current Entiry --AUDITLOGUSER
+                ComparableEvidence OldEntity = null;
+                OldEntity = _repository.GetNoTracking(evidence.Id);
+
+                objUser = _repository.Get(evidence.Id);
+
+                if (objUser != null)
+                {
+                    objUser.Type = evidence.Type;
+                    objUser.Size = evidence.Size;
+                    objUser.Remarks = evidence.Remarks;
+                    objUser.RateSqFt = evidence.RateSqFt;
+                    objUser.Price = evidence.Price;
+
+                    objUser.ModifiedBy = evidence.ModifiedBy;
+
+
+                    _repository.UpdateAsync(objUser);
+                    _repository.UpdateGraph(objUser, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<ComparableEvidence>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
+                }
+            }
+            else
+            {
+                objUser = _mapperFactory.Get<ComparableEvidenceModel, ComparableEvidence>(evidence);
+
+                objUser.CreatedBy = evidence.CreatedBy;
+                objUser.IsActive = evidence.IsActive;
+
+                _repository.AddAsync(objUser);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
+
+            if (objUser.Id == 0)
+                return DBOperation.Error;
+            else
+            {
+                //Address details
+                //if (evidence.Address != null)
+                //{
+                //    if (evidence.Address.Id > 0)
+                //    {
+                //        //Get current Entiry --AUDITLOGUSER
+                //        var OldEntity = _addressRepository.GetNoTracking(evidence.Address.Id);
+                //        objUserAddress = _addressRepository.Get(evidence.Address.Id);
+
+                //        if (objUserAddress != null)
+                //        {
+                //            var entityAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(evidence.Address);
+
+                //            objUserAddress.Address1 = entityAddress.Address1;
+                //            objUserAddress.Address2 = entityAddress.Address2;
+                //            objUserAddress.CountryId = entityAddress.CountryId;
+                //            objUserAddress.StateId = entityAddress.StateId; ;
+                //            objUserAddress.CityId = entityAddress.CityId;
+                //            objUserAddress.PinNo = entityAddress.PinNo;
+                //            objUserAddress.IsActive = entityAddress.IsActive;
+                //            objUserAddress.ModifiedBy = evidence.ModifiedBy;
+
+                //            _addressRepository.UpdateAsync(objUserAddress);
+                //            _addressRepository.UpdateGraph(objUserAddress, EntityState.Modified);
+                //            await _unitOfWork.SaveChangesAsync();
+
+                //            //Do Audit Log --AUDITLOGUSER
+                //            await _auditLogService.CreateAuditLog<MasterAddress>(AuditActionTypeEnum.Update, OldEntity, objUserAddress, MainTableName, MainTableKey);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        objUserAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(evidence.Address);
+                //        //objUserAddress.IsActive = evidence.IsActive;
+                //        objUserAddress.TableKeyId = objUser.Id;
+                //        objUserAddress.TableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
+                //        objUserAddress.CreatedBy = evidence.CreatedBy;
+
+                //        _addressRepository.AddAsync(objUserAddress);
+                //        await _unitOfWork.SaveChangesAsync();
+                //    }
+                //}
+
+
+                if (evidence.uploadDocument != null)
+                {
+                    foreach (var doc in evidence.uploadDocument)
+                    {
+                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                        objUserDocument.IsActive = doc.IsActive;
+                        objUserDocument.TableKeyId = objUser.Id;
+                        objUserDocument.TableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
+                        objUserDocument.DocumentName = doc.DocumentName;
+                        objUserDocument.FileName = doc.FileName;
+                        objUserDocument.FilePath = doc.FilePath;
+                        objUserDocument.FileType = doc.FileType;
+                        objUserDocument.CreatedBy = evidence.CreatedBy;
+
+                        _documentRepository.AddAsync(objUserDocument);
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return DBOperation.Success;
+        }
 
         public async Task<DBOperation> AssesmentUpsert(ValuationAssessementModel assesment)
         {
