@@ -60,6 +60,7 @@ namespace ValuationWeb.Persistence
             services.AddTransient<IValuationInvoiceService, ValuationInvoiceService>();
             services.AddTransient<IMasterOwnershipTypeService, MasterOwnershipTypeService>();
             services.AddTransient<IAuditLogService, AuditLogService>();
+            services.AddTransient<IValuationAssessmentService, ValuationAssessmentService>();
             return services;
         }
     }
