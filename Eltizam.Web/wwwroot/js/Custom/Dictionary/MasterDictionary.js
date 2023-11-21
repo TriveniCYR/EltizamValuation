@@ -3,8 +3,7 @@ $(document).ready(function () {
     InitializeDictionaryList();
 });
 
-function InitializeDictionaryList() {
-    var setDefaultOrder = [0, 'asc'];
+function InitializeDictionaryList() { 
     var ajaxObject = {
         "url": BaseURL + AllDictionary,
         "type": "POST",

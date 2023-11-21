@@ -32,8 +32,7 @@ function DeleteClientByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function InitializeClientList() { 
-    var setDefaultOrder = [0, 'asc'];
+function InitializeClientList() {  
     var ajaxObject = {
         "url": BaseURL + AllClient,
         "type": Post,

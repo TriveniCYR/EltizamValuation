@@ -55,9 +55,7 @@ function InitializeValutionRequestDataList() {
 
     var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val();
 
-    var toDate = $("#ToDate").val() === undefined ? "" : $("#ToDate").val();
-
-    var setDefaultOrder = [0, 'asc'];
+    var toDate = $("#ToDate").val() === undefined ? "" : $("#ToDate").val(); 
     var ajaxObject = {
         "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
 

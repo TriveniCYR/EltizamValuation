@@ -35,9 +35,7 @@ function DeleteVendorByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function InitializeVendorList() {
-     
-    var setDefaultOrder = [0, 'asc'];
+function InitializeVendorList() { 
     var ajaxObject = {
         "url": BaseURL + AllVendor,
         "type": "POST",

@@ -28,8 +28,7 @@ function DeleteUserByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function InitializeUserList () {
-    var setDefaultOrder = [0, 'asc'];
+function InitializeUserList () { 
     var ajaxObject = {
         "url": BaseURL + AllUser,
         "type": "POST",

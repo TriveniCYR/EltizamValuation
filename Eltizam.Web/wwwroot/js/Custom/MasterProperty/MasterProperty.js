@@ -3,8 +3,7 @@ $(document).ready(function () {
     InitializePropertyList();
 });
 
-function InitializePropertyList() {
-    var setDefaultOrder = [0, 'asc'];
+function InitializePropertyList() { 
     var ajaxObject = {
         "url": BaseURL + AllProperty,
         "type": Post,
