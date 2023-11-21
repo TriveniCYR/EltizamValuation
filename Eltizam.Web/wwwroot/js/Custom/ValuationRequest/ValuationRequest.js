@@ -81,23 +81,24 @@ function InitializeValutionRequestDataList() {
         {
             "data": "referenceNO", "name": "ReferenceNO"
         },
-
-        {
-            "data": "clientName", "name": "Client Name"
-        },
         {
             "data": "clientType", "name": "Client Type"
         },
         {
+            "data": "clientName", "name": "Client Name"
+        },
+        {
+            "data": "propertyType", "name": "Property Type"
+        },
+        {
+            "data": "propertyName", "name": "Property Name"
+        }, 
+        {
             "data": "location", "name": "Location"
         },
         {
-            "data": "propertyName", "name": "Property Use Type"
-        },
-        {
             "data": "valuationPurpose", "name": "Valuation Purpose"
-        },
-
+        }, 
         {
             "data": "methodOfValution", "name": "Method of Valuation"
         },

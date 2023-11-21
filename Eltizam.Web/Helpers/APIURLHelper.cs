@@ -52,7 +52,7 @@ namespace Eltizam.Web.Helpers
         public static string GetesignationById = "MasterDesignation/GetById";
         public static string DeleteDesignationById = "MasterDesignation/Delete";
         #endregion Designation
-
+        public static string DashboardDetails = "Dashboard/DashboardData";
         #region Department
         public static string UpsertDepartment = "MasterDepartment/Upsert";
         public static string GetAllDepartment = "MasterDepartment/GetAll";
@@ -61,6 +61,9 @@ namespace Eltizam.Web.Helpers
 
         #endregion Department
 
+        #region Dashboard
+
+        #endregion Dashboard
         #region MasterProperty
         public static string UpsertProperty = "MasterProperty/Upsert";
         public static string GetAllProperty = "MasterProperty/GetAll";

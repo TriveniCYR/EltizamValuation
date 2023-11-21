@@ -47,8 +47,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId, int resourceId, int propertyTypeId, int countryId, int stateId, int cityId, string? fromDate, string? toDate)
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
-            //string SortDir = model.order[0]?.dir;
-            string SortDir = "asc";
+            string SortDir = model.order[0]?.dir;
+          //  string SortDir = "asc";
 
             SqlParameter[] osqlParameter =
             {
