@@ -2238,3 +2238,9 @@ table.multipleValueTable {
     display: grid !important;
     grid-template-columns: 80px 1fr;
 }
+table.latestRequestsTable,
+table.latestQuotationsTable,
+table.topValuationsTable,
+table.topQuotationDuesTable {
+    min-width: auto;
+}

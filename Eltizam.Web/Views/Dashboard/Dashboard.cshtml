@@ -18,28 +18,24 @@
                 <div class="inputSearchs">
                     <form id="dashboardFilterForm">
                         <div class="flex dashboardSearch">
-                            <div style="margin-right: 10px;">
-                                @Html.LabelFor(model => model.ClientId, "Client", new { @class = "position-relative" })
-                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId" })
-                            </div>
-
-                            <div style="margin-right: 10px;">
-                                @Html.LabelFor(model => model.PropertyId, "Property", new { @class = "position-relative" })
-                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId" })
-                            </div>
-
-                            <div style="margin-right: 10px;">
-                                @Html.LabelFor(model => model.FromDate, "From")
-                                @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input", type = "text", id = "FromDate" })
-                            </div>
-
-                            <div style="margin-right: 10px;">
-                                @Html.LabelFor(model => model.ToDate, "To")
-                                @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input", type = "text", id = "ToDate" })
-                            </div>
-                            <div style="margin-right: 10px;">
+                            <label for="ClientTypeId">
+                                            Client
+                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId",@class="form-control" })
+                            </label>
+                            <label for="PropertyId">
+                                Property
+                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control" })
+                            </label> 
+                             <label for="">
+                                    From
+                                @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input form-control", id = "FromDate" })
+                            </label>
+                                <label for="">
+                                    To
+                                @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input  form-control", id = "ToDate" })
+                            </label>
                             <button type="button" onclick="submitFilterForm()" class="blueBtn">Search</button>
-                            </div>
+                       
                         </div>
                     </form>
                 </div>
@@ -75,61 +71,40 @@
                         <h3 id="totalDue"></h3>
                     </div>
                 </div>
-                <div>
-                    <div class="roundBorderBox w-70">
+                <div class="flex dashboard-status">
+                    <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
                             <h3>Latest requests</h3>
                             <a href="">View More</a>
                         </div>
-                        <table class="latestRequestsTable">
+                        <table class="dashboardTable latestRequestsTable">
                             <thead>
                                 <tr>
                                     <th>Client Name</th>
                                     <th>Project Name</th>
                                     <th>ValRef Number</th>
-                                    <th>ValuationDate</th>
                                     <th>Status</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                               
+                                
                             </tbody>
                         </table>
                     </div>
-                    <div class="roundBorderBox w-70">
+                    <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
                             <h3>Latest Qutotation Sub</h3>
                             <a href="">View More</a>
                         </div>
-                        <table class="latestQuotationsTable">
+                        <table class="dashboardTable latestQuotationsTable">
                             <thead>
                                 <tr>
                                     <th>Client Name</th>
                                     <th>Project Name</th>
                                     <th>QuotationFee</th>
-                                    <th>QuotationNum</th>
+                                    <th>Quotation Number</th>
                                     <th>ValRef Number</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                               
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div>
-                    <div class="roundBorderBox w-70">
-                        <div class="flex justify-between">
-                            <h3>Top Projects in Valuation</h3>
-                            <a href="">View More</a>
-                        </div>
-                        <table class="topValuationsTable">
-                            <thead>
-                                <tr>
-                                    <th>Client Name</th>
-                                    <th>Project Name</th>
-                                    <th>ValRef Number</th>
-                                    <th>Valuation Amount</th>
 
                                 </tr>
                             </thead>
@@ -138,12 +113,33 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="roundBorderBox w-70">
+                </div>
+                <div class="flex dashboard-status">
+                    <div class="roundBorderBox w-50">
+                        <div class="flex justify-between">
+                            <h3>Top Projects in Valuation</h3>
+                            <a href="">View More</a>
+                        </div>
+                        <table class="dashboardTable topValuationsTable">
+                            <thead>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <th>Project Name</th>
+                                    <th>ValRef Number</th>
+                                    <th>Valuation Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
                             <h3>Top Quatuons Due</h3>
                             <a href="">View More</a>
                         </div>
-                        <table class="topQuotationDuesTable">
+                        <table class="dashboardTable topQuotationDuesTable">
                             <thead>
                                 <tr>
                                     <th>Client Name</th>
@@ -159,6 +155,7 @@
                         </table>
                     </div>
                 </div>
+               
                 <div class="dashboardMapArea">
                     <div class="flex flex-column dashboard-status p-0">
                         <div class="roundBorderBox m-0 dashboard-box w-100">
