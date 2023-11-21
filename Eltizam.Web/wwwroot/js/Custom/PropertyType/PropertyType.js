@@ -4,8 +4,7 @@ $(document).ready(function () {
 });
 
 //Load data into table
-function InitializePropertyTypeDataList() {
-    var setDefaultOrder = [0, 'asc'];
+function InitializePropertyTypeDataList() { 
     var ajaxObject = {
         "url": BaseURL + GetAll,
         "type": "POST",

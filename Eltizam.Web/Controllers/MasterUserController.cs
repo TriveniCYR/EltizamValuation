@@ -209,9 +209,9 @@ namespace EltizamValuation.Web.Controllers
                 }
 
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var docName = Path.GetFileNameWithoutExtension(file.FileName);
                 var filePath = Path.Combine("wwwroot/Uploads", fileName);
-
-
+                filePath = filePath.Replace("\\", "/");
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     file.CopyToAsync(stream);
@@ -221,8 +221,8 @@ namespace EltizamValuation.Web.Controllers
                 var upload = new MasterDocumentModel
                 {
                     FileName = fileName,
-                    FilePath = filePath,
-                    DocumentName = document.DocumentName,
+                    FilePath = filePath.Replace("wwwroot", ".."),
+                    DocumentName = docName,
                     IsActive = 1,
                     FileType = GetFileType(file.ContentType)
                 };

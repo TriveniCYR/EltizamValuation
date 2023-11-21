@@ -42,6 +42,27 @@ namespace Eltizam.WebApi.Controllers
         #endregion Constructor
 
         [HttpPost]
+        [Route("SideDescriptionUpsert")]
+        public async Task<IActionResult> SideDescriptionUpsert(SiteDescriptionModel model)
+        {
+            try
+            {
+                DBOperation oResponse = await _ValuationAssessmentService.SideDescriptionUpsert(model);
+                if (oResponse == DBOperation.Success)
+                {
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (model.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+                }
+                else
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpPost]
         [Route("EvidenceUpsert")]
         public async Task<IActionResult> EvidenceUpsert(ComparableEvidenceModel evidence)
         {

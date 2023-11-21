@@ -292,6 +292,9 @@ namespace Eltizam.Business.Core.Implementation
                 _ValuationEntity.OwnershipType = res.OwnershipType;
                 _ValuationEntity.PropertyId = res.PropertyId;
                 _ValuationEntity.PropertyName = res.PropertyName;
+                _ValuationEntity.LocationCountryId = res.LocationCountryId;
+                _ValuationEntity.LocationStateId = res.LocationStateId;
+                _ValuationEntity.LocationCityId = res.LocationCityId;
             }
 
             return _ValuationEntity;

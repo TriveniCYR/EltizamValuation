@@ -183,7 +183,7 @@
                                                     @Html.HiddenFor(m => m.AmenityList[z].AmenityId)
                                                     @Html.HiddenFor(m => m.AmenityList[z].PropertyId)
                                                     @Html.CheckBoxFor(model => Model.AmenityList[z].IsActive, new { @class = "checkbox-checked", @checked = "checked" })
-                                                    <p>@amt.AmenityName</p>
+                                                    <p style="font-weight:400;">@amt.AmenityName</p>
                                                     <img src="/assets/@amt.Icon" class="amenitiesIcon" />
                                                 </label>
                                             }
