@@ -30,6 +30,16 @@ function profileTab(evt, cityName) {
     document.getElementById(cityName).style.border = "1px solid var(--blue)";
     evt.currentTarget.className += " active";
 }
+function redirectToComparableEvidences() {
+    // Switch to the "Comparable evidences" tab
+    profileTab(event, 'profile5');
+   
+}
+function redirectToValuationAssesment() {
+    // Switch to the "Comparable evidences" tab
+    profileTab(event, 'profile6');
+
+}
 document.getElementById("defaultOpen").click();
 
 function accordianToggle(header) {
@@ -137,7 +147,7 @@ $(document).ready(function () {
     GetValuerLists();
     BindQuatationList();
     BindInvoiceList();
-    /*BindPropertyDetail();*/
+        /*BindPropertyDetail();*/
 
     if (document.location.href.includes('id'))
 
@@ -867,6 +877,7 @@ function BindQuatationList() {
     });
 }
 
+
 function BindInvoiceList() {
     let id = $('#hdnId').val();
     $.ajax({
@@ -898,6 +909,8 @@ function BindInvoiceList() {
         }
     });
 }
+
+
 
 
 //#region Delete Quotation

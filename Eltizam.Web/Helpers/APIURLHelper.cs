@@ -227,7 +227,8 @@ namespace Eltizam.Web.Helpers
         public static string ValuationRequestDeleteById = "ValuationRequest/Delete";
         public static string ReviewRequestStatus = "ValuationRequest/ReviewerRequestStatus";
         public static string GetRequestStatus = "ValuationRequestStatus/GetAllStatus";
-        
+        public static string ValuationAssesment = "ValuationAssessment/ValuationAssesmentUpsert";
+        public static string GetSiteDescriptionList = "ValuationAssessment/GetSiteDescriptionList";
 
         #endregion Valuation Request
 

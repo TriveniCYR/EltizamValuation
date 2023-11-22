@@ -90,6 +90,8 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestModel>>(jsonResponse);
 
+                   //var requestid data._object.ValuationAssesment.RequestId
+
                     //Get Footer info
                     FooterInfo(TableNameEnum.ValuationRequest, _cofiguration, id);
 
@@ -455,6 +457,76 @@ namespace EltizamValuation.Web.Controllers
             }
             ModelState.Clear();
             return RedirectToAction(nameof(ValuationRequests));
+        }
+
+
+        [HttpPost]
+        public IActionResult ValuationAssesmentManage(int id, ValuationAssesmentActionModel valuationAssesment)
+        {
+            try
+            {
+                //Check permissions for Get
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
+                var requestId = id;
+                valuationAssesment.SiteDescription.ValuationRequestId = requestId;
+                valuationAssesment.comparableEvidenceModel.RequestId = requestId;
+                valuationAssesment.valuationAssessementModel.RequestId = requestId;
+
+                //int roleId = _helper.GetLoggedInRoleId();
+
+                //if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
+                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+                ////Get module wise permissions
+                //ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
+                //ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
+                //ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+
+
+                //// Assuming ViewBag.QuotationAccess is an object with a property View (boolean)
+                //bool hasQuatationViewAccess = ViewBag.QuotationAccess?.View ?? false;
+                //bool hasQuatationEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
+                //bool hasQuatationAddAccess = ViewBag.QuotationAccess?.Add ?? false;
+
+                //if (action == PermissionEnum.View && !hasQuatationViewAccess)
+                //{
+                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                //}
+                //else if (action == PermissionEnum.Edit && !hasQuatationEditAccess)
+                //{
+                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                //}
+                //else if (action == PermissionEnum.Add && !hasQuatationAddAccess)
+                //{
+                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                //}
+
+
+                if (valuationAssesment.SiteDescription.Id == 0)
+                    valuationAssesment.SiteDescription.CreatedBy = _helper.GetLoggedInUserId();
+                valuationAssesment.SiteDescription.ModifiedBy = _helper.GetLoggedInUserId();
+
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationAssesment, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationAssesment))).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                }
+                else
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+            }
+            return RedirectToAction("ValuationRequests");
+            //return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId });
         }
 
     }

@@ -77,6 +77,19 @@ namespace Eltizam.Business.Models
        
         public List<MasterAmenityListModel>? AmenityList { get; set; }
         public MasterPropertyDetailModel? PropertyDetail { get; set; }
+
+        public ValuationAssesmentActionModel? ValuationAssesment { get; set; }
+
+        //public SiteDescriptionModel? SiteDescription { get; set; }
+
+        //public ComparableEvidenceModel? ComparableEvidence { get; set; }
+
+        //public ValuationAssessementModel? ValuationAssessement { get; set; }
+
+        public DocumentFilesModel? Document { get; set; }
+
+        public List<MasterDocumentModel>? Documents { get; set; }
+
         //public Master_ClientTypeModel? master_ClientType { get; set; }
         //public MasterPropertyModel? masterPropertyModel { get; set; }
         //public Master_PropertySubTypeModel? master_PropertySub { get; set; }
