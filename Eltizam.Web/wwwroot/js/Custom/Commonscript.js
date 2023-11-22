@@ -127,6 +127,16 @@ function hideLoader() {
     }, 500);
 }
 
+function GetIntegerVal(val) {
+    if (val === undefined || isNaN(parseInt(val))) {
+        val = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        val = parseInt(val);
+    }
+
+    return val;
+}
+
 
 
 // ======== Bind dropdowns ============
@@ -240,16 +250,16 @@ $(document).on('click', 'form button[type=submit]', function (e) {
     }, 500);
 });
 
-function ValidateTabAndPage() {
+function ValidateTabAndPage() { 
     var errors = $(".input-validation-error");
     var err = "";
 
     var msg_1 = $(".input-validation-error").parent().closest('div.tabcontent').attr("title");
     if (msg_1 !== undefined) {
-        err += "<li>" + msg_1 + "<li>";
+        err += "<li>" + msg_1 + "</li>";
     }
     else if (errors.length > 0) {
-        err += "<li>Fill all mandate fields with valid data.<li>";
+        err += "<li>Fill all mandate fields with valid data.</li>";
     }
 
     if (err !== "") {
@@ -261,11 +271,11 @@ function FormattedError(err) {
     if (err !== undefined && err !== "") {
         ErrorDev.empty().show();
 
-        ErrorDev
-            .append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span onclick="CloseErrorBanner();" aria-hidden="true">×</span></button>')
-            .append("Please fill all mandatory fields and resolve error(s) in page/tab (if applicable).: <ul>" + err + "<ul>");
+        ErrorDev.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span onclick="CloseErrorBanner();" aria-hidden="true">×</span></button>' +
+                        'Please fill all mandatory fields and resolve error(s) in page / tab(if applicable).: <ul>' + err + '</ul>');
 
         hideLoader();
+        scrollToTop();
     }
 }
 
@@ -301,3 +311,26 @@ function removeDynamicTextbox(element) {
 }
 
 // ======== End: Dynamic textboxes append ============
+
+ 
+// ======== Start:  Scroller for page ============ 
+window.onscroll = function () {
+    showScrollToTopButton();
+};
+
+function showScrollToTopButton() {
+    const button = document.getElementById("scrollToTop");
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        button.style.display = "block";
+    } else {
+        button.style.display = "none";
+    }
+}
+
+// Scroll to the top when the button is clicked
+function scrollToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+// ======== End:  Scroller for page ============ 

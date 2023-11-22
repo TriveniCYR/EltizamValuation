@@ -6,7 +6,7 @@ $(document).ready(function () {
     BindResourceType();
     BindCountry();
     BindCountryCode();
-    debugger
+
     var countryId = $('#hdnCountry').val();
     if (countryId != null || countryId != 0) {
         BindState(countryId);
@@ -41,16 +41,14 @@ function BindRole() {
     BindDropdowns(RoleList, Role, _rpname, _val);
 }
 
-function BindResourceType() {
-
+function BindResourceType() { 
     var ResourceType = $("#ResourceId");
     var _val = $('#hdnResourceType').val();
     var _rpname = "resourceType";
     BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
 }
 
-function BindCountry() {
-    debugger
+function BindCountry() { 
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
@@ -92,7 +90,7 @@ function BindCountryCode() {
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            debugger
+           
             CountryCode.empty().append('<option selected="selected" value="">select</option>');
             AlternatePhone.empty().append('<option selected="selected" value="">select</option>');
             for (var i = 0; i < response.length; i++) {

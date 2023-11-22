@@ -6,6 +6,7 @@ using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
@@ -133,12 +134,19 @@ namespace EltizamValuation.Web.Controllers
 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertClient, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterUser))).Result;
 
-                if (responseMessage.IsSuccessStatusCode)
+                if (responseMessage.IsSuccessStatusCode && masterUser.Id==0)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
                     return RedirectToAction("Clients");
+                }
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+
+                    return Redirect($"/MasterClient/ClientManage?id={masterUser.Id}");
                 }
                 else
                 {

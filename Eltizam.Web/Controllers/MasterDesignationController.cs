@@ -86,6 +86,13 @@ namespace EltizamValuation.Web.Controllers
 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertDesignation, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterDesignation))).Result;
 
+                if (responseMessage.IsSuccessStatusCode && masterDesignation.Id==0)
+                {
+                    TempData["StatusMessage"] = "Saved Successfully";
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    ModelState.Clear();
+                    return Redirect($"/MasterDesignation/DesignationManage?id={masterDesignation.Id}");
+                }
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     TempData["StatusMessage"] = "Saved Successfully";

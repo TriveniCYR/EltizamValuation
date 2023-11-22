@@ -7,6 +7,7 @@ using Eltizam.Utility.Models;
 using Eltizam.Utility.Utility;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using System.Data;
@@ -203,13 +204,19 @@ namespace Eltizam.Web.Controllers
                             UtilityHelper.AddModuleRole(masterRole.Id, data._object);
                         }
                     }
+                    if (responseMessage.IsSuccessStatusCode && masterRole.Id == 0)
+                    {
+                        string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                        TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
+                        return RedirectToAction(nameof(Roles));
+                    }
                     if (responseMessage.IsSuccessStatusCode)
                     {
                         string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                         TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
-                        return RedirectToAction("Roles");
+                        return Redirect($"/MasterRole/RoleManage?id={masterRole.Id}");
                     }
                     else
                     {

@@ -155,12 +155,19 @@ namespace EltizamValuation.Web.Controllers
 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertLocation, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterlocation))).Result;
 
-                if (responseMessage.IsSuccessStatusCode)
+                if (responseMessage.IsSuccessStatusCode && masterlocation.Id==0)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
                     return RedirectToAction(nameof(Locations));
+                }
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+
+                    return Redirect($"/MasterLocation/LocationManage?id={masterlocation.Id}");
                 }
                 else
                 {
