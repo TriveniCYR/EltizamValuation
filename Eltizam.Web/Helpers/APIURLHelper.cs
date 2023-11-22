@@ -44,6 +44,7 @@ namespace Eltizam.Web.Helpers
         public static string UpsertUser = "MasterUser/Upsert";
         public static string GetUserById = "MasterUser/GetById";
         public static string DeleteUserById = "MasterUser/Delete";
+        public static string DeleteUserDocumentById = "MasterUser/DeleteDocument";
         public static string GetGlobalAuditFields = "MasterUser/GetGlobalAuditFields";
         public static string GetUserNameList = "MasterUser/GetAllUserList";
 
@@ -232,7 +233,8 @@ namespace Eltizam.Web.Helpers
         public static string ValuationRequestDeleteById = "ValuationRequest/Delete";
         public static string ReviewRequestStatus = "ValuationRequest/ReviewerRequestStatus";
         public static string GetRequestStatus = "ValuationRequestStatus/GetAllStatus";
-        
+        public static string ValuationAssesment = "ValuationAssessment/ValuationAssesmentUpsert";
+        public static string GetSiteDescriptionList = "ValuationAssessment/GetSiteDescriptionList";
 
         #endregion Valuation Request 
 

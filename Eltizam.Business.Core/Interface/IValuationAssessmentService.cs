@@ -12,8 +12,10 @@ namespace Eltizam.Business.Core.Interface
 {
     public interface IValuationAssessmentService
     {
-        Task<DBOperation> SideDescriptionUpsert(SiteDescriptionModel model);
-        Task<DBOperation> EvidenceUpsert(ComparableEvidenceModel entityUser);
-        Task<DBOperation> AssesmentUpsert(ValuationAssessementModel assesment);
+        Task<DBOperation> ValuationAssesmentUpsert(ValuationAssesmentActionModel model);
+        //Task<DBOperation> SideDescriptionUpsert(SiteDescriptionModel model);
+        //Task<DBOperation> EvidenceUpsert(ComparableEvidenceModel entityUser);
+        //Task<DBOperation> AssesmentUpsert(ValuationAssessementModel assesment);
+        Task<SiteDescriptionModel> GetSiteDescriptionList(int requestId);
     }
 }

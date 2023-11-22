@@ -4,11 +4,14 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -51,87 +54,335 @@ namespace Eltizam.Business.Core.Implementation
             _auditLogService = auditLogService;
         }
 
+
+        public async Task<DBOperation> ValuationAssesmentUpsert(ValuationAssesmentActionModel model)
+        {
+          
+            SiteDescription objUser;
+            ComparableEvidence comparable;
+            ValuationAssesment objUser1;
+            MasterDocument objUserDocument;
+
+            string MainTableName = Enum.GetName(TableNameEnum.SiteDescription);
+            int MainTableKey = model.SiteDescription.Id;
+
+            objUser = _siteRepository.GetAll().Where(x=>x.ValuationRequestId==model.SiteDescription.ValuationRequestId).FirstOrDefault();
+
+            //User details
+            if (objUser!=null)
+            {
+                //Get current Entiry --AUDITLOGUSER
+                SiteDescription OldEntity = null;
+                //OldEntity = _siteRepository.GetNoTracking(model.SiteDescription.Id);
+
+               
+
+                if (objUser != null)
+                {
+                    objUser.Location = model.SiteDescription.Location;
+                    objUser.InternalArea = model.SiteDescription.InternalArea;
+                    objUser.ExternalArea = model.SiteDescription.ExternalArea;
+                    objUser.Floor = model.SiteDescription.Floor;
+                    objUser.Room = model.SiteDescription.Room;
+                    objUser.Bedrooms = model.SiteDescription.Bedrooms;
+                    objUser.Storage = model.SiteDescription.Storage;
+                    objUser.Quantity = model.SiteDescription.Quantity;
+                    objUser.AdditionComment = model.SiteDescription.AdditionComment;
+                    objUser.PropertyCondition = model.SiteDescription.PropertyCondition;
+                    objUser.AdditionalNotes = model.SiteDescription.AdditionalNotes;
+                    objUser.Others = model.SiteDescription.Others;
+
+                    objUser.ModifiedBy = model.SiteDescription.ModifiedBy;
+
+
+                    _siteRepository.UpdateAsync(objUser);
+                    _siteRepository.UpdateGraph(objUser, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    //await _auditLogService.CreateAuditLog<SiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
+                }
+            }
+            else
+            {
+                objUser = _mapperFactory.Get<SiteDescriptionModel, SiteDescription>(model.SiteDescription);
+
+                objUser.CreatedBy = model.SiteDescription.CreatedBy;
+
+                _siteRepository.AddAsync(objUser);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
+
+            if (objUser.Id == 0)
+                return DBOperation.Error;
+            else
+            {
+                if (model.SiteDescription.uploadDocument != null)
+                {
+                    foreach (var doc in model.SiteDescription.uploadDocument)
+                    {
+                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                        objUserDocument.IsActive = doc.IsActive;
+                        objUserDocument.TableKeyId = objUser.Id;
+                        objUserDocument.TableName = Enum.GetName(TableNameEnum.SiteDescription);
+                        objUserDocument.DocumentName = doc.DocumentName;
+                        objUserDocument.FileName = doc.FileName;
+                        objUserDocument.FilePath = doc.FilePath;
+                        objUserDocument.FileType = doc.FileType;
+                        objUserDocument.CreatedBy = model.SiteDescription.CreatedBy;
+
+                        _documentRepository.AddAsync(objUserDocument);
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                }
+            }
+
+
+            ///////////////comprable//////
+            ///
+            string MaincomparableTableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
+            int MaincomparableTableKey = model.comparableEvidenceModel.Id;
+            comparable = _repository.GetAll().Where(x => x.RequestId == model.comparableEvidenceModel.RequestId).FirstOrDefault();
+
+
+            if (comparable != null)
+            {
+                //Get current Entiry --AUDITLOGUSER
+                ComparableEvidence OldEntity = null;
+                //OldEntity = _repository.GetNoTracking(model.comparableEvidenceModel.Id);
+
+                //comparable = _repository.Get(model.comparableEvidenceModel.Id);
+
+                if (comparable != null)
+                {
+                    comparable.Type = model.comparableEvidenceModel.Type;
+                    comparable.Size = model.comparableEvidenceModel.Size;
+                    comparable.Remarks = model.comparableEvidenceModel.Remarks;
+                    comparable.Price = model.comparableEvidenceModel.Price;
+
+                    comparable.ModifiedBy = model.comparableEvidenceModel.ModifiedBy;
+
+
+                    _repository.UpdateAsync(comparable);
+                    _repository.UpdateGraph(comparable, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    //await _auditLogService.CreateAuditLog<ComparableEvidence>(AuditActionTypeEnum.Update, OldEntity, comparable, MaincomparableTableName, MaincomparableTableKey);
+                }
+            }
+            else
+            {
+                comparable = _mapperFactory.Get<ComparableEvidenceModel, ComparableEvidence>(model.comparableEvidenceModel);
+
+                comparable.CreatedBy = model.comparableEvidenceModel.CreatedBy;
+                comparable.IsActive = model.comparableEvidenceModel.IsActive;
+
+                _repository.AddAsync(comparable);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
+
+            if (objUser.Id == 0)
+                return DBOperation.Error;
+            else
+            {
+
+                if (model.comparableEvidenceModel.uploadDocument != null)
+                {
+                    foreach (var doc in model.comparableEvidenceModel.uploadDocument)
+                    {
+                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                        objUserDocument.IsActive = doc.IsActive;
+                        objUserDocument.TableKeyId = objUser.Id;
+                        objUserDocument.TableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
+                        objUserDocument.DocumentName = doc.DocumentName;
+                        objUserDocument.FileName = doc.FileName;
+                        objUserDocument.FilePath = doc.FilePath;
+                        objUserDocument.FileType = doc.FileType;
+                        objUserDocument.CreatedBy = model.comparableEvidenceModel.CreatedBy;
+
+                        _documentRepository.AddAsync(objUserDocument);
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                }
+            }
+
+
+            ///////////asssesment/////////////////
+            ///
+            string MainAssesmentTableName = Enum.GetName(TableNameEnum.Valuation_Assessement);
+            int MainTableAssesmentKey = model.valuationAssessementModel.Id;
+            objUser1 = _valutionrepository.GetAll().Where(x => x.RequestId == model.valuationAssessementModel.RequestId).FirstOrDefault();
+
+
+            //User details
+            if (objUser1 != null)
+            {
+                //Get current Entiry --AUDITLOGUSER
+                ValuationAssesment OldEntity = null;
+                //OldEntity = _valutionrepository.GetNoTracking(model.valuationAssessementModel.Id);
+
+                //objUser1 = _valutionrepository.Get(model.valuationAssessementModel.Id);
+
+                if (objUser1 != null)
+                {
+                    objUser1.MarketValue = model.valuationAssessementModel.MarketValue;
+                    objUser1.MarkentRent = model.valuationAssessementModel.MarkentRent;
+                    objUser1.LifeOfBuilding = model.valuationAssessementModel.LifeOfBuilding;
+                    objUser1.AnnualMaintainceCost = model.valuationAssessementModel.AnnualMaintainceCost;
+                    objUser1.Insuarance = model.valuationAssessementModel.Insuarance;
+                    objUser1.InsuranceDetails = model.valuationAssessementModel.InsuranceDetails;
+                    objUser1.ModifiedBy = model.valuationAssessementModel.ModifiedBy;
+
+
+                    _valutionrepository.UpdateAsync(objUser1);
+                    _valutionrepository.UpdateGraph(objUser1, EntityState.Modified);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    //await _auditLogService.CreateAuditLog<ValuationAssesment>(AuditActionTypeEnum.Update, OldEntity, objUser1, MainAssesmentTableName, MainTableAssesmentKey);
+                }
+            }
+            else
+            {
+                objUser1 = _mapperFactory.Get<ValuationAssessementModel, ValuationAssesment>(model.valuationAssessementModel);
+
+                objUser1.CreatedBy = model.valuationAssessementModel.CreatedBy;
+
+                _valutionrepository.AddAsync(objUser1);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
+
+            if (objUser1.Id == 0)
+                return DBOperation.Error;
+            else
+            {
+
+                if (model.valuationAssessementModel.uploadDocument != null)
+                {
+                    foreach (var doc in model.valuationAssessementModel.uploadDocument)
+                    {
+                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                        objUserDocument.IsActive = doc.IsActive;
+                        objUserDocument.TableKeyId = objUser1.Id;
+                        objUserDocument.TableName = Enum.GetName(TableNameEnum.Valuation_Assessement);
+                        objUserDocument.DocumentName = doc.DocumentName;
+                        objUserDocument.FileName = doc.FileName;
+                        objUserDocument.FilePath = doc.FilePath;
+                        objUserDocument.FileType = doc.FileType;
+                        objUserDocument.CreatedBy = model.valuationAssessementModel.CreatedBy;
+
+                        _documentRepository.AddAsync(objUserDocument);
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                }
+            }
+
+
+
+
+            return DBOperation.Success;
+        }
+
+        public async Task<SiteDescriptionModel> GetSiteDescriptionList(int requestId)
+        {
+            DbParameter[] osqlParameter2 =
+            {
+                    new DbParameter("RequestId", requestId, SqlDbType.Int),
+                };
+
+            var quottationList = EltizamDBHelper.ExecuteSingleMappedReader<SiteDescriptionModel>(ProcedureMetastore.usp_Site_GetSiteDescriptionByRequestId,
+                                DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
+
+            return quottationList;
+            //var allList = _repository.GetAllAsync(x => x.ValuationRequestId == requestId).Result.ToList();
+            //return _mapperFactory.GetList<ValuationQuotation, ValuationQuatationListModel>(allList);
+        }
+
         public async Task<DBOperation> SideDescriptionUpsert(SiteDescriptionModel model)
         {
 
-                SiteDescription objUser;
-                MasterDocument objUserDocument;
+            SiteDescription objUser;
+            MasterDocument objUserDocument;
 
-                string MainTableName = Enum.GetName(TableNameEnum.SiteDescription);
-                int MainTableKey = model.Id;
+            string MainTableName = Enum.GetName(TableNameEnum.SiteDescription);
+            int MainTableKey = model.Id;
 
-                //User details
-                if (model.Id > 0)
+            //User details
+            if (model.Id > 0)
+            {
+                //Get current Entiry --AUDITLOGUSER
+                SiteDescription OldEntity = null;
+                OldEntity = _siteRepository.GetNoTracking(model.Id);
+
+                objUser = _siteRepository.Get(model.Id);
+
+                if (objUser != null)
                 {
-                    //Get current Entiry --AUDITLOGUSER
-                    SiteDescription OldEntity = null;
-                    OldEntity = _siteRepository.GetNoTracking(model.Id);
+                    objUser.Location = model.Location;
+                    objUser.InternalArea = model.InternalArea;
+                    objUser.ExternalArea = model.ExternalArea;
+                    objUser.Floor = model.Floor;
+                    objUser.Room = model.Room;
+                    objUser.Bedrooms = model.Bedrooms;
+                    objUser.Storage = model.Storage;
+                    objUser.Quantity = model.Quantity;
+                    objUser.AdditionComment = model.AdditionComment;
+                    objUser.PropertyCondition = model.PropertyCondition;
+                    objUser.AdditionalNotes = model.AdditionalNotes;
+                    objUser.Others = model.Others;
 
-                    objUser = _siteRepository.Get(model.Id);
-
-                    if (objUser != null)
-                    {
-                        objUser.Location = model.Location;
-                        objUser.InternalArea = model.InternalArea;
-                        objUser.ExternalArea = model.ExternalArea;
-                        objUser.Floor = model.Floor;
-                        objUser.Room = model.Room;
-                        objUser.Bedrooms = model.Bedrooms;
-                        objUser.Storage = model.Storage;
-                        objUser.Quantity = model.Quantity;
-                        objUser.AdditionComment = model.AdditionComment;
-                        objUser.PropertyCondition = model.PropertyCondition;
-                        objUser.AdditionalNotes = model.AdditionalNotes;
-                        objUser.Others = model.Others;
-
-                        objUser.ModifiedBy = model.ModifiedBy;
+                    objUser.ModifiedBy = model.ModifiedBy;
 
 
-                        _siteRepository.UpdateAsync(objUser);
-                        _siteRepository.UpdateGraph(objUser, EntityState.Modified);
-                        await _unitOfWork.SaveChangesAsync();
-
-                        //Do Audit Log --AUDITLOGUSER
-                        await _auditLogService.CreateAuditLog<SiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
-                    }
-                }
-                else
-                {
-                    objUser = _mapperFactory.Get<SiteDescriptionModel, SiteDescription>(model);
-
-                    objUser.CreatedBy = model.CreatedBy;
-
-                    _siteRepository.AddAsync(objUser);
+                    _siteRepository.UpdateAsync(objUser);
+                    _siteRepository.UpdateGraph(objUser, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<SiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
                 }
+            }
+            else
+            {
+                objUser = _mapperFactory.Get<SiteDescriptionModel, SiteDescription>(model);
+
+                objUser.CreatedBy = model.CreatedBy;
+
+                _siteRepository.AddAsync(objUser);
+                await _unitOfWork.SaveChangesAsync();
+            }
 
 
-                if (objUser.Id == 0)
-                    return DBOperation.Error;
-                else
+            if (objUser.Id == 0)
+                return DBOperation.Error;
+            else
+            {
+                if (model.uploadDocument != null)
                 {
-                    if (model.uploadDocument != null)
+                    foreach (var doc in model.uploadDocument)
                     {
-                        foreach (var doc in model.uploadDocument)
-                        {
-                            objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
-                            objUserDocument.IsActive = doc.IsActive;
-                            objUserDocument.TableKeyId = objUser.Id;
-                            objUserDocument.TableName = Enum.GetName(TableNameEnum.SiteDescription);
-                            objUserDocument.DocumentName = doc.DocumentName;
-                            objUserDocument.FileName = doc.FileName;
-                            objUserDocument.FilePath = doc.FilePath;
-                            objUserDocument.FileType = doc.FileType;
-                            objUserDocument.CreatedBy = model.CreatedBy;
+                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                        objUserDocument.IsActive = doc.IsActive;
+                        objUserDocument.TableKeyId = objUser.Id;
+                        objUserDocument.TableName = Enum.GetName(TableNameEnum.SiteDescription);
+                        objUserDocument.DocumentName = doc.DocumentName;
+                        objUserDocument.FileName = doc.FileName;
+                        objUserDocument.FilePath = doc.FilePath;
+                        objUserDocument.FileType = doc.FileType;
+                        objUserDocument.CreatedBy = model.CreatedBy;
 
-                            _documentRepository.AddAsync(objUserDocument);
-                            await _unitOfWork.SaveChangesAsync();
-                        }
+                        _documentRepository.AddAsync(objUserDocument);
+                        await _unitOfWork.SaveChangesAsync();
                     }
                 }
-
-                return DBOperation.Success;
             }
+
+            return DBOperation.Success;
+        }
         public async Task<DBOperation> EvidenceUpsert(ComparableEvidenceModel evidence)
         {
 
@@ -187,50 +438,7 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
             else
             {
-                //Address details
-                //if (evidence.Address != null)
-                //{
-                //    if (evidence.Address.Id > 0)
-                //    {
-                //        //Get current Entiry --AUDITLOGUSER
-                //        var OldEntity = _addressRepository.GetNoTracking(evidence.Address.Id);
-                //        objUserAddress = _addressRepository.Get(evidence.Address.Id);
-
-                //        if (objUserAddress != null)
-                //        {
-                //            var entityAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(evidence.Address);
-
-                //            objUserAddress.Address1 = entityAddress.Address1;
-                //            objUserAddress.Address2 = entityAddress.Address2;
-                //            objUserAddress.CountryId = entityAddress.CountryId;
-                //            objUserAddress.StateId = entityAddress.StateId; ;
-                //            objUserAddress.CityId = entityAddress.CityId;
-                //            objUserAddress.PinNo = entityAddress.PinNo;
-                //            objUserAddress.IsActive = entityAddress.IsActive;
-                //            objUserAddress.ModifiedBy = evidence.ModifiedBy;
-
-                //            _addressRepository.UpdateAsync(objUserAddress);
-                //            _addressRepository.UpdateGraph(objUserAddress, EntityState.Modified);
-                //            await _unitOfWork.SaveChangesAsync();
-
-                //            //Do Audit Log --AUDITLOGUSER
-                //            await _auditLogService.CreateAuditLog<MasterAddress>(AuditActionTypeEnum.Update, OldEntity, objUserAddress, MainTableName, MainTableKey);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        objUserAddress = _mapperFactory.Get<MasterUserAddressModel, MasterAddress>(evidence.Address);
-                //        //objUserAddress.IsActive = evidence.IsActive;
-                //        objUserAddress.TableKeyId = objUser.Id;
-                //        objUserAddress.TableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
-                //        objUserAddress.CreatedBy = evidence.CreatedBy;
-
-                //        _addressRepository.AddAsync(objUserAddress);
-                //        await _unitOfWork.SaveChangesAsync();
-                //    }
-                //}
-
-
+               
                 if (evidence.uploadDocument != null)
                 {
                     foreach (var doc in evidence.uploadDocument)
@@ -308,7 +516,7 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
             else
             {
-                
+
                 if (assesment.uploadDocument != null)
                 {
                     foreach (var doc in assesment.uploadDocument)

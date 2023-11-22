@@ -198,6 +198,25 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
+        // this is for delete master Designation detail by id
+        [HttpDelete("DeleteDocument/{id}")]
+        public async Task<IActionResult> DeleteDocument([FromRoute] int id)
+        {
+            try
+            {
+                DBOperation oResponse = await _MasterUserService.DeleteDocument(id);
+                if (oResponse == DBOperation.Success)
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+
         #endregion API Methods
     }
 }

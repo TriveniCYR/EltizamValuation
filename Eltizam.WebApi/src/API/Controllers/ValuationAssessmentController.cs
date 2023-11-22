@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
+using Eltizam.Business.Core.Implementation;
 
 namespace Eltizam.WebApi.Controllers
 {
@@ -42,15 +43,15 @@ namespace Eltizam.WebApi.Controllers
         #endregion Constructor
 
         [HttpPost]
-        [Route("SideDescriptionUpsert")]
-        public async Task<IActionResult> SideDescriptionUpsert(SiteDescriptionModel model)
+        [Route("ValuationAssesmentUpsert")]
+        public async Task<IActionResult> ValuationAssesmentUpsert(ValuationAssesmentActionModel model)
         {
             try
             {
-                DBOperation oResponse = await _ValuationAssessmentService.SideDescriptionUpsert(model);
+                DBOperation oResponse = await _ValuationAssessmentService.ValuationAssesmentUpsert(model);
                 if (oResponse == DBOperation.Success)
                 {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (model.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (model.SiteDescription.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
                 else
                     return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
@@ -62,47 +63,82 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("EvidenceUpsert")]
-        public async Task<IActionResult> EvidenceUpsert(ComparableEvidenceModel evidence)
+        [HttpGet, Route("GetSiteDescriptionList")]
+        public async Task<IActionResult> GetSiteDescriptionList(int RequestId)
         {
             try
             {
-                DBOperation oResponse = await _ValuationAssessmentService.EvidenceUpsert(evidence);
-                if (oResponse == DBOperation.Success)
-                {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (evidence.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
-                }
-                else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+                return _ObjectResponse.CreateData(await _ValuationAssessmentService.GetSiteDescriptionList(RequestId), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
-                await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
 
-        [HttpPost]
-        [Route("AssesmentUpsert")]
-        public async Task<IActionResult> AssesmentUpsert(ValuationAssessementModel valuation)
-        {
-            try
-            {
-                DBOperation oResponse = await _ValuationAssessmentService.AssesmentUpsert(valuation);
-                if (oResponse == DBOperation.Success)
-                {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (valuation.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
-                }
-                else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
-            }
-            catch (Exception ex)
-            {
-                await _ExceptionService.LogException(ex);
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-            }
-        }
+        //[HttpPost]
+        //[Route("SideDescriptionUpsert")]
+        //public async Task<IActionResult> SideDescriptionUpsert(SiteDescriptionModel model)
+        //{
+        //    try
+        //    {
+        //        DBOperation oResponse = await _ValuationAssessmentService.SideDescriptionUpsert(model);
+        //        if (oResponse == DBOperation.Success)
+        //        {
+        //            return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (model.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+        //        }
+        //        else
+        //            return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await _ExceptionService.LogException(ex);
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
+
+        //[HttpPost]
+        //[Route("EvidenceUpsert")]
+        //public async Task<IActionResult> EvidenceUpsert(ComparableEvidenceModel evidence)
+        //{
+        //    try
+        //    {
+        //        DBOperation oResponse = await _ValuationAssessmentService.EvidenceUpsert(evidence);
+        //        if (oResponse == DBOperation.Success)
+        //        {
+        //            return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (evidence.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+        //        }
+        //        else
+        //            return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await _ExceptionService.LogException(ex);
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
+
+        //[HttpPost]
+        //[Route("AssesmentUpsert")]
+        //public async Task<IActionResult> AssesmentUpsert(ValuationAssessementModel valuation)
+        //{
+        //    try
+        //    {
+        //        DBOperation oResponse = await _ValuationAssessmentService.AssesmentUpsert(valuation);
+        //        if (oResponse == DBOperation.Success)
+        //        {
+        //            return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (valuation.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+        //        }
+        //        else
+        //            return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await _ExceptionService.LogException(ex);
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
+
 
     }
 }

@@ -50,11 +50,15 @@
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab flex flex-start m-0 ptrl-20">
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
-                    <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
-                    <button class="tablinks" style="display: @(objPermssionIn.View ? "block" : "none")" onclick="profileTab(event, 'profile3')">Payment Details</button>
-                    <button class="tablinks" onclick="profileTab(event, 'profile4')" id="defaultOpen">Site description</button>                    
-                    <button class="tablinks" onclick="profileTab(event, 'profile5')">Comparable evidences</button>
-                    <button class="tablinks" onclick="profileTab(event, 'profile6')">Valuation Assessement</button>
+                    @* <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button> *@
+                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
+                   @*  <button class="tablinks" style="display: @(objPermssionIn.View ? "block" : "none")" onclick="profileTab(event, 'profile3')">Payment Details</button> *@
+                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile3')">Payment Details</button>
+
+                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile4')" id="defaultOpen">Site description</button>
+
+                    <button class="tablinks" style="display:  @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable evidences</button>
+                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
@@ -396,31 +400,31 @@
                                             <label for="CountryId" class="w-50">
                                                 Country
                                                 @Html.DropDownListFor(model => model.PropertyDetail.CountryId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control", @onchange = "BindLocationState(this.options[this.selectedIndex].value)"})
-                                                
+
                                             </label>
                                             <label for="StateId" class="w-50">
                                                 State
                                                 @Html.DropDownListFor(model => model.PropertyDetail.StateId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control", @onchange = "BindLocationCity(this.options[this.selectedIndex].value)"})
-                                               
+
                                             </label>
                                         </div>
                                         <div class="flex  mb-28" class="w-50">
                                             <label for="CityId">
                                                 City
                                                 @Html.DropDownListFor(model => model.PropertyDetail.CityId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control"})
-                                                
+
                                             </label>
                                             <label for="Zone" class="w-50">
                                                 Sector /Zone
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Zone, new {@disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Zone"] })
-                                                
+
                                             </label>
                                         </div>
                                         <div class="flex mb-28">
                                             <label for="address2" class="w-50">
                                                 <p class="m-0">Building Projects<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.PropertyDetail.BuildingProject, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Zone"] })
-                                                
+
                                             </label>
                                             <label for="address2" class="w-50">
                                                 Latitude
@@ -437,7 +441,7 @@
                                             <label for="" class="w-50">
                                                 <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Address1, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Address1"] })
-                                                
+
                                             </label>
                                         </div>
                                         <div class="flex mb-28">
@@ -465,27 +469,27 @@
                             <div class="text-right buttonArea bodyContent">
                                 <button type="button" class="lineBtn greyBtn">Cancel</button>
 
-                               @*  @if (roleId == (int)RoleEnum.Admin)
+                                @*  @if (roleId == (int)RoleEnum.Admin)
                                 {
-                                    <button type="submit" class="blueBtn" style="width:100px">Save</button>
+                                <button type="submit" class="blueBtn" style="width:100px">Save</button>
                                 }
 
                                 @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                                 {
-                                    <button type="button" class="blueBtn" id="isApprove" style="width:100px">
-                                        Save
-                                    </button>
+                                <button type="button" class="blueBtn" id="isApprove" style="width:100px">
+                                Save
+                                </button>
                                 } *@
 
 
                                 <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
-                               @*  <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">Save</button> *@
+                                @*  <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">Save</button> *@
                                 @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                                 {
                                     <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
                                         Save
                                     </button>
-                                } 
+                                }
                             </div>
                         </form>
                     </div>
@@ -559,10 +563,10 @@
                                 <button class=" blueBtn " style="width:120px" id="addNewIn">
                                     <img src="../assets/plus.svg" alt="plus">
                                     Add New
-                                </button> 
+                                </button>
                             </a>
                         </div>
-                    </div> 
+                    </div>
 
                     <div class="scroll-x">
                         <table id="InvoiceTable" class="table-striped">
@@ -581,91 +585,93 @@
                             <tbody>
                             </tbody>
                         </table>
-                    </div> 
+                    </div>
                 </div>
-
-                <div id="profile4" class="tabcontent">
-                    <h3 class="ptrl-20">Structural Information</h3>
-                    <div class="inputSearchs">
-                        <form >
+                <form asp-action="ValuationAssesmentManage">
+                    @Html.HiddenFor(model => model.Id)
+                    <div id="profile4" class="tabcontent">
+                        <h3 class="ptrl-20">Structural Information</h3>
+                        <div class="inputSearchs">
+                            
+                            <input type="hidden" id="Test" name="Test" value="@Model.Id">
                             <div class="flex">
                                 <label for="">
                                     Location
-                                    <input type="text" id="SiteLocation">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Location, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Location"] })
                                 </label>
                                 <label for="">
                                     Internal Area
-                                    <input type="text" id="SiteInternalArea">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.InternalArea, new {  @class = "form-control",  @placeholder = @SharedLocalizer["InternalArea"] })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="">
                                     External Area
-                                    <input type="text" id="SiteExternalArea">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.ExternalArea, new {  @class = "form-control",  @placeholder = @SharedLocalizer["ExternalArea"] })
                                 </label>
                                 <label for="">
                                     Floor
-                                    <input type="text" id="SiteFloor">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Floor, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Floor"] })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="">
                                     Room
-                                    <input type="text" id="SiteRoom">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Room"] })
                                 </label>
                                 <label for="">
                                     Bedrooms
-                                    <input type="text" id="SiteBedrooms">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control",  @placeholder = @SharedLocalizer["Bedrooms"] })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="">
                                     Storage
-                                    <input type="text" id="SiteStorage">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Storage, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Storage"] })
                                 </label>
                                 <label>
                                     Quantity
-                                    <input type="text"  id="SiteQuantity">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Quantity, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Room"] })
                                 </label>
                             </div>
                             <div class="flex">
 
                                 <label>
                                     Additional Comment
-                                    <input type="text"  id="SiteAdditionalComment">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.AdditionComment, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AdditionComment"] })
                                 </label>
                             </div>
-                        </form>
-                    </div>
-                    <div class="inputSearchs p-0">
-                        <div class="tabSection ptrl-20">
-                            <div class="addMoreAddress roundBorderBox m-0">
-                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                    <p>External Information</p>
-                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                                </div>
-                                <div class="panel" style="display: none;">
-                                    <div class="flex">
-                                        <label for="" class="w-100">
-                                            Property Condition
-                                            <input type="text" placeholder="enter address line 1" id="SitePropertyCondition">
-                                        </label>
-                                    </div>
-                                    <div class="flex">
-                                        <label for="" class="w-100">
-                                            Additional Notes
-                                            <input type="text" placeholder="enter address line 2"  id="SiteAdditionalNotes">
-                                        </label>
-                                    </div>
-                                    <div class="flex">
-                                        <label for="" class="w-100">
-                                            Others
-                                            <input type="text" placeholder="enter other" id="SiteOthers">
-                                        </label>
-                                    </div>
 
+                        </div>
+                        <div class="inputSearchs p-0">
+                            <div class="tabSection ptrl-20">
+                                <div class="addMoreAddress roundBorderBox m-0">
+                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                        <p>External Information</p>
+                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                    </div>
+                                    <div class="panel" style="display: none;">
+                                        <div class="flex">
+                                            <label for="" class="w-100">
+                                                Property Condition
+                                                @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.PropertyCondition, new {  @class = "form-control",  @placeholder = @SharedLocalizer["PropertyCondition"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="" class="w-100">
+                                                Additional Notes
+                                                @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.AdditionalNotes, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AdditionalNotes"] })
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <label for="" class="w-100">
+                                                Others
+                                                @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Others, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Others"] })
+                                            </label>
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div>
 
                         </div>
                     </div>
@@ -713,208 +719,262 @@
                                 </div>
                             </div>
 
+                            </div>
+                        </div>
+                        <div class="text-right buttonArea bodyContent plr-0">
+                          @*   <button type="button" class="blueBtn mr-12">Next</button>  *@
+                             <button type="button" class="blueBtn mr-12" onclick="redirectToComparableEvidences()">Next</button> 
+
                         </div>
                     </div>
-                    <div class="text-right buttonArea bodyContent plr-0">
-                        <button type="submit" class="blueBtn mr-12">Save</button>
-                    </div>
-                </div>
 
-                <div id="profile5" class="tabcontent">
-                    <h3 class="ptrl-20">Comparable Evidences</h3>
-                    <div class="inputSearchs">
-                        <form>                            
+                    <div id="profile5" class="tabcontent">
+                        <h3 class="ptrl-20">Comparable Evidences</h3>
+                        <div class="inputSearchs">
+                            @Html.HiddenFor(model => model.ValuationAssesment.comparableEvidenceModel.RequestId, new { @value = "Model.Id" })
                             <div class="flex">
                                 <label for="">
                                     Type
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Type, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Type"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.Type, "", new { @class = "text-danger" })
                                 </label>
                                 <label>
                                     Size
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Size, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Size"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.Size, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label>
                                     Remarks
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Remarks, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Remarks"] })
                                 </label>
                                 <label>
                                     Rate (Sq.Ft)
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, new {  @class = "form-control",  @placeholder = @SharedLocalizer["RateSqFt"] })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label>
                                     Price
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Price"] })
                                 </label>
                                 <label>
                                     Additional Comments
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.AddtionalComments, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AddtionalComments"] })
                                 </label>
                             </div>
-                        </form>
-                    </div>
-                    <div class="inputSearchs p-0">
-                        <div class="tabSection ptrl-20">
-                            <div class="addMoreAddress roundBorderBox m-0">
-                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                    <p>Upload Supporting Documents</p>
-                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                                </div>
-                                <div class="panel" style="display: none;">
-                                    <div class="flex">
-                                        <label for="" class="w-100">
-                                            <input type="file" class="fileInput" multiple onchange="displayFileNames(this)">
-                                            <input type="text" class="fileNames" readonly placeholder="file names">
-                                        </label>
+
+                        </div>
+                        <div class="inputSearchs p-0">
+                            <div class="tabSection ptrl-20">
+                                <div class="addMoreAddress roundBorderBox m-0">
+                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                        <p>Upload Supporting Documents</p>
+                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
-                                    <div class="W-100">
-                                        <div class="prevUpload roundBorderBox m-0">
-                                            <h3>Previously uploaded</h3>
-                                            <div class="flex">
-                                                <div class="prevUploadTab">
+                                    <div class="panel" style="display: none;">
+                                        <div class="flex">
+                                            <label for="" class="w-100">
+                                                @* <input type="file" class="fileInput" multiple onchange="displayFileNames(this)"> *@
+                                                @Html.TextBoxFor(model => model.Document.DocumentName, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["Document"],@type = "file" })
+                                                <input type="text" class="fileNames" readonly placeholder="file names">
+                                            </label>
+                                        </div>
+                                        <div class="W-100">
+                                            <div class="prevUpload roundBorderBox m-0">
+                                                <h3>Previously uploaded</h3>
+                                                <div class="flex">
+                                                    @*  <div class="prevUploadTab">
                                                     <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
+                                                    <img src="../assets/file.svg" alt="file" />
+                                                    ABC
                                                     </div>
                                                     <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
-                                                <div class="prevUploadTab">
+                                                    </div>
+                                                    <div class="prevUploadTab">
                                                     <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
+                                                    <img src="../assets/file.svg" alt="file" />
+                                                    ABC
                                                     </div>
                                                     <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
-                                                <div class="prevUploadTab">
+                                                    </div>
+                                                    <div class="prevUploadTab">
                                                     <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
+                                                    <img src="../assets/file.svg" alt="file" />
+                                                    ABC
                                                     </div>
                                                     <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
-                                                <div class="prevUploadTab">
+                                                    </div>
+                                                    <div class="prevUploadTab">
                                                     <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
+                                                    <img src="../assets/file.svg" alt="file" />
+                                                    ABC
                                                     </div>
                                                     <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                    </div> *@
+                                                    @if (Model.Documents != null)
+                                                    {
+                                                        @foreach (var docs in Model.Documents)
+                                                        {
+                                                            <div class="prevUploadTab">
+                                                                <div class="flex align-item-center m-0">
+                                                                    <img src="../assets/file.svg" alt="file" />
+                                                                    <span>@docs.DocumentName</span>
+                                                                </div>
+                                                                <a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>NA</label>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
+                        </div>
+                        <div class="text-right buttonArea bodyContent plr-0">
+                            <button type="button" class="blueBtn mr-12" onclick="redirectToValuationAssesment()">Next</button>
                         </div>
                     </div>
-                    <div class="text-right buttonArea bodyContent plr-0">
-                        <button type="submit" class="blueBtn mr-12">Save</button>
-                    </div>
-                </div>
 
-                <div id="profile6" class="tabcontent">
-                    <h3 class="ptrl-20">Valuation Evidences</h3>
-                    <div class="inputSearchs">
-                        <form>
+                    <div id="profile6" class="tabcontent">
+                        <h3 class="ptrl-20">Valuation Evidences</h3>
+                        <div class="inputSearchs">
+                            @Html.HiddenFor(model => model.ValuationAssesment.valuationAssessementModel.RequestId, new { @value = "Model.Id" })
                             <div class="flex">
                                 <label for="">
                                     Market Value
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, new {  @class = "form-control",  @placeholder = @SharedLocalizer["MarketValue"] })
                                 </label>
                                 <label for="">
                                     Market Rent
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarkentRent, new {  @class = "form-control",  @placeholder = @SharedLocalizer["MarkentRent"] })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="">
                                     Life of Building
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, new {  @class = "form-control",  @placeholder = @SharedLocalizer["LifeOfBuilding"] })
                                 </label>
                                 <label for="">
                                     Annual Maintainance Cost
-                                    <input type="text">
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
                                 </label>
                             </div>
                             <div class="flex fourBox flex-start">
                                 <label>
                                     Insurance
                                     <span class="flex yesNoToggle">
-                                        <input type="radio" name="answer" value="yes" onclick="toggleInput('yes')"> Yes &nbsp; &nbsp;
+                                        @* <input type="radio" name="answer" value="yes" onclick="toggleInput('yes')"> Yes &nbsp; &nbsp; *@
+                                       @*  <input type="radio" asp-for="" value="true" onclick="toggleInput('yes')"> Yes &nbsp; &nbsp; *@
+                                        @* @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance,"Yes")
+                                        @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance,"NO")
 
-                                        <input type="radio" name="answer" value="no" onclick="toggleInput('no')"> No
+
+                                        <input type="radio" name="answer" value="no" onclick="toggleInput('no')"> No *@
+
+                                        @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, true, new { onclick = "toggleInput('yes')" })
+                                        <span style="margin-right: 5px;">Yes</span>
+
+                                        @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, false, new { onclick = "toggleInput('no')" })
+                                        <span>No</span>
                                     </span>
                                 </label>
                                 <label id="yesInput" for="yesField" style="display: none;">
                                     Insurance details
-                                    <input type="text" id="yesField" name="yesField">
+                                    @* <input type="text" id="yesField" name="yesField"> *@
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new {  @class = "form-control",  @placeholder = @SharedLocalizer["InsuaranceDetail"] })
                                 </label>
 
                             </div>
-                        </form>
-                    </div>
 
-                    <div class="inputSearchs p-0">
-                        <div class="tabSection ptrl-20">
-                            <div class="addMoreAddress roundBorderBox m-0">
-                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                    <p>Upload Supporting Documents</p>
-                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                                </div>
-                                <div class="panel" style="display: none;">
-                                    <div class="flex">
-                                        <label for="" class="w-100">
-                                            <input type="file" class="fileInput" multiple onchange="displayFileNames(this)">
-                                            <input type="text" class="fileNames" readonly placeholder="file names">
-                                        </label>
+                        </div>
+
+                        <div class="inputSearchs p-0">
+                            <div class="tabSection ptrl-20">
+                                <div class="addMoreAddress roundBorderBox m-0">
+                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                        <p>Upload Supporting Documents</p>
+                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
-                                    <div class="W-100">
-                                        <div class="prevUpload roundBorderBox m-0">
-                                            <h3>Previously uploaded</h3>
-                                            <div class="flex">
-                                                <div class="prevUploadTab">
+                                    <div class="panel" style="display: none;">
+                                        <div class="flex">
+                                            <label for="" class="w-100">
+                                                @*  <input type="file" class="fileInput" multiple onchange="displayFileNames(this)"> *@
+                                                @Html.TextBoxFor(model => model.Document.DocumentName, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["Document"],@type = "file" })
+                                                <input type="text" class="fileNames" readonly placeholder="file names">
+                                            </label>
+                                        </div>
+                                        <div class="W-100">
+                                            <div class="prevUpload roundBorderBox m-0">
+                                                <h3>Previously uploaded</h3>
+                                                <div class="flex">
+                                                    @*  <div class="prevUploadTab">
                                                     <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
+                                                    <img src="../assets/file.svg" alt="file" />
+                                                    ABC
                                                     </div>
                                                     <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
-                                                <div class="prevUploadTab">
+                                                    </div>
+                                                    <div class="prevUploadTab">
                                                     <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
+                                                    <img src="../assets/file.svg" alt="file" />
+                                                    ABC
                                                     </div>
                                                     <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
-                                                <div class="prevUploadTab">
+                                                    </div>
+                                                    <div class="prevUploadTab">
                                                     <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
+                                                    <img src="../assets/file.svg" alt="file" />
+                                                    ABC
                                                     </div>
                                                     <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                </div>
-                                                <div class="prevUploadTab">
+                                                    </div>
+                                                    <div class="prevUploadTab">
                                                     <div class="flex align-item-center m-0">
-                                                        <img src="../assets/file.svg" alt="file" />
-                                                        ABC
+                                                    <img src="../assets/file.svg" alt="file" />
+                                                    ABC
                                                     </div>
                                                     <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+                                                    </div> *@
+                                                    @if (Model.Documents != null)
+                                                    {
+                                                        @foreach (var docs in Model.Documents)
+                                                        {
+                                                            <div class="prevUploadTab">
+                                                                <div class="flex align-item-center m-0">
+                                                                    <img src="../assets/file.svg" alt="file" />
+                                                                    <span>@docs.DocumentName</span>
+                                                                </div>
+                                                                <a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
+
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>NA</label>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
+                        </div>
+                        <div class="text-right buttonArea bodyContent plr-0">
+                            <button type="submit" class="blueBtn mr-12">Save</button>
                         </div>
                     </div>
-                    <div class="text-right buttonArea bodyContent plr-0">
-                        <button type="submit" class="blueBtn mr-12">Save</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -979,7 +1039,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-
+        
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
@@ -1011,7 +1071,8 @@
         var DeleteQuotationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteQuotationById";
         var DeleteInvoiceByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteInvoiceById";
         var ValuationRequestGetById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestGetById";
-        var RequeStatusReview = "@Eltizam.Web.Helpers.APIURLHelper.ReviewRequestStatus"; 
+        var RequeStatusReview = "@Eltizam.Web.Helpers.APIURLHelper.ReviewRequestStatus";
+        var GetSiteDescriptionList = "@Eltizam.Web.Helpers.APIURLHelper.GetSiteDescriptionList";
 
 
         //#region Static Messae Init
@@ -1019,8 +1080,11 @@
 
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
+        var isViewQt = objPermssionQt.View ? true : false;
 
-       var isViewQt = @objPermssionQt.View === "True" ? true : false; 
+        
+
+
     </script>
 
 }
