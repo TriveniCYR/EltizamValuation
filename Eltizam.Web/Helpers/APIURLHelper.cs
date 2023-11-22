@@ -41,6 +41,7 @@ namespace Eltizam.Web.Helpers
         public static string UpsertUser = "MasterUser/Upsert";
         public static string GetUserById = "MasterUser/GetById";
         public static string DeleteUserById = "MasterUser/Delete";
+        public static string DeleteUserDocumentById = "MasterUser/DeleteDocument";
         public static string GetGlobalAuditFields = "MasterUser/GetGlobalAuditFields";
         public static string GetUserNameList = "MasterUser/GetAllUserList";
 
