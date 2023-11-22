@@ -96,7 +96,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
                     _siteRepository.UpdateAsync(objUser);
-                    _siteRepository.UpdateGraph(objUser, EntityState.Modified);
+                    //_siteRepository.UpdateGraph(objUser, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
@@ -165,7 +165,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
                     _repository.UpdateAsync(comparable);
-                    _repository.UpdateGraph(comparable, EntityState.Modified);
+                    //_repository.UpdateGraph(comparable, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
@@ -238,7 +238,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
                     _valutionrepository.UpdateAsync(objUser1);
-                    _valutionrepository.UpdateGraph(objUser1, EntityState.Modified);
+                    //_valutionrepository.UpdateGraph(objUser1, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
@@ -339,7 +339,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
                     _siteRepository.UpdateAsync(objUser);
-                    _siteRepository.UpdateGraph(objUser, EntityState.Modified);
+                    //_siteRepository.UpdateGraph(objUser, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
@@ -415,7 +415,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
                     _repository.UpdateAsync(objUser);
-                    _repository.UpdateGraph(objUser, EntityState.Modified);
+                    //_repository.UpdateGraph(objUser, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
@@ -494,7 +494,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
                     _valutionrepository.UpdateAsync(objUser1);
-                    _valutionrepository.UpdateGraph(objUser1, EntityState.Modified);
+                    //_valutionrepository.UpdateGraph(objUser1, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER

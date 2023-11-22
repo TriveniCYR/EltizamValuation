@@ -110,7 +110,7 @@ namespace Eltizam.Business.Core.Implementation
                             valuationEntity.ModifiedBy = model.LogInUserId; 
 
                             _repository.UpdateAsync(valuationEntity);
-                            _repository.UpdateGraph(valuationEntity, EntityState.Modified);
+                            //_repository.UpdateGraph(valuationEntity, EntityState.Modified);
 
                             //Do Audit Log --AUDITLOG 
                             await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, id);
@@ -145,7 +145,7 @@ namespace Eltizam.Business.Core.Implementation
                     valuationEntity.ModifiedBy = model.LogInUserId;
 
                     _repository.UpdateAsync(valuationEntity);
-                    _repository.UpdateGraph(OldEntity, EntityState.Modified);
+                    //_repository.UpdateGraph(OldEntity, EntityState.Modified);
 
                     await _unitOfWork.SaveChangesAsync();
 
@@ -181,7 +181,7 @@ namespace Eltizam.Business.Core.Implementation
                     valuationEntity.ApproverComment = model.ApproverComment;
 
                     _repository.UpdateAsync(valuationEntity);
-                    _repository.UpdateGraph(valuationEntity, EntityState.Modified);
+                    //_repository.UpdateGraph(valuationEntity, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOG 
@@ -236,7 +236,7 @@ namespace Eltizam.Business.Core.Implementation
                         objValuation.ClientId = entityValuation.ClientId;
                         objValuation.ModifiedBy = entityValuation.ModifiedBy;
                         _repository.UpdateAsync(objValuation);
-                        _repository.UpdateGraph(objValuation, EntityState.Modified);
+                        //_repository.UpdateGraph(objValuation, EntityState.Modified);
 
                         await _unitOfWork.SaveChangesAsync();
 

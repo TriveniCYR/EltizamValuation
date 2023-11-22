@@ -291,7 +291,7 @@ namespace Eltizam.Business.Core.Implementation
 
                     
                     _repository.UpdateAsync(objUser);  
-                    _repository.UpdateGraph(objUser, EntityState.Modified);
+                    //_repository.UpdateGraph(objUser, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
@@ -346,7 +346,7 @@ namespace Eltizam.Business.Core.Implementation
                             objUserAddress.ModifiedBy = entityUser.ModifiedBy;
 
                             _addressRepository.UpdateAsync(objUserAddress);
-                            _addressRepository.UpdateGraph(objUserAddress, EntityState.Modified);
+                            //_addressRepository.UpdateGraph(objUserAddress, EntityState.Modified);
                             await _unitOfWork.SaveChangesAsync();
 
                             //Do Audit Log --AUDITLOGUSER
@@ -388,7 +388,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
                             _qualifyRepository.UpdateAsync(objUserQualification);
-                            _qualifyRepository.UpdateGraph(objUserQualification, EntityState.Modified);
+                            //_qualifyRepository.UpdateGraph(objUserQualification, EntityState.Modified);
                             await _unitOfWork.SaveChangesAsync();
 
                             //Do Audit Log --AUDITLOGUSER
@@ -492,7 +492,7 @@ namespace Eltizam.Business.Core.Implementation
                     objUser.ModifiedBy = _LoginUserId;
                     objUser.ModifiedDate = AppConstants.DateTime;
                     _repository.UpdateAsync(objUser);
-                    _repository.UpdateGraph(objUser, EntityState.Modified);
+                   // _repository.UpdateGraph(objUser, EntityState.Modified);
 
                     await _unitOfWork.SaveChangesAsync();
                 }

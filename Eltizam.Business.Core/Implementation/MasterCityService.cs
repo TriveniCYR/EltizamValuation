@@ -131,7 +131,7 @@ namespace Eltizam.Business.Core.Implementation
                         objCity.ModifiedBy = entityCity.CreatedBy;
 
                         _repository.UpdateAsync(objCity); 
-                        _repository.UpdateGraph(objCity, EntityState.Modified);
+                       // _repository.UpdateGraph(objCity, EntityState.Modified);
                         await _unitOfWork.SaveChangesAsync(); 
 
                         //Do Audit Log --AUDITLOGUSER

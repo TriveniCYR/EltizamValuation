@@ -127,7 +127,7 @@ namespace Eltizam.Business.Core.Implementation
                         objDicitonary.ModifiedBy = entitydictionary.ModifiedBy ?? By;
 
                         _repositoryDetail.UpdateAsync(objDicitonary);
-                        _repositoryDetail.UpdateGraph(objDicitonary, EntityState.Modified);
+                        //_repositoryDetail.UpdateGraph(objDicitonary, EntityState.Modified);
                         await _unitOfWork.SaveChangesAsync();
 
                         //Do Audit Log --AUDITLOGUSER

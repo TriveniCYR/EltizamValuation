@@ -56,7 +56,7 @@ namespace Eltizam.Business.Core.Implementation
                     objRole.ModifiedDate = AppConstants.DateTime;
                     objRole.IsActive = masterRoleEntity.IsActive;
                     _repository.UpdateAsync(objRole);
-                    _repository.UpdateGraph(objRole, EntityState.Modified);
+                    //_repository.UpdateGraph(objRole, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
                 }
                 else
