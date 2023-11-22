@@ -8,11 +8,15 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public string? UserName { get; set; }
-
+        [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
+         ErrorMessage = "Enter upper case, lower case & special character only")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? FirstName { get; set; }
+        [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
+         ErrorMessage = "Enter upper case, lower case & special character only")]
         public string? MiddleName { get; set; }
-
+        [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
+         ErrorMessage = "Enter upper case, lower case & special character only")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? LastName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -29,8 +33,10 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'Department' field is required.")]
         public int DepartmentId { get; set; }
-
+        [StringLength(50, MinimumLength = 10)]
         public string? LicenseNo { get; set; }
+        [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
+         ErrorMessage = "Enter upper case, lower case & special character only")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? CompanyName { get; set; }
 

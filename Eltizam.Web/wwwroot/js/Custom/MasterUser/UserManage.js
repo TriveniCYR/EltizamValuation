@@ -41,16 +41,14 @@ function BindRole() {
     BindDropdowns(RoleList, Role, _rpname, _val);
 }
 
-function BindResourceType() {
-
+function BindResourceType() { 
     var ResourceType = $("#ResourceId");
     var _val = $('#hdnResourceType').val();
     var _rpname = "resourceType";
     BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
 }
 
-function BindCountry() {
-
+function BindCountry() { 
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";

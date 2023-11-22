@@ -80,9 +80,7 @@ function removeParentDivAddress(element) {
 
 
 
-function BindClientType() {
-    debugger
-    
+function BindClientType() {  
     var ClientType = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
     var _rpname = "clientType";
@@ -111,8 +109,7 @@ function BindClientType() {
     //});
 }
 
-function BindCountry() {
-    debugger
+function BindCountry() { 
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
@@ -127,8 +124,7 @@ function BindState(id) {
     BindDropdowns(StateList + '/' + id, State, _rpname, _val);
 }
 
-function BindCity(id) {
-
+function BindCity(id) { 
     var City = $("#Address_CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";

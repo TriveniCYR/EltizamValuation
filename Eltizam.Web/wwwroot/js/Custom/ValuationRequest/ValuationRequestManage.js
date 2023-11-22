@@ -32,6 +32,37 @@ function profileTab(evt, cityName) {
 }
 document.getElementById("defaultOpen").click();
 
+
+
+function toggleInput(answer) {
+    const yesInput = document.getElementById('yesInput');
+    const yesField = document.getElementById('yesField');
+
+    if (answer === 'yes') {
+        yesInput.style.display = 'inline-flex';
+        yesField.setAttribute('required', 'true');
+    } else {
+        yesInput.style.display = 'none';
+        yesField.removeAttribute('required');
+    }
+}
+
+function displayFileNames(input) {
+    const fileInput = input;
+    const fileNamesInput = input.nextElementSibling;
+
+    const files = fileInput.files;
+    let fileNames = "";
+
+    for (let i = 0; i < files.length; i++) {
+        fileNames += files[i].name;
+        if (i < files.length - 1) {
+            fileNames += ", ";
+        }
+    }
+
+    fileNamesInput.value = fileNames;
+}
 function accordianToggle(header) {
     const item = header.nextElementSibling;
     if (item.style.display === 'block') {
@@ -489,7 +520,7 @@ function BindPropertyDetailById(Id) {
                         '<input checked data-val="true"   name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
                         '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
                 } 
-            }
+            } 
             var PropertyDetails = response._object.propertyDetail;  
             document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
             document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;

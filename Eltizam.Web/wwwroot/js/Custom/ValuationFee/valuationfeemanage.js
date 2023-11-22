@@ -68,7 +68,7 @@ function BindProperty() {
     BindDropdowns(PropertyList, Property, _rpname, _val); 
 }
 
-function BindPropertySub(id) {
+function BindPropertySub(id) { 
     var PropertySubType = $("#PropertySubTypeId");
     var _val = $('#hdnPropertySub').val();
     var _rpname = "propertySubType";

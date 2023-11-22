@@ -195,7 +195,7 @@ namespace Eltizam.Business.Core.Implementation
                     CreatedBy = log.CreatedBy,
                     CreatedDate = log.CreatedDate, // Include both date and time
                     CreatedDateFormatted = log.CreatedDate?.ToString("yyyy-MM-dd HH:mm:ss"), // Formatted date and time
-                    CreatedByName = usr.FirstName + ' ' + usr.LastName, // Use null-conditional operator
+                    CreatedByName = usr == null ? "" : usr.FirstName + ' ' + usr.LastName, // Use null-conditional operator
                     AuditLogListData = _AuditLogListData?.ToList(),
                 }); 
             }
