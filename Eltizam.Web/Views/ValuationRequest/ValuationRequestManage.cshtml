@@ -87,7 +87,7 @@
                                 <div class="flex  mb-28">
 
                                     <label for="" class="w-50">
-                                        Valuation Reference no
+                                        Val. Ref#
                                         @Html.TextBoxFor(model => model.ReferenceNo, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Valuation Reference no"] })
                                         @*  <input type="text" placeholder="12837187236" disabled> *@
                                     </label>
@@ -497,10 +497,10 @@
                         <div class="bodyContent footerAudit">
                             <div class=" position-relative flex justify-between align-item-center">
                                 <h4 class="m-0">
-                                    Valuation Request Id : @Html.DisplayFor(model => model.Id)
+                                    Valuation Id : @Html.DisplayFor(model => model.Id)
                                 </h4>
                                 <h4 class="m-0">
-                                    ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)
+                                    Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
                                 </h4>
                             </div>
                         </div>
@@ -544,10 +544,10 @@
                         <div class="bodyContent footerAudit">
                             <div class=" position-relative flex justify-between align-item-center">
                                 <h4 class="m-0">
-                                    Valuation Request Id : @Html.DisplayFor(model => model.Id)
+                                    Valuation Id : @Html.DisplayFor(model => model.Id)
                                 </h4>
                                 <h4 class="m-0">
-                                    ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)
+                                    Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
                                 </h4>
                             </div>
                         </div>
@@ -569,7 +569,7 @@
                             <thead>
                                 <tr>
                                     <th>#Invoice</th>
-                                    <th>Valuation Request Id</th>
+                                    <th>Valuation Id</th>
                                     <th>Transaction Model</th>
                                     <th>Transaction Status</th>
                                     <th>Amount</th>
@@ -1011,9 +1011,7 @@
         var DeleteQuotationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteQuotationById";
         var DeleteInvoiceByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteInvoiceById";
         var ValuationRequestGetById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestGetById";
-        var RequeStatusReview = "@Eltizam.Web.Helpers.APIURLHelper.ReviewRequestStatus";
-
-
+        var RequeStatusReview = "@Eltizam.Web.Helpers.APIURLHelper.ReviewRequestStatus"; 
 
 
         //#region Static Messae Init
@@ -1021,9 +1019,8 @@
 
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
-        var isViewQt = objPermssionQt.View ? true : false;
 
-
+       var isViewQt = @objPermssionQt.View === "True" ? true : false; 
     </script>
 
 }

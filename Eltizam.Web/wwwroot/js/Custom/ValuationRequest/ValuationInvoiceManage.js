@@ -51,8 +51,7 @@ $('#ChequeAmount').keypress(function (e) {
         }
     }
 });
-function SaveInvoice() {
-    debugger
+function SaveInvoice() { 
     var modeId = $('#hdnTabId').val();
     if(modeId=='1') {
         let transactionStatusId = $("#TransactionStatusId").val();
@@ -226,8 +225,7 @@ function SaveInvoice() {
     }
 }
 
-function SaveInvoiceData(request) {
-    debugger
+function SaveInvoiceData(request) { 
     $.ajax({
         type: "POST",
         url: BaseURL + UpsertValuationInvoice,

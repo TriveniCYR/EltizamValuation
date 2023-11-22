@@ -5,57 +5,31 @@ $(document).ready(function () {
 
 //Load data into table
 function InitializeValutionRequestDataList() { 
+    var tbl = $("#ValuationRequestTable");
+    if (tbl.find('tbody tr').length > 0)
+        tbl.dataTable().fnDestroy(); 
    
-    $("#ValuationRequestTable").dataTable().fnDestroy();
-    var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
-    var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
-    var propertyName = $("#PropertyName").val() === undefined ? "" : $("#PropertyName").val();
     var requestStatusId = $("#RequestStatusId").val();
     var propertyTypeId = $("#PropertyTypeId").val();
-    if (propertyTypeId === undefined || isNaN(parseInt(propertyTypeId))) {
-        propertyTypeId = 0; // Set a default value when the input is not a valid integer.
-    } else {
-        propertyTypeId = parseInt(propertyTypeId);
-    }
-
-    if (requestStatusId === undefined || isNaN(parseInt(requestStatusId))) {
-        requestStatusId = 0; // Set a default value when the input is not a valid integer.
-    } else {
-        requestStatusId = parseInt(requestStatusId);
-    }
-
-    var countryId = $("#CountryId").val();
-    if (countryId === undefined || isNaN(parseInt(countryId))) {
-        countryId = 0; // Set a default value when the input is not a valid integer.
-    } else {
-        countryId = parseInt(countryId);
-    }
-
     var stateId = $("#StateId").val();
-
-    if (stateId === undefined || isNaN(parseInt(stateId))) {
-        stateId = 0; // Set a default value when the input is not a valid integer.
-    } else {
-        stateId = parseInt(stateId);
-    }
-
-    var cityId = $("#CityId").val();
-    if (cityId === undefined || isNaN(parseInt(cityId))) {
-        cityId = 0; // Set a default value when the input is not a valid integer.
-    } else {
-        cityId = parseInt(cityId);
-    }
-
     var resourceId = $("#ResourceId").val();
-    if (resourceId === undefined || isNaN(parseInt(resourceId))) {
-        resourceId = 0; // Set a default value when the input is not a valid integer.
-    } else {
-        resourceId = parseInt(resourceId);
-    }
+    var countryId = $("CountryId").val();
+    var cityId = $("CityId").val();
 
-    var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val();
-
+    var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
+    var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
+    var propertyName = $("#PropertyName").val() === undefined ? "" : $("#PropertyName").val(); 
+    var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
     var toDate = $("#ToDate").val() === undefined ? "" : $("#ToDate").val(); 
+
+    propertyTypeId  = GetIntegerVal(propertyTypeId); 
+    requestStatusId = GetIntegerVal(requestStatusId);  
+    countryId       = GetIntegerVal(countryId);  
+    stateId         = GetIntegerVal(stateId);  
+    cityId          = GetIntegerVal(cityId);  
+    resourceId      = GetIntegerVal(resourceId);  
+
+
     var ajaxObject = {
         "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
 

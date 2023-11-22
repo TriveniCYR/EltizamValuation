@@ -169,8 +169,7 @@
     <script>
 
         $(document).ready(function () {
-            $('#ValuationFees').keypress(function (e) {
-                debugger
+            $('#ValuationFees').keypress(function (e) { 
                 if ($('#ValuationFees').val() == '' && (e.which == 48 || e.charCode == 46)) {
                     return false;
                 }

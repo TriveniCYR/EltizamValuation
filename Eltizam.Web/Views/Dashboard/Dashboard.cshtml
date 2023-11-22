@@ -19,28 +19,28 @@
                     <form id="dashboardFilterForm">
                         <div class="flex dashboardSearch">
                             <label for="ClientTypeId">
-                                            Client
-                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId",@class="form-control" })
+                                Client
+                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId", @class = "form-control" })
                             </label>
                             <label for="PropertyId">
                                 Property
-                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control" })
-                            </label> 
-                             <label for="">
-                                    From
+                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId", @class = "form-control" })
+                            </label>
+                            <label for="">
+                                From
                                 @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input form-control", id = "FromDate" })
                             </label>
-                                <label for="">
-                                    To
+                            <label for="">
+                                To
                                 @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input  form-control", id = "ToDate" })
                             </label>
                             <button type="button" onclick="submitFilterForm()" class="blueBtn">Search</button>
-                       
+
                         </div>
                     </form>
                 </div>
 
-         
+
                 <div class="flex fourBox gap dashboard-status">
                     <div class="dashboard-box">
                         <p class="flex justify-center align-item-center">
@@ -74,42 +74,38 @@
                 <div class="flex dashboard-status">
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h3>Latest requests</h3>
+                            <h5>Latest requests</h5>
                             <a href="">View More</a>
                         </div>
-                        <table class="dashboardTable latestRequestsTable">
+                        <table class="dashboardTable latestRequestsTable table-striped">
                             <thead>
                                 <tr>
-                                    <th>Client Name</th>
-                                    <th>Project Name</th>
-                                    <th>ValRef Number</th>
+                                    <th>Client</th>
+                                    <th>Property</th>
+                                    <th>Val Ref#</th>
                                     <th>Status</th>
-
                                 </tr>
                             </thead>
                             <tbody>
-                                
                             </tbody>
                         </table>
                     </div>
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h3>Latest Qutotation Sub</h3>
+                            <h5>Latest Qutotation Sub</h5>
                             <a href="">View More</a>
                         </div>
-                        <table class="dashboardTable latestQuotationsTable">
+                        <table class="dashboardTable latestQuotationsTable table-striped">
                             <thead>
                                 <tr>
-                                    <th>Client Name</th>
-                                    <th>Project Name</th>
-                                    <th>QuotationFee</th>
-                                    <th>Quotation Number</th>
-                                    <th>ValRef Number</th>
-
+                                    <th>Client</th>
+                                    <th>Property</th>
+                                    <th>Val Ref#</th>
+                                    <th>Quotation#</th>
+                                    <th>Fee</th>
                                 </tr>
                             </thead>
                             <tbody>
-                               
                             </tbody>
                         </table>
                     </div>
@@ -117,45 +113,43 @@
                 <div class="flex dashboard-status">
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h3>Top Projects in Valuation</h3>
+                            <h5>Top Projects in Valuation</h5>
                             <a href="">View More</a>
                         </div>
-                        <table class="dashboardTable topValuationsTable">
+                        <table class="dashboardTable topValuationsTable table-striped">
                             <thead>
                                 <tr>
-                                    <th>Client Name</th>
-                                    <th>Project Name</th>
-                                    <th>ValRef Number</th>
-                                    <th>Valuation Amount</th>
+                                    <th>Client</th>
+                                    <th>Property</th>
+                                    <th>Val Ref#</th>
+                                    <th>Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
-                               
                             </tbody>
                         </table>
                     </div>
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h3>Top Quatuons Due</h3>
+                            <h5>Top Quatuons Due</h5>
                             <a href="">View More</a>
                         </div>
-                        <table class="dashboardTable topQuotationDuesTable">
+                        <table class="dashboardTable topQuotationDuesTable table-striped">
                             <thead>
                                 <tr>
-                                    <th>Client Name</th>
-                                    <th>Project Name</th>
-                                    <th>ValRef Number</th>
-                                    <th>Quotation Fee</th>
-
+                                    <th>Client</th>
+                                    <th>Property</th>
+                                    <th>Val Ref#</th>
+                                    <th>Quotation#</th>
+                                    <th>Due</th>
                                 </tr>
                             </thead>
                             <tbody>
-                               
                             </tbody>
                         </table>
                     </div>
                 </div>
-               
+
                 <div class="dashboardMapArea">
                     <div class="flex flex-column dashboard-status p-0">
                         <div class="roundBorderBox m-0 dashboard-box w-100">
@@ -175,14 +169,15 @@
 
         </div>
     </div>
-</main> 
+</main>
 @section MyScripts {
     <script type="text/javascript" src="~/js/Custom/Dashboard/Dashboard.js?v=@jsVersion"></script>
-        <script>
-            //#region Setup API Url
+
+    <script>
+        //#region Setup API Url
         var AllClient = "@Eltizam.Web.Helpers.APIURLHelper.GetClientByClientTypeId";
         var AllProperty = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByFilters";
         var Dashboardurl = "@Eltizam.Web.Helpers.APIURLHelper.DashboardDetails"
-        </script>
+    </script>
 
 }

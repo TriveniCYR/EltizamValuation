@@ -48,8 +48,7 @@ function InitializePropertyTypeDataList() {
 
 
 //#region Delete Role  
-function ConfirmationDeletePropertyType(id) {
-    debugger;
+function ConfirmationDeletePropertyType(id) { 
     $('#DeletePropertyTypeModel #Id').val(id);
 }
 function DeletePropertyType() {

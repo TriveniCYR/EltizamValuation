@@ -1555,6 +1555,8 @@ table.popupTable {
     .inputSearchs .form .checkboxBtn input:checked + p {
         background-color: var(--blue);
         color: white;
+        font-size: 15px;
+        font-weight: 500;
     }
 
 .checkboxBtn input[type="checkbox"] {
@@ -2122,8 +2124,8 @@ table.dashboardTable {
 }
 
 .dashboardTable th {
-    background: none;
-    color: var(--black);
+    /*background: none;
+    color: var(--black);*/
     text-align: left;
     border: none;
 }

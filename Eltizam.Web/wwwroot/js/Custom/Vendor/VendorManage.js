@@ -10,8 +10,7 @@ $(document).ready(function () {
     BindDepartment();
     BindDesignation();
     BindCountryCode();
-    $('#Address_Phone').keypress(function (e) {
-        debugger
+    $('#Address_Phone').keypress(function (e) { 
         if ($('#Address_Phone').val() == '' && e.which == 48) {
             return false;
         }
@@ -147,8 +146,7 @@ function removeParentDivAddress(element) {
 }
 
 
-function BindCountry() {
-    debugger
+function BindCountry() { 
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
@@ -163,8 +161,7 @@ function BindState(id) {
     BindDropdowns(StateList + '/' + id, State, _rpname, _val);
 }
 
-function BindCity(id) {
-
+function BindCity(id) { 
     var City = $("#Address_CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";

@@ -396,8 +396,7 @@
 
         $(document).ready(function () { 
             const selectElement = document.getElementById("RoleId");
-            selectElement.addEventListener("change", function () {
-                debugger
+            selectElement.addEventListener("change", function () { 
                 if (selectElement.value !== "0") {
                     selectElement.classList.remove("input-validation-error");
                 } else {

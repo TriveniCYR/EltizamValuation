@@ -520,8 +520,7 @@ function BindPropertyDetailById(Id) {
                         '<input checked data-val="true"   name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
                         '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
                 } 
-            }
-            debugger
+            } 
             var PropertyDetails = response._object.propertyDetail;  
             document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
             document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;

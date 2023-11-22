@@ -33,10 +33,10 @@
                 <div class="bodyContent footerAudit">
                     <div class=" position-relative flex justify-between align-item-center">
                         <h4 class="m-0">
-                            Valuation Request Id : @Html.DisplayFor(model => model.ValuationRequestId)
+                            Valuation Id : @Html.DisplayFor(model => model.ValuationRequestId)
                         </h4>
                         <h4 class="m-0">
-                            ReferenceNo : @Html.DisplayFor(model => model.ReferenceNo)
+                            Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
                         </h4>
                     </div>
                 </div>
@@ -343,8 +343,7 @@
 
     <script>
 
-        $(document).ready(function () {
-            debugger
+        $(document).ready(function () { 
             if (@ViewBag.IsView == 1) {
                 $(".disabletxtbox").prop("disabled", true);
                 // Disable the associated label element

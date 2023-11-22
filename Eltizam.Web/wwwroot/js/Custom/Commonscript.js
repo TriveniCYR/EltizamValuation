@@ -127,6 +127,16 @@ function hideLoader() {
     }, 500);
 }
 
+function GetIntegerVal(val) {
+    if (val === undefined || isNaN(parseInt(val))) {
+        val = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        val = parseInt(val);
+    }
+
+    return val;
+}
+
 
 
 // ======== Bind dropdowns ============
