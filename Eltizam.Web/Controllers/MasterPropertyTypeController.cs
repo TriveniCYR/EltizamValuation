@@ -5,6 +5,7 @@ using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
@@ -66,12 +67,19 @@ namespace EltizamValuation.Web.Controllers
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
+                    if (responseMessage.IsSuccessStatusCode && masterPropertyType.Id==0)
+                    {
+                        string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                        TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                        return RedirectToAction("PropeprtyTypes");
+
+                    }
                     if (responseMessage.IsSuccessStatusCode)
                     {
                         string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                         TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
-
-                        return RedirectToAction("PropeprtyTypes");
+                        return Redirect($"/MasterPropertyType/PropertyTypes?id={masterPropertyType.Id}");
+                    
                     }
                     else
                     {

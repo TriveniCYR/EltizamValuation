@@ -144,7 +144,7 @@ namespace EltizamValuation.Web.Controllers
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
 
-            return RedirectToAction("Users");
+            return Redirect($"/MasterUser/UserManage?id={masterUser.Id}");
         }
 
         [HttpGet]

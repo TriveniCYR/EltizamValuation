@@ -69,7 +69,6 @@ function BindProperty() {
 }
 
 function BindPropertySub(id) {
-    debugger;
     var PropertySubType = $("#PropertySubTypeId");
     var _val = $('#hdnPropertySub').val();
     var _rpname = "propertySubType";

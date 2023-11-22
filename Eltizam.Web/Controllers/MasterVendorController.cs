@@ -1,9 +1,11 @@
 ﻿using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
@@ -115,13 +117,19 @@ namespace EltizamValuation.Web.Controllers
                 APIRepository objapi = new(_cofiguration);
 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertVendor, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterUser))).Result;
-
-                if (responseMessage.IsSuccessStatusCode)
+                if (responseMessage.IsSuccessStatusCode && masterUser.Id==0)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
 
                     return RedirectToAction("Vendors");
+                }
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+
+                    return Redirect($"/MasterVendor/VendorManage?id={masterUser.Id}");
                 }
                 else
                 {

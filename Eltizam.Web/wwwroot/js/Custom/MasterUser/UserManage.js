@@ -6,7 +6,7 @@ $(document).ready(function () {
     BindResourceType();
     BindCountry();
     BindCountryCode();
-    debugger
+
     var countryId = $('#hdnCountry').val();
     if (countryId != null || countryId != 0) {
         BindState(countryId);
@@ -50,7 +50,7 @@ function BindResourceType() {
 }
 
 function BindCountry() {
-    debugger
+
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
@@ -92,7 +92,7 @@ function BindCountryCode() {
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            debugger
+           
             CountryCode.empty().append('<option selected="selected" value="">select</option>');
             AlternatePhone.empty().append('<option selected="selected" value="">select</option>');
             for (var i = 0; i < response.length; i++) {

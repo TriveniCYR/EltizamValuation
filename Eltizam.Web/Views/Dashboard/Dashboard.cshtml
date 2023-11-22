@@ -28,11 +28,11 @@
                             </label> 
                              <label for="">
                                     From
-                                @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input form-control", id = "FromDate" })
+                                @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input", id = "FromDate" })
                             </label>
                                 <label for="">
                                     To
-                                @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input  form-control", id = "ToDate" })
+                                @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input", id = "ToDate" })
                             </label>
                             <button type="button" onclick="submitFilterForm()" class="blueBtn">Search</button>
                        

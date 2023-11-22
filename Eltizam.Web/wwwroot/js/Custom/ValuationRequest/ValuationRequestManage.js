@@ -490,7 +490,6 @@ function BindPropertyDetailById(Id) {
                         '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
                 } 
             }
-            debugger
             var PropertyDetails = response._object.propertyDetail;  
             document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
             document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
