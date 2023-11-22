@@ -146,28 +146,7 @@ function BindProperty() {
     var _rpname = "propertyType";
 
     BindDropdowns(PropertyList, Property, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + PropertyList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
-    //        Property.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            Property.append($("<option></option>").val(response[i].id).html(response[i].propertyType));
-    //        }
-    //        if ($('#hdnPropertyType').val() != 0) {
-    //            Property.val($('#hdnPropertyType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+
 }
 
 function BindPropertySub(id) {

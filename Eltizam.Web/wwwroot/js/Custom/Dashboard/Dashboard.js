@@ -66,11 +66,13 @@ function submitFilterFormSuccess(data) {
                 '<td>' + request.clientName + '</td>' +
                 '<td>' + request.propertyName + '</td>' +
                 '<td>' + request.valRefNum + '</td>' +
-                '<td>' + request.status + '</td>' +
+                '<td><span class="tableStatus" style="color: ' + request.colorCode + '; background-color: ' + request.backGroundColor + '; border: 1px solid ' + request.colorCode + ';">' + request.status + '</span></td>' +
                 '</tr>';
             latestRequestsTableBody.append(rowHtml);
         });
     }
+ 
+
     else {
         var rowHtml = '<tr>' +
             '<td colspan="5">' + "No Data Available" + '</td>' +
