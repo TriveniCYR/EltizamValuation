@@ -6,6 +6,8 @@ namespace Eltizam.Web.Helpers
     {
         public static IConfiguration Configuration;
 
+        #region Account
+
         public static string LoginURL = "Account/Login";
         public static string ValidateToken = "Account/ValidateToken";
         public static string GetBusinessUnit = "Account/GetAllBusinessUnit";
@@ -15,7 +17,9 @@ namespace Eltizam.Web.Helpers
         public static string ResetPassword = "Account/ResetPassword";
         public static string Anonymous_CheckEmailAddressExists = "Account/CheckEmailAddressExists"; 
         public static string Anonymous_IsTokenValid = "Account/IsTokenValid";
-        public static string ChangePassword = "Account/ChangePassword"; 
+        public static string ChangePassword = "Account/ChangePassword";
+
+        #endregion
 
         #region MasterCommon
 
@@ -32,8 +36,7 @@ namespace Eltizam.Web.Helpers
         public static string GetClientTypeList = "MasterClientType/GetClientTypeList";
         public static string GetByPermisionRoleUsingRoleId = "MasterRole/GetByPermisionRoleUsingRoleId";
 
-        #endregion MasterCommon
-         
+        #endregion MasterCommon 
 
         #region User
 
@@ -41,6 +44,7 @@ namespace Eltizam.Web.Helpers
         public static string UpsertUser = "MasterUser/Upsert";
         public static string GetUserById = "MasterUser/GetById";
         public static string DeleteUserById = "MasterUser/Delete";
+        public static string DeleteUserDocumentById = "MasterUser/DeleteDocument";
         public static string GetGlobalAuditFields = "MasterUser/GetGlobalAuditFields";
         public static string GetUserNameList = "MasterUser/GetAllUserList";
 
@@ -52,7 +56,7 @@ namespace Eltizam.Web.Helpers
         public static string GetesignationById = "MasterDesignation/GetById";
         public static string DeleteDesignationById = "MasterDesignation/Delete";
         #endregion Designation
-        public static string DashboardDetails = "Dashboard/DashboardData";
+        
         #region Department
         public static string UpsertDepartment = "MasterDepartment/Upsert";
         public static string GetAllDepartment = "MasterDepartment/GetAll";
@@ -63,7 +67,10 @@ namespace Eltizam.Web.Helpers
 
         #region Dashboard
 
+        public static string DashboardDetails = "Dashboard/DashboardData";
+
         #endregion Dashboard
+
         #region MasterProperty
         public static string UpsertProperty = "MasterProperty/Upsert";
         public static string GetAllProperty = "MasterProperty/GetAll";
@@ -188,8 +195,7 @@ namespace Eltizam.Web.Helpers
         public static string UpsertVendor = "MasterVendor/Upsert";
         public static string DeleteVendor = "MasterVendor/Delete";
 
-        #endregion Vendor
-
+        #endregion Vendor 
 
         #region LogExceptionMethod
         public static string LogException = "LogException/LogException";
@@ -230,8 +236,7 @@ namespace Eltizam.Web.Helpers
         public static string ValuationAssesment = "ValuationAssessment/ValuationAssesmentUpsert";
         public static string GetSiteDescriptionList = "ValuationAssessment/GetSiteDescriptionList";
 
-        #endregion Valuation Request
-
+        #endregion Valuation Request 
 
         #region AuditLog
         public static string GetAllAudit = "AuditLog/GetAll";

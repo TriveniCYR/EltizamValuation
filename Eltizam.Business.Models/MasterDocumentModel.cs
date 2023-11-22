@@ -16,5 +16,8 @@ namespace Eltizam.Business.Models
         public string? FileType { get; set; }
         public string? FilePath { get; set; }
         public int? IsActive { get; set; }
+        public int? CreatedBy { get; set; }
+        public string? CreatedName { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }

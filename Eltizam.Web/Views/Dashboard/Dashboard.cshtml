@@ -24,15 +24,15 @@
                             </label>
                             <label for="PropertyId">
                                 Property
-                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId", @class = "form-control" })
+                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control" })
+                            </label> 
+                             <label for="">
+                                    From
+                                @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input", id = "FromDate" })
                             </label>
-                            <label for="">
-                                From
-                                @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input form-control", id = "FromDate" })
-                            </label>
-                            <label for="">
-                                To
-                                @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input  form-control", id = "ToDate" })
+                                <label for="">
+                                    To
+                                @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input", id = "ToDate" })
                             </label>
                             <button type="button" onclick="submitFilterForm()" class="blueBtn">Search</button>
 
@@ -171,7 +171,7 @@
     </div>
 </main>
 @section MyScripts {
-    <script type="text/javascript" src="~/js/Custom/Dashboard/Dashboard.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/Dashboard/Dashboard.js?v=@jsVersion"></script>
 
     <script>
         //#region Setup API Url

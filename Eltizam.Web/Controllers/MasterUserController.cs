@@ -108,7 +108,7 @@ namespace EltizamValuation.Web.Controllers
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
 
-                masterUser.Email ??= masterUser.Address?.Email; 
+                masterUser.Email ??= masterUser.Address?.Email;
                 if (masterUser.Document != null && masterUser.Document.Files != null)
                 {
                     List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
@@ -144,7 +144,7 @@ namespace EltizamValuation.Web.Controllers
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
 
-            return RedirectToAction("Users");
+            return Redirect($"/MasterUser/UserManage?id={masterUser.Id}");
         }
 
         [HttpGet]
@@ -183,7 +183,34 @@ namespace EltizamValuation.Web.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult DeleteUserDocument(int id, string? fileName)
+        {
+            try
+            {
+                //Check permissions for Get                
+                int isFileDelete = DeleteFile(id, fileName);
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.DeleteUserDocumentById + "/" + id, HttpMethod.Delete, token).Result;
 
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                }
+                else
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+            }
+
+            return RedirectToAction("Users");
+        }
         private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
         {
             List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();
@@ -191,7 +218,7 @@ namespace EltizamValuation.Web.Controllers
             {
                 throw new ArgumentException("No files were uploaded.");
             }
-
+            var currentUser = _helper.GetLoggedInUserId();
             var savedFileNames = new List<string>();
 
             foreach (var file in document.Files)
@@ -224,7 +251,10 @@ namespace EltizamValuation.Web.Controllers
                     FilePath = filePath.Replace("wwwroot", ".."),
                     DocumentName = docName,
                     IsActive = 1,
-                    FileType = GetFileType(file.ContentType)
+                    CreatedBy = currentUser,
+                    FileType = GetFileType(file.ContentType),
+                    CreatedDate = null,
+                    CreatedName = ""
                 };
 
                 uploadFils.Add(upload);
@@ -232,6 +262,24 @@ namespace EltizamValuation.Web.Controllers
             return uploadFils;
         }
 
+        private int DeleteFile(int id, string? fileName)
+        {
+            int isDelete = 0;
+            if (fileName != null || fileName != "")
+            {
+                var filePath = Path.Combine("wwwroot/Uploads", fileName);
+                filePath = filePath.Replace("\\", "/");
+                // Check if the file type is allowed
+                if (System.IO.File.Exists(filePath))
+                {
+                    // If file found, delete it
+                    System.IO.File.Delete(filePath);
+                    isDelete = 1;
+                }
+
+            }
+            return isDelete;
+        }
         private string GetFileType(string contentType)
         {
             switch (contentType)

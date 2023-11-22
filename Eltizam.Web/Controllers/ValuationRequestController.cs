@@ -134,10 +134,17 @@ namespace EltizamValuation.Web.Controllers
                 //valuationRequestModelNew.ValuationDate = valuationRequestModel.ValuationDate;
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(request))).Result;
 
+                if (responseMessage.IsSuccessStatusCode && request.Id==0)
+                {
+                    TempData[UserHelper.SuccessMessage] = AppConstants.ActionSuccess;
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    return RedirectToAction(nameof(ValuationRequests));
+                }
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     TempData[UserHelper.SuccessMessage] = AppConstants.ActionSuccess;
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={request.Id}");
                 }
                 else
                     TempData[UserHelper.ErrorMessage] = AppConstants.ActionFailed;

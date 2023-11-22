@@ -70,13 +70,19 @@ namespace EltizamValuation.Web.Controllers
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration); 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuation, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterValuationFeesModel))).Result;
-
-                if (responseMessage.IsSuccessStatusCode)
+                if (responseMessage.IsSuccessStatusCode && masterValuationFeesModel.Id==0)
                 {
                     TempData["StatusMessage"] = "Saved Successfully";
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     ModelState.Clear();
                     return RedirectToAction(nameof(ValuationFees));
+                }
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    TempData["StatusMessage"] = "Saved Successfully";
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    ModelState.Clear();
+                    return Redirect($"/MasterValuationFee/ValuationFeeManage?id={masterValuationFeesModel.Id}");
                 }
                 else
                     TempData["StatusMessage"] = "Some Eror Occured";

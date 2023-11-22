@@ -420,7 +420,7 @@ namespace Eltizam.Business.Core.Implementation
                         objUserDocument.FileName = doc.FileName;
                         objUserDocument.FilePath = doc.FilePath;
                         objUserDocument.FileType = doc.FileType; 
-                        objUserDocument.CreatedBy = entityUser.CreatedBy;
+                        objUserDocument.CreatedBy = doc.CreatedBy;
 
                         _documentRepository.AddAsync(objUserDocument);
                         await _unitOfWork.SaveChangesAsync();
@@ -548,5 +548,21 @@ namespace Eltizam.Business.Core.Implementation
 
             return lstStf;
         }
+
+        public async Task<DBOperation> DeleteDocument(int id)
+        {
+            if(id > 0){
+               
+                var entityDoc = _documentRepository.Get(id);
+                if (entityDoc != null)
+                {
+                    _documentRepository.Remove(entityDoc);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+            // Return a success operation indicating successful deletion.
+            return DBOperation.Success;
+        }
+
     }
 }

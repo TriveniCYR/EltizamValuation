@@ -5,7 +5,8 @@ $(document).ready(function () {
     BindRole();
     BindResourceType();
     BindCountry();
-    BindCountryCode(); 
+    BindCountryCode();
+
     var countryId = $('#hdnCountry').val();
     if (countryId != null || countryId != 0) {
         BindState(countryId);
@@ -89,7 +90,7 @@ function BindCountryCode() {
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            debugger
+           
             CountryCode.empty().append('<option selected="selected" value="">select</option>');
             AlternatePhone.empty().append('<option selected="selected" value="">select</option>');
             for (var i = 0; i < response.length; i++) {
@@ -277,3 +278,19 @@ function removeParentDivAddress(element) {
     }
 }
 
+function displayFileNames(input) {
+    const fileInput = input;
+    const fileNamesInput = input.nextElementSibling;
+
+    const files = fileInput.files;
+    let fileNames = "";
+
+    for (let i = 0; i < files.length; i++) {
+        fileNames += files[i].name;
+        if (i < files.length - 1) {
+            fileNames += ", ";
+        }
+    }
+
+    fileNamesInput.value = fileNames;
+}

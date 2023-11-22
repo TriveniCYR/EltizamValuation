@@ -7,6 +7,7 @@ using Eltizam.Utility.Models;
 using Eltizam.Utility.Utility;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
@@ -90,12 +91,20 @@ namespace EltizamValuation.Web.Controllers
 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertDepartment, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterDepartment))).Result;
 
-                if (responseMessage.IsSuccessStatusCode)
+                if (responseMessage.IsSuccessStatusCode && masterDepartment.Id==0)
                 {
                     TempData["StatusMessage"] = "Saved Successfully";
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     ModelState.Clear();
                     return RedirectToAction(nameof(Departments));
+                  
+                }
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    TempData["StatusMessage"] = "Saved Successfully";
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    ModelState.Clear();
+                    return Redirect($"/MasterDepartment/DepartmentManage?id={masterDepartment.Id}");
                 }
                 else
                     TempData["StatusMessage"] = "Some Eror Occured";
