@@ -4,23 +4,19 @@ $(document).ready(function () {
 });
 
 function InitializeAuditLogList() {
-    $("#AuditLogTable").dataTable().fnDestroy();
-    
+    var tbl = $("#AuditLogTable");
+    if (tbl.find('tbody tr').length > 0)
+        tbl.dataTable().fnDestroy();
+
     var userName = $("#UserName").val();
-    if (userName === undefined || isNaN(parseInt(userName))) {
-        userName = 0; // Set a default value when the input is not a valid integer.
-    } else {
-        userName = parseInt(userName);
-    }
-
-    var tableName = $("#ParentTableName").val() === undefined ? "" : $("#ParentTableName").val();
-   
-
-    var datefrom = $("#FromDate").val() === undefined ? "" : $("#FromDate").val();
-
+    userName = GetIntegerVal(userName); 
+    var tableName = $("#ParentTableName").val() === undefined ? "" : $("#ParentTableName").val();  
+    var datefrom = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
     var dateto = $("#ToDate").val() === undefined ? "" : $("#ToDate").val();
-   
-    var _appendURL = "?UserName=" + userName +"&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto; 
+
+    var _appendURL = "?UserName=" + userName + "&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
+
+
     var ajaxObject = {
         "url": BaseURL + AllAudit + _appendURL,
         "type": "POST",
@@ -30,18 +26,20 @@ function InitializeAuditLogList() {
         },
         "datatype": "json"
     };
+
+
     var columnObject = [
         {
             "data": "id", "name": "Id"
-        }, 
+        },
         {
             "data": "createdByName", "name": "Created User"
         },
         {
             "data": "createdDate", "name": "Created Date",
 
-             "render": function (data, type, row, data) {
-                 return moment(row.createdDate).format('DD-MMM-YYYY');
+            "render": function (data, type, row, data) {
+                return moment(row.createdDate).format('DD-MMM-YYYY');
             }
         },
         {
@@ -55,7 +53,7 @@ function InitializeAuditLogList() {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                 html += '<li><a title="View" href="/AuditLog/AuditLogDetails?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
-                html += '<li><a title="View All" href="/AuditLog/AuditLogDetails?TableName=' + row.parentTableName +'"><img src="../assets/view.svg" alt="view" />View All History</a></li>';
+                html += '<li><a title="View All" href="/AuditLog/AuditLogDetails?TableName=' + row.parentTableName + '"><img src="../assets/view.svg" alt="view" />View All History</a></li>';
                 html += '</ul></div>';
 
                 return html;
@@ -64,7 +62,7 @@ function InitializeAuditLogList() {
     ];
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
-} 
+}
 
 //#endregion
 

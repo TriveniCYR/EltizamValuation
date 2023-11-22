@@ -14,7 +14,9 @@ namespace Eltizam.Business.Models
         public int? MarkentRent { get; set; }
         public int? LifeOfBuilding { get; set; }
         public int? AnnualMaintainceCost { get; set; }
-        public int? Insuarance { get; set; }
+        public bool Insuarance { get; set; }
+        public string? InsuranceDetails { get; set; }
+
         public int? CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }

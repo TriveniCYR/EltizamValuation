@@ -36,7 +36,7 @@ $(document).ready(function () {
     ErrorDev.hide();
     readsideNavToggle();
     hideLoader(); 
-
+    formatreadonlydate();
     //Toaster related things
     if (SuccessToaster !== "" && SuccessToaster !== null) {
         toastr.success(SuccessToaster);
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
+function formatreadonlydate () {
     var tdElements = document.querySelectorAll('.formatted-td-date-input');
 
     tdElements.forEach(function (tdElement) {
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var formattedDate = datePart + ' ' + timePart;
         tdElement.textContent = formattedDate.replace(/\s/g, '-').toLowerCase();
     });
-});
+}
 
 function showLoader() {
     $('#loading-wrapper').show();
@@ -125,6 +125,16 @@ function hideLoader() {
     setTimeout(function () {
         $('#loading-wrapper').hide();
     }, 500);
+}
+
+function GetIntegerVal(val) {
+    if (val === undefined || isNaN(parseInt(val))) {
+        val = 0; // Set a default value when the input is not a valid integer.
+    } else {
+        val = parseInt(val);
+    }
+
+    return val;
 }
 
 

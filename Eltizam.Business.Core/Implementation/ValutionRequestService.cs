@@ -318,36 +318,22 @@ namespace Eltizam.Business.Core.Implementation
              
                 if(siteDescription != null) {
                     _ValuationEntity.ValuationAssesment.SiteDescription= siteDescription;
-                    //_assesmentAction.SiteDescription.Id = siteDescription.Id;
-                    //_assesmentAction.SiteDescription.ValuationRequestId = siteDescription.ValuationRequestId;
-
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.Id = siteDescription.Id;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.ValuationRequestId = siteDescription.ValuationRequestId;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.Location = siteDescription.Location;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.InternalArea = siteDescription.InternalArea;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.ExternalArea = siteDescription.ExternalArea;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.Floor = siteDescription.Floor;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.Room = siteDescription.Room;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.Bedrooms = siteDescription.Bedrooms;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.Storage = siteDescription.Storage;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.AdditionComment = siteDescription.AdditionComment;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.PropertyCondition = siteDescription.PropertyCondition;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.AdditionalNotes = siteDescription.AdditionalNotes;
-                    //_ValuationEntity.ValuationAssesment.SiteDescription.PropertyCondition = siteDescription.PropertyCondition;
-                }
-
-                DbParameter[] osqlParameter2 =
-                {
+                    DbParameter[] osqlParameter2 =
+               {
                     new DbParameter(AppConstants.TableKeyId, siteDescription.Id, SqlDbType.Int),
                     new DbParameter(AppConstants.TableName,  sitetableName, SqlDbType.VarChar),
                 };
 
-                var siteDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
-                                    DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
-                if (siteDocuments != null)
-                {
-                _ValuationEntity.ValuationAssesment.SiteDescription.Documents = siteDocuments;
+                    var siteDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
+                                        DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                    if (siteDocuments != null)
+                    {
+                        _ValuationEntity.ValuationAssesment.SiteDescription.Documents = siteDocuments;
+                    }
+
                 }
+
+               
 
                 //comprable
                 compevidence = _mapperFactory.Get<ComparableEvidence, ComparableEvidenceModel>(_evidencerepository.Get(x => x.RequestId == id));
@@ -356,20 +342,21 @@ namespace Eltizam.Business.Core.Implementation
                 {
 
                     _ValuationEntity.ValuationAssesment.comparableEvidenceModel = compevidence;
-                }
-
-                DbParameter[] osqlParameter3 =
-                {
+                    DbParameter[] osqlParameter3 =
+              {
                     new DbParameter(AppConstants.TableKeyId, compevidence.Id, SqlDbType.Int),
                     new DbParameter(AppConstants.TableName,  evidencetableName, SqlDbType.VarChar),
                 };
 
-                var compDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
-                                    DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
-                if (siteDocuments != null)
-                {
-                    _ValuationEntity.ValuationAssesment.comparableEvidenceModel.Documents = compDocument;
+                    var compDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
+                                        DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter3);
+                    if (compDocument != null)
+                    {
+                        _ValuationEntity.ValuationAssesment.comparableEvidenceModel.Documents = compDocument;
+                    }
                 }
+
+              
 
                 /////Assesment
 
@@ -379,20 +366,21 @@ namespace Eltizam.Business.Core.Implementation
                 {
 
                     _ValuationEntity.ValuationAssesment.valuationAssessementModel = assement;
-                }
-
-                DbParameter[] osqlParameter4 =
-                {
+                    DbParameter[] osqlParameter4 =
+               {
                     new DbParameter(AppConstants.TableKeyId, compevidence.Id, SqlDbType.Int),
                     new DbParameter(AppConstants.TableName,  assesmenttableName, SqlDbType.VarChar),
                 };
 
-                var assesmentDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
-                                    DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter4);
-                if (assesmentDocument != null)
-                {
-                    _ValuationEntity.ValuationAssesment.valuationAssessementModel.Documents = assesmentDocument;
+                    var assesmentDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
+                                        DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter4);
+                    if (assesmentDocument != null)
+                    {
+                        _ValuationEntity.ValuationAssesment.valuationAssessementModel.Documents = assesmentDocument;
+                    }
                 }
+
+               
             }
 
 

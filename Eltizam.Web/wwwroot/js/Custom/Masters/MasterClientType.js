@@ -104,8 +104,7 @@ function CleareClientTypeFields() {
 function ConfirmationDeleteClientType(id) { 
     $('#popup-delete-overlay #ClientTypeID').val(id);
 }
-function DeleteClientType() {
-    debugger
+function DeleteClientType() { 
     var tempInAtiveID = $('#popup-delete-overlay #ClientTypeID').val();
     ajaxServiceMethod(BaseURL + DeleteClientTypeByIdUrl + "/" + tempInAtiveID, Post, DeleteClientTypeByIdSuccess, DeleteClientTypeByIdError);
 }

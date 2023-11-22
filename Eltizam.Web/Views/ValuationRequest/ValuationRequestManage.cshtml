@@ -46,9 +46,9 @@
                 <span>@_md @_header</span>
             </div>
         </div>
-        <div class="bodyContent">
+        <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
-                <div class="tab flex flex-start m-0">
+                <div class="tab flex flex-start m-0 ptrl-20">
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
                     @* <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button> *@
                     <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
@@ -57,8 +57,8 @@
 
                     <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile4')" id="defaultOpen">Site description</button>
 
-                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile5')">Comparable evidences</button>
-                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile6')">Valuation Assessement</button>
+                    <button class="tablinks" style="display:  @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable evidences</button>
+                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
@@ -91,7 +91,7 @@
                                 <div class="flex  mb-28">
 
                                     <label for="" class="w-50">
-                                        Valuation Reference no
+                                        Val. Ref#
                                         @Html.TextBoxFor(model => model.ReferenceNo, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Valuation Reference no"] })
                                         @*  <input type="text" placeholder="12837187236" disabled> *@
                                     </label>
@@ -497,6 +497,18 @@
 
 
                 <div id="profile2" class="tabcontent">
+                    <div class="whiteBoxShadow m-0 ">
+                        <div class="bodyContent footerAudit">
+                            <div class=" position-relative flex justify-between align-item-center">
+                                <h4 class="m-0">
+                                    Valuation Id : @Html.DisplayFor(model => model.Id)
+                                </h4>
+                                <h4 class="m-0">
+                                    Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center plr-0">
 
@@ -532,6 +544,18 @@
 
 
                 <div id="profile3" class="tabcontent">
+                    <div class="whiteBoxShadow m-0 ">
+                        <div class="bodyContent footerAudit">
+                            <div class=" position-relative flex justify-between align-item-center">
+                                <h4 class="m-0">
+                                    Valuation Id : @Html.DisplayFor(model => model.Id)
+                                </h4>
+                                <h4 class="m-0">
+                                    Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center p-0">
                             <h3>Invoice Listing</h3>
@@ -549,7 +573,7 @@
                             <thead>
                                 <tr>
                                     <th>#Invoice</th>
-                                    <th>Valuation Request Id</th>
+                                    <th>Valuation Id</th>
                                     <th>Transaction Model</th>
                                     <th>Transaction Status</th>
                                     <th>Amount</th>
@@ -649,78 +673,51 @@
                                     </div>
                                 </div>
 
-                            </div>
                         </div>
-                        <div class="inputSearchs p-0">
-                            <div class="tabSection ptrl-20">
-                                <div class="addMoreAddress roundBorderBox m-0">
-                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                        <p>Upload Supporting Documents</p>
-                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                    </div>
+                    <div class="inputSearchs p-0">
+                        <div class="tabSection ptrl-20">
+                            <div class="addMoreAddress roundBorderBox m-0">
+                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                    <p>Upload Supporting Documents</p>
+                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                </div>
+                                <div class="panel" style="display: none;">
+                                    <div class="flex">
+                                        <label for="" class="w-100">
+                                            <input type="file" class="fileInput" multiple onchange="displayFileNames(this)">
+                                            <input type="text" class="fileNames" readonly placeholder="file names">
+                                        </label>
                                     </div>
-                                    <div class="panel" style="display: none;">
-                                        <div class="flex">
-                                            <label for="" class="w-100">
-                                                @Html.TextBoxFor(model => model.Document.DocumentName, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["Document"],@type = "file" })
-                                                @* <input type="file" class="fileInput" multiple onchange="displayFileNames(this)"> *@
-                                                <input type="text" class="fileNames" readonly placeholder="file names">
-                                            </label>
-                                        </div>
-                                        <div class="W-100">
-                                            <div class="prevUpload roundBorderBox m-0">
-                                                <h3>Previously uploaded</h3>
-                                                <div class="flex">
-                                                    @*  <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div> *@
-                                                    @if (Model.Documents != null)
-                                                    {
-                                                        @foreach (var docs in Model.Documents)
-                                                        {
-                                                            <div class="prevUploadTab">
-                                                                <div class="flex align-item-center m-0">
-                                                                    <img src="../assets/file.svg" alt="file" />
-                                                                    <span>@docs.DocumentName</span>
-                                                                </div>
-                                                                <a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-
-                                                            </div>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <label>NA</label>
-                                                    }
-                                                </div>
+                                    <div class="W-100">
+                                        <div class="prevUpload roundBorderBox m-0">
+                                            <h3>Previously uploaded</h3>
+                                            <div class="scroll-x">
+                                                <table class="table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>File Name</th>
+                                                            <th>DateUpdate </th>
+                                                            <th>Uploaded By</th>
+                                                            <th>Download</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>                                                        
+                                                         <tr>
+                                                            <td>Image123</td>
+                                                            <td>2023-Oct-10 </td>
+                                                            <td>Admin</td>
+                                                            <td><a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
+                                                            <td><a title="Delete"><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
                             </div>
                         </div>
@@ -875,14 +872,25 @@
                                 <label>
                                     Insurance
                                     <span class="flex yesNoToggle">
-                                        <input type="radio" name="answer" value="yes" onclick="toggleInput('yes')"> Yes &nbsp; &nbsp;
+                                        @* <input type="radio" name="answer" value="yes" onclick="toggleInput('yes')"> Yes &nbsp; &nbsp; *@
+                                       @*  <input type="radio" asp-for="" value="true" onclick="toggleInput('yes')"> Yes &nbsp; &nbsp; *@
+                                        @* @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance,"Yes")
+                                        @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance,"NO")
 
-                                        <input type="radio" name="answer" value="no" onclick="toggleInput('no')"> No
+
+                                        <input type="radio" name="answer" value="no" onclick="toggleInput('no')"> No *@
+
+                                        @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, true, new { onclick = "toggleInput('yes')" })
+                                        <span style="margin-right: 5px;">Yes</span>
+
+                                        @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, false, new { onclick = "toggleInput('no')" })
+                                        <span>No</span>
                                     </span>
                                 </label>
                                 <label id="yesInput" for="yesField" style="display: none;">
                                     Insurance details
-                                    <input type="text" id="yesField" name="yesField">
+                                    @* <input type="text" id="yesField" name="yesField"> *@
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new {  @class = "form-control",  @placeholder = @SharedLocalizer["InsuaranceDetail"] })
                                 </label>
 
                             </div>
@@ -1065,8 +1073,6 @@
         var ValuationRequestGetById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestGetById";
         var RequeStatusReview = "@Eltizam.Web.Helpers.APIURLHelper.ReviewRequestStatus";
         var GetSiteDescriptionList = "@Eltizam.Web.Helpers.APIURLHelper.GetSiteDescriptionList";
-
-
 
 
         //#region Static Messae Init

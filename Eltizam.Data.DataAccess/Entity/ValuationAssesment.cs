@@ -11,12 +11,13 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? MarkentRent { get; set; }
         public int? LifeOfBuilding { get; set; }
         public int? AnnualMaintainceCost { get; set; }
-        public int? Insuarance { get; set; }
+        public bool? Insuarance { get; set; }
         public int? CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsActive { get; set; }
+        public string? InsuranceDetails { get; set; }
 
         public virtual ValuationRequest? Request { get; set; }
     }

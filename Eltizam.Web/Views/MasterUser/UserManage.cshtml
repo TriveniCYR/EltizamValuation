@@ -84,6 +84,7 @@
                                     <label for="MiddleName">
                                         Middle Name
                                         @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", @placeholder = @SharedLocalizer["Middle Name"] })
+                                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex">
@@ -153,7 +154,7 @@
                                     <label for="LicenseNo">
                                         AD Municipality / License No
                                         @Html.TextBoxFor(model => model.LicenseNo, new { @class = "form-control", @placeholder = @SharedLocalizer["License No"] })
-
+                                        @Html.ValidationMessageFor(model => model.LicenseNo, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                             </div>
@@ -396,8 +397,7 @@
 
         $(document).ready(function () { 
             const selectElement = document.getElementById("RoleId");
-            selectElement.addEventListener("change", function () {
-                debugger
+            selectElement.addEventListener("change", function () { 
                 if (selectElement.value !== "0") {
                     selectElement.classList.remove("input-validation-error");
                 } else {

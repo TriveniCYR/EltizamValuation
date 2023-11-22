@@ -38,8 +38,9 @@ function submitFilterForm() {
     var formDataObject = {
         PropertyId: $('#PropertyId').val(),
         ClientId: $('#ClientId').val(),
-        FromDate: $('#FromDate').val(),
-        ToDate: $('#ToDate').val()
+        FromDate: $('#FromDate').val() =="" ? "":flatpickr.formatDate(new Date($('#FromDate').val()), 'Y-m-d'), 
+        ToDate: $('#ToDate').val() == "" ? "" : flatpickr.formatDate(new Date($('#ToDate').val()), 'Y-m-d')
+         
     };
 
     var formDataJson = JSON.stringify(formDataObject);
@@ -65,7 +66,6 @@ function submitFilterFormSuccess(data) {
                 '<td>' + request.clientName + '</td>' +
                 '<td>' + request.propertyName + '</td>' +
                 '<td>' + request.valRefNum + '</td>' +
-                '<td class="formatted-td-date-input">' + request.valuationDate + '</td>' +
                 '<td>' + request.status + '</td>' +
                 '</tr>';
             latestRequestsTableBody.append(rowHtml);
@@ -76,12 +76,7 @@ function submitFilterFormSuccess(data) {
             '<td colspan="5">' + "No Data Available" + '</td>' +
             '</tr>';
         latestRequestsTableBody.append(rowHtml);
-    }
-
-    //RequestTable end
-
-
-    //LatestQuotationsTable Start
+    } 
 
     var latestQuotationsTableBody = $('.latestQuotationsTable tbody');
     latestQuotationsTableBody.empty(); // Clear existing rows
@@ -91,9 +86,9 @@ function submitFilterFormSuccess(data) {
             var rowHtml = '<tr>' +
                 '<td>' + quaotation.clientName + '</td>' +
                 '<td>' + quaotation.propertyName + '</td>' +
-                '<td>' + quaotation.quotationFee + '</td>' +
-                '<td>' + quaotation.quotationNum + '</td>' +
                 '<td>' + quaotation.valRefNum + '</td>' +
+                '<td>' + quaotation.quotationNum + '</td>' +
+                '<td>' + quaotation.quotationFee + '</td>' + 
                 '</tr>';
             latestQuotationsTableBody.append(rowHtml);
         });
@@ -104,9 +99,10 @@ function submitFilterFormSuccess(data) {
             '</tr>';
         latestQuotationsTableBody.append(rowHtml);
     }
-      //LatestQuotationsTable End
+    //LatestQuotationsTable End
 
     //TopValuationsTable Start
+
     var topValuationsTableBody = $('.topValuationsTable tbody');
     topValuationsTableBody.empty(); // Clear existing rows
 
@@ -137,6 +133,7 @@ function submitFilterFormSuccess(data) {
             var rowHtml = '<tr>' +
                 '<td>' + quotationdue.clientName + '</td>' +
                 '<td>' + quotationdue.propertyName + '</td>' +
+                '<td>' + quotationdue.valRefNum + '</td>' +
                 '<td>' + quotationdue.valRefNum + '</td>' +
                 '<td>' + quotationdue.quotationFee + '</td>' +
                 '</tr>';

@@ -5,8 +5,7 @@ $(document).ready(function () {
     BindRole();
     BindResourceType();
     BindCountry();
-    BindCountryCode();
-    debugger
+    BindCountryCode(); 
     var countryId = $('#hdnCountry').val();
     if (countryId != null || countryId != 0) {
         BindState(countryId);
@@ -41,16 +40,14 @@ function BindRole() {
     BindDropdowns(RoleList, Role, _rpname, _val);
 }
 
-function BindResourceType() {
-
+function BindResourceType() { 
     var ResourceType = $("#ResourceId");
     var _val = $('#hdnResourceType').val();
     var _rpname = "resourceType";
     BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
 }
 
-function BindCountry() {
-    debugger
+function BindCountry() { 
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";

@@ -66,14 +66,16 @@ namespace Eltizam.Business.Core.Implementation
             string MainTableName = Enum.GetName(TableNameEnum.SiteDescription);
             int MainTableKey = model.SiteDescription.Id;
 
+            objUser = _siteRepository.GetAll().Where(x=>x.ValuationRequestId==model.SiteDescription.ValuationRequestId).FirstOrDefault();
+
             //User details
-            if (model.SiteDescription.Id > 0)
+            if (objUser!=null)
             {
                 //Get current Entiry --AUDITLOGUSER
                 SiteDescription OldEntity = null;
-                OldEntity = _siteRepository.GetNoTracking(model.SiteDescription.Id);
+                //OldEntity = _siteRepository.GetNoTracking(model.SiteDescription.Id);
 
-                objUser = _siteRepository.Get(model.SiteDescription.Id);
+               
 
                 if (objUser != null)
                 {
@@ -98,7 +100,7 @@ namespace Eltizam.Business.Core.Implementation
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<SiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
+                    //await _auditLogService.CreateAuditLog<SiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
                 }
             }
             else
@@ -139,16 +141,18 @@ namespace Eltizam.Business.Core.Implementation
 
             ///////////////comprable//////
             ///
-            string MaincomparableTableName = Enum.GetName(TableNameEnum.SiteDescription);
+            string MaincomparableTableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
             int MaincomparableTableKey = model.comparableEvidenceModel.Id;
+            comparable = _repository.GetAll().Where(x => x.RequestId == model.comparableEvidenceModel.RequestId).FirstOrDefault();
 
-            if (model.comparableEvidenceModel.Id > 0)
+
+            if (comparable != null)
             {
                 //Get current Entiry --AUDITLOGUSER
                 ComparableEvidence OldEntity = null;
-                OldEntity = _repository.GetNoTracking(model.comparableEvidenceModel.Id);
+                //OldEntity = _repository.GetNoTracking(model.comparableEvidenceModel.Id);
 
-                comparable = _repository.Get(model.comparableEvidenceModel.Id);
+                //comparable = _repository.Get(model.comparableEvidenceModel.Id);
 
                 if (comparable != null)
                 {
@@ -165,7 +169,7 @@ namespace Eltizam.Business.Core.Implementation
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<ComparableEvidence>(AuditActionTypeEnum.Update, OldEntity, comparable, MaincomparableTableName, MaincomparableTableKey);
+                    //await _auditLogService.CreateAuditLog<ComparableEvidence>(AuditActionTypeEnum.Update, OldEntity, comparable, MaincomparableTableName, MaincomparableTableKey);
                 }
             }
             else
@@ -210,15 +214,17 @@ namespace Eltizam.Business.Core.Implementation
             ///
             string MainAssesmentTableName = Enum.GetName(TableNameEnum.Valuation_Assessement);
             int MainTableAssesmentKey = model.valuationAssessementModel.Id;
+            objUser1 = _valutionrepository.GetAll().Where(x => x.RequestId == model.valuationAssessementModel.RequestId).FirstOrDefault();
+
 
             //User details
-            if (model.valuationAssessementModel.Id > 0)
+            if (objUser1 != null)
             {
                 //Get current Entiry --AUDITLOGUSER
                 ValuationAssesment OldEntity = null;
-                OldEntity = _valutionrepository.GetNoTracking(model.valuationAssessementModel.Id);
+                //OldEntity = _valutionrepository.GetNoTracking(model.valuationAssessementModel.Id);
 
-                objUser1 = _valutionrepository.Get(model.valuationAssessementModel.Id);
+                //objUser1 = _valutionrepository.Get(model.valuationAssessementModel.Id);
 
                 if (objUser1 != null)
                 {
@@ -227,7 +233,7 @@ namespace Eltizam.Business.Core.Implementation
                     objUser1.LifeOfBuilding = model.valuationAssessementModel.LifeOfBuilding;
                     objUser1.AnnualMaintainceCost = model.valuationAssessementModel.AnnualMaintainceCost;
                     objUser1.Insuarance = model.valuationAssessementModel.Insuarance;
-
+                    objUser1.InsuranceDetails = model.valuationAssessementModel.InsuranceDetails;
                     objUser1.ModifiedBy = model.valuationAssessementModel.ModifiedBy;
 
 
@@ -236,7 +242,7 @@ namespace Eltizam.Business.Core.Implementation
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<ValuationAssesment>(AuditActionTypeEnum.Update, OldEntity, objUser1, MainAssesmentTableName, MainTableAssesmentKey);
+                    //await _auditLogService.CreateAuditLog<ValuationAssesment>(AuditActionTypeEnum.Update, OldEntity, objUser1, MainAssesmentTableName, MainTableAssesmentKey);
                 }
             }
             else
