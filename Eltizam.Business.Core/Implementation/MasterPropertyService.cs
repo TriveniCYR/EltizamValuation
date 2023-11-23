@@ -184,7 +184,7 @@ namespace Eltizam.Business.Core.Implementation
 
                     _repository.UpdateAsync(objProperty);
 
-                    _repository.UpdateGraph(objProperty, EntityState.Modified);
+                    //_repository.UpdateGraph(objProperty, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
                     //Do Audit Log --AUDITLOGUSER
                     await _auditLogService.CreateAuditLog<MasterProperty>(AuditActionTypeEnum.Update, OldEntity, objProperty);
@@ -230,7 +230,7 @@ namespace Eltizam.Business.Core.Implementation
                             objLocation.ModifiedBy = entityLocation.ModifiedBy;
                             objLocation.ModifiedDate = AppConstants.DateTime;
                             _detailrepository.UpdateAsync(objLocation);
-                            _detailrepository.UpdateGraph(objLocation, EntityState.Modified);
+                            //_detailrepository.UpdateGraph(objLocation, EntityState.Modified);
                             await _unitOfWork.SaveChangesAsync();
 
                             //Do Audit Log --AUDITLOGUSER

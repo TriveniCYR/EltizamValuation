@@ -122,7 +122,7 @@ namespace Eltizam.Business.Core.Implementation
                     objLocation.HomeCurrencyId = entityLocation.HomeCurrencyId;
                     objLocation.ForeignCurrencyId = entityLocation.ForeignCurrencyId;
                     _repository.UpdateAsync(objLocation);
-                    _repository.UpdateGraph(objLocation, EntityState.Modified);
+                    //_repository.UpdateGraph(objLocation, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER

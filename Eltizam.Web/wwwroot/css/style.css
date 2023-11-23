@@ -614,9 +614,6 @@ main {
     color: var(--white) !important;
 }
 
-::-webkit-scrollbar {
-    display: none;
-}
 
 table {
     min-width: 1029px;
@@ -1031,6 +1028,9 @@ img#closePopup {
     border-radius: 4px;
     margin-top: 19px;
     box-shadow: 0px 0px 12px 0px #00000012;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
 }
 
 .heading {
@@ -1793,14 +1793,12 @@ div.dataTables_wrapper div.dataTables_filter {
     padding: 20px;
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.07);
     border-radius: 5px;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
 }
 
 .dataTables_scrollHeadInner{
-    width:100% !important;
-}
-
-.dataTable
-{
     width:100% !important;
 }
 
@@ -2042,7 +2040,7 @@ div.dataTables_wrapper div.dataTables_filter {
     border: 1px solid var(--blue);
     z-index:99;
 }
-.dataTables_scrollBody table td {
+.dataTables_scrollBody table td, .dashboardTable td {
     border: none !important;
     border-bottom: 1px solid var(--blue) !important;
 }
@@ -2241,46 +2239,12 @@ table.multipleValueTable {
 }
 .phoneWithDrop {
     display: grid !important;
-    grid-template-columns: 80px 1fr;
+    grid-template-columns: 17% 1fr;
 }
 .scroll-y {
     height: 600px;
     overflow-y: auto;
 }
-
-
-    /* Chrome, Edge, and Safari */
-    .scroll-y::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .scroll-y::-webkit-scrollbar-thumb {
-        background-color: #3498db;
-    }
-
-    .scroll-y::-webkit-scrollbar-track {
-        background-color: #f1f1f1;
-    }
-
-/* Firefox */
-.scroll-y {
-    scrollbar-width: thin;
-    scrollbar-color: var(--blue) #f1f1f1;
-}
-
-    /* Firefox */
-    .scroll-y::-moz-scrollbar {
-        width: 8px;
-    }
-
-    .scroll-y::-moz-scrollbar-thumb {
-        background-color: var(--blue);
-    }
-
-    .scroll-y::-moz-scrollbar-track {
-        background-color: #f1f1f1;
-    }
-
 /* Edge */
 .scroll-y {
     -ms-overflow-style: -ms-autohiding-scrollbar;

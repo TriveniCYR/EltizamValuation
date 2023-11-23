@@ -233,6 +233,15 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     _userEntity.Documents = UserDocuments; 
                 }
+
+                if(_userEntity.ProfileAttachmentId != null && _userEntity.ProfileAttachmentId > 0)
+                {
+                    var profile = _documentRepository.Get(_userEntity.ProfileAttachmentId);
+                    if(profile != null)
+                    {
+                        _userEntity.ProfilePath = profile.FilePath;
+                    }
+                }
             }
 
             return _userEntity;
@@ -291,7 +300,7 @@ namespace Eltizam.Business.Core.Implementation
 
                     
                     _repository.UpdateAsync(objUser);  
-                    _repository.UpdateGraph(objUser, EntityState.Modified);
+                    //_repository.UpdateGraph(objUser, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
@@ -313,6 +322,27 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
             else
             {
+                if (entityUser.uploadProfile != null)
+                {
+                    objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(entityUser.uploadProfile);
+                    objUserDocument.IsActive = entityUser.uploadProfile.IsActive;
+                    objUserDocument.TableKeyId = objUser.Id;
+                    objUserDocument.TableName = "User_Profile";
+                    objUserDocument.DocumentName = entityUser.uploadProfile.DocumentName;
+                    objUserDocument.FileName = entityUser.uploadProfile.FileName;
+                    objUserDocument.FilePath = entityUser.uploadProfile.FilePath;
+                    objUserDocument.FileType = entityUser.uploadProfile.FileType;
+                    objUserDocument.CreatedBy = entityUser.uploadProfile.CreatedBy;
+
+                    _documentRepository.AddAsync(objUserDocument);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    var user = _repository.Get(entityUser.Id);
+                    user.ProfileAttachmentId = objUserDocument.Id;
+
+                    _repository.UpdateAsync(user);
+                    await _unitOfWork.SaveChangesAsync();
+                }
                 //Address details
                 if (entityUser.Address != null)
                 { 
@@ -346,7 +376,7 @@ namespace Eltizam.Business.Core.Implementation
                             objUserAddress.ModifiedBy = entityUser.ModifiedBy;
 
                             _addressRepository.UpdateAsync(objUserAddress);
-                            _addressRepository.UpdateGraph(objUserAddress, EntityState.Modified);
+                            //_addressRepository.UpdateGraph(objUserAddress, EntityState.Modified);
                             await _unitOfWork.SaveChangesAsync();
 
                             //Do Audit Log --AUDITLOGUSER
@@ -386,9 +416,8 @@ namespace Eltizam.Business.Core.Implementation
                             objUserQualification.IsActive = Qlfc.IsActive;
                             objUserQualification.ModifiedBy = entityUser.ModifiedBy;
 
-
                             _qualifyRepository.UpdateAsync(objUserQualification);
-                            _qualifyRepository.UpdateGraph(objUserQualification, EntityState.Modified);
+                            //_qualifyRepository.UpdateGraph(objUserQualification, EntityState.Modified);
                             await _unitOfWork.SaveChangesAsync();
 
                             //Do Audit Log --AUDITLOGUSER
@@ -492,7 +521,7 @@ namespace Eltizam.Business.Core.Implementation
                     objUser.ModifiedBy = _LoginUserId;
                     objUser.ModifiedDate = AppConstants.DateTime;
                     _repository.UpdateAsync(objUser);
-                    _repository.UpdateGraph(objUser, EntityState.Modified);
+                   // _repository.UpdateGraph(objUser, EntityState.Modified);
 
                     await _unitOfWork.SaveChangesAsync();
                 }
