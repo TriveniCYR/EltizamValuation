@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Eltizam.Resource.Resources;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +15,15 @@ namespace Eltizam.Business.Models
         public string? Location { get; set; }
         public decimal? InternalArea { get; set; }
         public decimal? ExternalArea { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public int? Floor { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public int? Room { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1,999, ErrorMessage = "Maximum Value not be greater than 999 ")]
         public int? Bedrooms { get; set; }
         public string? Storage { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public int? Quantity { get; set; }
         public string? AdditionComment { get; set; }
         public string? PropertyCondition { get; set; }
@@ -25,6 +32,7 @@ namespace Eltizam.Business.Models
         public int? ModifiedBy { get; set; }
         public int? CreatedBy { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
+        public DocumentFilesModel? Document { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
     }
 }

@@ -31,6 +31,24 @@
     var isAddIn = objPermssionIn.Add ? 1 : 0;
     var isEditIn = objPermssionIn.Edit ? 1 : 0;
     var isViewIn = objPermssionIn.View ? 1 : 0;
+
+    var objPermssionSite = (RolePermissionModel)ViewBag.SiteDescription;
+    var isAddSite = objPermssionSite.Add ? 1 : 0;
+    var isEditSite = objPermssionSite.Edit ? 1 : 0;
+    var isViewSite = objPermssionSite.View ? 1 : 0;
+
+    var objPermssionevidence = (RolePermissionModel)ViewBag.ComparableEvidences;
+    var isAddEvidence = objPermssionevidence.Add ? 1 : 0;
+    var isEditEvidence = objPermssionevidence.Edit ? 1 : 0;
+    var isViewEvidence = objPermssionevidence.View ? 1 : 0;
+
+    
+    var objPermssionAssesment = (RolePermissionModel)ViewBag.ValuationAssessement;
+    var isAddAssesment = objPermssionAssesment.Add ? 1 : 0;
+    var isEditAssesment = objPermssionAssesment.Edit ? 1 : 0;
+    var isViewAssesment = objPermssionAssesment.View ? 1 : 0;
+
+
     ViewData["Title"] = _md + _header;
     var htmlAttributes = true;
 }
@@ -50,15 +68,29 @@
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab flex flex-start m-0 ptrl-20">
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
-                    @* <button class="tablinks" style="display: @(objPermssionQt.View ? "block" : "none")" onclick="profileTab(event, 'profile2')">Quotation Listing</button> *@
-                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
-                   @*  <button class="tablinks" style="display: @(objPermssionIn.View ? "block" : "none")" onclick="profileTab(event, 'profile3')">Payment Details</button> *@
-                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile3')">Payment Details</button>
 
-                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile4')" id="defaultOpen">Site description</button>
+                    
+                    @{
+                       
+                    var displayStyleQt = (objPermssionQt.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                    var displayStyleIn = (objPermssionIn.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                    var displayStyleSite = (objPermssionSite.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                     var displayStyleevidence = (objPermssionevidence.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                     var displayStyleAssesment = (objPermssionAssesment.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                    }
+                    <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
+                    
+                     <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payment Details</button> 
+                    @if (roleId == (int)RoleEnum.Admin || roleId == (int)RoleEnum.Valuer)
+                    {
 
-                    <button class="tablinks" style="display:  @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable evidences</button>
-                    <button class="tablinks" style="display: @(_md == "Add" ? "none" : "block")" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
+
+
+                        <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="defaultOpen">Site Description</button>
+
+                        <button class="tablinks" style="display: @displayStyleevidence"  onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
+                        <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
+                    }
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
@@ -587,7 +619,7 @@
                         </table>
                     </div>
                 </div>
-                <form asp-action="ValuationAssesmentManage">
+                <form asp-action="ValuationAssesmentManage" enctype="multipart/form-data">
                     @Html.HiddenFor(model => model.Id)
                     <div id="profile4" class="tabcontent">
                         <h3 class="ptrl-20">Structural Information</h3>
@@ -617,11 +649,12 @@
                             <div class="flex">
                                 <label for="">
                                     Room
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Room"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Room"] })
                                 </label>
                                 <label for="">
                                     Bedrooms
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control",  @placeholder = @SharedLocalizer["Bedrooms"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control", @type="number", @placeholder = @SharedLocalizer["Bedrooms"] })
+                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Bedrooms, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
@@ -685,7 +718,8 @@
                                 <div class="panel" style="display: none;">
                                     <div class="flex">
                                         <label for="" class="w-100">
-                                            <input type="file" class="fileInput" multiple onchange="displayFileNames(this)">
+                                             <input type="file" class="fileInput" asp-for="ValuationAssesment.SiteDescription.Document.Files" multiple onchange="displayFileNames(this)"> 
+                                            @* <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)"> *@
                                             <input type="text" class="fileNames" readonly placeholder="file names">
                                         </label>
                                     </div>
@@ -703,14 +737,24 @@
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>                                                        
-                                                         <tr>
-                                                            <td>Image123</td>
-                                                            <td>2023-Oct-10 </td>
-                                                            <td>Admin</td>
-                                                            <td><a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                            <td><a title="Delete"><img src="../assets/trash.svg" alt="trash" /></a></td>
-                                                        </tr>
+                                                    <tbody>
+                                                            @if (Model.ValuationAssesment.SiteDescription.Documents != null)
+                                                            {
+                                                                @foreach (var docs in Model.ValuationAssesment.SiteDescription.Documents)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@docs.DocumentName</td>
+                                                                        <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
+                                                                        <td>@docs.CreatedName</td>
+                                                                        <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
+                                                                        <td><a title="Delete" href='/ValuationAssessment/DeleteSiteDescriptionDocument?id=@docs.Id&fileName=@docs.FileName'><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>NA</label>
+                                                            }
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -776,61 +820,44 @@
                                     <div class="panel" style="display: none;">
                                         <div class="flex">
                                             <label for="" class="w-100">
-                                                @* <input type="file" class="fileInput" multiple onchange="displayFileNames(this)"> *@
-                                                @Html.TextBoxFor(model => model.Document.DocumentName, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["Document"],@type = "file" })
+                                                <input type="file" class="fileInput" asp-for="ValuationAssesment.comparableEvidenceModel.Document.Files" multiple onchange="displayFileNames(this)">
                                                 <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
                                         </div>
                                         <div class="W-100">
                                             <div class="prevUpload roundBorderBox m-0">
                                                 <h3>Previously uploaded</h3>
-                                                <div class="flex">
-                                                    @*  <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div> *@
-                                                    @if (Model.Documents != null)
-                                                    {
-                                                        @foreach (var docs in Model.Documents)
-                                                        {
-                                                            <div class="prevUploadTab">
-                                                                <div class="flex align-item-center m-0">
-                                                                    <img src="../assets/file.svg" alt="file" />
-                                                                    <span>@docs.DocumentName</span>
-                                                                </div>
-                                                                <a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-
-                                                            </div>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <label>NA</label>
-                                                    }
+                                                <div class="scroll-x">
+                                                    <table class="table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>File Name</th>
+                                                                <th>DateUpdate </th>
+                                                                <th>Uploaded By</th>
+                                                                <th>Download</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.ValuationAssesment.comparableEvidenceModel.Documents != null)
+                                                            {
+                                                                @foreach (var docs in Model.ValuationAssesment.comparableEvidenceModel.Documents)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@docs.DocumentName</td>
+                                                                        <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
+                                                                        <td>@docs.CreatedName</td>
+                                                                        <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
+                                                                        <td><a title="Delete" href='/MasterUser/DeleteUserDocument?id=@docs.Id&fileName=@docs.FileName'><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>NA</label>
+                                                            }
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
@@ -872,26 +899,26 @@
                                 <label>
                                     Insurance
                                     <span class="flex yesNoToggle">
-                                        @* <input type="radio" name="answer" value="yes" onclick="toggleInput('yes')"> Yes &nbsp; &nbsp; *@
-                                       @*  <input type="radio" asp-for="" value="true" onclick="toggleInput('yes')"> Yes &nbsp; &nbsp; *@
-                                        @* @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance,"Yes")
-                                        @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance,"NO")
-
-
-                                        <input type="radio" name="answer" value="no" onclick="toggleInput('no')"> No *@
+                                       
 
                                         @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, true, new { onclick = "toggleInput('yes')" })
-                                        <span style="margin-right: 5px;">Yes</span>
+                                        <span>Yes</span>  &nbsp; &nbsp;
 
                                         @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, false, new { onclick = "toggleInput('no')" })
-                                        <span>No</span>
+                                        <span>No</span> &nbsp; &nbsp;
+
                                     </span>
                                 </label>
-                                <label id="yesInput" for="yesField" style="display: none;">
+                               @*  <label id="yesInput" for="yesField" style="display: none;">
                                     Insurance details
-                                    @* <input type="text" id="yesField" name="yesField"> *@
+                                   
                                     @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new {  @class = "form-control",  @placeholder = @SharedLocalizer["InsuaranceDetail"] })
-                                </label>
+                                </label> *@
+                                <label id="yesInput" for="yesField" style="display: @(Model.ValuationAssesment.valuationAssessementModel.Insuarance ? "block" : "none");">
+                               Insurance details
+                          @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new { @class = "form-control", @placeholder = @SharedLocalizer["InsuaranceDetail"] })
+                           </label>
+
 
                             </div>
 
@@ -907,64 +934,47 @@
                                     <div class="panel" style="display: none;">
                                         <div class="flex">
                                             <label for="" class="w-100">
-                                                @*  <input type="file" class="fileInput" multiple onchange="displayFileNames(this)"> *@
-                                                @Html.TextBoxFor(model => model.Document.DocumentName, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["Document"],@type = "file" })
+                                                <input type="file" class="fileInput" asp-for="ValuationAssesment.valuationAssessementModel.Document.Files" multiple onchange="displayFileNames(this)">
                                                 <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
                                         </div>
-                                        <div class="W-100">
+                                          <div class="W-100">
                                             <div class="prevUpload roundBorderBox m-0">
                                                 <h3>Previously uploaded</h3>
-                                                <div class="flex">
-                                                    @*  <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div>
-                                                    <div class="prevUploadTab">
-                                                    <div class="flex align-item-center m-0">
-                                                    <img src="../assets/file.svg" alt="file" />
-                                                    ABC
-                                                    </div>
-                                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                                    </div> *@
-                                                    @if (Model.Documents != null)
-                                                    {
-                                                        @foreach (var docs in Model.Documents)
-                                                        {
-                                                            <div class="prevUploadTab">
-                                                                <div class="flex align-item-center m-0">
-                                                                    <img src="../assets/file.svg" alt="file" />
-                                                                    <span>@docs.DocumentName</span>
-                                                                </div>
-                                                                <a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-
-                                                            </div>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <label>NA</label>
-                                                    }
+                                                <div class="scroll-x">
+                                                    <table class="table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>File Name</th>
+                                                                <th>DateUpdate </th>
+                                                                <th>Uploaded By</th>
+                                                                <th>Download</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.ValuationAssesment.valuationAssessementModel.Documents != null)
+                                                            {
+                                                                @foreach (var docs in Model.ValuationAssesment.valuationAssessementModel.Documents)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@docs.DocumentName</td>
+                                                                        <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
+                                                                        <td>@docs.CreatedName</td>
+                                                                        <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
+                                                                        <td><a title="Delete" href='/ValuationRequest/DeleteSiteDescriptionDocument?id=@docs.Id&fileName=@docs.FileName'><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>NA</label>
+                                                            }
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div
                                     </div>
                                 </div>
 

@@ -7,7 +7,7 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var objPermssion = (RolePermissionModel)ViewBag.Access;
     var isAdd = objPermssion.Add ? 1 : 0;
-     var isEdit = objPermssion.Edit ? 1 : 0;
+    var isEdit = objPermssion.Edit ? 1 : 0;
     string PageHeading = "";
     if (ViewBag.IsView == 0)
     {
@@ -55,7 +55,7 @@
                                 @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control  ", @onchange = "BindState(this.options[this.selectedIndex].value)"})
                                 @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                             </label>
-                         
+
                             <label for="IsActive" class="w-50">
                                 Status
                                 <input class='input-switch' type="checkbox" asp-for="IsActive" />
@@ -78,8 +78,9 @@
                         </div>
                         <div class="flex">
                             <label for="resourceType" class="w-50">
-                                Sector / Zone
+                                <p class="m-0">Sector / Zone<span class="text-danger">*</span></p>
                                 @Html.TextBoxFor(model => model.Sector,  new { @class = "form-control " })
+                                @Html.ValidationMessageFor(model => model.Sector, "", new { @class = "text-danger" })
                             </label>
                             <label for="Geo-coordinates" class="w-50">
                                 Latitude
@@ -92,15 +93,15 @@
                                 @Html.TextBoxFor(model => model.Longitude,  new { @class = "form-control  " })
                             </label>
                             <label for="Geo-coordinates" class="w-50">
-                                <p class="m-0">Home Currency<span class="text-danger">*</span></p>                               
-                                 @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>{},  new { @class = "form-control  "})
+                                <p class="m-0">Home Currency<span class="text-danger">*</span></p>
+                                @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>{},  new { @class = "form-control  "})
                                 @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
                             <label for="Geo-coordinates" class="w-50">
                                 <p class="m-0">Foreign Currency<span class="text-danger">*</span></p>
-                                 @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem> { },  new { @class = "form-control  " })
+                                @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem> { },  new { @class = "form-control  " })
                                 @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" })
                             </label>
                         </div>
@@ -110,7 +111,7 @@
                             <a class="greyBtn lineBtn formAbtn" asp-action="Locations">@SharedLocalizer["Cancel"]</a>
                             @if (ViewBag.IsView != 1)
                             {
-                           
+
                                 <button type="submit" id="btnSaveEdit" class="bgBlue">Save</button>
 
                             }
@@ -125,12 +126,12 @@
 </form>
 
 @section MyScripts {
-    <script type="text/javascript" src="~/js/custom/location/locationmanagement.js?v=@jsVersion"></script> 
+    <script type="text/javascript" src="~/js/custom/location/locationmanagement.js?v=@jsVersion"></script>
     <script>
         var CountryList = "@Eltizam.Web.Helpers.APIURLHelper.GetCountryList";
         var stateListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
         var cityListUrl = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
         var currencyUrl = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryDescriptionById";
-        var LocationGetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllLocations"; 
+        var LocationGetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetAllLocations";
     </script>
 }
