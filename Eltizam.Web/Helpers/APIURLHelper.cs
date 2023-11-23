@@ -236,7 +236,7 @@ namespace Eltizam.Web.Helpers
         public static string ValuationAssesment = "ValuationAssessment/ValuationAssesmentUpsert";
         public static string GetSiteDescriptionList = "ValuationAssessment/GetSiteDescriptionList";
 
-        public static string DeleteSiteDescriptionDocumentById = "ValuationAssessment/DeleteSiteDescriptionDocument";
+        public static string DeleteDocument = "ValuationAssessment/DeleteDocument";
 
         #endregion Valuation Request 
 
