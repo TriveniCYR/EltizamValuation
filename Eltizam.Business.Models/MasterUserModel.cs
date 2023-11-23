@@ -9,6 +9,7 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public string? UserName { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Enter upper case, lower case & special character only")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -16,6 +17,7 @@ namespace Eltizam.Business.Models
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Enter upper case, lower case & special character only")]
         public string? MiddleName { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Enter upper case, lower case & special character only")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -37,6 +39,7 @@ namespace Eltizam.Business.Models
         public int DepartmentId { get; set; }
         [StringLength(50, MinimumLength = 10)]
         public string? LicenseNo { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Enter upper case, lower case & special character only")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]

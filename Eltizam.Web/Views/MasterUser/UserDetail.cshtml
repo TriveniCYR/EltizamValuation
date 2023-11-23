@@ -48,7 +48,14 @@
                                 <div class="flex threeBox">
                                     <div class="flex justify-center mb-28">
                                         <div class="resourceProfile clientImg text-center">
-                                            <img src="../assets/client1.png" alt="img-7" />                                            
+                                            @if (Model.ProfileAttachmentId > 0)
+                                            {
+                                                <img src="@Model.ProfilePath" alt="upload-profile-pic" class="w-100" style="margin-bottom: 36px;" />
+                                            }
+                                            else
+                                            {
+                                                <img src="../assets/client1.png" alt="img-7" />
+                                            }
                                         </div>
                                     </div>
                                     <label for="IsActive" class="w-50">
@@ -277,25 +284,37 @@
                                 <div class="W-100">
                                     <div class="prevUpload roundBorderBox m-0">
                                         <h3>Previously uploaded</h3>
-                                        <div class="flex">
-                                            @if (Model.Documents != null)
-                                            {
-                                                @foreach (var docs in Model.Documents)
-                                                {
-                                                    <div class="prevUploadTab">
-                                                        <div class="flex align-item-center m-0">
-                                                            <img src="../assets/file.svg" alt="file" />
-                                                            <span>@docs.DocumentName</span>
-                                                        </div>
-                                                        <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-
-                                                    </div>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                <label>NA</label>
-                                            }
+                                        <div class="scroll-x">
+                                            <table id="UserTableDocument" class="table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>File Name</th>
+                                                        <th>DateUpdate </th>
+                                                        <th>Uploaded By</th>
+                                                        <th>Download</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Documents != null)
+                                                    {
+                                                        @foreach (var docs in Model.Documents)
+                                                        {
+                                                            <tr id="docs.Id">
+                                                                <td>@docs.DocumentName</td>
+                                                                <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
+                                                                <td>@docs.CreatedName</td>
+                                                                <td><a download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
+                                                                <td><a title="Delete"><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>NA</label>
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
