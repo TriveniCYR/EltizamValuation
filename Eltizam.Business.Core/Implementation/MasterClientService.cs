@@ -185,7 +185,7 @@ namespace Eltizam.Business.Core.Implementation
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objClient);
 
-                    _repository.UpdateGraph(objClient, EntityState.Modified);
+                    //_repository.UpdateGraph(objClient, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
                     //Do Audit Log --AUDITLOGUSER
                     await _auditLogService.CreateAuditLog<MasterClient>(AuditActionTypeEnum.Update, OldEntity, objClient);
@@ -245,7 +245,7 @@ namespace Eltizam.Business.Core.Implementation
                         objAddress.ModifiedBy = master_ClientModel.ModifiedBy;
                         _repositoryAddress.UpdateAsync(objAddress);
 
-                        _repositoryAddress.UpdateGraph(objAddress, EntityState.Modified);
+                        //_repositoryAddress.UpdateGraph(objAddress, EntityState.Modified);
                         await _unitOfWork.SaveChangesAsync();
 
                         //Do Audit Log --AUDITLOGUSER
@@ -283,7 +283,7 @@ namespace Eltizam.Business.Core.Implementation
                         objContact.Status = entityAddress.Status;
                         objContact.ModifiedBy = master_ClientModel.ModifiedBy;
                         _repositoryContact.UpdateAsync(objContact);
-                        _repositoryContact.UpdateGraph(objContact, EntityState.Modified);
+                        //_repositoryContact.UpdateGraph(objContact, EntityState.Modified);
                         await _unitOfWork.SaveChangesAsync();
 
                         //Do Audit Log --AUDITLOGUSER

@@ -108,7 +108,7 @@ namespace Eltizam.Business.Core.Implementation
                     objValuationFees.ModifiedDate = AppConstants.DateTime;
                     objValuationFees.ModifiedBy = entityValuationFees.ModifiedBy;
                     _repository.UpdateAsync(objValuationFees);
-                    _repository.UpdateGraph(objValuationFees, EntityState.Modified);
+                    //_repository.UpdateGraph(objValuationFees, EntityState.Modified);
 
                     await _unitOfWork.SaveChangesAsync();
 

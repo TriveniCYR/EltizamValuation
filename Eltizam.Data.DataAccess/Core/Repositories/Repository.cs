@@ -412,25 +412,30 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 dbContext.Entry(entity).Property("CreatedDate").CurrentValue = _currentSQLServerDate;
             }
-            catch (Exception ex) { }
-            try
-            {
-                //if (string.IsNullOrEmpty((string)dbContext.Entry(entity).Property("IPAddress").CurrentValue.ToString()))
-                //{
-                //    dbContext.Entry(entity).Property("IPAddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
-                //}
-            }
-            catch (Exception ex1) { }
-            try
-            {
-                //if (string.IsNullOrEmpty((string)dbContext.Entry(entity).Property("Ipaddress").CurrentValue))
-                //{
-                //    dbContext.Entry(entity).Property("Ipaddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
-                //}
-            }
-            catch
+            catch (Exception ex) 
             {
             }
+            
+            /*
+             try
+                {
+                    if (string.IsNullOrEmpty((string)dbContext.Entry(entity).Property("IPAddress").CurrentValue.ToString()))
+                    {
+                        dbContext.Entry(entity).Property("IPAddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
+                    }
+                }
+                catch (Exception ex1) { }
+                try
+                {
+                    if (string.IsNullOrEmpty((string)dbContext.Entry(entity).Property("Ipaddress").CurrentValue))
+                    {
+                        dbContext.Entry(entity).Property("Ipaddress").CurrentValue = Helper.GetIPAddress(Helper.httpRequest);
+                    }
+                }
+                catch
+                {
+                }
+            */
 
             //Global Common Fields Update
             dbContext.Entry(entity).Property("CreateDate").CurrentValue = _currentSQLServerDate;
@@ -447,8 +452,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 dbContext.Set<TEntity>().AddRange(entities);
             }
-            catch { }
-
+            catch 
+            { 
+            } 
         }
 
         public void AddRangeAsync(IEnumerable<TEntity> entities)
@@ -457,7 +463,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 dbContext.Set<TEntity>().AddRangeAsync(entities);
             }
-            catch (Exception e) { }
+            catch (Exception e) 
+            { 
+            }
         }
 
         public void UpdateAsync(TEntity entity, bool IsCreatedDateUpdate = false)
@@ -466,6 +474,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             TEntity originalEntity = GetOrignalEntity(entity);
 
             SetCommonPropertiesWhileUpdate(entity, originalEntity, IsCreatedDateUpdate);
+
+            UpdateGraph(entity, EntityState.Modified);
+            // dbContext.Set<TEntity>().Update(entity);
         }
 
         public TEntity GetEntity(Expression<Func<TEntity, bool>> predicate)
