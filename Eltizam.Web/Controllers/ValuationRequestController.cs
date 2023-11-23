@@ -56,7 +56,14 @@ namespace EltizamValuation.Web.Controllers
             if (view != null)
                 ViewData["IsView"] = true;
 
-            ValuationRequestModel valuationRequestModel;
+            //ValuationRequestModel valuationRequestModel;
+
+            var _ValuationEntity = new ValuationRequestModel();
+
+            _ValuationEntity.ValuationAssesment = new ValuationAssesmentActionModel();
+            _ValuationEntity.ValuationAssesment.SiteDescription = new SiteDescriptionModel();
+            _ValuationEntity.ValuationAssesment.comparableEvidenceModel = new ComparableEvidenceModel();
+            _ValuationEntity.ValuationAssesment.valuationAssessementModel = new ValuationAssessementModel();
             //Check permissions for Get
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit ;
 
@@ -70,13 +77,16 @@ namespace EltizamValuation.Web.Controllers
             ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
             ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
             ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+            ViewBag.SiteDescription = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.SiteDescription);
+            ViewBag.ComparableEvidences = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ComparableEvidences);
+            ViewBag.ValuationAssessement = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationAssessement);
 
             if (id == null || id <= 0)
             {
                 ViewBag.CurrentUserId = _helper.GetLoggedInUserId(); 
 
-                valuationRequestModel = new ValuationRequestModel(); 
-                return View("ValuationRequestManage", valuationRequestModel);
+                //valuationRequestModel = new ValuationRequestModel(); 
+                return View("ValuationRequestManage", _ValuationEntity);
             }
             else
             {
@@ -479,6 +489,24 @@ namespace EltizamValuation.Web.Controllers
                 valuationAssesment.comparableEvidenceModel.RequestId = requestId;
                 valuationAssesment.valuationAssessementModel.RequestId = requestId;
 
+                if (valuationAssesment.SiteDescription.Document != null && valuationAssesment.SiteDescription.Document.Files != null)
+                {
+                    List<MasterDocumentModel> docs = FileUpload(valuationAssesment.SiteDescription.Document);
+                    valuationAssesment.SiteDescription.uploadDocument = docs;
+                    valuationAssesment.SiteDescription.Document = null;
+                }
+                if (valuationAssesment.comparableEvidenceModel.Document != null && valuationAssesment.comparableEvidenceModel.Document.Files != null)
+                {
+                    List<MasterDocumentModel> docs = FileUpload(valuationAssesment.comparableEvidenceModel.Document);
+                    valuationAssesment.comparableEvidenceModel.uploadDocument = docs;
+                    valuationAssesment.comparableEvidenceModel.Document = null;
+                }
+                if (valuationAssesment.valuationAssessementModel.Document != null && valuationAssesment.valuationAssessementModel.Document.Files != null)
+                {
+                    List<MasterDocumentModel> docs = FileUpload(valuationAssesment.valuationAssessementModel.Document);
+                    valuationAssesment.valuationAssessementModel.uploadDocument = docs;
+                    valuationAssesment.valuationAssessementModel.Document = null;
+                }
                 //int roleId = _helper.GetLoggedInRoleId();
 
                 //if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
@@ -534,6 +562,119 @@ namespace EltizamValuation.Web.Controllers
             }
             return RedirectToAction("ValuationRequests");
             //return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId });
+        }
+
+        [HttpGet]
+        public IActionResult DeleteSiteDescriptionDocument(int id, string? fileName)
+        {
+            try
+            {
+                //Check permissions for Get                
+                int isFileDelete = DeleteFile(id, fileName);
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.DeleteSiteDescriptionDocumentById + "/" + id, HttpMethod.Delete, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                }
+                else
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+            }
+
+            return RedirectToAction("Users");
+        }
+        private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
+        {
+            List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();
+            if (document.Files == null || document.Files.Count == 0)
+            {
+                throw new ArgumentException("No files were uploaded.");
+            }
+            //var currentUser = _helper.GetLoggedInUserId();
+            var savedFileNames = new List<string>();
+
+            foreach (var file in document.Files)
+            {
+                if (file == null || file.Length == 0)
+                {
+                    continue;
+                }
+
+                // Check if the file type is allowed
+                var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
+                if (!allowedFileTypes.Contains(file.ContentType))
+                {
+                    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
+                }
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var docName = Path.GetFileNameWithoutExtension(file.FileName);
+                var filePath = Path.Combine("wwwroot/Uploads", fileName);
+                filePath = filePath.Replace("\\", "/");
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyToAsync(stream);
+                }
+
+                // Save information about the uploaded file to the database
+                var upload = new MasterDocumentModel
+                {
+                    FileName = fileName,
+                    FilePath = filePath.Replace("wwwroot", ".."),
+                    DocumentName = docName,
+                    IsActive = 1,
+                    //CreatedBy = currentUser,
+                    FileType = GetFileType(file.ContentType),
+                    CreatedDate = null,
+                    CreatedName = ""
+                };
+
+                uploadFils.Add(upload);
+            }
+            return uploadFils;
+        }
+
+        private int DeleteFile(int id, string? fileName)
+        {
+            int isDelete = 0;
+            if (fileName != null || fileName != "")
+            {
+                var filePath = Path.Combine("wwwroot/Uploads", fileName);
+                filePath = filePath.Replace("\\", "/");
+                // Check if the file type is allowed
+                if (System.IO.File.Exists(filePath))
+                {
+                    // If file found, delete it
+                    System.IO.File.Delete(filePath);
+                    isDelete = 1;
+                }
+
+            }
+            return isDelete;
+        }
+        private string GetFileType(string contentType)
+        {
+            switch (contentType)
+            {
+                case "image/jpeg":
+                case "image/png":
+                    return "Image";
+                case "application/msword":
+                    return "Word";
+                case "application/pdf":
+                    return "PDF";
+                default:
+                    return "Unknown";
+            }
         }
 
     }

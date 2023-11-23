@@ -22,10 +22,9 @@ namespace Eltizam.Business.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool IsActive { get; set; }
-        //public MasterUserAddressModel? Address { get; set; } = null;
-
         public List<MasterDocumentModel>? Documents { get; set; }
+        public DocumentFilesModel? Document { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
-        //public DocumentFilesModel? Document { get; set; }
     }
 }
+

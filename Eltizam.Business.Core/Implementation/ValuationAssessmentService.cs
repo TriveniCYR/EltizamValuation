@@ -195,7 +195,7 @@ namespace Eltizam.Business.Core.Implementation
                     {
                         objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
                         objUserDocument.IsActive = doc.IsActive;
-                        objUserDocument.TableKeyId = objUser.Id;
+                        objUserDocument.TableKeyId = comparable.Id;
                         objUserDocument.TableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
                         objUserDocument.DocumentName = doc.DocumentName;
                         objUserDocument.FileName = doc.FileName;
@@ -537,6 +537,23 @@ namespace Eltizam.Business.Core.Implementation
                 }
             }
 
+            return DBOperation.Success;
+        }
+
+
+        public async Task<DBOperation> DeleteDocument(int id)
+        {
+            if (id > 0)
+            {
+
+                var entityDoc = _documentRepository.Get(id);
+                if (entityDoc != null)
+                {
+                    _documentRepository.Remove(entityDoc);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+            // Return a success operation indicating successful deletion.
             return DBOperation.Success;
         }
 

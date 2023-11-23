@@ -287,6 +287,9 @@ namespace Eltizam.Business.Core.Implementation
             var assement = new ValuationAssessementModel();
             _ValuationEntity = _mapperFactory.Get<ValuationRequest, ValuationRequestModel>(await _repository.GetAsync(id));
             _ValuationEntity.ValuationAssesment = new ValuationAssesmentActionModel();
+            _ValuationEntity.ValuationAssesment.SiteDescription = new SiteDescriptionModel();
+            _ValuationEntity.ValuationAssesment.comparableEvidenceModel = new ComparableEvidenceModel();
+            _ValuationEntity.ValuationAssesment.valuationAssessementModel = new ValuationAssessementModel();
             // siteDescription = _mapperFactory.Get<SiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
 
             DbParameter[] osqlParameter =
@@ -315,7 +318,7 @@ namespace Eltizam.Business.Core.Implementation
                 _ValuationEntity.LocationCityId = res.LocationCityId;
 
                  siteDescription = _mapperFactory.Get<SiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
-             
+                  
                 if(siteDescription != null) {
                     _ValuationEntity.ValuationAssesment.SiteDescription= siteDescription;
                     DbParameter[] osqlParameter2 =

@@ -17,5 +17,6 @@ namespace Eltizam.Business.Core.Interface
         //Task<DBOperation> EvidenceUpsert(ComparableEvidenceModel entityUser);
         //Task<DBOperation> AssesmentUpsert(ValuationAssessementModel assesment);
         Task<SiteDescriptionModel> GetSiteDescriptionList(int requestId);
+        Task<DBOperation> DeleteDocument(int id);
     }
 }
