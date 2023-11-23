@@ -302,7 +302,7 @@ mb-16{
 
 /* system user master css here */
 .sideNavDashboard {
-    width: 16em;
+    width: 15em;
     background-color: var(--white);
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.07);
     z-index: 2;
@@ -345,8 +345,8 @@ mb-16{
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
-        line-height: 120%;
-        padding: 9px 20px;
+        line-height: 10%;
+        padding: 9px 10px;
         cursor: pointer;
         color: var(--white);
         position: relative;
@@ -454,7 +454,7 @@ mb-16{
     }
 
 .sideNavDashboard .sideMenu ul li img {
-    margin-right: 12px;
+    /*margin-right: 12px;*/
 }
 
 .right-arrow-menu {
