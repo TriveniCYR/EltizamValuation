@@ -182,7 +182,7 @@ namespace Eltizam.Business.Core.Implementation
         /// <returns></returns>
         public async Task<DBOperation> MasterDictionaryAddUpdate(MasterDictionaryEntity entity)
         {
-            if (entity != null && entity.Description != null)
+            if (entity != null && entity.Description != null && entity.Id==0)
             {
                 var result = IsDictionaryDescriptionExists(entity.Description);
                 if (result)
@@ -199,7 +199,6 @@ namespace Eltizam.Business.Core.Implementation
             {
                 // Get the existing entity from the repository.
                 objmasterDictionary = _repository.Get(entity.Id);
-
                 // If the entity exists, update its properties.
                 if (objmasterDictionary != null)
                 {
