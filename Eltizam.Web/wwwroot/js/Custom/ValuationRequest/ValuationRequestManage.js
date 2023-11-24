@@ -111,7 +111,7 @@ function ConfirmationDocument(id, isAction) {
 
 function DeleteDocument() {
 
-    var docId = $('#DeleteDocumentModel #ID').val()
+     docId = $('#DeleteDocumentModel #ID').val()
     var action = $('#isAction').val();
     if (isDeleteSite && action ==='isSite' )
     {
@@ -162,15 +162,15 @@ function DeleteDocument() {
 function DeleteDocumentSuccess(data) {
     try {
         if (data._Success === true) {
-            var docId = $('#DeleteDocumentModel #ID').val(); // Get the docId from the modal
-
-            // Delay the removal until after the AJAX call is complete
+           /* $('#' + docId).remove();*/
+            toastr.success(RecordDelete);
             setTimeout(function () {
-                $('#SiteTableDocument tr[data-docid="' + docId + '"]').remove();
-                debugger;
-                toastr.success(RecordDelete);
-            }, 0);
-        } else {
+               window.location.href = "/ValuationRequest/ValuationRequests";
+           }, 1000);
+        }
+
+        else
+        {
             toastr.error(data._Message);
         }
     } catch (e) {

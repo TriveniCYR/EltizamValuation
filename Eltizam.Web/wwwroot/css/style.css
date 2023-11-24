@@ -830,7 +830,7 @@ table .userPic {
     .inputSearchs .tabSection .flex label {
         display: flex;
         flex-direction: column;
-        width: 24%;
+        width: 48.5%;
     }
 
         .inputSearchs form .flex label + label,
