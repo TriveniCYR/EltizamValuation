@@ -560,7 +560,8 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
-            return RedirectToAction("ValuationRequests");
+            //return RedirectToAction("ValuationRequests");
+            return Redirect($"/ValuationRequest/ValuationRequestManage?id={valuationAssesment.SiteDescription.ValuationRequestId}");
             //return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId });
         }
 
