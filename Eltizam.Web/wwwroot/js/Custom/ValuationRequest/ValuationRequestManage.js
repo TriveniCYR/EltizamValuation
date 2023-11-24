@@ -35,7 +35,7 @@ function redirectToComparableEvidences() {
     profileTab(event, 'profile5');
     var tab_5 = document.getElementById('tab_5');
     tab_5.classList.add('active')
-   
+
 }
 function redirectToValuationAssesment() {
     // Switch to the "Comparable evidences" tab
@@ -111,29 +111,25 @@ function ConfirmationDocument(id, isAction) {
 
 function DeleteDocument() {
 
-     docId = $('#DeleteDocumentModel #ID').val()
+    docId = $('#DeleteDocumentModel #ID').val()
     var action = $('#isAction').val();
-    if (isDeleteSite && action ==='isSite' )
-    {
-        
-        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
-    }
-    else if (isDeleteEvidence && action === 'isEvidence')
-    
-    {
-
-       
+    if (isDeleteSite && action === 'isSite') {
 
         ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
-    else if (isDeleteAssesment && action === 'isAssesment')
-    {
+    else if (isDeleteEvidence && action === 'isEvidence') {
 
 
 
         ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
-   
+    else if (isDeleteAssesment && action === 'isAssesment') {
+
+
+
+        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
+    }
+
 
     else {
         toastr.error(DeleteAccessDenied);
@@ -141,36 +137,15 @@ function DeleteDocument() {
 }
 
 
-//function DeleteDocumentSuccess(data) {
-//    try {
-//        if (data._Success === true) {
-//            debugger
-//           /* $('#SiteTableDocument tr:eq(' + docId + ')').remove();*/
-//            toastr.success(RecordDelete);
-//            setTimeout(function () {
-//                window.location.href = "/ValuationRequest/ValuationRequests";
-//            }, 1000);
-//        }
-//        else {
-//            toastr.error(data._Message);
-//        }
-//    } catch (e) {
-//        toastr.error('Error:' + e.message);
-//    }
-//}
 
 function DeleteDocumentSuccess(data) {
     try {
         if (data._Success === true) {
-           /* $('#' + docId).remove();*/
+            $('#' + docId).remove();
             toastr.success(RecordDelete);
-            setTimeout(function () {
-               window.location.href = "/ValuationRequest/ValuationRequests";
-           }, 1000);
         }
 
-        else
-        {
+        else {
             toastr.error(data._Message);
         }
     } catch (e) {
@@ -264,7 +239,7 @@ $(document).ready(function () {
     GetValuerLists();
     BindQuatationList();
     BindInvoiceList();
-        /*BindPropertyDetail();*/
+    /*BindPropertyDetail();*/
 
     if (document.location.href.includes('id'))
 
@@ -342,7 +317,7 @@ $(document).ready(function () {
 });
 
 
-var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/  
+var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/
 
 //// Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
 //if (selectedOption === 'Rejected') {
@@ -367,14 +342,14 @@ var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text
 
 //}
 
-function BindValuationRequestStatus(roleId) { 
+function BindValuationRequestStatus(roleId) {
     var RequestStatus = $("#StatusId");
     var _val = $('#hdnStatusId').val();
     var _rpname = "statusName";
 
     BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
 }
-function BindClientType() { 
+function BindClientType() {
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientTypeId').val();
     var _rpname = "clientType";
@@ -487,7 +462,7 @@ function BindPropertySub(id) {
 }
 
 
-function BindOwnership() { 
+function BindOwnership() {
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
     var _rpname = "ownershipType";
@@ -517,7 +492,7 @@ function BindOwnership() {
 }
 
 
-function BindPropertyDetail() { 
+function BindPropertyDetail() {
     if (document.location.href.includes('id')) {
         var PropertyTypeId = document.getElementById("hdnPropertyType").value;
         var PropertySubTypeId = document.getElementById("hdnPropertySub").value;
@@ -605,8 +580,8 @@ function BindPropertyDetailById(Id) {
             document.getElementById('AgeOfConstruction').value = response._object.ageOfConstruction;
             document.getElementById('Parking').value = response._object.parking;
             document.getElementById('ParkingBayNo').value = response._object.parkingBayNo;
-            document.getElementById('Description').value = response._object.description; 
-            var AmenityList = response._object.amenityList;  
+            document.getElementById('Description').value = response._object.description;
+            var AmenityList = response._object.amenityList;
 
             for (i = 0; i < response._object.amenityList.length; i++) {
                 //var _id = response._object.amenityList[i].id
@@ -615,9 +590,9 @@ function BindPropertyDetailById(Id) {
                     Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
                         '<input checked data-val="true"   name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
                         '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
-                } 
-            } 
-            var PropertyDetails = response._object.propertyDetail;  
+                }
+            }
+            var PropertyDetails = response._object.propertyDetail;
             document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
             document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
             document.getElementById('PropertyDetail_CityId').value = PropertyDetails.cityId;
@@ -661,15 +636,15 @@ function BindState(id) {
     var state = $("#StateId");
     var _val = $('#hdnState').val();
     var _rpname = "stateName";
-     
+
     $.ajax({
         type: "GET",
         url: BaseURL + stateListUrl + '/' + id,
         "datatype": "json",
-        success: function (response) { 
+        success: function (response) {
             $("#StateId").val(function () {
                 return response[0].stateName;//this.value + number;
-            }); 
+            });
             if ($('#hdnState').val() != 0) {
                 state.val($('#hdnState').val());
             }
@@ -717,15 +692,15 @@ function BindCity(id) {
     var city = $("#CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";
-     
+
     $.ajax({
         type: "GET",
         url: BaseURL + cityListUrl + '/' + id,
         "datatype": "json",
-        success: function (response) {  
+        success: function (response) {
             $("#CityId").val(function () {
-                return response[0].cityName; 
-            }); 
+                return response[0].cityName;
+            });
             if ($('#hdnCity').val() != 0) {
                 state.val($('#hdnCity').val());
             }
@@ -781,19 +756,19 @@ function formatDateTo_ddMMMyyyy(date) {
     return `${day}-${month}-${year}`;
 }
 
-function BindClientDetailsByClientId(Id) { 
+function BindClientDetailsByClientId(Id) {
     $.ajax({
         type: Get,
         url: BaseURL + GetClientDetailById + '/' + Id,
         "datatype": "json",
-        success: function (response) { 
+        success: function (response) {
             document.getElementById('ClientName').value = response._object.clientName;
-            document.getElementById('LicenseNumber').value = response._object.licenseNumber; 
+            document.getElementById('LicenseNumber').value = response._object.licenseNumber;
 
             const inputDateString = response._object.trnexpiryDate;
             const inputDate = new Date(inputDateString);
             const formattedDate = formatDateTo_ddMMMyyyy(inputDate);
-            document.getElementById('TrnexpiryDate').value = formattedDate; 
+            document.getElementById('TrnexpiryDate').value = formattedDate;
 
             document.getElementById('Trnnumber').value = response._object.trnnumber;
             //document.getElementById('Trnnumber').value = response._object.address.address1;
@@ -807,18 +782,18 @@ function BindClientDetailsByClientId(Id) {
             }
             //document.getElementById('StateId').value = response._object.address.stateId;
             //document.getElementById('CityId').value = response._object.address.cityId;
-            document.getElementById('PinCode').value = response._object.address.pinNo; 
+            document.getElementById('PinCode').value = response._object.address.pinNo;
 
-            if (response._object.address != null) { 
+            if (response._object.address != null) {
                 $('#NewAddressTable tbody').html('');
                 //$.each(data._object, function (index, object) { //  <td>' + object.ClientTypeCode + '</td>  <td>' + object.isdClientTypeCode + '</td>  
                 $('#NewAddressTable tbody').append(' <tr><td>' + response._object.address.address1 + '</td> <td>' + response._object.address.address2 + '</td><td>' + response._object.address.countryName
                     + '</td><td>' + response._object.address.stateName + '</td><td>' + response._object.address.cityName + '</td><td>' + response._object.address.pinNo + '</td></tr>');
- 
+
             }
 
-            if (response._object.address != null) { 
-                $('#NewContactTable tbody').html('');  
+            if (response._object.address != null) {
+                $('#NewContactTable tbody').html('');
                 $('#NewContactTable tbody').append(' <tr><td>' + response._object.contact.contactPersonName + '</td> <td>' + response._object.contact.department + '</td><td>' + response._object.contact.designation
                     + '</td><td>' + response._object.contact.email + '</td><td>' + response._object.contact.mobile + '</td></tr>');
             }
@@ -870,7 +845,7 @@ function GetApproverLists() {
     var _rpname = "userName";
     var currentUserId = LogInUserId;
 
-    BindDropdowns(GetApproverList + '/' + currentUserId+'/Approver', statusId, _rpname, _val);
+    BindDropdowns(GetApproverList + '/' + currentUserId + '/Approver', statusId, _rpname, _val);
 
 }
 
@@ -920,7 +895,7 @@ function GetValuationMethodLists() {
 }
 
 
-$('#btnSaveApprove').on('click', function () { 
+$('#btnSaveApprove').on('click', function () {
     var statusId = $("#StatusId").val();
     var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
     var Id = document.getElementById('Id').value;
@@ -928,8 +903,8 @@ $('#btnSaveApprove').on('click', function () {
         Id: Id,
         StatusId: statusId,
         ApproverComment: approverComment
-    }; 
-    var ValutionRequestForApproverModel = data; 
+    };
+    var ValutionRequestForApproverModel = data;
 
     $.ajax({
         type: "POST",
@@ -941,7 +916,7 @@ $('#btnSaveApprove').on('click', function () {
         },
 
         data: JSON.stringify(ValutionRequestForApproverModel),
-        success: function (response) { 
+        success: function (response) {
             toastr.success(SucessMsg);
             setTimeout(function () {
                 window.location.href = "/ValuationRequest/ValuationRequests";
@@ -960,14 +935,14 @@ $('#btnSaveApprove').on('click', function () {
 
 
 
-function BindQuatationList() { 
+function BindQuatationList() {
     let id = $('#hdnId').val();
     $.ajax({
         type: Get,
         url: BaseURL + ValuationQuatationList + '?requestId=' + id,
         "datatype": "json",
-        success: function (response) { 
-            if (response != null) { 
+        success: function (response) {
+            if (response != null) {
                 $.each(response, function (index, object) {
                     var html = '';
 
@@ -981,7 +956,7 @@ function BindQuatationList() {
                         + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
                 });
                 //StaticDataTable("#QuatationTable");
-            } 
+            }
         },
         failure: function (response) {
             alert(response.responseText);
@@ -1000,8 +975,8 @@ function BindInvoiceList() {
         type: Get,
         url: BaseURL + ValuationInvoiceList + '?requestId=' + id,
         "datatype": "json",
-        success: function (response) { 
-            if (response != null) { 
+        success: function (response) {
+            if (response != null) {
                 $.each(response, function (index, object) {
                     var html = '';
 
@@ -1013,8 +988,8 @@ function BindInvoiceList() {
 
                     $('#InvoiceTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationRequestId + '</td><td>' + object.transactionMode
                         + '</td><td>' + object.transactionStatusName + '</td><td>' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
-                }); 
-            } 
+                });
+            }
         },
         failure: function (response) {
             alert(response.responseText);
@@ -1033,7 +1008,7 @@ function BindInvoiceList() {
 function ConfirmationDeleteQuotation(id) {
     $('#DeleteQuotationModel #Id').val(id);
 }
-function DeleteQuotation() { 
+function DeleteQuotation() {
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteQuotationModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteQuotationByIdUrl + "/" + tempInAtiveID, Post, DeleteQuotationByIdSuccess, DeleteQuotationByIdError);

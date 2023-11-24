@@ -755,7 +755,7 @@
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.SiteDescription.Documents)
                                                                 {
-                                                                    <tr>
+                                                                    <tr id="@docs.Id">
                                                                         <td>@docs.DocumentName</td>
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
@@ -862,7 +862,7 @@
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.comparableEvidenceModel.Documents)
                                                                 {
-                                                                    <tr>
+                                                                    <tr id="@docs.Id">
                                                                         <td>@docs.DocumentName</td>
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
@@ -995,7 +995,7 @@
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.valuationAssessementModel.Documents)
                                                                 {
-                                                                    <tr>
+                                                                    <tr id="@docs.Id">
                                                                         <td>@docs.DocumentName</td>
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
