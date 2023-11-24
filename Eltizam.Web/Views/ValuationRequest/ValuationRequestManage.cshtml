@@ -624,6 +624,18 @@
                 <form asp-action="ValuationAssesmentManage" enctype="multipart/form-data">
                     @Html.HiddenFor(model => model.Id)
                     <div id="profile4" class="tabcontent">
+                    <div class="whiteBoxShadow m-0 ">
+                        <div class="bodyContent footerAudit">
+                            <div class=" position-relative flex justify-between align-item-center">
+                                <h4 class="m-0">
+                                    Valuation Id : @Html.DisplayFor(model => model.Id)
+                                </h4>
+                                <h4 class="m-0">
+                                    Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
                         <h3 class="ptrl-20">Structural Information</h3>
                         <div class="inputSearchs">
                             
@@ -778,6 +790,18 @@
                     </div>
 
                     <div id="profile5" class="tabcontent">
+                        <div class="whiteBoxShadow m-0 ">
+                            <div class="bodyContent footerAudit">
+                                <div class=" position-relative flex justify-between align-item-center">
+                                    <h4 class="m-0">
+                                        Valuation Id : @Html.DisplayFor(model => model.Id)
+                                    </h4>
+                                    <h4 class="m-0">
+                                        Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
                         <h3 class="ptrl-20">Comparable Evidences</h3>
                         <div class="inputSearchs">
                             @Html.HiddenFor(model => model.ValuationAssesment.comparableEvidenceModel.RequestId, new { @value = "Model.Id" })
@@ -877,6 +901,18 @@
                     </div>
 
                     <div id="profile6" class="tabcontent">
+                        <div class="whiteBoxShadow m-0 ">
+                            <div class="bodyContent footerAudit">
+                                <div class=" position-relative flex justify-between align-item-center">
+                                    <h4 class="m-0">
+                                        Valuation Id : @Html.DisplayFor(model => model.Id)
+                                    </h4>
+                                    <h4 class="m-0">
+                                        Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
                         <h3 class="ptrl-20">Valuation Evidences</h3>
                         <div class="inputSearchs">
                             @Html.HiddenFor(model => model.ValuationAssesment.valuationAssessementModel.RequestId, new { @value = "Model.Id" })

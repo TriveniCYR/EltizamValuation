@@ -84,8 +84,8 @@ namespace Eltizam.Business.Core.Implementation
                     objInvoice.AccountBankName = entityInvoice.AccountBankName;
                     objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
                     objInvoice.Note = entityInvoice.Note;
-                    objInvoice.ModifyDate = AppConstants.DateTime;
-                    objInvoice.ModifyBy = 1;
+                    objInvoice.ModifiedDate = AppConstants.DateTime;
+                    objInvoice.ModifiedBy = entityInvoice.ModifiedBy;
                     _repository.UpdateAsync(objInvoice);
                 }
                 else
@@ -97,7 +97,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice);
                 objInvoice.CreatedDate = AppConstants.DateTime;
-                objInvoice.CreatedBy = 1;
+                objInvoice.CreatedBy = entityInvoice.CreatedBy ?? 1;
                 _repository.AddAsync(objInvoice);
             }
             await _unitOfWork.SaveChangesAsync();

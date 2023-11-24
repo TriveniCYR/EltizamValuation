@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="inputSearchs uploadDocBox p-0">
-                        <form asp-action="ValuationQuotationManage" autocomplete="off" asp-controller="ValuationRequest" method="post">
+                        <form asp-action="ValuationQuotationManage" autocomplete="off" asp-controller="ValuationRequest" method="post" enctype="multipart/form-data">
                             @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                             @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
                             @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
@@ -86,35 +86,55 @@
                                 </label>
                             </div>
                             <div class="tabSection">
+                                <h3 class="mb-28">Documents</h3>
+                                <div class="inputSearchs uploadDocBox">
 
-                                <h3 class="mb-28">Upload Supporting Documents</h3>
-                                @if (ViewBag.IsView != 1)
-                                {
-                                    <div class="flex">
-                                        <label for="document" class="w-50">
-                                            Documents Name
-                                            <input type="text" placeholder="enter Documents Name">
-                                        </label>
-                                        <label for="atach" class="w-50">
-                                            Attach Supporting Documents
-                                            <div class="attachDoc">
-                                                <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
-                                                <input type="file" class="btn" value="Upload Photo" multiple />
-                                                <p>click to upload.</p>
+                                    <div class="tabSection">
+                                        @if (ViewBag.IsView != 1)
+                                        {
+                                            <div class="flex">
+                                                <label for="" class="w-100">
+                                                    <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)">
+                                                    <input type="text" class="fileNames" readonly placeholder="file names">
+                                                </label>
                                             </div>
-                                        </label>
-                                    </div>
-                                }
-                                <div class="prevUpload roundBorderBox m-0">
-
-                                    <h3>Previously uploaded</h3>
-                                    <div class="flex">
-                                        <div class="prevUploadTab">
-                                            <div class="flex align-item-center m-0">
-                                                <img src="../assets/file.svg" alt="file" />
-                                                ABC
+                                        }
+                                        <div class="W-100">
+                                            <div class="prevUpload roundBorderBox m-0">
+                                                <h3>Previously uploaded</h3>
+                                                <div class="scroll-x">
+                                                    <table id="UserTableDocument" class="table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>File Name</th>
+                                                                <th>Updated Date</th>
+                                                                <th>Uploaded By</th>
+                                                                <th>Download</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.Documents != null)
+                                                            {
+                                                                @foreach (var docs in Model.Documents)
+                                                                {
+                                                                    <tr id="@docs.Id">
+                                                                        <td>@docs.DocumentName</td>
+                                                                        <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
+                                                                        <td>@docs.CreatedName</td>
+                                                                        <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
+                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>NA</label>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
                                         </div>
                                     </div>
                                 </div>
@@ -135,6 +155,34 @@
         </main>
     </div>
 </div>
+
+
+<div id="DeleteDocumentModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("ID")
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteDocument()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationQuatationManage.js?v=@jsVersion"></script>
     <script>

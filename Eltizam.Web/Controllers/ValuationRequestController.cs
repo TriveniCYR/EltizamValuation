@@ -278,6 +278,13 @@ namespace EltizamValuation.Web.Controllers
                     masterQuotation.CreatedBy = _helper.GetLoggedInUserId();
                 masterQuotation.ModifiedBy = _helper.GetLoggedInUserId();
 
+                if (masterQuotation.Document != null && masterQuotation.Document.Files != null)
+                {
+                    List<MasterDocumentModel> docs = FileUpload(masterQuotation.Document);
+                    masterQuotation.uploadDocument = docs;
+                    masterQuotation.Document = null;
+                }
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 

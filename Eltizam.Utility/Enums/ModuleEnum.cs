@@ -120,6 +120,12 @@ namespace Eltizam.Utility.Enums
         [Description("Site Description")]
         SiteDescription = 16,
 
+        [Description("Valuation Quotation")]
+        ValuationQuotation = 17,
+
+        [Description("Valuation Invoice")]
+        ValuationInvoice = 18,
+
     }
 
 

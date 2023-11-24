@@ -168,3 +168,53 @@ $('#FixedvaluationFees').keypress(function (e) {
         }
     }
 });
+
+
+function displayFileNames(input) {
+    const fileInput = input;
+    const fileNamesInput = input.nextElementSibling;
+
+    const files = fileInput.files;
+    let fileNames = "";
+
+    for (let i = 0; i < files.length; i++) {
+        fileNames += files[i].name;
+        if (i < files.length - 1) {
+            fileNames += ", ";
+        }
+    }
+
+    fileNamesInput.value = fileNames;
+}
+
+function ConfirmationDocument(id, isAction) {
+    $('#DeleteDocumentModel #ID').val(id);
+
+
+}
+function DeleteDocument() {
+    var id = $('#DeleteDocumentModel #ID').val();
+    if (id) {
+        docId = id;
+        ajaxServiceMethod(BaseURL + DeleteUserDocument + "/" + docId, Delete, DeleteUserDocumentSuccess, DeleteUserDocumentError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
+}
+function DeleteUserDocumentSuccess(data) {
+    try {
+        if (data._Success === true) {
+            $('#' + docId).remove();
+            toastr.success(RecordDelete);
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+function DeleteUserDocumentError(x, y, z) {
+    toastr.error(ErrorMessage);
+}
