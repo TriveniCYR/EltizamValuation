@@ -167,8 +167,13 @@ $('#Qualification_YearOfInstitute').keypress(function (e) {
         }
     }
 });
+function ConfirmationDocument(id, isAction) {
+    $('#DeleteDocumentModel #ID').val(id);
 
-function DeleteDocument(id) {
+
+}
+function DeleteDocument() {
+    var id = $('#DeleteDocumentModel #ID').val();
     if (id) {
         docId = id;
         ajaxServiceMethod(BaseURL + DeleteUserDocument + "/" + docId, Delete, DeleteUserDocumentSuccess, DeleteUserDocumentError);
@@ -180,8 +185,7 @@ function DeleteDocument(id) {
 function DeleteUserDocumentSuccess(data) {
     try {
         if (data._Success === true) {
-            debugger
-            $('#UserTableDocument tr:eq('+docId+')').remove();
+            $('#'+docId).remove();
             toastr.success(RecordDelete);
         }
         else {

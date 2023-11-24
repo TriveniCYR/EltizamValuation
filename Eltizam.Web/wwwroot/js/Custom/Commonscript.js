@@ -107,16 +107,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-function formatreadonlydate () {
+function formatreadonlydate() {
     var tdElements = document.querySelectorAll('.formatted-td-date-input');
 
     tdElements.forEach(function (tdElement) {
         var originalDate = new Date(tdElement.textContent);
         var datePart = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
         var timePart = originalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-
         var formattedDate = datePart + ' ' + timePart;
-        tdElement.textContent = formattedDate.replace(/\s/g, '-').toLowerCase();
+        tdElement.textContent = formattedDate;
     });
 }
 
