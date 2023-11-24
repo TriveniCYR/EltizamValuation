@@ -240,11 +240,11 @@ namespace EltizamValuation.Web.Controllers
                 }
 
                 // Check if the file type is allowed
-                var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
-                if (!allowedFileTypes.Contains(file.ContentType))
-                {
-                    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
-                }
+                //var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
+                //if (!allowedFileTypes.Contains(file.ContentType))
+                //{
+                //    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
+                //}
 
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 var docName = Path.GetFileNameWithoutExtension(file.FileName);
@@ -263,7 +263,7 @@ namespace EltizamValuation.Web.Controllers
                     DocumentName = docName,
                     IsActive = 1,
                     CreatedBy = currentUser,
-                    FileType = GetFileType(file.ContentType),
+                    FileType = file.ContentType,
                     CreatedDate = null,
                     CreatedName = ""
                 };
@@ -283,11 +283,11 @@ namespace EltizamValuation.Web.Controllers
             var savedFileNames = new List<string>();
 
             // Check if the file type is allowed
-            var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "image/jpg" };
-            if (!allowedFileTypes.Contains(pic.ContentType))
-            {
-                throw new ArgumentException($"File type '{pic.ContentType}' is not allowed.");
-            }
+            //var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "image/jpg" };
+            //if (!allowedFileTypes.Contains(pic.ContentType))
+            //{
+            //    throw new ArgumentException($"File type '{pic.ContentType}' is not allowed.");
+            //}
 
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension(pic.FileName);
             var docName = Path.GetFileNameWithoutExtension(pic.FileName);
@@ -306,7 +306,7 @@ namespace EltizamValuation.Web.Controllers
                 DocumentName = docName,
                 IsActive = 1,
                 CreatedBy = currentUser,
-                FileType = GetFileType(pic.ContentType),
+                FileType = pic.ContentType,
                 CreatedDate = null,
                 CreatedName = ""
             };
