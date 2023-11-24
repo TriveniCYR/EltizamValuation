@@ -104,11 +104,23 @@ namespace Eltizam.Business.Core.Implementation
 
             return lstStf;
         }
-
+        private bool IsPropertyDescriptionExists(string propertyType)
+        {
+            return _repository.GetAll()
+                .Any(property => property.PropertyType == propertyType);
+        }
         public async Task<DBOperation> AddUpdateMasterPropertyType(Master_PropertyTypeModel masterproperty)
         {
-            // Create a Master_PropertyType object.
-            MasterPropertyType type;
+                if (masterproperty != null && masterproperty.PropertyType != null && masterproperty.Id == 0)
+                {
+                    var result = IsPropertyDescriptionExists(masterproperty.PropertyType);
+                    if (result)
+                    {
+                        return DBOperation.AlreadyExist;
+                    }
+                }
+                // Create a Master_PropertyType object.
+                MasterPropertyType type;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (masterproperty.Id > 0)

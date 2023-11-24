@@ -13,10 +13,14 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public int? RequestId { get; set; }
         public string? Type { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+     
         public int? Size { get; set; }
         public string? Remarks { get; set; }
+      
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? RateSqFt { get; set; }
+        
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? Price { get; set; }
         public string? AddtionalComments { get; set; }
         public int? CreatedBy { get; set; }

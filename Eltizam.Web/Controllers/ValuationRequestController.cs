@@ -567,7 +567,8 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
-            return RedirectToAction("ValuationRequests");
+            //return RedirectToAction("ValuationRequests");
+            return Redirect($"/ValuationRequest/ValuationRequestManage?id={valuationAssesment.SiteDescription.ValuationRequestId}");
             //return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId });
         }
 
@@ -617,11 +618,11 @@ namespace EltizamValuation.Web.Controllers
                 }
 
                 // Check if the file type is allowed
-                var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
-                if (!allowedFileTypes.Contains(file.ContentType))
-                {
-                    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
-                }
+                //var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
+                //if (!allowedFileTypes.Contains(file.ContentType))
+                //{
+                //    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
+                //}
 
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 var docName = Path.GetFileNameWithoutExtension(file.FileName);

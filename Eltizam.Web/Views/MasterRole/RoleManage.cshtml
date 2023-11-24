@@ -123,7 +123,11 @@
 
                                                     @if (subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationRequest &&
                                                    subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationQuotation &&
-                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationInvoice)
+                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationInvoice   &&
+                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.SiteDescription &&
+                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ComparableEvidences &&
+                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationAssessement
+                                                   )
                                                     {
                                                         <td>
                                                             @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })

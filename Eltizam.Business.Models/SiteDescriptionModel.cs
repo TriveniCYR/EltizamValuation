@@ -12,20 +12,25 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public int ValuationRequestId { get; set; }
+        [StringLength(250, MinimumLength = 1)]
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? Location { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? InternalArea { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? ExternalArea { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public int? Floor { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public int? Room { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1,999, ErrorMessage = "Maximum Value not be greater than 999 ")]
+        
         public int? Bedrooms { get; set; }
         public string? Storage { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+       
         public int? Quantity { get; set; }
         public string? AdditionComment { get; set; }
+        [StringLength(250, MinimumLength = 1)]
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? PropertyCondition { get; set; }
         public string? AdditionalNotes { get; set; }
         public string? Others { get; set; }

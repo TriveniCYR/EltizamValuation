@@ -642,33 +642,40 @@
                             <input type="hidden" id="Test" name="Test" value="@Model.Id">
                             <div class="flex">
                                 <label for="">
-                                    Location
+                                      <p class="m-0">Location<span class="text-danger">*</span></p>
                                     @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Location, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Location"] })
+                                    @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
-                                    Internal Area
+                                   <p class="m-0"> Internal Area<span class="text-danger">*</span></p>
+                                   
                                     @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.InternalArea, new {  @class = "form-control",  @placeholder = @SharedLocalizer["InternalArea"] })
+                                    @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.InternalArea, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="">
-                                    External Area
+                                    <p class="m-0"> External Area<span class="text-danger">*</span></p>
+                                    
                                     @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.ExternalArea, new {  @class = "form-control",  @placeholder = @SharedLocalizer["ExternalArea"] })
+                                    @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
-                                    Floor
+                                    <p class="m-0"> Floor<span class="text-danger">*</span></p>
                                     @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Floor, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Floor"] })
+                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="">
-                                    Room
+                                      <p class="m-0"> Room<span class="text-danger">*</span></p>
                                     @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Room"] })
+                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
                                     Bedrooms
                                     @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control", @type="number", @placeholder = @SharedLocalizer["Bedrooms"] })
-                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Bedrooms, "", new { @class = "text-danger" })
+                                    
                                 </label>
                             </div>
                             <div class="flex">
@@ -678,7 +685,7 @@
                                 </label>
                                 <label>
                                     Quantity
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Quantity, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Room"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Quantity, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Quantity"] })
                                 </label>
                             </div>
                             <div class="flex">
@@ -700,14 +707,18 @@
                                     <div class="panel" style="display: none;">
                                         <div class="flex">
                                             <label for="" class="w-100">
-                                                Property Condition
+                                                <p class="m-0"> Property Condition<span class="text-danger">*</span></p>
+                                               
                                                 @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.PropertyCondition, new {  @class = "form-control",  @placeholder = @SharedLocalizer["PropertyCondition"] })
+                                                 @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.PropertyCondition, "", new { @class = "text-danger" })
+                                                 
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="" class="w-100">
                                                 Additional Notes
                                                 @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.AdditionalNotes, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AdditionalNotes"] })
+
                                             </label>
                                         </div>
                                         <div class="flex">
@@ -756,7 +767,7 @@
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.SiteDescription.Documents)
                                                                 {
-                                                                    <tr>
+                                                                    <tr id="@docs.Id">
                                                                         <td>@docs.DocumentName</td>
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
@@ -809,12 +820,12 @@
                                 <label for="">
                                     Type
                                     @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Type, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Type"] })
-                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.Type, "", new { @class = "text-danger" })
+                                   
                                 </label>
                                 <label>
                                     Size
                                     @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Size, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Size"] })
-                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.Size, "", new { @class = "text-danger" })
+                                   
                                 </label>
                             </div>
                             <div class="flex">
@@ -823,14 +834,17 @@
                                     @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Remarks, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Remarks"] })
                                 </label>
                                 <label>
-                                    Rate (Sq.Ft)
+                                   
+                                      <p class="m-0">  Rate (Sq.Ft)<span class="text-danger">*</span></p>
                                     @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, new {  @class = "form-control",  @placeholder = @SharedLocalizer["RateSqFt"] })
+                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label>
-                                    Price
+                                      <p class="m-0"> Price<span class="text-danger">*</span></p>
                                     @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Price"] })
+                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, "", new { @class = "text-danger" })
                                 </label>
                                 <label>
                                     Additional Comments
@@ -872,7 +886,7 @@
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.comparableEvidenceModel.Documents)
                                                                 {
-                                                                    <tr>
+                                                                    <tr id="@docs.Id">
                                                                         <td>@docs.DocumentName</td>
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
@@ -918,27 +932,49 @@
                             @Html.HiddenFor(model => model.ValuationAssesment.valuationAssessementModel.RequestId, new { @value = "Model.Id" })
                             <div class="flex">
                                 <label for="">
-                                    Market Value
+                                    <p class="m-0"> MarketValue<span class="text-danger">*</span></p>
                                     @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, new {  @class = "form-control",  @placeholder = @SharedLocalizer["MarketValue"] })
+                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
-                                    Market Rent
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarkentRent, new {  @class = "form-control",  @placeholder = @SharedLocalizer["MarkentRent"] })
+                                   
+                                      <p class="m-0"> Market Rate<span class="text-danger">*</span></p>
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarkentRent, new {  @class = "form-control",  @placeholder = @SharedLocalizer["MarkentRate"] })
+                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarkentRent, "", new { @class = "text-danger" })
                                 </label>
                             </div>
+                            @* <div class="flex">
+                               
+                                     <p class="m-0">Life of Building<span class="text-danger">*</span></p
+                                 
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, new {  @class = "form-control",  @placeholder = @SharedLocalizer["LifeOfBuilding"] })
+                                     
+                                
+                                <label for="">
+                                     <p class="m-0">Annual Maintainance Cost<span class="text-danger">*</span></p
+                                                                   
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
+                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
+                                </label>
+                            </div> *@
+
                             <div class="flex">
                                 <label for="">
-                                    Life of Building
+                                    <p class="m-0"> Life of Building<span class="text-danger">*</span></p>
+                                    
                                     @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, new {  @class = "form-control",  @placeholder = @SharedLocalizer["LifeOfBuilding"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
-                                    Annual Maintainance Cost
+                                      <p class="m-0">  Annual Maintainance Cost<span class="text-danger">*</span></p>
+                                   
                                     @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
+                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex fourBox flex-start">
                                 <label>
-                                    Insurance
+                                     Insuarance
                                     <span class="flex yesNoToggle">
                                        
 
@@ -949,12 +985,9 @@
                                         <span>No</span> &nbsp; &nbsp;
 
                                     </span>
+                                  
                                 </label>
-                               @*  <label id="yesInput" for="yesField" style="display: none;">
-                                    Insurance details
-                                   
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new {  @class = "form-control",  @placeholder = @SharedLocalizer["InsuaranceDetail"] })
-                                </label> *@
+                             
                                 <label id="yesInput" for="yesField" style="display: @(Model.ValuationAssesment.valuationAssessementModel.Insuarance ? "block" : "none");">
                                Insurance details
                           @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new { @class = "form-control", @placeholder = @SharedLocalizer["InsuaranceDetail"] })
@@ -998,7 +1031,7 @@
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.valuationAssessementModel.Documents)
                                                                 {
-                                                                    <tr>
+                                                                    <tr id="@docs.Id">
                                                                         <td>@docs.DocumentName</td>
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
@@ -1084,6 +1117,10 @@
     </div>
 </div>
 
+
+
+
+
 <div id="DeleteDocumentModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -1100,11 +1137,10 @@
                         </div>
                     </div>
                 </div>
-
                 @Html.Hidden("ID")
-                <div class="card-footer text-center">
-                    <button type="button" onclick="DeleteDocument()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
-                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteDocument()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
                 </div>
             </div>
         </div>

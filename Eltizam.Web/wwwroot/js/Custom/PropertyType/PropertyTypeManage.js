@@ -21,6 +21,7 @@ function SavePropertyType() {
     if (Inputs.length == 0) {
         return toastr.error('Atleast one SubType Description is required');
     }
+    var descriptions = {}; 
     for (var i = 0; i < Inputs.length; i++) {
         var inputValue = Inputs[i].value.trim();
         if (inputValue.length > 250) {
@@ -34,6 +35,11 @@ function SavePropertyType() {
                 'Id': Inputs[i].id,
                 'PropertySubType': inputValue,
             };
+            if (descriptions[objDynamic.PropertySubType]) {
+                toastr.error("Duplicate Subtype description found: " + objDynamic.PropertySubType);
+                return;
+            }
+            descriptions[objDynamic.PropertySubType] = true; 
             Dict.MasterPropertySubTypes.push(objDynamic);
         }
     }
@@ -58,7 +64,12 @@ function SavePropertyType() {
             toastr.error(ErrorMsg);
         },
         error: function (response) {
-            toastr.error(ErrorMsg);
+            if (response.status == 409) {
+                toastr.error("Description value Already Exist In system")
+            }
+            else {
+                toastr.error(ErrorMsg)
+            }
             $("#loader").hide();
         }
     });
