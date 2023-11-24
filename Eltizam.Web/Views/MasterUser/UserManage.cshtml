@@ -71,7 +71,7 @@
                                                     <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
                                                     Change photo
                                                 </div>
-                                                <input type="file" asp-for="File" class="uploadPhoto" />
+                                                <input type="file" accept="image/*" asp-for="File" class="uploadPhoto" />
                                             </div>
                                         </div>
                                     </div>
@@ -361,7 +361,7 @@
                                                                     <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                     <td>@docs.CreatedName</td>
                                                                     <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                    <td><a title="Delete" onclick="DeleteDocument(@docs.Id)" ><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                 </tr>
                                                             }
                                                         }
@@ -392,6 +392,31 @@
 @*  </div>
 </div> *@
 
+<div id="DeleteDocumentModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+                @Html.Hidden("ID")
+                <div class="buttonArea popup-btn">
+                    <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <button type="button" onclick="DeleteDocument()" data-dismiss="modal" class="redBtn">@SharedLocalizer["Delete"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/Custom/MasterUser/UserManage.js?v=@jsVersion"></script>
