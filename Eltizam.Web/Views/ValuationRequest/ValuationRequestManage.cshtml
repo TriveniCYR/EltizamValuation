@@ -15,7 +15,7 @@
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
-
+     var isDelete = objPermssion.Delete ? 1 : 0;
     var isAdd = objPermssion.Add ? 1 : 0;
     var isEdit = objPermssion.Edit ? 1 : 0;
     var isApprove = objPermssion.Approve ? 1 : 0;
@@ -36,18 +36,20 @@
     var isAddSite = objPermssionSite.Add ? 1 : 0;
     var isEditSite = objPermssionSite.Edit ? 1 : 0;
     var isViewSite = objPermssionSite.View ? 1 : 0;
-
+    var isDeleteSite = objPermssionSite.Delete ? 1 : 0;
+    
+     
     var objPermssionevidence = (RolePermissionModel)ViewBag.ComparableEvidences;
     var isAddEvidence = objPermssionevidence.Add ? 1 : 0;
     var isEditEvidence = objPermssionevidence.Edit ? 1 : 0;
     var isViewEvidence = objPermssionevidence.View ? 1 : 0;
-
+    var isDeleteEvidence = objPermssionevidence.Delete ? 1 : 0;
     
     var objPermssionAssesment = (RolePermissionModel)ViewBag.ValuationAssessement;
     var isAddAssesment = objPermssionAssesment.Add ? 1 : 0;
     var isEditAssesment = objPermssionAssesment.Edit ? 1 : 0;
     var isViewAssesment = objPermssionAssesment.View ? 1 : 0;
-
+    var isDeleteAssesment = objPermssionAssesment.Delete ? 1 : 0;
 
     ViewData["Title"] = _md + _header;
     var htmlAttributes = true;
@@ -83,11 +85,7 @@
                      <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payment Details</button> 
                     @if (roleId == (int)RoleEnum.Admin || roleId == (int)RoleEnum.Valuer)
                     {
-
-
-
                         <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="defaultOpen">Site Description</button>
-
                         <button class="tablinks" style="display: @displayStyleevidence"  onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
                         <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
                     }
@@ -119,6 +117,10 @@
                             <input type="hidden" id="hdnClientName" value="@(Model == null ? 0 : Model.ClientName)" />
                             <input type="hidden" id="hdnRoleId" value=@roleId />
                             <input type="hidden" id="roleEnum" value=@roleId />
+                             <input type="hidden" id="isDeleteSite" value="@isDeleteSite" />
+                             <input type="hidden" id="isDeleteEvidence" value="@isDeleteEvidence" />
+                             <input type="hidden" id="isDeleteAssesment" value="@isDeleteAssesment" />
+                             <input type="hidden" id="isAction"/>
                             <div class="ptrl-20">
                                 <div class="flex  mb-28">
 
@@ -727,7 +729,7 @@
                                         <div class="prevUpload roundBorderBox m-0">
                                             <h3>Previously uploaded</h3>
                                             <div class="scroll-x">
-                                                <table class="table-striped">
+                                                <table  id="SiteTableDocument" class="table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th>File Name</th>
@@ -747,7 +749,10 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        <td><a title="Delete" href='/ValuationAssessment/DeleteSiteDescriptionDocument?id=@docs.Id&fileName=@docs.FileName'><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        @* <td><a title="Delete" onclick="DeleteDocument(@docs.Id)" ><img src="../assets/trash.svg" alt="trash" /></a></td> *@
+                                                                       @*  <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="DeleteDocument(@docs.Id); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td> *@
+                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+
                                                                     </tr>
                                                                 }
                                                             }
@@ -828,7 +833,7 @@
                                             <div class="prevUpload roundBorderBox m-0">
                                                 <h3>Previously uploaded</h3>
                                                 <div class="scroll-x">
-                                                    <table class="table-striped">
+                                                    <table  id="EvidenceTableDocument"="table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th>File Name</th>
@@ -848,7 +853,7 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        <td><a title="Delete" href='/MasterUser/DeleteUserDocument?id=@docs.Id&fileName=@docs.FileName'><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                         <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                     </tr>
                                                                 }
                                                             }
@@ -942,7 +947,7 @@
                                             <div class="prevUpload roundBorderBox m-0">
                                                 <h3>Previously uploaded</h3>
                                                 <div class="scroll-x">
-                                                    <table class="table-striped">
+                                                    <table  id="AssesmentTableDocument class="table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th>File Name</th>
@@ -962,7 +967,7 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        <td><a title="Delete" href='/ValuationRequest/DeleteSiteDescriptionDocument?id=@docs.Id&fileName=@docs.FileName'><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                         <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                     </tr>
                                                                 }
                                                             }
@@ -1043,6 +1048,33 @@
     </div>
 </div>
 
+<div id="DeleteDocumentModel" class="modal themeModal " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label(@SharedLocalizer["DeleteConfirm"])
+                        </div>
+                    </div>
+                </div>
+
+                @Html.Hidden("ID")
+                <div class="card-footer text-center">
+                    <button type="button" onclick="DeleteDocument()" data-dismiss="modal" class="btn btn-primary mr-2">@SharedLocalizer["Yes"]</button>
+                    <a class="btn btn-danger" data-dismiss="modal">@SharedLocalizer["No"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
@@ -1084,7 +1116,7 @@
         var RequeStatusReview = "@Eltizam.Web.Helpers.APIURLHelper.ReviewRequestStatus";
         var GetSiteDescriptionList = "@Eltizam.Web.Helpers.APIURLHelper.GetSiteDescriptionList";
 
-
+         var DeleteAssesmentDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDocument";
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]";
 

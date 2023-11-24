@@ -76,8 +76,8 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
-        [HttpDelete("DeleteSiteDescriptionDocument/{id}")]
-        public async Task<IActionResult> DeleteSiteDescriptionDocument([FromRoute] int id)
+        [HttpDelete("DeleteDocument/{id}")]
+        public async Task<IActionResult> DeleteDocument([FromRoute] int id)
         {
             try
             {

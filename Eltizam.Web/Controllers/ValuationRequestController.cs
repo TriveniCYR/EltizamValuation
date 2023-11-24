@@ -573,7 +573,7 @@ namespace EltizamValuation.Web.Controllers
                 int isFileDelete = DeleteFile(id, fileName);
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.DeleteSiteDescriptionDocumentById + "/" + id, HttpMethod.Delete, token).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.DeleteDocument + "/" + id, HttpMethod.Delete, token).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
