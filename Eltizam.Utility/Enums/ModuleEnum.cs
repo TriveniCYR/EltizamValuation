@@ -30,7 +30,10 @@ namespace Eltizam.Utility.Enums
     {
         ValuationRequest = 1,
         ValuationQuotation = 2,
-        ValuationInvoice = 3
+        ValuationInvoice = 3,
+        SiteDescription= 4,
+        ComparableEvidences= 5,
+        ValuationAssessement= 6,
     }
 
     public enum RoleEnum

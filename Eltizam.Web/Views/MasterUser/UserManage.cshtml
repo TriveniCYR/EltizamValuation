@@ -58,13 +58,20 @@
                                 <div class="flex threeBox">
                                     <div class="flex justify-center mb-28">
                                         <div class="resourceProfile clientImg text-center">
-                                            <img src="../assets/client1.png" alt="img-7" />
+                                            @if(Model.ProfileAttachmentId > 0)
+                                            {
+                                                <img src="@Model.ProfilePath" alt="upload-profile-pic" class="w-100" style="margin-bottom: 36px;"/>
+                                            }
+                                            else
+                                            {
+                                                <img src="../assets/client1.png" alt="img-7" />
+                                            }
                                             <div class="position-relative">
-                                                <div class="upload-profile-pic-btn">
+                                                <div class="upload-profile-pic-btn">                                                    
                                                     <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
                                                     Change photo
                                                 </div>
-                                                <input type="file" class="uploadPhoto" />
+                                                <input type="file" asp-for="File" class="uploadPhoto" />
                                             </div>
                                         </div>
                                     </div>
@@ -334,7 +341,7 @@
                                     <div class="prevUpload roundBorderBox m-0">
                                         <h3>Previously uploaded</h3>
                                         <div class="scroll-x">
-                                                <table class="table-striped">
+                                                <table id="UserTableDocument" class="table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th>File Name</th>
@@ -349,12 +356,12 @@
                                                         {
                                                             @foreach (var docs in Model.Documents)
                                                             {                                                       
-                                                                <tr>
+                                                                <tr id="docs.Id">
                                                                     <td>@docs.DocumentName</td>
                                                                     <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                     <td>@docs.CreatedName</td>
                                                                     <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                    <td><a title="Delete" href='/MasterUser/DeleteUserDocument?id=@docs.Id&fileName=@docs.FileName'><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                    <td><a title="Delete" onclick="DeleteDocument(@docs.Id)" ><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                 </tr>
                                                             }
                                                         }
@@ -397,7 +404,10 @@
         var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
         var StateList = "@Eltizam.Web.Helpers.APIURLHelper.GetStateListByCountryId";
         var CityList = "@Eltizam.Web.Helpers.APIURLHelper.GeCityListByStateId";
+        var DeleteUserDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteUserDocumentById";
 
+        
+        var RecordDelete = "@SharedLocalizer["RecordDelete"]";
 
         $(document).ready(function () { 
             const selectElement = document.getElementById("RoleId");

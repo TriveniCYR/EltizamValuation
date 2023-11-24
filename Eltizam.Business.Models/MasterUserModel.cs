@@ -1,4 +1,5 @@
 ﻿using Eltizam.Resource.Resources;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,6 +9,7 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public string? UserName { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Enter upper case, lower case & special character only")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -15,12 +17,14 @@ namespace Eltizam.Business.Models
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Enter upper case, lower case & special character only")]
         public string? MiddleName { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Enter upper case, lower case & special character only")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? LastName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? Gender { get; set; }
+        public IFormFile? File { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -35,6 +39,7 @@ namespace Eltizam.Business.Models
         public int DepartmentId { get; set; }
         [StringLength(50, MinimumLength = 10)]
         public string? LicenseNo { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Enter upper case, lower case & special character only")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -63,8 +68,11 @@ namespace Eltizam.Business.Models
         [DataType(DataType.Password)]
         public string? ConfirmPassowrd { get; set; }
         public string? Email { get; set; }
+        public int ProfileAttachmentId { get; set; }
+        public string? ProfilePath { get; set; }
 
         //public int CreatedBy { get; set; }
+        public MasterDocumentModel? uploadProfile { get; set; }
         public MasterUserAddressModel? Address { get; set; } = null;
         public MasterUserAddressModel? UpsertAddress { get; set; } = null;
         public Master_QualificationModel? Qualification { get; set; } = null;

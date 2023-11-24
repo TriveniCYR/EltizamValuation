@@ -11,7 +11,7 @@
 //    document.getElementById(cityName).style.display = "block";
 //    evt.currentTarget.className += " active";
 //}
-
+var docId = 0;
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -102,6 +102,69 @@ function payTab(evt, payName) {
 }
 //document.getElementById("defaultOpenPay").click();
 // payment option JS ends
+function ConfirmationDocument(id, isAction) {
+    $('#DeleteDocumentModel #ID').val(id);
+    $('#isAction').val(isAction);
+
+
+}
+
+function DeleteDocument() {
+
+    var docId = $('#DeleteDocumentModel #ID').val()
+    var action = $('#isAction').val();
+    if (isDeleteSite && action ==='isSite' )
+    {
+        
+        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
+    }
+    else if (isDeleteEvidence && action === 'isEvidence')
+    
+    {
+
+       
+
+        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
+    }
+    else if (isDeleteAssesment && action === 'isAssesment')
+    {
+
+
+
+        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
+    }
+   
+
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
+}
+
+
+function DeleteDocumentSuccess(data) {
+    try {
+        if (data._Success === true) {
+            debugger
+           /* $('#SiteTableDocument tr:eq(' + docId + ')').remove();*/
+            toastr.success(RecordDelete);
+            setTimeout(function () {
+                window.location.href = "/ValuationRequest/ValuationRequests";
+            }, 1000);        
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+
+
+function DeleteDocumentError(x, y, z) {
+    toastr.error(ErrorMessage);
+}
+
+
 
 $(document).ready(function () {
 

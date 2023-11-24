@@ -100,6 +100,11 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
+                if(masterUser.DateOfBirth >  DateTime.Now)
+                {
+                    TempData[UserHelper.ErrorMessage] = "Date of Birth can not be future date.";
+                    return Redirect($"/MasterUser/UserManage?id={masterUser.Id}");
+                }
                 //Check permissions for Get
                 var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
 
@@ -114,6 +119,12 @@ namespace EltizamValuation.Web.Controllers
                     List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
                     masterUser.uploadDocument = docs;
                     masterUser.Document = null;
+                }
+                if(masterUser.File != null)
+                {
+                    MasterDocumentModel docs = ProfileUpload(masterUser.File);
+                    masterUser.uploadProfile = docs;
+                    masterUser.File = null;
                 }
 
                 masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
@@ -261,7 +272,47 @@ namespace EltizamValuation.Web.Controllers
             }
             return uploadFils;
         }
+        private MasterDocumentModel ProfileUpload(IFormFile pic)
+        {
+            MasterDocumentModel uploadFils = new MasterDocumentModel();
+            if (pic == null)
+            {
+                throw new ArgumentException("No files were uploaded.");
+            }
+            var currentUser = _helper.GetLoggedInUserId();
+            var savedFileNames = new List<string>();
 
+            // Check if the file type is allowed
+            var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "image/jpg" };
+            if (!allowedFileTypes.Contains(pic.ContentType))
+            {
+                throw new ArgumentException($"File type '{pic.ContentType}' is not allowed.");
+            }
+
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(pic.FileName);
+            var docName = Path.GetFileNameWithoutExtension(pic.FileName);
+            var filePath = Path.Combine("wwwroot/Uploads", fileName);
+            filePath = filePath.Replace("\\", "/");
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                pic.CopyToAsync(stream);
+            }
+
+            // Save information about the uploaded file to the database
+            var upload = new MasterDocumentModel
+            {
+                FileName = fileName,
+                FilePath = filePath.Replace("wwwroot", ".."),
+                DocumentName = docName,
+                IsActive = 1,
+                CreatedBy = currentUser,
+                FileType = GetFileType(pic.ContentType),
+                CreatedDate = null,
+                CreatedName = ""
+            };
+
+            return upload;
+        }
         private int DeleteFile(int id, string? fileName)
         {
             int isDelete = 0;

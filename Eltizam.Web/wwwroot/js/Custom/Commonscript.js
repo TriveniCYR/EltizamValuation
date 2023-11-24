@@ -21,6 +21,9 @@ var ErrorMsg = "Some error occurred while processing request.";
 var DeleteAccessDenied = "Delete permission not granted.";
 
 var IsDeletePerm = ($("#isDeletePerm").val() === "1" || $("#isDeletePerm").val() === 1);
+var isDeleteSite = ($("#isDeleteSite").val() === "1" || $("#isDeleteSite").val() === 1);
+var isDeleteEvidence = ($("#isDeleteEvidence").val() === "1" || $("#isDeleteEvidence").val() === 1);
+var isDeleteAssesment = ($("#isDeleteAssesment").val() === "1" || $("#isDeleteAssesment").val() === 1);
 var IsAddPerm = ($("#isAddPerm").val() === "1" || $("#isAddPerm").val() === 1);   
 var IsEditPerm = ($("#isEditPerm").val() === "1" || $("#isEditPerm").val() === 1); 
 

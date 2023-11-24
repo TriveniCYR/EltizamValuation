@@ -29,6 +29,8 @@ namespace Eltizam.Business.Models
         public int RoleId { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
+        public int ProfileAttachmentId { get; set; }
+        public string? ProfilePath { get; set; }
 
         public MasterUserAddressModel? Address { get; set; }
         public Master_QualificationModel? Qualification { get; set; }

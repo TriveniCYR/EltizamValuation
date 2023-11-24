@@ -1,4 +1,4 @@
-
+var docId = 0;
 $(document).ready(function () {
     BindDepartment();
     BindDesignation();
@@ -167,6 +167,33 @@ $('#Qualification_YearOfInstitute').keypress(function (e) {
         }
     }
 });
+
+function DeleteDocument(id) {
+    if (id) {
+        docId = id;
+        ajaxServiceMethod(BaseURL + DeleteUserDocument + "/" + docId, Delete, DeleteUserDocumentSuccess, DeleteUserDocumentError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
+}
+function DeleteUserDocumentSuccess(data) {
+    try {
+        if (data._Success === true) {
+            debugger
+            $('#UserTableDocument tr:eq('+docId+')').remove();
+            toastr.success(RecordDelete);
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+function DeleteUserDocumentError(x, y, z) {
+    toastr.error(ErrorMessage);
+}
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");

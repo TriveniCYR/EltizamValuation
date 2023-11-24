@@ -46,95 +46,6 @@ $(document).ready(function () {
         var stateId = $('#hdnState').val();
         BindCity(stateId);
     }
-    $('#BuildUpAreaSqFt').keypress(function (e) {
-        if ($('#BuildUpAreaSqFt').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#BuildUpAreaSqMtr').keypress(function (e) {
-        if ($('#BuildUpAreaSqMtr').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#AgeOfConstruction').keypress(function (e) {
-        if ($('#AgeOfConstruction').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#PropertyDetail_Pincode').keypress(function (e) {
-        if ($('#PropertyDetail_Pincode').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#PropertyDetail_Longitude').on("keypress", function (e) {
-        if ($('#PropertyDetail_Longitude').val() == '' && (e.which == 48 || e.charCode == 46)) {
-            return false;
-        }
-        else {
-            if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
-                var keypress = e.keyCode || e.which || e.charCode;
-                var key = String.fromCharCode(keypress);
-                var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
-
-                var txt = $(this).val() + key;
-                if (!regEx.test(txt)) {
-                    if (keypress != 8) {
-                        e.preventDefault();
-                    } else {
-                    }
-                } else {
-
-                }
-            }
-        }
-    });
-
-    $('#PropertyDetail_Latitude').on("keypress", function (e) {
-        if ($('#PropertyDetail_Latitude').val() == '' && (e.which == 48 || e.charCode == 46)) {
-            return false;
-        }
-        else {
-            if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
-                var keypress = e.keyCode || e.which || e.charCode;
-                var key = String.fromCharCode(keypress);
-                var regEx = /^[0-9]{0,3}(.[0-9]{0,6})?$/;
-
-                var txt = $(this).val() + key;
-                if (!regEx.test(txt)) {
-                    if (keypress != 8) {
-                        e.preventDefault();
-                    } else {
-                    }
-                } else {
-
-                }
-            }
-        }
-    });
 });
 
 function BindProperty() {
@@ -289,3 +200,86 @@ function BindCity(id) {
     var _rpname = "cityName";
     BindDropdowns(CityList + '/' + id, City, _rpname, _val);
 }
+
+
+$('#BuildUpAreaSqFt').keypress(function (e) {
+    if ($('#BuildUpAreaSqFt').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#BuildUpAreaSqMtr').keypress(function (e) {
+    if ($('#BuildUpAreaSqMtr').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#AgeOfConstruction').keypress(function (e) {
+    if ($('#AgeOfConstruction').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#ParkingBayNo').keypress(function (e) {
+    if ($('#ParkingBayNo').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#PropertyDetail_Pincode').keypress(function (e) {
+    if ($('#PropertyDetail_Pincode').val() == '' && e.which == 48) {
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+$('#PropertyDetail_Longitude').on("keypress", function (e) {
+    debugger
+    if ($('#PropertyDetail_Longitude').val() == '' && e.which == 48) {
+        return false;
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
+
+$('#PropertyDetail_Latitude').on("keypress", function (e) {
+    if ($('#PropertyDetail_Latitude').val() == '' && (e.which == 48)) {
+        return false;
+        return false;
+    }
+    else {
+        var charCode = (e.which) ? e.which : event.keyCode;
+        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+            return false;
+        }
+    }
+});
