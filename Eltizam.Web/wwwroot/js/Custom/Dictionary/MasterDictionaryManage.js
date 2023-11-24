@@ -1,10 +1,12 @@
 ﻿ //--- Save dictionary details for each value ------
 function SaveMasterDictionary() {  
-    if ($.trim($('#Description').val()) == '') {
+    var description = $.trim($('#Description').val());
+
+    if (description === '') {
         return toastr.error('Description can not be left blank');
     }
-    else {
-
+    if (description.length > 250) {
+        return toastr.error('Description should not exceed 250 characters');
     }
     var Dict =
     {
@@ -16,23 +18,30 @@ function SaveMasterDictionary() {
     }  
 
     var Inputs = $(".addPropertyInputDynamic :input");
+    if (Inputs.length == 0) {
+        return toastr.error('Atleast one Sub Description value is required');
+    }
     var descriptions = {}; 
 
     for (var i = 0; i < Inputs.length; i++) {
-        var input = Inputs[i];
-        var objDynamic = {
-            'Id': input.id,
-            'Description': input.value,
-        }
+        var inputValue = Inputs[i].value.trim();
+        if (inputValue === '') {
+            return toastr.error("Subtype Description Cannot be blank");
+        } else {
+            var objDynamic = {
+                'Id': Inputs[i].id,
+                'Description': inputValue,
+            }
 
-        if (descriptions[objDynamic.Description]) {
-            toastr.error("Duplicate description found: " + objDynamic.Description);
-            return; 
-        }
+            if (descriptions[objDynamic.Description]) {
+                toastr.error("Duplicate description found: " + objDynamic.Description);
+                return;
+            }
 
-        descriptions[objDynamic.Description] = true; 
+            descriptions[objDynamic.Description] = true;
 
-        Dict.MasterDicitonaryDetails.push(objDynamic);
+            Dict.MasterDicitonaryDetails.push(objDynamic); }
+     
     }
 
     var MasterDictionaryEntity = Dict;
