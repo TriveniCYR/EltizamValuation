@@ -141,17 +141,36 @@ function DeleteDocument() {
 }
 
 
+//function DeleteDocumentSuccess(data) {
+//    try {
+//        if (data._Success === true) {
+//            debugger
+//           /* $('#SiteTableDocument tr:eq(' + docId + ')').remove();*/
+//            toastr.success(RecordDelete);
+//            setTimeout(function () {
+//                window.location.href = "/ValuationRequest/ValuationRequests";
+//            }, 1000);
+//        }
+//        else {
+//            toastr.error(data._Message);
+//        }
+//    } catch (e) {
+//        toastr.error('Error:' + e.message);
+//    }
+//}
+
 function DeleteDocumentSuccess(data) {
     try {
         if (data._Success === true) {
-            debugger
-           /* $('#SiteTableDocument tr:eq(' + docId + ')').remove();*/
-            toastr.success(RecordDelete);
+            var docId = $('#DeleteDocumentModel #ID').val(); // Get the docId from the modal
+
+            // Delay the removal until after the AJAX call is complete
             setTimeout(function () {
-                window.location.href = "/ValuationRequest/ValuationRequests";
-            }, 1000);        
-        }
-        else {
+                $('#SiteTableDocument tr[data-docid="' + docId + '"]').remove();
+                debugger;
+                toastr.success(RecordDelete);
+            }, 0);
+        } else {
             toastr.error(data._Message);
         }
     } catch (e) {
