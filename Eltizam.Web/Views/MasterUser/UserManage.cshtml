@@ -356,7 +356,7 @@
                                                         {
                                                             @foreach (var docs in Model.Documents)
                                                             {                                                       
-                                                                <tr id="docs.Id">
+                                                                <tr id="@docs.Id">
                                                                     <td>@docs.DocumentName</td>
                                                                     <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                     <td>@docs.CreatedName</td>

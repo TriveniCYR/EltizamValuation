@@ -38,6 +38,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? UserTypeId { get; set; }
         public string? UserName { get; set; }
         public int? ProfileAttachmentId { get; set; }
+
         public virtual MasterDepartment? Department { get; set; }
         public virtual MasterDesignation? Designation { get; set; }
         public virtual ICollection<MasterUserAddress> MasterUserAddresses { get; set; }

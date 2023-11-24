@@ -181,7 +181,7 @@ function DeleteUserDocumentSuccess(data) {
     try {
         if (data._Success === true) {
             debugger
-            $('#UserTableDocument tr:eq('+docId+')').remove();
+            $('#UserTableDocument tbody tr:eq('+docId+')').remove();
             toastr.success(RecordDelete);
         }
         else {
