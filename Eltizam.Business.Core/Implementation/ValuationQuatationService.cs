@@ -7,6 +7,7 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
        private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<ValuationQuotation> _repository { get; set; }
+        private IRepository<MasterDocument> _repositoryDocument { get; set; }
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
         #endregion Properties
@@ -37,6 +39,7 @@ namespace Eltizam.Business.Core.Implementation
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
             _repository = _unitOfWork.GetRepository<ValuationQuotation>();
+            _repositoryDocument = _unitOfWork.GetRepository<MasterDocument>();
             configuration = _configuration;
             _helper = helper;
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
@@ -61,9 +64,25 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<ValuationQuatationListModel> GetQuatationById(int id)
         {
+            var tableName = Enum.GetName(TableNameEnum.ValuationQuotation);
+
             var _quatationEntity = new ValuationQuatationListModel();
             _quatationEntity = _mapperFactory.Get<ValuationQuotation, ValuationQuatationListModel>(await _repository.GetAsync(id));
+            if (_quatationEntity != null)
+            {
+                DbParameter[] osqlParameter2 =
+                {
+                    new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                    new DbParameter(AppConstants.TableName,  tableName, SqlDbType.VarChar),
+                };
 
+                var quatationDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
+                                    DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                if (quatationDocuments != null)
+                {
+                    _quatationEntity.Documents = quatationDocuments;
+                }
+            }
             return _quatationEntity;
         }
         public async Task<DBOperation> QuatationDelete(int id)
@@ -82,7 +101,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> Upsert(ValuationQuatationListModel entityQuatation)
         {
 
-            ValuationQuotation objQuatation;
+            ValuationQuotation objQuatation; 
+            MasterDocument objDocument;
 
             if (entityQuatation.Id > 0)
             {
@@ -100,8 +120,8 @@ namespace Eltizam.Business.Core.Implementation
                     objQuatation.Discount = entityQuatation.Discount;
                     objQuatation.TotalFee = entityQuatation.TotalFee;
                     objQuatation.StatusId = entityQuatation.StatusId;
-                    objQuatation.ModifyDate = AppConstants.DateTime;
-                    objQuatation.ModifyBy = 1;
+                    objQuatation.ModifiedDate = AppConstants.DateTime;
+                    objQuatation.ModifiedBy = entityQuatation.ModifiedBy;
                     _repository.UpdateAsync(objQuatation);
                 }
                 else
@@ -113,13 +133,33 @@ namespace Eltizam.Business.Core.Implementation
             {
                 objQuatation = _mapperFactory.Get<ValuationQuatationListModel, ValuationQuotation>(entityQuatation);
                 objQuatation.CreatedDate = AppConstants.DateTime;
-                objQuatation.CreatedBy = 1;
+                objQuatation.CreatedBy = entityQuatation.CreatedBy ?? 1;
                 _repository.AddAsync(objQuatation);
             }
             await _unitOfWork.SaveChangesAsync();
             if (objQuatation.Id == 0)
                 return DBOperation.Error;
+            else
+            {
+                if (entityQuatation.uploadDocument != null)
+                {
+                    foreach (var doc in entityQuatation.uploadDocument)
+                    {
+                        objDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                        objDocument.IsActive = doc.IsActive;
+                        objDocument.TableKeyId = objQuatation.Id;
+                        objDocument.TableName = Enum.GetName(TableNameEnum.ValuationQuotation);
+                        objDocument.DocumentName = doc.DocumentName;
+                        objDocument.FileName = doc.FileName;
+                        objDocument.FilePath = doc.FilePath;
+                        objDocument.FileType = doc.FileType;
+                        objDocument.CreatedBy = doc.CreatedBy;
 
+                        _repositoryDocument.AddAsync(objDocument);
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                }
+            }
             return DBOperation.Success;
         }
     }

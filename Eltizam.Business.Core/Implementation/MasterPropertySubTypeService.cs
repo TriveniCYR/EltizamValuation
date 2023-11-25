@@ -9,6 +9,7 @@ using Eltizam.Resource;
 using Eltizam.Utility;
 using Microsoft.Extensions.Localization;
 using System.Data;
+using static Dapper.SqlMapper;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -105,9 +106,10 @@ namespace Eltizam.Business.Core.Implementation
 		{
 			return _mapperFactory.GetList<MasterPropertySubType, Master_PropertySubTypeModel>(await _repository.GetAllAsync());
 		}
-
-		public async Task<DBOperation> AddUpdateMasterSubProperty(Master_PropertySubTypeModel entityproperty)
+ 
+        public async Task<DBOperation> AddUpdateMasterSubProperty(Master_PropertySubTypeModel entityproperty)
         {
+            
             // Create a Master_PropertyType object.
             MasterPropertySubType objPropertyType;
 
