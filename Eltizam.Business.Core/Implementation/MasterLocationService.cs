@@ -64,15 +64,15 @@ namespace Eltizam.Business.Core.Implementation
         //    }
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-            //  string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
-            //   string SortDir = model.order[0]?.dir;
+            string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
+            string SortDir = model.order[0]?.dir;
 
             SqlParameter[] osqlParameter =
             {
                 new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
                 new SqlParameter(AppConstants.P_PageSize,           model.length),
-                new SqlParameter(AppConstants.P_SortColumn,       "ID"),
-                new SqlParameter(AppConstants.P_SortDirection,      "ASC"),
+                new SqlParameter(AppConstants.P_SortColumn,       ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
                 new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
             };
 

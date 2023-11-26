@@ -1,8 +1,13 @@
 ﻿var tableId = "LocationTable";
 $(document).ready(function () {
+   
     InitializeLocationDataList(); 
+   
 });
+function locationreadOnlyForm() {
 
+    $('#location').find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true);
+}
 //Load data into table
 function InitializeLocationDataList() { 
     var ajaxObject = {
