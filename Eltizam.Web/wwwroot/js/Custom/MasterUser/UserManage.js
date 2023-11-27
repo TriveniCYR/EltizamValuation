@@ -79,6 +79,8 @@ function BindGender() {
         Gender.val($('#hdnGender').val());
     }
 }
+
+/*
 function BindCountryCode() {
     var CountryCode = $("#Address_PhoneExt");
     var AlternatePhone = $("#Address_AlternatePhoneExt");
@@ -111,6 +113,7 @@ function BindCountryCode() {
         }
     });
 }
+*/
 
 $('#Address_PinNo').keypress(function (e) {
     if ($('#Address_PinNo').val() == '' && e.which == 48) {

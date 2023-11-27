@@ -146,6 +146,9 @@ function GetIntegerVal(val) {
 
 
 // ======== Bind dropdowns ============
+var dftSel = "-- select --";
+var dftSel2 = "- -";
+
 function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
     $.ajax({
         type: Get,
@@ -153,7 +156,7 @@ function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
         "datatype": "json",
         success: function (response) {
             var _dd = _retrunProperty;
-            _controlID.empty().append('<option selected="selected" value="0">-- select --</option>');
+            _controlID.empty().append('<option selected="selected" value="0">' + dftSel +'</option>');
             for (var i = 0; i < response.length; i++) {
                 _controlID.append($("<option></option>").val(response[i].id).html(response[i][_dd]));
             }
@@ -178,7 +181,7 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
         "datatype": "json",
         success: function (response) {
             var _dd = _retrunProperty;
-            _controlID.empty().append('<option selected="selected" value="0">-- select --</option>');
+            _controlID.empty().append('<option selected="selected" value="0">' + dftSel +'</option>');
             for (var i = 0; i < response.values.length; i++) {
                 _controlID.append($("<option></option>").val(response.values[i].id).html(response.values[i][_dd]));
             }
@@ -195,6 +198,45 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
         }
     });
 }
+
+function BindCountryCode() { 
+    var CountryCode = $("#Address_PhoneExt");
+    var AlternatePhoneExt = $("#Address_AlternatePhoneExt");
+    var CountryCodeExt = $("#Contact_MobileExt");
+    var _val = $('#hdnPhoneExt').val();
+    var _valAlternate = $('#hdnAlternatePhoneExt').val();
+    var _valExt = $('#hdnMobileExt').val();
+
+    $.ajax({
+        type: "GET",
+        url: BaseURL + CountryList,
+        "datatype": "json",
+        success: function (response) {
+            CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 +'</option>');
+            CountryCodeExt.empty().append('<option selected="selected" value="">' + dftSel2 +'</option>');
+            AlternatePhoneExt.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
+
+            for (var i = 0; i < response.length; i++) {
+                CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                CountryCodeExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                AlternatePhoneExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+            }
+            if (_val != "" || _valExt != "") {
+                CountryCode.val(_val);
+                CountryCodeExt.val(_valExt);
+                AlternatePhoneExt.val(_valAlternate);
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
 
 
 
