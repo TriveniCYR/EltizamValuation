@@ -30,9 +30,9 @@ function InitializeAuditLogList() {
 
 
     var columnObject = [
-        //{
-        //    "data": "createdByName", "name": "Updated By"
-        //},
+        {
+            "data": "createdByName", "name": "Updated By"
+        },
 
         {
             "data": "createdDate", "name": "Updated Date",
@@ -41,18 +41,18 @@ function InitializeAuditLogList() {
                 return moment(row.createdDate).format('DD-MMM-YYYY');
             }
         },
-        //{
-        //    "data": "propertyName", "name": "Field Name"
-        //},
-        //{
-        //    "data": "oldValue", "name": "Before Update",
+        {
+            "data": "propertyName", "name": "Field Name"
+        },
+        {
+            "data": "oldValue", "name": "Before Update",
 
-        //},
+        },
 
-        //{
-        //    "data": "newValue", "name": "After Update",
+        {
+            "data": "newValue", "name": "After Update",
 
-        //},
+        }
        
         //{
         //    "data": "id", "name": "Action", "render": function (data, type, row, meta) {

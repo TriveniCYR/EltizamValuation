@@ -318,8 +318,39 @@ namespace Eltizam.Business.Core.Implementation
             var res = UtilityHelper.GetPaginationInfo(Results);
 
 
-            DataTableResponseModel resp = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<AuditLogModelResponse>());
+            DataTableResponseModel resp = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<AuditLogModelData>());
+            var resData = new List<AuditLogModelData>();
+            foreach (var log in resp.Data)
+            {
+                var _AuditLogListData = JsonConvert.DeserializeObject<List<AuditLogs>>(log.AuditLogListData);
+                var usr = _user.GetAll().Where(a => a.Id == log.CreatedBy).FirstOrDefault();
+                //log.AuditLogDetailListData = _AuditLogListData;
+                //resp.Data.AuditLogDetailListData = _AuditLogListData;
+                foreach (var detail in _AuditLogListData)
+                {
+                    resData.Add(new AuditLogModelData()
+                    {
 
+                        ActionType = log.ActionType,
+                        ParentTableKeyId = log.ParentTableKeyId,
+                        ParentTableName = log.ParentTableName,
+                        TableKeyId = log.TableKeyId,
+                        TableName = log.TableName,
+                        Id = log.Id,
+                        CreatedBy = log.CreatedBy,
+                        CreatedDate = log.CreatedDate, // Include both date and time
+                        CreatedDateFormatted = log.CreatedDate?.ToString("yyyy-MM-dd HH:mm:ss"), // Formatted date and time
+                        CreatedByName = usr == null ? "" : usr.FirstName + ' ' + usr.LastName, // Use null-conditional operator
+                        PropertyName = detail.PropertyName,
+                        OldValue = detail.OldValue,
+                        NewValue = detail.NewValue,
+                        DisplayName = detail.DisplayName,
+                    });
+                }
+            }
+            resp.Data = resData;
+            resp.recordsFiltered = resData.Count();
+            resp.recordsTotal = resData.Count();
             return resp;
         }
 
