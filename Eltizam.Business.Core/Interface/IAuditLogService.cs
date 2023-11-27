@@ -14,7 +14,7 @@ namespace Eltizam.Business.Core.Interface
         Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null);
         Task<List<AuditLogTableModel>> GetAllAuditLogTableName();
 
-        Task<DataTableResponseModel> GetAllDetailsLog(DataTableAjaxPostModel model, string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null);
-        //Task<AuditLogModelResponse> GetAllDetailsLog(DataTableAjaxPostModel model, string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null, List<AuditLogs> auditLogListData = null);
+        Task<DataTableResponseModel> GetAllDetailsLog(DataTableAjaxPostModel model, string? TableName, DateTime? DateFrom = null, DateTime? DateTo = null);
+        
     }
 }

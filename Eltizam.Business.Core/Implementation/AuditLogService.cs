@@ -292,66 +292,30 @@ namespace Eltizam.Business.Core.Implementation
 
 
 
-        public async Task<DataTableResponseModel> GetAllDetailsLog(DataTableAjaxPostModel model, string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        public async Task<DataTableResponseModel> GetAllDetailsLog(DataTableAjaxPostModel model, string? TableName, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
-            //string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
-            //string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
-            string ColumnName = "Id";
-            string SortDir = "asc";
+            string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
+            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
             System.Data.SqlClient.SqlParameter[] osqlParameter =
-            {
+    {
         new System.Data.SqlClient.SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
         new System.Data.SqlClient.SqlParameter(AppConstants.P_PageSize,           model.length),
         new System.Data.SqlClient.SqlParameter(AppConstants.P_SortColumn,         ColumnName),
         new System.Data.SqlClient.SqlParameter(AppConstants.P_SortDirection,      SortDir),
         new System.Data.SqlClient.SqlParameter(AppConstants.P_SearchText,         model.search?.value),
         new System.Data.SqlClient.SqlParameter("@TableName",                      TableName),
-        new System.Data.SqlClient.SqlParameter("@Id",                             Id),
-        new System.Data.SqlClient.SqlParameter("@TableKey",                      TableKey),
         new System.Data.SqlClient.SqlParameter("@DateFrom",                       DateFrom),
         new System.Data.SqlClient.SqlParameter("@DateTo",                         DateTo)
     };
 
-            var Results = await _repository.GetBySP(ProcedureMetastore.GetLogDetailsByFilters, CommandType.StoredProcedure, osqlParameter);
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_AuditLog_SearchDetailsByFilter, CommandType.StoredProcedure, osqlParameter);
 
-            //Get Pagination information
             var res = UtilityHelper.GetPaginationInfo(Results);
 
-
             DataTableResponseModel resp = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<AuditLogModelData>());
-            var resData = new List<AuditLogModelData>();
-            foreach (var log in resp.Data)
-            {
-                var _AuditLogListData = JsonConvert.DeserializeObject<List<AuditLogs>>(log.AuditLogListData);
-                var usr = _user.GetAll().Where(a => a.Id == log.CreatedBy).FirstOrDefault();
-                //log.AuditLogDetailListData = _AuditLogListData;
-                //resp.Data.AuditLogDetailListData = _AuditLogListData;
-                foreach (var detail in _AuditLogListData)
-                {
-                    resData.Add(new AuditLogModelData()
-                    {
 
-                        ActionType = log.ActionType,
-                        ParentTableKeyId = log.ParentTableKeyId,
-                        ParentTableName = log.ParentTableName,
-                        TableKeyId = log.TableKeyId,
-                        TableName = log.TableName,
-                        Id = log.Id,
-                        CreatedBy = log.CreatedBy,
-                        CreatedDate = log.CreatedDate, // Include both date and time
-                        CreatedDateFormatted = log.CreatedDate?.ToString("yyyy-MM-dd HH:mm:ss"), // Formatted date and time
-                        CreatedByName = usr == null ? "" : usr.FirstName + ' ' + usr.LastName, // Use null-conditional operator
-                        PropertyName = detail.PropertyName,
-                        OldValue = detail.OldValue,
-                        NewValue = detail.NewValue,
-                        DisplayName = detail.DisplayName,
-                    });
-                }
-            }
-            resp.Data = resData;
-            resp.recordsFiltered = resData.Count();
-            resp.recordsTotal = resData.Count();
             return resp;
+
         }
 
 
@@ -364,5 +328,5 @@ namespace Eltizam.Business.Core.Implementation
 
 
 
-    
+
 
