@@ -3,7 +3,7 @@ var BaseURL = $('#hdnAPIURL').val();
 var setDefaultOrder = [0, 'desc'];
 
 
-var LogInUserId = $("LogInUserId").val() ?? 1;
+var LogInUserId = $("#LogInUserId").val() ?? 1;
 var Post = 'POST';
 var Get = 'GET';
 var Delete = 'DELETE';
