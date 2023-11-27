@@ -1,4 +1,16 @@
-﻿ //--- Save dictionary details for each value ------
+﻿$(document).ready(function () {
+    var isViewValue = getParameterByName('Isview');
+    if (isViewValue === '1') {
+        $('#masterdictionary').find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true);
+        $('#btnSaveEdit,#addnevalue').hide();
+    }
+
+});
+
+
+
+//--- Save dictionary details for each value ------
+
 function SaveMasterDictionary() {  
     var description = $.trim($('#Description').val());
 
@@ -74,4 +86,17 @@ function SaveMasterDictionary() {
             $("#loader").hide();
         }
     }); 
+
+    // Function to check if a URL parameter exists
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+  
 }
