@@ -34,12 +34,16 @@ var IsAddPermIn = ($("#isAddPermInvoice").val() === "1" || $("#isAddPermInvoice"
 var IsEditPermIn = ($("#isEditPermInvoice").val() === "1" || $("#isEditPermInvoice").val() === 1);
 
 var IsApprovePerem = ($("#isApprovePerm").val() === "1" || $("#isApprovePerm").val() === 1);  
-
+var isView=
 $(document).ready(function () {
     ErrorDev.hide();
     readsideNavToggle();
     hideLoader(); 
     formatreadonlydate();
+    if ($("#isView").val() === "1")
+    {
+        locationreadOnlyForm();
+    }
     //Toaster related things
     if (SuccessToaster !== "" && SuccessToaster !== null) {
         toastr.success(SuccessToaster);
