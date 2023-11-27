@@ -80,6 +80,8 @@ namespace Eltizam.Business.Models
         public static string usp_AuditLog_GetTable = "usp_AuditLog_GetTable";
         public static string usp_AuditLog_Add = "usp_AuditLog_Add";
         public static string usp_ValuationRequest_GetDependencies = "usp_ValuationRequest_GetDependencies";
+        public static string GetLogDetailsByFilters = "GetLogDetailsByFilters";
+
 
         // Dahsboard
         public static string usp_ValuationRequest_GetLatestRequest = "usp_ValuationRequest_GetLatestRequest";

@@ -242,6 +242,7 @@ namespace Eltizam.Web.Helpers
 
         #region AuditLog
         public static string GetAllAudit = "AuditLog/GetAll";
+        public static string GetAuditDetails = "AuditLog/GetAllDetailsLog";
         public static string GetDetailsAudit = "AuditLog/GetLogDetailsByFilters";
         public static string GetAuditTableName = "AuditLog/GetAllAuditLogTableName";
 

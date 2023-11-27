@@ -1,154 +1,107 @@
 ﻿@using Eltizam.Business.Models;
-@model AuditData
+@model AuditLogModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = "Audit Logs";
     var _md = "View";
     ViewData["Title"] = _header; 
 }
 
-<main>
-    <div class="whiteBoxShadow">
-        <div class="heading position-relative flex justify-between">
-            <h3 class="dashboardTitle">View Audit Log</h3>
-            <div class="hamburger">
-                <a class="greyBtn lineBtn formAbtn" asp-action="Logs">@_header</a>
-                <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                <span>@_md</span>
+<div class="flex">
+    <div class="w-100 position-relative">
+        <main class="w-100">
+            <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+                <h3 class="dashboardTitle">AUDIT LOGS</h3>
+               @*  <div class="buttonArea flex align-item-center">
+                    <form asp-action="ClientManage" asp-controller="MasterClient" method="GET">
+
+                        <button class="flex align-item-center blueBtn">
+                            <img src="../assets/plus.svg" alt="plus"> Add New
+                        </button>
+                    </form>
+
+                </div> *@
             </div>
-        </div>
-        <div class="bodyContent p-0">
-            <div class="tabcontent m-0" style="display: block;">
-                <div class="auditLog-acc roundBorderBox">
 
-                    @*   <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                    <p>Created By: <b>@res.CreatedByName</b></p>
-                    <div class="flex align-item-center">
-                    <p style=" margin: 0 35px;">Created Date: <b>@res.CreatedDate?.ToString("dd/MMM/yyyy")</b></p>
+            <div class="accordion valueAdvance">
 
-                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                    </div>
-                    </div>  *@
+                <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+                <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
+                <div class="accordion-content inputSearchs">
 
-                    <div class="panel mt-28">
-                        <div class="flex m-0">
-                            <table class="table-striped">
-                                @* multipleValueTable *@
-                                <thead>
-                                    <tr>
-                                        <th>Updated By</th>
-                                        <th>Updated Date</th>
-                                        <th>Field Name</th>
-                                        <th>Before Update</th>
-                                        <th>After Update</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var res in Model._object)
-                                    {
-                                        @foreach (var a in res.AuditLogListData)
-                                        {
-                                            @if (a.PropertyName != "Id" && a.PropertyName != "CreatedBy" && a.PropertyName != "CreatedDate" && a.PropertyName != "ModifiedBy" && a.PropertyName != "ModifiedDate")
-                                            {
-                                                <tr>
-                                                    <td>@res.CreatedByName</td>
-                                                    <td class="formatted-td-date-input">@res.CreatedDate.ToString()</td>
-                                                    <td>@a.PropertyName</td>
-                                                    <td>@a.OldValue</td>
-                                                    <td>@a.NewValue</td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                    <h3 class="text-center">Advanced Search</h3>
+                    <form>
+
+
+                        <div class="flex flex-start">
+
+                          @*   <label for="UserName">
+                                <p class="m-0">UserName</p>
+                                @Html.DropDownListFor(model => model.UserName, new List<SelectListItem> { }, new {  })
+                            </label> *@
+                           @*  <label for="ParentTableName">
+                                <p class="m-0">TableName</p>
+                                @Html.DropDownListFor(model => model.ParentTableName, new List<SelectListItem> { }, new {  })
+                            </label> *@
+                            <label for="fromDate">
+                                From Date
+                                <input type="text" id="FromDate" class="formatted-date-input" name="FromDate" asp-for="FromDate">
+                            </label>
+                            <label for="toDate">
+                                To Date
+                                <input type="text" id="ToDate" class="formatted-date-input" name="ToDate" asp-for="ToDate">
+                            </label>
                         </div>
-                    </div>
+
+                        <div class="text-center">
+                            <button type="button" class="blueBtn" onclick="InitializeAuditLogList()">Search</button>
+                        </div>
+                        
+                    </form>
                 </div>
             </div>
+            <div class="scroll-x whiteWithPadding">
+                <input type="hidden" id="tableName" value=@ViewBag.Filter.TableName />
+                <input type="hidden" id="id" value="@ViewBag.Filter.Id" />
+                <input type="hidden" id="tableKey" value="@ViewBag.Filter.TableKey" />
+                @* <input type="hidden" id="dateFrom" value="@Model.DateFrom" />
+                <input type="hidden" id="dateTo" value="@Model.DateTo" /> *@
+                <table id="AuditLogHistory" class="table table-bordered table-striped table-hover dataTable no-footer">
+                    <thead>
+                        <tr>
+                            <th>Updated By</th>
+                            <th>Updated Date</th>
+                            <th>Field Name</th>
+                            <th>Before Update</th>
+                            <th>After Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </main>
 
-            @*    <div class="tabcontent m-0" style="display: block;">
-            <div class="auditLog-acc roundBorderBox">
-            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-            <p>Created By: <b>Yalla Reddy</b></p>
-            <div class="flex align-item-center">
-            <p style=" margin: 0 35px;">Created Date: <b>11/5/2023</b></p>
-            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-            </div>
-            </div>
-            <div class="panel mt-28">
-            <div class="flex m-0">
-            <table class="multipleValueTable">
-            <thead>
-            <tr>
-            <th>Time</th>
-            <th>Field Name</th>
-            <th>Old</th>
-            <th>New</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <td>10:11:43 PM</td>
-            <td>First Name</td>
-            <td>Yalla</td>
-            <td>Yallaa</td>
-            </tr>
-            <tr>
-            <td>10:11:43 PM</td>
-            <td>First Name</td>
-            <td>Yalla</td>
-            <td>Yallaa</td>
-            </tr>
-
-            </tbody>
-            </table>
-            </div>
-            </div>
-            </div>
-
-            </div> *@
-
-            @*  <div class="tabcontent m-0" style="display: block;">
-            <div class="auditLog-acc roundBorderBox">
-            <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-            <p>Created By: <b>Yalla Reddy</b></p>
-            <div class="flex align-item-center">
-            <p style=" margin: 0 35px;">Created Date: <b>11/5/2023</b></p>
-            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-            </div>
-            </div>
-            <div class="panel mt-28">
-            <div class="flex m-0">
-            <table class="multipleValueTable">
-            <thead>
-            <tr>
-            <th>Time</th>
-            <th>Field Name</th>
-            <th>Old</th>
-            <th>New</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-            <td>10:11:43 PM</td>
-            <td>First Name</td>
-            <td>Yalla</td>
-            <td>Yallaa</td>
-            </tr>
-            <tr>
-            <td>10:11:43 PM</td>
-            <td>First Name</td>
-            <td>Yalla</td>
-            <td>Yallaa</td>
-            </tr>
-
-            </tbody>
-            </table>
-            </div>
-            </div>
-            </div>
-
-            </div> *@
-        </div>
     </div>
-</main>
+</div>
+
+
+@section MyScripts {
+
+    @Html.Partial("_DataTablePartial")
+    <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/AuditLog/AuditLogs.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/AuditLog/AuditLogsFilter.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/AuditLog/AuditDetailsLogs .js?v=@jsVersion"></script>
+
+    <script>
+        //#region Setup API Url
+        var AllAudit = "@Eltizam.Web.Helpers.APIURLHelper.GetAllAudit";
+        var DeleteClient = "@Eltizam.Web.Helpers.APIURLHelper.DeleteClient";
+        var GetAuditTableNameList = "@Eltizam.Web.Helpers.APIURLHelper.GetAuditTableName";
+        var GetUserNameList = "@Eltizam.Web.Helpers.APIURLHelper.GetUserNameList";
+        var AllAuditDetails = "@Eltizam.Web.Helpers.APIURLHelper.GetAuditDetails";
+    </script>
+}

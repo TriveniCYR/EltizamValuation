@@ -1204,7 +1204,7 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.ExpireDate).HasColumnType("date");
 
-                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Note).IsUnicode(false);
 
@@ -1232,7 +1232,7 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.InstructorCharges).HasColumnType("decimal(18, 6)");
 
-                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Note).IsUnicode(false);
 

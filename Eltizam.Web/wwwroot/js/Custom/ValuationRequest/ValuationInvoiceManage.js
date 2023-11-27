@@ -6,6 +6,24 @@ $(document).ready(function () {
 
 });
 
+
+function displayFileNames(input) {
+    const fileInput = input;
+    const fileNamesInput = input.nextElementSibling;
+
+    const files = fileInput.files;
+    let fileNames = "";
+
+    for (let i = 0; i < files.length; i++) {
+        fileNames += files[i].name;
+        if (i < files.length - 1) {
+            fileNames += ", ";
+        }
+    }
+
+    fileNamesInput.value = fileNames;
+}
+
 var InvoiceRequest = {
     'TransactionStatusId': 0,
     'Amount': 0,

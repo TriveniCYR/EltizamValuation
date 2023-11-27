@@ -167,7 +167,7 @@ namespace Eltizam.Business.Core.Implementation
         }
         public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
-           // var users = await _repository.GetAllAsync();
+            // var users = await _repository.GetAllAsync();
             //TableName = "MasterUser";
 
             var entityAuditLogs = await _repository.FindAllAsync(x =>
@@ -185,7 +185,7 @@ namespace Eltizam.Business.Core.Implementation
                 var usr = _user.GetAll().Where(a => a.Id == log.CreatedBy).FirstOrDefault();
                 res.Add(new AuditLogModelResponse()
                 {
-                   
+
                     ActionType = log.ActionType,
                     ParentTableKeyId = log.ParentTableKeyId,
                     ParentTableName = log.ParentTableName,
@@ -197,29 +197,11 @@ namespace Eltizam.Business.Core.Implementation
                     CreatedDateFormatted = log.CreatedDate?.ToString("yyyy-MM-dd HH:mm:ss"), // Formatted date and time
                     CreatedByName = usr == null ? "" : usr.FirstName + ' ' + usr.LastName, // Use null-conditional operator
                     AuditLogListData = _AuditLogListData?.ToList(),
-                }); 
+                });
             }
 
-            //// Sort the res list by CreatedDate (including date and time)
-            //var sortedLogs = res.OrderBy(log => log.CreatedDate).ToList();
 
-            //// Group the sortedLogs list by date
-            //var groupedLogs = sortedLogs.GroupBy(log => log.CreatedDate?.Date);
 
-            //// Create a list of grouped results with time included as a formatted string
-            //var resultsWithTime = new List<AuditLogModelResponse>();
-            //foreach (var group in groupedLogs)
-            //{
-            //    var firstLogInGroup = group.FirstOrDefault();
-            //    resultsWithTime.Add(new AuditLogModelResponse
-            //    {
-            //        CreatedDate = group.Key,
-            //        CreatedDateFormatted = group.Key?.ToString("yyyy-MM-dd HH:mm:ss"),
-            //        CreatedByName = firstLogInGroup?.CreatedByName,
-            //        AuditLogListData = group.SelectMany(item => item.AuditLogListData).ToList()
-            //    });
-            //}
-            //return resultsWithTime;
 
             return res;
         }
@@ -307,5 +289,80 @@ namespace Eltizam.Business.Core.Implementation
 
             return lstStf;
         }
+
+
+
+        public async Task<DataTableResponseModel> GetAllDetailsLog(DataTableAjaxPostModel model, string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        {
+            //string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
+            //string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+            string ColumnName = "Id";
+            string SortDir = "asc";
+            System.Data.SqlClient.SqlParameter[] osqlParameter =
+            {
+        new System.Data.SqlClient.SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+        new System.Data.SqlClient.SqlParameter(AppConstants.P_PageSize,           model.length),
+        new System.Data.SqlClient.SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+        new System.Data.SqlClient.SqlParameter(AppConstants.P_SortDirection,      SortDir),
+        new System.Data.SqlClient.SqlParameter(AppConstants.P_SearchText,         model.search?.value),
+        new System.Data.SqlClient.SqlParameter("@TableName",                      TableName),
+        new System.Data.SqlClient.SqlParameter("@Id",                             Id),
+        new System.Data.SqlClient.SqlParameter("@TableKey",                      TableKey),
+        new System.Data.SqlClient.SqlParameter("@DateFrom",                       DateFrom),
+        new System.Data.SqlClient.SqlParameter("@DateTo",                         DateTo)
+    };
+
+            var Results = await _repository.GetBySP(ProcedureMetastore.GetLogDetailsByFilters, CommandType.StoredProcedure, osqlParameter);
+
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(Results);
+
+
+            DataTableResponseModel resp = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<AuditLogModelData>());
+            var resData = new List<AuditLogModelData>();
+            foreach (var log in resp.Data)
+            {
+                var _AuditLogListData = JsonConvert.DeserializeObject<List<AuditLogs>>(log.AuditLogListData);
+                var usr = _user.GetAll().Where(a => a.Id == log.CreatedBy).FirstOrDefault();
+                //log.AuditLogDetailListData = _AuditLogListData;
+                //resp.Data.AuditLogDetailListData = _AuditLogListData;
+                foreach (var detail in _AuditLogListData)
+                {
+                    resData.Add(new AuditLogModelData()
+                    {
+
+                        ActionType = log.ActionType,
+                        ParentTableKeyId = log.ParentTableKeyId,
+                        ParentTableName = log.ParentTableName,
+                        TableKeyId = log.TableKeyId,
+                        TableName = log.TableName,
+                        Id = log.Id,
+                        CreatedBy = log.CreatedBy,
+                        CreatedDate = log.CreatedDate, // Include both date and time
+                        CreatedDateFormatted = log.CreatedDate?.ToString("yyyy-MM-dd HH:mm:ss"), // Formatted date and time
+                        CreatedByName = usr == null ? "" : usr.FirstName + ' ' + usr.LastName, // Use null-conditional operator
+                        PropertyName = detail.PropertyName,
+                        OldValue = detail.OldValue,
+                        NewValue = detail.NewValue,
+                        DisplayName = detail.DisplayName,
+                    });
+                }
+            }
+            resp.Data = resData;
+            resp.recordsFiltered = resData.Count();
+            resp.recordsTotal = resData.Count();
+            return resp;
+        }
+
+
+
     }
+
 }
+
+
+
+
+
+    
+
