@@ -9,86 +9,83 @@
     ViewData["Title"] = _header; 
 }
 
-<main>
-    <div class="whiteBoxShadow">
-        <div class="heading position-relative flex justify-between">
-            <h3 class="dashboardTitle">View Audit Log</h3>
-            <div class="hamburger">
-                <a class="greyBtn lineBtn formAbtn" asp-action="Logs">@_header</a>
-                <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                <span>@_md</span>
+<div class="flex">
+    <div class="w-100 position-relative">
+        <main class="w-100">
+            <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
+                <h3 class="dashboardTitle">AUDIT LOGS</h3>
+               @*  <div class="buttonArea flex align-item-center">
+                    <form asp-action="ClientManage" asp-controller="MasterClient" method="GET">
+
+                        <button class="flex align-item-center blueBtn">
+                            <img src="../assets/plus.svg" alt="plus"> Add New
+                        </button>
+                    </form>
+
+                </div> *@
             </div>
-        </div>
 
-        <div class="accordion valueAdvance">
+            <div class="accordion valueAdvance">
 
-            <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
-            <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
-            <div class="accordion-content inputSearchs">
+                <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
+                <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
+                <div class="accordion-content inputSearchs">
 
-                <h3 class="text-center">Advanced Search</h3>
-                <form>
+                    <h3 class="text-center">Advanced Search</h3>
+                    <form>
 
 
-                    <div class="flex flex-start">
+                        <div class="flex flex-start">
 
-                       
-                     @*    <label for="ParentTableName">
-                            <p class="m-0">TableName</p>
-                            @Html.DropDownListFor(model => model.ParentTableName, new List<SelectListItem> { }, new {  })
-                        </label> *@
-                        <label for="fromDate">
-                            From Date
-                            <input type="text" id="FromDate" class="formatted-date-input" name="FromDate" asp-for="FromDate">
-                        </label>
-                        <label for="toDate">
-                            To Date
-                            <input type="text" id="ToDate" class="formatted-date-input" name="ToDate" asp-for="ToDate">
-                        </label>
-                    </div>
-
-                    <div class="text-center">
-                        <button type="button" class="blueBtn" onclick="InitializeAuditLogList()">Search</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="bodyContent p-0">
-            <div class="tabcontent m-0" style="display: block;">
-                <div class="auditLog-acc roundBorderBox">
-                    <input type="hidden" id="tableName" value=@ViewBag.Filter.TableName />
-                    <input type="hidden" id="id" value="@ViewBag.Filter.Id" />
-                    <input type="hidden" id="tableKey" value="@ViewBag.Filter.TableKey" />
-                    @* <input type="hidden" id="dateFrom" value="@Model.DateFrom" />
-                    <input type="hidden" id="dateTo" value="@Model.DateTo" /> *@
-                    
-
-                    <div class="panel mt-28">
-                        <div class="flex m-0">
-                            <table class="table-striped" id="AuditLogHistory">
-                                @* multipleValueTable *@
-                                <thead>
-                                    <tr>
-                                        <th>Updated By</th>
-                                        <th>Updated Date</th>
-                                        <th>Field Name</th>
-                                        <th>Before Update</th>
-                                        <th>After Update</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table>
+                          @*   <label for="UserName">
+                                <p class="m-0">UserName</p>
+                                @Html.DropDownListFor(model => model.UserName, new List<SelectListItem> { }, new {  })
+                            </label> *@
+                           @*  <label for="ParentTableName">
+                                <p class="m-0">TableName</p>
+                                @Html.DropDownListFor(model => model.ParentTableName, new List<SelectListItem> { }, new {  })
+                            </label> *@
+                            <label for="fromDate">
+                                From Date
+                                <input type="text" id="FromDate" class="formatted-date-input" name="FromDate" asp-for="FromDate">
+                            </label>
+                            <label for="toDate">
+                                To Date
+                                <input type="text" id="ToDate" class="formatted-date-input" name="ToDate" asp-for="ToDate">
+                            </label>
                         </div>
-                    </div>
+
+                        <div class="text-center">
+                            <button type="button" class="blueBtn" onclick="InitializeAuditLogList()">Search</button>
+                        </div>
+                        
+                    </form>
                 </div>
             </div>
+            <div class="scroll-x whiteWithPadding">
+                <input type="hidden" id="tableName" value=@ViewBag.Filter.TableName />
+                <input type="hidden" id="id" value="@ViewBag.Filter.Id" />
+                <input type="hidden" id="tableKey" value="@ViewBag.Filter.TableKey" />
+                @* <input type="hidden" id="dateFrom" value="@Model.DateFrom" />
+                <input type="hidden" id="dateTo" value="@Model.DateTo" /> *@
+                <table id="AuditLogHistory" class="table table-bordered table-striped table-hover dataTable no-footer">
+                    <thead>
+                        <tr>
+                            <th>Updated By</th>
+                            <th>Updated Date</th>
+                            <th>Field Name</th>
+                            <th>Before Update</th>
+                            <th>After Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </main>
 
-            
-        </div>
     </div>
-</main>
+</div>
 
 
 @section MyScripts {

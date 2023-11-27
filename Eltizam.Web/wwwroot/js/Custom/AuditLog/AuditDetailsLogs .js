@@ -4,18 +4,20 @@ $(document).ready(function () {
 });
 
 function InitializeAuditLogList() {
-    var tbl = $("#auditlogDetails");
+    var tbl = $("#AuditLogHistory");
     if (tbl.find('tbody tr').length > 0)
         tbl.dataTable().fnDestroy();
 
-    var userName = $("#UserName").val();
-    userName = GetIntegerVal(userName); 
+    //var userName = $("#UserName").val();
+    //userName = GetIntegerVal(userName); 
     var tableName = $("#tableName").val() === undefined ? "" : $("#tableName").val();  
     var datefrom = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
     var dateto = $("#ToDate").val() === undefined ? "" : $("#ToDate").val();
     
    /* var _appendURL = "?UserName=" + userName + "&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;*/
     var _appendURL = "?TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
+    //var _appendURL = "?DateFrom=" + datefrom + "&DateTo=" + dateto;
+
 
 
     var ajaxObject = {
