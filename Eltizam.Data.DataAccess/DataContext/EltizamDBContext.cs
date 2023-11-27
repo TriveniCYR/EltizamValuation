@@ -39,6 +39,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterException> MasterExceptions { get; set; } = null!;
         public virtual DbSet<MasterLocation> MasterLocations { get; set; } = null!;
         public virtual DbSet<MasterModule> MasterModules { get; set; } = null!;
+        public virtual DbSet<MasterNotification> MasterNotifications { get; set; } = null!;
         public virtual DbSet<MasterOwnershipType> MasterOwnershipTypes { get; set; } = null!;
         public virtual DbSet<MasterProperty> MasterProperties { get; set; } = null!;
         public virtual DbSet<MasterPropertyAmenity> MasterPropertyAmenities { get; set; } = null!;
@@ -621,6 +622,15 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<MasterNotification>(entity =>
+            {
+                entity.ToTable("Master_Notification", "dbo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.SentDatetime).HasColumnType("datetime");
+            });
+
             modelBuilder.Entity<MasterOwnershipType>(entity =>
             {
                 entity.ToTable("Master_OwnershipType", "dbo");
@@ -1105,9 +1115,9 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ExternalArea).HasColumnType("decimal(18, 6)");
+                entity.Property(e => e.ExternalArea).HasColumnType("decimal(16, 8)");
 
-                entity.Property(e => e.InternalArea).HasColumnType("decimal(18, 6)");
+                entity.Property(e => e.InternalArea).HasColumnType("decimal(16, 8)");
 
                 entity.Property(e => e.Location)
                     .HasMaxLength(250)
