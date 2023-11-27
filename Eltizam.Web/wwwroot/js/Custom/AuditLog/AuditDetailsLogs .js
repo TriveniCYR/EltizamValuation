@@ -8,16 +8,15 @@ function InitializeAuditLogHistoryList() {
     if (tbl.find('tbody tr').length > 0)
         tbl.dataTable().fnDestroy();
 
-    //var userName = $("#UserName").val();
+    var userName = $("#id").val();
     //userName = GetIntegerVal(userName); 
     var tableName = $("#tableName").val() === undefined ? "" : $("#tableName").val();  
     var datefrom = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
     var dateto = $("#ToDate").val() === undefined ? "" : $("#ToDate").val();
     
-   /* var _appendURL = "?UserName=" + userName + "&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;*/
-    var _appendURL = "?TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
-    //var _appendURL = "?DateFrom=" + datefrom + "&DateTo=" + dateto;
-
+   var _appendURL = "?UserName=" + userName + "&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
+   /* var _appendURL = "?TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;*/
+    
 
 
     var ajaxObject = {
