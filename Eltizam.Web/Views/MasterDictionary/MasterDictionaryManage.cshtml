@@ -15,13 +15,13 @@
     ViewData["Title"] = _header;
 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-   
+
     var objPermssion = (RolePermissionModel)ViewBag.Access;
     var isAdd = objPermssion.Add ? 1 : 0;
-    var isEdit = objPermssion.Edit ? 1 : 0; 
+    var isEdit = objPermssion.Edit ? 1 : 0;
 }
 
-<form>
+<form id="masterdictionary">
     <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative flex justify-between">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="dynamicInput">
                             <div class="addMoreInput buttonArea">
-                                <button type="button" class="blueBtn" onclick="addDynamicTextbox()">+ Add Values</button>
+                                <button type="button" class="blueBtn" id="addnevalue" onclick="addDynamicTextbox()">+ Add Values</button>
                             </div>
                             <div class="addPropertyInputDynamic"></div>
                         </div>

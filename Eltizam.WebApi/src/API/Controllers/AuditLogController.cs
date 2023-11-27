@@ -60,13 +60,13 @@ namespace Eltizam.WebApi.Controllers
 
 
 
-        [HttpGet, Route("GetAllDetailsLog")]
-        public async Task<IActionResult> GetAllDetailsLog([FromForm] DataTableAjaxPostModel model,  string? TableName = null, int? Id=null,int?TableKey=null, DateTime? DateFrom = null, DateTime? DateTo = null)
+        [HttpPost, Route("GetAllDetailsLog")]
+        public async Task<IActionResult> GetAllDetailsLog([FromForm] DataTableAjaxPostModel model, int? UserName,  string? TableName = null,  DateTime? DateFrom = null, DateTime? DateTo = null)
         {
             try
             {
 
-                return _ObjectResponse.CreateData(await _auditLogService.GetAllDetailsLog(model, TableName, Id=null,TableKey, DateFrom, DateTo), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _auditLogService.GetAllDetailsLog(model,  UserName,TableName,  DateFrom, DateTo), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

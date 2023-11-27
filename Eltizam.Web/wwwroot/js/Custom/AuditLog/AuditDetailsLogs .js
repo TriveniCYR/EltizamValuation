@@ -1,28 +1,27 @@
 var tableId = "AuditLogHistory";
 $(document).ready(function () {
-    InitializeAuditLogList();
+    InitializeAuditLogHistoryList();
 });
 
-function InitializeAuditLogList() {
+function InitializeAuditLogHistoryList() {
     var tbl = $("#AuditLogHistory");
     if (tbl.find('tbody tr').length > 0)
         tbl.dataTable().fnDestroy();
 
-    //var userName = $("#UserName").val();
+    var userName = $("#id").val();
     //userName = GetIntegerVal(userName); 
     var tableName = $("#tableName").val() === undefined ? "" : $("#tableName").val();  
     var datefrom = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
     var dateto = $("#ToDate").val() === undefined ? "" : $("#ToDate").val();
     
-   /* var _appendURL = "?UserName=" + userName + "&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;*/
-    var _appendURL = "?TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
-    //var _appendURL = "?DateFrom=" + datefrom + "&DateTo=" + dateto;
-
+   var _appendURL = "?UserName=" + userName + "&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
+   /* var _appendURL = "?TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;*/
+    
 
 
     var ajaxObject = {
         "url": BaseURL + AllAuditDetails + _appendURL,
-        "type": "Get",
+        "type": "POST",
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
             d.PageNumber = pageNumber.page;
@@ -55,18 +54,7 @@ function InitializeAuditLogList() {
             "data": "newValue", "name": "After Update",
 
         }
-       
-        //{
-        //    "data": "id", "name": "Action", "render": function (data, type, row, meta) {
-        //        var html = '';
-        //        html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-        //        html += '<li><a title="View" href="/AuditLog/AuditLogDetails?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
-        //        html += '<li><a title="View All" href="/AuditLog/AuditLogDetails?TableName=' + row.parentTableName + '"><img src="../assets/view.svg" alt="view" />View All History</a></li>';
-        //        html += '</ul></div>';
-
-        //        return html;
-        //    }
-        //}
+      
     ];
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
