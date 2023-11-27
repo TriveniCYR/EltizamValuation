@@ -31,7 +31,7 @@
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Client Details</button>
                     <button class="tablinks" onclick="profileTab(event, 'profile2')">Mailing Address</button>
                     <button class="tablinks" onclick="profileTab(event, 'profile3')">Contact Details</button>
-                    <button class="tablinks" onclick="profileTab(event, 'profile4')">Upload Supporting Documents</button>
+                    <button class="tablinks" onclick="profileTab(event, 'profile4')">Documents</button>
                 </div>
 
                 <form asp-action="ClientManage" method="POST" enctype="multipart/form-data">
@@ -287,8 +287,7 @@
                         </div>
                     </div>
 
-                    <div id="profile4" class="tabcontent">
-                        @*  <h3 class="ptrl-20">Upload Supporting Documents</h3> *@
+                    <div id="profile4" class="tabcontent"> 
                         <div class="inputSearchs uploadDocBox">
 
                             <div class="tabSection">
