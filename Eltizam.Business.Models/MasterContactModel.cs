@@ -11,6 +11,7 @@ namespace Eltizam.Business.Models
     public class MasterContactModel
     {
         public int Id { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? ContactPersonName { get; set; }
         public int? DepartmentId { get; set; }
         public string? Department { get; set; }

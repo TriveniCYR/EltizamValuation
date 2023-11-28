@@ -13,6 +13,7 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public int Type { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [StringLength(250, MinimumLength = 1)]
         public string? Description { get; set; }
         public string? Values { get; set; }
         public bool IsActive { get; set; } 

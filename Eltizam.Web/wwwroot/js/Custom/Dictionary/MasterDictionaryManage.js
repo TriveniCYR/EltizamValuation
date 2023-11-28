@@ -37,6 +37,9 @@ function SaveMasterDictionary() {
 
     for (var i = 0; i < Inputs.length; i++) {
         var inputValue = Inputs[i].value.trim();
+        if (inputValue.length > 250) {
+            return toastr.error('SubType Description should not exceed 250 characters');
+        }
         if (inputValue === '') {
             return toastr.error("Subtype Description Cannot be blank");
         } else {
