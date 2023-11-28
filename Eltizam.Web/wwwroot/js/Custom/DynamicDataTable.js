@@ -23,6 +23,10 @@
                 [10, 25, 50, 100, 'All'],
             ],
             dom: 'Bfrtip',
+            "language": {
+                //'loadingRecords': 'Processing...',
+                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>'
+            },
             stateSaveCallback: function (settings, data) {
                 localStorage.setItem('DataTables_' + settings.sInstance, JSON.stringify(data));
             },
@@ -31,23 +35,23 @@
             },
             buttons: [
                 {
-                    extend: 'excel', text: '<i class="far fa-file-excel"></i> Excel', className: "btn-primary", exportOptions:
+                    extend: 'excel', text: '<p class="m-0" style="position: absolute;top: -20px;width: 4em;">Export To </p> <i class="far fa-file-excel" style="font-size: x-large;"></i>', className: "btn-primary p-0", exportOptions:
                     {
                         columns: ':not(.notexport)'
                     }
                 },
                 {
-                    extend: 'pdf', text: '<i class="far fa-file-pdf"></i> PDF', className: "btn-primary", exportOptions:
-                    {
-                        columns: ':not(.notexport)'
-                    }
-                },
-                {
-                    extend: 'csv', text: '<i class="far fa-file-csv"></i> CSV', className: "btn-primary", exportOptions:
+                    extend: 'pdf', text: '<i class="far fa-file-pdf" style="font-size: x-large;"></i>', className: "btn-primary", exportOptions:
                     {
                         columns: ':not(.notexport)'
                     }
                 }
+                //,{
+                //    extend: 'csv', text: '<i class="far fa-file-csv"></i>', className: "btn-primary", exportOptions:
+                //    {
+                //        columns: ':not(.notexport)'
+                //    }
+                //}
                 /*{ extend: 'colvis', className: "btn-primary", columns: ':not(.notexport)' }*/
             ],
             "ajax": ajaxObject,

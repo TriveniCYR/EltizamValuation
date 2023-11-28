@@ -195,7 +195,7 @@ function BindDesignation() {
     BindDropdowns(DesignationList, Designation, _rpname, _val);
 }
 
-
+/*
 function BindCountryCode() {
     var CountryCode = $("#Address_PhoneExt");
     var AlternatePhoneExt = $("#Address_AlternatePhoneExt");
@@ -232,15 +232,4 @@ function BindCountryCode() {
         }
     });
 }
-
-// accordian function here
-function accordianToggle(header) {
-    const item = header.nextElementSibling;
-    if (item.style.height === 'auto') {
-        item.style.height = 0;
-    } else {
-        item.style.height = 'auto';
-    }
-}
-        //accordian function end
-
+*/ 
