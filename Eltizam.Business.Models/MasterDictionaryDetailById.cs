@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,8 @@ namespace Eltizam.Business.Models
         [NotMapped]
         public int? Type { get; set; }
         public int? DictionaryId { get; set; }
-        public int ChildId { get; set; } 
+        public int ChildId { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? Description { get; set; }
         public string? ParentDescription { get; set; }
         public string? ChildDescription { get; set; }

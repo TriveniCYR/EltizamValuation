@@ -171,7 +171,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objClient = _mapperFactory.Get<MasterClientModel, MasterClient>(master_ClientModel);
                     objClient.FirstName = master_ClientModel.FirstName;
-                    objClient.MiddleName = master_ClientModel.MiddleName;
+                    objClient.MiddleName = master_ClientModel.MiddleName==null?"": master_ClientModel.MiddleName;
                     objClient.LastName = master_ClientModel.LastName;
                     objClient.ClientTypeId = master_ClientModel.ClientTypeId;
                     objClient.Trnnumber = master_ClientModel.Trnnumber;
