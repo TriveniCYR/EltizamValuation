@@ -24,9 +24,12 @@ namespace Eltizam.Business.Models
         [Range(1, int.MaxValue, ErrorMessage = "The 'City' field is required.")]
         public int CityId { get; set; }
         public string? CityName { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string Sector { get; set; }
         public int Status { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? Latitude { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? Longitude { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }

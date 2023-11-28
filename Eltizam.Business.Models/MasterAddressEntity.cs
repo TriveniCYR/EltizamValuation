@@ -12,8 +12,11 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [StringLength(250, MinimumLength = 1)]
         public string? Address1 { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? Address2 { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? Address3 { get; set; }
         [StringLength(10, MinimumLength = 5)]
         public string? PinNo { get; set; }

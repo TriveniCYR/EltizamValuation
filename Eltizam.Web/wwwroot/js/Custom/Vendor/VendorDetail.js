@@ -127,6 +127,7 @@ function BindDesignation() {
     BindDropdowns(DesignationList, Designation, _rpname, _val);
 }
 
+/*
 function BindCountryCode() {
     var CountryCode = $("#Address_PhoneExt");
     var AlternatePhoneExt = $("#Address_AlternatePhoneExt");
@@ -164,3 +165,4 @@ function BindCountryCode() {
         }
     });
 }
+*/
