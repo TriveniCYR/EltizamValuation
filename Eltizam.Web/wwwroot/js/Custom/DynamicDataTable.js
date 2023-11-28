@@ -23,6 +23,10 @@
                 [10, 25, 50, 100, 'All'],
             ],
             dom: 'Bfrtip',
+            "language": {
+                //'loadingRecords': 'Processing...',
+                processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>'
+            },
             stateSaveCallback: function (settings, data) {
                 localStorage.setItem('DataTables_' + settings.sInstance, JSON.stringify(data));
             },
