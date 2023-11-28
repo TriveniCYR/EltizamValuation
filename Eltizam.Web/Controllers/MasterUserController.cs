@@ -1,4 +1,5 @@
-﻿using Eltizam.Business.Models;
+﻿using AzureBlobHandler;
+using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
@@ -255,6 +256,15 @@ namespace EltizamValuation.Web.Controllers
                     file.CopyToAsync(stream);
                 }
 
+                //------Blob--------------------------------
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    var result = UploadToBlob(file);
+                }
+               
+                //----------------------------------------------------
+
+
                 // Save information about the uploaded file to the database
                 var upload = new MasterDocumentModel
                 {
@@ -271,6 +281,11 @@ namespace EltizamValuation.Web.Controllers
                 uploadFils.Add(upload);
             }
             return uploadFils;
+        }
+        public async Task<BlobResponse> UploadToBlob(IFormFile file)
+        {
+            BlobHandler blob = new BlobHandler();
+           return await blob.SingleFileUpload(file.OpenReadStream(), 102, file.FileName, "tablename", 101,1);
         }
         private MasterDocumentModel ProfileUpload(IFormFile pic)
         {
