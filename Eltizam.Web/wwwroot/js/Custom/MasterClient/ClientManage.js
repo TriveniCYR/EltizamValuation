@@ -194,15 +194,6 @@ function BindDesignation() {
 
     BindDropdowns(DesignationList, Designation, _rpname, _val);
 }
-if (action === "Add") {
-    document.addEventListener('DOMContentLoaded', function () {
-        flatpickr('#TrnexpiryDate', {
-            dateFormat: 'd-M-Y',
-            defaultDate: 'today',
-            onChange: function (selectedDates, dateStr, instance) {
-                validateDate(selectedDates[0], instance);
-            }
-        });
 
 document.addEventListener("DOMContentLoaded", function () {
     // Add an event listener to the form submission
@@ -461,6 +452,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+if (action === "Add") {
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('#TrnexpiryDate', {
+            dateFormat: 'd-M-Y',
+            defaultDate: 'today',
+            onChange: function (selectedDates, dateStr, instance) {
+                validateDate(selectedDates[0], instance);
+            }
+        });
 
         function validateDate(selectedDate, instance) {
             var today = new Date();
