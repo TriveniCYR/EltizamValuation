@@ -200,9 +200,13 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
     });
 }
 
+
+
 function BindCountryCode() { 
     var CountryCode = $("#Address_PhoneExt");
     var AlternatePhoneExt = $("#Address_AlternatePhoneExt");
+    var ContactPhoneExt = $("#Address_PhoneExt");
+    
     var CountryCodeExt = $("#Contact_MobileExt");
     var _val = $('#hdnPhoneExt').val();
     var _valAlternate = $('#hdnAlternatePhoneExt').val();
@@ -214,8 +218,10 @@ function BindCountryCode() {
         "datatype": "json",
         success: function (response) {
             CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 +'</option>');
-            CountryCodeExt.empty().append('<option selected="selected" value="">' + dftSel2 +'</option>');
-            AlternatePhoneExt.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
+            CountryCodeExt.empty().append('<option selected="selected" value="0">' + dftSel2 +'</option>');
+            AlternatePhoneExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
+            ContactPhoneExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
+
 
             for (var i = 0; i < response.length; i++) {
                 CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));

@@ -1,4 +1,5 @@
 ﻿using Eltizam.Resource.Resources;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,11 +30,17 @@ namespace Eltizam.Business.Models
         public DateTime TrnexpiryDate { get; set; }
         public bool IsActive { get; set; }
         public string? Logo { get; set; }
-        
+
+        public int ProfileAttachmentId { get; set; }
+        public string? ProfilePath { get; set; }
+
+        public IFormFile? File { get; set; }
+
         public MasterAddressEntity? Address { get; set; }
         public MasterContactModel? Contact { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
         public DocumentFilesModel? Document { get; set; }
+        public MasterDocumentModel? uploadProfile { get; set; }
     }
 }

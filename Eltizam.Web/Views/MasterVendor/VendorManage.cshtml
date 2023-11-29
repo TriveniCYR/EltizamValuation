@@ -33,7 +33,7 @@
                     <button class="tablinks" onclick="profileTab(event, 'profile3')">Contact Details</button>
                 </div>
 
-                <form asp-action="VendorManage" method="POST" enctype="multipart/form-data">
+                <form id="vendor" asp-action="VendorManage" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
                     <div id="profile1" class="tabcontent">
                         @* <h3 class="ptrl-20">Clinet Details</h3> *@
@@ -41,16 +41,36 @@
                             <div class="tabSection">
                                 <div class="flex">
                                     <div class="flex justify-center mb-28">
+                                     
                                         <div class="resourceProfile clientImg text-center">
-                                            <img src="../assets/client1.png" alt="img-7" />
+                                            @if (Model.ProfileAttachmentId > 0)
+                                            {
+                                                <img id="previewImage" src="@Model.ProfilePath" alt="upload-profile-pic" class="w-100" style="margin-bottom: 36px;" />
+                                            }
+                                            else
+                                            {
+                                                <img id="previewImage" src="../assets/client1.png" alt="img-7" />
+                                            }
+
                                             <div class="position-relative">
                                                 <div class="upload-profile-pic-btn">
                                                     <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
-                                                    Change photo
+                                                    <span id="uploadBtnText">
+                                                        @if (Model.ProfileAttachmentId > 0)
+                                                        {
+                                                            <text>Change photo</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>Upload photo</text>
+                                                        }
+                                                    </span>
                                                 </div>
-                                                <input type="file" class="uploadPhoto" />
+                                                <input type="file" accept="image/*" asp-for="File" class="uploadPhoto" id="fileInput"  accept=".jpeg,.png,.jpg"/>
+                                               @*  <span class="text-danger" id="sizeError" style="position: relative;top: 46px;font-size: 16px;line-height: 20px;">Image size should not exceed 2 MB.</span> *@
+                                                <span class="text-danger" id="sizeError" style="display: none; position: relative;top: 46px;font-size: 16px;line-height: 20px;">Image size should not exceed 2 MB.</span>
                                             </div>
-                                        </div>
+                                        </div>  
                                     </div>
                                     <label for="Status" class="w-50" style="margin-top: 50px">
                                         Status
@@ -151,6 +171,7 @@
                                                 @Html.ValidationMessageFor(model => model.Address.Email, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="AlternateEmail">
+
                                                 Alternate Email
                                                 @Html.TextBoxFor(model => model.Address.AlternateEmail, new { @autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
                                                 @Html.ValidationMessageFor(model => model.Address.AlternateEmail, "", new { @class = "text-danger" })
@@ -169,7 +190,7 @@
                                                 @Html.ValidationMessageFor(model => model.Address.PhoneExt, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="AlternatePhone">
-                                                Alternate Phone
+                                                <p class="m-0">Alternate Phone<span class="text-danger">*</span></p>
                                                 <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                     @Html.DropDownListFor(model => model.Address.AlternatePhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
 
@@ -219,6 +240,7 @@
                                         <label for="ContactPersonName">
                                             Contact Person Name
                                                 @Html.TextBoxFor(model => model.Contact.ContactPersonName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Contact Person"] })
+                                                @Html.ValidationMessageFor(model => model.Contact.ContactPersonName, "", new { @class = "text-danger" })
                                         </label>
                                         <label for="Subject">
                                                 Department

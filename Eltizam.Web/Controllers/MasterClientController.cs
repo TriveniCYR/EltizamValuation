@@ -107,19 +107,29 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-
-                //Fill audit logs field
-                if (masterUser.Id == 0)
-                    masterUser.CreatedBy = _helper.GetLoggedInUserId();
-                masterUser.ModifiedBy = _helper.GetLoggedInUserId(); 
-
-
-                if (masterUser.Document.Files != null)
+                if (masterUser.Document != null && masterUser.Document.Files != null)
                 {
                     List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
                     masterUser.uploadDocument = docs;
                     masterUser.Document = null;
                 }
+
+                if (masterUser.File != null)
+                {
+                    MasterDocumentModel docs = ProfileUpload(masterUser.File);
+                    masterUser.uploadProfile = docs;
+                    masterUser.File = null;
+                }
+                
+
+
+
+                ////Fill audit logs field
+                //if (masterUser.Id == 0)
+                //    masterUser.CreatedBy = _helper.GetLoggedInUserId();
+                //masterUser.ModifiedBy = _helper.GetLoggedInUserId(); 
+
+
                 if (masterUser != null)
                 {
                     masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
@@ -203,7 +213,7 @@ namespace EltizamValuation.Web.Controllers
             {
                 throw new ArgumentException("No files were uploaded.");
             }
-
+            var currentUser = _helper.GetLoggedInUserId();
             var savedFileNames = new List<string>();
 
             foreach (var file in document.Files)
@@ -214,16 +224,16 @@ namespace EltizamValuation.Web.Controllers
                 }
 
                 // Check if the file type is allowed
-                var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
-                if (!allowedFileTypes.Contains(file.ContentType))
-                {
-                    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
-                }
+                //var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
+                //if (!allowedFileTypes.Contains(file.ContentType))
+                //{
+                //    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
+                //}
 
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var docName = Path.GetFileNameWithoutExtension(file.FileName);
                 var filePath = Path.Combine("wwwroot/Uploads", fileName);
-
-
+                filePath = filePath.Replace("\\", "/");
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     file.CopyToAsync(stream);
@@ -233,10 +243,13 @@ namespace EltizamValuation.Web.Controllers
                 var upload = new MasterDocumentModel
                 {
                     FileName = fileName,
-                    FilePath = filePath,
-                    DocumentName = document.DocumentName,
+                    FilePath = filePath.Replace("wwwroot", ".."),
+                    DocumentName = docName,
                     IsActive = 1,
-                    FileType = GetFileType(file.ContentType)
+                    CreatedBy = currentUser,
+                    FileType = file.ContentType,
+                    CreatedDate = null,
+                    CreatedName = ""
                 };
 
                 uploadFils.Add(upload);
@@ -259,5 +272,49 @@ namespace EltizamValuation.Web.Controllers
                     return "Unknown";
             }
         }
+
+        private MasterDocumentModel ProfileUpload(IFormFile pic)
+        {
+            MasterDocumentModel uploadFils = new MasterDocumentModel();
+            if (pic == null)
+            {
+                throw new ArgumentException("No files were uploaded.");
+            }
+            var currentUser = _helper.GetLoggedInUserId();
+            var savedFileNames = new List<string>();
+
+            //Check if the file type is allowed
+            var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "image/jpg" };
+            if (!allowedFileTypes.Contains(pic.ContentType))
+            {
+                throw new ArgumentException($"File type '{pic.ContentType}' is not allowed.");
+            }
+
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(pic.FileName);
+            var docName = Path.GetFileNameWithoutExtension(pic.FileName);
+            var filePath = Path.Combine("wwwroot/Uploads", fileName);
+            filePath = filePath.Replace("\\", "/");
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                pic.CopyToAsync(stream);
+            }
+
+            // Save information about the uploaded file to the database
+            var upload = new MasterDocumentModel
+            {
+                FileName = fileName,
+                FilePath = filePath.Replace("wwwroot", ".."),
+                DocumentName = docName,
+                IsActive = 1,
+                CreatedBy = currentUser,
+                FileType = pic.ContentType,
+                CreatedDate = null,
+                CreatedName = ""
+            };
+
+            return upload;
+        }
+
+       
     }
 }

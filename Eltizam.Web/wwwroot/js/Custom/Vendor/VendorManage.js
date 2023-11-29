@@ -10,7 +10,7 @@ $(document).ready(function () {
     BindDepartment();
     BindDesignation();
     BindCountryCode();
-    $('#Address_Phone').keypress(function (e) { 
+    $('#Address_Phone').keypress(function (e) {
         if ($('#Address_Phone').val() == '' && e.which == 48) {
             return false;
         }
@@ -146,7 +146,7 @@ function removeParentDivAddress(element) {
 }
 
 
-function BindCountry() { 
+function BindCountry() {
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
@@ -161,7 +161,7 @@ function BindState(id) {
     BindDropdowns(StateList + '/' + id, State, _rpname, _val);
 }
 
-function BindCity(id) { 
+function BindCity(id) {
     var City = $("#Address_CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";
@@ -183,42 +183,191 @@ function BindDesignation() {
     BindDropdowns(DesignationList, Designation, _rpname, _val);
 }
 
-/*
-function BindCountryCode() {
-    var CountryCode = $("#Address_PhoneExt");
-    var AlternatePhoneExt = $("#Address_AlternatePhoneExt");
-    var CountryCodeExt = $("#Contact_MobileExt");
-    var _val = $('#hdnPhoneExt').val();
-    var _valAlternate = $('#hdnAlternatePhoneExt').val();
-    var _valExt = $('#hdnMobileExt').val();
 
-    $.ajax({
-        type: "GET",
-        url: BaseURL + CountryList,
-        "datatype": "json",
-        success: function (response) {
-            CountryCode.empty().append('<option selected="selected" value="">select</option>');
-            CountryCodeExt.empty().append('<option selected="selected" value="">select</option>');
-            AlternatePhoneExt.empty().append('<option selected="selected" value="">select</option>');
-            for (var i = 0; i < response.length; i++) {
-                CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-                CountryCodeExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-                AlternatePhoneExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-            }
-            if (_val != "" || _valExt != "") {
-                CountryCode.val(_val);
-                CountryCodeExt.val(_valExt);
-                AlternatePhoneExt.val(_valAlternate);
-            }
-        },
-        failure: function (response) {
-            alert(response.responseText);
-        },
-        error: function (response) {
-            alert(response.responseText);
-            $("#loader").hide();
+//Function to handle the change event of the file input
+//function previewImage() {
+//    var preview = document.getElementById('previewImage');
+//    var fileInput = document.getElementById('fileInput');
+
+//    // Check if a file is selected
+//    if (fileInput.files && fileInput.files[0]) {
+//        var reader = new FileReader();
+
+//        reader.onload = function (e) {
+//            preview.src = e.target.result;
+//        };
+
+//        // Read the file as a data URL
+//        reader.readAsDataURL(fileInput.files[0]);
+//    }
+//}
+
+//// Attach the function to the change event of the file input
+//document.getElementById('fileInput').addEventListener('change', previewImage);
+
+
+
+function previewImage() {
+    var preview = document.getElementById('previewImage');
+    var fileInput = document.getElementById('fileInput');
+    var sizeError = document.getElementById('sizeError');
+
+    // Check if a file is selected
+    if (fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var img = new Image();
+            img.src = e.target.result;
+
+            img.onload = function () {
+                // Validate image size
+                var maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+                if (fileInput.files[0].size > maxSizeInBytes) {
+                    sizeError.style.display = 'inline-block';
+                    fileInput.value = ''; // Clear the file input
+                    preview.src = ''; // Clear the preview
+                }
+
+                else {
+                    sizeError.style.display = 'none';
+                    preview.src = e.target.result;
+                }
+            };
+        };
+
+        // Read the file as a data URL
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
+
+// Attach the function to the change event of the file input
+document.getElementById('fileInput').addEventListener('change', previewImage);
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Add an event listener to the form submission
+    document.getElementById("vendor").addEventListener("submit", function (event) {
+        // Call the custom validation function
+        if (!validatePhoneNumbers()) {
+            // If validation fails, prevent the form submission
+            event.preventDefault();
         }
     });
+
+    // Add change event listeners to relevant input fields
+    document.getElementById("Address_Phone").addEventListener("change", validatePhoneNumbers);
+    document.getElementById("Address_AlternatePhone").addEventListener("change", validatePhoneNumbers);
+    document.getElementById("Address_Landlinephone").addEventListener("change", validatePhoneNumbers);
+
+
+});
+
+function getNumericValue(inputValue) {
+    // Extract only numeric values from the input, excluding any phone codes
+    return inputValue.replace(/\D/g, "");
 }
-*/
+
+function validatePhoneNumbers() {
+    // Get numeric values of the phone number fields
+    var phoneExtNumeric = getNumericValue(document.getElementById("Address_PhoneExt").value.trim());
+    var phoneNumeric = getNumericValue(document.getElementById("Address_Phone").value.trim());
+    var alternatePhoneExtNumeric = getNumericValue(document.getElementById("Address_AlternatePhoneExt").value.trim());
+    var alternatePhoneNumeric = getNumericValue(document.getElementById("Address_AlternatePhone").value.trim());
+    var landlinePhoneNumeric = getNumericValue(document.getElementById("Address_Landlinephone").value.trim());
+
+    if (
+        (phoneNumeric !== "" && (phoneNumeric === alternatePhoneNumeric || phoneNumeric === landlinePhoneNumeric)) ||
+        (alternatePhoneNumeric !== "" && alternatePhoneNumeric === landlinePhoneNumeric)
+    ) {
+        // Display an alert or perform any other action to indicate the validation failure
+        /*alert(" Phone numbers,Alternate Phone and LandLine Phone should be different, considering prefixes.");*/
+        toastr.error('Phone numbers,Alternate Phone and LandLine Phone should be different, considering prefixes.');
+        // Clear the fields based on the specified conditions
+        if (phoneNumeric === alternatePhoneNumeric) {
+            document.getElementById('Address_AlternatePhone').value = '';
+        }
+
+        if (alternatePhoneNumeric === landlinePhoneNumeric) {
+            document.getElementById('Address_Landlinephone').value = '';
+        }
+
+        if (phoneNumeric === landlinePhoneNumeric) {
+            document.getElementById('Address_Landlinephone').value = '';
+        }
+        return false;
+    }
+
+
+    return true;
+}
+    
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Add an event listener to the form submission
+    document.getElementById("vendor").addEventListener("submit", function (event) {
+
+        // Call the custom validation function
+        if (!validateEmails()) {
+            // If validation fails, prevent the form submission
+            event.preventDefault();
+            
+        }
+
+       
+    });
+
+    // Add change event listeners to relevant input fields
+    document.getElementById("Address_Email").addEventListener("change", validateEmails);
+    document.getElementById("Address_AlternateEmail").addEventListener("change", validateEmails);
+});
+
+function validateEmails() {
+    console.log('validateEmails function is called');
+    // Get values of the email fields
+    var email = document.getElementById("Address_Email").value.trim();
+    var alternateEmail = document.getElementById("Address_AlternateEmail").value.trim();
+
+    // Check if Email and AlternateEmail are the same
+    if (email !== "" && alternateEmail !== "" && email === alternateEmail) {
+
+        toastr.error('Email and Alternate Email should be different.');
+        document.getElementById('Address_AlternateEmail').value = '';
+        return false;
+    }
+
+    //// Validation passed
+    return true;
+}
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the file input element
+        var fileInput = document.getElementById('fileInput');
+
+    // Add an event listener to the file input
+    fileInput.addEventListener('change', function () {
+            // Get the selected file
+            var file = fileInput.files[0];
+
+    // Check if a file is selected
+    if (file) {
+                // Check if the file type is an image
+                if (!file.type.startsWith('image/')) {
+                    // Display an error message or handle the error as needed
+                    toastr.error('Please select a valid image file.');
+    // Reset the file input (optional)
+    fileInput.value = '';
+                }
+            }
+        });
+    });
+
+
+
+
+
 

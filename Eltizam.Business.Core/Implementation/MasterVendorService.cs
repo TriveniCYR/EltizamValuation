@@ -32,6 +32,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterVendor> _repository { get; set; }
         private IRepository<MasterContact> _repositoryContact { get; set; }
         private IRepository<MasterAddress> _repositoryAddress { get; set; }
+        private IRepository<MasterDocument> _documentRepository { get; set; }
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
         private readonly string _dbConnection;
@@ -52,6 +53,7 @@ namespace Eltizam.Business.Core.Implementation
             _helper = helper;
             _auditLogService = auditLogService;
             _dbConnection = DatabaseConnection.ConnString;
+            _documentRepository = _unitOfWork.GetRepository<MasterDocument>();
         }
         #endregion Constructor
 
@@ -107,6 +109,15 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     masterVendor.Contact = contacts; 
                 }
+
+                if (masterVendor.ProfileAttachmentId != null && masterVendor.ProfileAttachmentId > 0)
+                {
+                    var profile = _documentRepository.Get(masterVendor.ProfileAttachmentId);
+                    if (profile != null)
+                    {
+                        masterVendor.ProfilePath = profile.FilePath;
+                    }
+                }
             }
 
             // Return all objects as a tuple.
@@ -145,6 +156,7 @@ namespace Eltizam.Business.Core.Implementation
             MasterVendor objVendor;
             MasterAddress objAddress;
             MasterContact objContact;
+            MasterDocument objUserDocument;
 
             string MainTableName = Enum.GetName(TableNameEnum.Master_Vendor);
             int MainTableKey = masterVendortModel.Id;
@@ -178,14 +190,7 @@ namespace Eltizam.Business.Core.Implementation
                     //Do Audit Log --AUDITLOGUSER
                     await _auditLogService.CreateAuditLog<MasterVendor>(AuditActionTypeEnum.Update, OldEntity, objVendor);
                 }
-                //else if (objVendor != null)
-                //{
-                //    objContact = _mapperFactory.Get<MasterContactModel, MasterContact>(masterVendortModel.masterContact);
-                //    objContact.CreatedDate = AppConstants.DateTime;
-                //    objContact.CreatedBy = masterVendortModel.CreatedBy;
-                //    objContact.ModifiedDate = AppConstants.DateTime;
-                //    objContact.ModifiedBy = masterVendortModel.ModifiedBy;
-                //}
+              
                 else
                 {
                     // Return a not found operation if the entity does not exist.
@@ -194,6 +199,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
+                
                 // Create a new MasterClient entity from the model for insertion.
                 objVendor = _mapperFactory.Get<MasterVendorModel, MasterVendor>(masterVendortModel);
                 objVendor.CreatedDate = AppConstants.DateTime;
@@ -210,6 +216,31 @@ namespace Eltizam.Business.Core.Implementation
 
             else
             {
+
+                if (masterVendortModel.uploadProfile != null)
+                {
+                    objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(masterVendortModel.uploadProfile);
+                    objUserDocument.IsActive = masterVendortModel.uploadProfile.IsActive;
+                    objUserDocument.TableKeyId = objVendor.Id;
+                    objUserDocument.TableName = "Vendor_Master";
+                    objUserDocument.DocumentName = masterVendortModel.uploadProfile.DocumentName;
+                    objUserDocument.FileName = masterVendortModel.uploadProfile.FileName;
+                    objUserDocument.FilePath = masterVendortModel.uploadProfile.FilePath;
+                    objUserDocument.FileType = masterVendortModel.uploadProfile.FileType;
+                    objUserDocument.CreatedBy = masterVendortModel.uploadProfile.CreatedBy;
+
+                    _documentRepository.AddAsync(objUserDocument);
+                    await _unitOfWork.SaveChangesAsync();
+
+
+
+                    var user = _repository.Get(objVendor.Id);
+                    user.ProfileAttachmentId = objUserDocument.Id;
+
+                    _repository.UpdateAsync(user);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+
                 if (masterVendortModel.Address.Id > 0)
                 {
                     var OldEntity = _repositoryAddress.GetNoTracking(masterVendortModel.Address.Id);
