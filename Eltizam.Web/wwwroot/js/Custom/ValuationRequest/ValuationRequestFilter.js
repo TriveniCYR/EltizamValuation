@@ -18,6 +18,15 @@ function assignToggle() {
     }
 }
 
+function assignToggleFilter() {
+    var x = document.getElementById("assignToggleFilter");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
 function BindApproverList() {
     var Approver = $("#ApproverId");
     var _val = "";

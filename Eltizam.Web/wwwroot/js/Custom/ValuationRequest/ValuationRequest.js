@@ -29,6 +29,7 @@ function InitializeValutionRequestDataList() {
     cityId          = GetIntegerVal(cityId);  
     resourceId      = GetIntegerVal(resourceId);  
 
+    assignToggleFilter();
 
     var ajaxObject = {
         "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
