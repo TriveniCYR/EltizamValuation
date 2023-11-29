@@ -9,13 +9,12 @@ namespace Eltizam.Business.Core.Interface
         Task<bool> CreateAuditLog<TResult>(AuditActionTypeEnum auditActionType, TResult oldEntity, TResult newEntity,
                    string? PTName = null, int? PTId = null) where TResult : new();
 
-        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model,int? UserName, string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null);
+        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, int? UserName, string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null);
 
         Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null);
         Task<List<AuditLogTableModel>> GetAllAuditLogTableName();
 
-        Task<DataTableResponseModel> GetAllDetailsLog(DataTableAjaxPostModel model, int? UserName, string? TableName, DateTime? DateFrom = null, DateTime? DateTo = null);
-
-
+        Task<DataTableResponseModel> GetAllDetailsLog(DataTableAjaxPostModel model, int? UserId, string? TableName, string? TableKey, int? Id, DateTime? DateFrom = null, DateTime? DateTo = null);
+ 
     }
 }

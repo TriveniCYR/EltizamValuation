@@ -11,8 +11,11 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [MaxLength(250, ErrorMessage = "The field {0} must be a string with a maximum length of {1}.")]
+
+        [StringLength(250, MinimumLength = 1)]
         public string ? PropertyType { get; set; }
-        public bool IsActive { get; set; } 
+        public bool IsActive { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? SubTypes { get; set; }
         [NotMapped]
         public List<Master_PropertySubTypeModel> MasterPropertySubTypes { get; set; }

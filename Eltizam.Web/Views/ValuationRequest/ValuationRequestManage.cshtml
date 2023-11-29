@@ -64,6 +64,7 @@
                 <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md @_header</span>
+                  <input type="hidden" id="md" value="@_md" />
             </div>
         </div>
         <div class="">
@@ -207,7 +208,7 @@
                                         </label>
 
                                     </div>
-                                    <div class="flex  mb-28">
+                                    @* <div class="flex  mb-28">
                                         <label for="" class="w-50">
                                             Company Name
                                             <input type="text" placeholder="" disabled>
@@ -222,7 +223,7 @@
                                         <label for="" class="w-50">
                                             Pincode
                                             @Html.TextBoxFor(model => model.PinCode, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Client Name"] })
-                                            @*  <input type="text" placeholder="234343" disabled> *@
+                                            
                                         </label>
                                         <label for="" class="w-50">
                                             Country
@@ -239,7 +240,7 @@
                                             City
                                             @Html.TextBoxFor(model => model.CityId, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["City Name"] })
                                         </label>
-                                    </div>
+                                    </div> *@
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
                                             TRN Number
@@ -316,13 +317,13 @@
                                         </label>
                                         <label for="" class="w-50">
                                             <p class="m-0">Property SubType<span class="text-danger">*</span></p>
-                                            @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
+                                            @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertyDetail()"})
                                             @Html.ValidationMessageFor(model => model.PropertySubTypeId, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
-                                            <p class="m-0">Type of Ownership<span class="text-danger">*</span></p>
+                                            <p class="m-0">Type of Ownership</p>
                                             @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertyDetail()" })
                                             @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" })
                                         </label>

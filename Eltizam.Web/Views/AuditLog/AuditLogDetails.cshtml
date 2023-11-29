@@ -13,28 +13,22 @@
     <div class="w-100 position-relative">
         <main class="w-100">
             <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
-                <h3 class="dashboardTitle">AUDIT LOGS</h3>
-
+                <h3 class="dashboardTitle">Log History</h3> 
             </div>
 
-            <div class="accordion valueAdvance">
-
+            <div class="accordion valueAdvance"> 
                 <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
                 <label for="section1" class="advaceSearhBtn"><img src="../assets/filter.svg" alt="filterSearch" /></label>
-                <div class="accordion-content inputSearchs">
-
+                <div class="accordion-content inputSearchs"> 
                     <h3 class="text-center">Advanced Search</h3>
-                    <form>
-
-
-                        <div class="flex flex-start">
-
+                    <form> 
+                        <div class="flex flex-start"> 
                             <label for="fromDate">
-                                From Date
+                                From
                                 <input type="text" id="FromDate" class="formatted-date-input" name="FromDate" asp-for="FromDate">
                             </label>
                             <label for="toDate">
-                                To Date
+                                To
                                 <input type="text" id="ToDate" class="formatted-date-input" name="ToDate" asp-for="ToDate">
                             </label>
                         </div>
@@ -48,8 +42,9 @@
             </div>
             <div class="scroll-x whiteWithPadding">
                 <input type="hidden" id="tableName" value=@ViewBag.Filter.TableName />
-                <input type="hidden" id="id" value="@ViewBag.Filter.Id" />
+                <input type="hidden" id="alid" value="@ViewBag.Filter.Id" />
                 <input type="hidden" id="tableKey" value="@ViewBag.Filter.TableKey" />
+
                 <table id="AuditLogHistory" class="table table-bordered table-striped table-hover dataTable no-footer">
                     <thead>
                         <tr>
@@ -74,7 +69,7 @@
 
     @Html.Partial("_DataTablePartial")
     <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
-    <script type="text/javascript" src="~/js/custom/AuditLog/AuditDetailsLogs .js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/AuditLog/AuditDetailsLogs.js?v=@jsVersion"></script>
 
     <script>
         var AllAudit = "@Eltizam.Web.Helpers.APIURLHelper.GetAllAudit";

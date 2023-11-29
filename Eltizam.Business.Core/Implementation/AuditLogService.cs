@@ -10,10 +10,8 @@ using Eltizam.Utility;
 using Eltizam.Utility.AuditLog;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Data;
-using System.Globalization;
 using System.Reflection;
 
 namespace Eltizam.Business.Core.Implementation
@@ -292,36 +290,33 @@ namespace Eltizam.Business.Core.Implementation
 
 
 
-        public async Task<DataTableResponseModel> GetAllDetailsLog(DataTableAjaxPostModel model, int? UserName, string? TableName, DateTime? DateFrom = null, DateTime? DateTo = null)
+        public async Task<DataTableResponseModel> GetAllDetailsLog(DataTableAjaxPostModel model, int? UserId, string? TableName, string? TableKey, int? Id, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
             string ColumnName = (model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty);
             string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+
             System.Data.SqlClient.SqlParameter[] osqlParameter =
-    {
-        new System.Data.SqlClient.SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
-        new System.Data.SqlClient.SqlParameter(AppConstants.P_PageSize,           model.length),
-        new System.Data.SqlClient.SqlParameter(AppConstants.P_SortColumn,         ColumnName),
-        new System.Data.SqlClient.SqlParameter(AppConstants.P_SortDirection,      SortDir),
-        new System.Data.SqlClient.SqlParameter(AppConstants.P_SearchText,         model.search?.value),
-         new System.Data.SqlClient.SqlParameter("@UserId",                         UserName),
-        new System.Data.SqlClient.SqlParameter("@TableName",                      TableName),
-        new System.Data.SqlClient.SqlParameter("@DateFrom",                       DateFrom),
-        new System.Data.SqlClient.SqlParameter("@DateTo",                         DateTo)
-        
-    };
+            {
+                new System.Data.SqlClient.SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new System.Data.SqlClient.SqlParameter(AppConstants.P_PageSize,           model.length),
+                new System.Data.SqlClient.SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new System.Data.SqlClient.SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new System.Data.SqlClient.SqlParameter(AppConstants.P_SearchText,         model.search?.value),
+                new System.Data.SqlClient.SqlParameter("@UserId",                         UserId),
+                new System.Data.SqlClient.SqlParameter("@TableName",                      TableName),
+                new System.Data.SqlClient.SqlParameter("@TableKey",                       TableKey),
+                new System.Data.SqlClient.SqlParameter("@Id",                             Id),
+                new System.Data.SqlClient.SqlParameter("@DateFrom",                       DateFrom),
+                new System.Data.SqlClient.SqlParameter("@DateTo",                         DateTo) 
+            };
 
             var Results = await _repository.GetBySP(ProcedureMetastore.usp_AuditLog_SearchDetailsByFilter, CommandType.StoredProcedure, osqlParameter);
 
-            var res = UtilityHelper.GetPaginationInfo(Results);
-
+            var res = UtilityHelper.GetPaginationInfo(Results); 
             DataTableResponseModel resp = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<AuditLogModelData>());
 
-            return resp;
-
-        }
-
-
-
+            return resp; 
+        } 
     }
 
 }

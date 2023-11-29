@@ -21,6 +21,7 @@
                 <a class="greyBtn lineBtn formAbtn" asp-action="Clients">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md</span>
+                 <input type="hidden" id="md" value="@_md" />
             </div>
         </div>
         <div class="bodyContent">
@@ -102,6 +103,7 @@
                                     <label for="MiddleName">
                                         Middle Name
                                         @Html.TextBoxFor(model => model.MiddleName, new {@class = "form-control",  @placeholder = @SharedLocalizer["Middle Name"] })
+                                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="LastName">
                                         <p class="m-0">Last Name<span class="text-danger">*</span></p>
@@ -123,7 +125,7 @@
                                             TRN Expire Date
                                             <span class="text-danger">*</span>
                                         </p>
-                                        <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" class="formatted-date-input" asp-for="TrnexpiryDate">
+                                        <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" class="formatted-date-input" asp-for="TrnexpiryDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
                                         @Html.ValidationMessageFor(model => model.TrnexpiryDate, "", new { @class = "text-danger" })
                                     </label>
                                 </div>

@@ -31,8 +31,6 @@ namespace Eltizam.Business.Models
         [Range(1, int.MaxValue, ErrorMessage = "The 'Property Sub Type' field is required.")]
         public int PropertySubTypeId { get; set; }
         public string? PropertySubType { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'Ownership Type' field is required.")]
         public int? OwnershipTypeId { get; set; }
         public string? PropertyName { get; set; }
         public string? OwnershipType { get; set; }
@@ -63,7 +61,6 @@ namespace Eltizam.Business.Models
         public DateTime? ValuerUpdateDate { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? TrnexpiryDate { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? ClientName { get; set; }
         public string? ClientType { get; set; }
         public int? CityId { get; set; }
