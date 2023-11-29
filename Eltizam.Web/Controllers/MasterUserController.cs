@@ -257,10 +257,11 @@ namespace EltizamValuation.Web.Controllers
                 }
 
                 //------Blob--------------------------------
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    var result = UploadToBlob(file);
-                }
+
+                //using (var stream = new FileStream(filePath, FileMode.Create))
+                //{
+                //    var result = UploadToBlob(file);
+                //}
                
                 //----------------------------------------------------
 
