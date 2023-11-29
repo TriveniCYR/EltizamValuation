@@ -392,4 +392,22 @@ function scrollToTop() {
     document.documentElement.scrollTop = 0;
 }
 
+// accordian here
+function accordianToggle(header) {
+    const item = header.nextElementSibling;
+    if (item.style.height === 'auto') {
+        item.style.height = 0;
+    } else {
+        item.style.height = 'auto';
+    }
+} 
+
+//Remove parent dynamic created page
+function removeParentDiv(element) {
+    const parentDiv = element.closest('.roundBorderBox');
+    if (parentDiv) {
+        parentDiv.remove();
+    }
+}
+
 // ======== End:  Scroller for page ============ 

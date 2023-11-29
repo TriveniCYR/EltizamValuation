@@ -11,7 +11,7 @@
     {
         href = "/MasterUser/" + ((data == null || data.CreatedBy == null) ? "Users" : "UserDetail?id=" + data.CreatedBy.ToString());
         href2 = "/MasterUser/" + ((data == null || data.ModifiedBy == null) ? "Users" : "UserDetail?id=" + data.ModifiedBy.ToString());
-        href3 = string.Format("/AuditLog/AuditLogDetails?TableName={0}&TableKey={1}", data.TableName, data.TableKey);
+        href3 = string.Format("/AuditLog/AuditLogDetailList?TableName={0}&TableKey={1}", data.TableName, data.TableKey);
     }
 }
 
