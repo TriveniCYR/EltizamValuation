@@ -228,8 +228,8 @@ namespace Eltizam.Business.Core.Implementation
                         objValuation.OtherReferenceNo = entityValuation.OtherReferenceNo;
                         objValuation.StatusId = entityValuation.StatusId;
                         objValuation.ValuationTimeFrame = entityValuation.ValuationTimeFrame;
-                        objValuation.ApproverId = entityValuation.ApproverId;
-                        objValuation.ValuerId = entityValuation.ValuerId;
+                        objValuation.ApproverId = entityValuation.ApproverId == 0 ? null : entityValuation.ApproverId;
+                        objValuation.ValuerId = entityValuation.ValuerId == 0 ? null : entityValuation.ValuerId;
                         objValuation.ValuationDate = entityValuation.ValuationDate;
                         objValuation.ValuationModeId = entityValuation.ValuationModeId;
                         objValuation.PropertyId = entityValuation.PropertyId;
@@ -255,6 +255,8 @@ namespace Eltizam.Business.Core.Implementation
                     objValuation = _mapperFactory.Get<ValuationRequestModel, ValuationRequest>(entityValuation);
                     objValuation.CreatedBy= (int)entityValuation.CreatedBy;
                     objValuation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_ValuationRequest, lastReq?.Id);
+                    objValuation.ApproverId = objValuation.ApproverId == 0 ? null : objValuation.ApproverId;
+                    objValuation.ValuerId = objValuation.ValuerId == 0 ? null : objValuation.ValuerId;
                     
                     _repository.AddAsync(objValuation);
                     await _unitOfWork.SaveChangesAsync();

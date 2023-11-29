@@ -34,5 +34,8 @@ namespace Eltizam.Business.Models
         public string? Note { get; set; }
         public int? CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
+        public List<MasterDocumentModel>? Documents { get; set; }
+        public List<MasterDocumentModel>? uploadDocument { get; set; }
+        public DocumentFilesModel? Document { get; set; }
     }
 }
