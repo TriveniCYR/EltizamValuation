@@ -117,6 +117,7 @@ $(document)
 document.addEventListener('DOMContentLoaded', function () {
     flatpickr('.formatted-date-input', {
         dateFormat: 'd-M-Y',
+        defaultDate: 'today'
     });
 });
 
@@ -127,8 +128,9 @@ function formatreadonlydate() {
         var originalDate = new Date(tdElement.textContent);
         var datePart = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
         var timePart = originalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-        var formattedDate = datePart + ' ' + timePart;
-        tdElement.textContent = formattedDate;
+
+        var formattedDate = datePart.replace(/\s/g, '-') + ' ' + timePart;
+        tdElement.textContent = formattedDate
     });
 }
 

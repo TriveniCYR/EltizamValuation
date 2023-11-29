@@ -99,7 +99,7 @@ function profileTab(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
- 
+
 function removeParentDiv(element) {
     const parentDiv = element.closest('.roundBorderBox');
     if (parentDiv) {
@@ -157,7 +157,7 @@ function BindClientType() {
 }
 
 function BindCountry() {
-  
+
     var Country = $("#Address_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
@@ -194,6 +194,25 @@ function BindDesignation() {
 
     BindDropdowns(DesignationList, Designation, _rpname, _val);
 }
+document.addEventListener('DOMContentLoaded', function () {
+    flatpickr('#TrnexpiryDate', {
+        dateFormat: 'd-M-Y',
+        defaultDate: 'today',
+        onChange: function (selectedDates, dateStr, instance) {
+            validateDate(selectedDates[0], instance);
+        }
+    });
+
+    function validateDate(selectedDate, instance) {
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (selectedDate < today) {
+            toastr.error("Back Dates are not allowed");
+            instance.setDate('today'); 
+        }
+    }
+});
+
 
 /*
 function BindCountryCode() {
@@ -232,4 +251,4 @@ function BindCountryCode() {
         }
     });
 }
-*/ 
+*/
