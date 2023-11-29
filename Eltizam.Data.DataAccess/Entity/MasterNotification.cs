@@ -6,7 +6,7 @@ namespace Eltizam.Data.DataAccess.Entity
     public partial class MasterNotification
     {
         public long Id { get; set; }
-        public long? ValuationRequestId { get; set; }
+        public int? ValuationRequestId { get; set; }
         public int? StatusId { get; set; }
         public string? Subject { get; set; }
         public string ToEmails { get; set; } = null!;
@@ -15,5 +15,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public bool IsEmailSent { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public virtual ValuationRequest? ValuationRequest { get; set; }
     }
 }

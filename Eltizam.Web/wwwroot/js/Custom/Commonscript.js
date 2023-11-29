@@ -24,8 +24,8 @@ var IsDeletePerm = ($("#isDeletePerm").val() === "1" || $("#isDeletePerm").val()
 var isDeleteSite = ($("#isDeleteSite").val() === "1" || $("#isDeleteSite").val() === 1);
 var isDeleteEvidence = ($("#isDeleteEvidence").val() === "1" || $("#isDeleteEvidence").val() === 1);
 var isDeleteAssesment = ($("#isDeleteAssesment").val() === "1" || $("#isDeleteAssesment").val() === 1);
-var IsAddPerm = ($("#isAddPerm").val() === "1" || $("#isAddPerm").val() === 1);   
-var IsEditPerm = ($("#isEditPerm").val() === "1" || $("#isEditPerm").val() === 1); 
+var IsAddPerm = ($("#isAddPerm").val() === "1" || $("#isAddPerm").val() === 1);
+var IsEditPerm = ($("#isEditPerm").val() === "1" || $("#isEditPerm").val() === 1);
 
 var IsAddPermQt = ($("#isAddPermQuotation").val() === "1" || $("#isAddPermQuotation").val() === 1);
 var IsEditPermQt = ($("#isEditPermQuotation").val() === "1" || $("#isEditPermQuotation").val() === 1);
@@ -33,16 +33,15 @@ var IsEditPermQt = ($("#isEditPermQuotation").val() === "1" || $("#isEditPermQuo
 var IsAddPermIn = ($("#isAddPermInvoice").val() === "1" || $("#isAddPermInvoice").val() === 1);
 var IsEditPermIn = ($("#isEditPermInvoice").val() === "1" || $("#isEditPermInvoice").val() === 1);
 
-var IsApprovePerem = ($("#isApprovePerm").val() === "1" || $("#isApprovePerm").val() === 1);  
- 
+var IsApprovePerem = ($("#isApprovePerm").val() === "1" || $("#isApprovePerm").val() === 1);
+var action = ($("#md").val())
 
 $(document).ready(function () {
     ErrorDev.hide();
     readsideNavToggle();
-    hideLoader(); 
+    hideLoader();
     formatreadonlydate();
-    if ($("#isView").val() === "1")
-    {
+    if ($("#isView").val() === "1") {
         locationreadOnlyForm();
     }
     //Toaster related things
@@ -108,10 +107,19 @@ $(document)
 
 document.addEventListener('DOMContentLoaded', function () {
     flatpickr('.formatted-date-input', {
-        dateFormat: 'd-M-Y',
-        defaultDate: 'today'
+        dateFormat: 'd-M-Y'
     });
 });
+
+if (action === "Add") {
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('.formatted-date-input', {
+            dateFormat: 'd-M-Y',
+            defaultDate: 'today'
+
+        });
+    }
+)}
 
 function formatreadonlydate() {
     var tdElements = document.querySelectorAll('.formatted-td-date-input');
@@ -159,7 +167,7 @@ function BindDropdowns(_url, _controlID, _retrunProperty, _val) {
         "datatype": "json",
         success: function (response) {
             var _dd = _retrunProperty;
-            _controlID.empty().append('<option selected="selected" value="0">' + dftSel +'</option>');
+            _controlID.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
             for (var i = 0; i < response.length; i++) {
                 _controlID.append($("<option></option>").val(response[i].id).html(response[i][_dd]));
             }
@@ -184,7 +192,7 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
         "datatype": "json",
         success: function (response) {
             var _dd = _retrunProperty;
-            _controlID.empty().append('<option selected="selected" value="0">' + dftSel +'</option>');
+            _controlID.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
             for (var i = 0; i < response.values.length; i++) {
                 _controlID.append($("<option></option>").val(response.values[i].id).html(response.values[i][_dd]));
             }
@@ -202,7 +210,7 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
     });
 }
 
-function BindCountryCode() { 
+function BindCountryCode() {
     var CountryCode = $("#Address_PhoneExt");
     var AlternatePhoneExt = $("#Address_AlternatePhoneExt");
     var CountryCodeExt = $("#Contact_MobileExt");
@@ -215,8 +223,8 @@ function BindCountryCode() {
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 +'</option>');
-            CountryCodeExt.empty().append('<option selected="selected" value="">' + dftSel2 +'</option>');
+            CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
+            CountryCodeExt.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
             AlternatePhoneExt.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
 
             for (var i = 0; i < response.length; i++) {
@@ -263,18 +271,18 @@ function GetIdLinkCss(url, id) {
 
 // ======== Left menu hide/show with Cache ============
 function sideNavToggle() {
-    var x = document.getElementById("sideNav"); 
-    var dsi = "none"; 
+    var x = document.getElementById("sideNav");
+    var dsi = "none";
     if (x.style.display === "none") {
         dsi = "block";
-    } 
+    }
 
     x.style.display = dsi;
     localStorage.setItem(ShowMenuCache, dsi);
 }
 function readsideNavToggle() {
     var x = document.getElementById("sideNav");
-    var curdsi = localStorage.getItem(ShowMenuCache); 
+    var curdsi = localStorage.getItem(ShowMenuCache);
 
     if (curdsi !== null)
         x.style.display = curdsi;
@@ -301,7 +309,7 @@ $(document).on('click', 'form button[type=submit]', function (e) {
     }, 500);
 });
 
-function ValidateTabAndPage() { 
+function ValidateTabAndPage() {
     var errors = $(".input-validation-error");
     var err = "";
 
@@ -323,7 +331,7 @@ function FormattedError(err) {
         ErrorDev.empty().show();
 
         ErrorDev.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span onclick="CloseErrorBanner();" aria-hidden="true">×</span></button>' +
-                        'Please fill all mandatory fields and resolve error(s) in page / tab(if applicable).: <ul>' + err + '</ul>');
+            'Please fill all mandatory fields and resolve error(s) in page / tab(if applicable).: <ul>' + err + '</ul>');
 
         hideLoader();
         scrollToTop();
@@ -333,7 +341,7 @@ function FormattedError(err) {
 function CloseErrorBanner() {
     ErrorDev.hide();
 }
- 
+
 // ======== End: Validation form things ============
 
 
@@ -343,7 +351,7 @@ function CloseErrorBanner() {
 let blockCount = 1;
 
 function addDynamicTextbox() {
-    const inputPropField = document.querySelector(".addPropertyInputDynamic"); 
+    const inputPropField = document.querySelector(".addPropertyInputDynamic");
     const uniqueId = `status-${blockCount}`;
 
 
@@ -363,7 +371,7 @@ function removeDynamicTextbox(element) {
 
 // ======== End: Dynamic textboxes append ============
 
- 
+
 // ======== Start:  Scroller for page ============ 
 window.onscroll = function () {
     showScrollToTopButton();

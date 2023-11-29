@@ -11,7 +11,7 @@ namespace Eltizam.Data.DataAccess.Entity
         }
 
         public int Id { get; set; }
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; }
         public int? Sort { get; set; }
         public int? IsActive { get; set; }
         public int? CreatedBy { get; set; }
