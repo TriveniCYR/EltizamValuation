@@ -14,7 +14,7 @@ $('#ValuationType').change(function () {
     var fixed = document.getElementById("fixed");
     var valuationType = document.getElementById('ValuationType').value;
     //alert("You entered " + valuationType + " for your gender<br>");
-    if (valuationType === "2") {
+    if (valuationType === "5") {
         general.style.display = "none";
         fixed.style.display = "block";
 
@@ -24,7 +24,7 @@ $('#ValuationType').change(function () {
         document.getElementById('TotalValuationFees').value = null;
 
 
-    } else if (valuationType === "1") {
+    } else if (valuationType === "6") {
         fixed.style.display = "none";
         general.style.display = "block";
         document.getElementById('FixedvaluationFees').value = null;
@@ -45,10 +45,10 @@ $(document).ready(function () {
     var general = document.getElementById("general");
     var fixed = document.getElementById("fixed");
     var valuationType = document.getElementById('ValuationType').value;
-    if (valuationType === "2") {
+    if (valuationType === "5") {
         general.style.display = "none";
         fixed.style.display = "block";
-    } else if (valuationType === "1") {
+    } else if (valuationType === "6") {
         fixed.style.display = "none";
         general.style.display = "block";
     }

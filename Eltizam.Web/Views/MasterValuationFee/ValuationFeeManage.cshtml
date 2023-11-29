@@ -105,8 +105,8 @@
                                 Valuation Type
                                 <div class="flex m-0 valuationType">
                                     @Html.DropDownList("ValuationType", new List<SelectListItem>{
-                                    new SelectListItem{ Text="General", Value = "1" },
-                                    new SelectListItem{ Text="Fixed", Value = "2" }}, new { @class = "form-control" })
+                                    new SelectListItem{ Text="General", Value = "6" },
+                                    new SelectListItem{ Text="Fixed", Value = "5" }}, new { @class = "form-control" })
 
                                 </div>
                             </label>
@@ -120,26 +120,28 @@
 
                             <div class="flex">
                                 <label for="" class="w-50">
-                                    <p class="m-0">Valuation Fees (AED)<span class="text-danger">*</span></p>
+                                    @* <p class="m-0">Valuation Fees (AED)<span class="text-danger">*</span></p> *@
+                                    Valuation Fees (AED)
                                     @Html.EditorFor(model => model.ValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" ,@placeholder="enter Valuation Fees (AED)"} })
-                                    @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" })
+                                   @*  @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" }) *@
                                 </label>
                                 <label for="" class="w-50">
-                                    <p class="m-0">VAT (Percent)<span class="text-danger">*</span></p>
+                                    @* <p class="m-0">VAT (Percent)<span class="text-danger">*</span></p> *@
                                     @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control", @placeholder="enter VAT (Percent)"} })
-                                    @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
+                                   @*  @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="" class="w-50">
                                     <p class="m-0">Other Charges<span class="text-danger">*</span></p>
-                                    @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",placeholder="enter other chargesr" } })
-                                    @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",placeholder="enter other charges" } })
+                                    @* @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" }) *@
                                 </label>
                                 <label for="" class="w-50">
-                                    <p class="m-0">Total evaluation Fees<span class="text-danger">*</span></p>
+                                    Total evaluation Fees
+                                  @*   <p class="m-0">Total evaluation Fees<span class="text-danger">*</span></p> *@
                                     @Html.EditorFor(model => model.TotalValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",@placeholder="enter Total evaluation Fees" } })
-                                    @Html.ValidationMessageFor(model => model.TotalValuationFees, "", new { @class = "text-danger" })
+                                   @*  @Html.ValidationMessageFor(model => model.TotalValuationFees, "", new { @class = "text-danger" }) *@
                                 </label>
                             </div>
                         </div>

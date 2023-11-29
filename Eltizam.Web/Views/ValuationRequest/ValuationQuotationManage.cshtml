@@ -64,12 +64,12 @@
                             <div class="flex">
                                 <label for="" class="w-50">
                                     <p class="m-0">Other Charges<span class="text-danger">*</span></p>
-                                    @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox",placeholder="enter other chargesr" } })
+                                    @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox",placeholder="enter other charges" } })
                                     @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="" class="w-50">
                                     Valuation Instructor Charges
-                                    @Html.EditorFor(model => model.InstructorCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox",placeholder="enter Instructor chargesr" } })
+                                    @Html.EditorFor(model => model.InstructorCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox",placeholder="enter Instructor charges" } })
                                     @Html.ValidationMessageFor(model => model.InstructorCharges, "", new { @class = "text-danger" })
                                 </label>
                             </div>

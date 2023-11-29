@@ -20,9 +20,11 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'OwnershipType' field is required.")]
         public int? OwnershipTypeId { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? CarpetAreaInSqFt { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [StringLength(250, MinimumLength = 1)]
         public string? CarpetAreaInSqMtr { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'ClientType' field is required.")]
@@ -35,9 +37,9 @@ namespace Eltizam.Business.Models
         public decimal? ValuationFees { get; set; }
         //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? Vat { get; set; }
-       // [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? OtherCharges { get; set; }
-      //  [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+       //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? TotalValuationFees { get; set; }
         public string? ValuationFeeType { get; set; }
         public string? PropertyType { get; set; }
