@@ -3,10 +3,14 @@
 ################################################################################
 
 /.vs
-[Oo]bj
-[Bb]in
+[Oo]bj/
+[Bb]in/
+[Dd]ebug/ 
+[Rr]elease/
 bin/
 obj/
+**/bin/*
+**/obj/*
 /Eltizam.Web/wwwroot/Uploads/errorlogs/ 
 /Eltizam.Api/obj/
 /Eltizam.Api/bin/
@@ -41,9 +45,7 @@ obj/
 /Eltizam.WebApi/src/API/obj/Debug/**
 /Eltizam.WebApi/src/API/obj/Debug/net6.0/**
 /Eltizam.WebApi/src/API/obj/Debug/net6.0/*
-/Eltizam.WebApi/src/API/bin/Debug/net6.0/ 
-**/bin/*
-**/obj/*
+/Eltizam.WebApi/src/API/bin/Debug/net6.0/  
 /Eltizam.WebApi/src/API/Logs
 /Eltizam.WebApi/src/API/bin/Debug/net6.0/runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll
 /Eltizam.WebApi/src/API/bin/Debug/net6.0/runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll
