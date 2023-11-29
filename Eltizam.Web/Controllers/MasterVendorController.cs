@@ -108,6 +108,14 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.Contact = (masterUser.Contact == null) ? null : masterUser.Contact;
                 }
 
+               
+                if (masterUser.File != null)
+                {
+                    MasterDocumentModel docs = ProfileUpload(masterUser.File);
+                    masterUser.uploadProfile = docs;
+                    masterUser.File = null;
+                }
+
                 //Do fill audit fields
                 if (masterUser.Id == 0)
                     masterUser.CreatedBy = _helper.GetLoggedInUserId();
@@ -241,6 +249,48 @@ namespace EltizamValuation.Web.Controllers
                 default:
                     return "Unknown";
             }
+        }
+
+        private MasterDocumentModel ProfileUpload(IFormFile pic)
+        {
+            MasterDocumentModel uploadFils = new MasterDocumentModel();
+            if (pic == null)
+            {
+                throw new ArgumentException("No files were uploaded.");
+            }
+            var currentUser = _helper.GetLoggedInUserId();
+            var savedFileNames = new List<string>();
+
+            //Check if the file type is allowed
+           var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "image/jpg" };
+            if (!allowedFileTypes.Contains(pic.ContentType))
+            {
+                throw new ArgumentException($"File type '{pic.ContentType}' is not allowed.");
+            }
+
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(pic.FileName);
+            var docName = Path.GetFileNameWithoutExtension(pic.FileName);
+            var filePath = Path.Combine("wwwroot/Uploads", fileName);
+            filePath = filePath.Replace("\\", "/");
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                pic.CopyToAsync(stream);
+            }
+
+            // Save information about the uploaded file to the database
+            var upload = new MasterDocumentModel
+            {
+                FileName = fileName,
+                FilePath = filePath.Replace("wwwroot", ".."),
+                DocumentName = docName,
+                IsActive = 1,
+                CreatedBy = currentUser,
+                FileType = pic.ContentType,
+                CreatedDate = null,
+                CreatedName = ""
+            };
+
+            return upload;
         }
 
     }

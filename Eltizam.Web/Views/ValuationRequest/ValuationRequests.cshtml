@@ -97,6 +97,9 @@
                             Client Name
                             @Html.TextBoxFor(model => model.ClientName, new { @placeholder = @SharedLocalizer["ClientName"] })
                         </label>
+                        
+                    </div>
+                    <div class="flex">
                         <label for="PropertyName">
                             Property Name
                             @Html.TextBoxFor(model => model.PropertyName, new { @placeholder = @SharedLocalizer["PropertyName"] })
@@ -119,6 +122,11 @@
                             @Html.DropDownListFor(model => model.RequestStatusId, new List<SelectListItem> { }, new { })
 
                         </label>
+                       
+                    </div>
+
+                    <div class="flex">
+
                         <label for="CountryId">
                             <p class="m-0">Country</p>
                             @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @onchange = "BindState(this.options[this.selectedIndex].value)" })
@@ -138,12 +146,14 @@
                             From
                             <input type="text" id="FromDate" class="formatted-date-input" name="FromDate" asp-for="FromDate">
                         </label>
+                      
+                    </div>
+                    <div class="flex">
                         <label for="toDate">
                             To
                             <input type="text" id="ToDate" class="formatted-date-input" name="ToDate" asp-for="ToDate">
                         </label>
                     </div>
-
                     <div class="text-center">
                         <button type="button" class="blueBtn" onclick="InitializeValutionRequestDataList()">Search</button>
                     </div>

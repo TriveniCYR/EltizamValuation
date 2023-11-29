@@ -1,4 +1,5 @@
-﻿using Eltizam.Business.Core.Interface;
+﻿using Eltizam.Business.Core.Implementation;
+using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.WebApi.Filters;
@@ -127,6 +128,24 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+        [HttpDelete("DeleteDocument/{id}")]
+        public async Task<IActionResult> DeleteDocument([FromRoute] int id)
+        {
+            try
+            {
+                DBOperation oResponse = await _clientServices.DeleteDocument(id);
+                if (oResponse == DBOperation.Success)
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         #endregion API Methods
     }
 }

@@ -95,6 +95,15 @@ namespace Eltizam.Business.Core.Implementation
                 if (UserAddress != null) 
                     _clientEntity.Address = UserAddress;
 
+                if (_clientEntity.ProfileAttachmentId != null && _clientEntity.ProfileAttachmentId > 0)
+                {
+                    var profile = _repositoryDocument.Get(_clientEntity.ProfileAttachmentId);
+                    if (profile != null)
+                    {
+                        _clientEntity.ProfilePath = profile.FilePath;
+                    }
+                }
+
 
                 DbParameter[] osqlParameter1 =
                 {
@@ -216,6 +225,30 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
 
+                if (master_ClientModel.uploadProfile != null)
+                {
+                    objDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(master_ClientModel.uploadProfile);
+                    objDocument.IsActive = master_ClientModel.uploadProfile.IsActive;
+                    objDocument.TableKeyId = objClient.Id;
+                    objDocument.TableName = "Client_Master";
+                    objDocument.DocumentName = master_ClientModel.uploadProfile.DocumentName;
+                    objDocument.FileName = master_ClientModel.uploadProfile.FileName;
+                    objDocument.FilePath = master_ClientModel.uploadProfile.FilePath;
+                    objDocument.FileType = master_ClientModel.uploadProfile.FileType;
+                    objDocument.CreatedBy = master_ClientModel.uploadProfile.CreatedBy;
+
+                    _repositoryDocument.AddAsync(objDocument);
+                    await _unitOfWork.SaveChangesAsync();
+
+
+
+                    var client = _repository.Get(objClient.Id);
+                    client.ProfileAttachmentId = objDocument.Id;
+
+                    _repository.UpdateAsync(client);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+
                 if (master_ClientModel.Address.Id > 0)
                 {
                     //Get current Entiry --AUDITLOGUSER
@@ -308,13 +341,13 @@ namespace Eltizam.Business.Core.Implementation
                     {
                         objDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
                         objDocument.IsActive = doc.IsActive;
-                        objDocument.TableKeyId = master_ClientModel.Id;
+                        objDocument.TableKeyId = objClient.Id;
                         objDocument.TableName = Enum.GetName(TableNameEnum.Master_Client);
                         objDocument.DocumentName = doc.DocumentName;
                         objDocument.FileName = doc.FileName;
                         objDocument.FilePath = doc.FilePath;
                         objDocument.FileType = doc.FileType;
-                        objDocument.CreatedBy = master_ClientModel.CreatedBy;
+                        objDocument.CreatedBy = doc.CreatedBy;
                         _repositoryDocument.AddAsync(objDocument);
                     }
                     await _unitOfWork.SaveChangesAsync();
@@ -380,6 +413,22 @@ namespace Eltizam.Business.Core.Implementation
 
             // Return the mapped entity.
             return _Clients;
+        }
+
+        public async Task<DBOperation> DeleteDocument(int id)
+        {
+            if (id > 0)
+            {
+
+                var entityDoc = _repositoryDocument.Get(id);
+                if (entityDoc != null)
+                {
+                    _repositoryDocument.Remove(entityDoc);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+            // Return a success operation indicating successful deletion.
+            return DBOperation.Success;
         }
 
         #endregion API Methods

@@ -152,6 +152,7 @@ namespace Eltizam.Web.Helpers
         public static string UpsertClient = "MasterClient/Upsert";
         public static string DeleteClient = "MasterClient/DeleteClient";
         public static string GetClientByClientTypeId = "MasterClient/getByClientTypeId";
+        public static string DeleteClientDocumentById = "MasterClient/DeleteDocument";
 
         #endregion Client
 
