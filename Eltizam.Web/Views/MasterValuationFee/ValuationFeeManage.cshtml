@@ -126,6 +126,7 @@
                                    @*  @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" }) *@
                                 </label>
                                 <label for="" class="w-50">
+                                    VAT (Percent)
                                     @* <p class="m-0">VAT (Percent)<span class="text-danger">*</span></p> *@
                                     @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control", @placeholder="enter VAT (Percent)"} })
                                    @*  @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
@@ -133,7 +134,8 @@
                             </div>
                             <div class="flex">
                                 <label for="" class="w-50">
-                                    <p class="m-0">Other Charges<span class="text-danger">*</span></p>
+                                    Other Charges
+                                    @* <p class="m-0">Other Charges<span class="text-danger">*</span></p> *@
                                     @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",placeholder="enter other charges" } })
                                     @* @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" }) *@
                                 </label>
