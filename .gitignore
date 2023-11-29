@@ -69,3 +69,12 @@ obj/
 /Eltizam.WebApi/src/Core/ValuationWeb.Application/obj/project.assets.json
 /Eltizam.WebApi/src/Core/ValuationWeb.Application/obj/project.nuget.cache
 /Eltizam.WebApi/src/Core/ValuationWeb.Application/obj/ValuationWeb.Application.csproj.nuget.dgspec.json
+/Eltizam.WebApi/src/API/obj/Debug/net6.0/EltizamValuation.WebApi.GeneratedMSBuildEditorConfig.editorconfig
+/Eltizam.WebApi/src/Infrastructure/obj/Debug/net6.0/ValuationWeb.Persistence.assets.cache
+/Eltizam.WebApi/src/Infrastructure/obj/Debug/net6.0/ValuationWeb.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+/Eltizam.WebApi/src/Core/ValuationWeb.Domain/obj/Debug/net6.0/ValuationWeb.Domain.assets.cache
+/Eltizam.WebApi/src/Core/ValuationWeb.Domain/obj/Debug/net6.0/ValuationWeb.Domain.csproj.AssemblyReference.cache
+/Eltizam.WebApi/src/Core/ValuationWeb.Domain/obj/Debug/net6.0/ValuationWeb.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Eltizam.WebApi/src/Infrastructure/obj/Release/net6.0/ValuationWeb.Persistence.assets.cache
+/Eltizam.WebApi/src/Infrastructure/obj/Release/net6.0/ValuationWeb.Persistence.csproj.AssemblyReference.cache
+/Eltizam.WebApi/src/Core/ValuationWeb.Application/obj/Debug/net6.0/ValuationWeb.Application.GeneratedMSBuildEditorConfig.editorconfig
