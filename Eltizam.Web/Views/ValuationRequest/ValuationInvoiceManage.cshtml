@@ -259,76 +259,54 @@
 
             <h3 class="blueHeading">Documents</h3>
             <div class="inputSearchs uploadDocBox">
+
                 <div class="tabSection">
                     @if (ViewBag.IsView != 1)
                     {
-                        <div class="flex mb-28">
-                            <label for="document" class="w-50">
-                                Documents Name
-                                <input type="text" placeholder="enter Documents Name">
-                            </label>
-                            <label for="atach" class="w-50">
-                                Attach Supporting Documents
-                                <div class="attachDoc">
-                                    <img src="../assets/cloud-upload.svg" alt="cloud-upload" />
-                                    <input type="file" class="btn" value="Upload Photo" multiple />
-                                    <p>click to upload.</p>
-                                </div>
+                        <div class="flex">
+                            <label for="" class="w-100">
+                                <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)">
+                                <input type="text" class="fileNames" readonly placeholder="file names">
                             </label>
                         </div>
                     }
                     <div class="W-100">
                         <div class="prevUpload roundBorderBox m-0">
                             <h3>Previously uploaded</h3>
-                            <div class="flex">
-                                <div class="prevUploadTab">
-                                    <div class="flex align-item-center m-0">
-                                        <img src="../assets/file.svg" alt="file" />
-                                        ABC
-                                    </div>
-                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                </div>
-                                <div class="prevUploadTab">
-                                    <div class="flex align-item-center m-0">
-                                        <img src="../assets/file.svg" alt="file" />
-                                        ABC
-                                    </div>
-                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                </div>
-                                <div class="prevUploadTab">
-                                    <div class="flex align-item-center m-0">
-                                        <img src="../assets/file.svg" alt="file" />
-                                        ABC
-                                    </div>
-                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                </div>
-                                <div class="prevUploadTab">
-                                    <div class="flex align-item-center m-0">
-                                        <img src="../assets/file.svg" alt="file" />
-                                        ABC
-                                    </div>
-                                    <a href="../assets/download.svg" download target="_blank"><img src="../assets/download.svg" alt="download" /></a>
-                                </div>
+                            <div class="scroll-x">
+                                <table id="UserTableDocument" class="table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>File Name</th>
+                                            <th>Updated Date</th>
+                                            <th>Uploaded By</th>
+                                            <th>Download</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Documents != null)
+                                        {
+                                            @foreach (var docs in Model.Documents)
+                                            {
+                                                <tr id="@docs.Id">
+                                                    <td>@docs.DocumentName</td>
+                                                    <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
+                                                    <td>@docs.CreatedName</td>
+                                                    <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
+                                                    <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <label>NA</label>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                </div>
-                @* @if (ViewBag.IsView != 1)
-                {
-                <div class="text-right ptrl-20 buttonArea bodyContent">
-                <button type="button" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;">
-                Save
-                </button>
-                </div>
-                } *@
-                <div class="text-right ptrl-20 buttonArea bodyContent plr-0">
-                    <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
-                    @if (Model.Id == 0)
-                    {
-                        <button type="button" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="SaveInvoice()">
-                            Save
-                        </button>
-                    }
                 </div>
             </div>
         </div>

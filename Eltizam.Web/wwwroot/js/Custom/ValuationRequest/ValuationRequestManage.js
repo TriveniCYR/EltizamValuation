@@ -762,7 +762,7 @@ function BindClientDetailsByClientId(Id) {
         url: BaseURL + GetClientDetailById + '/' + Id,
         "datatype": "json",
         success: function (response) {
-            document.getElementById('ClientName').value = response._object.clientName;
+            //document.getElementById('ClientName').value = response._object.clientName;
             document.getElementById('LicenseNumber').value = response._object.licenseNumber;
 
             const inputDateString = response._object.trnexpiryDate;
@@ -772,17 +772,17 @@ function BindClientDetailsByClientId(Id) {
 
             document.getElementById('Trnnumber').value = response._object.trnnumber;
             //document.getElementById('Trnnumber').value = response._object.address.address1;
-            document.getElementById('CountryId').value = response._object.address.countryId;
-            if (response._object.address.countryId) {
-                BindState(response._object.address.countryId);
-            }
-            //var HdnStateId = $('#hdnState').val();
-            if (response._object.address.stateId) {
-                BindCity(response._object.address.stateId);
-            }
+            //document.getElementById('CountryId').value = response._object.address.countryId;
+            //if (response._object.address.countryId) {
+            //    BindState(response._object.address.countryId);
+            //}
+            ////var HdnStateId = $('#hdnState').val();
+            //if (response._object.address.stateId) {
+            //    BindCity(response._object.address.stateId);
+            //}
             //document.getElementById('StateId').value = response._object.address.stateId;
             //document.getElementById('CityId').value = response._object.address.cityId;
-            document.getElementById('PinCode').value = response._object.address.pinNo;
+            //document.getElementById('PinCode').value = response._object.address.pinNo;
 
             if (response._object.address != null) {
                 $('#NewAddressTable tbody').html('');
