@@ -293,7 +293,7 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.LicenseNumber)
-                    .HasMaxLength(100)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Logo)
@@ -311,7 +311,7 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasColumnName("TRNExpiryDate");
 
                 entity.Property(e => e.Trnnumber)
-                    .HasMaxLength(100)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("TRNNumber");
 
@@ -483,7 +483,7 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(50)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.DictionaryCode)
@@ -562,19 +562,17 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Latitude).HasMaxLength(50);
+                entity.Property(e => e.Latitude).HasMaxLength(255);
 
                 entity.Property(e => e.LocationName)
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Longitude).HasMaxLength(50);
+                entity.Property(e => e.Longitude).HasMaxLength(255);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Sector)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Sector).HasMaxLength(255);
 
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.MasterLocations)
@@ -629,6 +627,11 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SentDatetime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.ValuationRequest)
+                    .WithMany(p => p.MasterNotifications)
+                    .HasForeignKey(d => d.ValuationRequestId)
+                    .HasConstraintName("FK__Master_No__Valua__3429BB53");
             });
 
             modelBuilder.Entity<MasterOwnershipType>(entity =>

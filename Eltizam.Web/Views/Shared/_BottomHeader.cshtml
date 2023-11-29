@@ -3,15 +3,22 @@
 
 @{
     var data = (GlobalAuditFields)ViewBag.FooterInfo;
-    var href = "/MasterUser/" + ((data == null || data.CreatedBy == null) ? "Users" : "UserDetail?id=" + data.CreatedBy.ToString());
-    var href2 = "/MasterUser/" + ((data == null || data.ModifiedBy == null) ? "Users" : "UserDetail?id=" + data.ModifiedBy.ToString());
-    var href3 = "/AuditLog/AuditLogDetails?TableName=" + data?.TableName;
+    var href = "";
+    var href2 = "";
+    var href3 = "";
+
+    @if (data != null)
+    {
+        href = "/MasterUser/" + ((data == null || data.CreatedBy == null) ? "Users" : "UserDetail?id=" + data.CreatedBy.ToString());
+        href2 = "/MasterUser/" + ((data == null || data.ModifiedBy == null) ? "Users" : "UserDetail?id=" + data.ModifiedBy.ToString());
+        href3 = string.Format("/AuditLog/AuditLogDetailList?TableName={0}&TableKey={1}", data.TableName, data.TableKey);
+    }
 }
 
 @*//Show footer for page if data exists*@
 @if (data != null)
 {
-    <div class="whiteBoxShadow footerAuditContainer">
+    <div class="whiteBoxShadow footerAuditContainer" style="width:96% !important;">
         <div class="bodyContent footerAudit">
             <div class=" position-relative flex justify-between align-item-center">
                 <div>
