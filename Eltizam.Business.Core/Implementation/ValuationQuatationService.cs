@@ -22,28 +22,31 @@ namespace Eltizam.Business.Core.Implementation
     public class ValuationQuatationService : IValuationQuatationService
     {
         #region Properties
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-       private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
+        //private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
         private IRepository<ValuationQuotation> _repository { get; set; }
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
         private readonly IHelper _helper;
-        private readonly int? _LoginUserId;
+
+        private readonly IAuditLogService _auditLogService;
+        // private readonly int? _LoginUserId;
         #endregion Properties
 
         #region Constructor
-        public ValuationQuatationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
-          IHelper helper,
-           Microsoft.Extensions.Configuration.IConfiguration _configuration)
+        public ValuationQuatationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IAuditLogService auditLogService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
             _repository = _unitOfWork.GetRepository<ValuationQuotation>();
             _repositoryDocument = _unitOfWork.GetRepository<MasterDocument>();
-            configuration = _configuration;
+            //configuration = _configuration;
             _helper = helper;
-            _LoginUserId = _helper.GetLoggedInUser()?.UserId;
+            //_LoginUserId = _helper.GetLoggedInUser()?.UserId;
+            _auditLogService = auditLogService;
         }
+
         #endregion Constructor
 
 
@@ -57,17 +60,16 @@ namespace Eltizam.Business.Core.Implementation
             var quottationList = EltizamDBHelper.ExecuteMappedReader<ValuationQuatationListModel>(ProcedureMetastore.usp_Quotation_GetQuotationByRequestId,
                                 DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
 
-            return quottationList;
-            //var allList = _repository.GetAllAsync(x => x.ValuationRequestId == requestId).Result.ToList();
-            //return _mapperFactory.GetList<ValuationQuotation, ValuationQuatationListModel>(allList);
+            return quottationList; 
         }
 
         public async Task<ValuationQuatationListModel> GetQuatationById(int id)
         {
             var tableName = Enum.GetName(TableNameEnum.ValuationQuotation);
 
-            var _quatationEntity = new ValuationQuatationListModel();
-            _quatationEntity = _mapperFactory.Get<ValuationQuotation, ValuationQuatationListModel>(await _repository.GetAsync(id));
+            // var _quatationEntity = new ValuationQuatationListModel();
+            var _quatationEntity = _mapperFactory.Get<ValuationQuotation, ValuationQuatationListModel>(await _repository.GetAsync(id));
+
             if (_quatationEntity != null)
             {
                 DbParameter[] osqlParameter2 =
@@ -78,13 +80,15 @@ namespace Eltizam.Business.Core.Implementation
 
                 var quatationDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
                                     DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
-                if (quatationDocuments != null)
-                {
-                    _quatationEntity.Documents = quatationDocuments;
-                }
+
+                if (quatationDocuments != null) 
+                    _quatationEntity.Documents = quatationDocuments; 
             }
+
             return _quatationEntity;
         }
+
+
         public async Task<DBOperation> QuatationDelete(int id)
         {
             var entityQuatation = _repository.Get(x => x.Id == id);
@@ -98,14 +102,21 @@ namespace Eltizam.Business.Core.Implementation
 
             return DBOperation.Success;
         }
-        public async Task<DBOperation> Upsert(ValuationQuatationListModel entityQuatation)
-        {
 
+
+        public async Task<DBOperation> Upsert(ValuationQuatationListModel entityQuatation)
+        { 
             ValuationQuotation objQuatation; 
             MasterDocument objDocument;
 
+            string MainTableName = Enum.GetName(TableNameEnum.ValuationQuotation);
+            int MainTableKey = entityQuatation.Id;
+
             if (entityQuatation.Id > 0)
             {
+                ValuationQuotation OldEntity = null;
+                OldEntity = _repository.GetNoTracking(entityQuatation.Id);
+
                 objQuatation = _repository.Get(entityQuatation.Id);
 
                 var OldObjDepartment = objQuatation;
@@ -122,7 +133,12 @@ namespace Eltizam.Business.Core.Implementation
                     objQuatation.StatusId = entityQuatation.StatusId;
                     objQuatation.ModifiedDate = AppConstants.DateTime;
                     objQuatation.ModifiedBy = entityQuatation.ModifiedBy;
+
                     _repository.UpdateAsync(objQuatation);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<ValuationQuotation>(AuditActionTypeEnum.Update, OldEntity, objQuatation, MainTableName, MainTableKey);
                 }
                 else
                 {
@@ -131,14 +147,20 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
+                var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
                 objQuatation = _mapperFactory.Get<ValuationQuatationListModel, ValuationQuotation>(entityQuatation);
+
+                objQuatation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_QuotationsRequest, lastReq?.Id); 
                 objQuatation.CreatedDate = AppConstants.DateTime;
                 objQuatation.CreatedBy = entityQuatation.CreatedBy ?? 1;
+
                 _repository.AddAsync(objQuatation);
+                await _unitOfWork.SaveChangesAsync();
             }
-            await _unitOfWork.SaveChangesAsync();
+            
             if (objQuatation.Id == 0)
                 return DBOperation.Error;
+
             else
             {
                 if (entityQuatation.uploadDocument != null)
@@ -160,6 +182,7 @@ namespace Eltizam.Business.Core.Implementation
                     }
                 }
             }
+
             return DBOperation.Success;
         }
     }

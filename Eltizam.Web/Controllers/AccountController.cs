@@ -54,7 +54,7 @@ namespace Eltizam.Web.Controllers
                 HttpResponseMessage responseMessage1 = objapi.APICommunication("/MasterCity/Upsert", HttpMethod.Post, string.Empty, rer).Result;
                 string jsonResponse1 = responseMessage1.Content.ReadAsStringAsync().Result;
 
-            */
+            */ 
 
             LoginViewModel loginViewModel = new LoginViewModel();
 
