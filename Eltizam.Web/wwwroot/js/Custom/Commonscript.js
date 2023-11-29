@@ -1,25 +1,33 @@
-﻿//Use this for entire project to bind the data 
-var BaseURL = $('#hdnAPIURL').val();
-var setDefaultOrder = [0, 'desc'];
+﻿//Use this for entire project to bind the data
 
 
+//Global variables
 var LogInUserId = $("#LogInUserId").val() ?? 1;
+
+var BaseURL = $('#hdnAPIURL').val();
+var setDefaultOrder = [0, 'desc']; 
+var ShowMenuCache = "showMenuCache";
+var defaultDateFormat = 'DD-MMM-YYYY hh:mm A';
+
+//API methods
 var Post = 'POST';
 var Get = 'GET';
 var Delete = 'DELETE';
 
+//Toastr messages
 var SuccessToast = $("#successToaster");
 var ErrorToast = $("#errorToaster");
 var SuccessToaster = SuccessToast.val();
 var ErrorToaster = ErrorToast.val();
-var ErrorDev = $("#errorBanner");
+var ErrorDev = $("#errorBanner"); 
 
-var ShowMenuCache = "showMenuCache";
-
+//Fixed messages
 var SucessMsg = "Request saved successfully.";
 var ErrorMsg = "Some error occurred while processing request.";
 var DeleteAccessDenied = "Delete permission not granted.";
 
+
+//Permission related things
 var IsDeletePerm = ($("#isDeletePerm").val() === "1" || $("#isDeletePerm").val() === 1);
 var isDeleteSite = ($("#isDeleteSite").val() === "1" || $("#isDeleteSite").val() === 1);
 var isDeleteEvidence = ($("#isDeleteEvidence").val() === "1" || $("#isDeleteEvidence").val() === 1);
@@ -390,6 +398,24 @@ function showScrollToTopButton() {
 function scrollToTop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+}
+
+// accordian here
+function accordianToggle(header) {
+    const item = header.nextElementSibling;
+    if (item.style.height === 'auto') {
+        item.style.height = 0;
+    } else {
+        item.style.height = 'auto';
+    }
+} 
+
+//Remove parent dynamic created page
+function removeParentDiv(element) {
+    const parentDiv = element.closest('.roundBorderBox');
+    if (parentDiv) {
+        parentDiv.remove();
+    }
 }
 
 // ======== End:  Scroller for page ============ 

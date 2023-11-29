@@ -55,18 +55,15 @@ namespace Eltizam.WebApi.Controllers
                 await _ExceptionService.LogException(ex);
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
-        }
-
-
-
+        } 
 
         [HttpPost, Route("GetAllDetailsLog")]
-        public async Task<IActionResult> GetAllDetailsLog([FromForm] DataTableAjaxPostModel model, int? UserName,  string? TableName = null,  DateTime? DateFrom = null, DateTime? DateTo = null)
+        public async Task<IActionResult> GetAllDetailsLog([FromForm] DataTableAjaxPostModel model, int? UserId, string? TableName = null, string? TableKey = null, int? Id = null, DateTime? DateFrom = null, DateTime? DateTo = null)
         {
             try
             {
 
-                return _ObjectResponse.CreateData(await _auditLogService.GetAllDetailsLog(model,  UserName,TableName,  DateFrom, DateTo), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _auditLogService.GetAllDetailsLog(model, UserId, TableName, TableKey, Id, DateFrom, DateTo), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

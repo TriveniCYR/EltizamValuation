@@ -88,16 +88,7 @@ function profileTab(evt, cityName) {
 }
 document.getElementById("defaultOpen").click();
 
-// accordian function here
-function accordianToggle(header) {
-    const item = header.nextElementSibling;
-    if (item.style.height === 'auto') {
-        item.style.height = 0;
-    } else {
-        item.style.height = 'auto';
-    }
-}
-//accordian function end
+ 
 
 
 function removeParentDiv(element) {

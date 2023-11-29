@@ -55,6 +55,14 @@
               "target": "Package",
               "version": "[2.0.78, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
             "SqlTableDependency": {
               "target": "Package",
               "version": "[8.5.8, )"
@@ -404,6 +412,14 @@
             "SqlTableDependency": {
               "target": "Package",
               "version": "[8.5.8, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "WindowsAzure.Storage": {
+              "target": "Package",
+              "version": "[9.3.3, )"
             }
           },
           "imports": [
