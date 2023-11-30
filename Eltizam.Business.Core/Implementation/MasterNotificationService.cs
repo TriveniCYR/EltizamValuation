@@ -29,7 +29,7 @@ namespace Eltizam.Business.Core.Implementation
             _repository = _unitOfWork.GetRepository<MasterNotification>();
             _configuration = configuration;
         }
-        public async Task<DBOperation> SendEmail(SendEmailModel request)
+        public async Task<DBOperation> SendEmail(SendEmailModel request,int valuationrequestId,int statusId)
         {
             var message = new MimeMessage();
             message.From.Add(MailboxAddress.Parse(_configuration.GetSection("SMTPDetails:FromEmail").Value));
@@ -46,8 +46,8 @@ namespace Eltizam.Business.Core.Implementation
             {
                 var notification = new MasterNotification
                 {
-                    ValuationRequestId = 1,
-                    StatusId = 1,
+                    ValuationRequestId = valuationrequestId,
+                    StatusId = statusId,
                     Subject = request.Subject,
                     ToEmails = request.To,
                     Body = request.Body,

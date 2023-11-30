@@ -7,12 +7,14 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -26,12 +28,14 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationInvoice> _repository;
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
+        private readonly INotificationService _notificationService;
+        private readonly IRepository<MasterUser> _masteruserrepository;
         #endregion Properties
 
         #region Constructor
         public ValuationInvoiceService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
           IHelper helper,
-           Microsoft.Extensions.Configuration.IConfiguration _configuration)
+           Microsoft.Extensions.Configuration.IConfiguration _configuration, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -39,6 +43,8 @@ namespace Eltizam.Business.Core.Implementation
             configuration = _configuration;
             _helper = helper;
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
+            _notificationService = notificationService;
+            _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
         }
         #endregion Constructor
 
@@ -103,7 +109,33 @@ namespace Eltizam.Business.Core.Implementation
             await _unitOfWork.SaveChangesAsync();
             if (objInvoice.Id == 0)
                 return DBOperation.Error;
+            try
+            {
+                string? username = _masteruserrepository.GetAll().Where(x => x.Id == objInvoice.CreatedBy).Select(x=>x.UserName).FirstOrDefault();
+                string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_InvoiceCreate.html");
+                strHtml = strHtml.Replace("[PDateP]", objInvoice.CreatedDate.ToString());
+                strHtml = strHtml.Replace("[PCreatedByP]", username);
+                strHtml = strHtml.Replace("[PValRefNoP]", objInvoice.ReferenceNo);
+                strHtml = strHtml.Replace("[Amount]", objInvoice.Amount.ToString());
+                //strHtml = strHtml.Replace("[Transaction]",statusName);
+                //strHtml = strHtml.Replace("[PaymentMode]", objInvoice.TransactionModeId);
+                strHtml = strHtml.Replace("[Date]", objInvoice.TransactionDate.ToString());
 
+
+                var sendemaildetails = new SendEmailModel
+                {
+                    To = "",
+                    Body = strHtml,
+                    Subject = "Valuation Invoice Creation",
+
+                };
+                await _notificationService.SendEmail(sendemaildetails, objInvoice.ValuationRequestId,0);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
             return DBOperation.Success;
         }
         public async Task<ValuationInvoiceListModel> GetInvoiceById(int id)

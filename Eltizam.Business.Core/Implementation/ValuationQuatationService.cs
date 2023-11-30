@@ -8,6 +8,7 @@ using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,15 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
+        private readonly INotificationService _notificationService;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IRepository<MasterUser> _masteruserrepository;
         #endregion Properties
 
         #region Constructor
         public ValuationQuatationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
           IHelper helper,
-           Microsoft.Extensions.Configuration.IConfiguration _configuration)
+           Microsoft.Extensions.Configuration.IConfiguration _configuration, IHostingEnvironment hostingEnvironment, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -43,6 +47,9 @@ namespace Eltizam.Business.Core.Implementation
             configuration = _configuration;
             _helper = helper;
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
+            _notificationService = notificationService;
+            _hostingEnvironment = hostingEnvironment;
+            _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
         }
         #endregion Constructor
 
@@ -100,7 +107,7 @@ namespace Eltizam.Business.Core.Implementation
         }
         public async Task<DBOperation> Upsert(ValuationQuatationListModel entityQuatation)
         {
-
+          
             ValuationQuotation objQuatation; 
             MasterDocument objDocument;
 
@@ -160,7 +167,37 @@ namespace Eltizam.Business.Core.Implementation
                     }
                 }
             }
+            try
+            {
+                string? username = _masteruserrepository.GetAll().Where(x => x.Id == objQuatation.CreatedBy).Select(x => x.UserName).FirstOrDefault();
+                string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_QuotationCreate.html");
+        
+                strHtml = strHtml.Replace("[PDateP]", objQuatation.CreatedDate.ToString());
+                strHtml = strHtml.Replace("[PCreatedByP]", username);
+                strHtml = strHtml.Replace("[PValRefNoP]", objQuatation.ReferenceNo);
+                strHtml = strHtml.Replace("[ValuationFees]", objQuatation.ValuationFee.ToString());
+                strHtml = strHtml.Replace("[VAT]", objQuatation.Vat.ToString());
+                strHtml = strHtml.Replace("[OtherCharges]", objQuatation.OtherCharges.ToString());
+                strHtml = strHtml.Replace("[ValuationInstructorCharges]", objQuatation.InstructorCharges.ToString());
+                strHtml = strHtml.Replace("[Discount]", objQuatation.Discount.ToString());
+                strHtml = strHtml.Replace("[TotalevaluationFees]", objQuatation.TotalFee.ToString());
+               
+                var sendemaildetails = new SendEmailModel
+                {
+                    To = "",
+                    Body = strHtml,
+                    Subject = "Valuation Quotation Creation",
+
+                };
+                await _notificationService.SendEmail(sendemaildetails, objQuatation.ValuationRequestId, objQuatation.StatusId);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
             return DBOperation.Success;
+        
         }
     }
 }
