@@ -37,8 +37,18 @@
                             <div class="tabSection">
                                 <div class="flex">
                                     <div class="flex justify-center mb-28">
+
                                         <div class="resourceProfile clientImg text-center">
-                                            <img src="../assets/client1.png" alt="img-7" />
+                                            @if (Model.ProfileAttachmentId > 0)
+                                            {
+                                                <img id="previewImage" src="@Model.ProfilePath" alt="upload-profile-pic" class="w-100" style="margin-bottom: 36px;" />
+                                            }
+                                            else
+                                            {
+                                                <img id="previewImage" src="../assets/client1.png" alt="img-7" />
+                                            }
+
+
                                         </div>
                                     </div>
                                     <label for="Status" class="w-50">
