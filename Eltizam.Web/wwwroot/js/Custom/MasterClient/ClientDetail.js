@@ -10,7 +10,24 @@ $(document).ready(function () {
         BindCity(stateId);
     }
     BindCountryCode();
+    BindDepartment();
+    BindDesignation();
 });
+
+function BindDepartment() {
+    var Department = $("#Contact_DepartmentId");
+    var _val = $('#hdnDeparment').val();
+    var _rpname = "department";
+
+    BindDropdowns(DepartmentList, Department, _rpname, _val);
+}
+function BindDesignation() {
+    var Designation = $("#Contact_DesignationId");
+    var _val = $('#hdnDesignation').val();
+    var _rpname = "designation";
+
+    BindDropdowns(DesignationList, Designation, _rpname, _val);
+}
 
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;

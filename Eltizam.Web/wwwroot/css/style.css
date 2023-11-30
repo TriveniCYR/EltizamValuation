@@ -2324,3 +2324,8 @@ table.topQuotationDuesTable {
         background: var(--blue);
         cursor: pointer;
     }
+#previewImage {
+    margin-bottom: 36px;
+    width: 170px;
+    height: 135px;
+}
