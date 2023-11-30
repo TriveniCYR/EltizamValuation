@@ -72,9 +72,9 @@
                                 <label for="" class="w-50">
                                     <p class="m-0">Transaction<span class="text-danger">*</span></p>
                                     <select id="TransactionStatusId" class="disabletxtbox">
-                                        <option value="1">completed</option>
+                                       @* <option value="1">completed</option>
                                         <option value="2">inprogress</option>
-                                        <option value="3">failed</option>
+                                        <option value="3">failed</option>*@
                                     </select>
                                 </label>
                                 <label for="" class="w-50">
@@ -358,7 +358,7 @@
 
         var ValuationInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationInvoiceById";
         var UpsertValuationInvoice = "@Eltizam.Web.Helpers.APIURLHelper.UpsertValuationInvoice";
-
+        var transactionStatus = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryDescriptionById";
 
     </script>
 }

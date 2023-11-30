@@ -49,7 +49,7 @@ namespace Eltizam.Business.Core.Implementation
             _configuration = configuration;
             _helper = helper;
             _notificationService = notificationService;
-            _auditLogService = auditLogService; 
+            _auditLogService = auditLogService;
         }
         #endregion Constructor
 
@@ -58,7 +58,7 @@ namespace Eltizam.Business.Core.Implementation
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
             string SortDir = model.order[0]?.dir;
-          //  string SortDir = "asc";
+            //  string SortDir = "asc";
 
             SqlParameter[] osqlParameter =
             {
@@ -109,13 +109,19 @@ namespace Eltizam.Business.Core.Implementation
                             var valuationEntity = _repository.Get(id);
                             valuationEntity.ApproverId = model.ApprovorId;
                             valuationEntity.AssignRemark = model.Remarks;
-                            valuationEntity.ModifiedBy = model.LogInUserId; 
+                            valuationEntity.ModifiedBy = model.LogInUserId;
 
                             _repository.UpdateAsync(valuationEntity);
                             //_repository.UpdateGraph(valuationEntity, EntityState.Modified);
 
                             //Do Audit Log --AUDITLOG 
                             await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, id);
+
+                            var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+
+                            var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+
+                            await SenddDetailsToEmail("Request Status Change", oldstatusname, newstatusname, valuationEntity.Id, valuationEntity.ReferenceNo, valuationEntity.StatusId);
                         }
                         await _unitOfWork.SaveChangesAsync();
                     }
@@ -138,7 +144,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     ValuationRequest OldEntity = null;
                     OldEntity = _repository.GetNoTracking(model.ValuationRequestId);
-                    var TableName = Enum.GetName(TableNameEnum.ValuationRequest); 
+                    var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
 
                     var valuationEntity = _repository.Get(model.ValuationRequestId);
                     valuationEntity.ApproverId = model.ApprovorId;
@@ -152,7 +158,13 @@ namespace Eltizam.Business.Core.Implementation
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOG 
-                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);  
+                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);
+
+                    var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+
+                    var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+
+                    await SenddDetailsToEmail("Request Status Change", oldstatusname, newstatusname, valuationEntity.Id, valuationEntity.ReferenceNo, valuationEntity.StatusId);
                 }
                 else
                 {
@@ -188,6 +200,12 @@ namespace Eltizam.Business.Core.Implementation
 
                     //Do Audit Log --AUDITLOG 
                     await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.Id);
+
+                    var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+
+                    var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+
+                    await SenddDetailsToEmail("Request Status Change", oldstatusname, newstatusname, valuationEntity.Id, valuationEntity.ReferenceNo, valuationEntity.StatusId);
                 }
                 else
                 {
@@ -243,7 +261,7 @@ namespace Eltizam.Business.Core.Implementation
                         await _unitOfWork.SaveChangesAsync();
 
                         //Do Audit Log --AUDITLOGUSER
-                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey);  
+                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey);
                     }
                     else
                     {
@@ -255,11 +273,11 @@ namespace Eltizam.Business.Core.Implementation
                     var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
 
                     objValuation = _mapperFactory.Get<ValuationRequestModel, ValuationRequest>(entityValuation);
-                    objValuation.CreatedBy= (int)entityValuation.CreatedBy;
+                    objValuation.CreatedBy = (int)entityValuation.CreatedBy;
                     objValuation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_ValuationRequest, lastReq?.Id);
                     objValuation.ApproverId = objValuation.ApproverId == 0 ? null : objValuation.ApproverId;
                     objValuation.ValuerId = objValuation.ValuerId == 0 ? null : objValuation.ValuerId;
-                    
+
                     _repository.AddAsync(objValuation);
                     await _unitOfWork.SaveChangesAsync();
                 }
@@ -271,7 +289,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
 
-                await SenddDetailsToEmail("Request Status Change", "", oldstatusname, newstatusname, objValuation.Id, objValuation.ReferenceNo, objValuation.StatusId);
+                await SenddDetailsToEmail("Request Status Change", oldstatusname, newstatusname, objValuation.Id, objValuation.ReferenceNo, objValuation.StatusId);
                 return DBOperation.Success;
             }
             catch (Exception ex)
@@ -288,7 +306,7 @@ namespace Eltizam.Business.Core.Implementation
             var evidencetableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
             var assesmenttableName = Enum.GetName(TableNameEnum.Valuation_Assessement);
             var _ValuationEntity = new ValuationRequestModel();
-           
+
             var _assesmentAction = new ValuationAssesmentActionModel();
             var siteDescription = new SiteDescriptionModel();
             var compevidence = new ComparableEvidenceModel();
@@ -325,10 +343,11 @@ namespace Eltizam.Business.Core.Implementation
                 _ValuationEntity.LocationStateId = res.LocationStateId;
                 _ValuationEntity.LocationCityId = res.LocationCityId;
 
-                 siteDescription = _mapperFactory.Get<SiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
-                  
-                if(siteDescription != null) {
-                    _ValuationEntity.ValuationAssesment.SiteDescription= siteDescription;
+                siteDescription = _mapperFactory.Get<SiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
+
+                if (siteDescription != null)
+                {
+                    _ValuationEntity.ValuationAssesment.SiteDescription = siteDescription;
                     DbParameter[] osqlParameter2 =
                {
                     new DbParameter(AppConstants.TableKeyId, siteDescription.Id, SqlDbType.Int),
@@ -344,7 +363,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 }
 
-               
+
 
                 //comprable
                 compevidence = _mapperFactory.Get<ComparableEvidence, ComparableEvidenceModel>(_evidencerepository.Get(x => x.RequestId == id));
@@ -367,7 +386,7 @@ namespace Eltizam.Business.Core.Implementation
                     }
                 }
 
-              
+
 
                 /////Assesment
 
@@ -391,7 +410,7 @@ namespace Eltizam.Business.Core.Implementation
                     }
                 }
 
-               
+
             }
 
 
@@ -411,30 +430,31 @@ namespace Eltizam.Business.Core.Implementation
             await _unitOfWork.SaveChangesAsync();
 
             return DBOperation.Success;
-        } 
+        }
 
-        public async Task<bool> SenddDetailsToEmail(string subject,string to,string? oldstatus,string? newstatus,int valuationrequestId, string referenceno,int statusid=0 )
+        public async Task<bool> SenddDetailsToEmail(string subject, string? oldstatus, string? newstatus, int valuationrequestId, string referenceno, int statusid = 0)
         {
-                var referencenumber=_repository.GetAll().Where(x => x.Id == valuationrequestId).Select(x => x.ReferenceNo);
-                string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_StatusChange.html");
-                strHtml = strHtml.Replace("[PValRefNoP]", referencenumber.ToString());
-                strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString());
-                strHtml = strHtml.Replace("[PNewStatusP]", newstatus);
-                strHtml = strHtml.Replace("[POldStatusP]", oldstatus);
-                if (referenceno != null)
-                {
-                    strHtml = strHtml.Replace("[PValRefNoP]", referenceno);
-                }
-                var sendemaildetails = new SendEmailModel
-                {
-                    To = to,
-                    Body = strHtml,
-                    Subject = subject,
+            var referencenumber = _repository.GetAll().Where(x => x.Id == valuationrequestId).Select(x => x.ReferenceNo);
+            string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_StatusChange.html");
+            strHtml = strHtml.Replace("[PValRefNoP]", referencenumber.ToString());
+            strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString());
+            strHtml = strHtml.Replace("[PNewStatusP]", newstatus);
+            strHtml = strHtml.Replace("[POldStatusP]", oldstatus);
+            if (referenceno != null)
+            {
+                strHtml = strHtml.Replace("[PValRefNoP]", referenceno);
+            }
+            var receipientemail = _notificationService.GetToEmail(RecepientActionEnum.ValidationRequestChange.ToString(), valuationrequestId);
+            var sendemaildetails = new SendEmailModel
+            {
+                ToEmailList = receipientemail.ToEmailList,
+                Body = strHtml,
+                Subject = subject,
 
-                };
-                await _notificationService.SendEmail(sendemaildetails,valuationrequestId, statusid);
-       
+            };
+            await _notificationService.SendEmail(sendemaildetails, valuationrequestId, statusid);
+
             return true;
         }
-    } 
+    }
 }

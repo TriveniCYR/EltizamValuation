@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using static Eltizam.Utility.Enums.GeneralEnum;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -29,7 +30,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly int? _LoginUserId;
         private readonly INotificationService _notificationService;
         private readonly IRepository<MasterUser> _masteruserrepository;
-
+        private readonly IRepository<MasterDictionaryDetail> _masterdictionaryrepository;
         private readonly IAuditLogService _auditLogService;
         #endregion Properties
 
@@ -44,6 +45,7 @@ namespace Eltizam.Business.Core.Implementation
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
             _notificationService = notificationService;
             _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
+            _masterdictionaryrepository = _unitOfWork.GetRepository<MasterDictionaryDetail>();
         }
         #endregion Constructor
 
@@ -125,19 +127,22 @@ namespace Eltizam.Business.Core.Implementation
             try
             {
                 string? username = _masteruserrepository.GetAll().Where(x => x.Id == objInvoice.CreatedBy).Select(x=>x.UserName).FirstOrDefault();
+                string transactionstatus = _masterdictionaryrepository.Get(x => x.Id == objInvoice.TransactionStatusId).Description;
                 string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_InvoiceCreate.html");
                 strHtml = strHtml.Replace("[PDateP]", objInvoice.CreatedDate.ToString());
                 strHtml = strHtml.Replace("[PCreatedByP]", username);
                 strHtml = strHtml.Replace("[PValRefNoP]", objInvoice.ReferenceNo);
                 strHtml = strHtml.Replace("[Amount]", objInvoice.Amount.ToString());
-                //strHtml = strHtml.Replace("[Transaction]",statusName);
-                //strHtml = strHtml.Replace("[PaymentMode]", objInvoice.TransactionModeId);
+                strHtml = strHtml.Replace("[Transaction]", transactionstatus);
+                TransactionModeEnum mode = (TransactionModeEnum)objInvoice.TransactionModeId;
+                string? paymentmode = Enum.GetName(typeof(TransactionModeEnum), mode);
+                strHtml = strHtml.Replace("[PaymentMode]", paymentmode);
                 strHtml = strHtml.Replace("[Date]", objInvoice.TransactionDate.ToString());
 
-
+                var receipientemail = _notificationService.GetToEmail(RecepientActionEnum.InvoiceCreation.ToString(), objInvoice.Id);
                 var sendemaildetails = new SendEmailModel
                 {
-                    To = "",
+                    ToEmailList = receipientemail.ToEmailList,
                     Body = strHtml,
                     Subject = "Valuation Invoice Creation",
 

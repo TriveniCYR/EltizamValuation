@@ -3,7 +3,7 @@ $(document).ready(function () {
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
     }
-
+    BindTransactionstatus();
 });
 
 
@@ -372,4 +372,12 @@ function formatDateTo_ddMMMyyyy(date) {
     const year = date.getFullYear();
 
     return `${day}-${month}-${year}`;
+}
+
+function BindTransactionstatus() {
+    var id = 47;
+    var transactionStatusId = $("#TransactionStatusId");
+    var _val = 0;
+    var _rpname = "description";
+    BindDropdowns(transactionStatus + '/' + id, transactionStatusId, _rpname, _val);
 }
