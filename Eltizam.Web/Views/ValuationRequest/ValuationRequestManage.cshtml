@@ -137,7 +137,7 @@
                                     <label for="" class="w-50">
                                         Other Reference no
                                         @Html.TextBoxFor(model => model.OtherReferenceNo, new { @class = "form-control", @placeholder = @SharedLocalizer["Other Reference no"] })
-                                        @*  <input type="text" placeholder="12837187236" disabled> *@
+                                        @Html.ValidationMessageFor(model => model.OtherReferenceNo, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex  mb-28">
@@ -164,7 +164,7 @@
                                     <label for="" class="w-50 m-0" id="comment">
                                         Review Comment
                                         @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer[""] })
-                                        @*  <input type="text" placeholder="12837187236" disabled> *@
+                                        @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex  mb-28">
@@ -184,7 +184,7 @@
                                     <label for="" class="w-50">
                                         Valuation Time Frame
                                         @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
-                                        @* <input type="text" placeholder="enter days"> *@
+                                        @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
 
@@ -206,7 +206,7 @@
                                             @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" })
                                         </label>
                                         <label for="" class="w-50">
-                                            <p class="m-0">Clients<span class="text-danger">*</span></p>
+                                            <p class="m-0">Client<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindClientDetailsByClientId(this.options[this.selectedIndex].value)" })
                                             @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
                                         </label>
@@ -1217,6 +1217,8 @@
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
         var isViewHide = "@ViewBag.IsView";
+        debugger
+        var isAddValuation = (@Model.Id == 0);
         var isViewQt = objPermssionQt.View ? true : false;
         
         

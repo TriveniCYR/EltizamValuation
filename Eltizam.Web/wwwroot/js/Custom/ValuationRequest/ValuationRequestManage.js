@@ -670,6 +670,11 @@ function BindPropertyDetailById(Id) {
                 }
             }
             var PropertyDetails = response._object.propertyDetail;
+            if (isAddValuation) { 
+            document.getElementById('hdnLocationCountryId').value = PropertyDetails.countryId;
+            document.getElementById('hdnLocationStateId').value = PropertyDetails.stateId;
+            document.getElementById('hdnLocationCityId').value = PropertyDetails.cityId;
+            }
             document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
             document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
             document.getElementById('PropertyDetail_CityId').value = PropertyDetails.cityId;
@@ -681,6 +686,7 @@ function BindPropertyDetailById(Id) {
             document.getElementById('PropertyDetail_Address2').value = PropertyDetails.address2;
             document.getElementById('PropertyDetail_Pincode').value = PropertyDetails.pincode;
             document.getElementById('PropertyDetail_Landmark').value = PropertyDetails.landmark;
+            debugger
             BindLocationState(PropertyDetails.countryId);
             BindLocationCity(PropertyDetails.stateId);
         },

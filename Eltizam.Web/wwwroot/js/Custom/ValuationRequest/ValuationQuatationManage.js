@@ -11,7 +11,7 @@ $('#ValuationFee').keypress(function (e) {
         if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
             var keypress = e.keyCode || e.which || e.charCode;
             var key = String.fromCharCode(keypress);
-            var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+            var regEx = /^[0-9]{0,20}(.[0-9]{0,6})?$/;
 
             var txt = $(this).val() + key;
             if (!regEx.test(txt)) {
@@ -34,7 +34,7 @@ $('#Vat').keypress(function (e) {
         if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
             var keypress = e.keyCode || e.which || e.charCode;
             var key = String.fromCharCode(keypress);
-            var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+            var regEx = /^[0-9]{0,20}(.[0-9]{0,6})?$/;
 
             var txt = $(this).val() + key;
             if (!regEx.test(txt)) {
@@ -57,7 +57,7 @@ $('#OtherCharges').keypress(function (e) {
         if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
             var keypress = e.keyCode || e.which || e.charCode;
             var key = String.fromCharCode(keypress);
-            var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+            var regEx = /^[0-9]{0,20}(.[0-9]{0,6})?$/;
 
             var txt = $(this).val() + key;
             if (!regEx.test(txt)) {
@@ -81,7 +81,7 @@ $('#InstructorCharges').keypress(function (e) {
         if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
             var keypress = e.keyCode || e.which || e.charCode;
             var key = String.fromCharCode(keypress);
-            var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+            var regEx = /^[0-9]{0,20}(.[0-9]{0,6})?$/;
 
             var txt = $(this).val() + key;
             if (!regEx.test(txt)) {
@@ -105,7 +105,7 @@ $('#Discount').keypress(function (e) {
         if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
             var keypress = e.keyCode || e.which || e.charCode;
             var key = String.fromCharCode(keypress);
-            var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+            var regEx = /^[0-9]{0,20}(.[0-9]{0,6})?$/;
 
             var txt = $(this).val() + key;
             if (!regEx.test(txt)) {
@@ -129,7 +129,7 @@ $('#TotalFee').keypress(function (e) {
         if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
             var keypress = e.keyCode || e.which || e.charCode;
             var key = String.fromCharCode(keypress);
-            var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+            var regEx = /^[0-9]{0,20}(.[0-9]{0,6})?$/;
 
             var txt = $(this).val() + key;
             if (!regEx.test(txt)) {
@@ -153,7 +153,7 @@ $('#FixedvaluationFees').keypress(function (e) {
         if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
             var keypress = e.keyCode || e.which || e.charCode;
             var key = String.fromCharCode(keypress);
-            var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+            var regEx = /^[0-9]{0,20}(.[0-9]{0,6})?$/;
 
             var txt = $(this).val() + key;
             if (!regEx.test(txt)) {
