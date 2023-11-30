@@ -5,7 +5,6 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using System;
@@ -24,24 +23,24 @@ namespace Eltizam.Business.Core.Implementation
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
         private IRepository<ValuationInvoice> _repository;
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
         private readonly INotificationService _notificationService;
         private readonly IRepository<MasterUser> _masteruserrepository;
+
+        private readonly IAuditLogService _auditLogService;
         #endregion Properties
 
         #region Constructor
-        public ValuationInvoiceService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
-          IHelper helper,
-           Microsoft.Extensions.Configuration.IConfiguration _configuration, INotificationService notificationService)
+        public ValuationInvoiceService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IAuditLogService auditLogService, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
             _repository = _unitOfWork.GetRepository<ValuationInvoice>();
-            configuration = _configuration;
             _helper = helper;
+            _auditLogService = auditLogService; 
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
             _notificationService = notificationService;
             _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
@@ -59,20 +58,22 @@ namespace Eltizam.Business.Core.Implementation
             var invoiceList = EltizamDBHelper.ExecuteMappedReader<ValuationInvoiceListModel>(ProcedureMetastore.usp_Invoice_GetInvoiceByRequestId,
                                 DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
 
-            return invoiceList;
-            //var allList = _repository.GetAllAsync(x => x.ValuationRequestId == requestId).Result.ToList();
-            //return _mapperFactory.GetList<ValuationInvoice, ValuationInvoiceListModel>(allList);
+            return invoiceList; 
         }
-        public async Task<DBOperation> Upsert(ValuationInvoiceListModel entityInvoice)
-        {
 
+        public async Task<DBOperation> Upsert(ValuationInvoiceListModel entityInvoice)
+        { 
             ValuationInvoice objInvoice;
+            string MainTableName = Enum.GetName(TableNameEnum.ValuationInvoice);
+            int MainTableKey = entityInvoice.Id;
 
             if (entityInvoice.Id > 0)
-            {
+            { 
+                ValuationInvoice OldEntity = null;
+                OldEntity = _repository.GetNoTracking(entityInvoice.Id);
+
                 objInvoice = _repository.Get(entityInvoice.Id);
 
-                var OldObjDepartment = objInvoice;
                 if (objInvoice != null)
                 {
                     objInvoice.ReferenceNo = entityInvoice.ReferenceNo;
@@ -91,8 +92,13 @@ namespace Eltizam.Business.Core.Implementation
                     objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
                     objInvoice.Note = entityInvoice.Note;
                     objInvoice.ModifiedDate = AppConstants.DateTime;
-                    objInvoice.ModifiedBy = entityInvoice.ModifiedBy;
+                    objInvoice.ModifiedBy = entityInvoice.ModifiedBy; 
+
                     _repository.UpdateAsync(objInvoice);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<ValuationInvoice>(AuditActionTypeEnum.Update, OldEntity, objInvoice, MainTableName, MainTableKey);
                 }
                 else
                 {
@@ -102,11 +108,18 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice);
+
+
+                var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
+                objInvoice.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_InvoiceRequest, lastReq?.Id);
+
                 objInvoice.CreatedDate = AppConstants.DateTime;
                 objInvoice.CreatedBy = entityInvoice.CreatedBy ?? 1;
+
                 _repository.AddAsync(objInvoice);
-            }
-            await _unitOfWork.SaveChangesAsync();
+                await _unitOfWork.SaveChangesAsync();
+            } 
+
             if (objInvoice.Id == 0)
                 return DBOperation.Error;
             try
@@ -138,6 +151,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             return DBOperation.Success;
         }
+
         public async Task<ValuationInvoiceListModel> GetInvoiceById(int id)
         {
             var _quatationEntity = new ValuationInvoiceListModel();
@@ -145,6 +159,7 @@ namespace Eltizam.Business.Core.Implementation
 
             return _quatationEntity;
         }
+
         public async Task<DBOperation> InvoiceDelete(int id)
         {
             var entityInvoice = _repository.Get(x => x.Id == id);

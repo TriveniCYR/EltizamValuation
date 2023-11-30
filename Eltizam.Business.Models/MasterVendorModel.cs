@@ -12,7 +12,7 @@ namespace Eltizam.Business.Models
     public class MasterVendorModel : GlobalAuditFields
     {
         public int Id { get; set; }
-        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Only alphabetical characters are allowed.")]
+        [RegularExpression("^[a-zA-Z ]+$", ErrorMessage = "Only alphabetical characters and spaces are allowed.")]
         [StringLength(250, MinimumLength = 1)]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string VendorName { get; set; }

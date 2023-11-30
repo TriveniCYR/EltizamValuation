@@ -47,11 +47,12 @@ namespace Eltizam.Data.DataAccess.Helper
 
         public static DateTime DateTime = DateTime.Now; 
         public static string DateFormat1 = DateTime.Now.ToString("dd-MMM-yyyy");
-        public static string DateFormat2 = DateTime.Now.ToString("yyyymmdd");
+        public static string DateFormat2 = DateTime.Now.ToString("yyMM");
 
 
         public static string ID_ValuationRequest = string.Format("VR{0}-", DateFormat2);
-        public static string ID_QuotationsRequest = string.Format("VR{0}-QT", DateFormat2); 
+        public static string ID_QuotationsRequest = string.Format("QT{0}-", DateFormat2);
+        public static string ID_InvoiceRequest    = string.Format("IN{0}-", DateFormat2);
     } 
 
     public class AppSettings
