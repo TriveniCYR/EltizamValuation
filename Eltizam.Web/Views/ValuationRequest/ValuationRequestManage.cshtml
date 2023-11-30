@@ -15,7 +15,7 @@
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
-     var isDelete = objPermssion.Delete ? 1 : 0;
+    var isDelete = objPermssion.Delete ? 1 : 0;
     var isAdd = objPermssion.Add ? 1 : 0;
     var isEdit = objPermssion.Edit ? 1 : 0;
     var isApprove = objPermssion.Approve ? 1 : 0;
@@ -37,14 +37,14 @@
     var isEditSite = objPermssionSite.Edit ? 1 : 0;
     var isViewSite = objPermssionSite.View ? 1 : 0;
     var isDeleteSite = objPermssionSite.Delete ? 1 : 0;
-    
-     
+
+
     var objPermssionevidence = (RolePermissionModel)ViewBag.ComparableEvidences;
     var isAddEvidence = objPermssionevidence.Add ? 1 : 0;
     var isEditEvidence = objPermssionevidence.Edit ? 1 : 0;
     var isViewEvidence = objPermssionevidence.View ? 1 : 0;
     var isDeleteEvidence = objPermssionevidence.Delete ? 1 : 0;
-    
+
     var objPermssionAssesment = (RolePermissionModel)ViewBag.ValuationAssessement;
     var isAddAssesment = objPermssionAssesment.Add ? 1 : 0;
     var isEditAssesment = objPermssionAssesment.Edit ? 1 : 0;
@@ -53,6 +53,10 @@
 
     ViewData["Title"] = _md + _header;
     var htmlAttributes = true;
+    var isHideBtn = false;
+    if(ViewBag.IsView == "2"){
+        isHideBtn = true;
+    }
 }
 
 <div id="PlaceHolderHere"></div>
@@ -500,8 +504,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="text-right buttonArea bodyContent">
+                             <div class="text-right buttonArea bodyContent">
                                 @* <button type="button" class="lineBtn greyBtn">Cancel</button> *@
                                 <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
                                 @*  @if (roleId == (int)RoleEnum.Admin)
@@ -515,15 +518,19 @@
                                 Save
                                 </button>
                                 } *@
-
-
-                                <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
-                                @*  <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">Save</button> *@
-                                @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
+                                @if(!isHideBtn)
                                 {
-                                    <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
-                                        Save
-                                    </button>
+                               
+
+                                    <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
+                                    @*  <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">Save</button> *@
+                                
+                                        @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
+                                        {
+                                            <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
+                                                Save
+                                            </button>
+                                        }
                                 }
                             </div>
                         </form>
@@ -548,12 +555,15 @@
                         <div class="flex justify-between align-item-center plr-0">
 
                             <h3>Quotation Listing</h3>
-                            <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
-                                <button id="addNewQt" class="blueBtn" style="width:120px">
-                                    <img src="../assets/plus.svg" alt="plus">
-                                    Add New
-                                </button>
-                            </a>
+                            @if(!isHideBtn)
+                            {
+                                <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
+                                    <button id="addNewQt" class="blueBtn" style="width:120px">
+                                        <img src="../assets/plus.svg" alt="plus">
+                                        Add New
+                                    </button>
+                                </a>
+                            }
                         </div>
                     </div>
                     <div class="scroll-x">
@@ -594,12 +604,15 @@
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center p-0">
                             <h3>Invoice Listing</h3>
-                            <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
-                                <button class=" blueBtn " style="width:120px" id="addNewIn">
-                                    <img src="../assets/plus.svg" alt="plus">
-                                    Add New
-                                </button>
-                            </a>
+                            @if(!isHideBtn)
+                            {
+                                <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
+                                    <button class=" blueBtn " style="width:120px" id="addNewIn">
+                                        <img src="../assets/plus.svg" alt="plus">
+                                        Add New
+                                    </button>
+                                </a>
+                            }
                         </div>
                     </div>
 
@@ -793,11 +806,14 @@
 
                             </div>
                         </div>
-                        <div class="text-right buttonArea bodyContent plr-0">
-                          @*   <button type="button" class="blueBtn mr-12">Next</button>  *@
-                             <button type="button" class="blueBtn mr-12" onclick="redirectToComparableEvidences()">Next</button> 
+                        @if (!isHideBtn)
+                        {
+                            <div class="text-right buttonArea bodyContent plr-0">
+                                @*   <button type="button" class="blueBtn mr-12">Next</button>  *@
+                                <button type="button" class="blueBtn mr-12" onclick="redirectToComparableEvidences()">Next</button> 
 
-                        </div>
+                            </div>
+                        }
                     </div>
 
                     <div id="profile5" class="tabcontent">
@@ -909,9 +925,12 @@
 
                             </div>
                         </div>
-                        <div class="text-right buttonArea bodyContent plr-0">
-                            <button type="button" class="blueBtn mr-12" onclick="redirectToValuationAssesment()">Next</button>
-                        </div>
+                        @if (!isHideBtn)
+                        {
+                            <div class="text-right buttonArea bodyContent plr-0">
+                                <button type="button" class="blueBtn mr-12" onclick="redirectToValuationAssesment()">Next</button>
+                            </div>
+                        }
                     </div>
 
                     <div id="profile6" class="tabcontent">
@@ -1054,9 +1073,12 @@
 
                             </div>
                         </div>
+                        @if(!isHideBtn)
+                        {
                         <div class="text-right buttonArea bodyContent plr-0">
                             <button type="submit" class="blueBtn mr-12">Save</button>
                         </div>
+                        }
                     </div>
                 </form>
             </div>
@@ -1194,8 +1216,9 @@
 
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
+        var isViewHide = "@ViewBag.IsView";
         var isViewQt = objPermssionQt.View ? true : false;
-
+        
         
 
 

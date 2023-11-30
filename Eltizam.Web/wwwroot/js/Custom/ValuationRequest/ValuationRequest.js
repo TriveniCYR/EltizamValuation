@@ -108,7 +108,7 @@ function InitializeValutionRequestDataList() {
             "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                html += '<li><a title="View" href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                html += '<li><a title="View" href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '&view=2"><img src="../assets/view.svg" alt="view" />View</a></li>';
                 html += '<li><a title="Edit" href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
                 /*html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletevalutionRequestModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteValuationRequest(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';*/
                 html += '</ul></div>';
@@ -178,6 +178,10 @@ function AssignRequest() {
     }
     else if (remarks == '') {
         toastr.error("Please add remarks comments.");
+        return false;
+    }
+    else if (remarks.length > 250) {
+        toastr.error("Remarks length can not be greater 250 characters");
         return false;
     }
     else if (ids.length == 0) {

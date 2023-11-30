@@ -14,16 +14,16 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Only alphabetical characters are allowed.")]
+        [RegularExpression("^[a-zA-Z ]+$", ErrorMessage = "Only alphabetical characters are allowed.")]
         [StringLength(250, MinimumLength = 1)]
         public string? FirstName { get; set; }
 
-        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Only alphabetical characters are allowed.")]
+        [RegularExpression("^[a-zA-Z ]+$", ErrorMessage = "Only alphabetical characters are allowed.")]
         [StringLength(250, MinimumLength = 1)]
         public string? MiddleName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Only alphabetical characters are allowed.")]
+        [RegularExpression("^[a-zA-Z ]+$", ErrorMessage = "Only alphabetical characters are allowed.")]
         [StringLength(250, MinimumLength = 1)]
         public string? LastName { get; set; }
 

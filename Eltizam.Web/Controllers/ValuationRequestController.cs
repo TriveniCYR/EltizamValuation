@@ -55,10 +55,11 @@ namespace EltizamValuation.Web.Controllers
 
             if (view != null)
                 ViewData["IsView"] = true;
+            if (view != null)
+                ViewBag.IsView = view;
+                //ValuationRequestModel valuationRequestModel;
 
-            //ValuationRequestModel valuationRequestModel;
-
-            var _ValuationEntity = new ValuationRequestModel();
+                var _ValuationEntity = new ValuationRequestModel();
 
             _ValuationEntity.ValuationAssesment = new ValuationAssesmentActionModel();
             _ValuationEntity.ValuationAssesment.SiteDescription = new SiteDescriptionModel();
