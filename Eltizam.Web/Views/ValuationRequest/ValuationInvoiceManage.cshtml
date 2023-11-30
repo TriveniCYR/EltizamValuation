@@ -25,6 +25,7 @@
             <div class="hamburger">
                 <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                  <input type="hidden" id="md" value="@_md" />
                 <span>@_md</span>
             </div>
         </div>
@@ -305,6 +306,15 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div class="text-right ptrl-20 buttonArea bodyContent plr-0">
+                            <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                            @if (Model.Id == 0)
+                            {
+                                <button type="button" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="SaveInvoice()">
+                                    Save
+                                </button>
+                            }
                         </div>
                     </div>
                 </div>
