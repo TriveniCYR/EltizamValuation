@@ -4,6 +4,9 @@ using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
+using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Utility.Enums;
+using Eltizam.Utility;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -11,10 +14,12 @@ using MimeKit;
 using MimeKit.Text;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
+using System.Drawing;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -33,7 +38,7 @@ namespace Eltizam.Business.Core.Implementation
         {
             var message = new MimeMessage();
             message.From.Add(MailboxAddress.Parse(_configuration.GetSection("SMTPDetails:FromEmail").Value));
-            message.To.Add(MailboxAddress.Parse(request.To));
+            message.To.Add(MailboxAddress.Parse(request.ToEmailList));
             message.Subject = request.Subject;
             message.Body = new TextPart(TextFormat.Html) { Text = request.Body };
             using var smtp = new SmtpClient();
@@ -49,7 +54,7 @@ namespace Eltizam.Business.Core.Implementation
                     ValuationRequestId = valuationrequestId,
                     StatusId = statusId,
                     Subject = request.Subject,
-                    ToEmails = request.To,
+                    ToEmails = request.ToEmailList,
                     Body = request.Body,
                     SentDatetime = DateTime.Now,
                     IsEmailSent = true,
@@ -68,7 +73,18 @@ namespace Eltizam.Business.Core.Implementation
        
             return DBOperation.Success;
         }
+        public SendEmailModel GetToEmail(string action, int valiadtionRequestId)
+        {
+            DbParameter[] osqlParameter =
+            {
+                new DbParameter("Action", action, SqlDbType.VarChar),
+                new DbParameter("ValiadtionRequestId",valiadtionRequestId,SqlDbType.Int),
+            };
+
+            var result = EltizamDBHelper.ExecuteMappedReader<SendEmailModel>(ProcedureMetastore.usp_EmailToList,
+                              DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter).FirstOrDefault();
+            return result;
+        }
      
-    
     }
 }
