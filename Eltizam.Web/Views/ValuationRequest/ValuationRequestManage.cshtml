@@ -90,12 +90,12 @@
                     <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
                     
                      <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payment Details</button> 
-                    @if (roleId == (int)RoleEnum.Admin || roleId == (int)RoleEnum.Valuer)
-                    {
+                   @*  @if (roleId == (int)RoleEnum.Admin || roleId == (int)RoleEnum.Valuer)
+                    { *@
                         <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="defaultOpen">Site Description</button>
                         <button class="tablinks" style="display: @displayStyleevidence"  onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
                         <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
-                    }
+                   @*  } *@
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
@@ -127,6 +127,7 @@
                              <input type="hidden" id="isDeleteSite" value="@isDeleteSite" />
                              <input type="hidden" id="isDeleteEvidence" value="@isDeleteEvidence" />
                              <input type="hidden" id="isDeleteAssesment" value="@isDeleteAssesment" />
+                               <input type="hidden" id="isDeletePerm" value="@isDelete" />  
                              <input type="hidden" id="isAction"/>
                             <div class="ptrl-20">
                                 <div class="flex  mb-28">

@@ -26,7 +26,7 @@
         <div class="heading position-relative flex justify-between ">
             <h3 class="dashboardTitle">@_md @_header</h3>
             <div class="hamburger">
-                <a class="greyBtn lineBtn formAbtn" asp-action="MasterRoles">@_header</a>
+                <a class="greyBtn lineBtn formAbtn" asp-action="Roles">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md</span>
             </div>
@@ -34,7 +34,7 @@
 
         <div class="bodyContent">
             <div class="inputSearchs p-0">
-                <form asp-action="Roles" autocomplete="off" asp-controller="MasterRole" method="post">
+                <form asp-action="RoleManage" autocomplete="off" asp-controller="MasterRole" method="post">
                     <input type="hidden" id="isAddPerm" value="@isAdd" />
                     <input type="hidden" id="isEditPerm" value="@isEdit" />
                     @Html.HiddenFor(m => m.Id)

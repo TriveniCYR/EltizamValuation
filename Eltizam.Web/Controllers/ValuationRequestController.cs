@@ -515,34 +515,37 @@ namespace EltizamValuation.Web.Controllers
                     valuationAssesment.valuationAssessementModel.uploadDocument = docs;
                     valuationAssesment.valuationAssessementModel.Document = null;
                 }
-                //int roleId = _helper.GetLoggedInRoleId();
+                int roleId = _helper.GetLoggedInRoleId();
 
-                //if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
-                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-                ////Get module wise permissions
-                //ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
-                //ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
-                //ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+                //Get module wise permissions
+                ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
+                ViewBag.SiteDescription = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.SiteDescription);
+                ViewBag.ComparableEvidences = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ComparableEvidences);
+                ViewBag.ValuationAssessement = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationAssessement);
 
 
-                //// Assuming ViewBag.QuotationAccess is an object with a property View (boolean)
-                //bool hasQuatationViewAccess = ViewBag.QuotationAccess?.View ?? false;
-                //bool hasQuatationEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
-                //bool hasQuatationAddAccess = ViewBag.QuotationAccess?.Add ?? false;
+                // Assuming ViewBag.QuotationAccess is an object with a property View (boolean)
+                bool hasSiteDescriptionViewAccess = ViewBag.QuotationAccess?.View ?? false;
+                bool hasSiteDescriptionEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
+                bool hasSiteDescriptionAddAccess = ViewBag.QuotationAccess?.Add ?? false;
 
-                //if (action == PermissionEnum.View && !hasQuatationViewAccess)
-                //{
-                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-                //}
-                //else if (action == PermissionEnum.Edit && !hasQuatationEditAccess)
-                //{
-                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-                //}
-                //else if (action == PermissionEnum.Add && !hasQuatationAddAccess)
-                //{
-                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-                //}
+                if (action == PermissionEnum.View && !hasSiteDescriptionViewAccess)
+                {
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                }
+                else if (action == PermissionEnum.Edit && !hasSiteDescriptionViewAccess)
+                {
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                }
+                else if (action == PermissionEnum.Add && !hasSiteDescriptionViewAccess)
+                {
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                }
+
+
 
 
                 if (valuationAssesment.SiteDescription.Id == 0)
