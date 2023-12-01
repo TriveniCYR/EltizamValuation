@@ -183,9 +183,39 @@ $(document).ready(function () {
     var inputElement13 = $('#OwnershipTypeId');
     var inputElement14 = $('#PropertyId');
     var inputElement15 = $('#ValuationTimeFrame');
+    var inputElement16 = $('#StatusId');
+    var inputElement17 = $('#ApproverComment');
 
 
+    var inputElement42 = $('#ValuationAssesment_SiteDescription_InternalArea');
+    var inputElement41 = $('#ValuationAssesment_SiteDescription_Location');
+    var inputElement43 = $('#ValuationAssesment_SiteDescription_ExternalArea');
+    var inputElement44 = $('#ValuationAssesment_SiteDescription_Floor');
+    var inputElement45 = $('#ValuationAssesment_SiteDescription_Room');
+    var inputElement46 = $('#ValuationAssesment_SiteDescription_Bedrooms');
+    var inputElement47 = $('#ValuationAssesment_SiteDescription_Storage');
+    var inputElement48 = $('#ValuationAssesment_SiteDescription_Quantity');
+    var inputElement49 = $('#ValuationAssesment_SiteDescription_AdditionComment');
+    var inputElement410 = $('#ValuationAssesment_SiteDescription_PropertyCondition');
+    var inputElement411 = $('#ValuationAssesment_SiteDescription_AdditionalNotes');
+    var inputElement412 = $('#ValuationAssesment_SiteDescription_Others');
 
+    var inputElement51 = $('#ValuationAssesment_comparableEvidenceModel_Type');
+    var inputElement52 = $('#ValuationAssesment_comparableEvidenceModel_Size');
+    var inputElement53 = $('#ValuationAssesment_comparableEvidenceModel_Remarks');
+    var inputElement54 = $('#ValuationAssesment_comparableEvidenceModel_RateSqFt');
+    var inputElement55 = $('#ValuationAssesment_comparableEvidenceModel_Price');
+    var inputElement56 = $('#ValuationAssesment_comparableEvidenceModel_AddtionalComments');
+
+
+    var inputElement62 = $('#ValuationAssesment_valuationAssessementModel_MarkentRent');
+    var inputElement62 = $('#ValuationAssesment_valuationAssessementModel_LifeOfBuilding');
+    var inputElement64 = $('#ValuationAssesment_valuationAssessementModel_AnnualMaintainceCost');
+    var inputElement61 = $('#ValuationAssesment_valuationAssessementModel_MarketValue');
+    var inputElement65 = $('#ValuationAssesment_valuationAssessementModel_Insuarance');
+    var inputElement66 = $('#ValuationAssesment_valuationAssessementModel_InsuranceDetails');
+    debugger
+    
     if (roleId == RoleEnum.Approver || roleId == RoleEnum.Valuer) {
         inputElement1.prop('disabled', true);
         inputElement2.prop('disabled', true);
@@ -201,19 +231,66 @@ $(document).ready(function () {
         inputElement14.prop('disabled', true);
         inputElement15.prop('disabled', true);
     } else {
-        inputElement1.prop('disabled', false);
-        inputElement2.prop('disabled', false);
-        inputElement3.prop('disabled', false);
-        inputElement7.prop('disabled', false);
-        inputElement9.prop('disabled', false);
-        inputElement10.prop('disabled', false);
-        inputElement11.prop('disabled', false);
-        inputElement12.prop('disabled', false);
-        inputElement13.prop('disabled', false);
-        inputElement14.prop('disabled', false);
-        inputElement15.prop('disabled', false);
+        if (isViewHide != "2") {
+            inputElement1.prop('disabled', false);
+            inputElement2.prop('disabled', false);
+            inputElement3.prop('disabled', false);
+            inputElement7.prop('disabled', false);
+            inputElement8.prop('disabled', false);
+            inputElement9.prop('disabled', false);
+            inputElement10.prop('disabled', false);
+            inputElement11.prop('disabled', false);
+            inputElement12.prop('disabled', false);
+            inputElement13.prop('disabled', false);
+            inputElement14.prop('disabled', false);
+            inputElement15.prop('disabled', false);
+        }
     }
+    debugger
+    if (isViewHide == "2") {
+        inputElement1.prop('disabled', true);
+        inputElement2.prop('disabled', true);
+        inputElement3.prop('disabled', true);
+        inputElement6.prop('disabled', true);
+        inputElement7.prop('disabled', true);
+        inputElement8.prop('disabled', true);
+        inputElement9.prop('disabled', true);
+        inputElement10.prop('disabled', true);
+        inputElement11.prop('disabled', true);
+        inputElement12.prop('disabled', true);
+        inputElement13.prop('disabled', true);
+        inputElement14.prop('disabled', true);
+        inputElement15.prop('disabled', true);
+        inputElement16.prop('disabled', true);
+        inputElement17.prop('disabled', true);
 
+        inputElement42.prop('disabled', true);
+        inputElement41.prop('disabled', true);
+        inputElement43.prop('disabled', true);
+        inputElement44.prop('disabled', true);
+        inputElement45.prop('disabled', true);
+        inputElement46.prop('disabled', true);
+        inputElement47.prop('disabled', true);
+        inputElement48.prop('disabled', true);
+        inputElement49.prop('disabled', true);
+        inputElement410.prop('disabled', true);
+        inputElement411.prop('disabled', true);
+        inputElement412.prop('disabled', true);
+
+        inputElement51.prop('disabled', true);
+        inputElement52.prop('disabled', true);
+        inputElement53.prop('disabled', true);
+        inputElement54.prop('disabled', true);
+        inputElement55.prop('disabled', true);
+        inputElement56.prop('disabled', true);
+
+        inputElement62.prop('disabled', true);
+        inputElement62.prop('disabled', true);
+        inputElement64.prop('disabled', true);
+        inputElement61.prop('disabled', true);
+        inputElement65.prop('disabled', true);
+        inputElement66.prop('disabled', true);
+    }
 
 
     if (roleId > 0) {
@@ -588,11 +665,16 @@ function BindPropertyDetailById(Id) {
                 if (response._object.amenityList[i].isActive == true) {
                     var ob = response._object.amenityList[i];
                     Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
-                        '<input checked data-val="true"   name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
+                        '<input checked data-val="true" disabled="disabled" name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
                         '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
                 }
             }
             var PropertyDetails = response._object.propertyDetail;
+            if (isAddValuation) { 
+            document.getElementById('hdnLocationCountryId').value = PropertyDetails.countryId;
+            document.getElementById('hdnLocationStateId').value = PropertyDetails.stateId;
+            document.getElementById('hdnLocationCityId').value = PropertyDetails.cityId;
+            }
             document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
             document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
             document.getElementById('PropertyDetail_CityId').value = PropertyDetails.cityId;
@@ -604,6 +686,7 @@ function BindPropertyDetailById(Id) {
             document.getElementById('PropertyDetail_Address2').value = PropertyDetails.address2;
             document.getElementById('PropertyDetail_Pincode').value = PropertyDetails.pincode;
             document.getElementById('PropertyDetail_Landmark').value = PropertyDetails.landmark;
+            debugger
             BindLocationState(PropertyDetails.countryId);
             BindLocationCity(PropertyDetails.stateId);
         },

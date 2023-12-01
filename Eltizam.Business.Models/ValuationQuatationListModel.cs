@@ -16,16 +16,18 @@ namespace Eltizam.Business.Models
         public int StatusId { get; set; }
         public string? StatusName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'ValuationFee' field is required.")]
+        [Range(1, double.MaxValue)]
         public decimal ValuationFee { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'Vat' field is required.")]
+        [Range(1, double.MaxValue)]
         public decimal Vat { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, double.MaxValue)]
         public decimal? OtherCharges { get; set; }
         public decimal? InstructorCharges { get; set; }
         public decimal? Discount { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, double.MaxValue)]
         public decimal? TotalFee { get; set; }
         public string? Note { get; set; }
         public int? CreatedBy { get; set; }

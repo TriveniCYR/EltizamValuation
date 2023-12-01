@@ -201,10 +201,10 @@ namespace Eltizam.Business.Core.Implementation
                 strHtml = strHtml.Replace("[ValuationInstructorCharges]", objQuatation.InstructorCharges.ToString());
                 strHtml = strHtml.Replace("[Discount]", objQuatation.Discount.ToString());
                 strHtml = strHtml.Replace("[TotalevaluationFees]", objQuatation.TotalFee.ToString());
-               
+                var receipientemail = _notificationService.GetToEmail(RecepientActionEnum.QuaotationCreation.ToString(), objQuatation.Id);
                 var sendemaildetails = new SendEmailModel
                 {
-                    To = "",
+                    ToEmailList = receipientemail.ToEmailList,
                     Body = strHtml,
                     Subject = "Valuation Quotation Creation",
 

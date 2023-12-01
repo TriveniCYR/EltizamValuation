@@ -12,10 +12,12 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public string? ReferenceNo { get; set; } = null!;
+        [StringLength(250, MinimumLength = 0)]
         public string? OtherReferenceNo { get; set; }
         public int ValuationModeId { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ValuationDate { get; set; }
+        [StringLength(250, MinimumLength = 0)]
         public int? ValuationTimeFrame { get; set; }
         public int ClientId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -50,6 +52,7 @@ namespace Eltizam.Business.Models
         [Range(1, int.MaxValue, ErrorMessage = "The 'Status' field is required.")]
         public int StatusId { get; set; }
         public int? ApproverId { get; set; }
+        [StringLength(250, MinimumLength = 0)]
         public string? ApproverComment { get; set; }
         public DateTime? ApproverUpdateDate { get; set; }
         //public int? CreatedBy { get; set; }
