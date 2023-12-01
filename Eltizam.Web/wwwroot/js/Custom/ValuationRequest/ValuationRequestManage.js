@@ -1092,7 +1092,7 @@ function ConfirmationDeleteQuotation(id) {
     $('#DeleteQuotationModel #Id').val(id);
 }
 function DeleteQuotation() {
-    if (IsDeletePerm || ) {
+    if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteQuotationModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteQuotationByIdUrl + "/" + tempInAtiveID, Post, DeleteQuotationByIdSuccess, DeleteQuotationByIdError);
     }
