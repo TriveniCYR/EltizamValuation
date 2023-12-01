@@ -256,7 +256,7 @@ function SaveInvoiceData(request) {
         success: function (response) {
             toastr.success(SucessMsg);
             setTimeout(function () {
-                window.location.href = "/ValuationRequest/ValuationRequestManage/" + request.ValuationRequestId;
+                window.location.href = "/ValuationRequest/ValuationRequestManage?id=" + request.ValuationRequestId;
             }, 1000);
         },
         failure: function (response) {
