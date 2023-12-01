@@ -11,6 +11,7 @@
 
 @model Eltizam.Business.Models.ValuationRequestModel
 @{
+   
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
@@ -50,7 +51,7 @@
     var isEditAssesment = objPermssionAssesment.Edit ? 1 : 0;
     var isViewAssesment = objPermssionAssesment.View ? 1 : 0;
     var isDeleteAssesment = objPermssionAssesment.Delete ? 1 : 0;
-
+    var View = Convert.ToInt32(Context.Request.Query["view"]);
     ViewData["Title"] = _md + _header;
     var htmlAttributes = true;
     var isHideBtn = false;
@@ -63,12 +64,13 @@
 <main class="">
     <div class="whiteBoxShadow">
         <div class="flex justify-between align-item-center cursor-pointer heading position-relative">
-            <h3 class="dashboardTitle">@_md @_header</h3>
+            <h3 class="dashboardTitle"> @if(View == 2){<text>View @_header</text>}else{ @_md @_header}</h3>
             <div class="hamburger">
                 <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md @_header</span>
                   <input type="hidden" id="md" value="@_md" />
+                    <input type="hidden" id="View" value="@View" />
             </div>
         </div>
         <div class="">
@@ -991,28 +993,21 @@
                                      @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
-                            <div class="flex fourBox flex-start">
+                            <div class="flex">
                                 <label>
                                      Insuarance
                                     <span class="flex yesNoToggle">
-                                       
-
                                         @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, true, new { onclick = "toggleInput('yes')" })
                                         <span>Yes</span>  &nbsp; &nbsp;
-
                                         @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, false, new { onclick = "toggleInput('no')" })
                                         <span>No</span> &nbsp; &nbsp;
-
                                     </span>
-                                  
                                 </label>
                              
                                 <label id="yesInput" for="yesField" style="display: @(Model.ValuationAssesment.valuationAssessementModel.Insuarance ? "block" : "none");">
                                Insurance details
-                          @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new { @class = "form-control", @placeholder = @SharedLocalizer["InsuaranceDetail"] })
-                           </label>
-
-
+                                @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new { @class = "form-control", @placeholder = @SharedLocalizer["InsuaranceDetail"] })
+                                </label>
                             </div>
 
                         </div>
@@ -1217,7 +1212,6 @@
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
         var isViewHide = "@ViewBag.IsView";
-        debugger
         var isAddValuation = (@Model.Id == 0);
         var isViewQt = objPermssionQt.View ? true : false;
         
