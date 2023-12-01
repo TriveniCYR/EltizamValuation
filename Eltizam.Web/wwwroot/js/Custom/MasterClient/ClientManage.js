@@ -494,12 +494,26 @@ if (action === "Add") {
 
     // If all files are within the size limit, display the file names
     displayFileNames(input);
+}
+
+function displayFileNames(input) {
+    const fileInput = input;
+    const fileNamesInput = input.nextElementSibling;
+
+    const files = fileInput.files;
+    let fileNames = "";
+
+    for (let i = 0; i < files.length; i++) {
+        fileNames += files[i].name;
+        if (i < files.length - 1) {
+            fileNames += ", ";
+        }
     }
 
-    function displayFileNames(input) {
-        // Your existing code to display file names goes here
-    }
+    fileNamesInput.value = fileNames;
+}
 
+    
 
 
 
