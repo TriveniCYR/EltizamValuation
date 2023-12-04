@@ -72,9 +72,9 @@ function InitializeValutionRequestDataList() {
         {
             "data": "valuationPurpose", "name": "Valuation Purpose", className: 'notexport actionColumn'
         }, 
-        {
-            "data": "methodOfValution", "name": "Method of Valuation", className: 'notexport actionColumn'
-        },
+        //{
+        //    "data": "methodOfValution", "name": "Method of Valuation", className: 'notexport actionColumn'
+        //},
         {
             "data": "valuationDate",
             "name": "Valuation Date",
