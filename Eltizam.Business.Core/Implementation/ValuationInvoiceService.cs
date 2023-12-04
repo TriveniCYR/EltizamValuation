@@ -113,7 +113,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
                 var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
-                objInvoice.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_InvoiceRequest, lastReq?.Id);
+                objInvoice.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_InvoiceRequest, lastReq?.Id + 1);
 
                 objInvoice.CreatedDate = AppConstants.DateTime;
                 objInvoice.CreatedBy = entityInvoice.CreatedBy ?? 1;
