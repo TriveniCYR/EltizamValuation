@@ -236,10 +236,10 @@ namespace Eltizam.Business.Core.Implementation
             try
             {
                 ValuationRequest OldEntity = null;
-                OldEntity = _repository.GetNoTracking(entityValuation.Id);
 
                 if (entityValuation.Id > 0)
                 {
+                    OldEntity = _repository.GetNoTracking(entityValuation.Id);
                     objValuation = _repository.Get(entityValuation.Id);
 
                     if (objValuation != null)
