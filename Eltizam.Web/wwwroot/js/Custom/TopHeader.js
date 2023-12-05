@@ -149,3 +149,23 @@ document.addEventListener("DOMContentLoaded", () => {
 //    });
 //}
 
+$(document).ready(function () {
+
+    Getactivenotifications();
+
+});
+
+function Getactivenotifications() {
+
+    ajaxServiceMethod(BaseURL + notifications, 'GET', GetactivenotificationsSuccess, GetactivenotificationsError);
+}
+function GetactivenotificationsSuccess(data) {
+document.getElementById('notificationcount').textContent = data.length;
+}
+
+function GetactivenotificationsError(x, y, z) {
+    toastr.error("yo");
+}
+
+
+

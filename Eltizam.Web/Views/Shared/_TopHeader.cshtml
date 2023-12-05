@@ -21,7 +21,7 @@
         <div class="position-relative notification">
             <a href="@_notfi">
                 <img src="~/assets/bell.svg" alt="bell" class="cursor-pointer" />
-                <span> 0 </span>
+                <span id="notificationcount">-</span>
             </a>
         </div>
 
@@ -88,6 +88,9 @@
         </div>
     </div>
 </div>
+<script>
+    var notifications = "@Eltizam.Web.Helpers.APIURLHelper.GetNotificationList";
+</script>
 
 
 

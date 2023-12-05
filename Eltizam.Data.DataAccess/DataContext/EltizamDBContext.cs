@@ -626,6 +626,8 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.ReadDate).HasColumnType("datetime");
+
                 entity.Property(e => e.SentDatetime).HasColumnType("datetime");
 
                 entity.HasOne(d => d.ValuationRequest)

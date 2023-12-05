@@ -63,8 +63,16 @@ namespace EltizamValuation.Web.Controllers
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id == null || id <= 0)
             {
-                masterUser = new MasterClientModel();
-                return View(masterUser);
+                var viewModel = new MasterClientModel
+                {
+                    Addresses = new List<MasterAddressEntity>(),
+                    Contacts = new List<MasterContactModel>()
+                };
+                MasterAddressEntity addess = new MasterAddressEntity();
+                MasterContactModel contact = new MasterContactModel();
+                viewModel.Addresses.Add(addess);
+                viewModel.Contacts.Add(contact);
+                return View(viewModel);
             }
             else
             {
@@ -122,19 +130,11 @@ namespace EltizamValuation.Web.Controllers
                 }
                 
 
-
-
-                ////Fill audit logs field
-                //if (masterUser.Id == 0)
-                //    masterUser.CreatedBy = _helper.GetLoggedInUserId();
-                //masterUser.ModifiedBy = _helper.GetLoggedInUserId(); 
-
-
-                if (masterUser != null)
-                {
-                    masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
-                    //masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
-                }
+                //if (masterUser != null)
+                //{
+                //    masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
+                //    //masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
+                //}
                 if (masterUser.Id == 0)
                     masterUser.CreatedBy = _helper.GetLoggedInUserId();
                 masterUser.ModifiedBy = _helper.GetLoggedInUserId();

@@ -818,6 +818,7 @@ function BindClientDetailsByClientId(Id) {
         url: BaseURL + GetClientDetailById + '/' + Id,
         "datatype": "json",
         success: function (response) {
+            debugger
             //document.getElementById('ClientName').value = response._object.clientName;
             document.getElementById('LicenseNumber').value = response._object.licenseNumber;
 
@@ -840,18 +841,20 @@ function BindClientDetailsByClientId(Id) {
             //document.getElementById('CityId').value = response._object.address.cityId;
             //document.getElementById('PinCode').value = response._object.address.pinNo;
 
-            if (response._object.address != null) {
+            if (response._object.addresses.length > 0) {
                 $('#NewAddressTable tbody').html('');
-                //$.each(data._object, function (index, object) { //  <td>' + object.ClientTypeCode + '</td>  <td>' + object.isdClientTypeCode + '</td>  
-                $('#NewAddressTable tbody').append(' <tr><td>' + response._object.address.address1 + '</td> <td>' + response._object.address.address2 + '</td><td>' + response._object.address.countryName
-                    + '</td><td>' + response._object.address.stateName + '</td><td>' + response._object.address.cityName + '</td><td>' + response._object.address.pinNo + '</td></tr>');
-
+                $.each(response._object.addresses, function (index, object) {
+                    $('#NewAddressTable tbody').append(' <tr><td>' + object.address1 + '</td> <td>' + object.address2 + '</td><td>' + object.countryName
+                        + '</td><td>' + object.stateName + '</td><td>' + object.cityName + '</td><td>' + object.pinNo + '</td></tr>');
+                })
             }
 
-            if (response._object.address != null) {
+            if (response._object.contacts.length > 0) {
                 $('#NewContactTable tbody').html('');
-                $('#NewContactTable tbody').append(' <tr><td>' + response._object.contact.contactPersonName + '</td> <td>' + response._object.contact.department + '</td><td>' + response._object.contact.designation
-                    + '</td><td>' + response._object.contact.email + '</td><td>' + response._object.contact.mobile + '</td></tr>');
+                $.each(response._object.contacts, function (index, object) {
+                    $('#NewContactTable tbody').append(' <tr><td>' + object.contactPersonName + '</td> <td>' + object.department + '</td><td>' + object.designation
+                        + '</td><td>' + object.email + '</td><td>' + object.mobile + '</td></tr>');
+                })
             }
         },
         failure: function (response) {

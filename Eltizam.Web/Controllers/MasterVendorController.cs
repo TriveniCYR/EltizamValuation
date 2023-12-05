@@ -57,8 +57,16 @@ namespace EltizamValuation.Web.Controllers
 
             if (id == null || id <= 0)
             {
-                masterUser = new MasterVendorModel();
-                return View(masterUser);
+                var viewModel = new MasterVendorModel
+                {
+                    Addresses = new List<MasterAddressEntity>(),
+                    Contacts = new List<MasterContactModel>()
+                };
+                MasterAddressEntity addess = new MasterAddressEntity();
+                MasterContactModel contact = new MasterContactModel();
+                viewModel.Addresses.Add(addess);
+                viewModel.Contacts.Add(contact);
+                return View(viewModel);
             }
             else
             {
@@ -104,8 +112,8 @@ namespace EltizamValuation.Web.Controllers
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 if (masterUser != null)
                 {
-                    masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
-                    masterUser.Contact = (masterUser.Contact == null) ? null : masterUser.Contact;
+                    masterUser.Address = null;
+                    masterUser.Contact = null;
                 }
 
                

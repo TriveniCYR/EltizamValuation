@@ -238,7 +238,8 @@ namespace Eltizam.Web.Helpers
         public static string GetSiteDescriptionList = "ValuationAssessment/GetSiteDescriptionList";
 
         public static string DeleteDocument = "ValuationAssessment/DeleteDocument";
-
+        public static string GetNotificationList = "Notification/GetNotificationList";
+        public static string UpdateNotification = "Notification/UpdateNotificationReadBy";
         #endregion Valuation Request 
 
         #region AuditLog
@@ -248,6 +249,8 @@ namespace Eltizam.Web.Helpers
         public static string GetAuditTableName = "AuditLog/GetAllAuditLogTableName";
 
         #endregion AuditLog
+
+      
 
     }
 }

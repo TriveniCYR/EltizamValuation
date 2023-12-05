@@ -1367,9 +1367,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 			styles: {
 				tableHeader: {
 					bold: true,
-					fontSize: 11,
+					fontSize: 10,
 					color: 'white',
-					fillColor: '#2d4154',
+					fillColor: '#3F51B5',
 					alignment: 'center'
 				},
 				tableBodyEven: {},
@@ -1378,18 +1378,18 @@ DataTable.ext.buttons.pdfHtml5 = {
 				},
 				tableFooter: {
 					bold: true,
-					fontSize: 11,
+					fontSize: 10,
 					color: 'white',
-					fillColor: '#2d4154'
+					fillColor: '#3F51B5'
 				},
 				title: {
 					alignment: 'center',
-					fontSize: 15
+					fontSize: 14
 				},
 				message: {}
 			},
 			defaultStyle: {
-				fontSize: 10
+				fontSize: 8
 			}
 		};
 

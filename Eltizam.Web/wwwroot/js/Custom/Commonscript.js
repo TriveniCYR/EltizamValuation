@@ -44,6 +44,7 @@ var IsEditPermIn = ($("#isEditPermInvoice").val() === "1" || $("#isEditPermInvoi
 var IsApprovePerem = ($("#isApprovePerm").val() === "1" || $("#isApprovePerm").val() === 1);
 var action = ($("#md").val())
 var view = ($("#View").val())
+var userid = parseInt($("#userid").val(), 10);
 
 $(document).ready(function () {
     ErrorDev.hide();
@@ -221,36 +222,86 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
 
 
 
-function BindCountryCode() { 
-    var CountryCode = $("#Address_PhoneExt");
-    var AlternatePhoneExt = $("#Address_AlternatePhoneExt");
-    var ContactPhoneExt = $("#Address_PhoneExt");
-    
-    var CountryCodeExt = $("#Contact_MobileExt");
-    var _val = $('#hdnPhoneExt').val();
-    var _valAlternate = $('#hdnAlternatePhoneExt').val();
-    var _valExt = $('#hdnMobileExt').val();
 
+
+function BindCountryCode() {
+    debugger
+        $.ajax({
+            type: "GET",
+            url: BaseURL + CountryList,
+            "datatype": "json",
+            success: function (response) {
+                for (var k = 0; k < addressLength; k++) {
+                    debugger
+                    var CountryCode = $("#Addresses_" + k + "__PhoneExt");
+                    var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
+
+                    var _val = $('#hdnPhoneExt_' + k).val();
+                    var _valAlternate = $('#hdnAlternatePhoneExt_' + k).val();
+
+                    CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
+                    AlternatePhoneExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
+
+
+                    for (var i = 0; i < response.length; i++) {
+                        CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                        AlternatePhoneExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                    }
+                    if (_val != "" || _valAlternate != "") {
+                        CountryCode.val(_val);
+                        AlternatePhoneExt.val(_valAlternate);
+                    }
+                }
+                for (var j = 0; j < contactLength; j++) {
+                    var ContactMobileExt = $("#Contacts_" + j + "__MobileExt");
+                    var _valMobileExt = $('#hdnMobileExt_' + j).val();
+
+                    ContactMobileExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
+                    for (var i = 0; i < response.length; i++) {
+                        ContactMobileExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                    }
+                    if (_valMobileExt != "") {
+                        ContactMobileExt.val(_valMobileExt);
+                    }
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
+            }
+    });
+}
+
+function BindCountryIsd() {
+    debugger
     $.ajax({
         type: "GET",
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 +'</option>');
-            CountryCodeExt.empty().append('<option selected="selected" value="0">' + dftSel2 +'</option>');
-            AlternatePhoneExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
-            ContactPhoneExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
+            for (var k = 0; k < addressLength; k++) {
+                debugger
+                var CountryCode = $("#Addresses_" + k + "__PhoneExt");
+                var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
+
+                var _val = $('#hdnPhoneExt_' + k).val();
+                var _valAlternate = $('#hdnAlternatePhoneExt_' + k).val();
+
+                CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
+                AlternatePhoneExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
 
 
-            for (var i = 0; i < response.length; i++) {
-                CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-                CountryCodeExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-                AlternatePhoneExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-            }
-            if (_val != "" || _valExt != "") {
-                CountryCode.val(_val);
-                CountryCodeExt.val(_valExt);
-                AlternatePhoneExt.val(_valAlternate);
+                for (var i = 0; i < response.length; i++) {
+                    CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                    AlternatePhoneExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                }
+                if (_val != "" || _valAlternate != "") {
+                    CountryCode.val(_val);
+                    AlternatePhoneExt.val(_valAlternate);
+                }
             }
         },
         failure: function (response) {
@@ -262,8 +313,6 @@ function BindCountryCode() {
         }
     });
 }
-
-
 
 
 // ======== IsActive list page color ============
@@ -411,35 +460,6 @@ function removeParentDiv(element) {
     }
 }
 
-function addRoundBorderBox() {
-    const roundBorderBox = document.querySelector('.roundBorderBox');
-    const clonedDiv = roundBorderBox.cloneNode(true);
-
-    roundBorderBox.parentElement.insertBefore(clonedDiv, roundBorderBox.nextSibling);
-
-    const inputFields = clonedDiv.querySelectorAll('input');
-    inputFields.forEach((input) => {
-        input.value = '';
-    });
-}
-
-// more address field on click
-function addMoreAddress() {
-    const addMoreAddressBox = document.querySelector('.addMoreAddress');
-    const clonedDiv = addMoreAddressBox.cloneNode(true);
-
-    const minusDiv = document.createElement('div');
-    minusDiv.className = 'text-right';
-    minusDiv.innerHTML = '<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">';
-    clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
-
-    addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
-
-    const inputFields = clonedDiv.querySelectorAll('input');
-    inputFields.forEach((input) => {
-        input.value = '';
-    });
-}
 function removeParentDivAddress(element) {
     const parentDivAdd = element.closest(".addMoreAddress");
     if (parentDivAdd) {
