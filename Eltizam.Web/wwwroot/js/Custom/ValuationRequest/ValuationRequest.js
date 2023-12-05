@@ -46,7 +46,7 @@ function InitializeValutionRequestDataList() {
     var columnObject = [
 
         {
-            "data": "id", "name": "Id",
+            "data": "id", "name": "Id", className: 'notexport actionColumn',
             "render": function (data, type, row, data) {
                 return '<div class="checkboxColumn"><input type="checkbox" value="' + row.id + '"><div>';
             }
@@ -55,13 +55,13 @@ function InitializeValutionRequestDataList() {
             "data": "referenceNO", "name": "ReferenceNO"
         },
         {
-            "data": "clientType", "name": "Client Type"
+            "data": "clientType", "name": "Client Type", className: 'notexport actionColumn'
         },
         {
             "data": "clientName", "name": "Client Name"
         },
         {
-            "data": "propertyType", "name": "Property Type"
+            "data": "propertyType", "name": "Property Type", className: 'notexport actionColumn'
         },
         {
             "data": "propertyName", "name": "Property Name"
@@ -70,11 +70,11 @@ function InitializeValutionRequestDataList() {
             "data": "location", "name": "Location"
         },
         {
-            "data": "valuationPurpose", "name": "Valuation Purpose"
+            "data": "valuationPurpose", "name": "Valuation Purpose", className: 'notexport actionColumn'
         }, 
-        {
-            "data": "methodOfValution", "name": "Method of Valuation"
-        },
+        //{
+        //    "data": "methodOfValution", "name": "Method of Valuation", className: 'notexport actionColumn'
+        //},
         {
             "data": "valuationDate",
             "name": "Valuation Date",

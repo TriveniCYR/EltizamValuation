@@ -1167,9 +1167,8 @@
 
 
 @section MyScripts {
-    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script> 
+
     <script>
         
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
@@ -1214,11 +1213,6 @@
         var UpdateLabel = "@SharedLocalizer["Update"]";
         var isViewHide = "@ViewBag.IsView";
         var isAddValuation = (@Model.Id == 0);
-        var isViewQt = objPermssionQt.View ? true : false;
-        
-        
-
-
-    </script>
-
+        // var isViewQt = objPermssionQt.View ? true : false; 
+    </script> 
 }

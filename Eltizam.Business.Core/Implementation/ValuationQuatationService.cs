@@ -155,7 +155,7 @@ namespace Eltizam.Business.Core.Implementation
                 var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
                 objQuatation = _mapperFactory.Get<ValuationQuatationListModel, ValuationQuotation>(entityQuatation);
 
-                objQuatation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_QuotationsRequest, lastReq?.Id); 
+                objQuatation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_QuotationsRequest, lastReq?.Id + 1); 
                 objQuatation.CreatedDate = AppConstants.DateTime;
                 objQuatation.CreatedBy = entityQuatation.CreatedBy ?? 1;
 

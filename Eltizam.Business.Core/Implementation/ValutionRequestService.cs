@@ -236,10 +236,10 @@ namespace Eltizam.Business.Core.Implementation
             try
             {
                 ValuationRequest OldEntity = null;
-                OldEntity = _repository.GetNoTracking(entityValuation.Id);
 
                 if (entityValuation.Id > 0)
                 {
+                    OldEntity = _repository.GetNoTracking(entityValuation.Id);
                     objValuation = _repository.Get(entityValuation.Id);
 
                     if (objValuation != null)
@@ -274,7 +274,7 @@ namespace Eltizam.Business.Core.Implementation
 
                     objValuation = _mapperFactory.Get<ValuationRequestModel, ValuationRequest>(entityValuation);
                     objValuation.CreatedBy = (int)entityValuation.CreatedBy;
-                    objValuation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_ValuationRequest, lastReq?.Id);
+                    objValuation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_ValuationRequest, lastReq?.Id + 1);
                     objValuation.ApproverId = objValuation.ApproverId == 0 ? null : objValuation.ApproverId;
                     objValuation.ValuerId = objValuation.ValuerId == 0 ? null : objValuation.ValuerId;
 
