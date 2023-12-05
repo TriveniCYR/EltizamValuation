@@ -413,7 +413,7 @@ function profileTab(evt, cityName) {
     document.getElementById(cityName).style.border = "1px solid var(--blue)";
     evt.currentTarget.className += " active";
 }
-document.getElementById("defaultOpen").click();
+//document.getElementById("defaultOpen").click();
 
 function removeParentDiv(element) {
     const parentDiv = element.closest('.roundBorderBox');
