@@ -27,12 +27,16 @@ namespace Eltizam.Business.Core.Implementation
     {
         private readonly IConfiguration _configuration;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapperFactory _mapperFactory;
         private IRepository<MasterNotification> _repository { get; set; }
-        public MasterNotificationService(IUnitOfWork unitOfWork,IConfiguration configuration)
+        private IRepository<ValuationRequest> _valuationrepository { get; set; }
+        public MasterNotificationService(IUnitOfWork unitOfWork,IConfiguration configuration,IMapperFactory mapperFactory)
         {
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.GetRepository<MasterNotification>();
             _configuration = configuration;
+            _mapperFactory = mapperFactory;
+            _valuationrepository= _unitOfWork.GetRepository<ValuationRequest>();
         }
         public async Task<DBOperation> SendEmail(SendEmailModel request,int valuationrequestId,int statusId)
         {
@@ -59,7 +63,9 @@ namespace Eltizam.Business.Core.Implementation
                     SentDatetime = DateTime.Now,
                     IsEmailSent = true,
                     CreatedBy = 1,
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    ReadBy = 0,
+                    ReadDate = null,
                    
                 };
                 _repository.AddAsync(notification);
@@ -85,6 +91,49 @@ namespace Eltizam.Business.Core.Implementation
                               DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter).FirstOrDefault();
             return result;
         }
-     
+
+        public List<MasterNotificationEntitty> GetAll(int? lastid)
+        {
+            var notificationresult = _repository.GetAllAsync().Result.ToList();
+            var valuationrequest = _valuationrepository.GetAllAsync().Result.ToList();
+
+            var result = from notification in notificationresult
+                         join valuation in valuationrequest on notification.ValuationRequestId equals valuation.Id
+                         where (lastid == null || notification.Id > lastid) && notification.ReadBy == 0
+                         orderby notification.Id
+                         select new MasterNotificationEntitty
+                         {
+                             Id = notification.Id,
+                             ValuationRequestId = notification.ValuationRequestId,
+                             Subject = notification.Subject,
+                             ToEmails = notification.ToEmails,
+                             Body = notification.Body,
+                             SentDatetime = notification.SentDatetime,
+                             Readby = notification.ReadBy,
+                             ReadDate = notification.ReadDate,
+                             ValRefNo = valuation.ReferenceNo,
+                             StatusId = notification.StatusId
+                         };
+
+            // Take the first 10 records if lastid is not provided or is 0
+            var finalResult = result.Take(lastid == null || lastid == 0 ? 10 : int.MaxValue).ToList();
+
+            return finalResult;
+        }
+
+
+        public async Task<DBOperation>UpdateNotification(int notificationid, int readBy)
+        {
+            var tobeupdateddata = _repository.Get(notificationid);
+            if (tobeupdateddata != null)
+            {
+                tobeupdateddata.ReadBy = readBy;
+                tobeupdateddata.ReadDate = DateTime.Now.Date;
+                _repository.UpdateAsync(tobeupdateddata);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            return DBOperation.Success;
+
+        }
     }
 }
