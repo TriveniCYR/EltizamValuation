@@ -12,5 +12,8 @@ namespace Eltizam.Business.Core.Interface
     {
         Task<DBOperation>SendEmail(SendEmailModel request,int valuationRequestId,int statusId);
         SendEmailModel GetToEmail(string action, int valiadtionRequestId);
+        //List<MasterNotificationEntitty> GetAll();
+        List<MasterNotificationEntitty> GetAll(int? lastid);
+        Task<DBOperation> UpdateNotification(int notificationid, int readBy);
     }
 }

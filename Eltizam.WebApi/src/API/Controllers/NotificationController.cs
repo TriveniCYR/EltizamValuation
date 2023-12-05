@@ -6,6 +6,7 @@ using Eltizam.WebApi.Filters;
 using Eltizam.Business.Models;
 using Eltizam.Business.Core.Interface;
 using Eltizam.WebApi.Helpers.Response;
+using Eltizam.Business.Core.Implementation;
 
 namespace EltizamValuation.WebApi.Controllers
 {
@@ -39,6 +40,43 @@ namespace EltizamValuation.WebApi.Controllers
                 }
                 else
                     return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "Email Not Sent" : AppConstants.BadRequest));
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpGet, Route("GetNotificationList")]
+        public async Task<IActionResult> GetNotificationList(int? lastid)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(_notificationService.GetAll(lastid), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+        [HttpPost("UpdateNotificationReadBy")]
+
+        public async Task<IActionResult> UpdateNotificationReadBy([FromQuery] int notificationid, [FromQuery] int ReadBy)
+        {
+            try
+            {
+                DBOperation oResponse = await _notificationService.UpdateNotification(notificationid, ReadBy);
+                if (oResponse == DBOperation.Success)
+                {
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+                }
+                else
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? "data not available" : AppConstants.BadRequest));
             }
             catch (ArgumentException ex)
             {

@@ -44,6 +44,7 @@ var IsEditPermIn = ($("#isEditPermInvoice").val() === "1" || $("#isEditPermInvoi
 var IsApprovePerem = ($("#isApprovePerm").val() === "1" || $("#isApprovePerm").val() === 1);
 var action = ($("#md").val())
 var view = ($("#View").val())
+var userid = parseInt($("#userid").val(), 10);
 
 $(document).ready(function () {
     ErrorDev.hide();
