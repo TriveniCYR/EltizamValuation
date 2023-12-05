@@ -33,7 +33,9 @@ namespace Eltizam.Business.Models
         public string? ProfilePath { get; set; }
 
         public MasterUserAddressModel? Address { get; set; }
+        public List<MasterUserAddressModel> Addresses { get; set; }
         public Master_QualificationModel? Qualification { get; set; }
+        public List<Master_QualificationModel> Qualifications { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
     }
 }

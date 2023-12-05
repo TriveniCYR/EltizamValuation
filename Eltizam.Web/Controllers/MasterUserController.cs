@@ -63,8 +63,17 @@ namespace EltizamValuation.Web.Controllers
 
             if (id == null || id <= 0)
             {
-                masterUser = new MasterUserModel();
-                return View(masterUser);
+                var viewModel = new MasterUserModel
+                {
+                    Addresses = new List<MasterUserAddressModel>(),
+                    Qualifications = new List<Master_QualificationModel>()
+                };
+                MasterUserAddressModel addess = new MasterUserAddressModel();
+                Master_QualificationModel qualification = new Master_QualificationModel();
+                //masterUser.Addresses = new List<MasterAddressEntity>();
+                viewModel.Addresses.Add(addess);
+                viewModel.Qualifications.Add(qualification);
+                return View(viewModel);
             }
             else
             {
@@ -128,8 +137,8 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.File = null;
                 }
 
-                masterUser.Address = (masterUser.Address == null) ? null : masterUser.Address;
-                masterUser.Qualification = (masterUser.Qualification == null) ? null : masterUser.Qualification;
+                masterUser.Address =  null;
+                masterUser.Qualification = null;
 
                 //Fill audit logs field
                 if (masterUser.Id == 0)

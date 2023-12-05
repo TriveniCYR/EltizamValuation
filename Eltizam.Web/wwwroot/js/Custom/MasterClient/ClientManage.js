@@ -191,19 +191,21 @@ function BindCountry() {
 function BindState(id) {
     for (var i = 0; i < addressLength; i++) {
         var State = $("#Addresses_" + i + "__StateId");
+        var CountryId = $('#hdnCountry_' + i).val();
         var _val = $('#hdnState_' + i).val();
         var _rpname = "stateName";
 
-        BindDropdowns(StateList + '/' + id, State, _rpname, _val);
+        BindDropdowns(StateList + '/' + CountryId, State, _rpname, _val);
     }
 }
 
 function BindCity(id) {
     for (var i = 0; i < addressLength; i++) {
         var City = $("#Addresses_" + i + "__CityId");
+        var StateId = $('#hdnState_' + i).val();
         var _val = $('#hdnCity_' + i).val();
         var _rpname = "cityName";
-        BindDropdowns(CityList + '/' + id, City, _rpname, _val);
+        BindDropdowns(CityList + '/' + StateId, City, _rpname, _val);
     }
 }
 

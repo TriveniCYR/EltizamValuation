@@ -34,7 +34,9 @@ namespace Eltizam.Business.Models
 
         public IFormFile? File { get; set; }
         public MasterAddressEntity? Address { get; set; }
+        public List<MasterAddressEntity> Addresses { get; set; }
         public MasterContactModel? Contact { get; set; }
+        public List<MasterContactModel> Contacts { get; set; }
 
         public List<MasterDocumentModel>? Documents { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
