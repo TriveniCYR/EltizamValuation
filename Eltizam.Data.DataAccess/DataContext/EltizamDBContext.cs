@@ -1157,6 +1157,10 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.InsuranceDetails).HasMaxLength(250);
 
+                entity.Property(e => e.MarketRate).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.MarketValue).HasColumnType("decimal(18, 0)");
+
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Request)

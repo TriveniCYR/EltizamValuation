@@ -508,4 +508,31 @@ function removeParentDiv(element) {
     }
 }
 
+
+// for validate Price or Rate
+$('.price').keypress(function (e) {
+
+    if ($('.price').val() == '' && (e.which == 48 || e.charCode == 46)) {
+        return false;
+    }
+    else {
+        if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+            var keypress = e.keyCode || e.which || e.charCode;
+            var key = String.fromCharCode(keypress);
+            var regEx = /^[0-9]{0,20}(.[0-9]{0,6})?$/;
+
+            var txt = $(this).val() + key;
+            if (!regEx.test(txt)) {
+                if (keypress != 8) {
+                    e.preventDefault();
+                } else {
+                }
+            }
+        }
+        else {
+            e.preventDefault();
+        }
+    }
+});
+
 // ======== End:  Scroller for page ============ 

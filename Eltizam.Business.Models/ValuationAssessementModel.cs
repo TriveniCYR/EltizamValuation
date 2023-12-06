@@ -13,12 +13,18 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public int? RequestId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        public int? MarketValue { get; set; }
+         [Range(1, double.MaxValue)]
+        public decimal? MarketValue { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        public int? MarkentRent { get; set; }
+        [StringLength(250, MinimumLength = 1)]
+        [Range(1, double.MaxValue)]
+        public decimal? MarketRate { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [StringLength(10, MinimumLength = 1)]
         public int? LifeOfBuilding { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+       
+        [StringLength(250, MinimumLength = 1)]
         public int? AnnualMaintainceCost { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public bool Insuarance { get; set; }

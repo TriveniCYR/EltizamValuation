@@ -229,7 +229,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (objUser1 != null)
                 {
                     objUser1.MarketValue = model.valuationAssessementModel.MarketValue;
-                    objUser1.MarkentRent = model.valuationAssessementModel.MarkentRent;
+                    objUser1.MarketRate = model.valuationAssessementModel.MarketRate;
                     objUser1.LifeOfBuilding = model.valuationAssessementModel.LifeOfBuilding;
                     objUser1.AnnualMaintainceCost = model.valuationAssessementModel.AnnualMaintainceCost;
                     objUser1.Insuarance = model.valuationAssessementModel.Insuarance;
@@ -485,7 +485,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (objUser1 != null)
                 {
                     objUser1.MarketValue = assesment.MarketValue;
-                    objUser1.MarkentRent = assesment.MarkentRent;
+                    objUser1.MarketRate = assesment.MarketRate;
                     objUser1.LifeOfBuilding = assesment.LifeOfBuilding;
                     objUser1.AnnualMaintainceCost = assesment.AnnualMaintainceCost;
                     objUser1.Insuarance = assesment.Insuarance;

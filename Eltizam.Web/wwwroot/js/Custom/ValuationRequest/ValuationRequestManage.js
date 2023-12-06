@@ -208,7 +208,7 @@ $(document).ready(function () {
     var inputElement56 = $('#ValuationAssesment_comparableEvidenceModel_AddtionalComments');
 
 
-    var inputElement62 = $('#ValuationAssesment_valuationAssessementModel_MarkentRent');
+    var inputElement62 = $('#ValuationAssesment_valuationAssessementModel_MarketRate');
     var inputElement62 = $('#ValuationAssesment_valuationAssessementModel_LifeOfBuilding');
     var inputElement64 = $('#ValuationAssesment_valuationAssessementModel_AnnualMaintainceCost');
     var inputElement61 = $('#ValuationAssesment_valuationAssessementModel_MarketValue');
@@ -362,7 +362,10 @@ $(document).ready(function () {
         BindCity(HdnStateId);
     }
 
+   
 
+
+    
 
 });
 
@@ -1113,4 +1116,22 @@ function DeleteInvoiceByIdSuccess(data) {
 function DeleteInvoiceByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
+
+function validateFileSize(input) {
+    const maxSizeInBytes = 2 * 1024 * 1024; // 5MB
+    const files = input.files;
+
+    for (let i = 0; i < files.length; i++) {
+        if (files[i].size > maxSizeInBytes) {
+            toastr.error('File size exceeds 2MB. Please choose a smaller file.');
+            input.value = ''; // Clear the input to prevent uploading the large file
+            return;
+        }
+    }
+
+    // If all files are within the size limit, display the file names
+    displayFileNames(input);
+}
+
+
 //#endregion Delete Invoice
