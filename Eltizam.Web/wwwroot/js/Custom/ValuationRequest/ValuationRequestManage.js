@@ -1133,5 +1133,4 @@ function validateFileSize(input) {
     displayFileNames(input);
 }
 
-
 //#endregion Delete Invoice

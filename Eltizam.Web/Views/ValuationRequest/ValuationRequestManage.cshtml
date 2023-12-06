@@ -638,7 +638,7 @@
                         </table>
                     </div>
                 </div>
-                <form asp-action="ValuationAssesmentManage" enctype="multipart/form-data"  >
+                <form asp-action="ValuationAssesmentManage" asp-controller="ValuationRequest" method="POST" enctype="multipart/form-data">
                     @Html.HiddenFor(model => model.Id)
                     <div id="profile4" class="tabcontent">
                     <div class="whiteBoxShadow m-0 ">
@@ -1170,6 +1170,8 @@
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script> 
 
     <script>
+
+        
         
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
