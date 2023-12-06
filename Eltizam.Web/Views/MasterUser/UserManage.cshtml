@@ -102,14 +102,14 @@
                                     </label>
                                     <label for="DepartmentId">
                                         <p class="m-0">Department<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.DepartmentId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Department"] })
+                                        @Html.DropDownListFor(model => model.DepartmentId, new List<SelectListItem>(), new { @class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer["Department"] })
                                         @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex">
                                     <label for="DesignationId">
                                         <p class="m-0">Designation<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.DesignationId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Designation"] })
+                                        @Html.DropDownListFor(model => model.DesignationId, new List<SelectListItem>(), new { @class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer["Designation"] })
                                         @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="DateOfBirth">
@@ -121,12 +121,12 @@
                                 <div class="flex">
                                     <label for="Gender">
                                         <p class="m-0">Gender<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Select Gender"] })
+                                        @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>(), new { @class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer["Select Gender"] })
                                         @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="ResourceId">
                                         <p class="m-0">Resource Type<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                                        @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(), new { @class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer[" Select ResourceType"] })
                                         @Html.ValidationMessageFor(model => model.ResourceId, "", new { @class = "text-danger" })
                                     </label>
                                 </div>

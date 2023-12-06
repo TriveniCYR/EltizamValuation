@@ -73,7 +73,7 @@ $(document).ready(function () {
         });
     }
 
-
+    $('.searchable-dropdown').select2();
 
     ErrorDev.hide();
     readsideNavToggle();

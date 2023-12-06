@@ -147,19 +147,19 @@
                                             <div class="flex">
                                                 <label for="CountryId">
                                                     <p class="m-0">Country<span class="text-danger">*</span></p>
-                                                    @Html.DropDownListFor(model => model.Addresses[i].CountryId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindCurrentState(this.options[this.selectedIndex].value,event)"})
+                                                    @Html.DropDownListFor(model => model.Addresses[i].CountryId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindCurrentState(this.options[this.selectedIndex].value,event)"})
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].CountryId, "", new { @class = "text-danger" })
                                                 </label>
                                                 <label for="StateId">
                                                     <p class="m-0">State<span class="text-danger">*</span></p>
-                                                    @Html.DropDownListFor(model => model.Addresses[i].StateId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindCurrentCity(this.options[this.selectedIndex].value,event)"})
+                                                    @Html.DropDownListFor(model => model.Addresses[i].StateId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindCurrentCity(this.options[this.selectedIndex].value,event)"})
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].StateId, "", new { @class = "text-danger" })
                                                 </label>
                                             </div>
                                             <div class="flex">
                                                 <label for="CityId">
                                                     <p class="m-0">City<span class="text-danger">*</span></p>
-                                                    @Html.DropDownListFor(model => model.Addresses[i].CityId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                                    @Html.DropDownListFor(model => model.Addresses[i].CityId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].CityId, "", new { @class = "text-danger" })
                                                 </label>
                                                 <label for="PinNo">
@@ -244,13 +244,13 @@
                                                 </label>
                                                 <label for="Subject">
                                                     Department
-                                                    @Html.DropDownListFor(model => model.Contacts[i].DepartmentId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Department"] })
+                                                    @Html.DropDownListFor(model => model.Contacts[i].DepartmentId, new List<SelectListItem>(), new { @class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer["Department"] })
                                                 </label>
                                             </div>
                                             <div class="flex">
                                                 <label for="Institute">
                                                     Designation
-                                                    @Html.DropDownListFor(model => model.Contacts[i].DesignationId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Designation"] })
+                                                    @Html.DropDownListFor(model => model.Contacts[i].DesignationId, new List<SelectListItem>(), new { @class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer["Designation"] })
                                                 </label>
                                                 <label for="year">
                                                     <p class="m-0">Email<span class="text-danger">*</span></p>

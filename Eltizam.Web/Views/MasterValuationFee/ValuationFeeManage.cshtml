@@ -48,7 +48,7 @@
                         <div class="flex">
                             <label for="PropertyTypeId" class="w-50">
                                 <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)"})
+                                @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)"})
                                 @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">
@@ -63,12 +63,12 @@
                         <div class="flex">
                             <label for="" class="w-50">
                                 <p class="m-0">Property SubType Name<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control",/*  @disabled = "disabled" */})
+                                @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown",/*  @disabled = "disabled" */})
                                 @Html.ValidationMessageFor(model => model.PropertySubTypeId, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">
                                 <p class="m-0">Type of Ownership<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
                                 @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" })
                             </label>
                             
@@ -76,7 +76,7 @@
                         <div class="flex">
                             <label for="" class="w-50">
                                 <p class="m-0">Client Type<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control"})
+                                @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
                                 @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" })
                             </label>
                             <label for="CarpetAreaInSqFt" class="w-50">
@@ -95,7 +95,7 @@
                             </label>
                             <label for="" class="w-50">
                                 <p class="m-0">Valuation Fee Type<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.ValuationFeeTypeId, new List<SelectListItem> { }, new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.ValuationFeeTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
                                 @Html.ValidationMessageFor(model => model.ValuationFeeTypeId, "", new { @class = "text-danger" })
                             </label>
                            
