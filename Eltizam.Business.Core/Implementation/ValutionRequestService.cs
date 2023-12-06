@@ -434,16 +434,12 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<bool> SenddDetailsToEmail(string subject, string? oldstatus, string? newstatus, int valuationrequestId, string referenceno, int statusid = 0)
         {
-            var referencenumber = _repository.GetAll().Where(x => x.Id == valuationrequestId).Select(x => x.ReferenceNo);
             string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_StatusChange.html");
-            strHtml = strHtml.Replace("[PValRefNoP]", referencenumber.ToString());
+            strHtml = strHtml.Replace("[PValRefNoP]", referenceno);
             strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString());
             strHtml = strHtml.Replace("[PNewStatusP]", newstatus);
             strHtml = strHtml.Replace("[POldStatusP]", oldstatus);
-            if (referenceno != null)
-            {
-                strHtml = strHtml.Replace("[PValRefNoP]", referenceno);
-            }
+           
             var receipientemail = _notificationService.GetToEmail(RecepientActionEnum.ValidationRequestChange.ToString(), valuationrequestId);
             var sendemaildetails = new SendEmailModel
             {
