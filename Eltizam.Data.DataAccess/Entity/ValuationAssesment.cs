@@ -8,7 +8,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int Id { get; set; }
         public int? RequestId { get; set; }
         public int? MarketValue { get; set; }
-        public int? MarkentRent { get; set; }
+        public int? MarketRate { get; set; }
         public int? LifeOfBuilding { get; set; }
         public int? AnnualMaintainceCost { get; set; }
         public bool? Insuarance { get; set; }
