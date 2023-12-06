@@ -68,10 +68,8 @@ namespace EltizamValuation.Web.Controllers
                     Addresses = new List<MasterAddressEntity>(),
                     Contacts = new List<MasterContactModel>()
                 };
-                //masterUser = new MasterClientModel();
                 MasterAddressEntity addess = new MasterAddressEntity();
                 MasterContactModel contact = new MasterContactModel();
-                //masterUser.Addresses = new List<MasterAddressEntity>();
                 viewModel.Addresses.Add(addess);
                 viewModel.Contacts.Add(contact);
                 return View(viewModel);

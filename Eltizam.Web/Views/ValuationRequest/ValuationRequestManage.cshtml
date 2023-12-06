@@ -544,7 +544,7 @@
                 <div id="profile2" class="tabcontent">
                     <div class="whiteBoxShadow m-0 ">
                         <div class="bodyContent footerAudit">
-                            <div class=" position-relative flex justify-between align-item-center">
+                            <div class=" position-relative flex justify-between align-item-center m-0">
                                 <h4 class="m-0">
                                     Valuation Id : @Html.DisplayFor(model => model.Id)
                                 </h4>
@@ -594,7 +594,7 @@
                 <div id="profile3" class="tabcontent">
                     <div class="whiteBoxShadow m-0 ">
                         <div class="bodyContent footerAudit">
-                            <div class=" position-relative flex justify-between align-item-center">
+                            <div class=" position-relative flex justify-between align-item-center m-0">
                                 <h4 class="m-0">
                                     Valuation Id : @Html.DisplayFor(model => model.Id)
                                 </h4>
@@ -643,7 +643,7 @@
                     <div id="profile4" class="tabcontent">
                     <div class="whiteBoxShadow m-0 ">
                         <div class="bodyContent footerAudit">
-                            <div class=" position-relative flex justify-between align-item-center">
+                            <div class=" position-relative flex justify-between align-item-center m-0">
                                 <h4 class="m-0">
                                     Valuation Id : @Html.DisplayFor(model => model.Id)
                                 </h4>
@@ -822,7 +822,7 @@
                     <div id="profile5" class="tabcontent">
                         <div class="whiteBoxShadow m-0 ">
                             <div class="bodyContent footerAudit">
-                                <div class=" position-relative flex justify-between align-item-center">
+                                <div class=" position-relative flex justify-between align-item-center m-0">
                                     <h4 class="m-0">
                                         Valuation Id : @Html.DisplayFor(model => model.Id)
                                     </h4>
@@ -939,7 +939,7 @@
                     <div id="profile6" class="tabcontent">
                         <div class="whiteBoxShadow m-0 ">
                             <div class="bodyContent footerAudit">
-                                <div class=" position-relative flex justify-between align-item-center">
+                                <div class=" position-relative flex justify-between align-item-center m-0">
                                     <h4 class="m-0">
                                         Valuation Id : @Html.DisplayFor(model => model.Id)
                                     </h4>
@@ -961,8 +961,8 @@
                                 <label for="">
                                    
                                       <p class="m-0"> Market Rate<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarkentRent, new {  @class = "form-control",  @placeholder = @SharedLocalizer["MarkentRate"] })
-                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarkentRent, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, new { @class = "form-control", @placeholder = @SharedLocalizer["MarkentRate"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             @* <div class="flex">
@@ -1063,7 +1063,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                        </div
+                                        </div>
                                     </div>
                                 </div>
 

@@ -275,7 +275,44 @@ function BindCountryCode() {
     });
 }
 
+function BindCountryIsd() {
+    debugger
+    $.ajax({
+        type: "GET",
+        url: BaseURL + CountryList,
+        "datatype": "json",
+        success: function (response) {
+            for (var k = 0; k < addressLength; k++) {
+                debugger
+                var CountryCode = $("#Addresses_" + k + "__PhoneExt");
+                var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
 
+                var _val = $('#hdnPhoneExt_' + k).val();
+                var _valAlternate = $('#hdnAlternatePhoneExt_' + k).val();
+
+                CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
+                AlternatePhoneExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
+
+
+                for (var i = 0; i < response.length; i++) {
+                    CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                    AlternatePhoneExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                }
+                if (_val != "" || _valAlternate != "") {
+                    CountryCode.val(_val);
+                    AlternatePhoneExt.val(_valAlternate);
+                }
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
 
 
 // ======== IsActive list page color ============

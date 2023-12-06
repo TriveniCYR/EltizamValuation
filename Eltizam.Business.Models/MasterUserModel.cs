@@ -74,9 +74,9 @@ namespace Eltizam.Business.Models
         //public int CreatedBy { get; set; }
         public MasterDocumentModel? uploadProfile { get; set; }
         public MasterUserAddressModel? Address { get; set; } = null;
-        public MasterUserAddressModel? UpsertAddress { get; set; } = null;
+        public List<MasterUserAddressModel> Addresses { get; set; } = null;
         public Master_QualificationModel? Qualification { get; set; } = null;
-        public Master_QualificationModel? UpsertQualification { get; set; } = null;
+        public List<Master_QualificationModel> Qualifications { get; set; } = null;
         public List<MasterDocumentModel>? Documents { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
         public DocumentFilesModel? Document { get; set; }
