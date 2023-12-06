@@ -92,14 +92,13 @@ namespace Eltizam.Business.Core.Implementation
             return result;
         }
 
-        public List<MasterNotificationEntitty> GetAll(int? lastid)
+        public List<MasterNotificationEntitty> GetAll(int? viewmore)
         {
             var notificationresult = _repository.GetAllAsync().Result.ToList();
             var valuationrequest = _valuationrepository.GetAllAsync().Result.ToList();
 
             var result = from notification in notificationresult
                          join valuation in valuationrequest on notification.ValuationRequestId equals valuation.Id
-                         where (lastid == null || notification.Id > lastid) && notification.ReadBy == 0
                          orderby notification.Id
                          select new MasterNotificationEntitty
                          {
@@ -115,8 +114,15 @@ namespace Eltizam.Business.Core.Implementation
                              StatusId = notification.StatusId
                          };
 
-            // Take the first 10 records if lastid is not provided or is 0
-            var finalResult = result.Take(lastid == null || lastid == 0 ? 10 : int.MaxValue).ToList();
+            List<MasterNotificationEntitty> finalResult;
+            if (viewmore > 0)
+            {
+                finalResult = result.ToList();
+            }
+            else
+            {
+                finalResult = result.Where(x=>x.Readby==0).Take(10).ToList();
+            }
 
             return finalResult;
         }
