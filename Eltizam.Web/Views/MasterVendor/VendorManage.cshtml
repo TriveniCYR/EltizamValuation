@@ -122,6 +122,12 @@
                                 @for (int i = 0; i < Model.Addresses.Count; i++)
                                 {
                                     <div class="addMoreAddress">
+                                        @if (i != 0)
+                                        {
+                                            <div class="text-right">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+                                            </div>
+                                        }
                                         <input type="hidden" id="@("hdnCountry_"+i)" value="@(Model.Addresses[i] == null ? 0 : Model.Addresses[i].CountryId)" />
                                         <input type="hidden" id="@("hdnState_"+i)" value="@(Model.Addresses[i] == null ? 0 : Model.Addresses[i].StateId)" />
                                         <input type="hidden" id="@("hdnCity_"+i)" value="@(Model.Addresses[i] == null ? 0 : Model.Addresses[i].CityId)" />
@@ -227,6 +233,12 @@
                                 @for (int i = 0; i < Model.Contacts.Count; i++)
                                 {
                                     <div class="roundBorderBox">
+                                        @if (i != 0)
+                                        {
+                                            <div class="text-right">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
+                                            </div>
+                                        }
                                         <input type="hidden" id="@("hdnDeparment_"+i)" value="@(Model.Contacts[i] == null ? 0 : Model.Contacts[i].DepartmentId)" />
                                         <input type="hidden" id="@("hdnDesignation_"+i)" value="@(Model.Contacts[i] == null ? 0 : Model.Contacts[i].DesignationId)" />
                                         <input type="hidden" id="@("hdnMobileExt_"+i)" value="@(Model.Contacts[i] == null ? 0 : Model.Contacts[i].MobileExt)" />

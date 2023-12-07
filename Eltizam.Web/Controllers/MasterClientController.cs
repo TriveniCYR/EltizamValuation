@@ -115,6 +115,10 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
+                if (!ModelState.IsValid)
+                {
+                    return View(masterUser);
+                }
                 if (masterUser.Document != null && masterUser.Document.Files != null)
                 {
                     List<MasterDocumentModel> docs = FileUpload(masterUser.Document);

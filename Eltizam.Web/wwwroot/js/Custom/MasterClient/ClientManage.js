@@ -116,11 +116,27 @@ function addRoundBorderBox() {
     var count = addressContainer.children(".roundBorderBox").length;
 
     clonedDiv.querySelectorAll('[id]').forEach(element => {
-        element.id = element.id.replace("_0", "_" + count);
+        element.id = element.id.replace("_" + (count - 1) + "", "_" + count);
     });
     clonedDiv.querySelectorAll('[name]').forEach(element => {
-        element.name = element.name.replace("[0]", "[" + count + "]");
+        element.name = element.name.replace("[" + (count - 1) + "]", "[" + count + "]");
     });
+    var personName = $("#Contacts_" + (count - 1) + "__ContactPersonName").val();
+    var email = $("#Contacts_" + (count - 1) + "__Email").val();
+    var mobileExt = $("#Contacts_" + (count - 1) + "__MobileExt").val();
+    var mobile = $("#Contacts_" + (count - 1) + "__Mobile").val();
+    if (personName == "" || email == "" || mobileExt == "" || mobileExt == "0" || mobile == "") {
+        toastr.error("Please fill mandate fields");
+        return false;
+    }
+    if (count == 1) {
+        const minusDiv = document.createElement('div');
+        minusDiv.className = 'text-right';
+        minusDiv.innerHTML = `
+    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
+        `;
+        clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
+    }
     roundBorderBox.parentElement.insertBefore(clonedDiv, roundBorderBox.nextSibling);
 
     const inputFields = clonedDiv.querySelectorAll('input');
@@ -131,29 +147,43 @@ function addRoundBorderBox() {
 
 // more address field on click
 function addMoreAddress() {
-    const addMoreAddressBox = document.querySelector('.addMoreAddress');
+    const addMoreAddressBox = document.querySelector('.addMoreAddress:last-child');
     const clonedDiv = addMoreAddressBox.cloneNode(true);
     var addressContainer = $("#addresses-container");
     var count = addressContainer.children(".addMoreAddress").length;
     clonedDiv.querySelectorAll('[id]').forEach(element => {
-        element.id = element.id.replace("_0", "_" + count);
+        element.id = element.id.replace("_" + (count - 1)+"", "_" + count);
     });
     clonedDiv.querySelectorAll('[name]').forEach(element => {
-        element.name = element.name.replace("[0]", "[" + count + "]");
+        element.name = element.name.replace("[" + (count - 1) + "]", "[" + count + "]");
     });
-    const minusDiv = document.createElement('div');
-    minusDiv.className = 'text-right';
-    minusDiv.innerHTML = `
+    var address1 = $("#Addresses_" + (count - 1) + "__Address1").val();
+    var countryId = $("#Addresses_" + (count - 1) + "__CountryId").val();
+    var stateId = $("#Addresses_" + (count - 1) + "__StateId").val();
+    var cityId = $("#Addresses_" + (count - 1) + "__CityId").val();
+    var email = $("#Addresses_" + (count - 1) + "__Email").val();
+    var phoneExt = $("#Addresses_" + (count - 1) + "__PhoneExt").val();
+    var phone = $("#Addresses_" + (count - 1) + "__Phone").val();
+    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || email == "" || phoneExt == "" || phone == "") {
+        toastr.error("Please fill mandate fields");
+        return false;
+    }
+    if (count == 1) {
+        const minusDiv = document.createElement('div');
+        minusDiv.className = 'text-right';
+        minusDiv.innerHTML = `
     <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
         `;
-    clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
-
+        clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
+    }
     addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
 
     const inputFields = clonedDiv.querySelectorAll('input');
     inputFields.forEach((input) => {
         input.value = '';
     });
+    $("#Addresses_" + count + "__StateId").empty();
+    $("#Addresses_" + count + "__CityId").empty();
 
 }
 
@@ -260,11 +290,14 @@ document.addEventListener("DOMContentLoaded", function () {
     //});
 
     // Add change event listeners to relevant input fields
-        document.getElementById("Address_Phone").addEventListener("change", validatePhoneNumbers);
-       document.getElementById("Address_AlternatePhone").addEventListener("change", validatePhoneNumbers);
-    document.getElementById("Address_Landlinephone").addEventListener("change", validatePhoneNumbers);
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    for (var i = 0; i < count; i++) {
+        document.getElementById("#Addresses_" + i + "__Phone").addEventListener("change", validatePhoneNumbers(i));
+        document.getElementById("Addresses_" + i + "__AlternatePhone").addEventListener("change", validatePhoneNumbers(i));
+        document.getElementById("Addresses_" + i + "__Landlinephone").addEventListener("change", validatePhoneNumbers(i));
 
-
+    }
 });
 
 function getNumericValue(inputValue) {
@@ -272,13 +305,16 @@ function getNumericValue(inputValue) {
     return inputValue.replace(/\D/g, "");
 }
 
-function validatePhoneNumbers() {
+function validatePhoneNumbers(i) {
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
     // Get numeric values of the phone number fields
-    var phoneExtNumeric = getNumericValue(document.getElementById("Address_PhoneExt").value.trim());
-    var phoneNumeric = getNumericValue(document.getElementById("Address_Phone").value.trim());
-    var alternatePhoneExtNumeric = getNumericValue(document.getElementById("Address_AlternatePhoneExt").value.trim());
-    var alternatePhoneNumeric = getNumericValue(document.getElementById("Address_AlternatePhone").value.trim());
-    var landlinePhoneNumeric = getNumericValue(document.getElementById("Address_Landlinephone").value.trim());
+
+    var phoneExtNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__PhoneExt").value.trim());
+    var phoneNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__Phone").value.trim());
+    var alternatePhoneExtNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__AlternatePhoneExt").value.trim());
+    var alternatePhoneNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__AlternatePhone").value.trim());
+    var landlinePhoneNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__Landlinephone").value.trim());
 
     if (
         (phoneNumeric !== "" && (phoneNumeric === alternatePhoneNumeric || phoneNumeric === landlinePhoneNumeric)) ||
@@ -287,15 +323,15 @@ function validatePhoneNumbers() {
         // Display an alert or perform any other action to indicate the validation failure
         toastr.error(' Phone numbers,Alternate Phone and LandLine Phone should be different, considering prefixes.');
         if (phoneNumeric === alternatePhoneNumeric) {
-            document.getElementById('Address_AlternatePhone').value = '';
+            document.getElementById('Addresses_' + i + '__AlternatePhone').value = '';
         }
 
         if (alternatePhoneNumeric === landlinePhoneNumeric) {
-            document.getElementById('Address_Landlinephone').value = '';
+            document.getElementById('Addresses_' + i + '__Landlinephone').value = '';
         }
 
         if (phoneNumeric === landlinePhoneNumeric) {
-            document.getElementById('Address_Landlinephone').value = '';
+            document.getElementById('Addresses_' + i + '__Landlinephone').value = '';
         }
         return false;
     }
@@ -312,22 +348,25 @@ document.addEventListener("DOMContentLoaded", function () {
     //        event.preventDefault();
     //    }
     //});
-
-    // Add change event listeners to relevant input fields
-    document.getElementById("Address_Email").addEventListener("change", validateEmails);
-    document.getElementById("Address_AlternateEmail").addEventListener("change", validateEmails);
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    for (var i = 0; i < count; i++) {
+        // Add change event listeners to relevant input fields
+        document.getElementById("Addresses_" + i + "__Email").addEventListener("change", validateEmails(i));
+        document.getElementById("Addresses_" + i + "__AlternateEmail").addEventListener("change", validateEmails(i));
+    }
 });
 
-function validateEmails() {
+function validateEmails(i) {
     // Get values of the email fields
-    var email = document.getElementById("Address_Email").value.trim();
-    var alternateEmail = document.getElementById("Address_AlternateEmail").value.trim();
+    var email = document.getElementById("Addresses_" + i + "__Email").value.trim();
+    var alternateEmail = document.getElementById("Addresses_" + i + "__AlternateEmail").value.trim();
 
     // Check if Email and AlternateEmail are the same
     if (email !== "" && alternateEmail !== "" && email === alternateEmail) {
         // Display an alert or perform any other action to indicate the validation failure
         toastr.error('Email and Alternate Email should be different.');
-        document.getElementById('Address_AlternateEmail').value = '';
+        document.getElementById('Addresses_' + i + '__AlternateEmail').value = '';
         return false;
     }
 
