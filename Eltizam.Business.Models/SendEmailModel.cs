@@ -1,6 +1,6 @@
 ﻿namespace Eltizam.Business.Models
 {
-    public class SendEmailModel
+    public class SendNotificationModel
     {
         public string ToEmailList { get; set; } = string.Empty;
         public string? Subject { get; set; } = string.Empty;

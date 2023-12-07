@@ -449,22 +449,21 @@ namespace Eltizam.Business.Core.Implementation
         {
             try
             { 
-                var recipientsInfo = _notificationService.GetValuationNotificationData(subjectEnum, valuationrequestId);
+                var notificationModel = _notificationService.GetValuationNotificationData(subjectEnum, valuationrequestId);  
 
                 string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_StatusChange.html");
                 if (subjectEnum == RecepientActionEnum.ValuationCreated)
                 {
                     strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_Created.html");
-                }
-
-                strHtml = strHtml.Replace("[PValRefNoP]", recipientsInfo.ValRefNo);
+                } 
+                strHtml = strHtml.Replace("[PValRefNoP]", notificationModel.ValRefNo);
                 strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString());
-                strHtml = strHtml.Replace("[PNewStatusP]", recipientsInfo.Status);
+                strHtml = strHtml.Replace("[PNewStatusP]", notificationModel.Status);
 
-                recipientsInfo.Body = strHtml;
-                recipientsInfo.Subject = subjectEnum.ToString();
-                
-                await _notificationService.SendEmail(recipientsInfo, valuationrequestId, recipientsInfo.StatusId); 
+                notificationModel.Subject = EnumHelper.GetDescription(subjectEnum);
+                notificationModel.Body = strHtml;
+
+                await _notificationService.SendEmail(notificationModel); 
                 return true;
             }
             catch (Exception)

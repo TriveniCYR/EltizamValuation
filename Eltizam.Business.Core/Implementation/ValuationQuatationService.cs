@@ -189,7 +189,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             try
             {
-                string? username = _masteruserrepository.GetAll().Where(x => x.Id == objQuatation.CreatedBy).Select(x => x.UserName).FirstOrDefault();
+              //  string? username = _masteruserrepository.GetAll().Where(x => x.Id == objQuatation.CreatedBy).Select(x => x.UserName).FirstOrDefault();
                 string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_QuotationCreate.html");
         
                 strHtml = strHtml.Replace("[PDateP]", objQuatation.CreatedDate.ToString()); 
@@ -200,22 +200,18 @@ namespace Eltizam.Business.Core.Implementation
                 strHtml = strHtml.Replace("[Discount]", objQuatation.Discount.ToString());
                 strHtml = strHtml.Replace("[TotalevaluationFees]", objQuatation.TotalFee.ToString());
 
-                var receipientemail = _notificationService.GetValuationNotificationData(RecepientActionEnum.QuaotationCreation, objQuatation.Id);
-                var sendemaildetails = new SendEmailModel
-                {
-                    ToEmailList = receipientemail.ToEmailList,
-                    Body = strHtml,
-                    Subject = RecepientActionEnum.QuaotationCreation.ToString() 
-                };
-                await _notificationService.SendEmail(sendemaildetails, objQuatation.ValuationRequestId, objQuatation.StatusId);
+                var notificationModel = _notificationService.GetValuationNotificationData(RecepientActionEnum.QuaotationCreation, objQuatation.Id);
+                notificationModel.Subject = EnumHelper.GetDescription(RecepientActionEnum.QuaotationCreation);
+                notificationModel.Body = strHtml; 
+
+                await _notificationService.SendEmail(notificationModel);
             }
             catch (Exception ex)
-            {
-
+            { 
                 throw ex;
             }
-            return DBOperation.Success;
-        
+
+            return DBOperation.Success; 
         }
     }
 }

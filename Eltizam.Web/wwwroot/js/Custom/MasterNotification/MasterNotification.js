@@ -36,14 +36,15 @@ function GetnotificationsSuccess(data) {
                         <p>${notification.body}</p>
                     </div>
                 </div>`;
+
             container.innerHTML += accordionHtml;
 
             if (index === data.length - 1) {
                 var viewMoreHtml = `
                     <div class="flex justify-end mb-28">
-                        <a onclick="showMoreToggle(${notification.id})" style="padding-right: 20px;color: #25408f;font-weight: bold;">View More</a>
-                    </div>
-                `;
+                        <a onclick="showMoreToggle(${notification.id})" style="padding-right: 20px;color: #25408f;font-weight: bold;cursor:pointer;">View More</a>
+                    </div>`;
+
                 container.innerHTML += viewMoreHtml;
             }
         });

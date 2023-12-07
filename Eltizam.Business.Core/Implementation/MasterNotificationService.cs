@@ -39,7 +39,7 @@ namespace Eltizam.Business.Core.Implementation
         /// <param name="valuationrequestId"></param>
         /// <param name="statusId"></param>
         /// <returns></returns>
-        public async Task<DBOperation> SendEmail(SendEmailModel request, int valuationrequestId, int? statusId)
+        public async Task<DBOperation> SendEmail(SendNotificationModel request)
         {  
             try
             {
@@ -75,8 +75,8 @@ namespace Eltizam.Business.Core.Implementation
                 //Log email entry
                 var notification = new MasterNotification
                 {
-                    ValuationRequestId = valuationrequestId,
-                    StatusId = statusId,
+                    ValuationRequestId = request.ValId,
+                    StatusId = request.StatusId,
                     Subject = request.Subject,
                     ToEmails = request.ToEmailList,
                     Body = request.Body,
@@ -99,7 +99,7 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         } 
 
-        public SendEmailModel GetValuationNotificationData(RecepientActionEnum subjectEnum, int valiadtionRequestId)
+        public SendNotificationModel GetValuationNotificationData(RecepientActionEnum subjectEnum, int valiadtionRequestId)
         {
             DbParameter[] osqlParameter =
             {
@@ -107,7 +107,7 @@ namespace Eltizam.Business.Core.Implementation
                 new DbParameter("ValId",  valiadtionRequestId, SqlDbType.Int),
             };
 
-            var result = EltizamDBHelper.ExecuteMappedReader<SendEmailModel>(ProcedureMetastore.usp_ValuationRequest_GetNotificationData,
+            var result = EltizamDBHelper.ExecuteMappedReader<SendNotificationModel>(ProcedureMetastore.usp_ValuationRequest_GetNotificationData,
                          DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter).FirstOrDefault();
            
             return result;

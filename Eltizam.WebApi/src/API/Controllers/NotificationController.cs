@@ -31,11 +31,14 @@ namespace EltizamValuation.WebApi.Controllers
         }
 
         [HttpPost("SendNotificationMail")]
-        public async Task<IActionResult> SendNotificationMail(SendEmailModel request,int valuationrequestId,int? statusId)
+        public async Task<IActionResult> SendNotificationMail(SendNotificationModel request,int valuationrequestId,int? statusId)
         {
             try
             {
-                DBOperation oResponse = await _notificationService.SendEmail(request, valuationrequestId, statusId);
+                request.ValId = valuationrequestId; request.StatusId = statusId;
+
+                DBOperation oResponse = await _notificationService.SendEmail(request);
+              
                 if (oResponse == DBOperation.Success)
                 {
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
