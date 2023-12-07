@@ -17,8 +17,8 @@ function InitializeValutionRequestDataList() {
     var cityId = $("CityId").val();
 
     var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
-    var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
-    var propertyName = $("#PropertyName").val() === undefined ? "" : $("#PropertyName").val(); 
+    var ClientId = $("#ClientId").val() === undefined ? "" : $("#ClientId").val();
+    var PropertyId = $("#PropertyId").val() === undefined ? "" : $("#PropertyId").val(); 
     var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
     var toDate = $("#ToDate").val() === undefined ? "" : $("#ToDate").val(); 
 
@@ -32,7 +32,7 @@ function InitializeValutionRequestDataList() {
     assignToggleFilter();
 
     var ajaxObject = {
-        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
+        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + ClientId + "&propertyName=" + PropertyId + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
 
         "type": "POST",
         "data": function (d) {
