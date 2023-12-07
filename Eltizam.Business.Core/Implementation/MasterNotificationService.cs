@@ -60,7 +60,7 @@ namespace Eltizam.Business.Core.Implementation
                     message.To.Add(MailboxAddress.Parse(Em));
 
                 // message.To.Add(MailboxAddress.Parse(request.ToEmailList));
-                message.Subject = request.Subject;
+                message.Subject = _configuration.GetSection("ApiInfo:Environment").Value +" "+ request.Subject;
                 message.Body = new TextPart(TextFormat.Html) { Text = request.Body };
 
                 using var smtp = new SmtpClient();
@@ -88,8 +88,7 @@ namespace Eltizam.Business.Core.Implementation
                     ReadDate = null, 
                 };
 
-                _repository.AddAsync(notification);
-
+                _repository.AddAsync(notification); 
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
