@@ -95,6 +95,16 @@ namespace EltizamValuation.Web.Controllers
                     //    string json = footerRes.Content.ReadAsStringAsync().Result;
                     //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
                     //}
+                    if(data._object.Addresses.Count == 0)
+                    {
+                        MasterAddressEntity addess = new MasterAddressEntity();
+                        data._object.Addresses.Add(addess);
+                    }
+                    if (data._object.Contacts.Count == 0)
+                    {
+                        MasterContactModel contact = new MasterContactModel();
+                        data._object.Contacts.Add(contact);
+                    }
 
                     return View(data._object);
                 }
@@ -115,10 +125,6 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-                if (!ModelState.IsValid)
-                {
-                    return View(masterUser);
-                }
                 if (masterUser.Document != null && masterUser.Document.Files != null)
                 {
                     List<MasterDocumentModel> docs = FileUpload(masterUser.Document);

@@ -37,7 +37,7 @@
                     <button class="tablinks" onclick="profileTab(event, 'profile4')">Documents</button>
                 </div>
 
-                <form asp-action="UserManage" method="POST" enctype="multipart/form-data">
+                <form id="resource"  asp-action="UserManage" method="POST" enctype="multipart/form-data">
 
                     <input type="hidden" id="isAddPerm" value="@isAdd" />
                     <input type="hidden" id="isEditPerm" value="@isEdit" />
@@ -400,8 +400,6 @@
         </div>
     </div>
 </main>
-@*  </div>
-</div> *@
 
 <div id="DeleteDocumentModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">

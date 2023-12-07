@@ -283,7 +283,7 @@ function removeParentDiv(element) {
 
 // more address field on click
 function addMoreAddress() {
-    const addMoreAddressBox = document.querySelector('.addMoreAddress');
+    const addMoreAddressBox = document.querySelector('.addMoreAddress:last-child');
     const clonedDiv = addMoreAddressBox.cloneNode(true);
     var addressContainer = $("#addresses-container");
     var count = addressContainer.children(".addMoreAddress").length;
@@ -318,6 +318,8 @@ function addMoreAddress() {
     inputFields.forEach((input) => {
         input.value = '';
     });
+    $('.searchable-dropdown').select2();
+
     $("#Addresses_" + count + "__StateId").empty();
     $("#Addresses_" + count + "__CityId").empty();
 }
@@ -330,7 +332,7 @@ function removeParentDiv(element) {
 }
 
 function addRoundBorderBox() {
-    const roundBorderBox = document.querySelector('.addQualification');
+    const roundBorderBox = document.querySelector('.addQualification:last-child');
     const clonedDiv = roundBorderBox.cloneNode(true);
     var qualificationContainer = $("#qualifications-container");
     var count = qualificationContainer.children(".addQualification").length;
@@ -372,6 +374,71 @@ function removeParentDivAddress(element) {
     }
 }
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Add an event listener to the form submission
+    document.getElementById("resource").addEventListener("submit", function (event) {
+        // Call the custom validation function
+        if (!validateForAddress() || !validateForContact()) {
+            // If validation fails, prevent the form submission
+            $('#loading-wrapper').hide();
+            event.preventDefault();
+        }
+    });
+
+});
+
+function validateForAddress() {
+    const addMoreAddressBox = document.querySelector('.addMoreAddress:last-child');
+    const clonedDiv = addMoreAddressBox.cloneNode(true);
+    var lastId = clonedDiv.querySelectorAll('[id]')[0].id;
+    var parts = lastId.split("_");
+    var count = parts[1];
+    var address1 = $("#Addresses_" + count + "__Address1").val();
+    var countryId = $("#Addresses_" + count + "__CountryId").val();
+    var stateId = $("#Addresses_" + count + "__StateId").val();
+    var cityId = $("#Addresses_" + count + "__CityId").val();
+    var email = $("#Addresses_" + count + "__Email").val();
+    var phoneExt = $("#Addresses_" + count + "__PhoneExt").val();
+    var phone = $("#Addresses_" + count + "__Phone").val();
+    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || email == "" || phoneExt == "" || phone == "") {
+        toastr.error("Please fill mandate fields in address section.");
+        return false;
+    }
+    // Function to validate email
+    if (!isValidEmail(email)) {
+        toastr.error("Please fill valid email id in address section.");
+        return false;
+    }
+
+    return true;
+}
+function isValidEmail(email) {
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
+}
+function validateForContact() {
+    const roundBorderBox = document.querySelector('.addQualification:last-child');
+    const clonedDiv = roundBorderBox.cloneNode(true);
+    var lastId = clonedDiv.querySelectorAll('[id]')[0].id;
+    var parts = lastId.split("_");
+    var count = parts[1];
+    var qualification = $("#Qualifications_" + (count - 1) + "__Qualification").val();
+    var subject = $("#Qualifications_" + (count - 1) + "__Subject").val();
+    var yearOfInstitute = $("#Qualifications_" + (count - 1) + "__YearOfInstitute").val();
+    var grade = $("#Qualifications_" + (count - 1) + "__Grade").val();
+    var institute = $("#Qualifications_" + (count - 1) + "__Institute").val();
+    if (qualification == "" || subject == "" || yearOfInstitute == "" || grade == "" || institute == "") {
+        toastr.error("Please fill mandate fields in current section.");
+        return false;
+    }
+    // Function to validate email
+    if (!isValidEmail(email)) {
+        toastr.error("Please fill valid email in contact section.");
+        return false;
+    }
+    return true;
+}
 function displayFileNames(input) {
     const fileInput = input;
     const fileNamesInput = input.nextElementSibling;

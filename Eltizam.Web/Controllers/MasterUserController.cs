@@ -122,11 +122,10 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.UserMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-                if (!ModelState.IsValid)
-                {
-                    return View(masterUser);
-                }
-
+                //if (!ModelState.IsValid)
+                //{
+                //    return View(masterUser);
+                //}
                 masterUser.Email ??= masterUser.Address?.Email;
                 if (masterUser.Document != null && masterUser.Document.Files != null)
                 {
