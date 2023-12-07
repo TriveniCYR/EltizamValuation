@@ -138,7 +138,7 @@ namespace Eltizam.Business.Core.Implementation
                 strHtml = strHtml.Replace("[PaymentMode]", paymentmode);
                 strHtml = strHtml.Replace("[Date]", objInvoice.TransactionDate.ToString());
 
-                var notificationModel = _notificationService.GetValuationNotificationData(RecepientActionEnum.InvoiceCreation, objInvoice.Id);
+                var notificationModel = _notificationService.GetValuationNotificationData(RecepientActionEnum.InvoiceCreation, objInvoice.ValuationRequestId);
                 notificationModel.Body = strHtml;
                 notificationModel.Subject = EnumHelper.GetDescription(RecepientActionEnum.InvoiceCreation); 
                 
