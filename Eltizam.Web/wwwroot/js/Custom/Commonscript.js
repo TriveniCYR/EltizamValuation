@@ -46,8 +46,35 @@ var action = ($("#md").val())
 var view = ($("#View").val())
 var userid = parseInt($("#userid").val(), 10);
 
-$(document).ready(function () {
+function formatCurrencyInElements(className) {
+    const elements = document.querySelectorAll(`.${className}`);
+    elements.forEach(function (element) {
+        if (element.tagName === 'INPUT') {
+            const formatInput = (inputElement) => {
+                const inputText = inputElement.value;
+                const hasNegativeSign = inputText.includes('-');
+                const numericValue = parseFloat(inputText.replace(/[^\d.]/g, ''));
+                if (!isNaN(numericValue)) {
+                    inputElement.value = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 6 });
+                }
+            };
+            formatInput(element);
 
+            element.addEventListener('blur', function () {
+                formatInput(this);
+            });
+        } else {
+            const elementText = element.textContent;
+            const hasNegativeSign = elementText.includes('-');
+            const numericValue = parseFloat(elementText.replace(/[^\d.]/g, ''));
+            if (!isNaN(numericValue)) {
+                element.textContent = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 6 });
+            }
+        }
+    });
+}
+$(document).ready(function () {
+    formatCurrencyInElements('formatting');
     // Assuming your elements have the class 'price'
     const elements = document.getElementsByClassName('price');
 

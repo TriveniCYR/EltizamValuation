@@ -101,6 +101,26 @@ function payTab(evt, payName) {
     document.getElementById(payName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
+function getPDF(id) {
+    id = 24;
+    var url1 = "/ValuationRequest/ValuationData";
+    $.get(url1, function (content1) {
+        var w = window.open();
+        w.document.open();
+        w.document.write(content1);
+        w.document.getElementById("loading-wrapper").remove();
+        saveAspdf(w.document.getElementById("PDFMainDiv")) //(w.document.body)
+        w.close();
+    });
+}
+
+function saveAspdf(con) {
+    var pdf = new jsPDF('p', 'pt', 'a4');
+    pdf.addHTML(con, function () {
+        pdf.save('web.pdf');
+    });
+}
 //document.getElementById("defaultOpenPay").click();
 // payment option JS ends
 function ConfirmationDocument(id, isAction) {

@@ -81,6 +81,7 @@
                 <input type="hidden" id="View" value="@View" />
             </div>
         </div>
+         <button class="btn-primary" onclick="getPDF(1)" id="btngetPDF" >Get PDF</button>
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab flex flex-start m-0 ptrl-20">
@@ -814,7 +815,7 @@
                             <div class="flex">
                                 <label>
                                     <p class="m-0"> Price<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, new { @class = "form-control price", @placeholder = @SharedLocalizer["Price"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["Price"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, "", new { @class = "text-danger" })
                                 </label>
                                 <label>
@@ -909,13 +910,13 @@
                             <div class="flex">
                                 <label for="">
                                     <p class="m-0"> MarketValue<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, new { @class = "form-control price", @placeholder = @SharedLocalizer["MarketValue"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["MarketValue"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
 
                                     <p class="m-0"> Market Rate<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, new { @class = "form-control price", @placeholder = @SharedLocalizer["MarkentRate"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["MarkentRate"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, "", new { @class = "text-danger" })
                                 </label>
                             </div>
@@ -930,7 +931,7 @@
                                 <label for="">
                                     <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control valiadteint formatting", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
@@ -1110,7 +1111,8 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
     <script> 
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
