@@ -24,7 +24,7 @@ namespace Eltizam.Business.Models
         public decimal? RateSqFt { get; set; }
         
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, double.MaxValue)]
+       
         public decimal? Price { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? AddtionalComments { get; set; }

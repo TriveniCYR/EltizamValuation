@@ -47,6 +47,34 @@ var view = ($("#View").val())
 var userid = parseInt($("#userid").val(), 10);
 
 $(document).ready(function () {
+
+    // Assuming your elements have the class 'valuation-input'
+    const elements = document.getElementsByClassName('price');
+
+    // Iterate through the elements and attach the event listener to each
+    for (const element of elements) {
+        element.addEventListener('input', function (event) {
+            let inputValue = event.target.value;
+
+            // Remove non-numeric characters, except for the decimal point
+            inputValue = inputValue.replace(/[^0-9.]/g, '');
+
+            // Remove leading zeros
+            inputValue = inputValue.replace(/^0+/g, '0');
+
+            // Limit to 6 decimal places
+            const decimalParts = inputValue.split('.');
+            if (decimalParts.length > 1) {
+                decimalParts[1] = decimalParts[1].slice(0, 6);
+                inputValue = decimalParts.join('.');
+            }
+
+            event.target.value = inputValue;
+        });
+    }
+
+    $('.searchable-dropdown').select2();
+
     ErrorDev.hide();
     readsideNavToggle();
     hideLoader();
@@ -90,6 +118,8 @@ $(document).ready(function () {
         $("#btnSaveEditIn").remove();
     }
 });
+
+
 
 //Attach the event handler to any element
 $(document)
@@ -509,30 +539,22 @@ function removeParentDiv(element) {
 }
 
 
-// for validate Price or Rate
-$('.price').keypress(function (e) {
+//document.getElementsByClassName('price').addEventListener('input', function (event) {
+//    const inputValue = event.target.value;
 
-    if ($('.price').val() == '' && (e.which == 48 || e.charCode == 46)) {
-        return false;
-    }
-    else {
-        if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
-            var keypress = e.keyCode || e.which || e.charCode;
-            var key = String.fromCharCode(keypress);
-            var regEx = /^[0-9]{0,20}(.[0-9]{0,6})?$/;
+//    // Regular expression to match decimal numbers with up to 6 decimal places
+//    const decimalRegex = /^(\d+)?(\.\d{0,6})?$/;
 
-            var txt = $(this).val() + key;
-            if (!regEx.test(txt)) {
-                if (keypress != 8) {
-                    e.preventDefault();
-                } else {
-                }
-            }
-        }
-        else {
-            e.preventDefault();
-        }
-    }
-});
+//    if (!decimalRegex.test(inputValue)) {
+//        // Remove the last character if it exceeds 6 decimal places
+//        const sanitizedValue = inputValue.substring(0, inputValue.indexOf('.') + 7);
+//        event.target.value = sanitizedValue;
+//    }
+//});
+
+
+
+
+
 
 // ======== End:  Scroller for page ============ 

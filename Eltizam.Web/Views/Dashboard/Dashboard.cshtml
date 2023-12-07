@@ -20,11 +20,11 @@
                         <div class="flex dashboardSearch">
                             <label for="ClientTypeId">
                                 Client
-                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId", @class = "form-control" })
+                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId", @class = "form-control searchable-dropdown" })
                             </label>
                             <label for="PropertyId">
                                 Property
-                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control" })
+                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control searchable-dropdown" })
                             </label> 
                              <label for="">
                                     From

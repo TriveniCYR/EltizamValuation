@@ -486,6 +486,7 @@ namespace EltizamValuation.Web.Controllers
 
 
         [HttpPost]
+        [Route("ValuationRequest/ValuationAssesmentManage")]
         public IActionResult ValuationAssesmentManage(int id, ValuationAssesmentActionModel valuationAssesment)
         {
             try
