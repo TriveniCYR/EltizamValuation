@@ -175,6 +175,12 @@
                                 @for (int i = 0; i < Model.Addresses.Count; i++)
                                 {
                                 <div class="addMoreAddress roundBorderBox">
+                                        @if (i != 0)
+                                        {
+                                            <div class="text-right">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+                                            </div>
+                                        }
                                         <input type="hidden" id="@("hdnCountry_"+i)" value="@(Model.Addresses[i] == null ? 0 : Model.Addresses[i].CountryId)" />
                                         <input type="hidden" id="@("hdnState_"+i)" value="@(Model.Addresses[i] == null ? 0 : Model.Addresses[i].StateId)" />
                                         <input type="hidden" id="@("hdnCity_"+i)" value="@(Model.Addresses[i] == null ? 0 : Model.Addresses[i].CityId)" />
@@ -281,6 +287,11 @@
                                 @for (int i = 0; i < Model.Qualifications.Count; i++)
                                 {
                                 <div class="roundBorderBox addQualification">
+                                    @if(i != 0){
+                                            <div class="text-right">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
+                                            </div>
+                                        }
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
                                         <p>Qualification Section</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">

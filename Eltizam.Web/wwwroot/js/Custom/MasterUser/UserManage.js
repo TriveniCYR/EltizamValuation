@@ -288,23 +288,38 @@ function addMoreAddress() {
     var addressContainer = $("#addresses-container");
     var count = addressContainer.children(".addMoreAddress").length;
     clonedDiv.querySelectorAll('[id]').forEach(element => {
-        element.id = element.id.replace("_0", "_" + count);
+        element.id = element.id.replace("_" + (count - 1) + "", "_" + count);
     });
     clonedDiv.querySelectorAll('[name]').forEach(element => {
-        element.name = element.name.replace("[0]", "[" + count + "]");
+        element.name = element.name.replace("[" + (count - 1) + "]", "[" + count + "]");
     });
-    const minusDiv = document.createElement('div');
-    minusDiv.className = 'text-right';
-    minusDiv.innerHTML = `<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
-                                                                    `;
-    clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
-
+    var address1 = $("#Addresses_" + (count - 1) + "__Address1").val();
+    var countryId = $("#Addresses_" + (count - 1) + "__CountryId").val();
+    var stateId = $("#Addresses_" + (count - 1) + "__StateId").val();
+    var cityId = $("#Addresses_" + (count - 1) + "__CityId").val();
+    var email = $("#Addresses_" + (count - 1) + "__Email").val();
+    var phoneExt = $("#Addresses_" + (count - 1) + "__PhoneExt").val();
+    var phone = $("#Addresses_" + (count - 1) + "__Phone").val();
+    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || email == "" || phoneExt == "" || phone == "") {
+        toastr.error("Please fill mandate fields in current section.");
+        return false;
+    }
+    if (count == 1) {
+        const minusDiv = document.createElement('div');
+        minusDiv.className = 'text-right';
+        minusDiv.innerHTML = `
+    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+        `;
+        clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
+    }
     addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
 
     const inputFields = clonedDiv.querySelectorAll('input');
     inputFields.forEach((input) => {
         input.value = '';
     });
+    $("#Addresses_" + count + "__StateId").empty();
+    $("#Addresses_" + count + "__CityId").empty();
 }
 
 function removeParentDiv(element) {
@@ -320,18 +335,28 @@ function addRoundBorderBox() {
     var qualificationContainer = $("#qualifications-container");
     var count = qualificationContainer.children(".addQualification").length;
     clonedDiv.querySelectorAll('[id]').forEach(element => {
-        element.id = element.id.replace("_0", "_" + count);
+        element.id = element.id.replace("_" + (count - 1) + "", "_" + count);
     });
     clonedDiv.querySelectorAll('[name]').forEach(element => {
-        element.name = element.name.replace("[0]", "[" + count + "]");
+        element.name = element.name.replace("[" + (count - 1) + "]", "[" + count + "]");
     });
-    const minusDiv = document.createElement('div');
-    minusDiv.className = 'text-right';
-    minusDiv.innerHTML = `
-                                        <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
-                                    `;
-    clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
-
+    var qualification = $("#Qualifications_" + (count - 1) + "__Qualification").val();
+    var subject = $("#Qualifications_" + (count - 1) + "__Subject").val();
+    var yearOfInstitute = $("#Qualifications_" + (count - 1) + "__YearOfInstitute").val();
+    var grade = $("#Qualifications_" + (count - 1) + "__Grade").val();
+    var institute = $("#Qualifications_" + (count - 1) + "__Institute").val();
+    if (qualification == "" || subject == "" || yearOfInstitute == "" || grade == "" || institute == "") {
+        toastr.error("Please fill mandate fields in current section.");
+        return false;
+    }
+    if (count == 1) {
+        const minusDiv = document.createElement('div');
+        minusDiv.className = 'text-right';
+        minusDiv.innerHTML = `
+    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
+        `;
+        clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
+    }
     roundBorderBox.parentElement.insertBefore(clonedDiv, roundBorderBox.nextSibling);
 
     const inputFields = clonedDiv.querySelectorAll('input');
