@@ -81,6 +81,7 @@
                 <input type="hidden" id="View" value="@View" />
             </div>
         </div>
+         <button class="btn-primary" onclick="getPDF(1)" id="btngetPDF" >Get PDF</button>
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab flex flex-start m-0 ptrl-20">
@@ -629,7 +630,7 @@
                                 </label>
                                 <label for="">
                                     <p class="m-0"> Floor<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Floor, new { @class = "form-control", @placeholder = @SharedLocalizer["Floor"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Floor, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Floor"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
                                 </label>
                             </div>
@@ -793,7 +794,7 @@
                                 </label>
                                 <label>
                                     Size
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Size, new { @class = "form-control", @placeholder = @SharedLocalizer["Size"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Size, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Size"] })
 
                                 </label>
                             </div>
@@ -917,32 +918,18 @@
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, "", new { @class = "text-danger" })
                                 </label>
                             </div>
-                            @* <div class="flex">
-
-                            <p class="m-0">Life of Building<span class="text-danger">*</span></p
-
-                            @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, new {  @class = "form-control",  @placeholder = @SharedLocalizer["LifeOfBuilding"] })
-
-
-                            <label for="">
-                            <p class="m-0">Annual Maintainance Cost<span class="text-danger">*</span></p
-
-                            @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
-                            @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
-                            </label>
-                            </div> *@
-
+                           
                             <div class="flex">
                                 <label for="">
                                     <p class="m-0"> Life of Building<span class="text-danger">*</span></p>
 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, new { @class = "form-control", @placeholder = @SharedLocalizer["LifeOfBuilding"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["LifeOfBuilding"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
                                     <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control formatting", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control valiadteint formatting", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
@@ -1122,7 +1109,8 @@
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
     <script> 
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";

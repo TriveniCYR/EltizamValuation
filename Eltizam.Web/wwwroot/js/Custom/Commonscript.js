@@ -112,7 +112,7 @@ $(document).ready(function () {
         });
     }
 
-    // Assuming your elements have the class 'price'
+    // Assuming your elements have the class 'valiadteint'
     const intelements = document.getElementsByClassName('valiadteint');
 
     // Iterate through the elements and attach the event listener to each
