@@ -109,7 +109,7 @@ function getPDF(id) {
         w.document.open();
         w.document.write(content1);
         w.document.getElementById("loading-wrapper").remove();
-        saveAspdf(w.document.body)
+        saveAspdf(w.document.getElementById("PDFMainDiv")) //(w.document.body)
         w.close();
     });
 }

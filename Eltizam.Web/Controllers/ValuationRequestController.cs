@@ -50,7 +50,7 @@ namespace EltizamValuation.Web.Controllers
         [HttpGet]
         public IActionResult ValuationData()
         {
-            return View();
+            return View("ValuationData");
         }
 
             [HttpGet]
