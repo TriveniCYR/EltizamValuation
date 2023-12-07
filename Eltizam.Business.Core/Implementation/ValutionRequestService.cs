@@ -117,11 +117,11 @@ namespace Eltizam.Business.Core.Implementation
                             //Do Audit Log --AUDITLOG 
                             await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, id);
 
-                            var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-
-                            var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-
-                            await SenddDetailsToEmail("Request Status Change", oldstatusname, newstatusname, valuationEntity.Id, valuationEntity.ReferenceNo, valuationEntity.StatusId);
+                            /*
+                                var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault(); 
+                                var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault(); 
+                                await SenddDetailsToEmail("Request Status Change", oldstatusname, newstatusname, valuationEntity.Id, valuationEntity.ReferenceNo, valuationEntity.StatusId);
+                            */
                         }
                         await _unitOfWork.SaveChangesAsync();
                     }
@@ -157,14 +157,20 @@ namespace Eltizam.Business.Core.Implementation
 
                     await _unitOfWork.SaveChangesAsync();
 
-                    //Do Audit Log --AUDITLOG 
-                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);
+                    try
+                    {
+                        //Do Audit Log --AUDITLOG 
+                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);
 
-                    var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                        var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                        var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                        if (newstatusname != oldstatusname)
+                            await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
+                    }
+                    catch (Exception ex)
+                    {
 
-                    var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-
-                    await SenddDetailsToEmail("Request Status Change", oldstatusname, newstatusname, valuationEntity.Id, valuationEntity.ReferenceNo, valuationEntity.StatusId);
+                    }
                 }
                 else
                 {
@@ -201,11 +207,11 @@ namespace Eltizam.Business.Core.Implementation
                     //Do Audit Log --AUDITLOG 
                     await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.Id);
 
+
                     var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-
                     var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-
-                    await SenddDetailsToEmail("Request Status Change", oldstatusname, newstatusname, valuationEntity.Id, valuationEntity.ReferenceNo, valuationEntity.StatusId);
+                    if (newstatusname != oldstatusname)
+                        await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
                 }
                 else
                 {
@@ -260,8 +266,20 @@ namespace Eltizam.Business.Core.Implementation
 
                         await _unitOfWork.SaveChangesAsync();
 
-                        //Do Audit Log --AUDITLOGUSER
-                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey);
+                        try
+                        {
+                            var newstatusname = _statusrepository.GetAll().Where(x => x.Id == objValuation.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                            var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+
+                            if (newstatusname != oldstatusname)
+                                await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, objValuation.Id);
+
+                            //Do Audit Log --AUDITLOGUSER
+                            await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, objValuation, MainTableName, MainTableKey);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
                     }
                     else
                     {
@@ -280,23 +298,25 @@ namespace Eltizam.Business.Core.Implementation
 
                     _repository.AddAsync(objValuation);
                     await _unitOfWork.SaveChangesAsync();
+
+                    try
+                    {
+                        await SenddDetailsToEmail(RecepientActionEnum.ValuationCreated, objValuation.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                    }
                 }
 
                 if (objValuation.Id == 0)
                     return DBOperation.Error;
 
-                var newstatusname = _statusrepository.GetAll().Where(x => x.Id == objValuation.StatusId).Select(x => x.StatusName).FirstOrDefault();
-
-                var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-
-                await SenddDetailsToEmail("Request Status Change", oldstatusname, newstatusname, objValuation.Id, objValuation.ReferenceNo, objValuation.StatusId);
                 return DBOperation.Success;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
         }
 
 
@@ -364,7 +384,6 @@ namespace Eltizam.Business.Core.Implementation
                 }
 
 
-
                 //comprable
                 compevidence = _mapperFactory.Get<ComparableEvidence, ComparableEvidenceModel>(_evidencerepository.Get(x => x.RequestId == id));
 
@@ -373,10 +392,10 @@ namespace Eltizam.Business.Core.Implementation
 
                     _ValuationEntity.ValuationAssesment.comparableEvidenceModel = compevidence;
                     DbParameter[] osqlParameter3 =
-              {
-                    new DbParameter(AppConstants.TableKeyId, compevidence.Id, SqlDbType.Int),
-                    new DbParameter(AppConstants.TableName,  evidencetableName, SqlDbType.VarChar),
-                };
+                    {
+                        new DbParameter(AppConstants.TableKeyId, compevidence.Id, SqlDbType.Int),
+                        new DbParameter(AppConstants.TableName,  evidencetableName, SqlDbType.VarChar),
+                    };
 
                     var compDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
                                         DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter3);
@@ -386,10 +405,7 @@ namespace Eltizam.Business.Core.Implementation
                     }
                 }
 
-
-
-                /////Assesment
-
+                /////Assesment 
                 assement = _mapperFactory.Get<ValuationAssesment, ValuationAssessementModel>(_assesmenterepository.Get(x => x.RequestId == id));
 
                 if (assement != null)
@@ -409,10 +425,7 @@ namespace Eltizam.Business.Core.Implementation
                         _ValuationEntity.ValuationAssesment.valuationAssessementModel.Documents = assesmentDocument;
                     }
                 }
-
-
             }
-
 
             return _ValuationEntity;
         }
@@ -432,25 +445,37 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<bool> SenddDetailsToEmail(string subject, string? oldstatus, string? newstatus, int valuationrequestId, string referenceno, int statusid = 0)
+        public async Task<bool> SenddDetailsToEmail(RecepientActionEnum subjectEnum, int valuationrequestId)
         {
-            string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_StatusChange.html");
-            strHtml = strHtml.Replace("[PValRefNoP]", referenceno);
-            strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString());
-            strHtml = strHtml.Replace("[PNewStatusP]", newstatus);
-            strHtml = strHtml.Replace("[POldStatusP]", oldstatus);
-           
-            var receipientemail = _notificationService.GetToEmail(RecepientActionEnum.ValidationRequestChange.ToString(), valuationrequestId);
-            var sendemaildetails = new SendEmailModel
+            try
+            { 
+                var recipientsInfo = _notificationService.GetValuationNotificationData(subjectEnum, valuationrequestId);
+
+                string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_StatusChange.html");
+                if (subjectEnum == RecepientActionEnum.ValuationCreated)
+                {
+                    strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_Created.html");
+                }
+
+                strHtml = strHtml.Replace("[PValRefNoP]", recipientsInfo.ValRefNo);
+                strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString());
+                strHtml = strHtml.Replace("[PNewStatusP]", recipientsInfo.Status); 
+
+
+                var sendemaildetails = new SendEmailModel
+                {
+                    ToEmailList = recipientsInfo.ToEmailList,
+                    Body = strHtml,
+                    Subject = subjectEnum.ToString(),
+                };
+                await _notificationService.SendEmail(sendemaildetails, valuationrequestId, recipientsInfo.StatusId);
+
+                return true;
+            }
+            catch (Exception)
             {
-                ToEmailList = receipientemail.ToEmailList,
-                Body = strHtml,
-                Subject = subject,
-
-            };
-            await _notificationService.SendEmail(sendemaildetails, valuationrequestId, statusid);
-
-            return true;
+                return false;
+            }
         }
     }
 }

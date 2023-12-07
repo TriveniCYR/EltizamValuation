@@ -1,22 +1,24 @@
 ﻿$(document).ready(function () {
-
     Getnotifications(0);
- 
 });
 
 function Getnotifications(notificationid) {
-
-    ajaxServiceMethod(BaseURL + notifications + '?lastid=' + notificationid, 'GET', GetnotificationsSuccess, GetnotificationsError);
+    var userId = $("#userid").val();
+    var valId = $("#valId").val();
+    debugger
+    var url = "?lastid=" + notificationid + "&userId=" + userId + "&valId=" + valId;
+    ajaxServiceMethod(BaseURL + notifications + url, 'GET', GetnotificationsSuccess, GetnotificationsError);
 }
+
 function GetnotificationsSuccess(data) {
     $("#loader").show();
     var container = document.getElementById('notificationsContainer');
     container.innerHTML = '';
-   
+
     if (data.length === 0) {
-      
         container.innerHTML = '<p>No notifications available.</p>';
-    } else {
+    }
+    else {
         data.forEach(function (notification, index) {
             var accordionHtml = `
                 <div class="auditLog-acc roundBorderBox m-0 mb-28">
@@ -33,9 +35,9 @@ function GetnotificationsSuccess(data) {
                         <p>To: ${notification.toEmails}</p>
                         <p>${notification.body}</p>
                     </div>
-                </div>
-            `;
+                </div>`;
             container.innerHTML += accordionHtml;
+
             if (index === data.length - 1) {
                 var viewMoreHtml = `
                     <div class="flex justify-end mb-28">
@@ -47,7 +49,7 @@ function GetnotificationsSuccess(data) {
         });
     }
 
-    console.log(container);
+    //console.log(container);
     formatreadonlydate();
     $("#loader").hide();
 }
@@ -64,12 +66,12 @@ function accordianToggle(header, notificationId) {
         item.style.display = 'none';
     } else {
         item.style.display = 'block';
-        markNotificationAsRead(notificationId,userid);
+        markNotificationAsRead(notificationId, userid);
     }
 }
 
 function markNotificationAsRead(notificationId, userId) {
-    const url = ` ${BaseURL}${updatenotification}?notificationid=${notificationId}&ReadBy=${userId}`;
+    const url = `${BaseURL}${updatenotification}?notificationid=${notificationId}&ReadBy=${userId}`;
 
     fetch(url, {
         method: 'POST',

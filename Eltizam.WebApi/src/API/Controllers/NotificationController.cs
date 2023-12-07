@@ -21,6 +21,7 @@ namespace EltizamValuation.WebApi.Controllers
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         private readonly INotificationService _notificationService;
+
         public NotificationController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, INotificationService notificationService)
         {
             _configuration = configuration;
@@ -28,8 +29,9 @@ namespace EltizamValuation.WebApi.Controllers
             _ExceptionService = exceptionService;
             _notificationService = notificationService;
         }
+
         [HttpPost("SendNotificationMail")]
-        public async Task<IActionResult> SendNotificationMail(SendEmailModel request,int valuationrequestId,int statusId)
+        public async Task<IActionResult> SendNotificationMail(SendEmailModel request,int valuationrequestId,int? statusId)
         {
             try
             {
@@ -53,11 +55,11 @@ namespace EltizamValuation.WebApi.Controllers
         }
 
         [HttpGet, Route("GetNotificationList")]
-        public async Task<IActionResult> GetNotificationList(int? lastid)
+        public async Task<IActionResult> GetNotificationList(int? lastid, int? userId, int? valId)
         {
             try
             {
-                return _ObjectResponse.CreateData(_notificationService.GetAll(lastid), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(_notificationService.GetAll(lastid, userId, valId), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

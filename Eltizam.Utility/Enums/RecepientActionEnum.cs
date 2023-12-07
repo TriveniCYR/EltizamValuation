@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Eltizam.Utility.Enums
 {
     public enum RecepientActionEnum
     {
-        [Description("Validation Request Change")]
-        ValidationRequestChange = 1,
-        [Description("Invoice Creation")]
-        InvoiceCreation = 2,
-        [Description("Quaotation Creation")]
+        [Description("Validation Created")]
+        ValuationCreated = 1,
+        [Description("Valuation Status Changed")]
+        ValuationStatusChanged = 2,
+        [Description("Quaotation Created")]
         QuaotationCreation = 3,
+        [Description("Invoice Created")]
+        InvoiceCreation = 4,       
     }
 }

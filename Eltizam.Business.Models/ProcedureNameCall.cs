@@ -56,7 +56,7 @@ namespace Eltizam.Business.Models
         public static string usp_Role_SearchAllList = "usp_Role_SearchAllList";
         public static string usp_Role_GetByRoleName = "usp_Role_GetByRoleName";
         public static string usp_Approver_AllList = "usp_Approver_AllList";
-        public static string usp_EmailToList = "usp_GetToEmailsNotification";
+        public static string usp_ValuationRequest_GetNotificationData = "usp_ValuationRequest_GetNotificationData";
         public static string usp_InsertException = "usp_InsertException";
         public static string usp_GetPageFooterDetails = "usp_GetPageFooterDetails";
         

@@ -53,6 +53,12 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string ID_ValuationRequest = string.Format("VR{0}-", DateFormat2);
         public static string ID_QuotationsRequest = string.Format("QT{0}-", DateFormat2);
         public static string ID_InvoiceRequest    = string.Format("IN{0}-", DateFormat2);
+
+
+        public static string EmailSubject_Created = "Valuation request created";
+        public static string EmailSubject_StatusChanged = "Valuation request Status changed";
+        public static string EmailSubject_QuotationCreated = "Valuation request Quotation created";
+        public static string EmailSubject_PaymentCreated = "Valuation request Payment created";
     } 
 
     public class AppSettings
