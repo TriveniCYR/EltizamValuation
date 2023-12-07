@@ -459,17 +459,12 @@ namespace Eltizam.Business.Core.Implementation
 
                 strHtml = strHtml.Replace("[PValRefNoP]", recipientsInfo.ValRefNo);
                 strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString());
-                strHtml = strHtml.Replace("[PNewStatusP]", recipientsInfo.Status); 
+                strHtml = strHtml.Replace("[PNewStatusP]", recipientsInfo.Status);
 
-
-                var sendemaildetails = new SendEmailModel
-                {
-                    ToEmailList = recipientsInfo.ToEmailList,
-                    Body = strHtml,
-                    Subject = subjectEnum.ToString(),
-                };
-                await _notificationService.SendEmail(sendemaildetails, valuationrequestId, recipientsInfo.StatusId);
-
+                recipientsInfo.Body = strHtml;
+                recipientsInfo.Subject = subjectEnum.ToString();
+                
+                await _notificationService.SendEmail(recipientsInfo, valuationrequestId, recipientsInfo.StatusId); 
                 return true;
             }
             catch (Exception)

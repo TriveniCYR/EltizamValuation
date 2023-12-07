@@ -48,7 +48,18 @@ namespace Eltizam.Business.Core.Implementation
 
                 var message = new MimeMessage();
                 message.From.Add(MailboxAddress.Parse(_configuration.GetSection("SMTPDetails:FromEmail").Value));
-                message.To.Add(MailboxAddress.Parse(request.ToEmailList));
+
+                //Parse email data
+                var Em = request.ToEmailList;
+                if (Em.Contains(';'))
+                {
+                    foreach (var mail in Em.Split(';')) 
+                        message.To.Add(MailboxAddress.Parse(mail.Trim())); 
+                }
+                else
+                    message.To.Add(MailboxAddress.Parse(Em));
+
+                // message.To.Add(MailboxAddress.Parse(request.ToEmailList));
                 message.Subject = request.Subject;
                 message.Body = new TextPart(TextFormat.Html) { Text = request.Body };
 
@@ -56,10 +67,12 @@ namespace Eltizam.Business.Core.Implementation
                 smtp.Connect(_configuration.GetSection("SMTPDetails:Host").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
                 smtp.Authenticate(_configuration.GetSection("SMTPDetails:UserName").Value,
                     _configuration.GetSection("SMTPDetails:Password").Value);
+              
+                //Send email 
                 smtp.Send(message);
                 smtp.Disconnect(true); 
                 
-
+                //Log email entry
                 var notification = new MasterNotification
                 {
                     ValuationRequestId = valuationrequestId,
@@ -92,7 +105,7 @@ namespace Eltizam.Business.Core.Implementation
             DbParameter[] osqlParameter =
             {
                 new DbParameter("Action", subjectEnum, SqlDbType.Int),
-                new DbParameter("ValiadtionRequestId",valiadtionRequestId, SqlDbType.Int),
+                new DbParameter("ValId",  valiadtionRequestId, SqlDbType.Int),
             };
 
             var result = EltizamDBHelper.ExecuteMappedReader<SendEmailModel>(ProcedureMetastore.usp_ValuationRequest_GetNotificationData,
