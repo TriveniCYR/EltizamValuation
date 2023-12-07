@@ -11,7 +11,7 @@
 
 @model Eltizam.Business.Models.ValuationRequestModel
 @{
-   
+
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
@@ -55,7 +55,8 @@
     ViewData["Title"] = _md + _header;
     var htmlAttributes = true;
     var isHideBtn = false;
-    if(ViewBag.IsView == "2"){
+    if (ViewBag.IsView == "2")
+    {
         isHideBtn = true;
     }
 }
@@ -64,58 +65,62 @@
 <main class="">
     <div class="whiteBoxShadow">
         <div class="flex justify-between align-item-center cursor-pointer heading position-relative">
-            <h3 class="dashboardTitle"> @if(View == 2){<text>View @_header</text>}else{ @_md @_header}</h3>
+            <h5 class="dashboardTitle"> @if (View == 2)
+                {
+                    <text>View @_header</text>
+                }
+                else
+                {
+                    @_md @_header
+                }</h5>
             <div class="hamburger">
                 <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md @_header</span>
-                  <input type="hidden" id="md" value="@_md" />
-                    <input type="hidden" id="View" value="@View" />
+                <input type="hidden" id="md" value="@_md" />
+                <input type="hidden" id="View" value="@View" />
             </div>
         </div>
+         <button class="btn-primary" onclick="getPDF(1)" id="btngetPDF" >Get PDF</button>
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab flex flex-start m-0 ptrl-20">
-                    <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Property Details</button>
 
-                    
-                    @{
-                       
-                    var displayStyleQt = (objPermssionQt.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
-                    var displayStyleIn = (objPermssionIn.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
-                    var displayStyleSite = (objPermssionSite.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
-                     var displayStyleevidence = (objPermssionevidence.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
-                     var displayStyleAssesment = (objPermssionAssesment.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                    <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Valuation Details</button>
+                    @{ 
+                        var displayStyleQt = (objPermssionQt.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                        var displayStyleIn = (objPermssionIn.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                        var displayStyleSite = (objPermssionSite.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                        var displayStyleevidence = (objPermssionevidence.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
+                        var displayStyleAssesment = (objPermssionAssesment.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                     }
                     <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
-                    
-                     <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payment Details</button> 
-                   @*  @if (roleId == (int)RoleEnum.Admin || roleId == (int)RoleEnum.Valuer)
-                    { *@
-                        <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="defaultOpen">Site Description</button>
-                        <button class="tablinks" style="display: @displayStyleevidence"  onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
-                        <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
-                   @*  } *@
+
+                    <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payment Details</button>   
+                    <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="defaultOpen">Site Description</button>
+                    <button class="tablinks" style="display: @displayStyleevidence" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
+                    <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button> 
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
-                    <h3 class="ptrl-20">Valuation Details</h3>
+                    <h5 class="ptrl-20">Valuation Details</h5>
                     <div class="inputSearchs p-0">
                         <form asp-action="ValuationRequestManage">
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.ReferenceNo)
+
                             <input type="hidden" id="isAddPerm" value="@isAdd" />
                             <input type="hidden" id="isEditPerm" value="@isEdit" />
                             <input type="hidden" id="isAddPermQuotation" value="@isAddQt" />
                             <input type="hidden" id="isEditPermQuotation" value="@isEditQt" />
                             <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
                             <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
-                            <input type="hidden" id="isApprovePerm" value="@isApprove" />
-
+                            <input type="hidden" id="isApprovePerm" value="@isApprove" /> 
                             <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                             <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
-                            <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />
+                           @*  <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />   *@
+                            <input type="hidden" id="hdnStatusId" value="@(_md == "Add" ? 3 : (Model == null ? 0 : Model.StatusId))" />
 
-                            @Html.HiddenFor(model => model.Id)
-                            @Html.HiddenFor(model => model.ReferenceNo)
                             <input type="hidden" id="hdnClientId" value="@(Model == null ? 0 : Model.ClientId)" />
                             <input type="hidden" id="hdnApproverId" value="@(Model == null ? 0 : Model.ApproverId)" />
                             <input type="hidden" id="hdnValuationModeId" value="@(Model == null ? 0 : Model.ValuationModeId)" />
@@ -124,14 +129,13 @@
                             <input type="hidden" id="hdnClientName" value="@(Model == null ? 0 : Model.ClientName)" />
                             <input type="hidden" id="hdnRoleId" value=@roleId />
                             <input type="hidden" id="roleEnum" value=@roleId />
-                             <input type="hidden" id="isDeleteSite" value="@isDeleteSite" />
-                             <input type="hidden" id="isDeleteEvidence" value="@isDeleteEvidence" />
-                             <input type="hidden" id="isDeleteAssesment" value="@isDeleteAssesment" />
-                               <input type="hidden" id="isDeletePerm" value="@isDelete" />  
-                             <input type="hidden" id="isAction"/>
+                            <input type="hidden" id="isDeleteSite" value="@isDeleteSite" />
+                            <input type="hidden" id="isDeleteEvidence" value="@isDeleteEvidence" />
+                            <input type="hidden" id="isDeleteAssesment" value="@isDeleteAssesment" />
+                            <input type="hidden" id="isDeletePerm" value="@isDelete" />
+                            <input type="hidden" id="isAction" />
                             <div class="ptrl-20">
-                                <div class="flex  mb-28">
-
+                                <div class="flex  mb-28"> 
                                     <label for="" class="w-50">
                                         Val. Ref#
                                         @Html.TextBoxFor(model => model.ReferenceNo, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Valuation Reference no"] })
@@ -186,7 +190,7 @@
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Valuation Time Frame
-                                        @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
+                                        @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
                                         @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -212,42 +216,8 @@
                                             <p class="m-0">Client<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindClientDetailsByClientId(this.options[this.selectedIndex].value)" })
                                             @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
-                                        </label>
-
-                                    </div>
-                                    @* <div class="flex  mb-28">
-                                        <label for="" class="w-50">
-                                            Company Name
-                                            <input type="text" placeholder="" disabled>
-                                        </label>
-                                        <label for="" class="w-50">
-                                            <p class="m-0">Clients<span class="text-danger">*</span></p>
-                                            @Html.TextBoxFor(model => model.ClientName, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Client Name"] })
-                                            @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
-                                        </label>
-                                    </div>
-                                    <div class="flex  mb-28">
-                                        <label for="" class="w-50">
-                                            Pincode
-                                            @Html.TextBoxFor(model => model.PinCode, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Client Name"] })
-                                            
-                                        </label>
-                                        <label for="" class="w-50">
-                                            Country
-                                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control", @onchange = "BindState(this.options[this.selectedIndex].value)" })
-
-                                        </label>
-                                    </div>
-                                    <div class="flex  mb-28">
-                                        <label for="" class="w-50">
-                                            State
-                                            @Html.TextBoxFor(model => model.StateId, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["State Name"] })
-                                        </label>
-                                        <label for="" class="w-50">
-                                            City
-                                            @Html.TextBoxFor(model => model.CityId, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["City Name"] })
-                                        </label>
-                                    </div> *@
+                                        </label> 
+                                    </div> 
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
                                             TRN Number
@@ -266,7 +236,7 @@
                                         </label>
                                     </div>
 
-                                    <h3>Addrress Details</h3>
+                                    <h5>Addrress Details</h5>
                                     <div class="flex m-0">
                                         <table class="multipleValueTable valueReqTable" id="NewAddressTable">
                                             <thead>
@@ -285,7 +255,7 @@
                                     </div>
 
 
-                                    <h3>Contact Details</h3>
+                                    <h5>Contact Details</h5>
                                     <div class="inputSearchs p-0">
                                         <table class="multipleValueTable valueReqTable" id="NewContactTable">
                                             <thead>
@@ -324,7 +294,7 @@
                                         </label>
                                         <label for="" class="w-50">
                                             <p class="m-0">Property SubType<span class="text-danger">*</span></p>
-                                            @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertyDetail()"})
+                                            @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertyDetail()" })
                                             @Html.ValidationMessageFor(model => model.PropertySubTypeId, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
@@ -338,8 +308,7 @@
                                         <label for="" class="w-50">
                                             <p class="m-0">Property Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)" })
-                                            @*   @Html.TextBoxFor(model => model.PropertyName, new { @class = "form-control",  @placeholder = @SharedLocalizer["Property Name"] }) *@
-                                            @* @Html.ValidationMessageFor(model => model.PropertyId, "", new { @class = "text-danger" }) *@
+                                       
                                         </label>
                                     </div>
                                     <div class="flex mb-28">
@@ -406,10 +375,10 @@
                                             Description
                                             @Html.TextBoxFor(model => model.Description, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Description"] })
 
-                                        </label>
-
+                                        </label> 
                                     </div>
-                                    <h3 class="blueHeading mb-16"> Amenities</h3>
+
+                                    <h5 class="blueHeading mb-16"> Amenities</h5>
                                     <div class="inputSearchs p-0">
                                         <div class="form">
                                             <div class="flex mb-28 flex-start" id="amentiesdiv">
@@ -433,7 +402,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h3 class="blueHeading mb-16"> Property Location</h3>
+                                    <h5 class="blueHeading mb-16">Property Location</h5>
                                     <div class="inputSearchs p-0">
                                         <input type="hidden" id="hdnLocationCountryId" value="@(Model == null ? 0 : Model.LocationCountryId)" />
                                         <input type="hidden" id="hdnLocationStateId" value="@(Model == null ? 0 : Model.LocationStateId)" />
@@ -441,99 +410,83 @@
                                         <div class="flex  mb-28">
                                             <label for="CountryId" class="w-50">
                                                 Country
-                                                @Html.DropDownListFor(model => model.PropertyDetail.CountryId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown", @onchange = "BindLocationState(this.options[this.selectedIndex].value)"})
+                                                @Html.DropDownListFor(model => model.PropertyDetail.CountryId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown", @onchange = "BindLocationState(this.options[this.selectedIndex].value)" })
 
                                             </label>
                                             <label for="StateId" class="w-50">
                                                 State
-                                                @Html.DropDownListFor(model => model.PropertyDetail.StateId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown", @onchange = "BindLocationCity(this.options[this.selectedIndex].value)"})
+                                                @Html.DropDownListFor(model => model.PropertyDetail.StateId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown", @onchange = "BindLocationCity(this.options[this.selectedIndex].value)" })
 
                                             </label>
                                         </div>
                                         <div class="flex  mb-28" class="w-50">
                                             <label for="CityId">
                                                 City
-                                                @Html.DropDownListFor(model => model.PropertyDetail.CityId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown"})
+                                                @Html.DropDownListFor(model => model.PropertyDetail.CityId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
 
                                             </label>
                                             <label for="Zone" class="w-50">
                                                 Sector /Zone
-                                                @Html.TextBoxFor(model => model.PropertyDetail.Zone, new {@disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Zone"] })
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Zone, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Zone"] })
 
                                             </label>
                                         </div>
                                         <div class="flex mb-28">
                                             <label for="address2" class="w-50">
                                                 <p class="m-0">Building Projects<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.PropertyDetail.BuildingProject, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Zone"] })
+                                                @Html.TextBoxFor(model => model.PropertyDetail.BuildingProject, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Zone"] })
 
                                             </label>
                                             <label for="address2" class="w-50">
                                                 Latitude
-                                                @Html.TextBoxFor(model => model.PropertyDetail.Latitude, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Latitude"] })
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Latitude, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Latitude"] })
 
                                             </label>
                                         </div>
                                         <div class="flex mb-28">
                                             <label for="address2" class="w-50">
                                                 Longitude
-                                                @Html.TextBoxFor(model => model.PropertyDetail.Longitude, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Longitude"] })
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Longitude, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Longitude"] })
 
                                             </label>
                                             <label for="" class="w-50">
                                                 <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.PropertyDetail.Address1, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Address1"] })
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Address1, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Address1"] })
 
                                             </label>
                                         </div>
                                         <div class="flex mb-28">
                                             <label for="" class="w-50">
                                                 Address Line 2
-                                                @Html.TextBoxFor(model => model.PropertyDetail.Address2, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Address2"] })
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Address2, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Address2"] })
 
                                             </label>
                                             <label for="address2" class="w-50">
                                                 Zip / PO Box
-                                                @Html.TextBoxFor(model => model.PropertyDetail.Pincode, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Pincode"] })
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Pincode, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Pincode"] })
                                             </label>
                                         </div>
                                         <div class="flex mb-28">
                                             <label for="address2" class="w-50">
                                                 Landmark
-                                                @Html.TextBoxFor(model => model.PropertyDetail.Landmark, new { @disabled = htmlAttributes, @class = "form-control",  @placeholder = @SharedLocalizer["Landmark"] })
+                                                @Html.TextBoxFor(model => model.PropertyDetail.Landmark, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Landmark"] })
 
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                             <div class="text-right buttonArea bodyContent">
-                                @* <button type="button" class="lineBtn greyBtn">Cancel</button> *@
-                                <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
-                                @*  @if (roleId == (int)RoleEnum.Admin)
-                                {
-                                <button type="submit" class="blueBtn" style="width:100px">Save</button>
-                                }
-
-                                @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
-                                {
-                                <button type="button" class="blueBtn" id="isApprove" style="width:100px">
-                                Save
-                                </button>
-                                } *@
-                                @if(!isHideBtn)
-                                {
-                               
-
-                                    <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
-                                    @*  <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">Save</button> *@
-                                
-                                        @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
-                                        {
-                                            <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
-                                                Save
-                                            </button>
-                                        }
+                            <div class="text-right buttonArea bodyContent"> 
+                                <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a> 
+                                @if (!isHideBtn)
+                                { 
+                                    <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>   
+                                    @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
+                                    {
+                                        <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
+                                            Save
+                                        </button>
+                                    }
                                 }
                             </div>
                         </form>
@@ -545,20 +498,20 @@
                     <div class="whiteBoxShadow m-0 ">
                         <div class="bodyContent footerAudit">
                             <div class=" position-relative flex justify-between align-item-center m-0">
-                                <h4 class="m-0">
+                                <h5 class="m-0">
                                     Valuation Id : @Html.DisplayFor(model => model.Id)
-                                </h4>
-                                <h4 class="m-0">
+                                </h5>
+                                <h5 class="m-0">
                                     Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                </h4>
+                                </h5>
                             </div>
                         </div>
                     </div>
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center plr-0">
 
-                            <h3>Quotation Listing</h3>
-                            @if(!isHideBtn)
+                            <h5>Quotation Listing</h5>
+                            @if (!isHideBtn)
                             {
                                 <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
                                     <button id="addNewQt" class="blueBtn" style="width:120px">
@@ -595,19 +548,19 @@
                     <div class="whiteBoxShadow m-0 ">
                         <div class="bodyContent footerAudit">
                             <div class=" position-relative flex justify-between align-item-center m-0">
-                                <h4 class="m-0">
+                                <h5 class="m-0">
                                     Valuation Id : @Html.DisplayFor(model => model.Id)
-                                </h4>
-                                <h4 class="m-0">
+                                </h5>
+                                <h5 class="m-0">
                                     Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                </h4>
+                                </h5>
                             </div>
                         </div>
                     </div>
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center p-0">
-                            <h3>Invoice Listing</h3>
-                            @if(!isHideBtn)
+                            <h5>Invoice Listing</h5>
+                            @if (!isHideBtn)
                             {
                                 <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
                                     <button class=" blueBtn " style="width:120px" id="addNewIn">
@@ -641,32 +594,32 @@
                 <form asp-action="ValuationAssesmentManage" asp-controller="ValuationRequest" method="POST" enctype="multipart/form-data">
                     @Html.HiddenFor(model => model.Id)
                     <div id="profile4" class="tabcontent">
-                    <div class="whiteBoxShadow m-0 ">
-                        <div class="bodyContent footerAudit">
-                            <div class=" position-relative flex justify-between align-item-center m-0">
-                                <h4 class="m-0">
-                                    Valuation Id : @Html.DisplayFor(model => model.Id)
-                                </h4>
-                                <h4 class="m-0">
-                                    Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                </h4>
+                        <div class="whiteBoxShadow m-0 ">
+                            <div class="bodyContent footerAudit">
+                                <div class=" position-relative flex justify-between align-item-center m-0">
+                                    <h5 class="m-0">
+                                        Valuation Id : @Html.DisplayFor(model => model.Id)
+                                    </h5>
+                                    <h5 class="m-0">
+                                        Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                                    </h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                        <h3 class="ptrl-20">Structural Information</h3>
+                        <h5 class="ptrl-20">Structural Information</h5>
                         <div class="inputSearchs">
-                            
+
                             <input type="hidden" id="Test" name="Test" value="@Model.Id">
                             <div class="flex">
                                 <label for="">
-                                      <p class="m-0">Location<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Location, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Location"] })
-                                    @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
+                                    <p class="m-0">Location<span class="text-danger">*</span></p>
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Location, new { @class = "form-control", @placeholder = @SharedLocalizer["Location"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
                                    <p class="m-0"> Internal Area<span class="text-danger">*</span></p>
                                    
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.InternalArea, new {  @class = "form-control",  @placeholder = @SharedLocalizer["InternalArea"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.InternalArea, new {  @class = "form-control price",  @placeholder = @SharedLocalizer["InternalArea"] })
                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.InternalArea, "", new { @class = "text-danger" })
                                 </label>
                             </div>
@@ -674,42 +627,42 @@
                                 <label for="">
                                     <p class="m-0"> External Area<span class="text-danger">*</span></p>
                                     
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.ExternalArea, new {  @class = "form-control",  @placeholder = @SharedLocalizer["ExternalArea"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.ExternalArea, new {  @class = "form-control price",  @placeholder = @SharedLocalizer["ExternalArea"] })
                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.ExternalArea, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
                                     <p class="m-0"> Floor<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Floor, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Floor"] })
-                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Floor, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Floor"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="">
                                       <p class="m-0"> Room<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new {  @class = "form-control",  @type="number",  @placeholder = @SharedLocalizer["Room"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new {  @class = "form-control valiadteint",  @type="number",  @placeholder = @SharedLocalizer["Room"] })
                                      @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Room, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
                                     Bedrooms
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control", @type="number", @placeholder = @SharedLocalizer["Bedrooms"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control valiadteint", @type="number", @placeholder = @SharedLocalizer["Bedrooms"] })
                                     
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="">
                                     Storage
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Storage, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Storage"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Storage, new { @class = "form-control", @placeholder = @SharedLocalizer["Storage"] })
                                 </label>
                                 <label>
                                     Quantity
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Quantity, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Quantity"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Quantity, new {  @class = "form-control valiadteint",  @placeholder = @SharedLocalizer["Quantity"] })
                                 </label>
                             </div>
                             <div class="flex">
 
                                 <label>
                                     Additional Comment
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.AdditionComment, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AdditionComment"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.AdditionComment, new { @class = "form-control", @placeholder = @SharedLocalizer["AdditionComment"] })
                                 </label>
                             </div>
 
@@ -725,60 +678,60 @@
                                         <div class="flex">
                                             <label for="" class="w-100">
                                                 <p class="m-0"> Property Condition<span class="text-danger">*</span></p>
-                                               
-                                                @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.PropertyCondition, new {  @class = "form-control",  @placeholder = @SharedLocalizer["PropertyCondition"] })
-                                                 @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.PropertyCondition, "", new { @class = "text-danger" })
-                                                 
+
+                                                @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.PropertyCondition, new { @class = "form-control", @placeholder = @SharedLocalizer["PropertyCondition"] })
+                                                @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.PropertyCondition, "", new { @class = "text-danger" })
+
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="" class="w-100">
                                                 Additional Notes
-                                                @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.AdditionalNotes, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AdditionalNotes"] })
+                                                @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.AdditionalNotes, new { @class = "form-control", @placeholder = @SharedLocalizer["AdditionalNotes"] })
 
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="" class="w-100">
                                                 Others
-                                                @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Others, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Others"] })
+                                                @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Others, new { @class = "form-control", @placeholder = @SharedLocalizer["Others"] })
                                             </label>
                                         </div>
 
                                     </div>
                                 </div>
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="inputSearchs p-0">
-                        <div class="tabSection ptrl-20">
-                            <div class="addMoreAddress roundBorderBox m-0">
-                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                    <p>Documents</p>
-                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                                </div>
-                                <div class="panel" style="display: none;">
-                                    <div class="flex">
-                                        <label for="" class="w-100">
-                                             <input type="file" class="fileInput" asp-for="ValuationAssesment.SiteDescription.Document.Files" multiple onchange="validateFileSize(this)">  
-                                            <input type="text" class="fileNames" readonly placeholder="file names">
-                                        </label>
+                        <div class="inputSearchs p-0">
+                            <div class="tabSection ptrl-20">
+                                <div class="addMoreAddress roundBorderBox m-0">
+                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                        <p>Documents</p>
+                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
-                                    <div class="W-100">
-                                        <div class="prevUpload roundBorderBox m-0">
-                                            <h3>Previously uploaded</h3>
-                                            <div class="scroll-x">
-                                                <table  id="SiteTableDocument" class="table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>File Name</th>
-                                                            <th>DateUpdate </th>
-                                                            <th>Uploaded By</th>
-                                                            <th>Download</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                                    <div class="panel" style="display: none;">
+                                        <div class="flex">
+                                            <label for="" class="w-100">
+                                                <input type="file" class="fileInput" asp-for="ValuationAssesment.SiteDescription.Document.Files" multiple onchange="validateFileSize(this)">
+                                                <input type="text" class="fileNames" readonly placeholder="file names">
+                                            </label>
+                                        </div>
+                                        <div class="W-100">
+                                            <div class="prevUpload roundBorderBox m-0">
+                                                <h5>Previously uploaded</h5>
+                                                <div class="scroll-x">
+                                                    <table id="SiteTableDocument" class="table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>File Name</th>
+                                                                <th>DateUpdate </th>
+                                                                <th>Uploaded By</th>
+                                                                <th>Download</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
                                                             @if (Model.ValuationAssesment.SiteDescription.Documents != null)
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.SiteDescription.Documents)
@@ -789,7 +742,7 @@
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
                                                                         @* <td><a title="Delete" onclick="DeleteDocument(@docs.Id)" ><img src="../assets/trash.svg" alt="trash" /></a></td> *@
-                                                                       @*  <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="DeleteDocument(@docs.Id); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td> *@
+                                                                        @*  <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="DeleteDocument(@docs.Id); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td> *@
                                                                         <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
 
                                                                     </tr>
@@ -797,24 +750,24 @@
                                                             }
                                                             else
                                                             {
-                                                                <label>NA</label>
+                                                                <tr>
+                                                                    <td colspan="5">NA</td>
+                                                                </tr>
                                                             }
-                                                    </tbody>
-                                                </table>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
                             </div>
                         </div>
                         @if (!isHideBtn)
                         {
-                            <div class="text-right buttonArea bodyContent plr-0">
-                                @*   <button type="button" class="blueBtn mr-12">Next</button>  *@
+                            <div class="text-right buttonArea bodyContent plr-0"> 
                                 <button type="button" class="blueBtn mr-12" onclick="redirectToComparableEvidences()">Next</button> 
-
                             </div>
                         }
                     </div>
@@ -823,51 +776,51 @@
                         <div class="whiteBoxShadow m-0 ">
                             <div class="bodyContent footerAudit">
                                 <div class=" position-relative flex justify-between align-item-center m-0">
-                                    <h4 class="m-0">
+                                    <h5 class="m-0">
                                         Valuation Id : @Html.DisplayFor(model => model.Id)
-                                    </h4>
-                                    <h4 class="m-0">
+                                    </h5>
+                                    <h5 class="m-0">
                                         Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                    </h4>
+                                    </h5>
                                 </div>
                             </div>
                         </div>
-                        <h3 class="ptrl-20">Comparable Evidences</h3>
+                        <h5 class="ptrl-20">Comparable Evidences</h5>
                         <div class="inputSearchs">
                             @Html.HiddenFor(model => model.ValuationAssesment.comparableEvidenceModel.RequestId, new { @value = "Model.Id" })
                             <div class="flex">
                                 <label for="">
                                     Type
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Type, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Type"] })
-                                   
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Type, new { @class = "form-control", @placeholder = @SharedLocalizer["Type"] })
+
                                 </label>
                                 <label>
                                     Size
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Size, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Size"] })
-                                   
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Size, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Size"] })
+
                                 </label>
                             </div>
                             <div class="flex">
                                 <label>
                                     Remarks
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Remarks, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Remarks"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Remarks, new { @class = "form-control", @placeholder = @SharedLocalizer["Remarks"] })
                                 </label>
                                 <label>
-                                   
-                                      <p class="m-0">  Rate (Sq.Ft)<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, new {  @class = "form-control price",  @placeholder = @SharedLocalizer["RateSqFt"] })
-                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, "", new { @class = "text-danger" })
+
+                                    <p class="m-0">  Rate (Sq.Ft)<span class="text-danger">*</span></p>
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, new { @class = "form-control price", @placeholder = @SharedLocalizer["RateSqFt"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label>
-                                      <p class="m-0"> Price<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, new {  @class = "form-control price",  @placeholder = @SharedLocalizer["Price"] })
-                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, "", new { @class = "text-danger" })
+                                    <p class="m-0"> Price<span class="text-danger">*</span></p>
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["Price"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, "", new { @class = "text-danger" })
                                 </label>
                                 <label>
                                     Additional Comments
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.AddtionalComments, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AddtionalComments"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.AddtionalComments, new { @class = "form-control", @placeholder = @SharedLocalizer["AddtionalComments"] })
                                 </label>
                             </div>
 
@@ -888,9 +841,9 @@
                                         </div>
                                         <div class="W-100">
                                             <div class="prevUpload roundBorderBox m-0">
-                                                <h3>Previously uploaded</h3>
+                                                <h5>Previously uploaded</h5>
                                                 <div class="scroll-x">
-                                                    <table  id="EvidenceTableDocument"="table-striped">
+                                                    <table id="EvidenceTableDocument" ="table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th>File Name</th>
@@ -910,13 +863,15 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                         <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                     </tr>
                                                                 }
                                                             }
                                                             else
                                                             {
-                                                                <label>NA</label>
+                                                                <tr>
+                                                                    <td colspan="5">NA</td>
+                                                                </tr>
                                                             }
                                                         </tbody>
                                                     </table>
@@ -940,63 +895,49 @@
                         <div class="whiteBoxShadow m-0 ">
                             <div class="bodyContent footerAudit">
                                 <div class=" position-relative flex justify-between align-item-center m-0">
-                                    <h4 class="m-0">
+                                    <h5 class="m-0">
                                         Valuation Id : @Html.DisplayFor(model => model.Id)
-                                    </h4>
-                                    <h4 class="m-0">
+                                    </h5>
+                                    <h5 class="m-0">
                                         Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                    </h4>
+                                    </h5>
                                 </div>
                             </div>
                         </div>
-                        <h3 class="ptrl-20">Valuation Evidences</h3>
+                        <h5 class="ptrl-20">Valuation Evidences</h5>
                         <div class="inputSearchs">
                             @Html.HiddenFor(model => model.ValuationAssesment.valuationAssessementModel.RequestId, new { @value = "Model.Id" })
                             <div class="flex">
                                 <label for="">
                                     <p class="m-0"> MarketValue<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, new {  @class = "form-control price",   @placeholder = @SharedLocalizer["MarketValue"] })
-                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["MarketValue"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
-                                   
-                                      <p class="m-0"> Market Rate<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, new {  @class = "form-control price",  @placeholder = @SharedLocalizer["MarkentRate"] })
-                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, "", new { @class = "text-danger" })
+
+                                    <p class="m-0"> Market Rate<span class="text-danger">*</span></p>
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["MarkentRate"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, "", new { @class = "text-danger" })
                                 </label>
                             </div>
-                            @* <div class="flex">
-                               
-                                     <p class="m-0">Life of Building<span class="text-danger">*</span></p
-                                 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, new {  @class = "form-control",  @placeholder = @SharedLocalizer["LifeOfBuilding"] })
-                                     
-                                
-                                <label for="">
-                                     <p class="m-0">Annual Maintainance Cost<span class="text-danger">*</span></p
-                                                                   
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
-                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
-                                </label>
-                            </div> *@
-
+                           
                             <div class="flex">
                                 <label for="">
                                     <p class="m-0"> Life of Building<span class="text-danger">*</span></p>
-                                    
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, new {  @class = "form-control",  @placeholder = @SharedLocalizer["LifeOfBuilding"] })
+
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["LifeOfBuilding"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.LifeOfBuilding, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
-                                      <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
-                                   
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new {  @class = "form-control",  @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
-                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
+                                    <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
+
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control valiadteint formatting", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label>
-                                     Insuarance
+                                    Insuarance
                                     <span class="flex yesNoToggle">
                                         @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, true, new { onclick = "toggleInput('yes')" })
                                         <span>Yes</span>  &nbsp; &nbsp;
@@ -1004,10 +945,10 @@
                                         <span>No</span> &nbsp; &nbsp;
                                     </span>
                                 </label>
-                             
+
                                 <label id="yesInput" for="yesField" style="display: @(Model.ValuationAssesment.valuationAssessementModel.Insuarance ? "block" : "none");">
-                               Insurance details
-                                @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new { @class = "form-control", @placeholder = @SharedLocalizer["InsuaranceDetail"] })
+                                    Insurance details
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.InsuranceDetails, new { @class = "form-control", @placeholder = @SharedLocalizer["InsuaranceDetail"] })
                                 </label>
                             </div>
 
@@ -1027,11 +968,11 @@
                                                 <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
                                         </div>
-                                          <div class="W-100">
+                                        <div class="W-100">
                                             <div class="prevUpload roundBorderBox m-0">
-                                                <h3>Previously uploaded</h3>
+                                                <h5>Previously uploaded</h5>
                                                 <div class="scroll-x">
-                                                    <table  id="AssesmentTableDocument class="table-striped">
+                                                    <table id="AssesmentTableDocument class="table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th>File Name</th>
@@ -1051,13 +992,15 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                         <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                     </tr>
                                                                 }
                                                             }
                                                             else
                                                             {
-                                                                <label>NA</label>
+                                                                <tr>
+                                                                    <td colspan="5">NA</td>
+                                                                </tr>
                                                             }
                                                         </tbody>
                                                     </table>
@@ -1069,11 +1012,11 @@
 
                             </div>
                         </div>
-                        @if(!isHideBtn)
+                        @if (!isHideBtn)
                         {
-                        <div class="text-right buttonArea bodyContent plr-0">
-                            <button type="submit" class="blueBtn mr-12">Save</button>
-                        </div>
+                            <div class="text-right buttonArea bodyContent plr-0">
+                                <button type="submit" class="blueBtn mr-12">Save</button>
+                            </div>
                         }
                     </div>
                 </form>
@@ -1088,7 +1031,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <h5 class="modal-title">@SharedLocalizer["Delete"]</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -1114,7 +1057,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <h5 class="modal-title">@SharedLocalizer["Delete"]</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -1144,7 +1087,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">@SharedLocalizer["Delete"]</h4>
+                <h5 class="modal-title">@SharedLocalizer["Delete"]</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -1167,12 +1110,10 @@
 
 
 @section MyScripts {
-    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script> 
-
-    <script>
-
-        
-        
+    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script> 
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
@@ -1207,7 +1148,7 @@
         var RequeStatusReview = "@Eltizam.Web.Helpers.APIURLHelper.ReviewRequestStatus";
         var GetSiteDescriptionList = "@Eltizam.Web.Helpers.APIURLHelper.GetSiteDescriptionList";
 
-         var DeleteAssesmentDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDocument";
+        var DeleteAssesmentDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDocument";
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]";
 
@@ -1215,6 +1156,6 @@
         var UpdateLabel = "@SharedLocalizer["Update"]";
         var isViewHide = "@ViewBag.IsView";
         var isAddValuation = (@Model.Id == 0);
-        // var isViewQt = objPermssionQt.View ? true : false; 
-    </script> 
+        // var isViewQt = objPermssionQt.View ? true : false;
+    </script>
 }

@@ -1,10 +1,12 @@
 ﻿<!DOCTYPE html>
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>Forget password </title>
     <style type="text/css">
-        p,ul {
+        p,ul 
+		{
             font-family: 'Calibri','Open Sans', Arial, Helvetica, sans-serif !important;
             font-size:16px;
         }
@@ -39,17 +41,16 @@
             <p>
                 Hello Team,<br />
             </p>
-            <p>Valuation Request #[PValRefNoP] Quotation is created on [PDateP]. Please find the details below.</p> </br>
-			<div> 	
-				<div>
-				<table style="border-collapse: collapse;width: 100%;border: 1px solid #ddd8d8;text-align: center;">
+          
+			<p>Valuation Request #[PValRefNoP] is created with status [PNewStatusP] on [PDateP].</p>
+			
+			<table style="border-collapse: collapse;width: 100%;border: 1px solid #ddd8d8;text-align: center;">
 					<thead>
 						<tr style="background: #576aa0;color: white;">
 							<th style="padding: 10px;">Val. Ref.</th>
 							<th>Client Name</th>
 							<th>Property Name</th> 
-							<th>Property Location</th> 
-							<th>Val. Status</th>  
+							<th>Property Location</th>  
 						</tr>
 					</thead>
 					<tbody>
@@ -57,36 +58,11 @@
 							<td style="padding: 10px;">[PValRefNoP]</td>
 							<td>[PClientP]</td>
 							<td>[PPropertyP]</td> 
-							<td>[PLocationP]</td> 
-							<td>[PStatusP]</td> 
+							<td>[PLocationP]</td>  
 						</tr>
 					</tbody>
 				</table> <br/>
-				<table style="border-collapse: collapse;width: 100%;border: 1px solid #ddd8d8;text-align: center;">
-					<thead>
-						<tr style="background: #576aa0;color: white;">
-							<th style="padding: 10px;">Valuation Fees (AED)</th>
-							<th>VAT (Percent)</th>
-							<th>Other Charges</th> 
-							<th>Valuation Instructor Charges</th> 
-							<th>Discount (%)</th> 
-							<th>Total evaluation Fees</th> 
-						</tr>
-					</thead>
-					<tbody>
-						<tr style="background-color: #f1f1f2;
-							border-bottom: 1px solid #576aa0;">
-							<td style="padding: 10px;">[ValuationFees]</td>
-							<td>[VAT]</td>
-							<td>[OtherCharges]</td> 
-							<td>[ValuationInstructorCharges]</td>
-							<td>[Discount]</td>
-							<td>[TotalevaluationFees]</td> 
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			</div></br>
+                
             <p>
                 Thank you,<br />
                 Eltizam Valuation System<br />

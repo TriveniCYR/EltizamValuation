@@ -16,6 +16,7 @@ function InitializeAuditLogList() {
 
     var _appendURL = "?UserName=" + userName + "&TableName=" + tableName + "&DateFrom=" + datefrom + "&DateTo=" + dateto;
 
+    assignToggleFilter();
 
     var ajaxObject = {
         "url": BaseURL + AllAudit + _appendURL,

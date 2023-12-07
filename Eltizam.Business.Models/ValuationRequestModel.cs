@@ -17,7 +17,7 @@ namespace Eltizam.Business.Models
         public int ValuationModeId { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ValuationDate { get; set; }
-        [StringLength(250, MinimumLength = 0)]
+        
         public int? ValuationTimeFrame { get; set; }
         public int ClientId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]

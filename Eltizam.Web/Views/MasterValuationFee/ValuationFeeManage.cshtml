@@ -122,13 +122,13 @@
                                 <label for="" class="w-50">
                                     @* <p class="m-0">Valuation Fees (AED)<span class="text-danger">*</span></p> *@
                                     Valuation Fees (AED)
-                                    @Html.EditorFor(model => model.ValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" ,@placeholder="enter Valuation Fees (AED)"} })
+                                    @Html.EditorFor(model => model.ValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control formatting" ,@placeholder="enter Valuation Fees (AED)"} })
                                    @*  @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" }) *@
                                 </label>
                                 <label for="" class="w-50">
                                     VAT (Percent)
                                     @* <p class="m-0">VAT (Percent)<span class="text-danger">*</span></p> *@
-                                    @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control", @placeholder="enter VAT (Percent)"} })
+                                    @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control formatting", @placeholder="enter VAT (Percent)"} })
                                    @*  @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                 </label>
                             </div>
@@ -136,13 +136,13 @@
                                 <label for="" class="w-50">
                                     Other Charges
                                     @* <p class="m-0">Other Charges<span class="text-danger">*</span></p> *@
-                                    @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",placeholder="enter other charges" } })
+                                    @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control formatting",placeholder="enter other charges" } })
                                     @* @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" }) *@
                                 </label>
                                 <label for="" class="w-50">
                                     Total evaluation Fees
                                   @*   <p class="m-0">Total evaluation Fees<span class="text-danger">*</span></p> *@
-                                    @Html.EditorFor(model => model.TotalValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",@placeholder="enter Total evaluation Fees" } })
+                                    @Html.EditorFor(model => model.TotalValuationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control formatting",@placeholder="enter Total evaluation Fees" } })
                                    @*  @Html.ValidationMessageFor(model => model.TotalValuationFees, "", new { @class = "text-danger" }) *@
                                 </label>
                             </div>
@@ -151,7 +151,7 @@
                         <div id="fixed">
                             <label for="" class="w-50">
                                 <p class="m-0">Fixed valuation Fees<span class="text-danger">*</span></p>
-                                @Html.EditorFor(model => model.FixedvaluationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control",@placeholder="enter Fixed evaluation Fees" } })
+                                @Html.EditorFor(model => model.FixedvaluationFees, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control formatting",@placeholder="enter Fixed evaluation Fees" } })
                                 @Html.ValidationMessageFor(model => model.FixedvaluationFees, "", new { @class = "text-danger" })
                             </label>
                         </div>

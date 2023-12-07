@@ -16,15 +16,15 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? Location { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [StringLength(250, MinimumLength = 1)]
+        
         public decimal? InternalArea { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [StringLength(250, MinimumLength = 1)]
+       
         public decimal? ExternalArea { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [StringLength(250, MinimumLength = 1)]
+        
         public int? Floor { get; set; }
-        [StringLength(250, MinimumLength = 1)]
+        
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public int? Room { get; set; }
         

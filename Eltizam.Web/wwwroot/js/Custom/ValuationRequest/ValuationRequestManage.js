@@ -12,6 +12,7 @@
 //    evt.currentTarget.className += " active";
 //}
 var docId = 0;
+var invoiceId = 0;
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -99,6 +100,26 @@ function payTab(evt, payName) {
     }
     document.getElementById(payName).style.display = "block";
     evt.currentTarget.className += " active";
+}
+
+function getPDF(id) {
+    id = 24;
+    var url1 = "/ValuationRequest/ValuationData";
+    $.get(url1, function (content1) {
+        var w = window.open();
+        w.document.open();
+        w.document.write(content1);
+        w.document.getElementById("loading-wrapper").remove();
+        saveAspdf(w.document.getElementById("PDFMainDiv")) //(w.document.body)
+        w.close();
+    });
+}
+
+function saveAspdf(con) {
+    var pdf = new jsPDF('p', 'pt', 'a4');
+    pdf.addHTML(con, function () {
+        pdf.save('web.pdf');
+    });
 }
 //document.getElementById("defaultOpenPay").click();
 // payment option JS ends
@@ -294,7 +315,7 @@ $(document).ready(function () {
 
 
     if (roleId > 0) {
-        BindValuationRequestStatus(roleId)
+        BindValuationRequestStatus(roleId, action)
 
 
     }
@@ -372,36 +393,51 @@ $(document).ready(function () {
 
 var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/
 
-//// Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
-//if (selectedOption === 'Rejected') {
-//    $('#comment').show();
-//} else {
-//    $('#comment').hide();
-//}
+// Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
+if (selectedOption === 'Rejected') {
+    $('#comment').show();
+} else {
+    $('#comment').hide();
+}
 
 
 //if (RoleId == 2) {
 //    BindValuationRequestStatus(RoleId);
 //}
-//function BindValuationRequestStatus() {
-//    /*alert("hello");*/ 
-//    var RequestStatus = $("#StatusId");
-//    var _val = $('#hdnStatusId').val();
-//    var _rpname = "statusName";
-//    var roleId=document.getElementById('hdnRoleId').value
-
-//    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
-
-
-//}
-
-function BindValuationRequestStatus(roleId) {
+function BindValuationRequestStatus() {
+    /*alert("hello");*/
     var RequestStatus = $("#StatusId");
     var _val = $('#hdnStatusId').val();
     var _rpname = "statusName";
+    var roleId=document.getElementById('hdnRoleId').value
 
-    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
+    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action, RequestStatus, _rpname, _val);
+   // var url = GetAllValuationRequestStatus + '/' + roleId + '?action=' + action;
+
+
 }
+
+//function BindValuationRequestStatus(roleId) {
+//    var RequestStatus = $("#StatusId");
+//    var _val = $('#hdnStatusId').val();
+
+//    var _rpname = "statusName";
+
+  
+//    if (action == 'Add') {
+//        BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, '3'); // Assuming '3' is the id for "New"
+
+//       /* RequestStatus.prop('disabled', true);*/
+      
+//    }
+//    else {
+//          BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
+//    }
+    
+//}
+
+
+
 function BindClientType() {
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientTypeId').val();
@@ -1091,6 +1127,7 @@ function ConfirmationDeleteInvoice(id) {
     $('#DeleteInvoiceModel #Id').val(id);
 }
 function DeleteInvoice() {
+    invoiceId = $('#DeleteInvoiceModel #ID').val()
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteInvoiceModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteInvoiceByIdUrl + "/" + tempInAtiveID, Post, DeleteInvoiceByIdSuccess, DeleteInvoiceByIdError);
@@ -1102,8 +1139,10 @@ function DeleteInvoice() {
 function DeleteInvoiceByIdSuccess(data) {
     try {
         if (data._Success === true) {
+            
+            /*$('#' + tableId).DataTable().draw();*/
+            $('#' + invoiceId).remove();
             toastr.success(RecordDelete);
-            //$('#' + tableId).DataTable().draw();
         }
         else {
             toastr.error(data._Message);

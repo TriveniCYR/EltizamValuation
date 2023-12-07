@@ -34,7 +34,7 @@ namespace EltizamValuation.Web.Controllers
         {
             //Check permissions
             int roleId = _helper.GetLoggedInRoleId();
-            if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, PermissionEnum.View, roleId,SubModuleEnum.ValuationRequest))
+            if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, PermissionEnum.View, roleId, SubModuleEnum.ValuationRequest))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
             //Get module wise permissions
@@ -48,6 +48,12 @@ namespace EltizamValuation.Web.Controllers
 
 
         [HttpGet]
+        public IActionResult ValuationData()
+        {
+            return View("ValuationData");
+        }
+
+            [HttpGet]
         public IActionResult ValuationRequestManage(int? id, string view)
         {
             if (id != null)
@@ -57,16 +63,16 @@ namespace EltizamValuation.Web.Controllers
                 ViewData["IsView"] = true;
             if (view != null)
                 ViewBag.IsView = view;
-                //ValuationRequestModel valuationRequestModel;
+            //ValuationRequestModel valuationRequestModel;
 
-                var _ValuationEntity = new ValuationRequestModel();
+            var _ValuationEntity = new ValuationRequestModel();
 
             _ValuationEntity.ValuationAssesment = new ValuationAssesmentActionModel();
             _ValuationEntity.ValuationAssesment.SiteDescription = new SiteDescriptionModel();
             _ValuationEntity.ValuationAssesment.comparableEvidenceModel = new ComparableEvidenceModel();
             _ValuationEntity.ValuationAssesment.valuationAssessementModel = new ValuationAssessementModel();
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit ;
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
 
             //var action =id == null? PermissionEnum.Add:true? PermissionEnum.Edit: PermissionEnum.View;
             int roleId = _helper.GetLoggedInRoleId();
@@ -84,7 +90,7 @@ namespace EltizamValuation.Web.Controllers
 
             if (id == null || id <= 0)
             {
-                ViewBag.CurrentUserId = _helper.GetLoggedInUserId(); 
+                ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
 
                 //valuationRequestModel = new ValuationRequestModel(); 
                 return View("ValuationRequestManage", _ValuationEntity);
@@ -101,7 +107,7 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestModel>>(jsonResponse);
 
-                   //var requestid data._object.ValuationAssesment.RequestId
+                    //var requestid data._object.ValuationAssesment.RequestId
 
                     //Get Footer info
                     FooterInfo(TableNameEnum.ValuationRequest, _cofiguration, id);
@@ -124,20 +130,20 @@ namespace EltizamValuation.Web.Controllers
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
-                //ValuationRequestModel entity = new ValuationRequestModel();
-                               request.Id = id;
+                //ValuationRequestModel entity = new ValuationRequestModel(); 
                 //entity.ApproverId = request.ApproverId;
                 //entity.ValuerId = request.ValuerId;
                 //entity.ValuationModeId = request.ValuationModeId;
                 //entity.ValuationTimeFrame = request.ValuationTimeFrame;
                 //entity.ValuationDate = request.ValuationDate;
                 //entity.StatusId = request.StatusId;
-                //entity.PropertyId = request.PropertyId;
+                ////entity.PropertyId = request.PropertyId;
                 //entity.ClientId = request.ClientId;
                 //entity.ReferenceNo = request.ReferenceNo;
                 //entity.OtherReferenceNo = request.OtherReferenceNo;
                 //Fill audit logs field
 
+                request.Id = id;
                 if (request.Id == 0)
                     request.CreatedBy = _helper.GetLoggedInUserId();
                 request.ModifiedBy = _helper.GetLoggedInUserId();
@@ -145,7 +151,7 @@ namespace EltizamValuation.Web.Controllers
                 //valuationRequestModelNew.ValuationDate = valuationRequestModel.ValuationDate;
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(request))).Result;
 
-                if (responseMessage.IsSuccessStatusCode && request.Id==0)
+                if (responseMessage.IsSuccessStatusCode && request.Id == 0)
                 {
                     TempData[UserHelper.SuccessMessage] = AppConstants.ActionSuccess;
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
@@ -176,7 +182,7 @@ namespace EltizamValuation.Web.Controllers
             ValuationQuatationListModel quotation;
             //Check permissions for Get
             var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
-            
+
 
             int roleId = _helper.GetLoggedInRoleId();
 
@@ -188,8 +194,8 @@ namespace EltizamValuation.Web.Controllers
             ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
             ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
 
-            
-              // Assuming ViewBag.QuotationAccess is an object with a property View (boolean)
+
+            // Assuming ViewBag.QuotationAccess is an object with a property View (boolean)
             bool hasQuatationViewAccess = ViewBag.QuotationAccess?.View ?? false;
             bool hasQuatationEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
             bool hasQuatationAddAccess = ViewBag.QuotationAccess?.Add ?? false;
@@ -329,7 +335,7 @@ namespace EltizamValuation.Web.Controllers
             ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
 
 
-            
+
             bool hasInvoiceViewAccess = ViewBag.QuotationAccess?.View ?? false;
             bool hasInvoiceEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
             bool hasInvoiceAddAccess = ViewBag.QuotationAccess?.Add ?? false;
@@ -396,7 +402,7 @@ namespace EltizamValuation.Web.Controllers
                 ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
 
 
-               
+
                 bool hasInvoiceViewAccess = ViewBag.QuotationAccess?.View ?? false;
                 bool hasInvoiceEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
                 bool hasInvoiceAddAccess = ViewBag.QuotationAccess?.Add ?? false;
@@ -492,7 +498,7 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 //Check permissions for Get
-                var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
                 var requestId = id;
                 valuationAssesment.SiteDescription.ValuationRequestId = requestId;
                 valuationAssesment.comparableEvidenceModel.RequestId = requestId;
@@ -529,9 +535,9 @@ namespace EltizamValuation.Web.Controllers
 
 
                 // Assuming ViewBag.QuotationAccess is an object with a property View (boolean)
-                bool hasSiteDescriptionViewAccess = ViewBag.QuotationAccess?.View ?? false;
-                bool hasSiteDescriptionEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
-                bool hasSiteDescriptionAddAccess = ViewBag.QuotationAccess?.Add ?? false;
+                bool hasSiteDescriptionViewAccess = ViewBag.SiteDescription?.View ?? false;
+                bool hasSiteDescriptionEditAccess = ViewBag.SiteDescription?.Edit ?? false;
+                bool hasSiteDescriptionAddAccess = ViewBag.SiteDescription?.Add ?? false;
 
                 if (action == PermissionEnum.View && !hasSiteDescriptionViewAccess)
                 {
