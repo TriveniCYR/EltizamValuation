@@ -101,10 +101,22 @@ function profileTab(evt, cityName) {
 }
 document.getElementById("defaultOpen").click();
 
-function removeParentDiv(element) {
+function removeParentDiv(element, num) {
     const parentDiv = element.closest('.roundBorderBox');
     if (parentDiv) {
         parentDiv.remove();
+    }
+    var contactContainer = $("#contacts-container");
+    var count = contactContainer.children(".roundBorderBox").length;
+    for (i = num; i < count; i++) {
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[id]').forEach(element => {
+            debugger
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
     }
 }
 
@@ -171,9 +183,7 @@ function addMoreAddress() {
     if (count == 1) {
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
-        minusDiv.innerHTML = `
-    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
-        `;
+        minusDiv.innerHTML = ' <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this,'+count+')"> ';
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
 
     }
@@ -190,10 +200,23 @@ function addMoreAddress() {
 
 }
 
-function removeParentDivAddress(element) {
+function removeParentDivAddress(element, num) {
+    debugger
     const parentDivAdd = element.closest(".addMoreAddress");
     if (parentDivAdd) {
         parentDivAdd.remove()
+    }
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    for (i = num; i < count; i++) {
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[id]').forEach(element => {
+            debugger
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
     }
 }
 
