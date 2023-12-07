@@ -5,58 +5,78 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Utility.Enums;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using MailKit.Net.Smtp;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
-using System.Drawing;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class MasterNotificationService: INotificationService
+    public class MasterNotificationService : INotificationService
     {
         private readonly IConfiguration _configuration;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
         private IRepository<MasterNotification> _repository { get; set; }
         private IRepository<ValuationRequest> _valuationrepository { get; set; }
-        public MasterNotificationService(IUnitOfWork unitOfWork,IConfiguration configuration,IMapperFactory mapperFactory)
+        public MasterNotificationService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapperFactory mapperFactory)
         {
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.GetRepository<MasterNotification>();
             _configuration = configuration;
             _mapperFactory = mapperFactory;
-            _valuationrepository= _unitOfWork.GetRepository<ValuationRequest>();
+            _valuationrepository = _unitOfWork.GetRepository<ValuationRequest>();
         }
-        public async Task<DBOperation> SendEmail(SendEmailModel request,int valuationrequestId,int statusId)
-        {
-            var message = new MimeMessage();
-            message.From.Add(MailboxAddress.Parse(_configuration.GetSection("SMTPDetails:FromEmail").Value));
-            message.To.Add(MailboxAddress.Parse(request.ToEmailList));
-            message.Subject = request.Subject;
-            message.Body = new TextPart(TextFormat.Html) { Text = request.Body };
-            using var smtp = new SmtpClient();
-            smtp.Connect(_configuration.GetSection("SMTPDetails:Host").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
-            smtp.Authenticate(_configuration.GetSection("SMTPDetails:UserName").Value,
-                _configuration.GetSection("SMTPDetails:Password").Value);
-            smtp.Send(message);
-            smtp.Disconnect(true);
+
+        /// <summary>
+        /// Send email and log entry into DB
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="valuationrequestId"></param>
+        /// <param name="statusId"></param>
+        /// <returns></returns>
+        public async Task<DBOperation> SendEmail(SendNotificationModel request)
+        {  
             try
             {
+                request.Body = request.Body?.Replace("[PValRefNoP]", request.ValRefNo).Replace("[PClientP]", request.Client).Replace("[PPropertyP]", request.Property)
+                                            .Replace("[PLocationP]", request.Location).Replace("[PStatusP]", request.Status).Replace("[PIdP]", request.ValId.ToString());
+
+                var message = new MimeMessage();
+                message.From.Add(MailboxAddress.Parse(_configuration.GetSection("SMTPDetails:FromEmail").Value));
+
+                //Parse email data
+                var Em = request.ToEmailList;
+                if (Em.Contains(';'))
+                {
+                    foreach (var mail in Em.Split(';')) 
+                        message.To.Add(MailboxAddress.Parse(mail.Trim())); 
+                }
+                else
+                    message.To.Add(MailboxAddress.Parse(Em));
+
+                // message.To.Add(MailboxAddress.Parse(request.ToEmailList));
+                message.Subject = _configuration.GetSection("ApiInfo:Environment").Value +" "+ request.Subject;
+                message.Body = new TextPart(TextFormat.Html) { Text = request.Body };
+
+                using var smtp = new SmtpClient();
+                smtp.Connect(_configuration.GetSection("SMTPDetails:Host").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
+                smtp.Authenticate(_configuration.GetSection("SMTPDetails:UserName").Value,
+                    _configuration.GetSection("SMTPDetails:Password").Value);
+              
+                //Send email 
+                smtp.Send(message);
+                smtp.Disconnect(true); 
+                
+                //Log email entry
                 var notification = new MasterNotification
                 {
-                    ValuationRequestId = valuationrequestId,
-                    StatusId = statusId,
+                    ValuationRequestId = request.ValId,
+                    StatusId = request.StatusId,
                     Subject = request.Subject,
                     ToEmails = request.ToEmailList,
                     Body = request.Body,
@@ -65,41 +85,42 @@ namespace Eltizam.Business.Core.Implementation
                     CreatedBy = 1,
                     CreatedDate = DateTime.Now,
                     ReadBy = 0,
-                    ReadDate = null,
-                   
+                    ReadDate = null, 
                 };
-                _repository.AddAsync(notification);
+
+                _repository.AddAsync(notification); 
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
-            {
+            { 
+                
+            } 
 
-                throw ex;
-            }
-       
             return DBOperation.Success;
-        }
-        public SendEmailModel GetToEmail(string action, int valiadtionRequestId)
+        } 
+
+        public SendNotificationModel GetValuationNotificationData(RecepientActionEnum subjectEnum, int valiadtionRequestId)
         {
             DbParameter[] osqlParameter =
             {
-                new DbParameter("Action", action, SqlDbType.VarChar),
-                new DbParameter("ValiadtionRequestId",valiadtionRequestId,SqlDbType.Int),
+                new DbParameter("Action", subjectEnum, SqlDbType.Int),
+                new DbParameter("ValId",  valiadtionRequestId, SqlDbType.Int),
             };
 
-            var result = EltizamDBHelper.ExecuteMappedReader<SendEmailModel>(ProcedureMetastore.usp_EmailToList,
-                              DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter).FirstOrDefault();
+            var result = EltizamDBHelper.ExecuteMappedReader<SendNotificationModel>(ProcedureMetastore.usp_ValuationRequest_GetNotificationData,
+                         DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter).FirstOrDefault();
+           
             return result;
         }
 
-        public List<MasterNotificationEntitty> GetAll(int? viewmore)
+        public List<MasterNotificationEntitty> GetAll(int? viewmore, int? userId, int? valId)
         {
             var notificationresult = _repository.GetAllAsync().Result.ToList();
             var valuationrequest = _valuationrepository.GetAllAsync().Result.ToList();
 
             var result = from notification in notificationresult
                          join valuation in valuationrequest on notification.ValuationRequestId equals valuation.Id
-                         orderby notification.Id
+                         orderby notification.Id descending
                          select new MasterNotificationEntitty
                          {
                              Id = notification.Id,
@@ -111,24 +132,30 @@ namespace Eltizam.Business.Core.Implementation
                              Readby = notification.ReadBy,
                              ReadDate = notification.ReadDate,
                              ValRefNo = valuation.ReferenceNo,
-                             StatusId = notification.StatusId
+                             StatusId = notification.StatusId, 
+                             CreatedBy = valuation.CreatedBy, 
                          };
+
+            if (userId != null && userId != 0)
+                result = result.Where(a => a.CreatedBy == userId).ToList(); 
+            if (valId != null && valId != 0) 
+                result = result.Where(a => a.ValuationRequestId == valId).ToList();  
 
             List<MasterNotificationEntitty> finalResult;
             if (viewmore > 0)
             {
                 finalResult = result.ToList();
-            }
+            } 
             else
             {
-                finalResult = result.Where(x=>x.Readby==0).Take(10).ToList();
+                finalResult = result.Where(x => x.Readby == 0).Take(10).ToList();
             }
 
             return finalResult;
         }
 
 
-        public async Task<DBOperation>UpdateNotification(int notificationid, int readBy)
+        public async Task<DBOperation> UpdateNotification(int notificationid, int readBy)
         {
             var tobeupdateddata = _repository.Get(notificationid);
             if (tobeupdateddata != null)

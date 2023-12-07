@@ -34,7 +34,7 @@
 <body style="font-family: 'Calibri'">
     <div style="width: 100%;margin-left: auto;margin-right: auto;margin-top: 1em;margin-bottom: 1em;max-width: 55em;zoom: 1;color: black;border:solid 1px #FFF; border-radius:10px">
         <div style="padding:10px;text-align:center; border-bottom:4px solid #0b3c5d"> 
-            <img src="../assets/logo.svg" alt="logo" height="80">
+            <img src="https://eltizam.aspnetdevelopment.in/assets/logo.png" alt="logo" height="80">
         </div>
         </div>      
         <div style="width: 100%;margin-left: auto;margin-right: auto;margin-top: 1em;margin-bottom: 1em;max-width: 55em;zoom: 1;color: black;border:solid 1px #FFF;border-radius:10px;padding:10px;border-bottom:4px solid #0b3c5d">
@@ -42,8 +42,25 @@
                 Hello Team,<br />
             </p>
           
-			<p>Valuation Request [PValRefNoP] status changed from [POldStatusP] to [PNewStatusP] on [PDateP].</p>
-                
+			<p>Valuation Request #[PValRefNoP] status changed to [PNewStatusP] on [PDateP].</p>
+            <table style="border-collapse: collapse;width: 100%;border: 1px solid #ddd8d8;text-align: center;">
+					<thead>
+						<tr style="background: #576aa0;color: white;">
+							<th style="padding: 10px;">Val. Ref.</th>
+							<th>Client Name</th>
+							<th>Property Name</th> 
+							<th>Property Location</th>  
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="background-color: #f1f1f2;border-bottom: 1px solid #576aa0;">
+							<td style="padding: 10px;">[PValRefNoP]</td>
+							<td>[PClientP]</td>
+							<td>[PPropertyP]</td> 
+							<td>[PLocationP]</td>  
+						</tr>
+					</tbody>
+				</table> <br/>
             <p>
                 Thank you,<br />
                 Eltizam Valuation System<br />

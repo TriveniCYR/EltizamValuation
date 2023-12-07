@@ -137,3 +137,75 @@ function BindClientType() {
     //});
 }
 
+
+function removeParentDiv(element) {
+    const parentDiv = element.closest('.roundBorderBox');
+    if (parentDiv) {
+        parentDiv.remove();
+    }
+}
+
+function addRoundBorderBox() {
+    const roundBorderBox = document.querySelector('.roundBorderBox');
+    const clonedDiv = roundBorderBox.cloneNode(true);
+
+    var addressContainer = $("#contacts-container");
+    var count = addressContainer.children(".roundBorderBox").length;
+
+    clonedDiv.querySelectorAll('[id]').forEach(element => {
+        element.id = element.id.replace("_0", "_" + count);
+    });
+    clonedDiv.querySelectorAll('[name]').forEach(element => {
+        element.name = element.name.replace("[0]", "[" + count + "]");
+    });
+    //const minusDiv = document.createElement('div');
+    //minusDiv.className = 'text-right';
+    //minusDiv.innerHTML = `
+    //<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
+    //    `;
+    //clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
+    roundBorderBox.parentElement.insertBefore(clonedDiv, roundBorderBox.nextSibling);
+
+    const inputFields = clonedDiv.querySelectorAll('input');
+    inputFields.forEach((input) => {
+        input.value = '';
+    });
+}
+
+// more address field on click
+function addMoreAddress() {
+    const addMoreAddressBox = document.querySelector('.addMoreAddress');
+    const clonedDiv = addMoreAddressBox.cloneNode(true);
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    clonedDiv.querySelectorAll('[id]').forEach(element => {
+        element.id = element.id.replace("_0", "_" + count);
+    });
+    clonedDiv.querySelectorAll('[name]').forEach(element => {
+        element.name = element.name.replace("[0]", "[" + count + "]");
+    });
+    //const minusDiv = document.createElement('div');
+    //minusDiv.className = 'text-right';
+    //minusDiv.innerHTML = `
+    //<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+    //    `;
+    //clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
+
+    addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
+
+    const inputFields = clonedDiv.querySelectorAll('input');
+    inputFields.forEach((input) => {
+        input.value = '';
+    });
+
+}
+
+function removeParentDivAddress(element) {
+    const parentDivAdd = element.closest(".addMoreAddress");
+    if (parentDivAdd) {
+        parentDivAdd.remove()
+    }
+}
+
+
+

@@ -189,35 +189,29 @@ namespace Eltizam.Business.Core.Implementation
             }
             try
             {
-                string? username = _masteruserrepository.GetAll().Where(x => x.Id == objQuatation.CreatedBy).Select(x => x.UserName).FirstOrDefault();
+              //  string? username = _masteruserrepository.GetAll().Where(x => x.Id == objQuatation.CreatedBy).Select(x => x.UserName).FirstOrDefault();
                 string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_QuotationCreate.html");
         
-                strHtml = strHtml.Replace("[PDateP]", objQuatation.CreatedDate.ToString());
-                strHtml = strHtml.Replace("[PCreatedByP]", username);
-                strHtml = strHtml.Replace("[PValRefNoP]", objQuatation.ReferenceNo);
+                strHtml = strHtml.Replace("[PDateP]", objQuatation.CreatedDate.ToString()); 
                 strHtml = strHtml.Replace("[ValuationFees]", objQuatation.ValuationFee.ToString());
                 strHtml = strHtml.Replace("[VAT]", objQuatation.Vat.ToString());
                 strHtml = strHtml.Replace("[OtherCharges]", objQuatation.OtherCharges.ToString());
                 strHtml = strHtml.Replace("[ValuationInstructorCharges]", objQuatation.InstructorCharges.ToString());
                 strHtml = strHtml.Replace("[Discount]", objQuatation.Discount.ToString());
                 strHtml = strHtml.Replace("[TotalevaluationFees]", objQuatation.TotalFee.ToString());
-                var receipientemail = _notificationService.GetToEmail(RecepientActionEnum.QuaotationCreation.ToString(), objQuatation.Id);
-                var sendemaildetails = new SendEmailModel
-                {
-                    ToEmailList = receipientemail.ToEmailList,
-                    Body = strHtml,
-                    Subject = "Valuation Quotation Creation",
 
-                };
-                await _notificationService.SendEmail(sendemaildetails, objQuatation.ValuationRequestId, objQuatation.StatusId);
+                var notificationModel = _notificationService.GetValuationNotificationData(RecepientActionEnum.QuaotationCreation, objQuatation.ValuationRequestId);
+                notificationModel.Subject = EnumHelper.GetDescription(RecepientActionEnum.QuaotationCreation);
+                notificationModel.Body = strHtml; 
+
+                await _notificationService.SendEmail(notificationModel);
             }
             catch (Exception ex)
-            {
-
+            { 
                 throw ex;
             }
-            return DBOperation.Success;
-        
+
+            return DBOperation.Success; 
         }
     }
 }

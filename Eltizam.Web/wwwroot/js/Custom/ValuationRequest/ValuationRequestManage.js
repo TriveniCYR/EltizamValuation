@@ -821,7 +821,6 @@ function BindClientDetailsByClientId(Id) {
         url: BaseURL + GetClientDetailById + '/' + Id,
         "datatype": "json",
         success: function (response) {
-            debugger
             //document.getElementById('ClientName').value = response._object.clientName;
             document.getElementById('LicenseNumber').value = response._object.licenseNumber;
 

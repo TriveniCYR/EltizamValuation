@@ -1,39 +1,38 @@
-﻿
-@inject IConfiguration Configuration
+﻿@inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 
 @{
     ViewData["Title"] = @SharedLocalizer["Notifications List"];
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var userid = Convert.ToInt32(Context.Request.Query["UserId"]);
+    var valId = Convert.ToInt32(Context.Request.Query["ValId"]);
 }
 
-    <!-- system user master -->
-    <div class="flex"> 
-        <div class="w-100 position-relative">
+<!-- system user master -->
+<div class="flex">
+    <div class="w-100 position-relative">
 
         <main>
             <div class="whiteBoxShadow">
                 <div class="heading position-relative flex justify-between ">
                     <h3 class="dashboardTitle">Notifications</h3>
                     <input type="hidden" id="userid" value="@userid" />
+                    <input type="hidden" id="valId" value="@valId" />
                 </div>
+
                 <div class="bodyContent" id="notificationsContainer">
-                    
-                       
                 </div>
             </div>
 
         </main>
-        </div>
-    </div> 
+    </div>
+</div>
+
 @section MyScripts {
     <script type="text/javascript" src="~/js/Custom/MasterNotification/MasterNotification.js?v=@jsVersion"></script>
 
     <script>
         var notifications = "@Eltizam.Web.Helpers.APIURLHelper.GetNotificationList";
-        var updatenotification = "@Eltizam.Web.Helpers.APIURLHelper.UpdateNotification";
-       
-      
+        var updatenotification = "@Eltizam.Web.Helpers.APIURLHelper.UpdateNotification"; 
     </script>
 }
