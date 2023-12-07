@@ -666,7 +666,7 @@
                                 <label for="">
                                    <p class="m-0"> Internal Area<span class="text-danger">*</span></p>
                                    
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.InternalArea, new {  @class = "form-control",  @placeholder = @SharedLocalizer["InternalArea"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.InternalArea, new {  @class = "form-control price",  @placeholder = @SharedLocalizer["InternalArea"] })
                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.InternalArea, "", new { @class = "text-danger" })
                                 </label>
                             </div>
@@ -674,7 +674,7 @@
                                 <label for="">
                                     <p class="m-0"> External Area<span class="text-danger">*</span></p>
                                     
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.ExternalArea, new {  @class = "form-control",  @placeholder = @SharedLocalizer["ExternalArea"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.ExternalArea, new {  @class = "form-control price",  @placeholder = @SharedLocalizer["ExternalArea"] })
                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.ExternalArea, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
@@ -686,12 +686,12 @@
                             <div class="flex">
                                 <label for="">
                                       <p class="m-0"> Room<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new {  @class = "form-control",  @type="number",  @placeholder = @SharedLocalizer["Room"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new {  @class = "form-control valiadteint",  @type="number",  @placeholder = @SharedLocalizer["Room"] })
                                      @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Room, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
                                     Bedrooms
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control", @type="number", @placeholder = @SharedLocalizer["Bedrooms"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control valiadteint", @type="number", @placeholder = @SharedLocalizer["Bedrooms"] })
                                     
                                 </label>
                             </div>
@@ -702,7 +702,7 @@
                                 </label>
                                 <label>
                                     Quantity
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Quantity, new {  @class = "form-control",  @placeholder = @SharedLocalizer["Quantity"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Quantity, new {  @class = "form-control valiadteint",  @placeholder = @SharedLocalizer["Quantity"] })
                                 </label>
                             </div>
                             <div class="flex">
@@ -797,7 +797,9 @@
                                                             }
                                                             else
                                                             {
-                                                                <label>NA</label>
+                                                                <tr>
+                                                                    <td colspan="5">NA</td>
+                                                                </tr>
                                                             }
                                                     </tbody>
                                                 </table>
@@ -916,7 +918,9 @@
                                                             }
                                                             else
                                                             {
-                                                                <label>NA</label>
+                                                                <tr>
+                                                                    <td colspan="5">NA</td>
+                                                                </tr>
                                                             }
                                                         </tbody>
                                                     </table>
@@ -1057,7 +1061,9 @@
                                                             }
                                                             else
                                                             {
-                                                                <label>NA</label>
+                                                                <tr>
+                                                                    <td colspan="5">NA</td>
+                                                                </tr>
                                                             }
                                                         </tbody>
                                                     </table>

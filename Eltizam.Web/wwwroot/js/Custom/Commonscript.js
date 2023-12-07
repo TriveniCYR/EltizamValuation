@@ -48,7 +48,7 @@ var userid = parseInt($("#userid").val(), 10);
 
 $(document).ready(function () {
 
-    // Assuming your elements have the class 'valuation-input'
+    // Assuming your elements have the class 'price'
     const elements = document.getElementsByClassName('price');
 
     // Iterate through the elements and attach the event listener to each
@@ -62,6 +62,13 @@ $(document).ready(function () {
             // Remove leading zeros
             inputValue = inputValue.replace(/^0+/g, '0');
 
+            // Limit to 20 digits before the decimal point
+            const parts = inputValue.split('.');
+            if (parts.length > 1) {
+                parts[0] = parts[0].slice(0, 20);
+                inputValue = parts.join('.');
+            }
+
             // Limit to 6 decimal places
             const decimalParts = inputValue.split('.');
             if (decimalParts.length > 1) {
@@ -69,12 +76,35 @@ $(document).ready(function () {
                 inputValue = decimalParts.join('.');
             }
 
+            // Check if the length exceeds the limit (20 digits before + 1 decimal point + 6 digits after)
+            if (inputValue.length > 27) {
+                inputValue = inputValue.slice(0, 27);
+            }
+
+            event.target.value = inputValue;
+        });
+    }
+
+    // Assuming your elements have the class 'price'
+    const intelements = document.getElementsByClassName('valiadteint');
+
+    // Iterate through the elements and attach the event listener to each
+    for (const element of intelements) {
+        element.addEventListener('input', function (event) {
+            let inputValue = event.target.value;
+
+            // Remove non-numeric characters
+            inputValue = inputValue.replace(/[^0-9]/g, '');
+
+            // Limit to 20 digits
+            inputValue = inputValue.slice(0, 20);
+
             event.target.value = inputValue;
         });
     }
 
 
-
+    
     ErrorDev.hide();
     readsideNavToggle();
     hideLoader();

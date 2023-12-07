@@ -492,7 +492,7 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 //Check permissions for Get
-                var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
                 var requestId = id;
                 valuationAssesment.SiteDescription.ValuationRequestId = requestId;
                 valuationAssesment.comparableEvidenceModel.RequestId = requestId;
@@ -529,9 +529,9 @@ namespace EltizamValuation.Web.Controllers
 
 
                 // Assuming ViewBag.QuotationAccess is an object with a property View (boolean)
-                bool hasSiteDescriptionViewAccess = ViewBag.QuotationAccess?.View ?? false;
-                bool hasSiteDescriptionEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
-                bool hasSiteDescriptionAddAccess = ViewBag.QuotationAccess?.Add ?? false;
+                bool hasSiteDescriptionViewAccess = ViewBag.SiteDescription?.View ?? false;
+                bool hasSiteDescriptionEditAccess = ViewBag.SiteDescription?.Edit ?? false;
+                bool hasSiteDescriptionAddAccess = ViewBag.SiteDescription?.Add ?? false;
 
                 if (action == PermissionEnum.View && !hasSiteDescriptionViewAccess)
                 {

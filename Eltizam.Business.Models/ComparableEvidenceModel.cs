@@ -14,7 +14,7 @@ namespace Eltizam.Business.Models
         public int? RequestId { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? Type { get; set; }
-        [StringLength(250, MinimumLength = 1)]
+       
         public int? Size { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? Remarks { get; set; }
