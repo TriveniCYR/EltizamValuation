@@ -89,6 +89,7 @@ function profileTab(evt, cityName) {
         tabcontent[i].style.padding = 0;
         tabcontent[i].style.border = "none";
         tabcontent[i].style.marginTop = 0;
+        tabcontent[i].style.position = "absolute";
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -97,6 +98,7 @@ function profileTab(evt, cityName) {
     document.getElementById(cityName).style.height = "auto";
     document.getElementById(cityName).style.padding = "6px 12px";
     document.getElementById(cityName).style.border = "1px solid var(--blue)";
+    document.getElementById(cityName).style.position = "initial";
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
@@ -563,38 +565,7 @@ if (action === "Add") {
 
 
 
-    function validateFileSize(input) {
-        const maxSizeInBytes = 2 * 1024 * 1024; // 5MB
-    const files = input.files;
-
-    for (let i = 0; i < files.length; i++) {
-            if (files[i].size > maxSizeInBytes) {
-                toastr.error('File size exceeds 2MB. Please choose a smaller file.');
-    input.value = ''; // Clear the input to prevent uploading the large file
-    return;
-            }
-        }
-
-    // If all files are within the size limit, display the file names
-    displayFileNames(input);
-}
-
-function displayFileNames(input) {
-    const fileInput = input;
-    const fileNamesInput = input.nextElementSibling;
-
-    const files = fileInput.files;
-    let fileNames = "";
-
-    for (let i = 0; i < files.length; i++) {
-        fileNames += files[i].name;
-        if (i < files.length - 1) {
-            fileNames += ", ";
-        }
-    }
-
-    fileNamesInput.value = fileNames;
-}
+   
 
     
 
