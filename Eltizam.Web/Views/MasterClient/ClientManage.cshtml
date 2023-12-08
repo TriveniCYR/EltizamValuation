@@ -328,7 +328,7 @@
                                     <label for="" class="w-100">
                                         @*   <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)"> *@
                                         <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="validateFileSize(this)">
-
+                                        <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                         <input type="text" class="fileNames" readonly placeholder="file names">
                                     </label>
                                 </div>
