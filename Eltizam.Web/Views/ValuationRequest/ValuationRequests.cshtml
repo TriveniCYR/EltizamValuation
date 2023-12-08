@@ -98,14 +98,14 @@
                         </label>
                         <label for="ClientName">
                             Client Name
-                            @Html.TextBoxFor(model => model.ClientName, new { @placeholder = @SharedLocalizer["ClientName"] })
+                            @Html.TextBoxFor(model => model.ClientId, new { @placeholder = @SharedLocalizer["Client"] })
                         </label>
                         
                     </div>
                     <div class="flex">
                         <label for="PropertyName">
                             Property Name
-                            @Html.TextBoxFor(model => model.PropertyName, new { @placeholder = @SharedLocalizer["PropertyName"] })
+                            @Html.TextBoxFor(model => model.PropertyId, new { @placeholder = @SharedLocalizer["Property"] })
                         </label>
                         <label for="">
                             <p class="m-0">
