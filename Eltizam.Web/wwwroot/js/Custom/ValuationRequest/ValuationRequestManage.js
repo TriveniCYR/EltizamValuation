@@ -229,10 +229,10 @@ $(document).ready(function () {
     var inputElement56 = $('#ValuationAssesment_comparableEvidenceModel_AddtionalComments');
 
 
-    var inputElement62 = $('#ValuationAssesment_valuationAssessementModel_MarketRate');
+    var inputElement61 = $('#ValuationAssesment_valuationAssessementModel_MarketRate');
     var inputElement62 = $('#ValuationAssesment_valuationAssessementModel_LifeOfBuilding');
-    var inputElement64 = $('#ValuationAssesment_valuationAssessementModel_AnnualMaintainceCost');
-    var inputElement61 = $('#ValuationAssesment_valuationAssessementModel_MarketValue');
+    var inputElement63 = $('#ValuationAssesment_valuationAssessementModel_AnnualMaintainceCost');
+    var inputElement64 = $('#ValuationAssesment_valuationAssessementModel_MarketValue');
     var inputElement65 = $('#ValuationAssesment_valuationAssessementModel_Insuarance');
     var inputElement66 = $('#ValuationAssesment_valuationAssessementModel_InsuranceDetails');
     
@@ -305,10 +305,10 @@ $(document).ready(function () {
         inputElement55.prop('disabled', true);
         inputElement56.prop('disabled', true);
 
-        inputElement62.prop('disabled', true);
-        inputElement62.prop('disabled', true);
-        inputElement64.prop('disabled', true);
         inputElement61.prop('disabled', true);
+        inputElement62.prop('disabled', true);
+        inputElement63.prop('disabled', true);
+        inputElement64.prop('disabled', true);
         inputElement65.prop('disabled', true);
         inputElement66.prop('disabled', true);
     }

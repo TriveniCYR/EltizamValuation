@@ -13,8 +13,8 @@ function InitializeValutionRequestDataList() {
     var propertyTypeId = $("#PropertyTypeId").val();
     var stateId = $("#StateId").val();
     var resourceId = $("#ResourceId").val();
-    var countryId = $("CountryId").val();
-    var cityId = $("CityId").val();
+    var countryId = $("#CountryId").val();
+    var cityId = $("#CityId").val();
 
     var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
     var ClientId = $("#ClientId").val() === undefined ? "" : $("#ClientId").val();
