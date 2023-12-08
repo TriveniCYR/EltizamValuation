@@ -62,22 +62,7 @@ function toggleInput(answer) {
     }
 }
 
-function displayFileNames(input) {
-    const fileInput = input;
-    const fileNamesInput = input.nextElementSibling;
 
-    const files = fileInput.files;
-    let fileNames = "";
-
-    for (let i = 0; i < files.length; i++) {
-        fileNames += files[i].name;
-        if (i < files.length - 1) {
-            fileNames += ", ";
-        }
-    }
-
-    fileNamesInput.value = fileNames;
-}
 function accordianToggle(header) {
     const item = header.nextElementSibling;
     if (item.style.display === 'block') {
@@ -1155,20 +1140,6 @@ function DeleteInvoiceByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function validateFileSize(input) {
-    const maxSizeInBytes = 2 * 1024 * 1024; // 5MB
-    const files = input.files;
 
-    for (let i = 0; i < files.length; i++) {
-        if (files[i].size > maxSizeInBytes) {
-            toastr.error('File size exceeds 2MB. Please choose a smaller file.');
-            input.value = ''; // Clear the input to prevent uploading the large file
-            return;
-        }
-    }
-
-    // If all files are within the size limit, display the file names
-    displayFileNames(input);
-}
 
 //#endregion Delete Invoice
