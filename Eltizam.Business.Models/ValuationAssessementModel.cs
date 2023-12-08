@@ -13,11 +13,11 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public int? RequestId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-         [Range(1, double.MaxValue)]
+        
         public decimal? MarketValue { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
       
-        [Range(1, double.MaxValue)]
+        
         public decimal? MarketRate { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         
