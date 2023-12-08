@@ -16,7 +16,6 @@ namespace Eltizam.Business.Models
         public string? Address1 { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? Address2 { get; set; }
-        [StringLength(250, MinimumLength = 1)]
         public string? Address3 { get; set; }
         [StringLength(10, MinimumLength = 5)]
         public string? PinNo { get; set; }

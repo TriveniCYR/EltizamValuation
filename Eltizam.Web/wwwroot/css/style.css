@@ -2329,3 +2329,6 @@ table.topQuotationDuesTable {
     width: 170px;
     height: 135px;
 }
+.select2-container--default + .select2-container--default {
+    display: none;
+}

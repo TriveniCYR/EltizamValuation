@@ -37,7 +37,7 @@
                     <button class="tablinks" onclick="profileTab(event, 'profile4')">Documents</button>
                 </div>
 
-                <form asp-action="UserManage" method="POST" enctype="multipart/form-data">
+                <form id="resource"  asp-action="UserManage" method="POST" enctype="multipart/form-data">
 
                     <input type="hidden" id="isAddPerm" value="@isAdd" />
                     <input type="hidden" id="isEditPerm" value="@isEdit" />
@@ -178,7 +178,7 @@
                                         @if (i != 0)
                                         {
                                             <div class="text-right">
-                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this,@i)">
                                             </div>
                                         }
                                         <input type="hidden" id="@("hdnCountry_"+i)" value="@(Model.Addresses[i] == null ? 0 : Model.Addresses[i].CountryId)" />
@@ -289,7 +289,7 @@
                                 <div class="roundBorderBox addQualification">
                                     @if(i != 0){
                                             <div class="text-right">
-                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this,@i)">
                                             </div>
                                         }
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
@@ -400,8 +400,6 @@
         </div>
     </div>
 </main>
-@*  </div>
-</div> *@
 
 <div id="DeleteDocumentModel" class="modal themeModal " role="dialog">
     <div class="modal-dialog">

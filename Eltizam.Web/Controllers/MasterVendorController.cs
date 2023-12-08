@@ -94,6 +94,17 @@ namespace EltizamValuation.Web.Controllers
                     if (data._object is null)
                         return NotFound();
 
+                    if (data._object.Addresses.Count == 0)
+                    {
+                        MasterAddressEntity addess = new MasterAddressEntity();
+                        data._object.Addresses.Add(addess);
+                    }
+                    if (data._object.Contacts.Count == 0)
+                    {
+                        MasterContactModel contact = new MasterContactModel();
+                        data._object.Contacts.Add(contact);
+                    }
+
                     return View(data._object);
                 }
                 return NotFound();
@@ -111,10 +122,10 @@ namespace EltizamValuation.Web.Controllers
                 if (!CheckRoleAccess(ModulePermissionEnum.VendorMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-                if (!ModelState.IsValid)
-                {
-                    return View(masterUser);
-                }
+                //if (!ModelState.IsValid)
+                //{
+                //    return View(masterUser);
+                //}
 
                 if (masterUser != null)
                 {

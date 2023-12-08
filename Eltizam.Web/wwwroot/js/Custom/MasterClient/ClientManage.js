@@ -101,15 +101,27 @@ function profileTab(evt, cityName) {
 }
 document.getElementById("defaultOpen").click();
 
-function removeParentDiv(element) {
+function removeParentDiv(element, num) {
     const parentDiv = element.closest('.roundBorderBox');
     if (parentDiv) {
         parentDiv.remove();
     }
+    var contactContainer = $("#contacts-container");
+    var count = contactContainer.children(".roundBorderBox").length;
+    for (i = num; i < count; i++) {
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[id]').forEach(element => {
+            debugger
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
+    }
 }
 
 function addRoundBorderBox() {
-    const roundBorderBox = document.querySelector('.roundBorderBox');
+    const roundBorderBox = document.querySelector('.roundBorderBox:last-child');
     const clonedDiv = roundBorderBox.cloneNode(true);
 
     var addressContainer = $("#contacts-container");
@@ -171,10 +183,9 @@ function addMoreAddress() {
     if (count == 1) {
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
-        minusDiv.innerHTML = `
-    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
-        `;
+        minusDiv.innerHTML = ' <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this,'+count+')"> ';
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
+
     }
     addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
 
@@ -182,23 +193,96 @@ function addMoreAddress() {
     inputFields.forEach((input) => {
         input.value = '';
     });
+    $('.searchable-dropdown').select2();
+
     $("#Addresses_" + count + "__StateId").empty();
     $("#Addresses_" + count + "__CityId").empty();
 
 }
 
-function removeParentDivAddress(element) {
+function removeParentDivAddress(element, num) {
     const parentDivAdd = element.closest(".addMoreAddress");
     if (parentDivAdd) {
         parentDivAdd.remove()
+    }
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    for (i = num; i < count; i++) {
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[id]').forEach(element => {
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
     }
 }
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    // Add an event listener to the form submission
+    document.getElementById("client").addEventListener("submit", function (event) {
+        // Call the custom validation function
+        if (!validateForAddress() || !validateForContact()) {
+            // If validation fails, prevent the form submission
+            $('#loading-wrapper').hide();
+            event.preventDefault();
+        }
+    });
 
+});
 
+function validateForAddress() {
+    const addMoreAddressBox = document.querySelector('.addMoreAddress:last-child');
+    const clonedDiv = addMoreAddressBox.cloneNode(true);
+    var lastId = clonedDiv.querySelectorAll('[id]')[0].id;
+    var parts = lastId.split("_");
+    var count = parts[1];
+    var address1 = $("#Addresses_" + count + "__Address1").val();
+    var countryId = $("#Addresses_" + count + "__CountryId").val();
+    var stateId = $("#Addresses_" + count + "__StateId").val();
+    var cityId = $("#Addresses_" + count + "__CityId").val();
+    var email = $("#Addresses_" + count + "__Email").val();
+    var phoneExt = $("#Addresses_" + count + "__PhoneExt").val();
+    var phone = $("#Addresses_" + count + "__Phone").val();
+    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || email == "" || phoneExt == "" || phone == "") {
+        toastr.error("Please fill mandate fields in address section.");
+        return false;
+    }
+    // Function to validate email
+    if (!isValidEmail(email)) {
+        toastr.error("Please fill valid email id in address section.");
+        return false;
+    }
 
+    return true;
+}
+function isValidEmail(email) {
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
+}
+function validateForContact() {
+    const roundBorderBox = document.querySelector('.roundBorderBox:last-child');
+    const clonedDiv = roundBorderBox.cloneNode(true);
+    var lastId = clonedDiv.querySelectorAll('[id]')[0].id;
+    var parts = lastId.split("_");
+    var count = parts[1];
+    var personName = $("#Contacts_" + count + "__ContactPersonName").val();
+    var email = $("#Contacts_" + count + "__Email").val();
+    var mobileExt = $("#Contacts_" + count + "__MobileExt").val();
+    var mobile = $("#Contacts_" + count + "__Mobile").val();
+    if (personName == "" || email == "" || mobileExt == "" || mobileExt == "0" || mobile == "") {
+        toastr.error("Please fill mandate fields in contact section.");
+        return false;
+    }
+    // Function to validate email
+    if (!isValidEmail(email)) {
+        toastr.error("Please fill valid email in contact section.");
+        return false;
+    }
+    return true;
+}
 function BindClientType() {
 
     var ClientType = $("#ClientTypeId");
@@ -279,101 +363,10 @@ function BindDesignation() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Add an event listener to the form submission
-    //document.getElementById("client").addEventListener("submit", function (event) {
-    //    // Call the custom validation function
-    //    if (!validatePhoneNumbers()) {
-    //        // If validation fails, prevent the form submission
-    //        event.preventDefault();
-    //    }
-    //});
-
-    // Add change event listeners to relevant input fields
-    var addressContainer = $("#addresses-container");
-    var count = addressContainer.children(".addMoreAddress").length;
-    for (var i = 0; i < count; i++) {
-        document.getElementById("#Addresses_" + i + "__Phone").addEventListener("change", validatePhoneNumbers(i));
-        document.getElementById("Addresses_" + i + "__AlternatePhone").addEventListener("change", validatePhoneNumbers(i));
-        document.getElementById("Addresses_" + i + "__Landlinephone").addEventListener("change", validatePhoneNumbers(i));
-
-    }
-});
-
 function getNumericValue(inputValue) {
     // Extract only numeric values from the input, excluding any phone codes
     return inputValue.replace(/\D/g, "");
 }
-
-function validatePhoneNumbers(i) {
-    var addressContainer = $("#addresses-container");
-    var count = addressContainer.children(".addMoreAddress").length;
-    // Get numeric values of the phone number fields
-
-    var phoneExtNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__PhoneExt").value.trim());
-    var phoneNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__Phone").value.trim());
-    var alternatePhoneExtNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__AlternatePhoneExt").value.trim());
-    var alternatePhoneNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__AlternatePhone").value.trim());
-    var landlinePhoneNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__Landlinephone").value.trim());
-
-    if (
-        (phoneNumeric !== "" && (phoneNumeric === alternatePhoneNumeric || phoneNumeric === landlinePhoneNumeric)) ||
-        (alternatePhoneNumeric !== "" && alternatePhoneNumeric === landlinePhoneNumeric)
-    ) {
-        // Display an alert or perform any other action to indicate the validation failure
-        toastr.error(' Phone numbers,Alternate Phone and LandLine Phone should be different, considering prefixes.');
-        if (phoneNumeric === alternatePhoneNumeric) {
-            document.getElementById('Addresses_' + i + '__AlternatePhone').value = '';
-        }
-
-        if (alternatePhoneNumeric === landlinePhoneNumeric) {
-            document.getElementById('Addresses_' + i + '__Landlinephone').value = '';
-        }
-
-        if (phoneNumeric === landlinePhoneNumeric) {
-            document.getElementById('Addresses_' + i + '__Landlinephone').value = '';
-        }
-        return false;
-    }
-
-    return true;
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Add an event listener to the form submission
-    //document.getElementById("client").addEventListener("submit", function (event) {
-    //    // Call the custom validation function
-    //    if (!validateEmails()) {
-    //        // If validation fails, prevent the form submission
-    //        event.preventDefault();
-    //    }
-    //});
-    var addressContainer = $("#addresses-container");
-    var count = addressContainer.children(".addMoreAddress").length;
-    for (var i = 0; i < count; i++) {
-        // Add change event listeners to relevant input fields
-        document.getElementById("Addresses_" + i + "__Email").addEventListener("change", validateEmails(i));
-        document.getElementById("Addresses_" + i + "__AlternateEmail").addEventListener("change", validateEmails(i));
-    }
-});
-
-function validateEmails(i) {
-    // Get values of the email fields
-    var email = document.getElementById("Addresses_" + i + "__Email").value.trim();
-    var alternateEmail = document.getElementById("Addresses_" + i + "__AlternateEmail").value.trim();
-
-    // Check if Email and AlternateEmail are the same
-    if (email !== "" && alternateEmail !== "" && email === alternateEmail) {
-        // Display an alert or perform any other action to indicate the validation failure
-        toastr.error('Email and Alternate Email should be different.');
-        document.getElementById('Addresses_' + i + '__AlternateEmail').value = '';
-        return false;
-    }
-
-    // Validation passed
-    return true;
-}
-
 
 function previewFiles() {
     var previewContainer = document.getElementById('filePreview');

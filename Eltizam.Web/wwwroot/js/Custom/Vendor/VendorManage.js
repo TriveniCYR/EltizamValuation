@@ -91,15 +91,27 @@ document.getElementById("defaultOpen").click();
  
 
 
-function removeParentDiv(element) {
+function removeParentDiv(element, num) {
     const parentDiv = element.closest('.roundBorderBox');
     if (parentDiv) {
         parentDiv.remove();
     }
+    var contactContainer = $("#contacts-container");
+    var count = contactContainer.children(".roundBorderBox").length;
+    for (i = num; i < count; i++) {
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[id]').forEach(element => {
+            debugger
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
+    }
 }
 
 function addRoundBorderBox() {
-    const roundBorderBox = document.querySelector('.roundBorderBox');
+    const roundBorderBox = document.querySelector('.roundBorderBox:last-child');
     const clonedDiv = roundBorderBox.cloneNode(true);
 
     var addressContainer = $("#contacts-container");
@@ -112,7 +124,7 @@ function addRoundBorderBox() {
         element.name = element.name.replace("[" + (count - 1) + "]", "[" + count + "]");
     });
 
-    /var personName = $("#Contacts_" + (count - 1) + "__ContactPersonName").val();
+    var personName = $("#Contacts_" + (count - 1) + "__ContactPersonName").val();
     var email = $("#Contacts_" + (count - 1) + "__Email").val();
     var mobileExt = $("#Contacts_" + (count - 1) + "__MobileExt").val();
     var mobile = $("#Contacts_" + (count - 1) + "__Mobile").val();
@@ -138,7 +150,7 @@ function addRoundBorderBox() {
 
 // more address field on click
 function addMoreAddress() {
-    const addMoreAddressBox = document.querySelector('.addMoreAddress');
+    const addMoreAddressBox = document.querySelector('.addMoreAddress:last-child');
     const clonedDiv = addMoreAddressBox.cloneNode(true);
 
     var addressContainer = $("#addresses-container");
@@ -174,15 +186,95 @@ function addMoreAddress() {
     inputFields.forEach((input) => {
         input.value = '';
     });
+    $('.searchable-dropdown').select2();
+
+    $("#Addresses_" + count + "__StateId").empty();
+    $("#Addresses_" + count + "__CityId").empty();
+
 }
-function removeParentDivAddress(element) {
+function removeParentDivAddress(element, num) {
     const parentDivAdd = element.closest(".addMoreAddress");
     if (parentDivAdd) {
         parentDivAdd.remove()
     }
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    for (i = num; i < count; i++) {
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[id]').forEach(element => {
+            debugger
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
+    }
 }
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    // Add an event listener to the form submission
+    document.getElementById("vendor").addEventListener("submit", function (event) {
+        // Call the custom validation function
+        if (!validateForAddress() || !validateForContact()) {
+            // If validation fails, prevent the form submission
+            $('#loading-wrapper').hide();
+            event.preventDefault();
+        }
+    });
+
+});
+
+function validateForAddress() {
+    const addMoreAddressBox = document.querySelector('.addMoreAddress:last-child');
+    const clonedDiv = addMoreAddressBox.cloneNode(true);
+    var lastId = clonedDiv.querySelectorAll('[id]')[0].id;
+    var parts = lastId.split("_");
+    var count = parts[1];
+    var address1 = $("#Addresses_" + count + "__Address1").val();
+    var countryId = $("#Addresses_" + count + "__CountryId").val();
+    var stateId = $("#Addresses_" + count + "__StateId").val();
+    var cityId = $("#Addresses_" + count + "__CityId").val();
+    var email = $("#Addresses_" + count + "__Email").val();
+    var phoneExt = $("#Addresses_" + count + "__PhoneExt").val();
+    var phone = $("#Addresses_" + count + "__Phone").val();
+    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || email == "" || phoneExt == "" || phone == "") {
+        toastr.error("Please fill mandate fields in address section.");
+        return false;
+    }
+    // Function to validate email
+    if (!isValidEmail(email)) {
+        toastr.error("Please fill valid email id in address section.");
+        return false;
+    }
+
+    return true;
+}
+function isValidEmail(email) {
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
+}
+function validateForContact() {
+    const roundBorderBox = document.querySelector('.roundBorderBox:last-child');
+    const clonedDiv = roundBorderBox.cloneNode(true);
+    var lastId = clonedDiv.querySelectorAll('[id]')[0].id;
+    var parts = lastId.split("_");
+    var count = parts[1];
+    var personName = $("#Contacts_" + count + "__ContactPersonName").val();
+    var email = $("#Contacts_" + count + "__Email").val();
+    var mobileExt = $("#Contacts_" + count + "__MobileExt").val();
+    var mobile = $("#Contacts_" + count + "__Mobile").val();
+    if (personName == "" || email == "" || mobileExt == "" || mobileExt == "0" || mobile == "") {
+        toastr.error("Please fill mandate fields in contact section.");
+        return false;
+    }
+    // Function to validate email
+    if (!isValidEmail(email)) {
+        toastr.error("Please fill valid email in contact section.");
+        return false;
+    }
+    return true;
+}
 function BindCountry() {
     debugger
     for (var i = 0; i < addressLength; i++) {
