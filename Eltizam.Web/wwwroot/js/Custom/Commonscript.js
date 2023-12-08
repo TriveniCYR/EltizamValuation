@@ -83,6 +83,12 @@ $(document).ready(function () {
         element.addEventListener('input', function (event) {
             let inputValue = event.target.value;
 
+            // Check for multiple decimal points and allow only one
+            if (inputValue.indexOf('.') !== inputValue.lastIndexOf('.')) {
+                const lastDotIndex = inputValue.lastIndexOf('.');
+                inputValue = inputValue.slice(0, lastDotIndex) + inputValue.slice(lastDotIndex + 1);
+            }
+
             // Remove non-numeric characters, except for the decimal point
             inputValue = inputValue.replace(/[^0-9.]/g, '');
 

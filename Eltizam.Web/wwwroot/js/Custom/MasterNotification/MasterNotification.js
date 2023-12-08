@@ -5,7 +5,6 @@
 function Getnotifications(notificationid) {
     var userId = $("#userid").val();
     var valId = $("#valId").val();
-    debugger
     var url = "?lastid=" + notificationid + "&userId=" + userId + "&valId=" + valId;
     ajaxServiceMethod(BaseURL + notifications + url, 'GET', GetnotificationsSuccess, GetnotificationsError);
 }
