@@ -80,8 +80,7 @@
                 <input type="hidden" id="md" value="@_md" />
                 <input type="hidden" id="View" value="@View" />
             </div>
-        </div>
-         <button class="btn-primary" onclick="getPDF(1)" id="btngetPDF" >Get PDF</button>
+        </div> 
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab flex flex-start m-0 ptrl-20">
@@ -1015,6 +1014,7 @@
                         @if (!isHideBtn)
                         {
                             <div class="text-right buttonArea bodyContent plr-0">
+                                <button onclick="getPDF(1)" class="blueBtn mr-12" id="btngetPDF">Generate PDF</button>
                                 <button type="submit" class="blueBtn mr-12">Save</button>
                             </div>
                         }
