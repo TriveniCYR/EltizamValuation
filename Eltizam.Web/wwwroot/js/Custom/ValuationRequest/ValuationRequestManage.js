@@ -21,6 +21,7 @@ function profileTab(evt, cityName) {
         tabcontent[i].style.padding = 0;
         tabcontent[i].style.border = "none";
         tabcontent[i].style.marginTop = 0;
+        tabcontent[i].style.position = "absolute";
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -29,6 +30,7 @@ function profileTab(evt, cityName) {
     document.getElementById(cityName).style.height = "auto";
     document.getElementById(cityName).style.padding = "6px 12px";
     document.getElementById(cityName).style.border = "1px solid var(--blue)";
+    document.getElementById(cityName).style.position = "initial";
     evt.currentTarget.className += " active";
 }
 function redirectToComparableEvidences() {
@@ -653,63 +655,65 @@ function BindFurnished() {
 
 function BindPropertyDetailById(Id) {
     var Amentiesdiv = $("#amentiesdiv");
-    $.ajax({
-        type: Get,
-        url: BaseURL + GetPropertyById + '/' + Id,
-        "datatype": "json",
-        success: function (response) {
+    if (Id != '0') {
+        $.ajax({
+            type: Get,
+            url: BaseURL + GetPropertyById + '/' + Id,
+            "datatype": "json",
+            success: function (response) {
 
-            //alert(response);
-            document.getElementById('UnitType').value = response._object.unitType;
-            document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
-            document.getElementById('Furnished').value = response._object.furnished;
-            document.getElementById('ValuationPurpose').value = response._object.valuationPurpose;
-            document.getElementById('BuildUpAreaSqFt').value = response._object.buildUpAreaSqFt;
-            document.getElementById('BuildUpAreaSqMtr').value = response._object.buildUpAreaSqMtr;
-            document.getElementById('AgeOfConstruction').value = response._object.ageOfConstruction;
-            document.getElementById('Parking').value = response._object.parking;
-            document.getElementById('ParkingBayNo').value = response._object.parkingBayNo;
-            document.getElementById('Description').value = response._object.description;
-            var AmenityList = response._object.amenityList;
+                //alert(response);
+                document.getElementById('UnitType').value = response._object.unitType;
+                document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
+                document.getElementById('Furnished').value = response._object.furnished;
+                document.getElementById('ValuationPurpose').value = response._object.valuationPurpose;
+                document.getElementById('BuildUpAreaSqFt').value = response._object.buildUpAreaSqFt;
+                document.getElementById('BuildUpAreaSqMtr').value = response._object.buildUpAreaSqMtr;
+                document.getElementById('AgeOfConstruction').value = response._object.ageOfConstruction;
+                document.getElementById('Parking').value = response._object.parking;
+                document.getElementById('ParkingBayNo').value = response._object.parkingBayNo;
+                document.getElementById('Description').value = response._object.description;
+                var AmenityList = response._object.amenityList;
 
-            for (i = 0; i < response._object.amenityList.length; i++) {
-                //var _id = response._object.amenityList[i].id
-                if (response._object.amenityList[i].isActive == true) {
-                    var ob = response._object.amenityList[i];
-                    Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
-                        '<input checked data-val="true" disabled="disabled" name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
-                        '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
+                for (i = 0; i < response._object.amenityList.length; i++) {
+                    //var _id = response._object.amenityList[i].id
+                    if (response._object.amenityList[i].isActive == true) {
+                        var ob = response._object.amenityList[i];
+                        Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
+                            '<input checked data-val="true" disabled="disabled" name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
+                            '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
+                    }
                 }
+                var PropertyDetails = response._object.propertyDetail;
+                if (isAddValuation) {
+                    document.getElementById('hdnLocationCountryId').value = PropertyDetails.countryId;
+                    document.getElementById('hdnLocationStateId').value = PropertyDetails.stateId;
+                    document.getElementById('hdnLocationCityId').value = PropertyDetails.cityId;
+                }
+                document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
+                document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
+                document.getElementById('PropertyDetail_CityId').value = PropertyDetails.cityId;
+                document.getElementById('PropertyDetail_Zone').value = PropertyDetails.zone;
+                document.getElementById('PropertyDetail_BuildingProject').value = PropertyDetails.buildingProject;
+                document.getElementById('PropertyDetail_Latitude').value = PropertyDetails.latitude;
+                document.getElementById('PropertyDetail_Longitude').value = PropertyDetails.longitude;
+                document.getElementById('PropertyDetail_Address1').value = PropertyDetails.address1;
+                document.getElementById('PropertyDetail_Address2').value = PropertyDetails.address2;
+                document.getElementById('PropertyDetail_Pincode').value = PropertyDetails.pincode;
+                document.getElementById('PropertyDetail_Landmark').value = PropertyDetails.landmark;
+
+                BindLocationState(PropertyDetails.countryId);
+                BindLocationCity(PropertyDetails.stateId);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
             }
-            var PropertyDetails = response._object.propertyDetail;
-            if (isAddValuation) { 
-            document.getElementById('hdnLocationCountryId').value = PropertyDetails.countryId;
-            document.getElementById('hdnLocationStateId').value = PropertyDetails.stateId;
-            document.getElementById('hdnLocationCityId').value = PropertyDetails.cityId;
-            }
-            document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
-            document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
-            document.getElementById('PropertyDetail_CityId').value = PropertyDetails.cityId;
-            document.getElementById('PropertyDetail_Zone').value = PropertyDetails.zone;
-            document.getElementById('PropertyDetail_BuildingProject').value = PropertyDetails.buildingProject;
-            document.getElementById('PropertyDetail_Latitude').value = PropertyDetails.latitude;
-            document.getElementById('PropertyDetail_Longitude').value = PropertyDetails.longitude;
-            document.getElementById('PropertyDetail_Address1').value = PropertyDetails.address1;
-            document.getElementById('PropertyDetail_Address2').value = PropertyDetails.address2;
-            document.getElementById('PropertyDetail_Pincode').value = PropertyDetails.pincode;
-            document.getElementById('PropertyDetail_Landmark').value = PropertyDetails.landmark;
-        
-            BindLocationState(PropertyDetails.countryId);
-            BindLocationCity(PropertyDetails.stateId);
-        },
-        failure: function (response) {
-            alert(response.responseText);
-        },
-        error: function (response) {
-            alert(response.responseText);
-            $("#loader").hide();
-        }
-    });
+        });
+    }
 }
 
 function BindCountry() {
