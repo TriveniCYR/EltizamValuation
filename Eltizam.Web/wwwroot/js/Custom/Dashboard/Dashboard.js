@@ -10,7 +10,8 @@ function initializeDashboard() {
         PropertyId: 0,
         ClientId: 0,
         FromDate: '',
-        ToDate: ''
+        ToDate: '',
+        Pagesize: 5
     };
 
     var formDataJson = JSON.stringify(formDataObject);
