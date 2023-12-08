@@ -178,7 +178,7 @@
                                         @if (i != 0)
                                         {
                                             <div class="text-right">
-                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this,@i)">
                                             </div>
                                         }
                                         <input type="hidden" id="@("hdnCountry_"+i)" value="@(Model.Addresses[i] == null ? 0 : Model.Addresses[i].CountryId)" />
@@ -289,7 +289,7 @@
                                 <div class="roundBorderBox addQualification">
                                     @if(i != 0){
                                             <div class="text-right">
-                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this,@i)">
                                             </div>
                                         }
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">

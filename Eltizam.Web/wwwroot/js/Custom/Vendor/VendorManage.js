@@ -91,10 +91,22 @@ document.getElementById("defaultOpen").click();
  
 
 
-function removeParentDiv(element) {
+function removeParentDiv(element, num) {
     const parentDiv = element.closest('.roundBorderBox');
     if (parentDiv) {
         parentDiv.remove();
+    }
+    var contactContainer = $("#contacts-container");
+    var count = contactContainer.children(".roundBorderBox").length;
+    for (i = num; i < count; i++) {
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[id]').forEach(element => {
+            debugger
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
     }
 }
 
@@ -180,10 +192,22 @@ function addMoreAddress() {
     $("#Addresses_" + count + "__CityId").empty();
 
 }
-function removeParentDivAddress(element) {
+function removeParentDivAddress(element, num) {
     const parentDivAdd = element.closest(".addMoreAddress");
     if (parentDivAdd) {
         parentDivAdd.remove()
+    }
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    for (i = num; i < count; i++) {
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[id]').forEach(element => {
+            debugger
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
     }
 }
 

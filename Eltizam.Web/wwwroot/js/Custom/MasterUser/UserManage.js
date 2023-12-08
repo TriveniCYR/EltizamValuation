@@ -278,6 +278,17 @@ function removeParentDiv(element) {
     if (parentDiv) {
         parentDiv.remove();
     }
+    var addressContainer = $("#qualifications-container");
+    var count = addressContainer.children(".roundBorderBox").length;
+    for (i = num; i < count; i++) {
+        addressContainer.children(".roundBorderBox")[i].querySelectorAll('[id]').forEach(element => {
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        addressContainer.children(".roundBorderBox")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
+    }
 }
 
 
@@ -324,12 +335,12 @@ function addMoreAddress() {
     $("#Addresses_" + count + "__CityId").empty();
 }
 
-function removeParentDiv(element) {
-    const parentDiv = element.closest('.addQualification');
-    if (parentDiv) {
-        parentDiv.remove();
-    }
-}
+//function removeParentDiv(element) {
+//    const parentDiv = element.closest('.addQualification');
+//    if (parentDiv) {
+//        parentDiv.remove();
+//    }
+//}
 
 function addRoundBorderBox() {
     const roundBorderBox = document.querySelector('.addQualification:last-child');
@@ -367,10 +378,21 @@ function addRoundBorderBox() {
     });
 }
 
-function removeParentDivAddress(element) {
+function removeParentDivAddress(element, num) {
     const parentDivAdd = element.closest(".addMoreAddress");
     if (parentDivAdd) {
         parentDivAdd.remove()
+    }
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    for (i = num; i < count; i++) {
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[id]').forEach(element => {
+            element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
+        });
+        addressContainer.children(".addMoreAddress")[i].querySelectorAll('[name]').forEach(element => {
+            element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
+        });
+
     }
 }
 

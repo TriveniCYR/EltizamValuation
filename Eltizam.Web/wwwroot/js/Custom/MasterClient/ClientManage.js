@@ -201,7 +201,6 @@ function addMoreAddress() {
 }
 
 function removeParentDivAddress(element, num) {
-    debugger
     const parentDivAdd = element.closest(".addMoreAddress");
     if (parentDivAdd) {
         parentDivAdd.remove()
@@ -210,7 +209,6 @@ function removeParentDivAddress(element, num) {
     var count = addressContainer.children(".addMoreAddress").length;
     for (i = num; i < count; i++) {
         addressContainer.children(".addMoreAddress")[i].querySelectorAll('[id]').forEach(element => {
-            debugger
             element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
         });
         addressContainer.children(".addMoreAddress")[i].querySelectorAll('[name]').forEach(element => {
