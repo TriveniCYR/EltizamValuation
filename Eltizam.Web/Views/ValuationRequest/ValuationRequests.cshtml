@@ -98,31 +98,31 @@
                         </label>
                         <label for="ClientName">
                             Client Name
-                            @Html.TextBoxFor(model => model.ClientName, new { @placeholder = @SharedLocalizer["ClientName"] })
+                            @Html.DropDownListFor(model => model.ClientName, new List<SelectListItem> { }, new { id = "ClientName", @class = "form-control searchable-dropdown" })
                         </label>
                         
                     </div>
                     <div class="flex">
                         <label for="PropertyName">
                             Property Name
-                            @Html.TextBoxFor(model => model.PropertyName, new { @placeholder = @SharedLocalizer["PropertyName"] })
+                            @Html.DropDownListFor(model => model.PropertyName, new List<SelectListItem> { }, new { id = "PropertyName", @class = "form-control searchable-dropdown" })
                         </label>
                         <label for="">
                             <p class="m-0">
                                 Property Type
                             </p>
-                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { })
+                            @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new {@class = "searchable-dropdown" })
                         </label>
 
                     </div>
                     <div class="flex">
                         <label for="Method of Valuation">
                             <p class="m-0">Method of Valuation</p>
-                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(), new { @placeholder = @SharedLocalizer[" Select ResourceType"] })
+                            @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(), new {@class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer[" Select ResourceType"] })
                         </label>
                         <label for="">
                             <p class="m-0">Request Status </p>
-                            @Html.DropDownListFor(model => model.RequestStatusId, new List<SelectListItem> { }, new { })
+                            @Html.DropDownListFor(model => model.RequestStatusId, new List<SelectListItem> { }, new {@class = "searchable-dropdown" })
 
                         </label>
                        
@@ -132,18 +132,18 @@
 
                         <label for="CountryId">
                             <p class="m-0">Country</p>
-                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @onchange = "BindState(this.options[this.selectedIndex].value)" })
+                            @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "searchable-dropdown",@onchange = "BindState(this.options[this.selectedIndex].value)" })
                         </label>
                         <label for="StateId">
                             <p class="m-0">Emirate/State</p>
-                            @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @onchange = "BindCity(this.options[this.selectedIndex].value)" })
+                            @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new {@class = "searchable-dropdown", @onchange = "BindCity(this.options[this.selectedIndex].value)" })
                         </label>
                     </div>
 
                     <div class="flex">
                         <label for="CityId">
                             <p class="m-0">City</p>
-                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { })
+                            @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new {@class = "searchable-dropdown" })
                         </label>
                         <label for="fromDate">
                             From
@@ -242,7 +242,8 @@
         var PropertyList = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyTypeList";
         var ValutionRequestStatusList = "@Eltizam.Web.Helpers.APIURLHelper.GetRequestStatus";
         var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationMethod";
-
+        var AllClient = "@Eltizam.Web.Helpers.APIURLHelper.GetClientByClientTypeId";
+        var AllProperty = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByFilters";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";

@@ -17,8 +17,8 @@ function InitializeValutionRequestDataList() {
     var cityId = $("CityId").val();
 
     var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
-    var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
-    var propertyName = $("#PropertyName").val() === undefined ? "" : $("#PropertyName").val(); 
+    var clientName = $("#ClientName").val() === null || $("#ClientName").val() === '0' ? "" : $("#ClientName").val();
+    var propertyName = $("#PropertyName").val() === null || $("#PropertyName").val() === '0' ? "" : $("#PropertyName").val(); 
     var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
     var toDate = $("#ToDate").val() === undefined ? "" : $("#ToDate").val(); 
 
