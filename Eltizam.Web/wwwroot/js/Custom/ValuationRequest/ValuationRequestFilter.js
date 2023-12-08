@@ -32,6 +32,8 @@ function assignToggle() {
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {
+        document.getElementById('Remarks').value = "";
+        document.getElementById('ApproverId').value = 0;
         x.style.display = "none";
     }
 }

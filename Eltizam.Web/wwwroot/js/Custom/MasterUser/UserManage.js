@@ -241,6 +241,7 @@ function profileTab(evt, cityName) {
         tabcontent[i].style.padding = 0;
         tabcontent[i].style.border = "none";
         tabcontent[i].style.marginTop = 0;
+        tabcontent[i].style.position = "absolute";
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -249,6 +250,7 @@ function profileTab(evt, cityName) {
     document.getElementById(cityName).style.height = "auto";
     document.getElementById(cityName).style.padding = "6px 12px";
     document.getElementById(cityName).style.border = "1px solid var(--blue)";
+    document.getElementById(cityName).style.position = "initial";
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();

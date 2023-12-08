@@ -14,7 +14,7 @@
 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Request";
-    var _md = Model.Id > 0 ? "Edit" : "Add";
+    var _md = Model.Id > 0 ? "Edit" : (ViewBag.IsView == "2") ? "View" : "Add";
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
     var isDelete = objPermssion.Delete ? 1 : 0;
     var isAdd = objPermssion.Add ? 1 : 0;

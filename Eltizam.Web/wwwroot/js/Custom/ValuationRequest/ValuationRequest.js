@@ -1,4 +1,5 @@
 ﻿var tableId = "ValuationRequestTable";
+var isAssigned = false;
 $(document).ready(function () {
     InitializeValutionRequestDataList(); 
 });
@@ -28,9 +29,10 @@ function InitializeValutionRequestDataList() {
     stateId         = GetIntegerVal(stateId);  
     cityId          = GetIntegerVal(cityId);  
     resourceId      = GetIntegerVal(resourceId);  
-
-    assignToggleFilter();
-
+    if (isAssigned) {
+        assignToggleFilter();
+        isAssigned = false;
+    }
     var ajaxObject = {
         "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
 
@@ -205,9 +207,9 @@ function AssignRequest() {
         },
         data: JSON.stringify(modelReq),
         success: function (response) {
-            assignToggle();
             toastr.success("Valuation Request(s) assinged to Approver.");
-
+            isAssigned = true;
+            assignToggle();
             InitializeValutionRequestDataList();
             /*window.location.href = "/ValuationRequest/ValuationRequests";*/
         },
