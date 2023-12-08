@@ -930,7 +930,7 @@
                                 <label for="">
                                     <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control valiadteint formatting", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
