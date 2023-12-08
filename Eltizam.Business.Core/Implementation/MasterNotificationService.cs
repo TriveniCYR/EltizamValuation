@@ -148,7 +148,7 @@ namespace Eltizam.Business.Core.Implementation
             } 
             else
             {
-                finalResult = result.Where(x => x.Readby == 0).Take(10).ToList();
+                finalResult = result.Where(x => x.Readby == 0).ToList();
             }
 
             return finalResult;
