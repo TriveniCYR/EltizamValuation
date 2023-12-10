@@ -65,6 +65,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<ValuationQuotationStatus> ValuationQuotationStatuses { get; set; } = null!;
         public virtual DbSet<ValuationRequest> ValuationRequests { get; set; } = null!;
         public virtual DbSet<ValuationRequestStatus> ValuationRequestStatuses { get; set; } = null!;
+        public virtual DbSet<VwPropertyLocation> VwPropertyLocations { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -1153,6 +1154,8 @@ namespace Eltizam.Data.DataAccess.DataContext
             {
                 entity.ToTable("ValuationAssesment", "dbo");
 
+                entity.Property(e => e.AnnualMaintainceCost).HasColumnType("decimal(18, 0)");
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.InsuranceDetails).HasMaxLength(250);
@@ -1362,6 +1365,57 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.StatusName)
                     .HasMaxLength(500)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VwPropertyLocation>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vw_Property_Location", "dbo");
+
+                entity.Property(e => e.Address1)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Address2)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BuildingProject)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Landmark)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Latitude)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Longitude)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Pincode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PropertyName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TotalAddress)
+                    .HasMaxLength(1510)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Zone)
+                    .HasMaxLength(250)
                     .IsUnicode(false);
             });
 
