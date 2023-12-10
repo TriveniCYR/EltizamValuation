@@ -1033,7 +1033,7 @@ function BindQuatationList() {
                   
                     html += '</ul></div>';
 
-                    $('#QuatationTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationFee + '</td><td>' + object.vat
+                    $('#QuatationTable tbody').append(' <tr id="'+ object.id +'"><td>' + object.id + '</td> <td>' + object.valuationFee + '</td><td>' + object.vat
                         + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
                 });
                 //StaticDataTable("#QuatationTable");
@@ -1106,6 +1106,9 @@ function DeleteQuotation() {
 function DeleteQuotationByIdSuccess(data) {
     try {
         if (data._Success === true) {
+            var deletedId = $('#DeleteQuotationModel #Id').val();
+            $('#' + deletedId).remove();
+
             toastr.success(RecordDelete);
             //$('#' + tableId).DataTable().draw();
         }
