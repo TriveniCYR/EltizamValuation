@@ -14,7 +14,7 @@
 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Request";
-    var _md = Model.Id > 0 ? "Edit" : "Add";
+    var _md = Model.Id > 0 ? "Edit" : (ViewBag.IsView == "2") ? "View" : "Add";
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
     var isDelete = objPermssion.Delete ? 1 : 0;
     var isAdd = objPermssion.Add ? 1 : 0;
@@ -80,8 +80,7 @@
                 <input type="hidden" id="md" value="@_md" />
                 <input type="hidden" id="View" value="@View" />
             </div>
-        </div>
-         <button class="btn-primary" onclick="getPDF(1)" id="btngetPDF" >Get PDF</button>
+        </div> 
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab flex flex-start m-0 ptrl-20">
@@ -713,6 +712,7 @@
                                     <div class="panel" style="display: none;">
                                         <div class="flex">
                                             <label for="" class="w-100">
+                                                <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                                 <input type="file" class="fileInput" asp-for="ValuationAssesment.SiteDescription.Document.Files" multiple onchange="validateFileSize(this)">
                                                 <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
@@ -728,7 +728,11 @@
                                                                 <th>DateUpdate </th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                <th>Action</th>
+                                                                @if (View != 2)
+                                                                {
+                                                                    <th>Action</th>
+                                                                }
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -741,9 +745,11 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        @* <td><a title="Delete" onclick="DeleteDocument(@docs.Id)" ><img src="../assets/trash.svg" alt="trash" /></a></td> *@
-                                                                        @*  <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="DeleteDocument(@docs.Id); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td> *@
-                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        @if (View != 2)
+                                                                        {
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        }
+                                                                        
 
                                                                     </tr>
                                                                 }
@@ -835,8 +841,9 @@
                                     <div class="panel" style="display: none;">
                                         <div class="flex">
                                             <label for="" class="w-100">
+                                                <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                                 <input type="file" class="fileInput" asp-for="ValuationAssesment.comparableEvidenceModel.Document.Files" multiple onchange="validateFileSize(this)">
-                                                <input type="text" class="fileNames" readonly placeholder="file names">
+                                                 <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
                                         </div>
                                         <div class="W-100">
@@ -850,7 +857,10 @@
                                                                 <th>DateUpdate </th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                <th>Action</th>
+                                                                @if (View != 2)
+                                                                {
+                                                                    <th>Action</th>
+                                                                }
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -863,7 +873,10 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        @if (View != 2)
+                                                                        {
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        }
                                                                     </tr>
                                                                 }
                                                             }
@@ -931,7 +944,7 @@
                                 <label for="">
                                     <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control valiadteint formatting", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
@@ -964,6 +977,7 @@
                                     <div class="panel" style="display: none;">
                                         <div class="flex">
                                             <label for="" class="w-100">
+                                                <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                                 <input type="file" class="fileInput" asp-for="ValuationAssesment.valuationAssessementModel.Document.Files" multiple onchange="validateFileSize(this)">
                                                 <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
@@ -979,7 +993,10 @@
                                                                 <th>DateUpdate </th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                <th>Action</th>
+                                                                @if (View != 2)
+                                                                {
+                                                                    <th>Action</th>
+                                                                }
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -992,7 +1009,10 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        @if (View != 2)
+                                                                        {
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        }
                                                                     </tr>
                                                                 }
                                                             }
@@ -1015,6 +1035,7 @@
                         @if (!isHideBtn)
                         {
                             <div class="text-right buttonArea bodyContent plr-0">
+                                <button onclick="getPDF(1)" class="blueBtn mr-12" id="btngetPDF">Generate PDF</button>
                                 <button type="submit" class="blueBtn mr-12">Save</button>
                             </div>
                         }

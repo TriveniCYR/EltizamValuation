@@ -61,59 +61,31 @@ namespace Eltizam.Business.Core.Implementation
             {
                 DbParameter[] osqlParameter =
                 {
-                     new DbParameter("ClientId", model.ClientId, SqlDbType.Int),
+                     new DbParameter("ClientId", model.ClientId,     SqlDbType.Int),
                      new DbParameter("PropertyId", model.PropertyId, SqlDbType.Int),
-                     new DbParameter("FromDate",  model.FromDate, SqlDbType.VarChar),
-                     new DbParameter("ToDate",  model.ToDate, SqlDbType.VarChar),
+                     new DbParameter("FromDate",  model.FromDate,   SqlDbType.VarChar),
+                     new DbParameter("ToDate",    model.ToDate,     SqlDbType.VarChar),
+                     new DbParameter("Pagesize",  model.Pagesize,   SqlDbType.Int),
                 };
+
                 var latestRequests = EltizamDBHelper.ExecuteMappedReader<DashboardLatestRequest>(ProcedureMetastore.usp_ValuationRequest_GetLatestRequest, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
-
-                if (latestRequests != null)
-                {
-                    _dashboarddata.LatestRequests = latestRequests;
-                }
-
-                DbParameter[] osqlParameter1 =
-                {
-                     new DbParameter("ClientId", model.ClientId, SqlDbType.Int),
-                     new DbParameter("PropertyId", model.PropertyId, SqlDbType.Int),
-                     new DbParameter("FromDate",  model.FromDate, SqlDbType.VarChar),
-                     new DbParameter("ToDate",  model.ToDate, SqlDbType.VarChar),
-                };
+                if (latestRequests != null)  
+                    _dashboarddata.LatestRequests = latestRequests;  
+                
                 var latestQuotations = EltizamDBHelper.ExecuteMappedReader<DashboardLatestQuotation>(ProcedureMetastore.usp_ValuationRequest_GetLatestQuotation, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
 
-                if (latestQuotations != null)
-                {
-                    _dashboarddata.LatestQuotations = latestQuotations;
-                }
+                if (latestQuotations != null) 
+                    _dashboarddata.LatestQuotations = latestQuotations;  
 
-                DbParameter[] osqlParameter2 =
-                {
-                     new DbParameter("ClientId", model.ClientId, SqlDbType.Int),
-                     new DbParameter("PropertyId", model.PropertyId, SqlDbType.Int),
-                     new DbParameter("FromDate",  model.FromDate, SqlDbType.VarChar),
-                     new DbParameter("ToDate",  model.ToDate, SqlDbType.VarChar),
-                };
+                 
                 var topValuations = EltizamDBHelper.ExecuteMappedReader<TopValuationModel>(ProcedureMetastore.usp_ValuationRequest_GetTopValuation, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                if (latestQuotations != null) 
+                    _dashboarddata.TopValuations = topValuations; 
 
-                if (latestQuotations != null)
-                {
-                    _dashboarddata.TopValuations = topValuations;
-                }
-
-                DbParameter[] osqlParameter3 =
-                {
-                     new DbParameter("ClientId", model.ClientId, SqlDbType.Int),
-                     new DbParameter("PropertyId", model.PropertyId, SqlDbType.Int),
-                     new DbParameter("FromDate",  model.FromDate, SqlDbType.VarChar),
-                     new DbParameter("ToDate",  model.ToDate, SqlDbType.VarChar),
-                };
+                 
                 var topQuotationDues = EltizamDBHelper.ExecuteMappedReader<TopQuotationDueModel>(ProcedureMetastore.usp_ValuationRequest_GetTopQuotationDue, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
-
-                if (latestQuotations != null)
-                {
-                    _dashboarddata.TopQuotationDues = topQuotationDues;
-                }
+                if (latestQuotations != null) 
+                    _dashboarddata.TopQuotationDues = topQuotationDues; 
             }
 
             return _dashboarddata;

@@ -326,10 +326,9 @@
                             <div class="tabSection">
                                 <div class="flex">
                                     <label for="" class="w-100">
-                                        @*   <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)"> *@
+                                        <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                         <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="validateFileSize(this)">
-
-                                        <input type="text" class="fileNames" readonly placeholder="file names">
+                                          <input type="text" class="fileNames" readonly placeholder="file names">
                                     </label>
                                 </div>
                                 <div class="W-100">
@@ -362,7 +361,9 @@
                                                     }
                                                     else
                                                     {
-                                                        <label>NA</label>
+                                                        <tr>
+                                                            <td colspan="5">NA</td>
+                                                        </tr>
                                                     }
                                                 </tbody>
                                             </table>

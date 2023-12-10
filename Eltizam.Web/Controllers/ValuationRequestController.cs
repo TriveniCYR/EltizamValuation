@@ -558,6 +558,12 @@ namespace EltizamValuation.Web.Controllers
                 if (valuationAssesment.SiteDescription.Id == 0)
                     valuationAssesment.SiteDescription.CreatedBy = _helper.GetLoggedInUserId();
                 valuationAssesment.SiteDescription.ModifiedBy = _helper.GetLoggedInUserId();
+                if (valuationAssesment.comparableEvidenceModel.Id == 0)
+                    valuationAssesment.comparableEvidenceModel.CreatedBy = _helper.GetLoggedInUserId();
+                valuationAssesment.comparableEvidenceModel.ModifiedBy = _helper.GetLoggedInUserId();
+                if (valuationAssesment.valuationAssessementModel.Id == 0)
+                    valuationAssesment.valuationAssessementModel.CreatedBy = _helper.GetLoggedInUserId();
+                valuationAssesment.valuationAssessementModel.ModifiedBy = _helper.GetLoggedInUserId();
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
