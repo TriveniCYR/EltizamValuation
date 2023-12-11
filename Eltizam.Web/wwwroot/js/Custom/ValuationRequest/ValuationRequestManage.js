@@ -1131,9 +1131,9 @@ function DeleteInvoice() {
 function DeleteInvoiceByIdSuccess(data) {
     try {
         if (data._Success === true) {
-            
+            invoiceCurrentId = $('#DeleteInvoiceModel #Id').val()
             /*$('#' + tableId).DataTable().draw();*/
-            $('#' + invoiceId).remove();
+            $('#' + invoiceCurrentId).remove();
             toastr.success(RecordDelete);
         }
         else {

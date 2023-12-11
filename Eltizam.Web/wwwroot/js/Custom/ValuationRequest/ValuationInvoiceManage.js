@@ -72,7 +72,7 @@ $('#ChequeAmount').keypress(function (e) {
 function SaveInvoice() { 
     var modeId = $('#hdnTabId').val();
     if(modeId=='1') {
-        let transactionStatusId = $("#TransactionStatusId").val();
+        let transactionStatusId = $("#CardTransactionStatusId").val();
         let amouont = $("#Amount").val();
         let transactionDate = $("#TransactionDate").val();
         let hdnReferenceNo = $("#hdnReferenceNo").val();
@@ -99,7 +99,7 @@ function SaveInvoice() {
 
     }
     if (modeId == '2') {
-        let transactionStatusId = $("#TransactionStatusId").val();
+        let transactionStatusId = $("#ChequeTransactionStatusId").val();
         let amouont = $("#ChequeAmount").val();
         let transactionDate = $("#ChequeTransactionDate").val();
         let chequeNumber = $("#ChequeNumber").val();
@@ -145,7 +145,7 @@ function SaveInvoice() {
         SaveInvoiceData(InvoiceRequest);
     }
     if(modeId=='3') {
-        let transactionStatusId = $("#TransactionStatusId").val();
+        let transactionStatusId = $("#CardTransactionStatusId").val();
         let amouont = $("#CardAmount").val();
         let transactionDate = $("#CardTransactionDate").val();
         let transactionId = $("#CardTransactionId").val();
@@ -198,7 +198,7 @@ function SaveInvoice() {
     }
 
     if(modeId=='4') {
-        let transactionStatusId = $("#TransactionStatusId").val();
+        let transactionStatusId = $("#NetTransactionStatusId").val();
         let amouont = $("#BankAmount").val();
         let transactionDate = $("#BankTransactionDate").val();
         let transactionId = $("#BankingTransactionId").val();
@@ -314,25 +314,30 @@ function GetInvoiceDetail(id){
             debugger
             if (response._object != null) {
                 let modeId = response._object.transactionModeId;
-                document.getElementById('TransactionStatusId').value = response._object.transactionStatusId;
+                document.getElementById('hdnTransactionStatusId').value = response._object.transactionStatusId;
+                document.getElementById('hdnTransactionModeId').value = response._object.transactionModeId;
                 if (modeId == 1) {
                     document.getElementById('Amount').value = response._object.amount;
                     document.getElementById('TransactionDate').value = response._object.transactionDate;
+                    document.getElementById('CashTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 else if (modeId == 2) {
                     document.getElementById('ChequeAmount').value = response._object.amount;
                     document.getElementById('ChequeTransactionDate').value = response._object.transactionDate;
                     document.getElementById('ChequeRecievedDate').value = response._object.chequeRecievedDate;
+                    document.getElementById('ChequeTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 else if (modeId == 3) {
                     document.getElementById('CardAmount').value = response._object.amount;
                     document.getElementById('CardTransactionDate').value = response._object.transactionDate;
                     document.getElementById('CardTransactionId').value = response._object.transactionId;
+                    document.getElementById('CardTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 else if (modeId == 4) {
                     document.getElementById('BankAmount').value = response._object.amount;
                     document.getElementById('BankTransactionDate').value = response._object.transactionDate;
                     document.getElementById('BankingTransactionId').value = response._object.transactionId;
+                    document.getElementById('NetTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 document.getElementById('ChequeNumber').value = response._object.checkNumer;
                 document.getElementById('ChequeBankName').value = response._object.checkBankName;
@@ -376,8 +381,52 @@ function formatDateTo_ddMMMyyyy(date) {
 
 function BindTransactionstatus() {
     var id = 47;
-    var transactionStatusId = $("#TransactionStatusId");
-    var _val = 0;
+    debugger
+    var cashStatusId = $("#CashTransactionStatusId");
+    var chequeStatusId = $("#ChequeTransactionStatusId");
+    var cardStatusId = $("#CardTransactionStatusId");
+    var netStatusId = $("#NetTransactionStatusId");
+    var _val = $("#hdnTransactionStatusId").val();
+    var _payMode = $("#hdnTransactionModeId").val();
     var _rpname = "description";
-    BindDropdowns(transactionStatus + '/' + id, transactionStatusId, _rpname, _val);
+    //BindDropdowns(transactionStatus + '/' + id, transactionStatusId, _rpname, _val);
+    $.ajax({
+        type: Get,
+        url: BaseURL + transactionStatus + '/' + id,
+        "datatype": "json",
+        success: function (response) {
+            var _dd = _rpname;
+            cashStatusId.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
+            chequeStatusId.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
+            cardStatusId.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
+            netStatusId.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
+            for (var i = 0; i < response.length; i++) {
+                cashStatusId.append($("<option></option>").val(response[i].id).html(response[i][_dd]));
+                chequeStatusId.append($("<option></option>").val(response[i].id).html(response[i][_dd]));
+                cardStatusId.append($("<option></option>").val(response[i].id).html(response[i][_dd]));
+                netStatusId.append($("<option></option>").val(response[i].id).html(response[i][_dd]));
+            }
+            if (_val != 0) {
+                if (_payMode == 1) {
+                    cashStatusId.val(_val);
+                }
+                else if (_payMode == 2) {
+                    chequeStatusId.val(_val);
+                }
+                else if (_payMode == 3) {
+                    cardStatusId.val(_val);
+                }
+                else if (_payMode == 4) {
+                    netStatusId.val(_val);
+                }
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
 }
