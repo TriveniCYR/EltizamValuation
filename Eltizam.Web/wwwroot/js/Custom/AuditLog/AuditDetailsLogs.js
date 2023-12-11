@@ -49,7 +49,7 @@ function InitializeAuditLogHistoryList() {
         {
             "data": "newValue", "name": "After Update",
             "render": function (data, type, row, data) {
-                return row.propertyName.indexOf('Date') > -1 ? moment(row.oldValue).format(defaultDateFormat) : row.oldValue;
+                return row.propertyName.indexOf('Date') > -1 ? moment(row.oldValue).format(defaultDateFormat) : row.newValue;
             }
         } 
     ];

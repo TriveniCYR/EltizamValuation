@@ -26,9 +26,12 @@
                 <div class="profileHead flex justify-between align-item-center cursor-pointer p-0">
                     <h3 class="dashboardTitle">@_md @_header</h3>
                     <div class="hamburger">
-                        <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
+                        <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">Valuation Requests</a>
                         <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                        <a class="greyBtn lineBtn formAbtn" href="ValuationRequestManage?id=@Model.ValuationRequestId">Valuation Details</a>
+                         <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                         <span>@_md @_header</span>
+
                     </div>
                 </div>
                 <div class="bodyContent">
