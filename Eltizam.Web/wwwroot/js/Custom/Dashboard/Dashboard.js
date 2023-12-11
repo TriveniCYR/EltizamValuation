@@ -1,7 +1,9 @@
 ﻿$(document).ready(function () {
     BindClientNameDropdown();
     BindPropertyNameDropdown();
-    initializeDashboard();
+
+    showLoader();
+    initializeDashboard(); 
 });
 
 // Function to initialize the dashboard on page load
@@ -43,13 +45,13 @@ function submitFilterForm() {
         ToDate: $('#ToDate').val() == "" ? "" : flatpickr.formatDate(new Date($('#ToDate').val()), 'Y-m-d')
          
     };
-
+    showLoader();
     var formDataJson = JSON.stringify(formDataObject);
     ajaxServiceMethod(BaseURL + Dashboardurl, 'POST', submitFilterFormSuccess, submitFilterFormError, formDataJson);
 }
 
 function submitFilterFormSuccess(data) { 
-    debugger
+     
     var widgets = data._object.dashboardWidgets;
     $('#totalClients').text(widgets.totalClients);
     $('#totalProjects').text(widgets.totalProjects);
@@ -150,6 +152,7 @@ function submitFilterFormSuccess(data) {
         topQuotationDuesTableBody.append(rowHtml);
     }
 
+    hideLoader();
      //TopQuotationDuesTable End
 }
 function submitFilterFormError(x, y, z) {
