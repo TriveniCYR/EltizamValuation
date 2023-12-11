@@ -90,8 +90,8 @@ function payTab(evt, payName) {
 }
 
 function getPDF(id) {
-    id = 24;
-    var url1 = "/ValuationRequest/ValuationData";
+   // id = 24;
+    var url1 = "/ValuationRequest/ValuationData/"+id;
     $.get(url1, function (content1) {
         var w = window.open();
         w.document.open();

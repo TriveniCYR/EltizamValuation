@@ -52,6 +52,15 @@ namespace Eltizam.Business.Models
         [Range(1, int.MaxValue, ErrorMessage = "The 'Status' field is required.")]
         public int StatusId { get; set; }
         public int? ApproverId { get; set; }
+        public string? ApproverName { get; set; }
+        public string? ValuerName { get; set; }
+        public string? ValuationRequestStatus { get; set; }
+        public string? ReviewComment { get; set; }
+
+        public string? MethodofValuation { get; set; }
+
+        
+
         [StringLength(250, MinimumLength = 0)]
         public string? ApproverComment { get; set; }
         public DateTime? ApproverUpdateDate { get; set; }

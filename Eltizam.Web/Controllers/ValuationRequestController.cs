@@ -3,12 +3,14 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
+using Eltizam.Utility.Utility;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using System;
+using System.Data;
 
 namespace EltizamValuation.Web.Controllers
 {
@@ -48,9 +50,26 @@ namespace EltizamValuation.Web.Controllers
 
 
         [HttpGet]
-        public IActionResult ValuationData()
+        public IActionResult ValuationData(int id)
         {
-            return View("ValuationData");
+            DataSet ds = new DataSet();
+            ValuationRequestModel model = new ValuationRequestModel();
+            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+            APIRepository objapi = new(_cofiguration);
+            HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetValuationPDFData + "/" + id, HttpMethod.Get, token).Result;
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;              
+                ds = JsonConvert.DeserializeObject<DataSet>(jsonResponse);
+               
+                    var listmodel = ds.Tables[0].DataTableToList<ValuationRequestModel>();
+                    model = listmodel[0];
+                
+
+            }
+            ViewBag.pdfdata = null;
+            return View("ValuationData",model);
         }
 
             [HttpGet]
