@@ -23,10 +23,12 @@
         <div class="heading position-relative flex justify-between">
             <h3 class="dashboardTitle">@_md @_header</h3>
             <div class="hamburger">
-                <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequestManage">@_header</a>
+                <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">Valuation Requests</a>
+                <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                <a class="greyBtn lineBtn formAbtn" href="ValuationRequestManage?id=@Model.ValuationRequestId">Valuation Details</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                   <input type="hidden" id="md" value="@_md" />
-                <span>@_md</span>
+                <span>@_md @_header</span>
             </div>
         </div>
         <div class="bodyContent">
@@ -51,6 +53,8 @@
                     <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
                     <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
                     <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
+                    <input type="hidden" id="hdnTransactionStatusId" value="@(Model == null ? 0 : Model.TransactionStatusId)" />
+                    <input type="hidden" id="hdnTransactionModeId" value="@(Model == null ? 0 : Model.TransactionModeId)" />
                     <input type="hidden" id="hdnTabId" value="0" />
                     <button class="payTabLink" onclick="payTab(event, 'pay1', 1)" id="defaultOpenPay">Cash</button>
                     <button class="payTabLink" onclick="payTab(event, 'pay2', 2)">Cheque</button>
@@ -71,10 +75,7 @@
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Transaction<span class="text-danger">*</span></p>
-                                    <select id="TransactionStatusId" class="disabletxtbox">
-                                       @* <option value="1">completed</option>
-                                        <option value="2">inprogress</option>
-                                        <option value="3">failed</option>*@
+                                    <select id="CashTransactionStatusId" class="disabletxtbox">
                                     </select>
                                 </label>
                                 <label for="" class="w-50">
@@ -107,10 +108,7 @@
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Transaction Status<span class="text-danger">*</span></p>
-                                    <select id="TransactionStatusId" class="disabletxtbox">
-                                        <option value="1">Completed</option>
-                                        <option value="2">Inprogress</option>
-                                        <option value="3">Failed</option>
+                                    <select id="ChequeTransactionStatusId" class="disabletxtbox">
                                     </select>
                                 </label>
                                 <label for="" class="w-50">
@@ -162,10 +160,7 @@
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Transaction Status<span class="text-danger">*</span></p>
-                                    <select id="TransactionStatusId" class="disabletxtbox">
-                                        <option value="1">completed</option>
-                                        <option value="2">inprogress</option>
-                                        <option value="3">failed</option>
+                                    <select id="CardTransactionStatusId" class="disabletxtbox">
                                     </select>
                                 </label>
                                 <label for="" class="w-50">
@@ -219,10 +214,7 @@
                             <div class="flex mb-28">
                                 <label for="" class="w-50">
                                     <p class="m-0">Transaction Status<span class="text-danger">*</span></p>
-                                    <select id="TransactionStatusId" class="disabletxtbox">
-                                        <option value="1">completed</option>
-                                        <option value="2">inprogress</option>
-                                        <option value="3">failed</option>
+                                    <select id="NetTransactionStatusId" class="disabletxtbox">
                                     </select>
                                 </label>
                                 <label for="" class="w-50">

@@ -457,7 +457,7 @@ namespace Eltizam.Business.Core.Implementation
                     strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_Created.html");
                 } 
                 strHtml = strHtml.Replace("[PValRefNoP]", notificationModel.ValRefNo);
-                strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString());
+                strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString("dd-MMM-yyyy"));
                 strHtml = strHtml.Replace("[PNewStatusP]", notificationModel.Status);
 
                 notificationModel.Subject = EnumHelper.GetDescription(subjectEnum);

@@ -48,24 +48,24 @@ namespace Eltizam.Business.Core.Implementation
         #region API Methods
         public async Task<DashboardDataModel> GetDashboardData(DashboardFilterModel model)
         {
-            var _dashboarddata = new DashboardDataModel();
+            var _dashboarddata = new DashboardDataModel(); 
 
-            _dashboarddata.TotalClients = 350;
-            _dashboarddata.TotalProjects = 450;
-            _dashboarddata.TotalRevenue = 450;
-            _dashboarddata.TotalDue = 450;
-            _dashboarddata.CompletedPerc = 78;
-            _dashboarddata.PendingPerc = 22;
+            //_dashboarddata.TotalClients = 350;
+            //_dashboarddata.TotalProjects = 450;
+            //_dashboarddata.TotalRevenue = 450;
+            //_dashboarddata.TotalDue = 450;
+            //_dashboarddata.CompletedPerc = 78;
+            //_dashboarddata.PendingPerc = 22;
 
-            if (_dashboarddata.TotalClients > 0 && _dashboarddata.TotalProjects > 0)
+            //if (_dashboarddata.TotalClients > 0 && _dashboarddata.TotalProjects > 0)
             {
                 DbParameter[] osqlParameter =
                 {
-                     new DbParameter("ClientId", model.ClientId,     SqlDbType.Int),
-                     new DbParameter("PropertyId", model.PropertyId, SqlDbType.Int),
-                     new DbParameter("FromDate",  model.FromDate,   SqlDbType.VarChar),
-                     new DbParameter("ToDate",    model.ToDate,     SqlDbType.VarChar),
-                     new DbParameter("Pagesize",  model.Pagesize,   SqlDbType.Int),
+                     new DbParameter("ClientId",    model.ClientId,   SqlDbType.Int),
+                     new DbParameter("PropertyId",  model.PropertyId, SqlDbType.Int),
+                     new DbParameter("FromDate",    model.FromDate,   SqlDbType.VarChar),
+                     new DbParameter("ToDate",      model.ToDate,     SqlDbType.VarChar),
+                     new DbParameter("Pagesize",    model.Pagesize,   SqlDbType.Int),
                 };
 
                 var latestRequests = EltizamDBHelper.ExecuteMappedReader<DashboardLatestRequest>(ProcedureMetastore.usp_ValuationRequest_GetLatestRequest, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
@@ -85,7 +85,11 @@ namespace Eltizam.Business.Core.Implementation
                  
                 var topQuotationDues = EltizamDBHelper.ExecuteMappedReader<TopQuotationDueModel>(ProcedureMetastore.usp_ValuationRequest_GetTopQuotationDue, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
                 if (latestQuotations != null) 
-                    _dashboarddata.TopQuotationDues = topQuotationDues; 
+                    _dashboarddata.TopQuotationDues = topQuotationDues;
+
+                var dashboardwidgets = EltizamDBHelper.ExecuteMappedReader<DashboardWidgetsRequest>(ProcedureMetastore.usp_ValuationRequest_GetWidgetRequest, _dbConnection, System.Data.CommandType.StoredProcedure, osqlParameter);
+                if (dashboardwidgets != null)
+                    _dashboarddata.DashboardWidgets = dashboardwidgets?.FirstOrDefault();
             }
 
             return _dashboarddata;

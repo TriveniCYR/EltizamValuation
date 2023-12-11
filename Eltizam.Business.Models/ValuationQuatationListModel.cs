@@ -29,6 +29,8 @@ namespace Eltizam.Business.Models
         public int? CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string ? UserName { get; set; }
+        public string? RequestStatus { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
         public DocumentFilesModel? Document { get; set; }

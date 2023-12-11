@@ -330,8 +330,9 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
-            return RedirectToAction("ValuationRequests");
+            //return RedirectToAction("ValuationRequests");
             //return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId });
+            return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterQuotation.ValuationRequestId}");
         }
         [HttpGet]
         public IActionResult ValuationInvoiceManage(int? id, int vId, string refNo)
@@ -463,7 +464,8 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
-            return RedirectToAction("ValuationRequestManage");
+             return RedirectToAction("ValuationRequestManage");
+            
 
         }
 

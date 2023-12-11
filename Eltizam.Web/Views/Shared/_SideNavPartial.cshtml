@@ -24,7 +24,7 @@
                 {
                     foreach (var _m in menus)
                     {
-                        <li onclick="designation()">
+                        <li onclick="markActiveMenu($(this));">
                             <div class="flex align-item-center">
                                 <img src="../assets/@_m.Icon" alt="@_m.ModuleName" class="showIcon">
                                 <img src="../assets/@_m.HoverIcon" alt="@_m.ModuleName" class="hoverIcon">
