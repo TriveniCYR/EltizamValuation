@@ -1022,10 +1022,10 @@ function BindQuatationList() {
                   
                     html += '</ul></div>';
 
-                    $('#QuatationTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationFee + '</td><td>' + object.vat
-                        + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
+                    $('#QuatationTable tbody').append(' <tr id="' + object.id + '"><td>' + object.id + '</td> <td class="formatting">' + object.valuationFee + '</td><td class="formatting">' + object.vat
+                        + '</td><td class="formatting">' + object.otherCharges + '</td><td class="formatting">' + object.discount + '</td><td class="formatting">' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
                 });
-                //StaticDataTable("#QuatationTable");
+                formatCurrencyInElements('formatting');
             }
         },
         failure: function (response) {
@@ -1061,7 +1061,7 @@ function BindInvoiceList() {
                     html += '</ul></div>';
 
                     $('#InvoiceTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationRequestId + '</td><td>' + object.transactionMode
-                        + '</td><td>' + object.transactionStatusName + '</td><td>' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                        + '</td><td>' + object.transactionStatusName + '</td><td class="formatting">' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
                 });
             }
         },
@@ -1095,6 +1095,9 @@ function DeleteQuotation() {
 function DeleteQuotationByIdSuccess(data) {
     try {
         if (data._Success === true) {
+            var deletedId = $('#DeleteQuotationModel #Id').val();
+            $('#' + deletedId).remove();
+
             toastr.success(RecordDelete);
             //$('#' + tableId).DataTable().draw();
         }
