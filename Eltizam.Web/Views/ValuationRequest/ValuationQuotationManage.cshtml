@@ -96,6 +96,7 @@
                                         {
                                             <div class="flex">
                                                 <label for="" class="w-100">
+                                                    <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                                     <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)">
                                                     <input type="text" class="fileNames" readonly placeholder="file names">
                                                 </label>
@@ -112,7 +113,10 @@
                                                                 <th>Updated Date</th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                <th>Action</th>
+                                                                @if (_md!="View")
+                                                                {
+                                                                    <th>Action</th>
+                                                                }
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -125,13 +129,18 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
+                                                                        @if (_md != "View")
+                                                                        {
                                                                         <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                     }
                                                                     </tr>
                                                                 }
                                                             }
                                                             else
                                                             {
-                                                                <label>NA</label>
+                                                                <tr>
+                                                                    <td colspan="5">NA</td>
+                                                                </tr>
                                                             }
                                                         </tbody>
                                                     </table>

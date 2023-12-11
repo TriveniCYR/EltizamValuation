@@ -129,8 +129,8 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     objQuatation.ReferenceNo = entityQuatation.ReferenceNo;
                     objQuatation.ValuationRequestId = entityQuatation.ValuationRequestId;
-                    objQuatation.ValuationFee = entityQuatation.ValuationFee;
-                    objQuatation.Vat = entityQuatation.Vat;
+                    objQuatation.ValuationFee = (decimal)entityQuatation.ValuationFee;
+                    objQuatation.Vat = (decimal)entityQuatation.Vat;
                     objQuatation.OtherCharges = entityQuatation.OtherCharges;
                     objQuatation.InstructorCharges = entityQuatation.InstructorCharges;
                     objQuatation.Discount = entityQuatation.Discount;

@@ -10,7 +10,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public decimal? MarketValue { get; set; }
         public decimal? MarketRate { get; set; }
         public int? LifeOfBuilding { get; set; }
-        public int? AnnualMaintainceCost { get; set; }
+        public decimal? AnnualMaintainceCost { get; set; }
         public bool? Insuarance { get; set; }
         public int? CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
