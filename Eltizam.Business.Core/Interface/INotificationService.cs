@@ -10,5 +10,6 @@ namespace Eltizam.Business.Core.Interface
         SendNotificationModel GetValuationNotificationData(RecepientActionEnum subjectEnum, int valiadtionRequestId); 
         List<MasterNotificationEntitty> GetAll(int? lastid, int? userId, int? valId);
         Task<DBOperation> UpdateNotification(int notificationid, int readBy);
+        void UpdateValuationRequestStatus(int newStatusId, int valuationRequestId);
     }
 }

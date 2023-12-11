@@ -35,6 +35,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly INotificationService _notificationService;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IRepository<MasterUser> _masteruserrepository;
+        private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
         #endregion Properties
 
         #region Constructor
@@ -49,6 +50,7 @@ namespace Eltizam.Business.Core.Implementation
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
             _notificationService = notificationService;
             _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
+            _statusrepository = _unitOfWork.GetRepository<ValuationRequestStatus>();
         }
 
         #endregion Constructor
@@ -189,10 +191,12 @@ namespace Eltizam.Business.Core.Implementation
             }
             try
             {
-              //  string? username = _masteruserrepository.GetAll().Where(x => x.Id == objQuatation.CreatedBy).Select(x => x.UserName).FirstOrDefault();
+                var statusid = _statusrepository.GetAll().Where(x => x.StatusName == "Quoted").Select(x => x.Id).FirstOrDefault();
+                _notificationService.UpdateValuationRequestStatus(statusid,objQuatation.ValuationRequestId);
+              
                 string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_QuotationCreate.html");
         
-                strHtml = strHtml.Replace("[PDateP]", objQuatation.CreatedDate.ToString()); 
+                strHtml = strHtml.Replace("[PDateP]", objQuatation.CreatedDate.ToString("dd-MMM-yyyy")); 
                 strHtml = strHtml.Replace("[ValuationFees]", objQuatation.ValuationFee.ToString());
                 strHtml = strHtml.Replace("[VAT]", objQuatation.Vat.ToString());
                 strHtml = strHtml.Replace("[OtherCharges]", objQuatation.OtherCharges.ToString());
@@ -213,5 +217,6 @@ namespace Eltizam.Business.Core.Implementation
 
             return DBOperation.Success; 
         }
+
     }
 }
