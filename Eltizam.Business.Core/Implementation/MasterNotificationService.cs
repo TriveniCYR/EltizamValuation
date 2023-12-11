@@ -23,6 +23,8 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private IRepository<MasterNotification> _repository { get; set; }
         private IRepository<ValuationRequest> _valuationrepository { get; set; }
+        private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
+
         public MasterNotificationService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapperFactory mapperFactory)
         {
             _unitOfWork = unitOfWork;
@@ -30,6 +32,7 @@ namespace Eltizam.Business.Core.Implementation
             _configuration = configuration;
             _mapperFactory = mapperFactory;
             _valuationrepository = _unitOfWork.GetRepository<ValuationRequest>();
+            _statusrepository = _unitOfWork.GetRepository<ValuationRequestStatus>(); ;
         }
 
         /// <summary>
@@ -167,6 +170,54 @@ namespace Eltizam.Business.Core.Implementation
             }
             return DBOperation.Success;
 
+        }
+
+
+        public async void UpdateValuationRequestStatus(int newStatusId,int id)
+        {
+            try
+            {
+                ValuationRequest result = null;
+
+                if (newStatusId > 0)
+                {
+                    result = _valuationrepository.Get(id);
+                    result.StatusId = newStatusId;
+                    _valuationrepository.UpdateAsync(result);
+                    await _unitOfWork.SaveChangesAsync();
+                    await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<bool> SenddDetailsToEmail(RecepientActionEnum subjectEnum, int valuationrequestId)
+        {
+            try
+            {
+                var notificationModel = GetValuationNotificationData(subjectEnum, valuationrequestId);
+
+                string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_StatusChange.html");
+                if (subjectEnum == RecepientActionEnum.ValuationCreated)
+                {
+                    strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_Created.html");
+                }
+                strHtml = strHtml.Replace("[PValRefNoP]", notificationModel.ValRefNo);
+                strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString("dd-MMM-yyyy"));
+                strHtml = strHtml.Replace("[PNewStatusP]", notificationModel.Status);
+
+                notificationModel.Subject = EnumHelper.GetDescription(subjectEnum);
+                notificationModel.Body = strHtml;
+
+                await SendEmail(notificationModel);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
