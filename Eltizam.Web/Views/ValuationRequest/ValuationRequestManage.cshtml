@@ -14,7 +14,7 @@
 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Request";
-    var _md = Model.Id > 0 ? "Edit" : "Add";
+    var _md = Model.Id > 0 ? "Edit" : (ViewBag.IsView == "2") ? "View" : "Add";
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
     var isDelete = objPermssion.Delete ? 1 : 0;
     var isAdd = objPermssion.Add ? 1 : 0;
@@ -80,8 +80,7 @@
                 <input type="hidden" id="md" value="@_md" />
                 <input type="hidden" id="View" value="@View" />
             </div>
-        </div>
-         <button class="btn-primary" onclick="getPDF(1)" id="btngetPDF" >Get PDF</button>
+        </div> 
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab flex flex-start m-0 ptrl-20">
@@ -118,7 +117,9 @@
                             <input type="hidden" id="isApprovePerm" value="@isApprove" /> 
                             <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                             <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
-                            <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />  
+                           @*  <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />   *@
+                            <input type="hidden" id="hdnStatusId" value="@(_md == "Add" ? 3 : (Model == null ? 0 : Model.StatusId))" />
+
                             <input type="hidden" id="hdnClientId" value="@(Model == null ? 0 : Model.ClientId)" />
                             <input type="hidden" id="hdnApproverId" value="@(Model == null ? 0 : Model.ApproverId)" />
                             <input type="hidden" id="hdnValuationModeId" value="@(Model == null ? 0 : Model.ValuationModeId)" />
@@ -188,7 +189,7 @@
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Valuation Time Frame
-                                        @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
+                                        @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
                                         @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -711,6 +712,7 @@
                                     <div class="panel" style="display: none;">
                                         <div class="flex">
                                             <label for="" class="w-100">
+                                                <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                                 <input type="file" class="fileInput" asp-for="ValuationAssesment.SiteDescription.Document.Files" multiple onchange="validateFileSize(this)">
                                                 <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
@@ -726,7 +728,11 @@
                                                                 <th>DateUpdate </th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                <th>Action</th>
+                                                                @if (View != 2)
+                                                                {
+                                                                    <th>Action</th>
+                                                                }
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -739,9 +745,11 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        @* <td><a title="Delete" onclick="DeleteDocument(@docs.Id)" ><img src="../assets/trash.svg" alt="trash" /></a></td> *@
-                                                                        @*  <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="DeleteDocument(@docs.Id); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td> *@
-                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        @if (View != 2)
+                                                                        {
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        }
+                                                                        
 
                                                                     </tr>
                                                                 }
@@ -806,14 +814,14 @@
                                 <label>
 
                                     <p class="m-0">  Rate (Sq.Ft)<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, new { @class = "form-control price", @placeholder = @SharedLocalizer["RateSqFt"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["RateSqFt"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.RateSqFt, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label>
                                     <p class="m-0"> Price<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, new { @class = "form-control price", @placeholder = @SharedLocalizer["Price"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["Price"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.comparableEvidenceModel.Price, "", new { @class = "text-danger" })
                                 </label>
                                 <label>
@@ -833,8 +841,9 @@
                                     <div class="panel" style="display: none;">
                                         <div class="flex">
                                             <label for="" class="w-100">
+                                                <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                                 <input type="file" class="fileInput" asp-for="ValuationAssesment.comparableEvidenceModel.Document.Files" multiple onchange="validateFileSize(this)">
-                                                <input type="text" class="fileNames" readonly placeholder="file names">
+                                                 <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
                                         </div>
                                         <div class="W-100">
@@ -848,7 +857,10 @@
                                                                 <th>DateUpdate </th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                <th>Action</th>
+                                                                @if (View != 2)
+                                                                {
+                                                                    <th>Action</th>
+                                                                }
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -861,7 +873,10 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        @if (View != 2)
+                                                                        {
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        }
                                                                     </tr>
                                                                 }
                                                             }
@@ -908,13 +923,13 @@
                             <div class="flex">
                                 <label for="">
                                     <p class="m-0"> MarketValue<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, new { @class = "form-control price", @placeholder = @SharedLocalizer["MarketValue"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["MarketValue"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
 
                                     <p class="m-0"> Market Rate<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, new { @class = "form-control price", @placeholder = @SharedLocalizer["MarkentRate"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["MarkentRate"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, "", new { @class = "text-danger" })
                                 </label>
                             </div>
@@ -929,7 +944,7 @@
                                 <label for="">
                                     <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
@@ -962,6 +977,7 @@
                                     <div class="panel" style="display: none;">
                                         <div class="flex">
                                             <label for="" class="w-100">
+                                                <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                                 <input type="file" class="fileInput" asp-for="ValuationAssesment.valuationAssessementModel.Document.Files" multiple onchange="validateFileSize(this)">
                                                 <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
@@ -977,7 +993,10 @@
                                                                 <th>DateUpdate </th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                <th>Action</th>
+                                                                @if (View != 2)
+                                                                {
+                                                                    <th>Action</th>
+                                                                }
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -990,7 +1009,10 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        @if (View != 2)
+                                                                        {
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                        }
                                                                     </tr>
                                                                 }
                                                             }
@@ -1013,6 +1035,7 @@
                         @if (!isHideBtn)
                         {
                             <div class="text-right buttonArea bodyContent plr-0">
+                                <button type="reset" onclick="getPDF(1)" class="blueBtn mr-12" id="btngetPDF">Generate PDF</button>
                                 <button type="submit" class="blueBtn mr-12">Save</button>
                             </div>
                         }

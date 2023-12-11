@@ -12,6 +12,7 @@
 //    evt.currentTarget.className += " active";
 //}
 var docId = 0;
+var invoiceId = 0;
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -20,6 +21,7 @@ function profileTab(evt, cityName) {
         tabcontent[i].style.padding = 0;
         tabcontent[i].style.border = "none";
         tabcontent[i].style.marginTop = 0;
+        tabcontent[i].style.position = "absolute";
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -28,6 +30,7 @@ function profileTab(evt, cityName) {
     document.getElementById(cityName).style.height = "auto";
     document.getElementById(cityName).style.padding = "6px 12px";
     document.getElementById(cityName).style.border = "1px solid var(--blue)";
+    document.getElementById(cityName).style.position = "initial";
     evt.currentTarget.className += " active";
 }
 function redirectToComparableEvidences() {
@@ -61,22 +64,7 @@ function toggleInput(answer) {
     }
 }
 
-function displayFileNames(input) {
-    const fileInput = input;
-    const fileNamesInput = input.nextElementSibling;
 
-    const files = fileInput.files;
-    let fileNames = "";
-
-    for (let i = 0; i < files.length; i++) {
-        fileNames += files[i].name;
-        if (i < files.length - 1) {
-            fileNames += ", ";
-        }
-    }
-
-    fileNamesInput.value = fileNames;
-}
 function accordianToggle(header) {
     const item = header.nextElementSibling;
     if (item.style.display === 'block') {
@@ -108,38 +96,12 @@ function getPDF(id) {
         var w = window.open();
         w.document.open();
         w.document.write(content1);
-        if (w.document.getElementById("loading-wrapper") !=null)
-        w.document.getElementById("loading-wrapper").remove();
-        //sideNavToggle();
-        generatePDF(w.document.getElementById("PDFMainDiv")) //(w.document.body)
+       // w.document.getElementById("loading-wrapper").remove();
+        saveAspdf(w.document.getElementById("PDFMainDiv")) //(w.document.body)
         w.close();
     });
 }
-function downloadPdf(con1) {
 
-    var val = htmlToPdfmake(con1);
-    var dd = { content: val };
-    pdfMake.createPdf(dd).download();
-
-
-    //var docDefinition = {
-    //    content: con1,
-    //    defaultStyle: {
-    //    }
-    //};
-    //pdfMake.createPdf(con1).print();
-}
-function generatePDF(element) {
-    var opt = {
-        margin: [0, 0, 30, 0], //top, left, buttom, right,
-        filename: 'my_file.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { dpi: 192, scale: 2, letterRendering: true },
-        pagebreak: { mode: 'avoid-all' },
-        jsPDF: { unit: 'pt', format: 'letter', orientation: 'landscape' }
-    };
-    html2pdf(). set(opt). from(element).save();
-}
 function saveAspdf(con) {
     var pdf = new jsPDF('p', 'pt', 'a4');
     pdf.addHTML(con, function () {
@@ -254,10 +216,10 @@ $(document).ready(function () {
     var inputElement56 = $('#ValuationAssesment_comparableEvidenceModel_AddtionalComments');
 
 
-    var inputElement62 = $('#ValuationAssesment_valuationAssessementModel_MarketRate');
+    var inputElement61 = $('#ValuationAssesment_valuationAssessementModel_MarketRate');
     var inputElement62 = $('#ValuationAssesment_valuationAssessementModel_LifeOfBuilding');
-    var inputElement64 = $('#ValuationAssesment_valuationAssessementModel_AnnualMaintainceCost');
-    var inputElement61 = $('#ValuationAssesment_valuationAssessementModel_MarketValue');
+    var inputElement63 = $('#ValuationAssesment_valuationAssessementModel_AnnualMaintainceCost');
+    var inputElement64 = $('#ValuationAssesment_valuationAssessementModel_MarketValue');
     var inputElement65 = $('#ValuationAssesment_valuationAssessementModel_Insuarance');
     var inputElement66 = $('#ValuationAssesment_valuationAssessementModel_InsuranceDetails');
     
@@ -330,17 +292,17 @@ $(document).ready(function () {
         inputElement55.prop('disabled', true);
         inputElement56.prop('disabled', true);
 
-        inputElement62.prop('disabled', true);
-        inputElement62.prop('disabled', true);
-        inputElement64.prop('disabled', true);
         inputElement61.prop('disabled', true);
+        inputElement62.prop('disabled', true);
+        inputElement63.prop('disabled', true);
+        inputElement64.prop('disabled', true);
         inputElement65.prop('disabled', true);
         inputElement66.prop('disabled', true);
     }
 
 
     if (roleId > 0) {
-        BindValuationRequestStatus(roleId)
+        BindValuationRequestStatus(roleId, action)
 
 
     }
@@ -418,36 +380,51 @@ $(document).ready(function () {
 
 var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/
 
-//// Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
-//if (selectedOption === 'Rejected') {
-//    $('#comment').show();
-//} else {
-//    $('#comment').hide();
-//}
+// Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
+if (selectedOption === 'Rejected') {
+    $('#comment').show();
+} else {
+    $('#comment').hide();
+}
 
 
 //if (RoleId == 2) {
 //    BindValuationRequestStatus(RoleId);
 //}
-//function BindValuationRequestStatus() {
-//    /*alert("hello");*/ 
-//    var RequestStatus = $("#StatusId");
-//    var _val = $('#hdnStatusId').val();
-//    var _rpname = "statusName";
-//    var roleId=document.getElementById('hdnRoleId').value
-
-//    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
-
-
-//}
-
-function BindValuationRequestStatus(roleId) {
+function BindValuationRequestStatus() {
+    /*alert("hello");*/
     var RequestStatus = $("#StatusId");
     var _val = $('#hdnStatusId').val();
     var _rpname = "statusName";
+    var roleId=document.getElementById('hdnRoleId').value
 
-    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
+    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action, RequestStatus, _rpname, _val);
+   // var url = GetAllValuationRequestStatus + '/' + roleId + '?action=' + action;
+
+
 }
+
+//function BindValuationRequestStatus(roleId) {
+//    var RequestStatus = $("#StatusId");
+//    var _val = $('#hdnStatusId').val();
+
+//    var _rpname = "statusName";
+
+  
+//    if (action == 'Add') {
+//        BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, '3'); // Assuming '3' is the id for "New"
+
+//       /* RequestStatus.prop('disabled', true);*/
+      
+//    }
+//    else {
+//          BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
+//    }
+    
+//}
+
+
+
 function BindClientType() {
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientTypeId').val();
@@ -663,63 +640,65 @@ function BindFurnished() {
 
 function BindPropertyDetailById(Id) {
     var Amentiesdiv = $("#amentiesdiv");
-    $.ajax({
-        type: Get,
-        url: BaseURL + GetPropertyById + '/' + Id,
-        "datatype": "json",
-        success: function (response) {
+    if (Id != '0') {
+        $.ajax({
+            type: Get,
+            url: BaseURL + GetPropertyById + '/' + Id,
+            "datatype": "json",
+            success: function (response) {
 
-            //alert(response);
-            document.getElementById('UnitType').value = response._object.unitType;
-            document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
-            document.getElementById('Furnished').value = response._object.furnished;
-            document.getElementById('ValuationPurpose').value = response._object.valuationPurpose;
-            document.getElementById('BuildUpAreaSqFt').value = response._object.buildUpAreaSqFt;
-            document.getElementById('BuildUpAreaSqMtr').value = response._object.buildUpAreaSqMtr;
-            document.getElementById('AgeOfConstruction').value = response._object.ageOfConstruction;
-            document.getElementById('Parking').value = response._object.parking;
-            document.getElementById('ParkingBayNo').value = response._object.parkingBayNo;
-            document.getElementById('Description').value = response._object.description;
-            var AmenityList = response._object.amenityList;
+                //alert(response);
+                document.getElementById('UnitType').value = response._object.unitType;
+                document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
+                document.getElementById('Furnished').value = response._object.furnished;
+                document.getElementById('ValuationPurpose').value = response._object.valuationPurpose;
+                document.getElementById('BuildUpAreaSqFt').value = response._object.buildUpAreaSqFt;
+                document.getElementById('BuildUpAreaSqMtr').value = response._object.buildUpAreaSqMtr;
+                document.getElementById('AgeOfConstruction').value = response._object.ageOfConstruction;
+                document.getElementById('Parking').value = response._object.parking;
+                document.getElementById('ParkingBayNo').value = response._object.parkingBayNo;
+                document.getElementById('Description').value = response._object.description;
+                var AmenityList = response._object.amenityList;
 
-            for (i = 0; i < response._object.amenityList.length; i++) {
-                //var _id = response._object.amenityList[i].id
-                if (response._object.amenityList[i].isActive == true) {
-                    var ob = response._object.amenityList[i];
-                    Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
-                        '<input checked data-val="true" disabled="disabled" name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
-                        '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
+                for (i = 0; i < response._object.amenityList.length; i++) {
+                    //var _id = response._object.amenityList[i].id
+                    if (response._object.amenityList[i].isActive == true) {
+                        var ob = response._object.amenityList[i];
+                        Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
+                            '<input checked data-val="true" disabled="disabled" name="AmenityList[' + ob.id + '].IsActive" type="checkbox" text="[' + ob.amenityName + ']" value="true"/> ' + '<p> ' + ob.amenityName + '  </p>' +
+                            '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
+                    }
                 }
+                var PropertyDetails = response._object.propertyDetail;
+                if (isAddValuation) {
+                    document.getElementById('hdnLocationCountryId').value = PropertyDetails.countryId;
+                    document.getElementById('hdnLocationStateId').value = PropertyDetails.stateId;
+                    document.getElementById('hdnLocationCityId').value = PropertyDetails.cityId;
+                }
+                document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
+                document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
+                document.getElementById('PropertyDetail_CityId').value = PropertyDetails.cityId;
+                document.getElementById('PropertyDetail_Zone').value = PropertyDetails.zone;
+                document.getElementById('PropertyDetail_BuildingProject').value = PropertyDetails.buildingProject;
+                document.getElementById('PropertyDetail_Latitude').value = PropertyDetails.latitude;
+                document.getElementById('PropertyDetail_Longitude').value = PropertyDetails.longitude;
+                document.getElementById('PropertyDetail_Address1').value = PropertyDetails.address1;
+                document.getElementById('PropertyDetail_Address2').value = PropertyDetails.address2;
+                document.getElementById('PropertyDetail_Pincode').value = PropertyDetails.pincode;
+                document.getElementById('PropertyDetail_Landmark').value = PropertyDetails.landmark;
+
+                BindLocationState(PropertyDetails.countryId);
+                BindLocationCity(PropertyDetails.stateId);
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+                $("#loader").hide();
             }
-            var PropertyDetails = response._object.propertyDetail;
-            if (isAddValuation) { 
-            document.getElementById('hdnLocationCountryId').value = PropertyDetails.countryId;
-            document.getElementById('hdnLocationStateId').value = PropertyDetails.stateId;
-            document.getElementById('hdnLocationCityId').value = PropertyDetails.cityId;
-            }
-            document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
-            document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
-            document.getElementById('PropertyDetail_CityId').value = PropertyDetails.cityId;
-            document.getElementById('PropertyDetail_Zone').value = PropertyDetails.zone;
-            document.getElementById('PropertyDetail_BuildingProject').value = PropertyDetails.buildingProject;
-            document.getElementById('PropertyDetail_Latitude').value = PropertyDetails.latitude;
-            document.getElementById('PropertyDetail_Longitude').value = PropertyDetails.longitude;
-            document.getElementById('PropertyDetail_Address1').value = PropertyDetails.address1;
-            document.getElementById('PropertyDetail_Address2').value = PropertyDetails.address2;
-            document.getElementById('PropertyDetail_Pincode').value = PropertyDetails.pincode;
-            document.getElementById('PropertyDetail_Landmark').value = PropertyDetails.landmark;
-        
-            BindLocationState(PropertyDetails.countryId);
-            BindLocationCity(PropertyDetails.stateId);
-        },
-        failure: function (response) {
-            alert(response.responseText);
-        },
-        error: function (response) {
-            alert(response.responseText);
-            $("#loader").hide();
-        }
-    });
+        });
+    }
 }
 
 function BindCountry() {
@@ -1043,10 +1022,10 @@ function BindQuatationList() {
                   
                     html += '</ul></div>';
 
-                    $('#QuatationTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationFee + '</td><td>' + object.vat
-                        + '</td><td>' + object.otherCharges + '</td><td>' + object.discount + '</td><td>' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
+                    $('#QuatationTable tbody').append(' <tr id="' + object.id + '"><td>' + object.id + '</td> <td class="formatting">' + object.valuationFee + '</td><td class="formatting">' + object.vat
+                        + '</td><td class="formatting">' + object.otherCharges + '</td><td class="formatting">' + object.discount + '</td><td class="formatting">' + object.totalFee + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
                 });
-                //StaticDataTable("#QuatationTable");
+                formatCurrencyInElements('formatting');
             }
         },
         failure: function (response) {
@@ -1082,7 +1061,7 @@ function BindInvoiceList() {
                     html += '</ul></div>';
 
                     $('#InvoiceTable tbody').append(' <tr><td>' + object.id + '</td> <td>' + object.valuationRequestId + '</td><td>' + object.transactionMode
-                        + '</td><td>' + object.transactionStatusName + '</td><td>' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                        + '</td><td>' + object.transactionStatusName + '</td><td class="formatting">' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
                 });
             }
         },
@@ -1116,6 +1095,9 @@ function DeleteQuotation() {
 function DeleteQuotationByIdSuccess(data) {
     try {
         if (data._Success === true) {
+            var deletedId = $('#DeleteQuotationModel #Id').val();
+            $('#' + deletedId).remove();
+
             toastr.success(RecordDelete);
             //$('#' + tableId).DataTable().draw();
         }
@@ -1137,6 +1119,7 @@ function ConfirmationDeleteInvoice(id) {
     $('#DeleteInvoiceModel #Id').val(id);
 }
 function DeleteInvoice() {
+    invoiceId = $('#DeleteInvoiceModel #ID').val()
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteInvoiceModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteInvoiceByIdUrl + "/" + tempInAtiveID, Post, DeleteInvoiceByIdSuccess, DeleteInvoiceByIdError);
@@ -1148,8 +1131,10 @@ function DeleteInvoice() {
 function DeleteInvoiceByIdSuccess(data) {
     try {
         if (data._Success === true) {
+            
+            /*$('#' + tableId).DataTable().draw();*/
+            $('#' + invoiceId).remove();
             toastr.success(RecordDelete);
-            //$('#' + tableId).DataTable().draw();
         }
         else {
             toastr.error(data._Message);
@@ -1162,20 +1147,6 @@ function DeleteInvoiceByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-function validateFileSize(input) {
-    const maxSizeInBytes = 2 * 1024 * 1024; // 5MB
-    const files = input.files;
 
-    for (let i = 0; i < files.length; i++) {
-        if (files[i].size > maxSizeInBytes) {
-            toastr.error('File size exceeds 2MB. Please choose a smaller file.');
-            input.value = ''; // Clear the input to prevent uploading the large file
-            return;
-        }
-    }
-
-    // If all files are within the size limit, display the file names
-    displayFileNames(input);
-}
 
 //#endregion Delete Invoice

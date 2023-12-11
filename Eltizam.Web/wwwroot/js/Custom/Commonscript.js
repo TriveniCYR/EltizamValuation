@@ -46,8 +46,35 @@ var action = ($("#md").val())
 var view = ($("#View").val())
 var userid = parseInt($("#userid").val(), 10);
 
-$(document).ready(function () {
+function formatCurrencyInElements(className) {
+    const elements = document.querySelectorAll(`.${className}`);
+    elements.forEach(function (element) {
+        if (element.tagName === 'INPUT') {
+            const formatInput = (inputElement) => {
+                const inputText = inputElement.value;
+                const hasNegativeSign = inputText.includes('-');
+                const numericValue = parseFloat(inputText.replace(/[^\d.]/g, ''));
+                if (!isNaN(numericValue)) {
+                    inputElement.value = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 6 });
+                }
+            };
+            formatInput(element);
 
+            element.addEventListener('blur', function () {
+                formatInput(this);
+            });
+        } else {
+            const elementText = element.textContent;
+            const hasNegativeSign = elementText.includes('-');
+            const numericValue = parseFloat(elementText.replace(/[^\d.]/g, ''));
+            if (!isNaN(numericValue)) {
+                element.textContent = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 6 });
+            }
+        }
+    });
+}
+$(document).ready(function () {
+    formatCurrencyInElements('formatting');
     // Assuming your elements have the class 'price'
     const elements = document.getElementsByClassName('price');
 
@@ -55,6 +82,12 @@ $(document).ready(function () {
     for (const element of elements) {
         element.addEventListener('input', function (event) {
             let inputValue = event.target.value;
+
+            // Check for multiple decimal points and allow only one
+            if (inputValue.indexOf('.') !== inputValue.lastIndexOf('.')) {
+                const lastDotIndex = inputValue.lastIndexOf('.');
+                inputValue = inputValue.slice(0, lastDotIndex) + inputValue.slice(lastDotIndex + 1);
+            }
 
             // Remove non-numeric characters, except for the decimal point
             inputValue = inputValue.replace(/[^0-9.]/g, '');
@@ -501,6 +534,7 @@ function profileTab(evt, cityName) {
         tabcontent[i].style.padding = 0;
         tabcontent[i].style.border = "none";
         tabcontent[i].style.marginTop = 0;
+        tabcontent[i].style.position = "absolute";
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
@@ -509,6 +543,7 @@ function profileTab(evt, cityName) {
     document.getElementById(cityName).style.height = "auto";
     document.getElementById(cityName).style.padding = "6px 12px";
     document.getElementById(cityName).style.border = "1px solid var(--blue)";
+    document.getElementById(cityName).style.position = "initial";
     evt.currentTarget.className += " active";
 }
 //document.getElementById("defaultOpen").click();
@@ -569,22 +604,46 @@ function removeParentDiv(element) {
 }
 
 
-//document.getElementsByClassName('price').addEventListener('input', function (event) {
-//    const inputValue = event.target.value;
+function assignToggleFilter() {
+    var x = document.getElementById("assignToggleFilter");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
 
-//    // Regular expression to match decimal numbers with up to 6 decimal places
-//    const decimalRegex = /^(\d+)?(\.\d{0,6})?$/;
+function validateFileSize(input) {
+    const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+    const files = input.files;
 
-//    if (!decimalRegex.test(inputValue)) {
-//        // Remove the last character if it exceeds 6 decimal places
-//        const sanitizedValue = inputValue.substring(0, inputValue.indexOf('.') + 7);
-//        event.target.value = sanitizedValue;
-//    }
-//});
+    for (let i = 0; i < files.length; i++) {
+        if (files[i].size > maxSizeInBytes) {
+            toastr.error('File size exceeds 5MB. Please choose a smaller file.');
+            input.value = ''; // Clear the input to prevent uploading the large file
+            return;
+        }
+    }
 
+    // If all files are within the size limit, display the file names
+    displayFileNames(input);
+}
 
+function displayFileNames(input) {
+    const fileInput = input;
+    const fileNamesInput = input.nextElementSibling;
 
+    const files = fileInput.files;
+    let fileNames = "";
 
+    for (let i = 0; i < files.length; i++) {
+        fileNames += files[i].name;
+        if (i < files.length - 1) {
+            fileNames += ", ";
+        }
+    }
 
+    fileNamesInput.value = fileNames;
+}
 
 // ======== End:  Scroller for page ============ 

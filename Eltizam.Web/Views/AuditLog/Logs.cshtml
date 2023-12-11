@@ -23,12 +23,13 @@
             <div class="accordion valueAdvance">
 
                 <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
-                
                 <label for="section1" class="advaceSearhBtn" onclick="assignToggleFilter()"><img src="../assets/filter.svg" alt="filterSearch" /></label>
-                <div class="accordion-content inputSearchs">
+                <div class="accordion-content inputSearchs" id="assignToggleFilter">
+                    <div class="flex justify-between">
+                        <h3>Advanced Search</h3>
+                        <span class="cursor-pointer" onclick="assignToggleFilter()">X</span>
+                    </div>
 
-                    <h3 class="text-center">Advanced Search</h3>
-                    <span class="cursor-pointer" onclick="assignToggleFilter()">X</span>
                     <form>
                             
 

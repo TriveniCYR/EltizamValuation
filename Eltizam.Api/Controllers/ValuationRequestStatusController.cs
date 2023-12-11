@@ -40,7 +40,7 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                return _ObjectResponse.CreateData(await _RequestStatusService.GetAll(roleId), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _RequestStatusService.GetAll(roleId,null), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

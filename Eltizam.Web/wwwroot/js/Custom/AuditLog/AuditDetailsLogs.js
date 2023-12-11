@@ -16,7 +16,7 @@ function InitializeAuditLogHistoryList() {
     var tkey = $("#tableKey").val() === undefined ? "" : $("#tableKey").val(); 
     
     var _appendURL = "?UserName=" + LogInUserId + "&TableName=" + tableName + "&TableKey=" + tkey + "&Id=" + id + "&DateFrom=" + datefrom + "&DateTo=" + dateto; 
-
+    assignToggleFilter();
     var ajaxObject = {
         "url": BaseURL + AllAuditDetails + _appendURL,
         "type": "POST",
@@ -56,6 +56,7 @@ function InitializeAuditLogHistoryList() {
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
 }
+
 
 //#endregion
 

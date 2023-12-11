@@ -6,26 +6,39 @@ $(document).ready(function () {
     BindRequestStaus();
     BindValutionMethod();
     BindApproverList(); 
+    BindClientNameDropdown();
+    BindPropertyNameDropdown();
 
 });
+function BindClientNameDropdown() {
+    var Client = $("#ClientName");
+    var _val = 0;
+    var _rpname = "clientName";
+    var id = 0;
+    BindDropdowns(AllClient + '/' + id, Client, _rpname, _val);
+}
 
+function BindPropertyNameDropdown() {
+    var property = $("#PropertyName");
+    var _val = 0;
+    var _rpname = "propertyName";
+    var propertytypeid = 0;
+    var subpropertytypeid = 0;
+    var ownershiptypeid = 0;
+    BindDropdowns(AllProperty + '/' + propertytypeid + '/' + subpropertytypeid + '/' + ownershiptypeid, property, _rpname, _val);
+}
 function assignToggle() {
     var x = document.getElementById("assignToggle");
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {
+        document.getElementById('Remarks').value = "";
+        document.getElementById('ApproverId').value = 0;
         x.style.display = "none";
     }
 }
 
-function assignToggleFilter() {
-    var x = document.getElementById("assignToggleFilter");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
+
 
 function BindApproverList() {
     var Approver = $("#ApproverId");

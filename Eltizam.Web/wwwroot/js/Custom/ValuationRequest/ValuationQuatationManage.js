@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    document.getElementById('ValuationFee').value == null ? '' : document.getElementById('ValuationFee').value;
-    document.getElementById('Vat').value == null ? '': document.getElementById('Vat').value;
+    //document.getElementById('ValuationFee').value == 0.000000 ? document.getElementById('ValuationFee').placeholder = 'Enter Valuation Fee' : document.getElementById('ValuationFee').value;
+    //document.getElementById('Vat').value == null ? '': document.getElementById('Vat').value;
 });
 $('#ValuationFee').keypress(function (e) {
     

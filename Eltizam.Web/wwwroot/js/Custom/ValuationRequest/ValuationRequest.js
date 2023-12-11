@@ -1,4 +1,5 @@
 ﻿var tableId = "ValuationRequestTable";
+var isAssigned = false;
 $(document).ready(function () {
     InitializeValutionRequestDataList(); 
 });
@@ -13,12 +14,12 @@ function InitializeValutionRequestDataList() {
     var propertyTypeId = $("#PropertyTypeId").val();
     var stateId = $("#StateId").val();
     var resourceId = $("#ResourceId").val();
-    var countryId = $("CountryId").val();
-    var cityId = $("CityId").val();
+    var countryId = $("#CountryId").val();
+    var cityId = $("#CityId").val();
 
     var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
-    var clientName = $("#ClientName").val() === undefined ? "" : $("#ClientName").val();
-    var propertyName = $("#PropertyName").val() === undefined ? "" : $("#PropertyName").val(); 
+    var clientName = $("#ClientName").val() === null || $("#ClientName").val() === '0' ? "" : $("#ClientName").val();
+    var propertyName = $("#PropertyName").val() === null || $("#PropertyName").val() === '0' ? "" : $("#PropertyName").val(); 
     var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
     var toDate = $("#ToDate").val() === undefined ? "" : $("#ToDate").val(); 
 
@@ -28,9 +29,10 @@ function InitializeValutionRequestDataList() {
     stateId         = GetIntegerVal(stateId);  
     cityId          = GetIntegerVal(cityId);  
     resourceId      = GetIntegerVal(resourceId);  
-
-    assignToggleFilter();
-
+    if (isAssigned) {
+        assignToggleFilter();
+        isAssigned = false;
+    }
     var ajaxObject = {
         "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
 
@@ -205,9 +207,9 @@ function AssignRequest() {
         },
         data: JSON.stringify(modelReq),
         success: function (response) {
-            assignToggle();
             toastr.success("Valuation Request(s) assinged to Approver.");
-
+            isAssigned = true;
+            assignToggle();
             InitializeValutionRequestDataList();
             /*window.location.href = "/ValuationRequest/ValuationRequests";*/
         },

@@ -13,11 +13,11 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public int? RequestId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-         [Range(1, double.MaxValue)]
+        
         public decimal? MarketValue { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
       
-        [Range(1, double.MaxValue)]
+        
         public decimal? MarketRate { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         
@@ -25,7 +25,7 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
        
         
-        public int? AnnualMaintainceCost { get; set; }
+        public decimal? AnnualMaintainceCost { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public bool Insuarance { get; set; }
         public string? InsuranceDetails { get; set; }

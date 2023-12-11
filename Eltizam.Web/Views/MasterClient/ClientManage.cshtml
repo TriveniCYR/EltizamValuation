@@ -154,7 +154,7 @@
                                     <div class="addMoreAddress">
                                         @if(i != 0){
                                             <div class="text-right">
-                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this,@i)">
                                             </div>
                                         }
                                         <input type="hidden" id="@("hdnCountry_"+i)" value="@(Model.Addresses[i] == null ? 0 : Model.Addresses[i].CountryId)" />
@@ -221,7 +221,7 @@
                                                     <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                         @Html.DropDownListFor(model => model.Addresses[i].PhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
 
-                                                        @Html.TextBoxFor(model => model.Addresses[i].Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Phone"] })
+                                                        @Html.TextBoxFor(model => model.Addresses[i].Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Phone"], @onclick="EmailValidation(event)" })
 
                                                     </div>
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].Phone, "", new { @class = "text-danger" })
@@ -265,7 +265,7 @@
                                         @if (i != 0)
                                         {
                                             <div class="text-right">
-                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this)">
+                                                <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDiv(this,@i)">
                                             </div>
                                         }
                                         <input type="hidden" id="@("hdnDeparment_"+i)" value="@(Model.Contacts[i] == null ? 0 : Model.Contacts[i].DepartmentId)" />
@@ -326,10 +326,9 @@
                             <div class="tabSection">
                                 <div class="flex">
                                     <label for="" class="w-100">
-                                        @*   <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)"> *@
+                                        <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                         <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="validateFileSize(this)">
-
-                                        <input type="text" class="fileNames" readonly placeholder="file names">
+                                          <input type="text" class="fileNames" readonly placeholder="file names">
                                     </label>
                                 </div>
                                 <div class="W-100">
@@ -362,7 +361,9 @@
                                                     }
                                                     else
                                                     {
-                                                        <label>NA</label>
+                                                        <tr>
+                                                            <td colspan="5">NA</td>
+                                                        </tr>
                                                     }
                                                 </tbody>
                                             </table>

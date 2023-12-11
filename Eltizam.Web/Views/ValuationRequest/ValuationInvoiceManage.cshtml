@@ -23,7 +23,7 @@
         <div class="heading position-relative flex justify-between">
             <h3 class="dashboardTitle">@_md @_header</h3>
             <div class="hamburger">
-                <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
+                <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequestManage">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                   <input type="hidden" id="md" value="@_md" />
                 <span>@_md</span>
@@ -79,7 +79,7 @@
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Amount<span class="text-danger">*</span></p>
-                                    <input type="text" id="Amount" placeholder="enter the amount" class="disabletxtbox">
+                                    <input type="text" id="Amount" placeholder="enter the amount" class="disabletxtbox price formatting">
                                 </label>
                             </div>
                             <div class="flex mb-28">
@@ -115,7 +115,7 @@
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Amount<span class="text-danger">*</span></p>
-                                    <input type="text" id="ChequeAmount" placeholder="enter the amount" class="disabletxtbox">
+                                    <input type="text" id="ChequeAmount" placeholder="enter the amount" class="disabletxtbox formatting">
                                 </label>
                             </div>
                             <div class="flex mb-28">
@@ -170,7 +170,7 @@
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Amount<span class="text-danger">*</span></p>
-                                    <input type="text" id="CardAmount" placeholder="enter the amount" class="disabletxtbox">
+                                    <input type="text" id="CardAmount" placeholder="enter the amount" class="disabletxtbox formatting">
                                 </label>
                             </div>
                             <div class="flex mb-28">
@@ -227,7 +227,7 @@
                                 </label>
                                 <label for="" class="w-50">
                                     <p class="m-0">Amount<span class="text-danger">*</span></p>
-                                    <input type="text" id="BankAmount" placeholder="enter the amount" class="disabletxtbox">
+                                    <input type="text" id="BankAmount" placeholder="enter the amount" class="disabletxtbox formatting">
                                 </label>
                             </div>
                             <div class="flex mb-28">
@@ -266,7 +266,8 @@
                     {
                         <div class="flex">
                             <label for="" class="w-100">
-                                <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)">
+                                <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
+                                <input type="file"  class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)">
                                 <input type="text" class="fileNames" readonly placeholder="file names">
                             </label>
                         </div>
@@ -301,7 +302,9 @@
                                         }
                                         else
                                         {
-                                            <label>NA</label>
+                                            <tr>
+                                                <td colspan="5">NA</td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>

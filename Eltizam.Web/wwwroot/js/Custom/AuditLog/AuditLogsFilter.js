@@ -46,4 +46,13 @@ function BindUserName() {
     BindDropdowns(GetUserNameList, userName, _rpname, _val);
 }
 
+function assignToggleFilter() {
+    var x = document.getElementById("assignToggleFilter");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
 
