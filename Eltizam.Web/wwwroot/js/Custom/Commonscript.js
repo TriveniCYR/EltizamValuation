@@ -613,6 +613,10 @@ function assignToggleFilter() {
     }
 }
 
+
+function markActiveMenu(r) { 
+}
+
 function validateFileSize(input) {
     const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
     const files = input.files;
