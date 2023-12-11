@@ -48,19 +48,21 @@ function submitFilterForm() {
     ajaxServiceMethod(BaseURL + Dashboardurl, 'POST', submitFilterFormSuccess, submitFilterFormError, formDataJson);
 }
 
-function submitFilterFormSuccess(data) {
-    console.log(data);
-    $('#totalClients').text(data._object.totalClients);
-    $('#totalProjects').text(data._object.totalProjects);
-    $('#totalRevenue').text(data._object.totalRevenue);
-    $('#completedPerc').text(data._object.completedPerc + '%');
-    $('#pendingPerc').text(data._object.pendingPerc + '%');
-    $('#totalDue').text(data._object.totalDue);
+function submitFilterFormSuccess(data) { 
+    debugger
+    var widgets = data._object.dashboardWidgets;
+    $('#totalClients').text(widgets.totalClients);
+    $('#totalProjects').text(widgets.totalProjects);
+    $('#totalRevenue').text(widgets.totalRevenue);
+    $('#completedPerc').text(widgets.completedPerc + '%');
+    $('#pendingPerc').text(widgets.pendingPerc + '%');
+    $('#totalDue').text(widgets.totalDue);
 
     //RequestTable Start
 
     var latestRequestsTableBody = $('.latestRequestsTable tbody');
     latestRequestsTableBody.empty(); // Clear existing rows
+
     if (data._object.latestRequests.length != 0) {
         data._object.latestRequests.forEach(function (request) {
             var rowHtml = '<tr>' +
@@ -71,9 +73,7 @@ function submitFilterFormSuccess(data) {
                 '</tr>';
             latestRequestsTableBody.append(rowHtml);
         });
-    }
- 
-
+    } 
     else {
         var rowHtml = '<tr>' +
             '<td colspan="5">' + "No Data Available" + '</td>' +

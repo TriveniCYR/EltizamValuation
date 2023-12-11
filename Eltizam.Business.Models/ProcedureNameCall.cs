@@ -84,6 +84,7 @@ namespace Eltizam.Business.Models
 
 
         // Dahsboard
+        public static string usp_ValuationRequest_GetWidgetRequest = "usp_ValuationRequest_GetWidgetRequest";
         public static string usp_ValuationRequest_GetLatestRequest = "usp_ValuationRequest_GetLatestRequest";
         public static string usp_ValuationRequest_GetLatestQuotation = "usp_ValuationRequest_GetLatestQuotation";
         public static string usp_ValuationRequest_GetTopValuation = "usp_ValuationRequest_GetTopValuation";

@@ -130,6 +130,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 var statusid = _statusrepository.GetAll().Where(x => x.StatusName == "Paymented").Select(x => x.Id).FirstOrDefault();
                 _notificationService.UpdateValuationRequestStatus(statusid, objInvoice.ValuationRequestId);
+
                 string? username = _masteruserrepository.GetAll().Where(x => x.Id == objInvoice.CreatedBy).Select(x=>x.UserName).FirstOrDefault();
                 string transactionstatus = _masterdictionaryrepository.Get(x => x.Id == objInvoice.TransactionStatusId).Description;
                 TransactionModeEnum mode = (TransactionModeEnum)objInvoice.TransactionModeId;
