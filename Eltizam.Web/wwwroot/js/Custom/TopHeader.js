@@ -164,7 +164,7 @@ document.getElementById('notificationcount').textContent = data.length;
 }
 
 function GetactivenotificationsError(x, y, z) {
-    toastr.error("yo");
+    toastr.error("Something failed");
 }
 
 
