@@ -36,7 +36,7 @@
 
 	<ItemGroup>
 		<Content Include="Properties\launchSettings.json" />
-		<Content Remove="wwwroot\js\custom\valuationrequest\ValuationQuatationManage.js" />
+		<!--<Content Remove="wwwroot\js\custom\valuationrequest\ValuationQuatationManage.js" />-->
 	</ItemGroup>
 
 	<ItemGroup>
