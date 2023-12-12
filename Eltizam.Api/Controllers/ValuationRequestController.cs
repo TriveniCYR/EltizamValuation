@@ -36,7 +36,23 @@ namespace EltizamValuation.Api.Controllers
         {
             try
             {
-                return _ObjectResponse.CreateData(await _valutionServices.GetAll(model, userName, clientName, propertyName, requestStatusId, resourceId, propertyTypeId,countryId, stateId, cityId, fromDate,toDate, valRef), (Int32)HttpStatusCode.OK);
+                var filters = new ValuationRequestFilters()
+                {
+                    userName = userName,
+                    clientName = clientName,
+                    propertyName = propertyName,
+                    requestStatusId = requestStatusId,
+                    resourceId = resourceId,
+                    propertyTypeId = propertyTypeId,
+                    countryId = countryId,
+                    stateId = stateId,
+                    cityId = cityId,
+                    fromDate = fromDate,
+                    toDate = toDate,
+                    valRef = valRef
+                };
+
+                return _ObjectResponse.CreateData(await _valutionServices.GetAll(model, filters), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

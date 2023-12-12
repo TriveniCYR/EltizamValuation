@@ -54,7 +54,7 @@ namespace Eltizam.Business.Core.Implementation
         #endregion Constructor
 
 
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId, int resourceId, int propertyTypeId, int countryId, int stateId, int cityId, string? fromDate, string? toDate, string? valRef)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, ValuationRequestFilters filters) // string? userName, string? clientName, string? propertyName, int requestStatusId, int resourceId, int propertyTypeId, int countryId, int stateId, int cityId, string? fromDate, string? toDate, string? valRef)
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
             string SortDir = model.order[0]?.dir;
@@ -67,18 +67,18 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
                 new SqlParameter(AppConstants.P_SortDirection,      SortDir),
                 new SqlParameter(AppConstants.P_SearchText,         model.search?.value),
-                new SqlParameter("UserName",                        userName),
-                new SqlParameter("ClientName",                     clientName),
-                new SqlParameter("PropertyName",                    propertyName),
-                new SqlParameter("ValuationStatus",                 requestStatusId),
-                new SqlParameter("ValuationMethod",                 resourceId),
-                new SqlParameter("@PropertyTypeId",                 propertyTypeId),
-                new SqlParameter("CountryId",                       countryId),
-                new SqlParameter("StateId",                         stateId),
-                new SqlParameter("CityId",                          cityId),
-                new SqlParameter("FromDate",                        fromDate),
-                new SqlParameter("ToDate",                          toDate),
-                new SqlParameter("ValRef",                          valRef)
+                new SqlParameter("UserName",                        filters.userName),
+                new SqlParameter("ClientName",                      filters.clientName),
+                new SqlParameter("PropertyName",                    filters.propertyName),
+                new SqlParameter("ValuationStatus",                 filters.requestStatusId),
+                new SqlParameter("ValuationMethod",                 filters.resourceId),
+                new SqlParameter("@PropertyTypeId",                 filters.propertyTypeId),
+                new SqlParameter("CountryId",                       filters.countryId),
+                new SqlParameter("StateId",                         filters.stateId),
+                new SqlParameter("CityId",                          filters.cityId),
+                new SqlParameter("FromDate",                        filters.fromDate),
+                new SqlParameter("ToDate",                          filters.toDate),
+                new SqlParameter("ValRef",                          filters.valRef)
             };
 
             var Results = await _repository.GetBySP(ProcedureMetastore.usp_Valution_GetValuationList, CommandType.StoredProcedure, osqlParameter);
