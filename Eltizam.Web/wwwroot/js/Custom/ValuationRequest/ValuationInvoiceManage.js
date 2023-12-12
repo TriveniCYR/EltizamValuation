@@ -78,7 +78,7 @@ function SaveInvoice() {
         let hdnReferenceNo = $("#hdnReferenceNo").val();
         let hdnValuationRequestId = $("#hdnValuationRequestId").val();
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Status.");
+            toastr.error("Select Transaction.");
             return false;
         }
         else if (amouont == '') {
@@ -109,7 +109,7 @@ function SaveInvoice() {
         let hdnReferenceNo = $("#hdnReferenceNo").val();
         let hdnValuationRequestId = $("#hdnValuationRequestId").val();
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId =='0') {
-            toastr.error("Select Status.");
+            toastr.error("Select Transaction.");
             return false;
         }
         else if (amouont == '') {
@@ -156,7 +156,7 @@ function SaveInvoice() {
         let hdnReferenceNo = $("#hdnReferenceNo").val();
         let hdnValuationRequestId = $("#hdnValuationRequestId").val();
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Status.");
+            toastr.error("Select Transaction.");
             return false;
         }
         else if (amouont == '') {
@@ -207,7 +207,7 @@ function SaveInvoice() {
         let hdnReferenceNo = $("#hdnReferenceNo").val();
         let hdnValuationRequestId = $("#hdnValuationRequestId").val();
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Status.");
+            toastr.error("Select Transaction.");
             return false;
         }
         else if (amouont == '') {
