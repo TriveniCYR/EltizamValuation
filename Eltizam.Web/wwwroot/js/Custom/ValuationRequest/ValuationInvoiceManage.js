@@ -49,11 +49,11 @@ var InvoiceRequest = {
 
 function SaveInvoice() { 
     var modeId = $('#hdnTabId').val();
-    document.getElementById('TransactionModeId').value = modeId;
+    document.getElementById('TransactionModeId').value = parseInt(modeId);
     if(modeId=='1') {
         let transactionStatusId = $("#CashTransactionStatusId").val();
-        let amouont = $("#Amount").val();
-        let transactionDate = $("#TransactionDate").val();
+        let amouont = $("#CashAmount").val();
+        let transactionDate = $("#CashTransactionDate").val();
         let hdnReferenceNo = $("#hdnReferenceNo").val();
         let hdnValuationRequestId = $("#hdnValuationRequestId").val();
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
@@ -264,18 +264,6 @@ function SaveInvoice() {
 //    });
 //}
 
-
-$('#AccountNumber').keypress(function (e) {
-    if ($('#AccountNumber').val() == '' && e.which == 48) {
-        return false;
-    }
-    else {
-        var charCode = (e.which) ? e.which : event.keyCode;
-        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-            return false;
-        }
-    }
-});
 
 $('#AccountNumber').keypress(function (e) {
     if ($('#AccountNumber').val() == '' && e.which == 48) {

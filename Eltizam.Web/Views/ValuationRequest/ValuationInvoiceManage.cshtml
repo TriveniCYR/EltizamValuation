@@ -10,13 +10,16 @@
     var _md = ViewBag.IsView > 0 ? "View" : "Add";
     ViewData["Title"] = _md + _header;
 
-    // var objPermssion = (RolePermissionModel)ViewBag.Access;
-    // var isAdd = objPermssion.Add ? 1 : 0;
-    // var isEdit = objPermssion.Edit ? 1 : 0;
-}
-<!-- system user master -->
-@* <div class="flex">
-    <div class="w-100 position-relative"> *@
+    var _cls = "defaultOpenPay"; 
+    var _id1 = @Model.TransactionModeId == 1 ? _cls : "";
+    var _id2 = @Model.TransactionModeId == 2 ? _cls : "";
+    var _id3 = @Model.TransactionModeId == 3 ? _cls : "";
+    var _id4 = @Model.TransactionModeId == 4 ? _cls : ""; 
+    if (Model.Id <= 0)
+    {
+        _id1 = _cls;
+    }
+} 
 
 <main>
     <div class="whiteBoxShadow">
@@ -27,7 +30,7 @@
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <a class="greyBtn lineBtn formAbtn" href="ValuationRequestManage?id=@Model.ValuationRequestId">Valuation Details</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                  <input type="hidden" id="md" value="@_md" />
+                <input type="hidden" id="md" value="@_md" />
                 <span>@_md @_header</span>
             </div>
         </div>
@@ -46,23 +49,23 @@
             </div>
             <h3 class="ptrl-20">Select Payment Mode</h3>
             <form asp-action="ValuationInvoiceManage" method="POST" enctype="multipart/form-data" id="invoice">
-                <div class="paymentOption">
-                    <div class="payTab">
-                        @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
-                        @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
-                        @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
-                        @Html.HiddenFor(model => model.TransactionModeId, new { @class = "control-label" })
-                        <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
-                        <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
-                        <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
-                        <input type="hidden" id="hdnTransactionStatusId" value="@(Model == null ? 0 : Model.TransactionStatusId)" />
-                        <input type="hidden" id="hdnTransactionModeId" value="@(Model == null ? 0 : Model.TransactionModeId)" />
-                        <input type="hidden" id="hdnTabId" value="0" />
-                        <button class="payTabLink" type="button" onclick="payTab(event, 'pay1', 1)" id="defaultOpenPay">Cash</button>
-                        <button class="payTabLink" type="button" onclick="payTab(event, 'pay2', 2)">Cheque</button>
-                        <button class="payTabLink" type="button" onclick="payTab(event, 'pay3', 3)">Credit Card</button>
-                        <button class="payTabLink" type="button" onclick="payTab(event, 'pay4', 4)">Net Banking</button>
-                    </div>
+            <div class="paymentOption">
+                <div class="payTab">
+                    @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                    @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
+                    @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })                    
+                    @Html.HiddenFor(model => model.TransactionModeId, new { @class = "control-label" })
+                    <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
+                    <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
+                    <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
+                    <input type="hidden" id="hdnTransactionStatusId" value="@(Model == null ? 0 : Model.TransactionStatusId)" />
+                    <input type="hidden" id="hdnTransactionModeId" value="@(Model == null ? 0 : Model.TransactionModeId)" />
+                    <input type="hidden" id="hdnTabId" value="1" />
+                    <button class="payTabLink" type="button" onclick="payTab(event, 'pay1', 1)" id="@_id1">Cash</button>
+                    <button class="payTabLink" type="button" onclick="payTab(event, 'pay2', 2)" id="@_id2">Cheque</button>
+                    <button class="payTabLink" type="button" onclick="payTab(event, 'pay3', 3)" id="@_id3">Credit Card</button>
+                    <button class="payTabLink" type="button" onclick="payTab(event, 'pay4', 4)" id="@_id4">Net Banking</button>
+                </div>
 
                     <div id="pay1" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
@@ -141,8 +144,7 @@
                                     <label for="" class="w-50">
                                         <p class="m-0">Cheque Bank Name<span class="text-danger">*</span></p>
                                         @* <input type="text" id="ChequeBankName" placeholder="enter bank name" class=""> *@
-                                        @Html.EditorFor(model => model.CheckBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter bank name"} })
-                                        @Html.ValidationMessageFor(model => model.CheckBankName, "", new { @class = "text-danger", oninput = "validateInput(this)"  })
+                                        @Html.EditorFor(model => model.CheckBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter bank name", oninput = "validateInput(this)"  } })
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Cheque Date<span class="text-danger">*</span></p>
@@ -203,7 +205,7 @@
                                         <p class="m-0">Bank Name<span class="text-danger">*</span></p>
                                         @* <input type="text" id="CardBankName" placeholder="enter bank name" class=""> *@
                                         @Html.EditorFor(model => model.CardBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter bank name", oninput = "validateInput(this)" } })
-                                        @Html.ValidationMessageFor(model => model.CardBankName, "", new { @class = "text-danger" })
+                                        
                                     </label>
                                 </div>
                                 <div class="flex mb-28">
@@ -211,7 +213,7 @@
                                         <p class="m-0">Name on card<span class="text-danger">*</span></p>
                                         @* <input type="text" id="NameOnCard" placeholder="enter name on card" class=""> *@
                                         @Html.EditorFor(model => model.CardHolderName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter name on card", oninput = "validateInput(this)"} })
-                                        @Html.ValidationMessageFor(model => model.CardHolderName, "", new { @class = "text-danger" })
+                                        
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Expiry Date<span class="text-danger">*</span></p>
@@ -261,7 +263,7 @@
                                         <p class="m-0">Bank Name<span class="text-danger">*</span></p>
                                        @*  <input type="text" id="BankName" placeholder="enter banke name" class=""> *@
                                         @Html.EditorFor(model => model.AccountBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter banke name", oninput = "validateInput(this)"} })
-                                        @Html.ValidationMessageFor(model => model.AccountBankName, "", new { @class = "text-danger" })
+                                       
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Account Number<span class="text-danger">*</span></p>
@@ -284,14 +286,14 @@
                         <div class="flex">
                             <label for="" class="w-100">
                                 <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
-                                <input type="file"  class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)">
+                                <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="displayFileNames(this)">
                                 <input type="text" class="fileNames" readonly placeholder="file names">
                             </label>
                         </div>
                     }
                     <div class="W-100">
                         <div class="prevUpload roundBorderBox m-0">
-                            <h3>Previously uploaded</h3>
+                            <h5>Previously uploaded</h5>
                             <div class="scroll-x">
                                     <table id="InvoiceTableDocument" class="table-striped">
                                     <thead>
@@ -359,12 +361,13 @@
 
     <script>
 
-        $(document).ready(function () { 
+        $(document).ready(function () {
             if (@ViewBag.IsView == 1) {
                 $('#invoice').find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true).css('background-color', '#f2f2f2');
                 // Disable the associated label element
             }
         });
+
         // payemnt option JS here
         function payTab(evt, payName, num) {
             document.getElementById('hdnTabId').value = num;
@@ -380,9 +383,9 @@
             document.getElementById(payName).style.display = "block";
             evt.currentTarget.className += " active";
         }
-        document.getElementById("defaultOpenPay").click();
-        // payment option JS ends
 
+
+        document.getElementById("defaultOpenPay").click(); 
 
         var ValuationInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationInvoiceById";
         var UpsertValuationInvoice = "@Eltizam.Web.Helpers.APIURLHelper.UpsertValuationInvoice";
