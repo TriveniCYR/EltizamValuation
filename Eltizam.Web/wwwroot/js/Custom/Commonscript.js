@@ -5,7 +5,7 @@
 var LogInUserId = $("#LogInUserId").val() ?? 1;
 
 var BaseURL = $('#hdnAPIURL').val();
-var setDefaultOrder = [0, 'desc']; 
+var setDefaultOrder = [0, 'desc'];
 var ShowMenuCache = "showMenuCache";
 var defaultDateFormat = 'DD-MMM-YYYY hh:mm A';
 
@@ -19,7 +19,7 @@ var SuccessToast = $("#successToaster");
 var ErrorToast = $("#errorToaster");
 var SuccessToaster = SuccessToast.val();
 var ErrorToaster = ErrorToast.val();
-var ErrorDev = $("#errorBanner"); 
+var ErrorDev = $("#errorBanner");
 
 //Fixed messages
 var SucessMsg = "Request saved successfully.";
@@ -222,7 +222,8 @@ if (action === "Add") {
 
         });
     }
-)}
+    )
+}
 
 function formatreadonlydate() {
     var tdElements = document.querySelectorAll('.formatted-td-date-input');
@@ -319,52 +320,52 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
 
 function BindCountryCode() {
     debugger
-        $.ajax({
-            type: "GET",
-            url: BaseURL + CountryList,
-            "datatype": "json",
-            success: function (response) {
-                for (var k = 0; k < addressLength; k++) {
-                    debugger
-                    var CountryCode = $("#Addresses_" + k + "__PhoneExt");
-                    var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
+    $.ajax({
+        type: "GET",
+        url: BaseURL + CountryList,
+        "datatype": "json",
+        success: function (response) {
+            for (var k = 0; k < addressLength; k++) {
+                debugger
+                var CountryCode = $("#Addresses_" + k + "__PhoneExt");
+                var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
 
-                    var _val = $('#hdnPhoneExt_' + k).val();
-                    var _valAlternate = $('#hdnAlternatePhoneExt_' + k).val();
+                var _val = $('#hdnPhoneExt_' + k).val();
+                var _valAlternate = $('#hdnAlternatePhoneExt_' + k).val();
 
-                    CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
-                    AlternatePhoneExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
+                CountryCode.empty().append('<option selected="selected" value="">' + dftSel2 + '</option>');
+                AlternatePhoneExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
 
 
-                    for (var i = 0; i < response.length; i++) {
-                        CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-                        AlternatePhoneExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-                    }
-                    if (_val != "" || _valAlternate != "") {
-                        CountryCode.val(_val);
-                        AlternatePhoneExt.val(_valAlternate);
-                    }
+                for (var i = 0; i < response.length; i++) {
+                    CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                    AlternatePhoneExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
                 }
-                for (var j = 0; j < contactLength; j++) {
-                    var ContactMobileExt = $("#Contacts_" + j + "__MobileExt");
-                    var _valMobileExt = $('#hdnMobileExt_' + j).val();
-
-                    ContactMobileExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
-                    for (var i = 0; i < response.length; i++) {
-                        ContactMobileExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-                    }
-                    if (_valMobileExt != "") {
-                        ContactMobileExt.val(_valMobileExt);
-                    }
+                if (_val != "" || _valAlternate != "") {
+                    CountryCode.val(_val);
+                    AlternatePhoneExt.val(_valAlternate);
                 }
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-                $("#loader").hide();
             }
+            for (var j = 0; j < contactLength; j++) {
+                var ContactMobileExt = $("#Contacts_" + j + "__MobileExt");
+                var _valMobileExt = $('#hdnMobileExt_' + j).val();
+
+                ContactMobileExt.empty().append('<option selected="selected" value="0">' + dftSel2 + '</option>');
+                for (var i = 0; i < response.length; i++) {
+                    ContactMobileExt.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
+                }
+                if (_valMobileExt != "") {
+                    ContactMobileExt.val(_valMobileExt);
+                }
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
     });
 }
 
@@ -509,7 +510,7 @@ let blockCount = 1;
 
 function addDynamicTextbox() {
     const inputPropField = document.querySelector(".addPropertyInputDynamic");
-    const uniqueId = `status-${blockCount}`; 
+    const uniqueId = `status-${blockCount}`;
 
     const newBlock = document.createElement("div");
     newBlock.className = "inputFieldProp";
@@ -593,7 +594,7 @@ function accordianToggle(header) {
     } else {
         item.style.height = 'auto';
     }
-} 
+}
 
 //Remove parent dynamic created page
 function removeParentDiv(element) {
@@ -613,8 +614,12 @@ function assignToggleFilter() {
     }
 }
 
+function hideSearchToggle() {
+    var x = document.getElementById("assignToggleFilter");
+    x.style.display = "none";
+}
 
-function markActiveMenu(r) { 
+function markActiveMenu(r) {
 }
 
 function validateFileSize(input) {
