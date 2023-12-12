@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using static Eltizam.Utility.Enums.GeneralEnum;
 using System.Net;
+using System.Data;
+using System.Dynamic;
 
 namespace EltizamValuation.Api.Controllers
 {
@@ -40,8 +42,7 @@ namespace EltizamValuation.Api.Controllers
 
 
         #region API Methods
-
-        
+      
         // get all records from master department with sorting and pagination 
 
         [HttpGet, Route("GetQuatationList")]
@@ -56,7 +57,6 @@ namespace EltizamValuation.Api.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
-
         [HttpPost]
         [Route("Upsert")]
         public async Task<IActionResult> Upsert(ValuationQuatationListModel model)

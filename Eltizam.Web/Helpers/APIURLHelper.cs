@@ -235,8 +235,9 @@ namespace Eltizam.Web.Helpers
         public static string ReviewRequestStatus = "ValuationRequest/ReviewerRequestStatus";
         public static string GetRequestStatus = "ValuationRequestStatus/GetAllStatus";
         public static string ValuationAssesment = "ValuationAssessment/ValuationAssesmentUpsert";
-        public static string GetSiteDescriptionList = "ValuationAssessment/GetSiteDescriptionList";
-
+        public static string GetSiteDescriptionList = "ValuationAssessment/GetSiteDescriptionList";        
+        public static string GetValuationPDFData = "ValuationQuatation/GetValuationPDFData";
+        
         public static string DeleteDocument = "ValuationAssessment/DeleteDocument";
         public static string GetNotificationList = "Notification/GetNotificationList";
         public static string UpdateNotification = "Notification/UpdateNotificationReadBy";

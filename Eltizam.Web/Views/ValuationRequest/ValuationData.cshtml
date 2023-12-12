@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Eltizam.Utility.Models;
+@model Eltizam.Business.Models.ValuationRequestModel
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,41 +43,41 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Valuation Reference no 
-                                    <input type="text" placeholder="12837187236" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@Model.ReferenceNo" placeholder="12837187236" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
                                     margin-top: 5px;">
                                 </label>
-                                <label for="" style="width: 23.5%;display: flex;
+                                <label  style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Other Reference no
-                                    <input type="text" placeholder="12837187236" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@Model.OtherReferenceNo" placeholder="12837187236" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
                                     margin-top: 5px;">
                                 </label>
-                                <label for="" style="
+                                <label  style="
                                 width: 23.5%;
                                 display: flex;
                                 flex-direction: column;
                             ">
                                     Approver Name
-                                    <input type="text" placeholder="Clyde" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@Model.ApproverName" placeholder="Clyde" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
                                     margin-top: 5px;">
                                 </label>
-                                <label for="" style="
+                                <label style="
                                 width: 23.5%;
                                 margin-left: 10px;
                                 display: flex;
                                 flex-direction: column;
                             ">
                                     Valuer Name 
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text"  value="@Model.ValuerName"  style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -89,7 +92,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Valuation Status
-                                    <input type="text" placeholder="Pending" style="border: 1px solid #e8e7e6;
+                                    <input type="text"  value="@Model.ValuationRequestStatus"  placeholder="Pending" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -98,7 +101,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Review Comment
-                                    <input type="text" placeholder="Pending" style="border: 1px solid #e8e7e6;
+                                    <input type="text"  value="@Model.ReviewComment"  placeholder="Pending" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -113,7 +116,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     Valuation Date
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text"  value="@Model.ValuationDate"  style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -126,7 +129,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     Method of Valuation
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text"  value="@Model.MethodofValuation"  style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -141,7 +144,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Valuation Time Frame
-                                    <input type="text" placeholder="enter days" style="border: 1px solid #e8e7e6;
+                                    <input type="text"  value="@Model.ValuationTimeFrame"  placeholder="enter days" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;

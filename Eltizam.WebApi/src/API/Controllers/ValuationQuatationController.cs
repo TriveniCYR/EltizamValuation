@@ -39,8 +39,21 @@ namespace Eltizam.WebApi.Controllers
 
         #region API Methods
 
-        
+
         // get all records from master department with sorting and pagination 
+
+        [HttpGet, Route("GetValuationPDFData/{id}")]
+        public async Task<IActionResult> GetValuationPDFData([FromRoute] int id)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _ValuationQuatatiionService.GetValuationPDFData(id), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
 
         [HttpGet, Route("GetQuatationList")]
         public async Task<IActionResult> GetQuatationList(int RequestId)

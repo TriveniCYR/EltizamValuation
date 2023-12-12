@@ -72,12 +72,12 @@ $('#ChequeAmount').keypress(function (e) {
 function SaveInvoice() { 
     var modeId = $('#hdnTabId').val();
     if(modeId=='1') {
-        let transactionStatusId = $("#CardTransactionStatusId").val();
+        let transactionStatusId = $("#CashTransactionStatusId").val();
         let amouont = $("#Amount").val();
         let transactionDate = $("#TransactionDate").val();
         let hdnReferenceNo = $("#hdnReferenceNo").val();
         let hdnValuationRequestId = $("#hdnValuationRequestId").val();
-        if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId))) {
+        if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             toastr.error("Select Status.");
             return false;
         }
@@ -108,7 +108,7 @@ function SaveInvoice() {
         let chequeRecievedDate = $("#ChequeRecievedDate").val();
         let hdnReferenceNo = $("#hdnReferenceNo").val();
         let hdnValuationRequestId = $("#hdnValuationRequestId").val();
-        if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId))) {
+        if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId =='0') {
             toastr.error("Select Status.");
             return false;
         }
@@ -155,7 +155,7 @@ function SaveInvoice() {
         let expiryDate = $("#ExpiryDate").val();
         let hdnReferenceNo = $("#hdnReferenceNo").val();
         let hdnValuationRequestId = $("#hdnValuationRequestId").val();
-        if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId))) {
+        if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             toastr.error("Select Status.");
             return false;
         }
@@ -206,7 +206,7 @@ function SaveInvoice() {
         let accountNumber = $("#AccountNumber").val();
         let hdnReferenceNo = $("#hdnReferenceNo").val();
         let hdnValuationRequestId = $("#hdnValuationRequestId").val();
-        if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId))) {
+        if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             toastr.error("Select Status.");
             return false;
         }
