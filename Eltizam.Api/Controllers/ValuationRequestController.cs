@@ -32,11 +32,27 @@ namespace EltizamValuation.Api.Controllers
         #endregion Constructor
 
         [HttpPost, Route("GetAllValuationRequest")]
-        public async Task<IActionResult> GetAllValuationRequest([FromForm] DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId,int propertyTypeId, int countryId,int stateId,int cityId,string? fromDate, string? toDate)
+        public async Task<IActionResult> GetAllValuationRequest([FromForm] DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId,int resourceId,int propertyTypeId, int countryId,int stateId,int cityId,string? fromDate, string? toDate, string? valRef)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _valutionServices.GetAll(model, userName, clientName, propertyName, requestStatusId, resourceId, propertyTypeId,countryId, stateId, cityId, fromDate,toDate), (Int32)HttpStatusCode.OK);
+                var filters = new ValuationRequestFilters()
+                {
+                    userName = userName,
+                    clientName = clientName,
+                    propertyName = propertyName,
+                    requestStatusId = requestStatusId,
+                    resourceId = resourceId,
+                    propertyTypeId = propertyTypeId,
+                    countryId = countryId,
+                    stateId = stateId,
+                    cityId = cityId,
+                    fromDate = fromDate,
+                    toDate = toDate,
+                    valRef = valRef
+                };
+
+                return _ObjectResponse.CreateData(await _valutionServices.GetAll(model, filters), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

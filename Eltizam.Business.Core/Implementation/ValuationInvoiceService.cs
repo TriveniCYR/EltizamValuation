@@ -7,6 +7,7 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,7 +26,8 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
         private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
-        private IRepository<ValuationInvoice> _repository;
+        private IRepository<ValuationInvoice> _repository;        
+        private IRepository<MasterDocument> _repositoryDocument { get; set; }
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
         private readonly INotificationService _notificationService;
@@ -41,6 +43,7 @@ namespace Eltizam.Business.Core.Implementation
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
             _repository = _unitOfWork.GetRepository<ValuationInvoice>();
+            _repositoryDocument = _unitOfWork.GetRepository<MasterDocument>();
             _helper = helper;
             _auditLogService = auditLogService; 
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
@@ -67,7 +70,8 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> Upsert(ValuationInvoiceListModel entityInvoice)
         { 
-            ValuationInvoice objInvoice;
+            ValuationInvoice objInvoice; 
+            MasterDocument objDocument;
             string MainTableName = Enum.GetName(TableNameEnum.ValuationInvoice);
             int MainTableKey = entityInvoice.Id;
 
@@ -126,6 +130,27 @@ namespace Eltizam.Business.Core.Implementation
             if (objInvoice.Id == 0)
                 return DBOperation.Error;
 
+            else
+            {
+                if (entityInvoice.uploadDocument != null)
+                {
+                    foreach (var doc in entityInvoice.uploadDocument)
+                    {
+                        objDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                        objDocument.IsActive = doc.IsActive;
+                        objDocument.TableKeyId = objInvoice.Id;
+                        objDocument.TableName = Enum.GetName(TableNameEnum.ValuationInvoice);
+                        objDocument.DocumentName = doc.DocumentName;
+                        objDocument.FileName = doc.FileName;
+                        objDocument.FilePath = doc.FilePath;
+                        objDocument.FileType = doc.FileType;
+                        objDocument.CreatedBy = objInvoice.CreatedBy;
+
+                        _repositoryDocument.AddAsync(objDocument);
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                }
+            }
             try
             {
                 var statusid = _statusrepository.GetAll().Where(x => x.StatusName == "Paymented").Select(x => x.Id).FirstOrDefault();
@@ -157,9 +182,25 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<ValuationInvoiceListModel> GetInvoiceById(int id)
         {
-            var _quatationEntity = new ValuationInvoiceListModel();
-            _quatationEntity = _mapperFactory.Get<ValuationInvoice, ValuationInvoiceListModel>(await _repository.GetAsync(id));
+            var tableName = Enum.GetName(TableNameEnum.ValuationInvoice);
 
+            //var _quatationEntity = new ValuationInvoiceListModel();
+            var _quatationEntity = _mapperFactory.Get<ValuationInvoice, ValuationInvoiceListModel>(await _repository.GetAsync(id));
+
+            if (_quatationEntity != null)
+            {
+                DbParameter[] osqlParameter2 =
+                {
+                    new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                    new DbParameter(AppConstants.TableName,  tableName, SqlDbType.VarChar),
+                };
+
+                var quatationDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
+                                    DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
+
+                if (quatationDocuments != null)
+                    _quatationEntity.Documents = quatationDocuments;
+            }
             return _quatationEntity;
         }
 
@@ -174,6 +215,21 @@ namespace Eltizam.Business.Core.Implementation
 
             await _unitOfWork.SaveChangesAsync();
 
+            return DBOperation.Success;
+        }
+        public async Task<DBOperation> DeleteDocument(int id)
+        {
+            if (id > 0)
+            {
+
+                var entityDoc = _repositoryDocument.Get(id);
+                if (entityDoc != null)
+                {
+                    _repositoryDocument.Remove(entityDoc);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+            // Return a success operation indicating successful deletion.
             return DBOperation.Success;
         }
     }

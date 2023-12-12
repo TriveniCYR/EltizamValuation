@@ -13,13 +13,13 @@
     <div class="w-100 position-relative">
         <main class="w-100">
             <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
-                <h3 class="dashboardTitle">Log History</h3> 
+                <h5 class="dashboardTitle">Log History</h5> 
             </div>
 
             <div class="accordion valueAdvance"> 
                 <input type="checkbox" id="section1" class="advancedSearch visible-in-web">
                 <label for="section1" class="advaceSearhBtn" onclick="assignToggleFilter()"><img src="../assets/filter.svg" alt="filterSearch" /></label>
-                <div class="accordion-content inputSearchs" id="assignToggleFilter">
+                <div class="accordion-content inputSearchs" id="assignToggleFilter" style="width:35em;">
                     <div class="flex justify-between">
                         <h3>Advanced Search</h3>
                         <span class="cursor-pointer" onclick="assignToggleFilter()">X</span>
@@ -27,11 +27,11 @@
                     <form> 
                         <div class="flex flex-start"> 
                             <label for="fromDate">
-                                From
+                                <p class="m-0">From</p>
                                 <input type="text" id="FromDate" class="formatted-date-input" name="FromDate" asp-for="FromDate">
                             </label>
                             <label for="toDate">
-                                To
+                                <p class="m-0">To</p>
                                 <input type="text" id="ToDate" class="formatted-date-input" name="ToDate" asp-for="ToDate">
                             </label>
                         </div>
