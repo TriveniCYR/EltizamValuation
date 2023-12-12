@@ -80,7 +80,7 @@ namespace Eltizam.Business.Core.Implementation
             //DropdownObjects.PIDFCommercialMaster = dsCommercial.Tables[9];
             //DropdownObjects.PBFOutSourceData = dsCommercial.Tables[10];
             //DropdownObjects.CountryList = dsCommercial.Tables[11];
-            return pdfObjects;
+            return dsCommercial;
         }
 
         public async Task<List<ValuationQuatationListModel>> GetQuatationList(int requestId)

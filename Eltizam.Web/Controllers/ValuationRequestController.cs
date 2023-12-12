@@ -68,7 +68,7 @@ namespace EltizamValuation.Web.Controllers
                 
 
             }
-            ViewBag.pdfdata = null;
+            ViewBag.pdfdata = ds;
             return View("ValuationData",model);
         }
 
