@@ -334,39 +334,7 @@ namespace EltizamValuation.Web.Controllers
             //return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId });
             return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterQuotation.ValuationRequestId}");
         }
-
-        [HttpPost]
-        public IActionResult ValuationInvoiceManage(int id, ValuationInvoiceListModel masterInvoice)
-        {
-            try
-            {
-                //Check permissions for Get
-                var action = id == null ? PermissionEnum.Add : PermissionEnum.View; 
-
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
-
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationQuatation, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterInvoice))).Result;
-
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
-                }
-                else
-                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
-
-            }
-            catch (Exception e)
-            {
-                _helper.LogExceptions(e);
-                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-            } 
-
-            return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterInvoice.ValuationRequestId}"); 
-        }
-
-
+                
         [HttpGet]
         public IActionResult ValuationInvoiceManage(int? id, int vId, string refNo)
         {
@@ -436,7 +404,7 @@ namespace EltizamValuation.Web.Controllers
             }
         }
         [HttpPost]
-        public IActionResult ValuationInvoiceManages(int id, ValuationInvoiceListModel masterInvoice)
+        public IActionResult ValuationInvoiceManage(int id, ValuationInvoiceListModel masterInvoice)
         {
             try
             {
@@ -472,11 +440,45 @@ namespace EltizamValuation.Web.Controllers
                 {
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
                 }
+                if(masterInvoice.TransactionModeId == 1)
+                {
+                    masterInvoice.TransactionStatusId = masterInvoice.CashTransactionStatusId ?? 0;
+                    masterInvoice.TransactionDate = masterInvoice.CashTransactionDate;
+                    masterInvoice.Amount = masterInvoice.CashAmount ?? 0;
+                }
+                else if(masterInvoice.TransactionModeId == 2)
+                {
+                    masterInvoice.TransactionStatusId = masterInvoice.ChequeTransactionStatusId ?? 0;
+                    masterInvoice.TransactionDate = masterInvoice.ChequeTransactionDate;
+                    masterInvoice.Amount = masterInvoice.ChequeAmount ?? 0;
+                }
+                else if (masterInvoice.TransactionModeId == 3)
+                {
+                    masterInvoice.TransactionStatusId = masterInvoice.CardTransactionStatusId ?? 0;
+                    masterInvoice.TransactionDate = masterInvoice.CardTransactionDate;
+                    masterInvoice.Amount = masterInvoice.CardAmount ?? 0;
+                    masterInvoice.TransactionId = masterInvoice.CardTransactionId;
+                }
+                else if (masterInvoice.TransactionModeId == 4)
+                {
+                    masterInvoice.TransactionStatusId = masterInvoice.BankTransactionStatusId ?? 0;
+                    masterInvoice.TransactionDate = masterInvoice.BankTransactionDate;
+                    masterInvoice.Amount = masterInvoice.BankAmount ?? 0;
+                    masterInvoice.TransactionId = masterInvoice.BankTransactionId;
+                }
 
                 //Fill audit logs field
                 if (masterInvoice.Id == 0)
                     masterInvoice.CreatedBy = _helper.GetLoggedInUserId();
                 masterInvoice.ModifiedBy = _helper.GetLoggedInUserId();
+
+                if (masterInvoice.Document != null && masterInvoice.Document.Files != null)
+                {
+                    List<MasterDocumentModel> docs = FileUpload(masterInvoice.Document);
+                    masterInvoice.uploadDocument = docs;
+                    masterInvoice.Document = null;
+                }
+
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
@@ -497,8 +499,9 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
-             return RedirectToAction("ValuationRequestManage");
-            
+            return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterInvoice.ValuationRequestId}");
+            //return RedirectToAction("ValuationRequestManage");
+
 
         }
 
