@@ -69,7 +69,7 @@ function InitializeVendorList() {
             }
         },
         {
-            "data": "id", "name": "Action", "render": function (data, type, row, meta) {
+            "data": "id", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
 
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'

@@ -69,7 +69,7 @@ function InitializeClientList() {
             }
         },
         {
-            "data": "id", "name": "Action", "render": function (data, type, row, meta) {
+            "data": "id", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                 html += '<li><a title="View" href="/MasterClient/ClientDetail?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';

@@ -2034,14 +2034,14 @@ div.dataTables_wrapper div.dataTables_filter {
     margin-bottom: 0;
 }
 
-#assignToggle {
+#assingApprover {
     display: block;
     left: auto;
     right: 0px;
     height: auto;
     width: 330px;
     border: 1px solid var(--blue);
-    z-index:99;
+    z-index: 99;
 }
 .dataTables_scrollBody table td, .dashboardTable td {
     border: none !important;

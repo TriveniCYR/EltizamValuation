@@ -27,8 +27,8 @@ function BindPropertyNameDropdown() {
     var ownershiptypeid = 0;
     BindDropdowns(AllProperty + '/' + propertytypeid + '/' + subpropertytypeid + '/' + ownershiptypeid, property, _rpname, _val);
 }
-function assignToggle() {
-    var x = document.getElementById("assignToggle");
+function assingApproverToggle() {
+    var x = document.getElementById("assingApprover");
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {

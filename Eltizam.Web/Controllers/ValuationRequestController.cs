@@ -56,7 +56,7 @@ namespace EltizamValuation.Web.Controllers
             ValuationRequestModel model = new ValuationRequestModel();
             HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
             APIRepository objapi = new(_cofiguration);
-            HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetValuationPDFData + "/" + id, HttpMethod.Get, token).Result;
+            HttpResponseMessage responseMessage = objapi.APICommunication("" + "/" + id, HttpMethod.Get, token).Result;
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -334,6 +334,39 @@ namespace EltizamValuation.Web.Controllers
             //return RedirectToAction("ValuationRequestManage", new { id = masterQuotation.ValuationRequestId });
             return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterQuotation.ValuationRequestId}");
         }
+
+        [HttpPost]
+        public IActionResult ValuationInvoiceManage(int id, ValuationInvoiceListModel masterInvoice)
+        {
+            try
+            {
+                //Check permissions for Get
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.View; 
+
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationQuatation, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterInvoice))).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                }
+                else
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+            } 
+
+            return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterInvoice.ValuationRequestId}"); 
+        }
+
+
         [HttpGet]
         public IActionResult ValuationInvoiceManage(int? id, int vId, string refNo)
         {
@@ -403,7 +436,7 @@ namespace EltizamValuation.Web.Controllers
             }
         }
         [HttpPost]
-        public IActionResult ValuationInvoiceManage(int id, ValuationInvoiceListModel masterInvoice)
+        public IActionResult ValuationInvoiceManages(int id, ValuationInvoiceListModel masterInvoice)
         {
             try
             {
