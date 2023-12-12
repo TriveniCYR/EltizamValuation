@@ -112,4 +112,20 @@ namespace Eltizam.Business.Models
         //public virtual ICollection<ValuationInvoice> ValuationInvoices { get; set; }
         //public virtual ICollection<ValuationQuotation> ValuationQuotations { get; set; }
     }
+
+    public class ValuationRequestFilters
+    { 
+        public string? userName { get; set; }
+        public string? clientName { get; set; }
+        public string? propertyName { get; set; }
+        public int? requestStatusId { get; set; } 
+        public int? resourceId { get; set; }
+        public int? propertyTypeId { get; set; }
+        public int? countryId { get; set; }
+        public int? stateId { get; set; } 
+        public int? cityId { get; set; }
+        public string? fromDate { get; set; }
+        public string? toDate { get; set; }
+        public string? valRef { get; set; }
+    }
 }
