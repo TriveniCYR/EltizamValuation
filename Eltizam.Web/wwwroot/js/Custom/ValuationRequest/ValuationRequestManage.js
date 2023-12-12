@@ -90,18 +90,44 @@ function payTab(evt, payName) {
 }
 
 function getPDF(id) {
-    id = 24;
-    var url1 = "/ValuationRequest/ValuationData";
+   // id = 24;
+    var url1 = "/ValuationRequest/ValuationData/"+id;
     $.get(url1, function (content1) {
         var w = window.open();
         w.document.open();
         w.document.write(content1);
-       // w.document.getElementById("loading-wrapper").remove();
-        saveAspdf(w.document.getElementById("PDFMainDiv")) //(w.document.body)
+        if (w.document.getElementById("loading-wrapper") != null)
+            w.document.getElementById("loading-wrapper").remove();
+        //sideNavToggle();
+        generatePDF(w.document.getElementById("PDFMainDiv")) //(w.document.body)
         w.close();
     });
 }
+function downloadPdf(con1) {
 
+    var val = htmlToPdfmake(con1);
+    var dd = { content: val };
+    pdfMake.createPdf(dd).download();
+
+
+    //var docDefinition = {
+    //    content: con1,
+    //    defaultStyle: {
+    //    }
+    //};
+    //pdfMake.createPdf(con1).print();
+}
+function generatePDF(element) {
+    var opt = {
+        margin: [0, 0, 30, 0], //top, left, buttom, right,
+        filename: 'my_file.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { dpi: 192, scale: 2, letterRendering: true },
+        pagebreak: { mode: 'avoid-all' },
+        jsPDF: { unit: 'pt', format: 'letter', orientation: 'landscape' }
+    };
+    html2pdf().set(opt).from(element).save();
+}
 function saveAspdf(con) {
     var pdf = new jsPDF('p', 'pt', 'a4');
     pdf.addHTML(con, function () {

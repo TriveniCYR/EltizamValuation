@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +57,31 @@ namespace Eltizam.Business.Core.Implementation
 
         #endregion Constructor
 
+
+        public async Task<dynamic> GetValuationPDFData(int valId)
+        {
+
+            SqlParameter[] osqlParameter = {
+                new SqlParameter("@Id", valId)
+            };
+
+            DataSet dsCommercial = await _repository.GetDataSetBySP("stp_npd_GetValuationDataforPDF", System.Data.CommandType.StoredProcedure, osqlParameter);
+
+            dynamic pdfObjects = new ExpandoObject();
+            pdfObjects.ValuationRequest = dsCommercial.Tables[0];
+            //DropdownObjects.CommercialYear = dsCommercial.Tables[1];
+            //DropdownObjects.PIDFStrength = dsCommercial.Tables[2];
+            //DropdownObjects.PIDF = dsCommercial.Tables[3];
+            //DropdownObjects.BusinessUnit = dsCommercial.Tables[4];
+            //DropdownObjects.Currency = dsCommercial.Tables[5];
+            //DropdownObjects.PackagingType = dsCommercial.Tables[6];
+            //DropdownObjects.PackSize = dsCommercial.Tables[7];
+            //DropdownObjects.FinalSelection = dsCommercial.Tables[8];
+            //DropdownObjects.PIDFCommercialMaster = dsCommercial.Tables[9];
+            //DropdownObjects.PBFOutSourceData = dsCommercial.Tables[10];
+            //DropdownObjects.CountryList = dsCommercial.Tables[11];
+            return pdfObjects;
+        }
 
         public async Task<List<ValuationQuatationListModel>> GetQuatationList(int requestId)
         {
