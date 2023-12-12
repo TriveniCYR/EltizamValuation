@@ -629,7 +629,7 @@ function validateFileSize(input) {
     for (let i = 0; i < files.length; i++) {
         if (files[i].size > maxSizeInBytes) {
             const fileName = files[i].name;
-            toastr.error(`File "${fileName}" exceeds 5MB. Please choose a smaller file.`);
+            toastr.error(`File "${fileName}" exceeds max limit of 5MB, please choose a smaller file(s).`);
             input.value = ''; // Clear the input to prevent uploading the large file
             return;
         }
