@@ -46,6 +46,7 @@ namespace Eltizam.Business.Models
         public string? StateName { get; set; }
 
         public string? UserName { get; set; }
+        public string? ValRef { get; set; }
 
         public string? CityName { get; set; }
         public int? PropertyTypeId { get; set; }

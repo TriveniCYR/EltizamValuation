@@ -95,15 +95,7 @@ function BindRequestStaus() {
     var _val = $('#hdnRequestStaus').val();
     var _rpname = "statusName";
     BindDropdowns(ValutionRequestStatusList, RequestStaus, _rpname, _val);
-}
-// function BindResourceType() {
-
-//     var ResourceTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetResourceTypeList";
-//     var ResourceType = $("#ResourceId");
-//     var _val = "";
-//     var _rpname = "resourceType";
-//     BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
-// }
+} 
 
 function BindValutionMethod() {
 

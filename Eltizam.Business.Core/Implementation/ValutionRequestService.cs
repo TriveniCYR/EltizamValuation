@@ -54,7 +54,7 @@ namespace Eltizam.Business.Core.Implementation
         #endregion Constructor
 
 
-        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId, int resourceId, int propertyTypeId, int countryId, int stateId, int cityId, string? fromDate, string? toDate)
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId, int resourceId, int propertyTypeId, int countryId, int stateId, int cityId, string? fromDate, string? toDate, string? valRef)
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
             string SortDir = model.order[0]?.dir;
@@ -77,7 +77,8 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter("StateId",                         stateId),
                 new SqlParameter("CityId",                          cityId),
                 new SqlParameter("FromDate",                        fromDate),
-                new SqlParameter("ToDate",                          toDate)
+                new SqlParameter("ToDate",                          toDate),
+                new SqlParameter("ValRef",                          valRef)
             };
 
             var Results = await _repository.GetBySP(ProcedureMetastore.usp_Valution_GetValuationList, CommandType.StoredProcedure, osqlParameter);
