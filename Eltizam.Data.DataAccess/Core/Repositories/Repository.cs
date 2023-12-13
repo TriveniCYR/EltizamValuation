@@ -30,7 +30,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
 
         public Repository(EltizamDBContext Context)
         {
-            dbContext = Context ??  throw new ArgumentNullException(nameof(Context));
+            dbContext = Context ?? throw new ArgumentNullException(nameof(Context));
             dbSet = dbContext.Set<TEntity>();
             _EntityName = typeof(TEntity).Name;
             _currentSQLServerDate = DateTime.Now; //_commonService.GetSQLServerDate();
@@ -412,10 +412,10 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 dbContext.Entry(entity).Property("CreatedDate").CurrentValue = _currentSQLServerDate;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
             }
-            
+
             /*
              try
                 {
@@ -452,9 +452,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 dbContext.Set<TEntity>().AddRange(entities);
             }
-            catch 
-            { 
-            } 
+            catch
+            {
+            }
         }
 
         public void AddRangeAsync(IEnumerable<TEntity> entities)
@@ -463,8 +463,8 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 dbContext.Set<TEntity>().AddRangeAsync(entities);
             }
-            catch (Exception e) 
-            { 
+            catch (Exception e)
+            {
             }
         }
 
@@ -785,20 +785,25 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         #endregion Update with child Entity
 
         public void Remove(TEntity entity)
-        {
+        { 
             //Find Original Entity
             TEntity originalEntity = GetOrignalEntity(entity);
 
             var props = originalEntity.GetType().GetProperties();
-            if (props.Any(p => p.Name is "IsDeleted"))
+            if (props.Any(p => p.Name is "IsDeleted") || props.Any(p => p.Name is "IsActive"))
             {
-                dbContext.Entry(originalEntity).Property("IsDeleted").CurrentValue = true;
-                UpdateAsync(originalEntity);
+                if(props.Any(p => p.Name is "IsDeleted"))
+                    dbContext.Entry(originalEntity).Property("IsDeleted").CurrentValue = true;
 
-            }
+                if (props.Any(p => p.Name is "IsActive"))
+                    dbContext.Entry(originalEntity).Property("IsActive").CurrentValue = false;
+
+
+                //Update entity for IsActive and IsDelete
+                UpdateAsync(originalEntity);
+            } 
             else
             {
-
                 dbContext.Entry(originalEntity).State = EntityState.Deleted;
             }
         }
