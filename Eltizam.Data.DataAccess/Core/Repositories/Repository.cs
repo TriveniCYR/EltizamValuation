@@ -149,6 +149,29 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             }
             return o;
         }
+        public TEntity Get2(int id)
+        {
+            string key = this._EntityName + id.ToString();
+            TEntity o = dbContext.Set<TEntity>().Find(id);
+            if (o == null)
+            {
+                throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
+            }
+            return o;
+        }
+
+        public async Task<TEntity> GetAsync2(int id)
+        {
+            string key = this._EntityName + id.ToString();
+            TEntity o = await dbContext.Set<TEntity>().FindAsync(id);
+
+            if (o == null)
+            {
+                throw new Exception(AppConstants.NoRecordFound, new KeyNotFoundException(AppConstants.NoRecordFound));
+            }
+            else
+                return o;
+        }
 
         public async Task<TEntity> GetNoTrackingAsync(int id)
         {
@@ -785,22 +808,22 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         #endregion Update with child Entity
 
         public void Remove(TEntity entity)
-        { 
+        {
             //Find Original Entity
             TEntity originalEntity = GetOrignalEntity(entity);
 
             var props = originalEntity.GetType().GetProperties();
             if (props.Any(p => p.Name is "IsDeleted") || props.Any(p => p.Name is "IsActive"))
             {
-                if(props.Any(p => p.Name is "IsDeleted"))
+                if (props.Any(p => p.Name is "IsDeleted"))
                     dbContext.Entry(originalEntity).Property("IsDeleted").CurrentValue = true;
 
                 if (props.Any(p => p.Name is "IsActive"))
-                    dbContext.Entry(originalEntity).Property("IsActive").CurrentValue = false; 
+                    dbContext.Entry(originalEntity).Property("IsActive").CurrentValue = false;
 
                 //Update entity for IsActive and IsDelete
                 UpdateAsync(originalEntity);
-            } 
+            }
             else
             {
                 dbContext.Entry(originalEntity).State = EntityState.Deleted;
