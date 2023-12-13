@@ -56,7 +56,7 @@ namespace EltizamValuation.Web.Controllers
             ValuationRequestModel model = new ValuationRequestModel();
             HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
             APIRepository objapi = new(_cofiguration);
-            HttpResponseMessage responseMessage = objapi.APICommunication("" + "/" + id, HttpMethod.Get, token).Result;
+            HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetValuationPDFData + "/" + id, HttpMethod.Get, token).Result;
 
             if (responseMessage.IsSuccessStatusCode)
             {

@@ -3,10 +3,6 @@
 @model Eltizam.Business.Models.ValuationRequestModel
 @{
     var _dtSet = (DataSet)ViewBag.pdfdata;
-    var IsChecked = "checked";
-}
-@{
-    Layout = "";
 }
 <html lang="en">
 <head>
@@ -580,7 +576,7 @@ background-color: #fafafc;">
                                 align-items: center;
                                 position: relative;
                             ">
-                                    <input type="checkbox" "@IsChecked" placeholder="enter first name" style="
+                                    <input type="checkbox" placeholder="enter first name" style="
                                     background-color: #fff;
                                     border: 1px solid #3f392b;
                                     width: 18px;
