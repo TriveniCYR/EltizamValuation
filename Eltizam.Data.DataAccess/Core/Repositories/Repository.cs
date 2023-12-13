@@ -697,7 +697,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
 
                 if (delete != null && (bool)delete.CurrentValue == true)
                 {
-                    dbContext.Entry(entity).Property(DeletedDate).CurrentValue = _currentSQLServerDate;
+                    dbContext.Entry(entity).Property(ModifiedDate).CurrentValue = _currentSQLServerDate; //DeletedDate
                 }
             }
             catch (Exception e)
@@ -796,8 +796,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
                     dbContext.Entry(originalEntity).Property("IsDeleted").CurrentValue = true;
 
                 if (props.Any(p => p.Name is "IsActive"))
-                    dbContext.Entry(originalEntity).Property("IsActive").CurrentValue = false;
-
+                    dbContext.Entry(originalEntity).Property("IsActive").CurrentValue = false; 
 
                 //Update entity for IsActive and IsDelete
                 UpdateAsync(originalEntity);

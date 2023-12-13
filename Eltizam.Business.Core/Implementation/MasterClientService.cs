@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
@@ -419,44 +420,29 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> DeleteClient(int id)
         {
-            // Get the entity to be deleted from the repository.
-            var entityUser = _repository.Get(x => x.Id == id);
-
-            // If the entity does not exist, return a not found operation.
-            if (entityUser == null)
-                return DBOperation.NotFound;
-            else
+            try
             {
+                var old = _repository.GetNoTracking(id);
 
-                var entityValuation = _repositoryValuation.GetAll().Where(x => x.ClientId == id).ToList();
-                if (entityValuation.Count > 0)
+                DbParameter[] prm =
                 {
-                    return DBOperation.AlreadyExist;
-                }
+                    new DbParameter("ClientId", id, SqlDbType.Int),
+                    new DbParameter("By",       1, SqlDbType.Int)
+                };
 
-                var entityLocation = _repositoryAddress.GetAll().Where(x => x.TableKeyId == id && x.TableName == "Master_Client").ToList();
-                if (entityLocation.Count > 0)
-                {
-                    foreach (var addrs in entityLocation)
-                    {
-                        _repositoryAddress.Remove(addrs);
-                    }
-                }
-                var entityContact = _repositoryContact.GetAll().Where(x => x.TableKeyId == id && x.TableName == "Master_Client").ToList();
-                if (entityContact.Count > 0)
-                {
-                    foreach (var contct in entityContact)
-                    {
-                        _repositoryContact.Remove(contct);
-                    }
-                }
+                EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_Client_Delete, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);
 
-                _repository.Remove(entityUser);
+                var newP = _repository.Get(id);
 
-                await _unitOfWork.SaveChangesAsync();
+                //Do Audit Log --AUDITLOGUSER
+                await _auditLogService.CreateAuditLog<MasterClient>(AuditActionTypeEnum.Update, old, newP, Enum.GetName(TableNameEnum.Master_Client), id);
 
                 // Return a success operation indicating successful deletion.
                 return DBOperation.Success;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
