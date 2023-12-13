@@ -5,6 +5,7 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -22,8 +23,9 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMasterRoleModulePermission _roleModulePermission;
         private IRepository<MasterUser> _Userrepository { get; set; }
         private readonly IMemoryCache _memoryCache;
+        private readonly IAuditLogService _auditLogService;
 
-        public MasterRoleService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IMasterRoleModulePermission roleModulePermission, IMemoryCache memoryCache)
+        public MasterRoleService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IMasterRoleModulePermission roleModulePermission, IMemoryCache memoryCache, IAuditLogService auditLogService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -31,15 +33,21 @@ namespace Eltizam.Business.Core.Implementation
             _memoryCache = memoryCache;
             _repository = _unitOfWork.GetRepository<MasterRole>();
             _Userrepository = _unitOfWork.GetRepository<MasterUser>();
+            _auditLogService = auditLogService;
         }
 
         public async Task<DBOperation> AddUpdateRole(MasterRoleEntity masterRoleEntity)
         {
             MasterRole objRole;
+            string MainTableName = Enum.GetName(TableNameEnum.Master_Role);
+            int MainTableKey = masterRoleEntity.Id;
             var LoggedUserId = masterRoleEntity.LoggedUserId;
-           
+            MasterRole OldEntity = null;
             if (masterRoleEntity.Id > 0) //Update existing user
             {
+                OldEntity = _repository.GetNoTracking(masterRoleEntity.Id);
+                objRole = _repository.Get(masterRoleEntity.Id);
+
                 if (!masterRoleEntity.IsActive)
                 {
                     var IsUserExist = _Userrepository.GetAllQuery().Where(x => x.RoleId == masterRoleEntity.Id).ToList();
@@ -58,7 +66,10 @@ namespace Eltizam.Business.Core.Implementation
                     _repository.UpdateAsync(objRole);
                     //_repository.UpdateGraph(objRole, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<MasterRole>(AuditActionTypeEnum.Update, OldEntity, objRole, MainTableName, MainTableKey);
                 }
+                
                 else
                 {
                     return DBOperation.NotFound;
