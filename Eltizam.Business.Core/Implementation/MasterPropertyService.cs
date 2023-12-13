@@ -298,7 +298,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_Property_Delete, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);
 
-                var newP = _repository.Get(id); 
+                var newP = _repository.Get2(id); 
                 //Do Audit Log --AUDITLOGUSER
                 await _auditLogService.CreateAuditLog<MasterProperty>(AuditActionTypeEnum.Update, old, newP, Enum.GetName(TableNameEnum.Master_Property), id);
 

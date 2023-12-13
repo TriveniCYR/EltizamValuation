@@ -432,7 +432,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_Client_Delete, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);
 
-                var newP = _repository.Get(id);
+                var newP = _repository.Get2(id);
 
                 //Do Audit Log --AUDITLOGUSER
                 await _auditLogService.CreateAuditLog<MasterClient>(AuditActionTypeEnum.Update, old, newP, Enum.GetName(TableNameEnum.Master_Client), id);
