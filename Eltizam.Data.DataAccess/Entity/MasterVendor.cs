@@ -17,5 +17,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public int? ProfileAttachmentId { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }
