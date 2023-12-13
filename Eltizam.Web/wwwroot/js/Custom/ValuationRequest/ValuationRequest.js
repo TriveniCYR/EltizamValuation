@@ -31,7 +31,6 @@ function InitializeValutionRequestDataList() {
     resourceId = GetIntegerVal(resourceId);
 
     hideSearchToggle();
-    debugger
     var filters = "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate + '&valRef=' + valRef;
 
     var ajaxObject = {
