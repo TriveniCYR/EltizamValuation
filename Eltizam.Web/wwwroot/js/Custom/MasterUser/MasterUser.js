@@ -44,7 +44,7 @@ function ConfirmationDeleteUser(id) {
 function DeleteUser() { 
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteUserModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeleteUserByIdUrl + "/" + tempInAtiveID, Post, DeleteUserByIdSuccess, DeleteUserByIdError);
+        ajaxServiceMethod(BaseURL + DeleteUserByIdUrl + "/" + tempInAtiveID, Post, DeleteUserByIdSuccess, DeleteFailure);
     }
     else {
         toastr.error(DeleteAccessDenied);
@@ -63,9 +63,7 @@ function DeleteUserByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
-function DeleteUserByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
+ 
 
 function InitializeUserList() {  
     var ajaxObject = {

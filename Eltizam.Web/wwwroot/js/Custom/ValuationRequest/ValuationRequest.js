@@ -130,7 +130,7 @@ function ConfirmationDeleteValuationRequest(id) {
 function DeleteValuationRequestType() {
     var tid = $('#DeletevalutionRequestModel #Id').val();
     debugger;
-    ajaxServiceMethod(BaseURL + ValuationRequestDeleteById + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+    ajaxServiceMethod(BaseURL + ValuationRequestDeleteById + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteFailure);
 }
 function DeleteUserByIdSuccess(data) {
     try {
@@ -145,10 +145,7 @@ function DeleteUserByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
-function DeleteUserByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
-
+ 
 $("#cbSelectAll").on("click", function () {
     var ischecked = this.checked;
     $("#ValuationRequestTable  tbody").find("input:checkbox").each(function () {
