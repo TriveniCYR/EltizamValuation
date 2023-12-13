@@ -137,6 +137,7 @@ namespace Eltizam.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
 
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterModuleEntity>>>(jsonResponse);
+                    FooterInfo(TableNameEnum.Master_Role, _cofiguration, id);
                     MasterRole.MasterModules = data._object.OrderBy(x => x.SortOrder).ToList();
                     return View(MasterRole);
                 }

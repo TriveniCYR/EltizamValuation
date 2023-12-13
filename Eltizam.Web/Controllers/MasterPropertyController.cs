@@ -99,6 +99,9 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterPropertyModel>>(jsonResponse);
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_Property, _cofiguration, id);
+
                     if (data._object is null)
                         return NotFound();
                     return View(data._object);
@@ -185,6 +188,8 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterPropertyModel>>(jsonResponse);
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_Property, _cofiguration, id);
                     if (data._object is null)
                         return NotFound();
 

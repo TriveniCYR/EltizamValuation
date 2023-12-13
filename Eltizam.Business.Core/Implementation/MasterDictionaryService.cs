@@ -14,6 +14,7 @@ using Microsoft.Extensions.Localization;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using static Dapper.SqlMapper;
@@ -194,9 +195,14 @@ namespace Eltizam.Business.Core.Implementation
             // Create a Master_PropertyType object.
             MasterDictionary objmasterDictionary;
 
+            string MainTableName = Enum.GetName(TableNameEnum.Master_Dictionary);
+            int MainTableKey = entity.Id;
+            MasterDictionary OldEntity = null;
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (entity.Id > 0)
             {
+                OldEntity = _repository.GetNoTracking(entity.Id);
+                objmasterDictionary = _repository.Get(entity.Id);
                 // Get the existing entity from the repository.
                 objmasterDictionary = _repository.Get(entity.Id);
                 // If the entity exists, update its properties.
@@ -226,7 +232,8 @@ namespace Eltizam.Business.Core.Implementation
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
-
+            //Do Audit Log --AUDITLOGUSER
+            await _auditLogService.CreateAuditLog<MasterDictionary>(AuditActionTypeEnum.Update, OldEntity, objmasterDictionary, MainTableName, MainTableKey);
 
             // Return an appropriate operation result.
             if (objmasterDictionary.Id == 0)

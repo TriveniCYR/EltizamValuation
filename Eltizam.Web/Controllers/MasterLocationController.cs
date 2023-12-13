@@ -123,6 +123,8 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_Location, _cofiguration, id);
                     if (data._object is null)
                         return NotFound();
                     ViewBag.IsView = Isview;
