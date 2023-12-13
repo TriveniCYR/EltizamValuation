@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 function BindAuditLogTableName() {
   
-    var ParentTableName = $("#ParentTableName");
+    var TableName = $("#ParentTableName");
     var _val = "";
     var _rpname = "parentTableName";
    /* BindDropdowns(GetAuditTableNameList, ParentTableName, _rpname, _val);*/
@@ -19,13 +19,14 @@ function BindAuditLogTableName() {
         url: BaseURL + GetAuditTableNameList,
         "datatype": "json",
         success: function (response) {
+            console.log(response);
             
-            ParentTableName.empty().append('<option selected="selected" value="">-- select --</option>');
+            TableName.empty().append('<option selected="selected" value="">-- select --</option>');
             for (var i = 0; i < response.length; i++) {
-                ParentTableName.append($("<option></option>").val(response[i].parentTableName).html(response[i].parentTableName));
+                TableName.append($("<option></option>").val(response[i].tableName).html(response[i].tableName));
             }
             if (_val != 0) {
-                ParentTableName.val(_val);
+                TableName.val(_val);
             }
         },
         failure: function (response) {
