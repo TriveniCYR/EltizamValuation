@@ -9,7 +9,7 @@ function ConfirmationDeleteClient(id) {
 function DeletedClient() {
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteClientModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID, Post, DeleteClientByIdSuccess, DeleteClientByIdError);
+        ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID, Post, DeleteClientByIdSuccess, DeleteFailure);
     }
     else {
         toastr.error(DeleteAccessDenied);
@@ -28,9 +28,7 @@ function DeleteClientByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
-function DeleteClientByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
+
 
 function InitializeClientList() {  
     var ajaxObject = {
