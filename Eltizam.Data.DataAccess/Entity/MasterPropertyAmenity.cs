@@ -14,6 +14,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public int? PropertyTypeId { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public virtual MasterAmenity Amenity { get; set; } = null!;
         public virtual MasterProperty Property { get; set; } = null!;
