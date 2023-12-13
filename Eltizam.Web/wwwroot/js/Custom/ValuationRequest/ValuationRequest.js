@@ -17,6 +17,7 @@ function InitializeValutionRequestDataList() {
     var cityId = $("#CityId").val();
 
     var userName = $("#UserName").val() === undefined ? "" : $("#UserName").val();
+    var valRef = $("#ValRef").val() === undefined ? "" : $("#ValRef").val();
     var clientName = $("#ClientName").val() === null || $("#ClientName").val() === '0' ? "" : $("#ClientName").val();
     var propertyName = $("#PropertyName").val() === null || $("#PropertyName").val() === '0' ? "" : $("#PropertyName").val(); 
     var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
@@ -29,19 +30,19 @@ function InitializeValutionRequestDataList() {
     cityId          = GetIntegerVal(cityId);  
     resourceId = GetIntegerVal(resourceId);
 
-    assignToggleFilter();
+    hideSearchToggle();
+    debugger
+    var filters = "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate + '&valRef=' + valRef;
 
     var ajaxObject = {
-        "url": BaseURL + GetAll + "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate,
-
+        "url": BaseURL + GetAll + filters,
         "type": "POST",
         "data": function (d) {
             var pageNumber = $('#' + tableId).DataTable().page.info();
             d.PageNumber = pageNumber.page;
         },
         "datatype": "json"
-    };
-
+    }; 
 
     var columnObject = [
 
@@ -92,10 +93,8 @@ function InitializeValutionRequestDataList() {
         },
         {
             "data": "valuator", "name": "Valuator"
-        },
-
-        {
-
+        }, 
+        { 
             "data": "statusName",
             "name": "Status",
             "render": function (data, type, row, meta) { 
@@ -206,7 +205,7 @@ function AssignRequest() {
         data: JSON.stringify(modelReq),
         success: function (response) {
             toastr.success("Valuation Request(s) assinged to Approver.");
-            assignToggle();
+            assingApproverToggle();
             InitializeValutionRequestDataList();
             /*window.location.href = "/ValuationRequest/ValuationRequests";*/
         },

@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
     BindClientNameDropdown();
     BindPropertyNameDropdown();
-
     showLoader();
     initializeDashboard(); 
 });
@@ -154,10 +153,125 @@ function submitFilterFormSuccess(data) {
 
     hideLoader();
      //TopQuotationDuesTable End
+
+    formatCurrencyInElements('formatting')
 }
+
 function submitFilterFormError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
+function fetchDataForModal() {
+    var formDataObject = {
+        PropertyId: 0,
+        ClientId: 0,
+        FromDate: '',
+        ToDate: '',
+        Pagesize: -1
+    };
+    var formDataJson = JSON.stringify(formDataObject);
+    return $.ajax({
+        url: BaseURL + Dashboardurl,
+        method: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: formDataJson,
+    });
+}
 
+$('#openModalLinklatestRequestsTable').on('click', function () {
+    // Clear the table body before making a new request
+    $('#data-tablerequest tbody').empty();
+    fetchDataForModal()
+        .done(function (data) {
+            // Handle data for modal 1
+            $.each(data._object.latestRequests, function (index,request) {
+                $('#data-tablerequest tbody').append('<tr>' +
+                    '<td>' + request.clientName + '</td>' +
+                    '<td>' + request.propertyName + '</td>' +
+                    '<td>' + request.valRefNum + '</td>' +
+                    '<td><span class="tableStatus" style="color: ' + request.colorCode + '; background-color: ' + request.backGroundColor + '; border: 1px solid ' + request.colorCode + ';">' + request.status + '</span></td>' +
+                    '</tr>');
+            });
 
+            // Open the modal for modal 1
+            $('#myModallatestRequestsTable').modal('show');
+        })
+        .fail(function () {
+            alert('Failed to fetch data for modal 1 from the API');
+        });
+    return false;
+});
+
+$('#openModalLinklatestQuotationsTable').on('click', function () {
+    // Clear the table body before making a new request
+    $('#data-tablequaotation tbody').empty();
+    fetchDataForModal()
+        .done(function (data) {
+            $.each(data._object.latestQuotations, function (index, quaotation) {
+                $('#data-tablequaotation tbody').append('<tr>' +
+                    '<td>' + quaotation.clientName + '</td>' +
+                    '<td>' + quaotation.propertyName + '</td>' +
+                    '<td>' + quaotation.valRefNum + '</td>' +
+                    '<td>' + quaotation.quotationNum + '</td>' +
+                    '<td>' + quaotation.quotationFee + '</td>' +
+                    '</tr>');
+            });
+
+            // Open the modal for modal 1
+            $('#myModallatestQuotationsTable').modal('show');
+        })
+        .fail(function () {
+            alert('Failed to fetch data for modal  from the API');
+        });
+    return false;
+        
+    });
+
+$('#openModalLinktopValuationsTable').on('click', function () {
+        // Clear the table body before making a new request
+    $('#data-tabletopValuations tbody').empty();
+        fetchDataForModal()
+            .done(function (data) {
+                // Handle data for modal 1
+                $.each(data._object.topValuations, function (index, valuation) {
+                    $('#data-tabletopValuations tbody').append('<tr>' +
+                        '<td>' + valuation.clientName + '</td>' +
+                        '<td>' + valuation.propertyName + '</td>' +
+                        '<td>' + valuation.valRefNum + '</td>' +
+                        '<td>' + valuation.valuationAmount + '</td>' +
+                        '</tr>');
+                });
+
+                $('#myModaltopValuationsTable').modal('show');
+            })
+            .fail(function () {
+                alert('Failed to fetch data for modal 1 from the API');
+            });
+       
+        return false;
+    });
+
+ $('#openModalLinktopQuotationDuesTable').on('click', function () {
+        // Clear the table body before making a new request
+     $('#data-tableQuotationDues tbody').empty();
+     fetchDataForModal()
+         .done(function (data) {
+             // Handle data for modal 1
+             $.each(data._object.topQuotationDues, function (index, quotationdue) {
+                 $('#data-tableQuotationDues tbody').append('<tr>' +
+                     '<td>' + quotationdue.clientName + '</td>' +
+                     '<td>' + quotationdue.propertyName + '</td>' +
+                     '<td>' + quotationdue.valRefNum + '</td>' +
+                     '<td>' + quotationdue.valRefNum + '</td>' +
+                     '<td>' + quotationdue.quotationFee + '</td>' +
+                     '</tr>');
+             });
+
+             $('#myModaltopQuotationDuesTable').modal('show');
+         })
+         .fail(function () {
+             alert('Failed to fetch data for modal from the API');
+         });
+        return false;
+    });
