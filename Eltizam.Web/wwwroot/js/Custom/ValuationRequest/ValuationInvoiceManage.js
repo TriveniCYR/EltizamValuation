@@ -48,77 +48,60 @@ var InvoiceRequest = {
 };
 
 function SaveInvoice() { 
+    var ErrMsg = "";
     var modeId = $('#hdnTabId').val();
     document.getElementById('TransactionModeId').value = parseInt(modeId);
+
     if(modeId=='1') {
         let transactionStatusId = $("#CashTransactionStatusId").val();
         let amouont = $("#CashAmount").val();
-        let transactionDate = $("#CashTransactionDate").val();
-        let hdnReferenceNo = $("#hdnReferenceNo").val();
-        let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+        let transactionDate = $("#CashTransactionDate").val(); 
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Transaction.");
-            return false;
+            ErrMsg += "Select Transaction."; 
         }
         else if (amouont == '') {
-            toastr.error("Enter Amount.");
-            return false;
+            ErrMsg += "Enter Amount."; 
         }
         else if (transactionDate == '') {
-            toastr.error("Enter Transaction Date.");
-            return false;
-        }
-        else {
-            $('#loading-wrapper').hide();
-            return true;
-        }
+            ErrMsg += "Enter Transaction Date."; 
+        } 
+
         //InvoiceRequest.TransactionDate = transactionDate;
         //InvoiceRequest.Amount = amouont;
         //InvoiceRequest.TransactionStatusId = transactionStatusId;
         //InvoiceRequest.ReferenceNo = hdnReferenceNo;
         //InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
         //InvoiceRequest.TransactionModeId = 1;
-        //SaveInvoiceData(InvoiceRequest);
-
+        //SaveInvoiceData(InvoiceRequest); 
     }
-    if (modeId == '2') {
+
+    else if (modeId == '2') {
         let transactionStatusId = $("#ChequeTransactionStatusId").val();
         let amouont = $("#ChequeAmount").val();
         let transactionDate = $("#ChequeTransactionDate").val();
         let chequeNumber = $("#CheckNumer").val();
-        let chequeBankName = $("#CheckBankName").val();
-        let chequeDate = $("#CheckDate").val();
-        let chequeRecievedDate = $("#ChequeRecievedDate").val();
-        let hdnReferenceNo = $("#hdnReferenceNo").val();
-        let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+        let chequeBankName = $("#CheckBankName").val(); 
+        let chequeRecievedDate = $("#ChequeRecievedDate").val(); 
+
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Transaction.");
-            return false;
+            ErrMsg += "Select Transaction."; 
+            hideLoader();
         }
         else if (amouont == '') {
-            toastr.error("Enter Amount.");
-            return false;
+            ErrMsg += "Enter Amount."; 
         }
         else if (transactionDate == '') {
-            toastr.error("Enter Transaction Date.");
-            return false;
+            ErrMsg += "Enter Transaction Date.";
         }
         else if (chequeRecievedDate == '') {
-            toastr.error("Enter Cheque Recieved Date.");
-            return false;
+            ErrMsg += "Enter Cheque Recieved Date."; 
         }
         else if (chequeNumber == '') {
-            toastr.error("Enter Cheque No.");
-            return false;
+            ErrMsg += "Enter Cheque No."; 
         }
         else if (chequeBankName == '') {
-            toastr.error("Enter Bank Name.");
-            return false;
-        }
-        else {
-            $('#loading-wrapper').hide();
-            return true;
-        }
+            ErrMsg += "Enter Bank Name."; 
+        } 
         //InvoiceRequest.TransactionDate = transactionDate;
         //InvoiceRequest.Amount = amouont;
         //InvoiceRequest.TransactionStatusId = transactionStatusId;
@@ -131,17 +114,15 @@ function SaveInvoice() {
         //InvoiceRequest.ChequeRecievedDate = chequeRecievedDate;
         //SaveInvoiceData(InvoiceRequest);
     }
-    if(modeId=='3') {
+
+    else if(modeId=='3') {
         let transactionStatusId = $("#CardTransactionStatusId").val();
         let amouont = $("#CardAmount").val();
         let transactionDate = $("#CardTransactionDate").val();
         let transactionId = $("#CardTransactionId").val();
         let creditCardNumber = $("#CardNumber").val();
         let bankName = $("#CardBankName").val();
-        let nameOnCard = $("#CardHolderName").val();
-        let expiryDate = $("#ExpireDate").val();
-        let hdnReferenceNo = $("#hdnReferenceNo").val();
-        let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+        let nameOnCard = $("#CardHolderName").val(); 
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             toastr.error("Select Transaction.");
             return false;
@@ -188,15 +169,13 @@ function SaveInvoice() {
         //SaveInvoiceData(InvoiceRequest);
     }
 
-    if(modeId=='4') {
+    else if(modeId=='4') {
         let transactionStatusId = $("#BankTransactionStatusId").val();
         let amouont = $("#BankAmount").val();
         let transactionDate = $("#BankTransactionDate").val();
         let transactionId = $("#BankTransactionId").val();
         let bankName = $("#AccountBankName").val();
-        let accountNumber = $("#AccountHolderName").val();
-        let hdnReferenceNo = $("#hdnReferenceNo").val();
-        let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+        let accountNumber = $("#AccountHolderName").val(); 
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             toastr.error("Select Transaction.");
             return false;
@@ -235,6 +214,15 @@ function SaveInvoice() {
         //InvoiceRequest.AccountHolderName = accountNumber;
         //InvoiceRequest.TransactionId = transactionId;
         //SaveInvoiceData(InvoiceRequest);
+    }
+     
+    if (ErrMsg !== "") {
+        toastr.error(ErrMsg);
+        hideLoader();
+        return false;
+    }
+    else {
+        return true;
     }
 }
 
