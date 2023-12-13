@@ -18,7 +18,6 @@ namespace Eltizam.Data.DataAccess.DataContext
         }
 
         public virtual DbSet<ComparableEvidence> ComparableEvidences { get; set; } = null!;
-        public virtual DbSet<Dictionary> Dictionaries { get; set; } = null!;
         public virtual DbSet<EmailLogHistory> EmailLogHistories { get; set; } = null!;
         public virtual DbSet<MasterAddress> MasterAddresses { get; set; } = null!;
         public virtual DbSet<MasterAmenity> MasterAmenities { get; set; } = null!;
@@ -102,21 +101,6 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .WithMany(p => p.ComparableEvidences)
                     .HasForeignKey(d => d.RequestId)
                     .HasConstraintName("FK_Comparable_Evidence_ValuationRequest");
-            });
-
-            modelBuilder.Entity<Dictionary>(entity =>
-            {
-                entity.ToTable("Dictionary", "dbo");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Type)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<EmailLogHistory>(entity =>
@@ -1226,6 +1210,10 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasColumnName("ReferenceNO");
 
                 entity.Property(e => e.TransactionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TransactionId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.ValuationRequest)
                     .WithMany(p => p.ValuationInvoices)

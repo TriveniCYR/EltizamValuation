@@ -19,6 +19,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public string? DictionaryCode { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public virtual ICollection<MasterDictionaryDetail> MasterDictionaryDetails { get; set; }
     }
