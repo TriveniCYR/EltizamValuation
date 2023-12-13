@@ -27,6 +27,9 @@ function profileTab(evt, cityName) {
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
+
+   
+
     document.getElementById(cityName).style.height = "auto";
     document.getElementById(cityName).style.padding = "6px 12px";
     document.getElementById(cityName).style.border = "1px solid var(--blue)";
@@ -48,6 +51,7 @@ function redirectToValuationAssesment() {
 
 }
 document.getElementById("defaultOpen").click();
+
 
 
 
@@ -196,12 +200,16 @@ function DeleteDocumentError(x, y, z) {
 
 $(document).ready(function () {
 
+   
+
     var RoleEnum = {
         'Requestor': 1,
         'Approver': 2,
         'Valuer': 3,
         'Admin': 4
     };
+
+
 
     var roleId = document.getElementById('hdnRoleId').value;
     var inputElement1 = $('#ApproverId');
@@ -1171,6 +1179,74 @@ function DeleteInvoiceByIdSuccess(data) {
 }
 function DeleteInvoiceByIdError(x, y, z) {
     toastr.error(ErrorMessage);
+}
+
+document.getElementById('tab_4').addEventListener('click', function () {
+    // Create an alert or call your desired function when the button is clicked
+    changeLinksite();
+});
+
+
+// Add a click event listener to the button
+document.getElementById('tab_5').addEventListener('click', function () {
+    // Create an alert when the button is clicked
+    changeLinkevidence();
+});
+document.getElementById('tab_6').addEventListener('click', function () {
+    // Create an alert when the button is clicked
+    changeLinkassesment();
+});
+
+
+
+// Assuming some event triggers this change
+
+
+document.getElementById('defaultOpen').addEventListener('click', function () {
+    // Call your desired function when the button is clicked
+    changeLinkvaluation();
+});
+
+
+function changeLinksite() {
+    let id = $('#siteId').val();
+    
+    // Get the anchor element by its id
+    var myLink = document.getElementById('myLink');
+
+    // Change the href attribute to the new link
+    myLink.setAttribute('href', '/AuditLog/AuditLogDetailList?TableName=SiteDescription&TableKey=' + id);
+}
+
+function changeLinkevidence() {
+    let id = $('#compId').val();
+   
+    // Get the anchor element by its id
+    var myLink = document.getElementById('myLink');
+
+    // Change the href attribute to the new link
+    myLink.setAttribute('href', '/AuditLog/AuditLogDetailList?TableName=Comparable_Evidence&TableKey=' + id);
+}
+
+
+function changeLinkassesment() {
+    let id = $('#assesmentId').val();
+
+    // Get the anchor element by its id
+    var myLink = document.getElementById('myLink');
+
+    // Change the href attribute to the new link
+    myLink.setAttribute('href', '/AuditLog/AuditLogDetailList?TableName=Valuation_Assessement&TableKey=' + id);
+}
+
+function changeLinkvaluation() {
+    let id = $('#valuationdetailsId').val();
+
+    // Get the anchor element by its id
+    var myLink = document.getElementById('myLink');
+
+    // Change the href attribute to the new link
+    myLink.setAttribute('href', '/AuditLog/AuditLogDetailList?TableName=ValuationRequest&TableKey=' + id);
 }
 
 

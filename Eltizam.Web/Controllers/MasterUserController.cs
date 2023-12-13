@@ -198,7 +198,8 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
-                    if (data._object is null)
+                    FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
+                      if (data._object is null)
                         return NotFound();
 
                     return View(data._object);

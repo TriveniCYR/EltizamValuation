@@ -1,7 +1,9 @@
 ﻿@using Eltizam.Utility.Models;
+@using System.Data;
 @model Eltizam.Business.Models.ValuationRequestModel
-
-<!DOCTYPE html>
+@{
+    var _dtSet = (DataSet)ViewBag.pdfdata;
+}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -170,7 +172,8 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Client Type
-                                    <input type="text" placeholder="Client" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[1].Rows[0]["ClientType"].ToString()" placeholder="Client" 
+                                    style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -179,7 +182,8 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Clients
-                                    <input type="text" placeholder="Bank" style="border: 1px solid #e8e7e6;
+                                    <input type="text" placeholder="" value="@_dtSet.Tables[1].Rows[0]["Clients"].ToString()" 
+                                    style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -188,21 +192,14 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Company Name
-                                    <input type="text" placeholder="ICICI Bank" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[1].Rows[0]["Company"].ToString()" 
+                                           placeholder="" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
                                     margin-top: 5px;">
                                 </label>
-                                <label for="" style="width: 23.5%;display: flex;
-                                flex-direction: column;">
-                                    Clients
-                                    <input type="text" placeholder="Jones" style="border: 1px solid #e8e7e6;
-                                    border-radius: 4px;
-                                    padding: 8px 10px;
-                                    outline: none;
-                                    margin-top: 5px;">
-                                </label>
+                               
                             </div>
                             <div style="margin: 10px 0 28px;
                             display: flex;
@@ -212,7 +209,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Pincode
-                                    <input type="text" placeholder="ABC" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[1].Rows[0]["PinNo"].ToString()" placeholder="ABC" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -221,7 +218,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Country
-                                    <input type="text" placeholder="DEF" style="border: 1px solid #e8e7e6;
+                                    <input type="text" placeholder="DEF" value="@_dtSet.Tables[1].Rows[0]["Country"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -230,7 +227,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     State
-                                    <input type="text" placeholder="234343" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[1].Rows[0]["State"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -239,15 +236,11 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     City
-                                    <select name="city" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[1].Rows[0]["City"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
                                     margin-top: 5px;">
-                                        <option value="city1">ABC</option>
-                                        <option value="city2">DEF</option>
-                                        <option value="city3">GHI</option>
-                                    </select>
                                 </label>
                             </div>
                             <div style="margin: 10px 0 28px;
@@ -260,7 +253,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     TRN Number
-                                    <input type="text" placeholder="232423" style="border: 1px solid #e8e7e6;
+                                    <input type="text"  value="@_dtSet.Tables[1].Rows[0]["TRNNumber"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -269,7 +262,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     TRN Expiry Date
-                                    <input type="text" placeholder="11/14/2022" style="border: 1px solid #e8e7e6;
+                                    <input type="text"  value="@_dtSet.Tables[1].Rows[0]["TRNExpiryDate"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -278,7 +271,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     License Number
-                                    <input type="text" placeholder="234232" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[1].Rows[0]["LicenseNumber"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -304,44 +297,18 @@ background-color: #fafafc;">
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @for(int i=0;i<@_dtSet.Tables[1].Rows.Count;i++)
+                                        {                                        
                                         <tr style="background-color: #f1f1f2;
                                             border-bottom: 1px solid #576aa0;">
-                                            <td style="padding: 10px;">XYZ</td>
-                                            <td>ABC</td>
-                                            <td>Mumbai</td>
-                                            <td>Maharashtra</td>
-                                            <td>India</td>
-                                            <td>400071</td>
-
+                                            <td>@_dtSet.Tables[1].Rows[i]["Address1"].ToString()</td>
+                                           <td>@_dtSet.Tables[1].Rows[i]["Address2"].ToString()</td>
+                                           <td>@_dtSet.Tables[1].Rows[i]["City"].ToString()</td>
+                                           <td>@_dtSet.Tables[1].Rows[i]["State"].ToString()</td>
+                                           <td>@_dtSet.Tables[1].Rows[i]["Country"].ToString()</td>
+                                                <td>@_dtSet.Tables[1].Rows[i]["PinNo"].ToString()</td>
                                         </tr>
-                                        <tr style="border-bottom: 1px solid #576aa0;">
-                                            <td style="padding: 10px;">XYZ</td>
-                                            <td>ABC</td>
-                                            <td>Mumbai</td>
-                                            <td>Maharashtra</td>
-                                            <td>India</td>
-                                            <td>400071</td>
-
-                                        </tr>
-                                        <tr style="background-color: #f1f1f2;
-                                        border-bottom: 1px solid #576aa0;">
-                                            <td style="padding: 10px;">XYZ</td>
-                                            <td>ABC</td>
-                                            <td>Mumbai</td>
-                                            <td>Maharashtra</td>
-                                            <td>India</td>
-                                            <td>400071</td>
-
-                                        </tr>
-                                        <tr style="border-bottom: 1px solid #576aa0;">
-                                            <td style="padding: 10px;">XYZ</td>
-                                            <td>ABC</td>
-                                            <td>Mumbai</td>
-                                            <td>Maharashtra</td>
-                                            <td>India</td>
-                                            <td>400071</td>
-
-                                        </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -362,40 +329,19 @@ background-color: #fafafc;">
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr style="background-color: #f1f1f2;
+
+                                        @for (int i = 0; i < @_dtSet.Tables[2].Rows.Count; i++)
+                                        {
+                                             <tr style="background-color: #f1f1f2;
                                             border-bottom: 1px solid #576aa0;">
-                                            <td style="padding: 10px;">XYZ</td>
-                                            <td>ABC</td>
-                                            <td>developer</td>
-                                            <td>test@test.com</td>
-                                            <td>9999999999</td>
+                                                <td>@_dtSet.Tables[2].Rows[i]["ContactPersonName"].ToString()</td>
+                                                <td>@_dtSet.Tables[2].Rows[i]["Department"].ToString()</td>
+                                                <td>@_dtSet.Tables[2].Rows[i]["Designation"].ToString()</td>
+                                                <td>@_dtSet.Tables[2].Rows[i]["Email"].ToString()</td>
+                                                <td>@_dtSet.Tables[2].Rows[i]["Mobile"].ToString()</td>
+                                            </tr>
+                                        }
 
-                                        </tr>
-                                        <tr style="border-bottom: 1px solid #576aa0;">
-                                            <td style="padding: 10px;">XYZ</td>
-                                            <td>ABC</td>
-                                            <td>developer</td>
-                                            <td>test@test.com</td>
-                                            <td>9999999999</td>
-
-                                        </tr>
-                                        <tr style="background-color: #f1f1f2;
-                                        border-bottom: 1px solid #576aa0;">
-                                            <td style="padding: 10px;">XYZ</td>
-                                            <td>ABC</td>
-                                            <td>developer</td>
-                                            <td>test@test.com</td>
-                                            <td>9999999999</td>
-
-                                        </tr>
-                                        <tr style="border-bottom: 1px solid #576aa0;">
-                                            <td style="padding: 10px;">XYZ</td>
-                                            <td>ABC</td>
-                                            <td>developer</td>
-                                            <td>test@test.com</td>
-                                            <td>9999999999</td>
-
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -418,7 +364,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Property Type Name
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["PropertyType"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -427,7 +373,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Property SubType
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["PropertySubType"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -436,7 +382,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Type of Ownership
-                                    <input type="text" placeholder="ICICI Bank" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["OwnershipType"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -445,7 +391,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Property Name
-                                    <input type="text" placeholder="Jones" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["PropertyName"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -460,7 +406,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Unit Type
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["UnitType"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -469,7 +415,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Additional Units
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["AdditionalUnits"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -478,7 +424,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Furnished
-                                    <input type="text"  style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["Furnished"].ToString()"  style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -487,15 +433,11 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Purpose of Valuation
-                                    <select name="city" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["ValuationPurpose"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
                                     margin-top: 5px;">
-                                        <option value="city1">ABC</option>
-                                        <option value="city2">DEF</option>
-                                        <option value="city3">GHI</option>
-                                    </select>
                                 </label>
                             </div>
                             <div style="margin: 10px 0 28px;
@@ -507,7 +449,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Built Up Area (Sq.Ft)
-                                    <input type="text"  style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["BuildUpAreaSqFt"].ToString()"  style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -516,7 +458,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Built up Area (Sq.Meter)
-                                    <input type="text"  style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["BuildUpAreaSqMtr"].ToString()"  style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -525,7 +467,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Age of construction
-                                    <input type="text"  style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["AgeOfConstruction"].ToString()"   style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -534,7 +476,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Parking
-                                    <input type="text"  style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["Parking"].ToString()"  style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -552,7 +494,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Parking BAY Number
-                                    <input type="text"  style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["ParkingBayNo"].ToString()"  style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -561,7 +503,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Description
-                                    <input type="text"  style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[3].Rows[0]["Description"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -599,7 +541,7 @@ background-color: #fafafc;">
                                 position: relative;
                                 background-color: #576aa0;
                             ">
-                                    <input type="checkbox" placeholder="enter first name" checked style="
+                                    <input type="checkbox"  placeholder="enter first name" checked style="
                                     background-color: #fff;
                                     border: 1px solid #3f392b;
                                     width: 18px;
@@ -1026,7 +968,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Country
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["Country"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1035,7 +977,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     State
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["State"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1044,7 +986,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     City
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["City"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1053,7 +995,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Sector /Zone
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["Zone"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1068,7 +1010,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Building Projects
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["BuildingProject"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1077,7 +1019,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Latitude
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["Latitude"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1086,7 +1028,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Longitude
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["Longitude"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1095,7 +1037,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Address Line 1
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["Address1"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1112,7 +1054,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Address Line 2
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["Address2"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1121,7 +1063,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Zip / PO Box
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["Pincode"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1130,7 +1072,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Landmark
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[5].Rows[0]["Landmark"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1167,52 +1109,23 @@ background-color: #fafafc;">
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr style="background-color: #f1f1f2;
+                                    @for (int i = 0; i < @_dtSet.Tables[6].Rows.Count; i++)
+                                    {
+                                        <tr style="background-color: #f1f1f2;
                                         border-bottom: 1px solid #576aa0;">
-                                        <td style="padding: 10px;"> 65790-45321</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>2657</td>
-                                        <td>12/09/2022</td>
-                                        <td><span style="background-color: #c5cee8;color: #25408f;border: 1px solid #25408f;padding: 3px;font-size: 12px;border-radius: 5px;">Submitted</span></td>
-
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #576aa0;">
-                                        <td style="padding: 10px;"> 65790-45321</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>2657</td>
-                                        <td>12/09/2022</td>
-                                        <td><span style="background-color: #e6f5e6;color: #009900;border: 1px solid #009900;padding: 3px;font-size: 12px;border-radius: 5px;">Confirm</span></td>
-
-                                    </tr>
-                                    <tr style="background-color: #f1f1f2;
-                                    border-bottom: 1px solid #576aa0;">
-                                        <td style="padding: 10px;"> 65790-45321</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>2657</td>
-                                        <td>12/09/2022</td>
-                                        <td><span style="background-color: #FFF6E9;color: #ff9900;border: 1px solid #ff9900;padding: 3px;font-size: 12px;border-radius: 5px;">Pending</span></td>
-
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #576aa0;">
-                                        <td style="padding: 10px;"> 65790-45321</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>2657</td>
-                                        <td>12/09/2022</td>
-                                        <td><span style="background-color: #c5cee8;color: #25408f;border: 1px solid #25408f;padding: 3px;font-size: 12px;border-radius: 5px;">Submitted</span></td>
-
-                                    </tr>
+                                            <td>@_dtSet.Tables[6].Rows[i]["Quotation"].ToString()</td>
+                                            <td>@_dtSet.Tables[6].Rows[i]["ValuationFee"].ToString()</td>
+                                            <td>@_dtSet.Tables[6].Rows[i]["VAT"].ToString()</td>
+                                            <td>@_dtSet.Tables[6].Rows[i]["OtherCharges"].ToString()</td>
+                                                <td>@_dtSet.Tables[6].Rows[i]["Discount"].ToString()</td>
+                                            <td>@_dtSet.Tables[6].Rows[i]["TotalFee"].ToString()</td>
+                                            <td>@_dtSet.Tables[6].Rows[i]["CreatedDate"].ToString()</td>
+                                           <td><span style="border: 1px solid #25408f;padding: 3px;font-size: 12px;border-radius: 5px;">
+                                                    @_dtSet.Tables[6].Rows[i]["Status"].ToString()
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -1240,49 +1153,26 @@ background-color: #fafafc;">
                                         <th>Amount</th>
                                         <th>Transaction Date	</th>
                                         <th>Creation Date</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr style="background-color: #f1f1f2;
+                                    @if (@_dtSet.Tables[7].Rows.Count > 0)
+                                    {
+                                        @for (int i = 0; i < @_dtSet.Tables[7].Rows.Count; i++)
+                                        {
+                                            <tr style="background-color: #f1f1f2;
                                         border-bottom: 1px solid #576aa0;">
-                                        <td style="padding: 10px;"> 65790-45321</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>2657</td>
-                                        <td>12/09/2022</td>
+                                                <td>@_dtSet.Tables[7].Rows[i]["InvoiceNo"].ToString()</td>
+                                                <td>@_dtSet.Tables[7].Rows[i]["ValuationRequestId"].ToString()</td>
+                                                <td>@_dtSet.Tables[7].Rows[i]["TransactionId"].ToString()</td>
+                                                <td>@_dtSet.Tables[7].Rows[i]["TransactionStatusId"].ToString()</td>
+                                                <td>@_dtSet.Tables[7].Rows[i]["Amount"].ToString()</td>
+                                                <td>@_dtSet.Tables[7].Rows[i]["TransactionDate"].ToString()</td>
+                                                <td>@_dtSet.Tables[7].Rows[i]["CreatedDate"].ToString()</td>
 
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #576aa0;">
-                                        <td style="padding: 10px;"> 65790-45321</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>2657</td>
-                                        <td>12/09/2022</td>
-                                    </tr>
-                                    <tr style="background-color: #f1f1f2;
-                                    border-bottom: 1px solid #576aa0;">
-                                        <td style="padding: 10px;"> 65790-45321</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>2657</td>
-                                        <td>12/09/2022</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid #576aa0;">
-                                        <td style="padding: 10px;"> 65790-45321</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>1000</td>
-                                        <td>5%</td>
-                                        <td>2657</td>
-                                        <td>12/09/2022</td>
-                                    </tr>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -1304,7 +1194,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Location 
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[8].Rows[0]["Location"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1313,7 +1203,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Internal Area
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[8].Rows[0]["InternalArea"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1325,7 +1215,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     External Area
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[8].Rows[0]["ExternalArea"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1338,7 +1228,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     Floor
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[8].Rows[0]["Floor"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1353,7 +1243,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Room
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input value="@_dtSet.Tables[8].Rows[0]["Room"].ToString()" type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1362,7 +1252,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Bedrooms
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input value="@_dtSet.Tables[8].Rows[0]["Bedrooms"].ToString()"  type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1377,7 +1267,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     Storage
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input value="@_dtSet.Tables[8].Rows[0]["Storage"].ToString()" type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1390,7 +1280,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     Quantity
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text" value="@_dtSet.Tables[8].Rows[0]["Quantity"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1405,7 +1295,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Additional Comment
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text"   value="@_dtSet.Tables[8].Rows[0]["AdditionComment"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1424,14 +1314,14 @@ background-color: #fafafc;">
                             margin-top: 0;
                             padding: 15px 12px;">External Information</h3>
                             <div style="padding: 20px;">
-                                <div style="margin: 10px 0 28px;" style="margin-bottom: 28px">
+                                <div style="margin: 10px 0 28px;"  style="margin-bottom: 28px">
                                 <label for="" style="
                                 display: flex;
                                 flex-direction: column;
                                 margin-bottom: 28px;
                                 ">
                                     Property Condition
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input  value="@_dtSet.Tables[8].Rows[0]["PropertyCondition"].ToString()" type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1443,7 +1333,7 @@ background-color: #fafafc;">
                                 margin-bottom: 28px;
                                 ">
                                     Additional Notes
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input type="text"  value="@_dtSet.Tables[8].Rows[0]["AdditionalNotes"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1456,7 +1346,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                                 margin-bottom: 28px;">
                                     Others
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                        <input type="text" value="@_dtSet.Tables[8].Rows[0]["Others"].ToString()" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1483,7 +1373,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Type 
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input value="@_dtSet.Tables[9].Rows[0]["Type"].ToString()"  type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1492,7 +1382,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Size
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input value="@_dtSet.Tables[9].Rows[0]["Size"].ToString()"  type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1504,7 +1394,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     Remarks
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input  value="@_dtSet.Tables[9].Rows[0]["Remarks"].ToString()"  type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1517,7 +1407,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     Rate (Sq.Ft) 
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input  value="@_dtSet.Tables[9].Rows[0]["RateSqFt"].ToString()"  type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1532,7 +1422,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Price
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input  value="@_dtSet.Tables[9].Rows[0]["Price"].ToString()"   type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1541,7 +1431,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Additional Comments
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input value="@_dtSet.Tables[9].Rows[0]["AddtionalComments"].ToString()" type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1570,7 +1460,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Market Value 
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input  value="@_dtSet.Tables[10].Rows[0]["MarketValue"].ToString()"   type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1579,7 +1469,7 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Market Rent
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input   value="@_dtSet.Tables[10].Rows[0]["MarketRate"].ToString()" type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1591,7 +1481,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     Life of Building
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input   value="@_dtSet.Tables[10].Rows[0]["LifeOfBuilding"].ToString()" type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1604,7 +1494,7 @@ background-color: #fafafc;">
                                 flex-direction: column;
                             ">
                                     Annual Maintainance Cost
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input   value="@_dtSet.Tables[10].Rows[0]["AnnualMaintainceCost"].ToString()" type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
@@ -1619,16 +1509,12 @@ background-color: #fafafc;">
                                 <label for="" style="width: 23.5%;display: flex;
                                 flex-direction: column;">
                                     Insurance Details
-                                    <input type="text" style="border: 1px solid #e8e7e6;
+                                    <input   value="@_dtSet.Tables[10].Rows[0]["InsuranceDetails"].ToString()" type="text" style="border: 1px solid #e8e7e6;
                                     border-radius: 4px;
                                     padding: 8px 10px;
                                     outline: none;
                                     margin-top: 5px;">
                                 </label>
-
-
-
-
                                 </div>
                         </form>
                     </div>

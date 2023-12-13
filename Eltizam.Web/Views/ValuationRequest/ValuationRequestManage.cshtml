@@ -96,9 +96,11 @@
                     <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
 
                     <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payment Details</button>   
-                    <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="defaultOpen">Site Description</button>
+                    <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="tab_4">Site Description</button>
                     <button class="tablinks" style="display: @displayStyleevidence" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
                     <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button> 
+                   
+
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
@@ -133,6 +135,10 @@
                             <input type="hidden" id="isDeleteAssesment" value="@isDeleteAssesment" />
                             <input type="hidden" id="isDeletePerm" value="@isDelete" />
                             <input type="hidden" id="isAction" />
+                            <input type="hidden" id="compId" value="@(Model == null ? 0 : Model.ValuationAssesment.comparableEvidenceModel.Id)" />
+                            <input type="hidden" id="siteId" value="@(Model == null ? 0 : Model.ValuationAssesment.SiteDescription.Id)" />
+                            <input type="hidden" id="assesmentId" value="@(Model == null ? 0 : Model.ValuationAssesment.valuationAssessementModel.Id)" />
+                            <input type="hidden" id="valuationdetailsId" value="@(Model == null ? 0 : Model.Id)"/>
                             <div class="ptrl-20">
                                 <div class="flex  mb-28"> 
                                     <label for="" class="w-50">
@@ -927,7 +933,7 @@
                             @Html.HiddenFor(model => model.ValuationAssesment.valuationAssessementModel.RequestId, new { @value = "Model.Id" })
                             <div class="flex">
                                 <label for="">
-                                    <p class="m-0"> MarketValue<span class="text-danger">*</span></p>
+                                    <p class="m-0"> Market Value<span class="text-danger">*</span></p>
                                     @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["MarketValue"] })
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketValue, "", new { @class = "text-danger" })
                                 </label>

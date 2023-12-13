@@ -14,6 +14,7 @@ namespace Eltizam.Business.Core.Interface
         Task<ValuationInvoiceListModel> GetInvoiceById(int id);
         Task<DBOperation> InvoiceDelete(int id);
         Task<DBOperation> Upsert(ValuationInvoiceListModel entityQuatation);
+        Task<DBOperation> DeleteDocument(int id);
 
     }
 }

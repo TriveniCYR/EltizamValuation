@@ -30,13 +30,13 @@ namespace Eltizam.Business.Models
         public int Furnished { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? ValuationPurpose { get; set; }
-        [StringLength(25, MinimumLength = 1)]
+        //[StringLength(25, MinimumLength = 1)]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? BuildUpAreaSqFt { get; set; }
-        [StringLength(25, MinimumLength = 1)]
+        //[StringLength(25, MinimumLength = 1)]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? BuildUpAreaSqMtr { get; set; }
-        [StringLength(25, MinimumLength = 1)]
+        //[StringLength(25, MinimumLength = 1)]
         public int? AgeOfConstruction { get; set; }
         public bool IsActive { get; set; }
         [StringLength(250, MinimumLength = 1)]

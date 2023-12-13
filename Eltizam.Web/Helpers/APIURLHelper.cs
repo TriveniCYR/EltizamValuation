@@ -116,6 +116,7 @@ namespace Eltizam.Web.Helpers
         public static string UpsertValuationInvoice = "ValuationInvoice/Upsert";
         public static string ValuationInvoiceById = "ValuationInvoice/GetInvoiceById";
         public static string DeleteInvoiceById = "ValuationInvoice/Delete";
+        public static string DeleteInvoiceDocument = "ValuationInvoice/DeleteDocument";
 
         #endregion Quotation
 

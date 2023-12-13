@@ -7,6 +7,7 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility;
+using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Localization;
 using System.Data;
@@ -25,11 +26,12 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterPropertyType> _repository { get; set; }
         private IRepository<MasterPropertySubType> _subrepository { get; set; }
         private readonly IHelper _helper;
+        private readonly IAuditLogService _auditLogService;
         #endregion Properties
 
         #region Constructor
         public MasterPropertyTypeService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
-          IHelper helper,
+          IHelper helper, IAuditLogService auditLogService,
            Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
@@ -39,6 +41,7 @@ namespace Eltizam.Business.Core.Implementation
             _subrepository = _unitOfWork.GetRepository<MasterPropertySubType>();
             configuration = _configuration;
             _helper = helper;
+            _auditLogService = auditLogService;
         }
         #endregion Constructor
 
@@ -121,10 +124,15 @@ namespace Eltizam.Business.Core.Implementation
                 }
                 // Create a Master_PropertyType object.
                 MasterPropertyType type;
+            string MainTableName = Enum.GetName(TableNameEnum.Master_PropertyType);
+            int MainTableKey = masterproperty.Id;
+            MasterPropertyType OldEntity = null;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
             if (masterproperty.Id > 0)
             {
+                OldEntity = _repository.GetNoTracking(masterproperty.Id);
+                type = _repository.Get(masterproperty.Id);
                 // Get the existing entity from the repository.
                 type = _repository.Get(masterproperty.Id);
 
@@ -154,6 +162,9 @@ namespace Eltizam.Business.Core.Implementation
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
+
+            //Do Audit Log --AUDITLOGUSER
+            await _auditLogService.CreateAuditLog<MasterPropertyType>(AuditActionTypeEnum.Update, OldEntity, type, MainTableName, MainTableKey);
 
             // Return an appropriate operation result.
             if (type.Id == 0)
