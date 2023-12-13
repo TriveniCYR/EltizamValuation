@@ -101,18 +101,7 @@ function SaveInvoice() {
         }
         else if (chequeBankName == '') {
             ErrMsg += "Enter Bank Name."; 
-        } 
-        //InvoiceRequest.TransactionDate = transactionDate;
-        //InvoiceRequest.Amount = amouont;
-        //InvoiceRequest.TransactionStatusId = transactionStatusId;
-        //InvoiceRequest.ReferenceNo = hdnReferenceNo;
-        //InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
-        //InvoiceRequest.TransactionModeId = 2;
-        //InvoiceRequest.CheckNumer = chequeNumber;
-        //InvoiceRequest.CheckBankName = chequeBankName;
-        //InvoiceRequest.CheckDate = chequeDate;
-        //InvoiceRequest.ChequeRecievedDate = chequeRecievedDate;
-        //SaveInvoiceData(InvoiceRequest);
+        }
     }
 
     else if(modeId=='3') {
@@ -124,49 +113,26 @@ function SaveInvoice() {
         let bankName = $("#CardBankName").val();
         let nameOnCard = $("#CardHolderName").val(); 
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Transaction.");
-            return false;
+            ErrMsg += "Select Transaction.";
         }
         else if (amouont == '') {
-            toastr.error("Enter Amount.");
-            return false;
+            ErrMsg += "Enter Transaction Date."; 
         }
         else if (transactionDate == '') {
-            toastr.error("Enter Transaction Date.");
-            return false;
+            ErrMsg += "Enter Amount."; 
         }
         else if (creditCardNumber == '') {
-            toastr.error("Enter Card Number.");
-            return false;
+            ErrMsg += "Enter Card Number."; 
         }
         else if (bankName == '') {
-            toastr.error("Enter Bank Name.");
-            return false;
+            ErrMsg += "Enter Bank Name."; 
         }
         else if (nameOnCard == '') {
-            toastr.error("Enter Holder Name.");
-            return false;
+            ErrMsg += "Enter Holder Name."; 
         }
         else if (transactionId == '') {
-            toastr.error("Enter Transaction Id.");
-            return false;
+            ErrMsg += "Enter Transaction Id."; 
         }
-        else {
-            $('#loading-wrapper').hide();
-            return true;
-        }
-        //InvoiceRequest.TransactionDate = transactionDate;
-        //InvoiceRequest.Amount = amouont;
-        //InvoiceRequest.TransactionStatusId = transactionStatusId;
-        //InvoiceRequest.ReferenceNo = hdnReferenceNo;
-        //InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
-        //InvoiceRequest.TransactionModeId = 3;
-        //InvoiceRequest.CardNumber = creditCardNumber;
-        //InvoiceRequest.CardBankName = bankName;
-        //InvoiceRequest.CardHolderName = nameOnCard;
-        //InvoiceRequest.ExpireDate = expiryDate;
-        //InvoiceRequest.TransactionId = transactionId;
-        //SaveInvoiceData(InvoiceRequest);
     }
 
     else if(modeId=='4') {
@@ -177,43 +143,23 @@ function SaveInvoice() {
         let bankName = $("#AccountBankName").val();
         let accountNumber = $("#AccountHolderName").val(); 
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Transaction.");
-            return false;
+            ErrMsg += "Select Transaction.";
         }
         else if (amouont == '') {
-            toastr.error("Enter Amount.");
-            return false;
+            ErrMsg += "Enter Transaction Date.";
         }
         else if (transactionDate == '') {
-            toastr.error("Enter Transaction Date.");
-            return false;
+            ErrMsg += "Enter Amount.";
         }
         else if (bankName == '') {
-            toastr.error("Enter Bank Name.");
-            return false;
+            ErrMsg += "Enter Bank Name.";
         }
         else if (accountNumber == '') {
-            toastr.error("Enter Account Number.");
-            return false;
+            ErrMsg += "Enter Account Number.";
         }
         else if (transactionId == '') {
-            toastr.error("Enter Transaction Id.");
-            return false;
+            ErrMsg += "Enter Transaction Id.";
         }
-        else {
-            $('#loading-wrapper').hide();
-            return true;
-        }
-        //InvoiceRequest.TransactionDate = transactionDate;
-        //InvoiceRequest.Amount = amouont;
-        //InvoiceRequest.TransactionStatusId = transactionStatusId;
-        //InvoiceRequest.ReferenceNo = hdnReferenceNo;
-        //InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
-        //InvoiceRequest.TransactionModeId = 4;
-        //InvoiceRequest.AccountBankName = bankName;
-        //InvoiceRequest.AccountHolderName = accountNumber;
-        //InvoiceRequest.TransactionId = transactionId;
-        //SaveInvoiceData(InvoiceRequest);
     }
      
     if (ErrMsg !== "") {
