@@ -18,6 +18,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public string? Icon { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public virtual ICollection<MasterPropertyAmenity> MasterPropertyAmenities { get; set; }
     }

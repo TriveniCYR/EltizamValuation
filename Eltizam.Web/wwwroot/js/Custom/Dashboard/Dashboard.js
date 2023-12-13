@@ -92,7 +92,7 @@ function submitFilterFormSuccess(data) {
                 '<td>' + quaotation.propertyName + '</td>' +
                 '<td>' + quaotation.valRefNum + '</td>' +
                 '<td>' + quaotation.quotationNum + '</td>' +
-                '<td>' + quaotation.quotationFee + '</td>' + 
+                '<td class="formatting">' + quaotation.quotationFee + '</td>' + 
                 '</tr>';
             latestQuotationsTableBody.append(rowHtml);
         });
@@ -116,7 +116,7 @@ function submitFilterFormSuccess(data) {
                 '<td>' + valuation.clientName + '</td>' +
                 '<td>' + valuation.propertyName + '</td>' +
                 '<td>' + valuation.valRefNum + '</td>' +
-                '<td>' + valuation.valuationAmount + '</td>' +
+                '<td class="formatting">' + valuation.valuationAmount + '</td>' +
                 '</tr>';
             topValuationsTableBody.append(rowHtml);
         });
@@ -139,7 +139,7 @@ function submitFilterFormSuccess(data) {
                 '<td>' + quotationdue.propertyName + '</td>' +
                 '<td>' + quotationdue.valRefNum + '</td>' +
                 '<td>' + quotationdue.valRefNum + '</td>' +
-                '<td>' + quotationdue.quotationFee + '</td>' +
+                '<td class="formatting">' + quotationdue.quotationFee + '</td>' +
                 '</tr>';
             topQuotationDuesTableBody.append(rowHtml);
         });
@@ -214,11 +214,11 @@ $('#openModalLinklatestQuotationsTable').on('click', function () {
                     '<td>' + quaotation.propertyName + '</td>' +
                     '<td>' + quaotation.valRefNum + '</td>' +
                     '<td>' + quaotation.quotationNum + '</td>' +
-                    '<td>' + quaotation.quotationFee + '</td>' +
+                    '<td class="formatting">' + quaotation.quotationFee + '</td>' +
                     '</tr>');
             });
 
-            // Open the modal for modal 1
+            formatCurrencyInElements('formatting');
             $('#myModallatestQuotationsTable').modal('show');
         })
         .fail(function () {
@@ -239,10 +239,10 @@ $('#openModalLinktopValuationsTable').on('click', function () {
                         '<td>' + valuation.clientName + '</td>' +
                         '<td>' + valuation.propertyName + '</td>' +
                         '<td>' + valuation.valRefNum + '</td>' +
-                        '<td>' + valuation.valuationAmount + '</td>' +
+                        '<td class="formatting">' + valuation.valuationAmount + '</td>' +
                         '</tr>');
                 });
-
+                formatCurrencyInElements('formatting');
                 $('#myModaltopValuationsTable').modal('show');
             })
             .fail(function () {
@@ -264,10 +264,10 @@ $('#openModalLinktopValuationsTable').on('click', function () {
                      '<td>' + quotationdue.propertyName + '</td>' +
                      '<td>' + quotationdue.valRefNum + '</td>' +
                      '<td>' + quotationdue.valRefNum + '</td>' +
-                     '<td>' + quotationdue.quotationFee + '</td>' +
+                     '<td class="formatting">' + quotationdue.quotationFee + '</td>' +
                      '</tr>');
              });
-
+             formatCurrencyInElements('formatting');
              $('#myModaltopQuotationDuesTable').modal('show');
          })
          .fail(function () {

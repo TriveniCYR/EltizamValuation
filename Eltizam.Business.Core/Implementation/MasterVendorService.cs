@@ -188,7 +188,7 @@ namespace Eltizam.Business.Core.Implementation
                     //_repository.UpdateGraph(objVendor, EntityState.Modified);
                     await _unitOfWork.SaveChangesAsync();
                     //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<MasterVendor>(AuditActionTypeEnum.Update, OldEntity, objVendor);
+                    await _auditLogService.CreateAuditLog<MasterVendor>(AuditActionTypeEnum.Update, OldEntity, objVendor, MainTableName, MainTableKey);
                 }
               
                 else

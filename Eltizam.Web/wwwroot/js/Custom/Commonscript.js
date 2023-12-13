@@ -68,7 +68,7 @@ function formatCurrencyInElements(className) {
             const hasNegativeSign = elementText.includes('-');
             const numericValue = parseFloat(elementText.replace(/[^\d.]/g, ''));
             if (!isNaN(numericValue)) {
-                element.textContent = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 6 });
+                element.textContent = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 2 });
             }
         }
     });

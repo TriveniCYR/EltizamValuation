@@ -6,7 +6,7 @@ $(document).ready(function () {
 });
 function locationreadOnlyForm() {
 
-    $('#location').find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true);
+    $('#location').find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true).css('background-color', '#f2f2f2');;
 }
 //Load data into table
 function InitializeLocationDataList() { 

@@ -8,6 +8,6 @@ namespace Eltizam.Business.Models
 {
     public class AuditLogTableModel
     {
-        public string ParentTableName { get; set; }
+        public string TableName { get; set; }
     }
 }

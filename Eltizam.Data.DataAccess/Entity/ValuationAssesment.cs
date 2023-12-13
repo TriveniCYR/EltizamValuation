@@ -18,6 +18,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public bool? IsActive { get; set; }
         public string? InsuranceDetails { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public virtual ValuationRequest? Request { get; set; }
     }

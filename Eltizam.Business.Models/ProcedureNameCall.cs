@@ -21,6 +21,8 @@ namespace Eltizam.Business.Models
         public static string usp_Vendor_SearchAllList = "usp_Vendor_SearchAllList";
         public static string usp_Client_Search_GetClientList = "usp_Client_Search_GetClientList";
         public static string usp_Property_Search_GetPropertyList = "usp_Property_Search_GetPropertyList";
+        public static string usp_Property_Delete = "usp_Property_Delete";
+        public static string usp_Client_Delete = "usp_Client_Delete";
         public static string usp_Amenity_GetAmenityByPropertyId = "usp_Amenity_GetAmenityByPropertyId";
         public static string usp_PropertyLocation_GetLocationByPropertyId = "usp_PropertyLocation_GetLocationByPropertyId";
        

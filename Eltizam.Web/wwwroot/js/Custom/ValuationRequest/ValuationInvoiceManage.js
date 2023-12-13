@@ -48,193 +48,127 @@ var InvoiceRequest = {
 };
 
 function SaveInvoice() { 
+    var ErrMsg = "";
     var modeId = $('#hdnTabId').val();
     document.getElementById('TransactionModeId').value = parseInt(modeId);
+
     if(modeId=='1') {
         let transactionStatusId = $("#CashTransactionStatusId").val();
         let amouont = $("#CashAmount").val();
-        let transactionDate = $("#CashTransactionDate").val();
-        let hdnReferenceNo = $("#hdnReferenceNo").val();
-        let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+        let transactionDate = $("#CashTransactionDate").val(); 
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Transaction.");
-            return false;
+            ErrMsg += "Select Transaction."; 
         }
         else if (amouont == '') {
-            toastr.error("Enter Amount.");
-            return false;
+            ErrMsg += "Enter Amount."; 
         }
         else if (transactionDate == '') {
-            toastr.error("Enter Transaction Date.");
-            return false;
-        }
-        else {
-            $('#loading-wrapper').hide();
-            return true;
-        }
+            ErrMsg += "Enter Transaction Date."; 
+        } 
+
         //InvoiceRequest.TransactionDate = transactionDate;
         //InvoiceRequest.Amount = amouont;
         //InvoiceRequest.TransactionStatusId = transactionStatusId;
         //InvoiceRequest.ReferenceNo = hdnReferenceNo;
         //InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
         //InvoiceRequest.TransactionModeId = 1;
-        //SaveInvoiceData(InvoiceRequest);
-
+        //SaveInvoiceData(InvoiceRequest); 
     }
-    if (modeId == '2') {
+
+    else if (modeId == '2') {
         let transactionStatusId = $("#ChequeTransactionStatusId").val();
         let amouont = $("#ChequeAmount").val();
         let transactionDate = $("#ChequeTransactionDate").val();
         let chequeNumber = $("#CheckNumer").val();
-        let chequeBankName = $("#CheckBankName").val();
-        let chequeDate = $("#CheckDate").val();
-        let chequeRecievedDate = $("#ChequeRecievedDate").val();
-        let hdnReferenceNo = $("#hdnReferenceNo").val();
-        let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+        let chequeBankName = $("#CheckBankName").val(); 
+        let chequeRecievedDate = $("#ChequeRecievedDate").val(); 
+
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Transaction.");
-            return false;
+            ErrMsg += "Select Transaction."; 
+            hideLoader();
         }
         else if (amouont == '') {
-            toastr.error("Enter Amount.");
-            return false;
+            ErrMsg += "Enter Amount."; 
         }
         else if (transactionDate == '') {
-            toastr.error("Enter Transaction Date.");
-            return false;
+            ErrMsg += "Enter Transaction Date.";
         }
         else if (chequeRecievedDate == '') {
-            toastr.error("Enter Cheque Recieved Date.");
-            return false;
+            ErrMsg += "Enter Cheque Recieved Date."; 
         }
         else if (chequeNumber == '') {
-            toastr.error("Enter Cheque No.");
-            return false;
+            ErrMsg += "Enter Cheque No."; 
         }
         else if (chequeBankName == '') {
-            toastr.error("Enter Bank Name.");
-            return false;
+            ErrMsg += "Enter Bank Name."; 
         }
-        else {
-            $('#loading-wrapper').hide();
-            return true;
-        }
-        //InvoiceRequest.TransactionDate = transactionDate;
-        //InvoiceRequest.Amount = amouont;
-        //InvoiceRequest.TransactionStatusId = transactionStatusId;
-        //InvoiceRequest.ReferenceNo = hdnReferenceNo;
-        //InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
-        //InvoiceRequest.TransactionModeId = 2;
-        //InvoiceRequest.CheckNumer = chequeNumber;
-        //InvoiceRequest.CheckBankName = chequeBankName;
-        //InvoiceRequest.CheckDate = chequeDate;
-        //InvoiceRequest.ChequeRecievedDate = chequeRecievedDate;
-        //SaveInvoiceData(InvoiceRequest);
     }
-    if(modeId=='3') {
+
+    else if(modeId=='3') {
         let transactionStatusId = $("#CardTransactionStatusId").val();
         let amouont = $("#CardAmount").val();
         let transactionDate = $("#CardTransactionDate").val();
         let transactionId = $("#CardTransactionId").val();
         let creditCardNumber = $("#CardNumber").val();
         let bankName = $("#CardBankName").val();
-        let nameOnCard = $("#CardHolderName").val();
-        let expiryDate = $("#ExpireDate").val();
-        let hdnReferenceNo = $("#hdnReferenceNo").val();
-        let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+        let nameOnCard = $("#CardHolderName").val(); 
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Transaction.");
-            return false;
+            ErrMsg += "Select Transaction.";
         }
         else if (amouont == '') {
-            toastr.error("Enter Amount.");
-            return false;
+            ErrMsg += "Enter Transaction Date."; 
         }
         else if (transactionDate == '') {
-            toastr.error("Enter Transaction Date.");
-            return false;
+            ErrMsg += "Enter Amount."; 
         }
         else if (creditCardNumber == '') {
-            toastr.error("Enter Card Number.");
-            return false;
+            ErrMsg += "Enter Card Number."; 
         }
         else if (bankName == '') {
-            toastr.error("Enter Bank Name.");
-            return false;
+            ErrMsg += "Enter Bank Name."; 
         }
         else if (nameOnCard == '') {
-            toastr.error("Enter Holder Name.");
-            return false;
+            ErrMsg += "Enter Holder Name."; 
         }
         else if (transactionId == '') {
-            toastr.error("Enter Transaction Id.");
-            return false;
+            ErrMsg += "Enter Transaction Id."; 
         }
-        else {
-            $('#loading-wrapper').hide();
-            return true;
-        }
-        //InvoiceRequest.TransactionDate = transactionDate;
-        //InvoiceRequest.Amount = amouont;
-        //InvoiceRequest.TransactionStatusId = transactionStatusId;
-        //InvoiceRequest.ReferenceNo = hdnReferenceNo;
-        //InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
-        //InvoiceRequest.TransactionModeId = 3;
-        //InvoiceRequest.CardNumber = creditCardNumber;
-        //InvoiceRequest.CardBankName = bankName;
-        //InvoiceRequest.CardHolderName = nameOnCard;
-        //InvoiceRequest.ExpireDate = expiryDate;
-        //InvoiceRequest.TransactionId = transactionId;
-        //SaveInvoiceData(InvoiceRequest);
     }
 
-    if(modeId=='4') {
+    else if(modeId=='4') {
         let transactionStatusId = $("#BankTransactionStatusId").val();
         let amouont = $("#BankAmount").val();
         let transactionDate = $("#BankTransactionDate").val();
         let transactionId = $("#BankTransactionId").val();
         let bankName = $("#AccountBankName").val();
-        let accountNumber = $("#AccountHolderName").val();
-        let hdnReferenceNo = $("#hdnReferenceNo").val();
-        let hdnValuationRequestId = $("#hdnValuationRequestId").val();
+        let accountNumber = $("#AccountHolderName").val(); 
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            toastr.error("Select Transaction.");
-            return false;
+            ErrMsg += "Select Transaction.";
         }
         else if (amouont == '') {
-            toastr.error("Enter Amount.");
-            return false;
+            ErrMsg += "Enter Transaction Date.";
         }
         else if (transactionDate == '') {
-            toastr.error("Enter Transaction Date.");
-            return false;
+            ErrMsg += "Enter Amount.";
         }
         else if (bankName == '') {
-            toastr.error("Enter Bank Name.");
-            return false;
+            ErrMsg += "Enter Bank Name.";
         }
         else if (accountNumber == '') {
-            toastr.error("Enter Account Number.");
-            return false;
+            ErrMsg += "Enter Account Number.";
         }
         else if (transactionId == '') {
-            toastr.error("Enter Transaction Id.");
-            return false;
+            ErrMsg += "Enter Transaction Id.";
         }
-        else {
-            $('#loading-wrapper').hide();
-            return true;
-        }
-        //InvoiceRequest.TransactionDate = transactionDate;
-        //InvoiceRequest.Amount = amouont;
-        //InvoiceRequest.TransactionStatusId = transactionStatusId;
-        //InvoiceRequest.ReferenceNo = hdnReferenceNo;
-        //InvoiceRequest.ValuationRequestId = hdnValuationRequestId;
-        //InvoiceRequest.TransactionModeId = 4;
-        //InvoiceRequest.AccountBankName = bankName;
-        //InvoiceRequest.AccountHolderName = accountNumber;
-        //InvoiceRequest.TransactionId = transactionId;
-        //SaveInvoiceData(InvoiceRequest);
+    }
+     
+    if (ErrMsg !== "") {
+        toastr.error(ErrMsg);
+        hideLoader();
+        return false;
+    }
+    else {
+        return true;
     }
 }
 
@@ -288,43 +222,42 @@ function GetInvoiceDetail(id){
         url: BaseURL + ValuationInvoiceById + '/'+id,
         "datatype": "json",
         success: function (response) {
-            debugger
             if (response._object != null) {
                 let modeId = response._object.transactionModeId;
                 document.getElementById('hdnTransactionStatusId').value = response._object.transactionStatusId;
                 document.getElementById('hdnTransactionModeId').value = response._object.transactionModeId;
                 if (modeId == 1) {
                     document.getElementById('CashAmount').value = response._object.amount;
-                    document.getElementById('CashTransactionDate').value = response._object.transactionDate;
+                    document.getElementById('CashTransactionDate').value = moment(response._object.transactionDate).format('DD-MMM-YYYY');
                     document.getElementById('CashTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 else if (modeId == 2) {
                     document.getElementById('ChequeAmount').value = response._object.amount;
-                    document.getElementById('ChequeTransactionDate').value = response._object.transactionDate;
-                    document.getElementById('ChequeRecievedDate').value = response._object.chequeRecievedDate;
+                    document.getElementById('ChequeTransactionDate').value = moment(response._object.transactionDate).format('DD-MMM-YYYY');
+                    document.getElementById('ChequeRecievedDate').value = moment(response._object.chequeRecievedDate).format('DD-MMM-YYYY');
                     document.getElementById('ChequeTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 else if (modeId == 3) {
                     document.getElementById('CardAmount').value = response._object.amount;
-                    document.getElementById('CardTransactionDate').value = response._object.transactionDate;
+                    document.getElementById('CardTransactionDate').value = moment(response._object.transactionDate).format('DD-MMM-YYYY');
                     document.getElementById('CardTransactionId').value = response._object.transactionId;
                     document.getElementById('CardTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 else if (modeId == 4) {
                     document.getElementById('BankAmount').value = response._object.amount;
-                    document.getElementById('BankTransactionDate').value = response._object.transactionDate;
+                    document.getElementById('BankTransactionDate').value = moment(response._object.transactionDate).format('DD-MMM-YYYY');
                     document.getElementById('BankTransactionId').value = response._object.transactionId;
                     document.getElementById('BankTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 document.getElementById('CheckNumer').value = response._object.checkNumer;
                 document.getElementById('CheckBankName').value = response._object.checkBankName;
-                document.getElementById('CheckDate').value = response._object.checkDate;
-                document.getElementById('ChequeRecievedDate').value = response._object.chequeRecievedDate;
+                document.getElementById('CheckDate').value = response._object.checkDate
+                document.getElementById('ChequeRecievedDate').value =response._object.chequeRecievedDate;
                 document.getElementById('CardNumber').value = response._object.cardNumber;
                 document.getElementById('CardBankName').value = response._object.cardBankName;
                 document.getElementById('AccountBankName').value = response._object.accountBankName;
                 document.getElementById('CardHolderName').value = response._object.cardHolderName;
-                document.getElementById('ExpireDate').value = response._object.expireDate;
+                document.getElementById('ExpireDate').value = moment(response._object.expireDate).format('DD-MMM-YYYY');
                 document.getElementById('AccountHolderName').value = response._object.accountHolderName;
                 if (response._object.documents != null && response._object.documents.length > 0) {
                     var documents = response._object.documents;
@@ -376,7 +309,6 @@ function formatDateTo_ddMMMyyyy(date) {
 
 function BindTransactionstatus() {
     var id = 47;
-    debugger
     var cashStatusId = $("#CashTransactionStatusId");
     var chequeStatusId = $("#ChequeTransactionStatusId");
     var cardStatusId = $("#CardTransactionStatusId");

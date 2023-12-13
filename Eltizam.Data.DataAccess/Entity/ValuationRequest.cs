@@ -35,6 +35,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? ValuerComment { get; set; }
         public DateTime? ValuerUpdateDate { get; set; }
         public string? AssignRemark { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public virtual MasterUser? Approver { get; set; }
         public virtual MasterClient Client { get; set; } = null!;

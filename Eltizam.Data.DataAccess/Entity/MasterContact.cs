@@ -19,5 +19,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public string? MobileExt { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

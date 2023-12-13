@@ -24,5 +24,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifiedBy { get; set; }
         public decimal? FixedvaluationFees { get; set; }
         public bool? IsActive { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }
