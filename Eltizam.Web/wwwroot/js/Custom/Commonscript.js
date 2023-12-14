@@ -180,10 +180,23 @@ $(document).ready(function () {
     }
 
     hideLoader();
-});
 
-function makeFormReadOnly() {
-    debugger
+    Getactivenotifications();
+}); 
+
+function Getactivenotifications() {
+    ajaxServiceMethod(BaseURL + notifications, 'GET', NotificationCountSuccess, GetnotificationsError);
+}
+
+function GetnotificationsError(x, y, z) {
+    toastr.error("Something failed");
+}
+
+function NotificationCountSuccess(data) {
+    document.getElementById('notificationcount').textContent = data.length;
+}
+
+function makeFormReadOnly() { 
     if ($("#PageViewMode").val() === "1") {
         var bdC = $(".bodyContent");
         var title = bdC.parent().find(".dashboardTitle");
