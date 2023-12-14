@@ -19,11 +19,10 @@ namespace Eltizam.WebApi.Controllers
         private readonly IMasterPropertyService _propertyServices;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
         private readonly IExceptionService _ExceptionService;
-        IExceptionService exceptionService;
         #endregion Properties
 
         #region Constructor
-        public MasterPropertyController(IMasterPropertyService propertyServices, IResponseHandler<dynamic> ObjectResponse)
+        public MasterPropertyController(IMasterPropertyService propertyServices, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService)
         {
             _propertyServices = propertyServices;
             _ObjectResponse = ObjectResponse;
@@ -106,13 +105,15 @@ namespace Eltizam.WebApi.Controllers
                 DBOperation oResponse = await _propertyServices.DeleteProperty(id,by);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
+                else if (oResponse == DBOperation.AlreadyExist)
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.OK, "Please deactivated valuation attached with this Property");
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
                 await _ExceptionService.LogException(ex);
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
