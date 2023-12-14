@@ -9,7 +9,7 @@ function ConfirmationDeleteClient(id) {
 function DeletedClient() {
     if (IsDeletePerm) {
         var by = LogInUserId;
-        ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID + "?by=" + by, Post, DeleteClientByIdSuccess, DeleteClientByIdError);
+        ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID + "?by=" + by, Post, DeleteClientByIdSuccess, DeleteFailure);
     }
     else {
         toastr.error(DeleteAccessDenied);

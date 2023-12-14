@@ -418,23 +418,19 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
+       
+
         public async Task<DBOperation> DeleteClient(int id, int? by)
         {
-            // Get the entity to be deleted from the repository.
-            var entityUser = _repository.Get(x => x.Id == id);
-            entityUser.ModifiedBy = by ?? entityUser.ModifiedBy;
-            // If the entity does not exist, return a not found operation.
-            if (entityUser == null)
-                return DBOperation.NotFound;
-            else
+            try
             {
                 var old = _repository.GetNoTracking(id);
 
                 DbParameter[] prm =
                 {
-                    new DbParameter("ClientId", id, SqlDbType.Int),
-                    new DbParameter("By",       1, SqlDbType.Int)
-                };
+            new DbParameter("ClientId", id, SqlDbType.Int),
+            new DbParameter("By",       by, SqlDbType.Int)
+        };
 
                 EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_Client_Delete, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);
 
