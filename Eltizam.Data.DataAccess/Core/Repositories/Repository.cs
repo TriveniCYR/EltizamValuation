@@ -718,7 +718,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
             {
                 var delete = dbContext.Entry(entity).Property(IsDeleted).CurrentValue;
 
-                if (delete != null && delete.CurrentValue!=null && (bool)delete.CurrentValue == true)
+                if (delete != null && (bool)delete == true)
                 {
                     dbContext.Entry(entity).Property(ModifiedDate).CurrentValue = _currentSQLServerDate; //DeletedDate
                 }
