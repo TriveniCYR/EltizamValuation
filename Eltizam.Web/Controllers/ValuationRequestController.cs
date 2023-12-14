@@ -254,7 +254,7 @@ namespace EltizamValuation.Web.Controllers
 
                     ViewBag.IsView = 1;
                     ////Get Footer info
-                    FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
+                    //FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
 
                     return View(data._object);
                 }
@@ -396,8 +396,8 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationInvoiceListModel>>(jsonResponse);
 
                     ViewBag.IsView = 1;
-                    //Get Footer info
-                    FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
+                    ////Get Footer info
+                    //FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
                     return View(data._object);
                 }
                 return NotFound();
