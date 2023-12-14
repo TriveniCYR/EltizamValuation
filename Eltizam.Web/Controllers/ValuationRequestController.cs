@@ -692,7 +692,7 @@ namespace EltizamValuation.Web.Controllers
                     FileName = fileName,
                     FilePath = filePath.Replace("wwwroot", ".."),
                     DocumentName = docName,
-                    IsActive = 1,
+                    IsActive = true,
                     //CreatedBy = currentUser,
                     FileType = GetFileType(file.ContentType),
                     CreatedDate = null,

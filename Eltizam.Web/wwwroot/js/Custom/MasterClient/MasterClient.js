@@ -9,6 +9,7 @@ function ConfirmationDeleteClient(id) {
 function DeletedClient() {
     if (IsDeletePerm) {
         var by = LogInUserId;
+        var tempInAtiveID = $('#DeleteClientModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID + "?by=" + by, Post, DeleteClientByIdSuccess, DeleteFailure);
     }
     else {

@@ -415,11 +415,11 @@ $(document).ready(function () {
 var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/
 
 // Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
-if (selectedOption === 'Rejected') {
-    $('#comment').show();
-} else {
-    $('#comment').hide();
-}
+//if (selectedOption === 'Rejected') {
+//    $('#comment').show();
+//} else {
+//    $('#comment').hide();
+//}
 
 
 //if (RoleId == 2) {

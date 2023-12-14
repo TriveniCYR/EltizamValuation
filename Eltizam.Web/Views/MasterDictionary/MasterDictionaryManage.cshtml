@@ -25,7 +25,7 @@
     <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative flex justify-between">
-                <h3 class="dashboardTitle">@_md @_header</h3>
+                <h3 class="dashboardTitle" id="title">@_md @_header</h3>
                 <div class="hamburger">
                     <a class="greyBtn lineBtn formAbtn" asp-action="Dictionary">@_header</a>
                     <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
@@ -76,7 +76,7 @@
                                         </label>
                                         @if (i >= 0)
                                         {
-                                            <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeDynamicTextbox(this)">
+                                            <img src="../assets/minus-icon.svg" id="image" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeDynamicTextbox(this)">
                                         }
                                     </div>
                                 }

@@ -435,7 +435,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             catch (Exception ex)
             {
-                throw ex;
+                    throw ex;
             }
         }
 
