@@ -154,12 +154,10 @@ namespace EltizamValuation.Web.Controllers
         [HttpGet] 
         public IActionResult PropertyTypeDetail(int? id)
         {
-            if (id != null)
-            {
-                ViewData["IsEdit"] = true;
-            }
+            
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
+            var action = PermissionEnum.View;
+
             int roleId = _helper.GetLoggedInRoleId();
             if (!CheckRoleAccess(ModulePermissionEnum.PropertyTypeMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
@@ -181,10 +179,9 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<Master_PropertyTypeModel>>(jsonResponse);
-                    FooterInfo(TableNameEnum.Master_PropertyType, _cofiguration, id);
-                    if (data._object is null)
-                        return NotFound();
-
+                    
+                    FooterInfo(TableNameEnum.Master_PropertyType, _cofiguration, id, true);
+                     
                     return View("PropertyTypeDetail", data._object);
                 }
                 return NotFound();

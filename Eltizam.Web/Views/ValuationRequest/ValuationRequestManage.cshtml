@@ -10,11 +10,12 @@
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
 
 @model Eltizam.Business.Models.ValuationRequestModel
-@{
-
+@{ 
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Request";
-    var _md = Model.Id > 0 ? "Edit" : (ViewBag.IsView == "2") ? "View" : "Add";
+    var _md = Model.Id > 0 ? "Edit" : "Add";
+    ViewData["Title"] = _md + _header; 
+
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
     var isDelete = objPermssion.Delete ? 1 : 0;
     var isAdd = objPermssion.Add ? 1 : 0;
@@ -50,43 +51,30 @@
     var isAddAssesment = objPermssionAssesment.Add ? 1 : 0;
     var isEditAssesment = objPermssionAssesment.Edit ? 1 : 0;
     var isViewAssesment = objPermssionAssesment.View ? 1 : 0;
-    var isDeleteAssesment = objPermssionAssesment.Delete ? 1 : 0;
-    var View = Convert.ToInt32(Context.Request.Query["view"]);
-    ViewData["Title"] = _md + _header;
+    var isDeleteAssesment = objPermssionAssesment.Delete ? 1 : 0; 
+
     var htmlAttributes = true;
-    var isHideBtn = false;
-    if (ViewBag.IsView == "2")
-    {
-        isHideBtn = true;
-    }
+    var isHideBtn = ViewBag.PageViewMode == 1; 
 }
 
 <div id="PlaceHolderHere"></div>
-<main class="">
+<main class="bodyContent">
     <div class="whiteBoxShadow">
         <div class="flex justify-between align-item-center cursor-pointer heading position-relative">
-            <h5 class="dashboardTitle"> @if (View == 2)
-                {
-                    <text>View @_header</text>
-                }
-                else
-                {
-                    @_md @_header
-                }</h5>
+            <h3 class="dashboardTitle">@_md @_header</h3>
             <div class="hamburger">
                 <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md @_header</span>
-                <input type="hidden" id="md" value="@_md" />
-                <input type="hidden" id="View" value="@View" />
+                <input type="hidden" id="md" value="@_md" /> 
             </div>
-        </div> 
+        </div>
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
                 <div class="tab flex flex-start m-0 ptrl-20">
 
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Valuation Details</button>
-                    @{ 
+                    @{
                         var displayStyleQt = (objPermssionQt.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                         var displayStyleIn = (objPermssionIn.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                         var displayStyleSite = (objPermssionSite.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
@@ -95,11 +83,11 @@
                     }
                     <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
 
-                    <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payment Details</button>   
+                    <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payment Details</button>
                     <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="tab_4">Site Description</button>
                     <button class="tablinks" style="display: @displayStyleevidence" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
-                    <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button> 
-                   
+                    <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
+
 
                 </div>
 
@@ -116,10 +104,10 @@
                             <input type="hidden" id="isEditPermQuotation" value="@isEditQt" />
                             <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
                             <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
-                            <input type="hidden" id="isApprovePerm" value="@isApprove" /> 
+                            <input type="hidden" id="isApprovePerm" value="@isApprove" />
                             <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                             <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
-                           @*  <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />   *@
+                            @*  <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />   *@
                             <input type="hidden" id="hdnStatusId" value="@(_md == "Add" ? 3 : (Model == null ? 0 : Model.StatusId))" />
 
                             <input type="hidden" id="hdnClientId" value="@(Model == null ? 0 : Model.ClientId)" />
@@ -138,9 +126,9 @@
                             <input type="hidden" id="compId" value="@(Model == null ? 0 : Model.ValuationAssesment.comparableEvidenceModel.Id)" />
                             <input type="hidden" id="siteId" value="@(Model == null ? 0 : Model.ValuationAssesment.SiteDescription.Id)" />
                             <input type="hidden" id="assesmentId" value="@(Model == null ? 0 : Model.ValuationAssesment.valuationAssessementModel.Id)" />
-                            <input type="hidden" id="valuationdetailsId" value="@(Model == null ? 0 : Model.Id)"/>
+                            <input type="hidden" id="valuationdetailsId" value="@(Model == null ? 0 : Model.Id)" />
                             <div class="ptrl-20">
-                                <div class="flex  mb-28"> 
+                                <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Val. Ref#
                                         @Html.TextBoxFor(model => model.ReferenceNo, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Valuation Reference no"] })
@@ -221,8 +209,8 @@
                                             <p class="m-0">Client<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindClientDetailsByClientId(this.options[this.selectedIndex].value)" })
                                             @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
-                                        </label> 
-                                    </div> 
+                                        </label>
+                                    </div>
                                     <div class="flex  mb-28">
                                         <label for="" class="w-50">
                                             TRN Number
@@ -313,7 +301,7 @@
                                         <label for="" class="w-50">
                                             <p class="m-0">Property Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)" })
-                                       
+
                                         </label>
                                     </div>
                                     <div class="flex mb-28">
@@ -380,7 +368,7 @@
                                             Description
                                             @Html.TextBoxFor(model => model.Description, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Description"] })
 
-                                        </label> 
+                                        </label>
                                     </div>
 
                                     <h5 class="blueHeading mb-16"> Amenities</h5>
@@ -481,17 +469,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-right buttonArea bodyContent"> 
+                            <div class="text-right buttonArea bodyContent">
                                 <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a> 
-                                @if (!isHideBtn)
-                                { 
-                                    <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>   
-                                    @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
-                                    {
-                                        <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
-                                            Save
-                                        </button>
-                                    }
+                                <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
+                                @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
+                                {
+                                    <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
+                                        Save
+                                    </button>
                                 }
                             </div>
                         </form>
@@ -513,8 +498,7 @@
                         </div>
                     </div>
                     <div class="buttonArea">
-                        <div class="flex justify-between align-item-center plr-0">
-
+                        <div class="flex justify-between align-item-center plr-0"> 
                             <h5>Quotation Listing</h5>
                             @if (!isHideBtn)
                             {
@@ -627,18 +611,18 @@
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
-                                   <p class="m-0"> Internal Area<span class="text-danger">*</span></p>
-                                   
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.InternalArea, new {  @class = "form-control price",  @placeholder = @SharedLocalizer["InternalArea"] })
-                                    @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.InternalArea, "", new { @class = "text-danger" })
+                                    <p class="m-0"> Internal Area<span class="text-danger">*</span></p>
+
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.InternalArea, new { @class = "form-control price", @placeholder = @SharedLocalizer["InternalArea"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.InternalArea, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
                                 <label for="">
                                     <p class="m-0"> External Area<span class="text-danger">*</span></p>
-                                    
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.ExternalArea, new {  @class = "form-control price",  @placeholder = @SharedLocalizer["ExternalArea"] })
-                                    @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.ExternalArea, "", new { @class = "text-danger" })
+
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.ExternalArea, new { @class = "form-control price", @placeholder = @SharedLocalizer["ExternalArea"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.ExternalArea, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
                                     <p class="m-0"> Floor<span class="text-danger">*</span></p>
@@ -648,14 +632,14 @@
                             </div>
                             <div class="flex">
                                 <label for="">
-                                      <p class="m-0"> Room<span class="text-danger">*</span></p>
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new {  @class = "form-control valiadteint",  @type="number",  @placeholder = @SharedLocalizer["Room"] })
-                                     @Html.ValidationMessageFor(model =>model.ValuationAssesment.SiteDescription.Room, "", new { @class = "text-danger" })
+                                    <p class="m-0"> Room<span class="text-danger">*</span></p>
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Room, new { @class = "form-control valiadteint", @type = "number", @placeholder = @SharedLocalizer["Room"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.Room, "", new { @class = "text-danger" })
                                 </label>
                                 <label for="">
                                     Bedrooms
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control valiadteint", @type="number", @placeholder = @SharedLocalizer["Bedrooms"] })
-                                    
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Bedrooms, new { @class = "form-control valiadteint", @type = "number", @placeholder = @SharedLocalizer["Bedrooms"] })
+
                                 </label>
                             </div>
                             <div class="flex">
@@ -665,7 +649,7 @@
                                 </label>
                                 <label>
                                     Quantity
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Quantity, new {  @class = "form-control valiadteint",  @placeholder = @SharedLocalizer["Quantity"] })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Quantity, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Quantity"] })
                                 </label>
                             </div>
                             <div class="flex">
@@ -739,11 +723,10 @@
                                                                 <th>DateUpdate </th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                @if (View != 2)
+                                                                @if (!isHideBtn)
                                                                 {
                                                                     <th>Action</th>
-                                                                }
-                                                                
+                                                                } 
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -756,12 +739,10 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        @if (View != 2)
+                                                                        @if (!isHideBtn)
                                                                         {
                                                                             <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
-                                                                        }
-                                                                        
-
+                                                                        } 
                                                                     </tr>
                                                                 }
                                                             }
@@ -783,8 +764,8 @@
                         </div>
                         @if (!isHideBtn)
                         {
-                            <div class="text-right buttonArea bodyContent plr-0"> 
-                                <button type="button" class="blueBtn mr-12" onclick="redirectToComparableEvidences()">Next</button> 
+                            <div class="text-right buttonArea bodyContent plr-0">
+                                <button type="button" class="blueBtn mr-12" onclick="redirectToComparableEvidences()">Next</button>
                             </div>
                         }
                     </div>
@@ -854,7 +835,7 @@
                                             <label for="" class="w-100">
                                                 <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
                                                 <input type="file" class="fileInput" asp-for="ValuationAssesment.comparableEvidenceModel.Document.Files" multiple onchange="validateFileSize(this)">
-                                                 <input type="text" class="fileNames" readonly placeholder="file names">
+                                                <input type="text" class="fileNames" readonly placeholder="file names">
                                             </label>
                                         </div>
                                         <div class="W-100">
@@ -868,7 +849,7 @@
                                                                 <th>DateUpdate </th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                @if (View != 2)
+                                                                @if (!isHideBtn)
                                                                 {
                                                                     <th>Action</th>
                                                                 }
@@ -884,7 +865,7 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        @if (View != 2)
+                                                                        @if (!isHideBtn)
                                                                         {
                                                                             <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                         }
@@ -944,7 +925,7 @@
                                     @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.MarketRate, "", new { @class = "text-danger" })
                                 </label>
                             </div>
-                           
+
                             <div class="flex">
                                 <label for="">
                                     <p class="m-0"> Life of Building<span class="text-danger">*</span></p>
@@ -1004,7 +985,7 @@
                                                                 <th>DateUpdate </th>
                                                                 <th>Uploaded By</th>
                                                                 <th>Download</th>
-                                                                @if (View != 2)
+                                                                @if (!isHideBtn)
                                                                 {
                                                                     <th>Action</th>
                                                                 }
@@ -1020,7 +1001,7 @@
                                                                         <td class="formatted-td-date-input">@docs.CreatedDate.ToString() </td>
                                                                         <td>@docs.CreatedName</td>
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
-                                                                        @if (View != 2)
+                                                                        @if (!isHideBtn)
                                                                         {
                                                                             <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                         }
@@ -1148,13 +1129,13 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  
-    
-     <script src='https://cdn.jsdelivr.net/npm/pdfmake@latest/build/pdfmake.min.js'></script>
-  <script src='https://cdn.jsdelivr.net/npm/pdfmake@latest/build/vfs_fonts.min.js'></script>
-  <!-- html-to-pdfmake file: -->
-  <script src="https://cdn.jsdelivr.net/npm/html-to-pdfmake/browser.js"></script>
-    <script> 
+
+
+    <script src='https://cdn.jsdelivr.net/npm/pdfmake@latest/build/pdfmake.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/pdfmake@latest/build/vfs_fonts.min.js'></script>
+    <!-- html-to-pdfmake file: -->
+    <script src="https://cdn.jsdelivr.net/npm/html-to-pdfmake/browser.js"></script>
+    <script>
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";

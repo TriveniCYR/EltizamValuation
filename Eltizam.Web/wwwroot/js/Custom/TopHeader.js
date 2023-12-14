@@ -96,76 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
     addRole.addEventListener("click", () => addRolePopup.classList.add("display-block"));
     closePopup.addEventListener("click", () => addRolePopup.classList.remove("display-block"));
 });
+ 
 
-//function PosttopHeader() {
-//    debugger;
-//    var changePassword = {
-//        'UserId': 0,
-//        'NewPassword': '',
-//        'ConfirmPassword': ''
-//    }
-//    debugger;
-//    var userpswd = $('#NewPassword').val();
-//    var confirmpswd = $('#ConfirmPassword').val();
-//    changePassword.NewPassword = userpswd;
-//    changePassword.ConfirmPassword = confirmpswd;
-
-
-//    $.ajax({
-//        type: "POST",
-//        url: $('#hdnBaseURL').val() + ChangePasswordUrl,
-//        "dataType": "json",
-//        headers: {
-//            'Accept': 'application/json',
-//            'Content-Type': 'application/json'
-//        },
-//        data: JSON.stringify(changePassword),
-//        success: function (response) {
-//            if (response && response.errors) {
-//                // Display validation errors in Toastr notifications
-//                for (var i = 0; i < response.errors.length; i++) {
-//                    toastr.error(response.errors[i]);
-//                }
-//            } else {
-//                toastr.success('Password changed successfully!');
-//                window.location.href = "/MasterUser/Users";
-//            }
-//            //window.location.href = "/MasterUser/Users";
-//        },
-//        error: function (xhr) {
-//        if (xhr.responseJSON && xhr.responseJSON.errors) {
-//            for (var i = 0; i < xhr.responseJSON.errors.length; i++) {
-//                toastr.error(xhr.responseJSON.errors[i]);
-//            }
-//        } else {
-//            toastr.error('An error occurred while processing your request.');
-//        }
-//        $("#loader").hide();
-//    }
-//        //error: function (response) {
-//        //    alert(response.responseText);
-//        //    $("#loader").hide();
-//        //}
-//    });
-//}
-
-$(document).ready(function () {
-
-    Getactivenotifications();
-
-});
-
-function Getactivenotifications() {
-
-    ajaxServiceMethod(BaseURL + notifications, 'GET', GetactivenotificationsSuccess, GetactivenotificationsError);
-}
-function GetactivenotificationsSuccess(data) {
-document.getElementById('notificationcount').textContent = data.length;
-}
-
-function GetactivenotificationsError(x, y, z) {
-    toastr.error("Something failed");
-}
 
 
 

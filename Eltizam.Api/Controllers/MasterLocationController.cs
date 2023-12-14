@@ -126,22 +126,22 @@ namespace EltizamValuation.Api.Controllers
         }
 
         // this is for delete master Designation detail by id
-        [HttpPost("Delete/{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            try
-            {
-                DBOperation oResponse = await _LocationService.Delete(id);
-                if (oResponse == DBOperation.Success)
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
-                else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
-            }
-            catch (Exception ex)
-            {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-            }
-        }
+        //[HttpPost("Delete/{id}")]
+        //public async Task<IActionResult> Delete([FromRoute] int id)
+        //{
+        //    try
+        //    {
+        //        DBOperation oResponse = await _LocationService.Delete(id);
+        //        if (oResponse == DBOperation.Success)
+        //            return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
+        //        else
+        //            return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
 
         #endregion API Methods
     }

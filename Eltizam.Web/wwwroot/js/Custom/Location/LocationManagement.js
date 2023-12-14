@@ -1,13 +1,10 @@
 ﻿var tableId = "LocationTable";
-$(document).ready(function () {
-   
+$(document).ready(function () { 
+    debugger
     InitializeLocationDataList(); 
    
-});
-function locationreadOnlyForm() {
+}); 
 
-    $('#location').find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true).css('background-color', '#f2f2f2');;
-}
 //Load data into table
 function InitializeLocationDataList() { 
     var ajaxObject = {
@@ -50,8 +47,8 @@ function InitializeLocationDataList() {
             "data": "action", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                html += '<li><a title="View" href="/MasterLocation/LocationManage?id=' + row.id + '&Isview=1"><img src="../assets/view.svg" alt="view" />View</a></li>';
-                html += '<li><a title="Edit" href="/MasterLocation/LocationManage?id=' + row.id + '&Isview=0"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
+                html += '<li><a title="View" href="/MasterLocation/LocationManage?id=' + row.id + '&IsView=1"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                html += '<li><a title="Edit" href="/MasterLocation/LocationManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
                 html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteLocationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteLocation(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                 html += '</ul></div>';
 

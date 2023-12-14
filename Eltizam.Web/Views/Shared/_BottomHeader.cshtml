@@ -3,6 +3,7 @@
 
 @{
     var data = (GlobalAuditFields)ViewBag.FooterInfo;
+    var mode = ViewBag.PageViewMode;
     var href = "";
     var href2 = "";
     var href3 = "";
@@ -15,9 +16,14 @@
     }
 }
 
+@if (mode != null)
+{
+    <input type="hidden" id="PageViewMode" value="@mode" />
+}
+
 @*//Show footer for page if data exists*@
 @if (data != null)
-{
+{  
     <div class="whiteBoxShadow footerAuditContainer" style="width:96% !important;">
         <div class="bodyContent footerAudit">
             <div class=" position-relative flex justify-between align-item-center">
@@ -36,7 +42,7 @@
 
                         <span>Last Updated By --></span>
                         <a class="lineBtn formAbtn" href="@href2">@data.ModifiedByName</a> <br>
-                        <span>Last Updated Date --></span><span class="formatted-td-date-input">@data.ModifiedDate.ToString()</span>
+                        <span>Last Updated Date --></span>  <span class="formatted-td-date-input">@data.ModifiedDate.ToString()</span>
                     </div>
                     <div class="text-right">
                         <a href="@href3" id="myLink">

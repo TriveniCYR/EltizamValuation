@@ -7,7 +7,7 @@
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
- 
+
 @{
     ViewData["Title"] = @MasterLocalizer["Location List"];
     var objPermssion = (RolePermissionModel)ViewBag.Access;
@@ -28,27 +28,27 @@
                 <input type="hidden" id="isDeletePerm" value="@isDelete" />
                 <input type="hidden" id="isAddPerm" value="@isAdd" />
                 <input type="hidden" id="isEditPerm" value="@isEdit" />
-                <a href='/MasterLocation/LocationManage?Isview=2'>
-                        <button class="flex align-item-center blueBtn" id="addNew">
+                <a href='/MasterLocation/LocationManage'>
+                    <button class="flex align-item-center blueBtn" id="addNew">
                         <img src="~/assets/plus.svg" alt="plus"> Add New
-                        </button> 
-                    </a>
-                
+                    </button>
+                </a>
+
             </div>
         </div>
         <div class="scroll-x whiteWithPadding">
             <table id="LocationTable" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>@MasterLocalizer["Id"] </th> 
+                        <th>@MasterLocalizer["Id"] </th>
                         <th>@MasterLocalizer["Country Name"] </th>
                         <th>@MasterLocalizer["States/Emirates"] </th>
-                        <th>@MasterLocalizer["Region Name"] </th>                     
+                        <th>@MasterLocalizer["Region Name"] </th>
                         <th>@MasterLocalizer["Sector/Zone"] </th>
                         <th>@MasterLocalizer["Home Currency"] </th>
                         <th>@MasterLocalizer["Foreign Currency"] </th>
                         <th>@MasterLocalizer["Active"] </th>
-                        <th>@MasterLocalizer["Action"] </th> 
+                        <th>@MasterLocalizer["Action"] </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,8 +134,8 @@
 @section MyScripts
 {
     @Html.Partial("_DataTablePartial")
-
     <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
+
     <script type="text/javascript" src="~/js/custom/Location/LocationManagement.js?v=@jsVersion"></script>
 
     <script>

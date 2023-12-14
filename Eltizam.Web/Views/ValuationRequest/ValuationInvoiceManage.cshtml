@@ -10,16 +10,16 @@
     var _md = ViewBag.IsView > 0 ? "View" : "Add";
     ViewData["Title"] = _md + _header;
 
-    var _cls = "defaultOpenPay"; 
+    var _cls = "defaultOpenPay";
     var _id1 = @Model.TransactionModeId == 1 ? _cls : "";
     var _id2 = @Model.TransactionModeId == 2 ? _cls : "";
     var _id3 = @Model.TransactionModeId == 3 ? _cls : "";
-    var _id4 = @Model.TransactionModeId == 4 ? _cls : ""; 
+    var _id4 = @Model.TransactionModeId == 4 ? _cls : "";
     if (Model.Id <= 0)
     {
         _id1 = _cls;
     }
-} 
+}
 
 <main>
     <div class="whiteBoxShadow">
@@ -49,31 +49,27 @@
             </div>
             <h3 class="ptrl-20">Select Payment Mode</h3>
             <form asp-action="ValuationInvoiceManage" method="POST" enctype="multipart/form-data" id="invoice">
-            <div class="paymentOption">
-                <div class="payTab">
-                    @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
-                    @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
-                    @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })                    
-                    @Html.HiddenFor(model => model.TransactionModeId, new { @class = "control-label" })
-                    <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
-                    <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
-                    <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
-                    <input type="hidden" id="hdnTransactionStatusId" value="@(Model == null ? 0 : Model.TransactionStatusId)" />
-                    <input type="hidden" id="hdnTransactionModeId" value="@(Model == null ? 0 : Model.TransactionModeId)" />
-                    <input type="hidden" id="hdnTabId" value="1" />
-                    <button class="payTabLink" type="button" onclick="payTab(event, 'pay1', 1)" id="@_id1">Cash</button>
-                    <button class="payTabLink" type="button" onclick="payTab(event, 'pay2', 2)" id="@_id2">Cheque</button>
-                    <button class="payTabLink" type="button" onclick="payTab(event, 'pay3', 3)" id="@_id3">Credit Card</button>
-                    <button class="payTabLink" type="button" onclick="payTab(event, 'pay4', 4)" id="@_id4">Net Banking</button>
-                </div>
+                <div class="paymentOption">
+                    <div class="payTab">
+                        @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
+                        @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
+                        @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
+                        @Html.HiddenFor(model => model.TransactionModeId, new { @class = "control-label" })
+                        <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
+                        <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
+                        <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
+                        <input type="hidden" id="hdnTransactionStatusId" value="@(Model == null ? 0 : Model.TransactionStatusId)" />
+                        <input type="hidden" id="hdnTransactionModeId" value="@(Model == null ? 0 : Model.TransactionModeId)" />
+                        <input type="hidden" id="hdnTabId" value="1" />
+                        <button class="payTabLink" type="button" onclick="payTab(event, 'pay1', 1)" id="@_id1">Cash</button>
+                        <button class="payTabLink" type="button" onclick="payTab(event, 'pay2', 2)" id="@_id2">Cheque</button>
+                        <button class="payTabLink" type="button" onclick="payTab(event, 'pay3', 3)" id="@_id3">Credit Card</button>
+                        <button class="payTabLink" type="button" onclick="payTab(event, 'pay4', 4)" id="@_id4">Net Banking</button>
+                    </div>
 
                     <div id="pay1" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
                             <h3>Add Cash Payment Details</h3>
-                            @* @if (ViewBag.IsView != 1)
-                            {
-                                <button type="button" class="blueBtn" onclick="SaveCashInvoice()">Save</button>
-                            } *@
                         </div>
                         <div class="inputSearchs">
                             <div class="tabSection">
@@ -86,8 +82,8 @@
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Amount<span class="text-danger">*</span></p>
-                                       @*  <input type="text" id="Amount" placeholder="enter the amount" class=" price formatting"> *@
-                                        @Html.EditorFor(model => model.CashAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder="enter amount"} })
+                                        @*  <input type="text" id="Amount" placeholder="enter the amount" class=" price formatting"> *@
+                                        @Html.EditorFor(model => model.CashAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount" } })
                                         @* @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                     </label>
                                 </div>
@@ -106,24 +102,18 @@
                     <div id="pay2" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
                             <h3>Add Cheque Payment Details</h3>
-                            @* @if (ViewBag.IsView != 1)
-                            {
-                                <button type="button" class="blueBtn" onclick="SaveChequeInvoice()">Save</button>
-                            } *@
                         </div>
                         <div class="inputSearchs">
                             <div class="tabSection">
                                 <div class="flex mb-28">
                                     <label for="" class="w-50">
                                         <p class="m-0">Transaction Status<span class="text-danger">*</span></p>
-                                        @* <select id="CashTransactionStatusId" class="">
-                                        </select> *@
                                         @Html.DropDownListFor(model => model.ChequeTransactionStatusId, new List<SelectListItem> { }, new { @class = "form-control  searchable-dropdown" })
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Amount<span class="text-danger">*</span></p>
                                         @*  <input type="text" id="Amount" placeholder="enter the amount" class=" price formatting"> *@
-                                        @Html.EditorFor(model => model.ChequeAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder="enter amount"} })
+                                        @Html.EditorFor(model => model.ChequeAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount" } })
                                         @* @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                     </label>
                                 </div>
@@ -136,7 +126,7 @@
                                     <label for="" class="w-50">
                                         <p class="m-0">Cheque Number<span class="text-danger">*</span></p>
                                         @* <input type="number" id="ChequeNumber" placeholder="enter cheque number" class=""> *@
-                                        @Html.EditorFor(model => model.CheckNumer, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter cheque number"} })
+                                        @Html.EditorFor(model => model.CheckNumer, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder = "enter cheque number" } })
 
                                     </label>
                                 </div>
@@ -144,7 +134,7 @@
                                     <label for="" class="w-50">
                                         <p class="m-0">Cheque Bank Name<span class="text-danger">*</span></p>
                                         @* <input type="text" id="ChequeBankName" placeholder="enter bank name" class=""> *@
-                                        @Html.EditorFor(model => model.CheckBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter bank name", oninput = "validateInput(this)"  } })
+                                        @Html.EditorFor(model => model.CheckBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder = "enter bank name", oninput = "validateInput(this)" } })
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Cheque Date<span class="text-danger">*</span></p>
@@ -163,10 +153,6 @@
                     <div id="pay3" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
                             <h3>Add Credit Card Payment Details</h3>
-                            @* @if (ViewBag.IsView != 1)
-                            {
-                                <button type="button" class="blueBtn" onclick="SaveCreditCardInvoice()">Save</button>
-                            } *@
                         </div>
                         <div class="inputSearchs">
                             <div class="tabSection">
@@ -178,7 +164,7 @@
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Amount<span class="text-danger">*</span></p>
-                                        @Html.EditorFor(model => model.CardAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder="enter amount"} })
+                                        @Html.EditorFor(model => model.CardAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount" } })
                                         @* @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                     </label>
                                 </div>
@@ -190,7 +176,7 @@
                                     <label for="" class="w-50">
                                         <p class="m-0">Transaction ID<span class="text-danger">*</span></p>
                                         @* <input type="number" id="CardTransactionId" placeholder="enter Transaction ID" class=""> *@
-                                        @Html.EditorFor(model => model.CardTransactionId, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter transaction id"} })
+                                        @Html.EditorFor(model => model.CardTransactionId, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder = "enter transaction id" } })
                                         @* @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                     </label>
                                 </div>
@@ -198,27 +184,27 @@
                                     <label for="" class="w-50">
                                         <p class="m-0">Credit Card Number<span class="text-danger">*</span></p>
                                         @* <input type="number" id="CreditCardNumber" placeholder="enter credit card number" class=""> *@
-                                        @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  valiadteint", @placeholder="enter card number"} })
+                                        @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  valiadteint", @placeholder = "enter card number" } })
 
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Bank Name<span class="text-danger">*</span></p>
                                         @* <input type="text" id="CardBankName" placeholder="enter bank name" class=""> *@
-                                        @Html.EditorFor(model => model.CardBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter bank name", oninput = "validateInput(this)" } })
-                                        
+                                        @Html.EditorFor(model => model.CardBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder = "enter bank name", oninput = "validateInput(this)" } })
+
                                     </label>
                                 </div>
                                 <div class="flex mb-28">
                                     <label for="" class="w-50">
                                         <p class="m-0">Name on card<span class="text-danger">*</span></p>
                                         @* <input type="text" id="NameOnCard" placeholder="enter name on card" class=""> *@
-                                        @Html.EditorFor(model => model.CardHolderName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter name on card", oninput = "validateInput(this)"} })
-                                        
+                                        @Html.EditorFor(model => model.CardHolderName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder = "enter name on card", oninput = "validateInput(this)" } })
+
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Expiry Date<span class="text-danger">*</span></p>
                                         <input type="text" id="ExpireDate" asp-for="ExpireDate" name="ExpireDate" class=" formatted-date-input">
-                                        
+
                                     </label>
                                 </div>
                             </div>
@@ -227,10 +213,6 @@
                     <div id="pay4" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
                             <h3>Add Net Banking Payment Details</h3>
-                            @* @if (ViewBag.IsView != 1)
-                            {
-                                <button type="button" class="blueBtn" onclick="SaveNetBankingInvoice()">Save</button>
-                            } *@
                         </div>
                         <div class="inputSearchs">
                             <div class="tabSection">
@@ -241,7 +223,7 @@
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Amount<span class="text-danger">*</span></p>
-                                        @Html.EditorFor(model => model.BankAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder="enter amount"} })
+                                        @Html.EditorFor(model => model.BankAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount" } })
                                         @* @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                     </label>
                                 </div>
@@ -254,21 +236,21 @@
                                     <label for="" class="w-50">
                                         <p class="m-0">Transaction ID<span class="text-danger">*</span></p>
                                         @* <input type="number" id="BankTransactionId" placeholder="enter Transaction ID" class=""> *@
-                                        @Html.EditorFor(model => model.BankTransactionId, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control", @placeholder="enter transaction id"} })
+                                        @Html.EditorFor(model => model.BankTransactionId, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control", @placeholder = "enter transaction id" } })
 
                                     </label>
                                 </div>
                                 <div class="flex mb-28">
                                     <label for="" class="w-50">
                                         <p class="m-0">Bank Name<span class="text-danger">*</span></p>
-                                       @*  <input type="text" id="BankName" placeholder="enter banke name" class=""> *@
-                                        @Html.EditorFor(model => model.AccountBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder="enter banke name", oninput = "validateInput(this)"} })
-                                       
+                                        @*  <input type="text" id="BankName" placeholder="enter banke name" class=""> *@
+                                        @Html.EditorFor(model => model.AccountBankName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control ", @placeholder = "enter banke name", oninput = "validateInput(this)" } })
+
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Account Number<span class="text-danger">*</span></p>
                                         @* <input type="number" id="AccountNumber" placeholder="enter acount number" class=""> *@
-                                        @Html.EditorFor(model => model.AccountHolderName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  valiadteint", @placeholder="enter acount number"} })
+                                        @Html.EditorFor(model => model.AccountHolderName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  valiadteint", @placeholder = "enter acount number" } })
 
                                     </label>
                                 </div>
@@ -280,48 +262,48 @@
                 <h3 class="blueHeading">Documents</h3>
                 <div class="inputSearchs uploadDocBox">
 
-                <div class="tabSection">
-                    @if (ViewBag.IsView != 1)
-                    {
-                        <div class="flex">
-                            <label for="" class="w-100">
-                                <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
-                                <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="validateFileSize(this)">
-                                <input type="text" class="fileNames" readonly placeholder="file names">
-                            </label>
-                        </div>
-                    }
-                    <div class="W-100">
-                        <div class="prevUpload roundBorderBox m-0">
-                            <h5>Previously uploaded</h5>
-                            <div class="scroll-x">
-                                    <table id="InvoiceTableDocument" class="table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>File Name</th>
-                                            <th>Updated Date</th>
-                                            <th>Uploaded By</th>
-                                            <th>Download</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                    <div class="tabSection">
+                        @if (ViewBag.IsView != 1)
+                        {
+                            <div class="flex">
+                                <label for="" class="w-100">
+                                    <span class="m-0" style="font-weight:normal;">File size upto 5MB *</span>
+                                    <input type="file" class="fileInput" asp-for="Document.Files" multiple onchange="validateFileSize(this)">
+                                    <input type="text" class="fileNames" readonly placeholder="file names">
+                                </label>
                             </div>
-                        </div>
-                        <div class="text-right ptrl-20 buttonArea bodyContent plr-0">
+                        }
+                        <div class="W-100">
+                            <div class="prevUpload roundBorderBox m-0">
+                                <h5>Previously uploaded</h5>
+                                <div class="scroll-x">
+                                    <table id="InvoiceTableDocument" class="table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>File Name</th>
+                                                <th>Updated Date</th>
+                                                <th>Uploaded By</th>
+                                                <th>Download</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="text-right ptrl-20 buttonArea bodyContent plr-0">
                                 <a href='/ValuationRequest/ValuationRequestManage?id=@Model.ValuationRequestId'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
-                            @if (Model.Id == 0)
-                            {
-                                <button type="submit" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="return SaveInvoice()">
-                                    Save
-                                </button>
-                            }
+                                @if (Model.Id == 0)
+                                {
+                                    <button type="submit" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="return SaveInvoice()">
+                                        Save
+                                    </button>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </form>
         </div>
     </div>
@@ -360,14 +342,26 @@
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationInvoiceManage.js?v=@jsVersion"></script>
 
     <script>
-
-        $(document).ready(function () {
-            if (@ViewBag.IsView == 1) {
-                $('#invoice').find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true).css('background-color', '#f2f2f2');
-                // Disable the associated label element
+        // payemnt option JS here
+        function payTab(evt, payName, num) {
+            document.getElementById('hdnTabId').value = num;
+            var i, payTabContent, payTabLink;
+            payTabContent = document.getElementsByClassName("payTabContent");
+            for (i = 0; i < payTabContent.length; i++) {
+                payTabContent[i].style.display = "none";
             }
-        });
-        
+            payTabLink = document.getElementsByClassName("payTabLink");
+            for (i = 0; i < payTabLink.length; i++) {
+                payTabLink[i].className = payTabLink[i].className.replace(" active", "");
+            }
+            document.getElementById(payName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+        }
+
+
+        document.getElementById("defaultOpenPay").click();
+
         var ValuationInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationInvoiceById";
         var UpsertValuationInvoice = "@Eltizam.Web.Helpers.APIURLHelper.UpsertValuationInvoice";
         var transactionStatus = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryDescriptionById";

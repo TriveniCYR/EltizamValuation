@@ -139,12 +139,13 @@ $(document).ready(function () {
     $('.searchable-dropdown').select2();
 
     ErrorDev.hide();
+
     readsideNavToggle();
-    hideLoader();
+
     formatreadonlydate();
-    if ($("#isView").val() === "1") {
-        locationreadOnlyForm();
-    }
+
+    makeFormReadOnly();
+
     //Toaster related things
     if (SuccessToaster !== "" && SuccessToaster !== null) {
         toastr.success(SuccessToaster);
@@ -164,9 +165,6 @@ $(document).ready(function () {
 
         $("#btnSaveApprove").remove();
     }
-
-
-
     if (IsAddPermQt === false) {
         $("#addNewQt").remove();
     }
@@ -180,8 +178,43 @@ $(document).ready(function () {
     if (IsEditPermIn === false) {
         $("#btnSaveEditIn").remove();
     }
+
+    hideLoader();
+
+    Getactivenotifications();
 });
 
+function Getactivenotifications() {
+    ajaxServiceMethod(BaseURL + notifications, 'GET', NotificationCountSuccess, GetnotificationsError);
+}
+
+function GetnotificationsError(x, y, z) {
+    toastr.error("Something failed");
+}
+
+function NotificationCountSuccess(data) {
+    document.getElementById('notificationcount').textContent = data.length;
+}
+
+function makeFormReadOnly() {
+    if ($("#PageViewMode").val() === "1") {
+        var bdC = $(".bodyContent");
+        var title = bdC.parent().find(".dashboardTitle");
+        var humburg = bdC.parent().find(".hamburger span");
+
+        bdC.find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true).css('background-color', '#f2f2f2');
+        bdC.find("[type=submit]").remove(); // Hide submit actions
+        if (title !== null) {
+            var newTitle = title.text().replace("Edit", "View");
+            title.text(newTitle);
+        }
+
+        if (humburg !== null) {
+            var newhumburg = humburg.text().replace("Edit", "View");
+            humburg.text(newhumburg);
+        }
+    }
+}
 function DeleteFailure(x, y, z) {
     var _em = "";
     if (x.responseJSON !== undefined && x.responseJSON._Message !== undefined)
@@ -234,13 +267,15 @@ if (action === "Add") {
 function formatreadonlydate() {
     var tdElements = document.querySelectorAll('.formatted-td-date-input');
 
-    tdElements.forEach(function (tdElement) {
-        var originalDate = new Date(tdElement.textContent);
-        var datePart = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-        var timePart = originalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    tdElements.forEach(function (e) { 
+        if (e.textContent !== undefined && e.textContent !== null && e.textContent !== "") {
+            var originalDate = new Date(e.textContent);
 
-        var formattedDate = datePart.replace(/\s/g, '-') + ' ' + timePart;
-        tdElement.textContent = formattedDate
+            var datePart = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+            var timePart = originalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }); 
+            var formattedDate = datePart.replace(/\s/g, '-') + ' ' + timePart;
+            e.textContent = formattedDate;
+        }
     });
 }
 
@@ -320,19 +355,13 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
     });
 }
 
-
-
-
-
 function BindCountryCode() {
-    debugger
     $.ajax({
         type: "GET",
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
             for (var k = 0; k < addressLength; k++) {
-                debugger
                 var CountryCode = $("#Addresses_" + k + "__PhoneExt");
                 var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
 
@@ -376,14 +405,12 @@ function BindCountryCode() {
 }
 
 function BindCountryIsd() {
-    debugger
     $.ajax({
         type: "GET",
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
             for (var k = 0; k < addressLength; k++) {
-                debugger
                 var CountryCode = $("#Addresses_" + k + "__PhoneExt");
                 var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
 

@@ -46,25 +46,6 @@ var InvoiceRequest = {
     'Note': ''
 
 };
-// payemnt option JS here
-function payTab(evt, payName, num) {
-    document.getElementById('hdnTabId').value = num;
-    var i, payTabContent, payTabLink;
-    payTabContent = document.getElementsByClassName("payTabContent");
-    for (i = 0; i < payTabContent.length; i++) {
-        payTabContent[i].style.display = "none";
-    }
-    payTabLink = document.getElementsByClassName("payTabLink");
-    for (i = 0; i < payTabLink.length; i++) {
-        payTabLink[i].className = payTabLink[i].className.replace(" active", "");
-    }
-    document.getElementById(payName).style.display = "block";
-    evt.currentTarget.className += " active";
-
-}
-
-
-document.getElementById("defaultOpenPay").click(); 
 
 function SaveInvoice() { 
     var ErrMsg = "";

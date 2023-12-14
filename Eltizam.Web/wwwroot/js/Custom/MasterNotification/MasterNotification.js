@@ -1,15 +1,18 @@
 ﻿$(document).ready(function () {
     Getnotifications(0);
-});
+}); 
 
-function Getnotifications(notificationid) {
+
+
+function Getnotifications(notificationid) { 
     var userId = $("#userid").val();
     var valId = $("#valId").val();
     var url = "?lastid=" + notificationid + "&userId=" + userId + "&valId=" + valId;
+
     ajaxServiceMethod(BaseURL + notifications + url, 'GET', GetnotificationsSuccess, GetnotificationsError);
 }
 
-function GetnotificationsSuccess(data) {
+function GetnotificationsSuccess(data) { 
     $("#loader").show();
     var container = document.getElementById('notificationsContainer');
     container.innerHTML = '';
@@ -53,10 +56,7 @@ function GetnotificationsSuccess(data) {
     formatreadonlydate();
     $("#loader").hide();
 }
-
-function GetnotificationsError(x, y, z) {
-    toastr.error("error occured");
-}
+ 
 
 // accordian function here
 function accordianToggle(header, notificationId) {
@@ -84,8 +84,7 @@ function markNotificationAsRead(notificationId, userId) {
         })
         .then(data => {
             console.log('Success:', data);
-            Getactivenotifications();
-
+            //Getactivenotifications(); 
         })
         .catch(error => {
             console.error('Error:', error);
