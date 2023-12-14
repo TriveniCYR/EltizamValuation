@@ -46,12 +46,69 @@ var InvoiceRequest = {
     'Note': ''
 
 };
+// payemnt option JS here
+function payTab(evt, payName, num) {
+    document.getElementById('hdnTabId').value = num;
+    var i, payTabContent, payTabLink;
+    payTabContent = document.getElementsByClassName("payTabContent");
+    for (i = 0; i < payTabContent.length; i++) {
+        payTabContent[i].style.display = "none";
+    }
+    payTabLink = document.getElementsByClassName("payTabLink");
+    for (i = 0; i < payTabLink.length; i++) {
+        payTabLink[i].className = payTabLink[i].className.replace(" active", "");
+    }
+    document.getElementById(payName).style.display = "block";
+    evt.currentTarget.className += " active";
+
+}
+
+
+document.getElementById("defaultOpenPay").click(); 
 
 function SaveInvoice() { 
     var ErrMsg = "";
     var modeId = $('#hdnTabId').val();
     document.getElementById('TransactionModeId').value = parseInt(modeId);
 
+    if (modeId == 1) {
+        document.getElementById('CheckNumer').value = '';
+        document.getElementById('CheckBankName').value = '';
+        document.getElementById('CheckDate').value = ''
+        document.getElementById('ChequeRecievedDate').value = '';
+        document.getElementById('CardNumber').value = '';
+        document.getElementById('CardBankName').value = '';
+        document.getElementById('CardHolderName').value = '';
+        document.getElementById('ExpireDate').value = '';
+        document.getElementById('AccountBankName').value = '';
+        document.getElementById('AccountHolderName').value = '';
+    }
+    else if (modeId == 2) {
+        document.getElementById('CardNumber').value = '';
+        document.getElementById('CardBankName').value = '';
+        document.getElementById('CardHolderName').value = '';
+        document.getElementById('ExpireDate').value = '';
+        document.getElementById('AccountBankName').value = '';
+        document.getElementById('AccountHolderName').value = '';
+    }
+    else if (modeId == 3) {
+        document.getElementById('CheckNumer').value = '';
+        document.getElementById('CheckBankName').value = '';
+        document.getElementById('CheckDate').value = ''
+        document.getElementById('ChequeRecievedDate').value = '';
+        document.getElementById('AccountBankName').value = '';
+        document.getElementById('AccountHolderName').value = '';
+    }
+    else if (modeId == 4) {
+        document.getElementById('CheckNumer').value = '';
+        document.getElementById('CheckBankName').value = '';
+        document.getElementById('CheckDate').value = ''
+        document.getElementById('ChequeRecievedDate').value = '';
+        document.getElementById('CardNumber').value = '';
+        document.getElementById('CardBankName').value = '';
+        document.getElementById('CardHolderName').value = '';
+        document.getElementById('ExpireDate').value = '';
+    }
     if(modeId=='1') {
         let transactionStatusId = $("#CashTransactionStatusId").val();
         let amouont = $("#CashAmount").val();
@@ -167,7 +224,7 @@ function SaveInvoice() {
         hideLoader();
         return false;
     }
-    else {
+    else {        
         return true;
     }
 }
@@ -242,6 +299,7 @@ function GetInvoiceDetail(id){
                     document.getElementById('CardTransactionDate').value = moment(response._object.transactionDate).format('DD-MMM-YYYY');
                     document.getElementById('CardTransactionId').value = response._object.transactionId;
                     document.getElementById('CardTransactionStatusId').value = response._object.transactionStatusId;
+                    document.getElementById('ExpireDate').value = moment(response._object.expireDate).format('DD-MMM-YYYY');
                 }
                 else if (modeId == 4) {
                     document.getElementById('BankAmount').value = response._object.amount;
@@ -257,7 +315,6 @@ function GetInvoiceDetail(id){
                 document.getElementById('CardBankName').value = response._object.cardBankName;
                 document.getElementById('AccountBankName').value = response._object.accountBankName;
                 document.getElementById('CardHolderName').value = response._object.cardHolderName;
-                document.getElementById('ExpireDate').value = moment(response._object.expireDate).format('DD-MMM-YYYY');
                 document.getElementById('AccountHolderName').value = response._object.accountHolderName;
                 if (response._object.documents != null && response._object.documents.length > 0) {
                     var documents = response._object.documents;
