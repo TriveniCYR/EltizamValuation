@@ -254,7 +254,7 @@ namespace EltizamValuation.Web.Controllers
                     FileName = fileName,
                     FilePath = filePath,
                     DocumentName = document.DocumentName,
-                    IsActive = 1,
+                    IsActive =  true,
                     FileType = GetFileType(file.ContentType)
                 };
 
@@ -311,7 +311,7 @@ namespace EltizamValuation.Web.Controllers
                 FileName = fileName,
                 FilePath = filePath.Replace("wwwroot", ".."),
                 DocumentName = docName,
-                IsActive = 1,
+                IsActive = true,
                 CreatedBy = currentUser,
                 FileType = pic.ContentType,
                 CreatedDate = null,

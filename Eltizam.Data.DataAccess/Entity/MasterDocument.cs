@@ -12,7 +12,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? FileName { get; set; }
         public string? FileType { get; set; }
         public string? FilePath { get; set; }
-        public int? IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
