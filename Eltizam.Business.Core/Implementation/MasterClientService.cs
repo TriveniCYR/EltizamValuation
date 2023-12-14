@@ -252,7 +252,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (master_ClientModel.Addresses.Count > 0)
                 {
                     
-                    var entityAddressess = _repositoryAddress.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client").ToList();
+                    var entityAddressess = _repositoryAddress.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client" && x.IsDeleted == true).ToList();
                     var allAddressId = entityAddressess.Count > 0 ? entityAddressess.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
                     
                     foreach (var address in master_ClientModel.Addresses)
@@ -326,7 +326,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (master_ClientModel.Contacts.Count > 0)
                 {
 
-                    var entityContacts = _repositoryContact.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client").ToList();
+                    var entityContacts = _repositoryContact.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client" && x.IsDeleted == true).ToList();
                     var allContactId = entityContacts.Count > 0 ? entityContacts.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
 
                     foreach (var contact in master_ClientModel.Contacts)
@@ -418,7 +418,9 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async Task<DBOperation> DeleteClient(int id)
+       
+
+        public async Task<DBOperation> DeleteClient(int id, int? by)
         {
             try
             {
@@ -426,9 +428,9 @@ namespace Eltizam.Business.Core.Implementation
 
                 DbParameter[] prm =
                 {
-                    new DbParameter("ClientId", id, SqlDbType.Int),
-                    new DbParameter("By",       1, SqlDbType.Int)
-                };
+            new DbParameter("ClientId", id, SqlDbType.Int),
+            new DbParameter("By",       by, SqlDbType.Int)
+        };
 
                 EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_Client_Delete, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);
 

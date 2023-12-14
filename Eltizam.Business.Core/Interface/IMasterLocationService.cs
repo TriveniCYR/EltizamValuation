@@ -9,6 +9,6 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> AddUpdateLocationClient(MasterLocationEntity entityUser);
         Task<MasterLocationEntity> GetById(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
-        Task<DBOperation> Delete(int id);
+        Task<DBOperation> Delete(int id, int? by);
     }
 }

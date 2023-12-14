@@ -285,7 +285,7 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<DBOperation> DeleteProperty(int id)
+        public async Task<DBOperation> DeleteProperty(int id,int? by)
         {
             try
             {
@@ -293,7 +293,7 @@ namespace Eltizam.Business.Core.Implementation
                 DbParameter[] prm =
                 {
                     new DbParameter("PropertyId", id, SqlDbType.Int), 
-                    new DbParameter("By",         1, SqlDbType.Int)
+                    new DbParameter("By",         by, SqlDbType.Int)
                 };
 
                 EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_Property_Delete, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);

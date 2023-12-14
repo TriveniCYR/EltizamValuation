@@ -242,10 +242,17 @@ namespace Eltizam.Business.Core.Implementation
                 }
                 if (masterVendortModel.Addresses.Count > 0)
                 {
+                    var entityAddressess = _repositoryAddress.GetAll().Where(x => x.TableKeyId == masterVendortModel.Id && x.TableName == "Master_Vendor" && x.IsDeleted == true).ToList();
+                    var allAddressId = entityAddressess.Count > 0 ? entityAddressess.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
+
                     foreach (var address in masterVendortModel.Addresses)
                     {
                         if (address.Id > 0)
                         {
+                            if (allAddressId != null && allAddressId.Count > 0)
+                            {
+                                allAddressId.Remove(address.Id);
+                            }
                             var OldEntity = _repositoryAddress.GetNoTracking(address.Id);
 
                             objAddress = _repositoryAddress.Get(address.Id);
@@ -291,13 +298,32 @@ namespace Eltizam.Business.Core.Implementation
 
                         }
                     }
+                    if (allAddressId != null && allAddressId.Count > 0)
+                    {
+                        foreach (var addId in allAddressId)
+                        {
+                            var entityAdd = _repositoryAddress.Get(x => x.Id == addId);
+                            if (entityAdd != null)
+                            {
+                                _repositoryAddress.Remove(entityAdd);
+                            }
+                        }
+                        await _unitOfWork.SaveChangesAsync();
+                    }
                 }
                 if (masterVendortModel.Contacts.Count > 0)
                 {
+                    var entityContacts = _repositoryContact.GetAll().Where(x => x.TableKeyId == masterVendortModel.Id && x.TableName == "Master_User" && x.IsDeleted == true).ToList();
+                    var allContactId = entityContacts.Count > 0 ? entityContacts.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
+
                     foreach (var contact in masterVendortModel.Contacts)
                     {
                         if (contact.Id > 0)
                         {
+                            if (allContactId != null && allContactId.Count > 0)
+                            {
+                                allContactId.Remove(contact.Id);
+                            }
                             var OldEntity = _repositoryContact.GetNoTracking(contact.Id);
 
                             objContact = _repositoryContact.Get(contact.Id);
@@ -334,6 +360,18 @@ namespace Eltizam.Business.Core.Implementation
                             await _unitOfWork.SaveChangesAsync();
                         }
                     }
+                    if (allContactId != null && allContactId.Count > 0)
+                    {
+                        foreach (var addId in allContactId)
+                        {
+                            var entityAdd = _repositoryContact.Get(x => x.Id == addId);
+                            if (entityAdd != null)
+                            {
+                                _repositoryContact.Remove(entityAdd);
+                            }
+                        }
+                        await _unitOfWork.SaveChangesAsync();
+                    }
                 }
             }
 
@@ -341,11 +379,11 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async Task<DBOperation> DeleteVendor(int id)
+        public async Task<DBOperation> DeleteVendor(int id,int? by)
         {
             // Get the entity to be deleted from the repository.
             var entityUser = _repository.Get(x => x.Id == id);
-
+            entityUser.ModifiedBy = by ?? entityUser.ModifiedBy;
             // If the entity does not exist, return a not found operation.
             if (entityUser == null)
                 return DBOperation.NotFound;

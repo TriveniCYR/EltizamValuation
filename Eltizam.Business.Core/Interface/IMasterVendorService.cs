@@ -13,6 +13,6 @@ namespace Eltizam.Business.Core.Interface
         Task<MasterVendorModel> GetMasterVendorByIdAsync(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> AddUpdateMasterVendor(MasterVendorModel masterVendortModel);
-        Task<DBOperation> DeleteVendor(int id);
+        Task<DBOperation> DeleteVendor(int id, int? by);
     }
 }

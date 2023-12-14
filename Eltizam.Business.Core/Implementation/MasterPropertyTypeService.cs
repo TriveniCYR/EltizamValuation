@@ -194,10 +194,10 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<DBOperation> DeletePropertyType(int id)
+        public async Task<DBOperation> DeletePropertyType(int id,int? by)
         {
-            var entityProperty = _repository.Get(id);
-
+            var entityProperty = await _repository.GetAsync(id);
+            entityProperty.ModifiedBy = by ?? entityProperty.ModifiedBy;
             var subPropertiesByPopertyId = _subrepository.GetAll().Where(x => x.PropertyTypeId == id);
             foreach (var item in subPropertiesByPopertyId)
             {

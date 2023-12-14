@@ -13,7 +13,7 @@ namespace Eltizam.Business.Core.Interface
         Task<MasterPropertyModel> GetMasterPropertyByIdAsync(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> AddUpdateMasterProperty(MasterPropertyModel entityqualification);
-        Task<DBOperation> DeleteProperty(int id);
+        Task<DBOperation> DeleteProperty(int id, int? by);
         Task<List<MasterAmenityListModel>> GetPropertyAmenityList();
         Task<List<MasterPropertyModel>> GetMasterPropertyByFiltersAsync(int propertyTypeId, int subPropertyTypeId, int ownershipTypeId);
     }

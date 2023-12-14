@@ -68,7 +68,8 @@ function ConfirmationDeleteLocation(id) {
 function DeleteLocation() {
     if (IsDeletePerm) {
         var tid = $('#DeleteLocationModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeleteLocationByIdUrl + "/" + tid, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
+        var by = LogInUserId;
+        ajaxServiceMethod(BaseURL + DeleteLocationByIdUrl + "/" + tid + "?by=" + by, 'POST', DeleteUserByIdSuccess, DeleteUserByIdError);
     }
     else {
         toastr.error(DeleteAccessDenied);

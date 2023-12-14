@@ -215,6 +215,10 @@ namespace Eltizam.Business.Core.Implementation
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(objmasterDictionary);
                 }
+                //Do Audit Log --AUDITLOGUSER
+                await _auditLogService.CreateAuditLog<MasterDictionary>(AuditActionTypeEnum.Update, OldEntity, objmasterDictionary, MainTableName, MainTableKey);
+                await _unitOfWork.SaveChangesAsync();
+
             }
             else
             {
@@ -232,8 +236,7 @@ namespace Eltizam.Business.Core.Implementation
 
             // Save changes to the database asynchronously.
             await _unitOfWork.SaveChangesAsync();
-            //Do Audit Log --AUDITLOGUSER
-            await _auditLogService.CreateAuditLog<MasterDictionary>(AuditActionTypeEnum.Update, OldEntity, objmasterDictionary, MainTableName, MainTableKey);
+            
 
             // Return an appropriate operation result.
             if (objmasterDictionary.Id == 0)

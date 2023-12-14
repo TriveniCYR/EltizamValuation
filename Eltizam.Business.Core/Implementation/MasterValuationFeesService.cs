@@ -137,10 +137,10 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<DBOperation> Delete(int id)
+        public async Task<DBOperation> Delete(int id,int? by)
         {
             var entityValuationFees = _repository.Get(x => x.Id == id);
-
+            entityValuationFees.ModifiedBy = by ?? entityValuationFees.ModifiedBy;
             if (entityValuationFees == null)
                 return DBOperation.NotFound;
 

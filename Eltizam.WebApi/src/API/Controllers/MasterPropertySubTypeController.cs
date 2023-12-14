@@ -119,11 +119,11 @@ namespace Eltizam.WebApi.Controllers
         //}
 
         [HttpDelete("DeleteProperty/{id}")]
-        public async Task<IActionResult> DeleteSubProperty([FromRoute] int id)
+        public async Task<IActionResult> DeleteSubProperty([FromRoute] int id, int? by)
         {
             try
             {
-                DBOperation oResponse = await _subpropertyServices.DeleteSubProperty(id);
+                DBOperation oResponse = await _subpropertyServices.DeleteSubProperty(id,by);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else

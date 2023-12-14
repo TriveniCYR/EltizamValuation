@@ -716,7 +716,7 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
 
             try
             {
-                var delete = dbContext.Entry(entity).Property(IsDeleted);
+                var delete = dbContext.Entry(entity).Property(IsDeleted).CurrentValue;
 
                 if (delete != null && delete.CurrentValue != null && (bool)delete.CurrentValue == true)
                 {
