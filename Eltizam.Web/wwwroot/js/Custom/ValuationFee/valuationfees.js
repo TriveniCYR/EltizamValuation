@@ -11,7 +11,7 @@ function ConfirmationDeleteValuationFees(id) {
 function DeleteValuationFees() {
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteValuationFeesModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeleteValuationByIdUrl + "/" + tempInAtiveID, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+        ajaxServiceMethod(BaseURL + DeleteValuationByIdUrl + "/" + tempInAtiveID, Delete, DeleteUserByIdSuccess, DeleteFailure);
     }
     else {
         toastr.error(DeleteAccessDenied);
@@ -32,9 +32,7 @@ function DeleteUserByIdSuccess(data) {
     }
 }
 
-function DeleteUserByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
+ 
 
 function InitializeDataList() {
     var setDefaultOrder = [0, 'asc'];
