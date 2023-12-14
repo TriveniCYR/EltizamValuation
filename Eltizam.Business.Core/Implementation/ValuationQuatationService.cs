@@ -122,7 +122,7 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async Task<DBOperation> QuatationDelete(int id)
+        public async Task<DBOperation> QuatationDelete(int id ,int? by)
         {
             var entityQuatation = _repository.Get(x => x.Id == id);
 

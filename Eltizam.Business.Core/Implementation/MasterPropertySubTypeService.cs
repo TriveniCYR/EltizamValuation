@@ -159,11 +159,11 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<DBOperation> DeleteSubProperty(int id)
+        public async Task<DBOperation> DeleteSubProperty(int id,int? by)
         {
             // Get the entity to be deleted from the repository.
             var entityPropertyType = _repository.Get(x => x.Id == id);
-
+            entityPropertyType.ModifiedBy = by ?? entityPropertyType.ModifiedBy;
             // If the entity does not exist, return a not found operation.
             if (entityPropertyType == null)
                 return DBOperation.NotFound;

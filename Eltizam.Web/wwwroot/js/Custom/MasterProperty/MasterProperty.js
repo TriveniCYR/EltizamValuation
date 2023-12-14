@@ -63,7 +63,8 @@ function ConfirmationDeleteProperty(id) {
 function DeleteProperty() {
     if (IsDeletePerm) {
         var tId = $('#DeletePropertyModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeletePropertyByIdUrl + "/" + tId, Delete, DeletePropertyByIdSuccess, DeletePropertyByIdError);
+        var by = LogInUserId;
+        ajaxServiceMethod(BaseURL + DeletePropertyByIdUrl + "/" + tId + "?by=" + by, Delete, DeletePropertyByIdSuccess, DeletePropertyByIdError);
     }
     else {
         toastr.error(DeleteAccessDenied);

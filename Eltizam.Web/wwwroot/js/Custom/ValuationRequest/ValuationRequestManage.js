@@ -1119,7 +1119,8 @@ function ConfirmationDeleteQuotation(id) {
 function DeleteQuotation() {
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteQuotationModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeleteQuotationByIdUrl + "/" + tempInAtiveID, Post, DeleteQuotationByIdSuccess, DeleteQuotationByIdError);
+        var by = LogInUserId;
+        ajaxServiceMethod(BaseURL + DeleteQuotationByIdUrl + "/" + tempInAtiveID + "?by=" + by, Post, DeleteQuotationByIdSuccess, DeleteQuotationByIdError);
     }
 
     else {
@@ -1154,9 +1155,10 @@ function ConfirmationDeleteInvoice(id) {
 }
 function DeleteInvoice() {
     invoiceId = $('#DeleteInvoiceModel #ID').val()
+    var by = LogInUserId;
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteInvoiceModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeleteInvoiceByIdUrl + "/" + tempInAtiveID, Post, DeleteInvoiceByIdSuccess, DeleteInvoiceByIdError);
+        ajaxServiceMethod(BaseURL + DeleteInvoiceByIdUrl + "/" + tempInAtiveID + "?by=" + by, Post, DeleteInvoiceByIdSuccess, DeleteInvoiceByIdError);
     }
     else {
         toastr.error(DeleteAccessDenied);

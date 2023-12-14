@@ -8,8 +8,8 @@ function ConfirmationDeleteClient(id) {
 }
 function DeletedClient() {
     if (IsDeletePerm) {
-        var tempInAtiveID = $('#DeleteClientModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID, Post, DeleteClientByIdSuccess, DeleteClientByIdError);
+        var by = LogInUserId;
+        ajaxServiceMethod(BaseURL + DeleteClient + "/" + tempInAtiveID + "?by=" + by, Post, DeleteClientByIdSuccess, DeleteClientByIdError);
     }
     else {
         toastr.error(DeleteAccessDenied);

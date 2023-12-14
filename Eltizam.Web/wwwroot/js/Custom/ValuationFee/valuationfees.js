@@ -11,7 +11,8 @@ function ConfirmationDeleteValuationFees(id) {
 function DeleteValuationFees() {
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteValuationFeesModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeleteValuationByIdUrl + "/" + tempInAtiveID, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+        var by = LogInUserId;
+        ajaxServiceMethod(BaseURL + DeleteValuationByIdUrl + "/" + tempInAtiveID + "?by=" + by, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
     }
     else {
         toastr.error(DeleteAccessDenied);
@@ -66,6 +67,9 @@ function InitializeDataList() {
         {
             "data": "totalValuationFees", "name": "Total Valuation Fees"
         },
+        //{
+        //    "data": "fixedvaluationFees", "name": "FixedvaluationFees"
+        //},
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
                 return GetActiveFlagCss(data);

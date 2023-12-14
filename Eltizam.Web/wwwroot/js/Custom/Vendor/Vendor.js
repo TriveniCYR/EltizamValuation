@@ -11,7 +11,8 @@ function DeleteVendor() {
     if (IsDeletePerm) {
 
         var tempInAtiveID = $('#DeleteVendorModel #Id').val();
-        ajaxServiceMethod(BaseURL + DeleteVendors + "/" + tempInAtiveID, 'POST', DeleteVendorByIdSuccess, DeleteVendorByIdError);
+        var by = LogInUserId;
+        ajaxServiceMethod(BaseURL + DeleteVendors + "/" + tempInAtiveID + "?by=" + by, 'POST', DeleteVendorByIdSuccess, DeleteVendorByIdError);
     }
     else {
         toastr.error(DeleteAccessDenied);

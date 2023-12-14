@@ -92,11 +92,11 @@ namespace Eltizam.WebApi.Controllers
         }
 
         [HttpPost("DeleteClient/{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id, int? by)
         {
             try
             {
-                DBOperation oResponse = await _clientServices.DeleteClient(id);
+                DBOperation oResponse = await _clientServices.DeleteClient(id, by);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else if (oResponse == DBOperation.AlreadyExist)

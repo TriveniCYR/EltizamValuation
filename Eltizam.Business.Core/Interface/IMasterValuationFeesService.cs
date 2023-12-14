@@ -14,6 +14,6 @@ namespace Eltizam.Business.Core.Interface
         Task<MasterValuationFeesModel> GetById(int id);
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         //Task<List<MasterValuationFeesModel>> GetAll();
-        Task<DBOperation> Delete(int id);
+        Task<DBOperation> Delete(int id, int? by);
     }
 }

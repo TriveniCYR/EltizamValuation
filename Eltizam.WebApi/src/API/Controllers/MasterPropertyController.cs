@@ -99,11 +99,11 @@ namespace Eltizam.WebApi.Controllers
         }
 
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> DeleteProperty([FromRoute] int id)
+        public async Task<IActionResult> DeleteProperty([FromRoute] int id, int? by)
         {
             try
             {
-                DBOperation oResponse = await _propertyServices.DeleteProperty(id);
+                DBOperation oResponse = await _propertyServices.DeleteProperty(id,by);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else

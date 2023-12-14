@@ -417,11 +417,11 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async Task<DBOperation> DeleteClient(int id)
+        public async Task<DBOperation> DeleteClient(int id, int? by)
         {
             // Get the entity to be deleted from the repository.
             var entityUser = _repository.Get(x => x.Id == id);
-
+            entityUser.ModifiedBy = by ?? entityUser.ModifiedBy;
             // If the entity does not exist, return a not found operation.
             if (entityUser == null)
                 return DBOperation.NotFound;

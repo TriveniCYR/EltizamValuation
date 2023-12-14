@@ -204,10 +204,10 @@ namespace Eltizam.Business.Core.Implementation
             return _quatationEntity;
         }
 
-        public async Task<DBOperation> InvoiceDelete(int id)
+        public async Task<DBOperation> InvoiceDelete(int id, int? by)
         {
             var entityInvoice = _repository.Get(x => x.Id == id);
-
+            entityInvoice.ModifiedBy = by ?? entityInvoice.ModifiedBy;
             if (entityInvoice == null)
                 return DBOperation.NotFound;
 

@@ -158,9 +158,10 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<DBOperation> Delete(int id)
+        public async Task<DBOperation> Delete(int id, int? by)
         {
             var entityLocation = _repository.Get(x => x.Id == id);
+            entityLocation.ModifiedBy = by ?? entityLocation.ModifiedBy;
 
             if (entityLocation == null)
                 return DBOperation.NotFound;
