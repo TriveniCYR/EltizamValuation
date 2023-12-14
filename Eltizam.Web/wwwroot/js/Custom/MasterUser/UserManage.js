@@ -49,8 +49,7 @@ function BindResourceType() {
 }
 
 
-function BindCountry() {
-    debugger
+function BindCountry() {  
     for (var i = 0; i < addressLength; i++) {
         var Country = $("#Addresses_" + i + "__CountryId");
         var _val = $('#hdnCountry_' + i).val();
@@ -59,8 +58,7 @@ function BindCountry() {
     }
 }
 
-function BindState(id) {
-    debugger
+function BindState(id) { 
     for (var i = 0; i < addressLength; i++) {
         var State = $("#Addresses_" + i + "__StateId");
         var CountryId = $('#hdnCountry_' + i).val();
@@ -71,8 +69,7 @@ function BindState(id) {
     }
 }
 
-function BindCity(id) {
-    debugger
+function BindCity(id) { 
     for (var i = 0; i < addressLength; i++) {
         var City = $("#Addresses_" + i + "__CityId");
         var _val = $('#hdnCity_' + i).val();

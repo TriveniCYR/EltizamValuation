@@ -111,8 +111,7 @@ function removeParentDiv(element, num) {
     var contactContainer = $("#contacts-container");
     var count = contactContainer.children(".roundBorderBox").length;
     for (i = num; i < count; i++) {
-        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[id]').forEach(element => {
-            debugger
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[id]').forEach(element => { 
             element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
         });
         contactContainer.children(".roundBorderBox")[i].querySelectorAll('[name]').forEach(element => {
@@ -292,8 +291,7 @@ function BindClientType() {
     BindDropdowns(ClientTypeList, ClientType, _rpname, _val);
 }
 
-function BindCountry() {
-    debugger
+function BindCountry() { 
     for (var i = 0; i < addressLength; i++) {
         var Country = $("#Addresses_" + i + "__CountryId");
         var _val = $('#hdnCountry_' + i).val();

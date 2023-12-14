@@ -15,8 +15,7 @@ $(document).ready(function () {
 });
 
 
-function BindCountry() {
-    debugger
+function BindCountry() { 
     for (var i = 0; i < addressLength; i++) {
         var Country = $("#Addresses_" + i + "__CountryId");
         var _val = $('#hdnCountry_' + i).val();

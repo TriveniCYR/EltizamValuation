@@ -21,9 +21,7 @@ $('#ValuationType').change(function () {
         document.getElementById('ValuationFees').value = null;
         document.getElementById('Vat').value = null;
         document.getElementById('OtherCharges').value = null;
-        document.getElementById('TotalValuationFees').value = null;
-
-
+        document.getElementById('TotalValuationFees').value = null; 
     } else if (valuationType === "1") {
         fixed.style.display = "none";
         general.style.display = "block";
@@ -60,9 +58,7 @@ $(document).ready(function () {
     }
 });
 
-function BindProperty() {
-    //alert("hello");
-   
+function BindProperty() { 
     var Property = $("#PropertyTypeId");
     var _val = $('#hdnProperty').val();
     var _rpname = "propertyType";
