@@ -14,17 +14,17 @@ namespace Eltizam.Utility.AuditLog
     {
         public static string ToAuditLog<TResult>(this TResult Old, TResult New) where TResult : new()
         {
-            var compare = new ObjectsComparer.Comparer<TResult>();
-            List<AuditLog> auditlog = new();
+            var compare = new ObjectsComparer.Comparer<TResult>(); 
             compare.Compare(Old, New, out IEnumerable<Difference> differences);
 
-            string AuditLog_ExcludeFields = "Id,ModifiedBy,ModifiedDate";
+            string excludeFields = "Id.Value,ModifiedBy.Value,ModifiedDate.Value";
+            List<AuditLog> auditlogs = new();
 
             foreach (var diff in differences)
             { 
-                if (!AuditLog_ExcludeFields.ToLower().Contains(diff.MemberPath.ToLower()))
+                if (!excludeFields.ToLower().Contains(diff.MemberPath.ToLower()))
                 {
-                    auditlog.Add(new AuditLog
+                    auditlogs.Add(new AuditLog
                     {
                         OldValue = diff.Value1,
                         NewValue = diff.Value2,
@@ -34,12 +34,12 @@ namespace Eltizam.Utility.AuditLog
                 }
             }
 
-            bool ISmatched = false;
-            ObjectCompare.auditlogList = new List<AuditLog>();
-            ObjectCompare.CompareNew(Old, New, out ISmatched);
+            //bool ISmatched = false;
+            //ObjectCompare.auditlogList = new List<AuditLog>();
+            //ObjectCompare.CompareNew(Old, New, out ISmatched);
 
-            var obj = ObjectCompare.auditlogList;
-            return JsonConvert.SerializeObject(obj);
+            //var obj = ObjectCompare.auditlogList;
+            return JsonConvert.SerializeObject(auditlogs);
         }
 
         public static bool DeepCompare(object Old_obj, object New_Obj, out string comparison)

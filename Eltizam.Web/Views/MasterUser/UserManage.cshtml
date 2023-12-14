@@ -26,6 +26,7 @@
                 <a class="greyBtn lineBtn formAbtn" asp-action="Users">@_header</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md</span>
+                <input type="hidden" id="md" value="@_md" />
             </div>
         </div>
         <div class="bodyContent">
@@ -58,20 +59,30 @@
                                 <div class="flex threeBox">
                                     <div class="flex justify-center mb-28">
                                         <div class="resourceProfile clientImg text-center">
-                                            @if(Model.ProfileAttachmentId > 0)
+                                            @if (Model.ProfileAttachmentId > 0)
                                             {
-                                                <img src="@Model.ProfilePath" alt="upload-profile-pic" class="w-100" style="margin-bottom: 36px;"/>
+                                                <img id="previewImage" src="@Model.ProfilePath" alt="upload-profile-pic" />
                                             }
                                             else
                                             {
-                                                <img src="../assets/client1.png" alt="img-7" />
+                                                <img id="previewImage" src="../assets/client1.png" alt="img-7" />
                                             }
                                             <div class="position-relative">
-                                                <div class="upload-profile-pic-btn">                                                    
+                                                <div class="upload-profile-pic-btn">
                                                     <img src="../assets/upload-profile-pic.svg" alt="upload-profile-pic" />
-                                                    Change photo
+                                                    <span id="uploadBtnText">
+                                                        @if (Model.ProfileAttachmentId > 0)
+                                                        {
+                                                            <text>Change photo</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            <text>Upload photo</text>
+                                                        }
+                                                    </span>
                                                 </div>
-                                                <input type="file" accept="image/*" asp-for="File" class="uploadPhoto" />
+                                                <input type="file" accept="image/*" asp-for="File" class="uploadPhoto" id="fileInput" accept=".jpeg,.png,.jpg" />
+                                                <span class="text-danger" id="sizeError" style="display: none; position: relative;top: 46px;font-size: 16px;line-height: 20px;">Image size should not exceed 2 MB.</span>
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +125,7 @@
                                     </label>
                                     <label for="DateOfBirth">
                                         <p class="m-0">Date of Birth<span class="text-danger">*</span></p>
-                                        <input type="text" id="DateOfBirth" class="formatted-date-input" name="DateOfBirth" asp-for="DateOfBirth">
+                                        <input type="text" id="DateOfBirth" class="formatted-date-input" name="DateOfBirth" asp-for="DateOfBirth" min="@DateTime.Now.ToString("yyyy-MM-dd")">
                                         @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -153,7 +164,7 @@
                                     </label>
                                     <label for="CompanyName">
                                         <p class="m-0">Company/Vendor Name<span class="text-danger">*</span></p>
-                                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", @placeholder = @SharedLocalizer["Last Name"] })
+                                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", @placeholder = @SharedLocalizer["Company/Vendor Name"] })
                                         @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -223,7 +234,7 @@
                                             </label>
                                             <label for="PinNo">
                                                 Zip / PO Box
-                                                @Html.TextBoxFor(model => model.Addresses[i].PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Zip / PO Box"] })
+                                                @Html.TextBoxFor(model => model.Addresses[i].PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked valiadteint", @placeholder = @SharedLocalizer["Zip / PO Box"] })
                                                 @Html.ValidationMessageFor(model => model.Addresses[i].PinNo, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
@@ -245,7 +256,7 @@
                                                 <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                     @Html.DropDownListFor(model => model.Addresses[i].PhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
 
-                                                    @Html.TextBoxFor(model => model.Addresses[i].Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Phone"] })
+                                                        @Html.TextBoxFor(model => model.Addresses[i].Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked valiadteint", @placeholder = @SharedLocalizer["Phone"] })
                                                     
                                                 </div>
                                                 @Html.ValidationMessageFor(model => model.Addresses[i].Phone, "", new { @class = "text-danger" })
@@ -256,7 +267,7 @@
                                                 <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                     @Html.DropDownListFor(model => model.Addresses[i].AlternatePhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
 
-                                                    @Html.TextBoxFor(model => model.Addresses[i].AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Alternate Phone"] })
+                                                    @Html.TextBoxFor(model => model.Addresses[i].AlternatePhone, new { @autocomplete = "off", @class = "form-control checkbox-checked valiadteint", @placeholder = @SharedLocalizer["Alternate Phone"] })
                                                     
                                                 </div>
                                                 @Html.ValidationMessageFor(model => model.Addresses[i].AlternatePhone, "", new { @class = "text-danger" })
@@ -266,7 +277,7 @@
                                         <div class="flex">
                                             <label for="">
                                                 Landline phone
-                                                @Html.TextBoxFor(model => model.Addresses[i].Landlinephone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Landline phone"] })
+                                                    @Html.TextBoxFor(model => model.Addresses[i].Landlinephone, new { @autocomplete = "off", @class = "form-control checkbox-checked valiadteint", @placeholder = @SharedLocalizer["Landline phone"] })
                                                 @Html.ValidationMessageFor(model => model.Addresses[i].Landlinephone, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
@@ -318,7 +329,7 @@
                                             </label>
                                             <label for="year">
                                                 <p class="m-0">Year of Institute<span class="text-danger">*</span></p>
-                                                    @Html.TextBoxFor(model => model.Qualifications[i].YearOfInstitute, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Year"] })
+                                                    @Html.TextBoxFor(model => model.Qualifications[i].YearOfInstitute, new { @autocomplete = "off", @class = "form-control checkbox-checked valiadteint", @placeholder = @SharedLocalizer["Year"] })
                                                     @Html.ValidationMessageFor(model => model.Qualifications[i].YearOfInstitute, "", new { @class = "text-danger" })
                                             </label>
                                         </div>

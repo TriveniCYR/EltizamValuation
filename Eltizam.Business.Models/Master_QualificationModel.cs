@@ -24,7 +24,7 @@ namespace Eltizam.Business.Models
         [StringLength(250, MinimumLength = 1)]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? Grade { get; set; }
-        [StringLength(100, MinimumLength = 1)]
+        [StringLength(20, MinimumLength = 4)]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? YearOfInstitute { get; set; }
         public int IsActive { get; set; }

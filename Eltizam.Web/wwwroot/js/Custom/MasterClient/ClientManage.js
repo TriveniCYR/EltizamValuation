@@ -216,7 +216,6 @@ function removeParentDivAddress(element, num) {
         addressContainer.children(".addMoreAddress")[i].querySelectorAll('[name]').forEach(element => {
             element.name = element.name.replace("[" + (i + 1) + "]", "[" + i + "]");
         });
-
     }
 }
 
@@ -232,7 +231,6 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
         }
     });
-
 });
 
 function validateForAddress() {
