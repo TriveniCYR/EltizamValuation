@@ -196,19 +196,28 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> DeletePropertyType(int id,int? by)
         {
-            var entityProperty = await _repository.GetAsync(id);
+            var entityProperty = _repository.Get(x => x.Id == id);
             entityProperty.ModifiedBy = by ?? entityProperty.ModifiedBy;
-            var subPropertiesByPopertyId = _subrepository.GetAll().Where(x => x.PropertyTypeId == id);
-            foreach (var item in subPropertiesByPopertyId)
+            // If the entity does not exist, return a not found operation.
+            if (entityProperty == null)
+                return DBOperation.NotFound;
+            else
             {
-                _subrepository.Remove(item);
+                var subPropertiesByPopertyId = _subrepository.GetAll().Where(x => x.PropertyTypeId == id).ToList();
+                if (subPropertiesByPopertyId.Count > 0)
+                {
+                    foreach (var item in subPropertiesByPopertyId)
+                    {
+                        _subrepository.Remove(item);
+                    }
+                }
+                _repository.Remove(entityProperty);
+
+                await _unitOfWork.SaveChangesAsync();
+
+                // Return a success operation indicating successful deletion.
+                return DBOperation.Success;
             }
-            _repository.Remove(entityProperty);
-
-            await _unitOfWork.SaveChangesAsync();
-
-            // Return a success operation indicating successful deletion.
-            return DBOperation.Success;
             
         }
 
