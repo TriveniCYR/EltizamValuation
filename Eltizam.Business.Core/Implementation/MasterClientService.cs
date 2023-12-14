@@ -252,7 +252,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (master_ClientModel.Addresses.Count > 0)
                 {
                     
-                    var entityAddressess = _repositoryAddress.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client").ToList();
+                    var entityAddressess = _repositoryAddress.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client" && x.IsDeleted == true).ToList();
                     var allAddressId = entityAddressess.Count > 0 ? entityAddressess.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
                     
                     foreach (var address in master_ClientModel.Addresses)
@@ -326,7 +326,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (master_ClientModel.Contacts.Count > 0)
                 {
 
-                    var entityContacts = _repositoryContact.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client").ToList();
+                    var entityContacts = _repositoryContact.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client" && x.IsDeleted == true).ToList();
                     var allContactId = entityContacts.Count > 0 ? entityContacts.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
 
                     foreach (var contact in master_ClientModel.Contacts)

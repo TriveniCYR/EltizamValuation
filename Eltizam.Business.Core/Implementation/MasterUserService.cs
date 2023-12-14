@@ -347,10 +347,18 @@ namespace Eltizam.Business.Core.Implementation
 
                 if (entityUser.Addresses.Count > 0)
                 {
+
+                    var entityAddressess = _addressRepository.GetAll().Where(x => x.TableKeyId == entityUser.Id && x.TableName == "Master_User" && x.IsDeleted == true).ToList();
+                    var allAddressId = entityAddressess.Count > 0 ? entityAddressess.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
+
                     foreach (var address in entityUser.Addresses)
                     {
                         if (address.Id > 0)
                         {
+                            if (allAddressId != null && allAddressId.Count > 0)
+                            {
+                                allAddressId.Remove(address.Id);
+                            }
                             //Get current Entiry --AUDITLOGUSER
                             var OldEntity = _addressRepository.GetNoTracking(address.Id);
                             objUserAddress = _addressRepository.Get(address.Id);
@@ -398,16 +406,36 @@ namespace Eltizam.Business.Core.Implementation
                             await _unitOfWork.SaveChangesAsync();
                         }
                     }
+                    if (allAddressId != null && allAddressId.Count > 0)
+                    {
+                        foreach (var addId in allAddressId)
+                        {
+                            var entityAdd = _addressRepository.Get(x => x.Id == addId);
+                            if (entityAdd != null)
+                            {
+                                _addressRepository.Remove(entityAdd);
+                            }
+                        }
+                        await _unitOfWork.SaveChangesAsync();
+                    }
                 } 
 
                 //Qualification details
                 if (entityUser.Qualifications.Count > 0)
                 {
+
+                    var entityContacts = _qualifyRepository.GetAll().Where(x => x.TableKeyId == entityUser.Id && x.TableName == "Master_User" && x.IsDeleted == true).ToList();
+                    var allContactId = entityContacts.Count > 0 ? entityContacts.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
+
                     foreach (var qualify in entityUser.Qualifications)
                     {
                         var Qlfc = qualify;
                         if (Qlfc.Id > 0)
                         {
+                            if (allContactId != null && allContactId.Count > 0)
+                            {
+                                allContactId.Remove(qualify.Id);
+                            }
                             //Get current Entiry --AUDITLOGUSER
                             var OldEntity = _qualifyRepository.GetNoTracking(Qlfc.Id);
                             objUserQualification = _qualifyRepository.Get(Qlfc.Id);
@@ -441,6 +469,18 @@ namespace Eltizam.Business.Core.Implementation
                             _qualifyRepository.AddAsync(objUserQualification);
                             await _unitOfWork.SaveChangesAsync();
                         }
+                    }
+                    if (allContactId != null && allContactId.Count > 0)
+                    {
+                        foreach (var addId in allContactId)
+                        {
+                            var entityAdd = _qualifyRepository.Get(x => x.Id == addId);
+                            if (entityAdd != null)
+                            {
+                                _qualifyRepository.Remove(entityAdd);
+                            }
+                        }
+                        await _unitOfWork.SaveChangesAsync();
                     }
                 } 
 
