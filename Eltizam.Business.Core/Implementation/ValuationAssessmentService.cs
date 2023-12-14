@@ -65,13 +65,14 @@ namespace Eltizam.Business.Core.Implementation
             MasterDocument objUserDocument;
             objUser = _siteRepository.GetAll().Where(x => x.ValuationRequestId == model.SiteDescription.ValuationRequestId).FirstOrDefault();
 
-            string MainTableName = Enum.GetName(TableNameEnum.SiteDescription);
-            int MainTableKey = objUser.Id;
+           
 
-            
+
             //User details
             if (objUser!=null)
             {
+                string MainTableName = Enum.GetName(TableNameEnum.SiteDescription);
+                int MainTableKey = objUser.Id;
                 //Get current Entiry --AUDITLOGUSER
                 SiteDescription OldEntity = null;
                 OldEntity = _siteRepository.GetNoTracking(objUser.Id);
@@ -141,16 +142,13 @@ namespace Eltizam.Business.Core.Implementation
             }
 
 
-            ///////////////comprable//////
-            ///
             comparable = _repository.GetAll().Where(x => x.RequestId == model.comparableEvidenceModel.RequestId).FirstOrDefault();
-            string MaincomparableTableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
-            int MaincomparableTableKey = comparable.Id;
-            
-
 
             if (comparable != null)
             {
+                int MaincomparableTableKey = comparable.Id;
+                string MaincomparableTableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
+
                 //Get current Entiry --AUDITLOGUSER
                 ComparableEvidence OldEntity = null;
                 OldEntity = _repository.GetNoTracking(comparable.Id);
@@ -212,18 +210,13 @@ namespace Eltizam.Business.Core.Implementation
                 }
             }
 
-
-            ///////////asssesment/////////////////
-            ///
             objUser1 = _valutionrepository.GetAll().Where(x => x.RequestId == model.valuationAssessementModel.RequestId).FirstOrDefault();
-            string MainAssesmentTableName = Enum.GetName(TableNameEnum.Valuation_Assessement);
-            int MainTableAssesmentKey = objUser1.Id;
-           
-
-
-            //User details
+         
             if (objUser1 != null)
             {
+                string MainAssesmentTableName = Enum.GetName(TableNameEnum.Valuation_Assessement);
+                int MainTableAssesmentKey = objUser1.Id;
+
                 //Get current Entiry --AUDITLOGUSER
                 ValuationAssesment OldEntity = null;
                 OldEntity = _valutionrepository.GetNoTracking(objUser1.Id);
