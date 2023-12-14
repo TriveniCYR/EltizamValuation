@@ -106,23 +106,23 @@ namespace EltizamValuation.Api.Controllers
             }
         }
 
-        [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> DeleteProperty([FromRoute] int id)
-        {
-            try
-            {
-                DBOperation oResponse = await _propertyTypeServices.DeletePropertyType(id);
-                if (oResponse == DBOperation.Success)
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
-                else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
-            }
-            catch (Exception ex)
-            {
-                await _ExceptionService.LogException(ex);
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-            }
-        }
+        //[HttpDelete("Delete/{id}")]
+        //public async Task<IActionResult> DeleteProperty([FromRoute] int id)
+        //{
+        //    try
+        //    {
+        //        DBOperation oResponse = await _propertyTypeServices.DeletePropertyType(id);
+        //        if (oResponse == DBOperation.Success)
+        //            return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
+        //        else
+        //            return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await _ExceptionService.LogException(ex);
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
 
         [HttpGet("CheckPropertTypeExists")]
         public async Task<IActionResult> CheckPropertTypeExists(string PropertyType)

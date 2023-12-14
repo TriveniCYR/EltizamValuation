@@ -117,23 +117,23 @@ namespace EltizamValuation.Api.Controllers
         //    }
         //}
 
-        [HttpDelete("DeleteProperty/{id}")]
-        public async Task<IActionResult> DeleteSubProperty([FromRoute] int id)
-        {
-            try
-            {
-                DBOperation oResponse = await _subpropertyServices.DeleteSubProperty(id);
-                if (oResponse == DBOperation.Success)
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
-                else
-                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
-            }
-            catch (Exception ex)
-            {
-                await _ExceptionService.LogException(ex);
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
-            }
-        }
+        //[HttpDelete("DeleteProperty/{id}")]
+        //public async Task<IActionResult> DeleteSubProperty([FromRoute] int id)
+        //{
+        //    try
+        //    {
+        //        DBOperation oResponse = await _subpropertyServices.DeleteSubProperty(id);
+        //        if (oResponse == DBOperation.Success)
+        //            return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
+        //        else
+        //            return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await _ExceptionService.LogException(ex);
+        //        return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+        //    }
+        //}
         #endregion API Methods
     }
 }
