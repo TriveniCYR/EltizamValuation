@@ -30,6 +30,7 @@ namespace EltizamValuation.Web.Controllers
             _stringLocalizerShared = stringLocalizerShared;
             _helper = helper;
         }
+
         [HttpGet]
         [Route("MasterClient/Clients")]
         public IActionResult Clients()
@@ -88,15 +89,7 @@ namespace EltizamValuation.Web.Controllers
                     //Get Footer info
                     FooterInfo(TableNameEnum.Master_Client, _cofiguration, id);
                
-
-
-                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Client));
-                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    //if (footerRes.IsSuccessStatusCode)
-                    //{
-                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
-                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    //}
+                     
                     if (data._object.Addresses.Count == 0)
                     {
                         MasterAddressEntity addess = new MasterAddressEntity();
@@ -189,12 +182,14 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult ClientDetail(int? id)
         {
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
+            var action = PermissionEnum.View;
 
             int roleId = _helper.GetLoggedInRoleId();
             if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
             MasterClientModel masterUser;
+            
             if (id == null || id <= 0)
             {
                 masterUser = new MasterClientModel();
@@ -210,8 +205,9 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterClientModel>>(jsonResponse);
+                    
                     //Get Footer info
-                    FooterInfo(TableNameEnum.Master_Client, _cofiguration, id);
+                    FooterInfo(TableNameEnum.Master_Client, _cofiguration, id, true); 
 
                     if (data._object is null)
                         return NotFound();
@@ -221,6 +217,7 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+
         private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
         {
             List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();

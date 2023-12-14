@@ -139,12 +139,13 @@ $(document).ready(function () {
     $('.searchable-dropdown').select2();
 
     ErrorDev.hide();
-    readsideNavToggle();
-    hideLoader();
+
+    readsideNavToggle(); 
+
     formatreadonlydate();
-    if ($("#isView").val() === "1") {
-        locationreadOnlyForm();
-    }
+
+    makeFormReadOnly();
+
     //Toaster related things
     if (SuccessToaster !== "" && SuccessToaster !== null) {
         toastr.success(SuccessToaster);
@@ -163,10 +164,7 @@ $(document).ready(function () {
     if (IsApprovePerem === false) {
 
         $("#btnSaveApprove").remove();
-    }
-
-
-
+    } 
     if (IsAddPermQt === false) {
         $("#addNewQt").remove();
     }
@@ -180,8 +178,30 @@ $(document).ready(function () {
     if (IsEditPermIn === false) {
         $("#btnSaveEditIn").remove();
     }
+
+    hideLoader();
 });
 
+function makeFormReadOnly() {
+    debugger
+    if ($("#PageViewMode").val() === "1") {
+        var bdC = $(".bodyContent");
+        var title = bdC.parent().find(".dashboardTitle");
+        var humburg = bdC.parent().find(".hamburger span");
+
+        bdC.find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true).css('background-color', '#f2f2f2');
+        bdC.find("[type=submit]").remove(); // Hide submit actions
+        if (title !== null) {
+            var newTitle = title.text().replace("Edit", "View");
+            title.text(newTitle);
+        }
+
+        if (humburg !== null) {
+            var newhumburg = humburg.text().replace("Edit", "View");
+            humburg.text(newhumburg);
+        }
+    }
+}
 function DeleteFailure(x, y, z) {
     var _em = "";
     if (x.responseJSON !== undefined && x.responseJSON._Message !== undefined)
@@ -319,20 +339,14 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
         }
     });
 }
-
-
-
-
-
-function BindCountryCode() {
-    debugger
+ 
+function BindCountryCode() { 
     $.ajax({
         type: "GET",
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            for (var k = 0; k < addressLength; k++) {
-                debugger
+            for (var k = 0; k < addressLength; k++) { 
                 var CountryCode = $("#Addresses_" + k + "__PhoneExt");
                 var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
 
@@ -375,15 +389,13 @@ function BindCountryCode() {
     });
 }
 
-function BindCountryIsd() {
-    debugger
+function BindCountryIsd() { 
     $.ajax({
         type: "GET",
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            for (var k = 0; k < addressLength; k++) {
-                debugger
+            for (var k = 0; k < addressLength; k++) { 
                 var CountryCode = $("#Addresses_" + k + "__PhoneExt");
                 var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
 

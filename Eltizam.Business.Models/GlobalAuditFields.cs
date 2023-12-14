@@ -17,5 +17,6 @@ namespace Eltizam.Business.Models
         public DateTime? ModifiedDate { get; set; }
         public string? TableName { get; set; }
         public int? TableKey { get; set; }
+        public int? IsView { get; set; }
     }
 }

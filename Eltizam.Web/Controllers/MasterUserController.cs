@@ -110,7 +110,7 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
-                if(masterUser.DateOfBirth >  DateTime.Now)
+                if (masterUser.DateOfBirth > DateTime.Now)
                 {
                     TempData[UserHelper.ErrorMessage] = "Date of Birth can not be future date.";
                     return Redirect($"/MasterUser/UserManage?id={masterUser.Id}");
@@ -133,14 +133,14 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.uploadDocument = docs;
                     masterUser.Document = null;
                 }
-                if(masterUser.File != null)
+                if (masterUser.File != null)
                 {
                     MasterDocumentModel docs = ProfileUpload(masterUser.File);
                     masterUser.uploadProfile = docs;
                     masterUser.File = null;
                 }
 
-                masterUser.Address =  null;
+                masterUser.Address = null;
                 masterUser.Qualification = null;
 
                 //Fill audit logs field
@@ -198,8 +198,9 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
-                    FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
-                      if (data._object is null)
+                    FooterInfo(TableNameEnum.Master_User, _cofiguration, id, true);
+
+                    if (data._object is null)
                         return NotFound();
 
                     return View(data._object);
@@ -275,7 +276,7 @@ namespace EltizamValuation.Web.Controllers
                 //{
                 //    var result = UploadToBlob(file);
                 //}
-               
+
                 //----------------------------------------------------
 
 
@@ -299,7 +300,7 @@ namespace EltizamValuation.Web.Controllers
         public async Task<BlobResponse> UploadToBlob(IFormFile file)
         {
             BlobHandler blob = new BlobHandler();
-           return await blob.SingleFileUpload(file.OpenReadStream(), 102, file.FileName, "tablename", 101,1);
+            return await blob.SingleFileUpload(file.OpenReadStream(), 102, file.FileName, "tablename", 101, 1);
         }
         private MasterDocumentModel ProfileUpload(IFormFile pic)
         {

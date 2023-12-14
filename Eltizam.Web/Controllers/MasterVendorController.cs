@@ -110,6 +110,8 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
+
+
         [HttpPost]
         public IActionResult VendorManage(int id, MasterVendorModel masterUser)
         {
@@ -203,7 +205,8 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterVendorModel>>(jsonResponse);
-                    FooterInfo(TableNameEnum.Master_Vendor, _cofiguration, id);
+
+                    FooterInfo(TableNameEnum.Master_Vendor, _cofiguration, id, true);
                     if (data._object is null)
                         return NotFound();
 
