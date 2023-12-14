@@ -12,7 +12,7 @@ function DeleteVendor() {
 
         var tempInAtiveID = $('#DeleteVendorModel #Id').val();
         var by = LogInUserId;
-        ajaxServiceMethod(BaseURL + DeleteVendors + "/" + tempInAtiveID + "?by=" + by, 'POST', DeleteVendorByIdSuccess, DeleteVendorByIdError);
+        ajaxServiceMethod(BaseURL + DeleteVendors + "/" + tempInAtiveID + "?by=" + by, 'POST', DeleteVendorByIdSuccess, DeleteFailure);
     }
     else {
         toastr.error(DeleteAccessDenied);
@@ -32,9 +32,7 @@ function DeleteVendorByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
-function DeleteVendorByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
+ 
 
 function InitializeVendorList() { 
     var ajaxObject = {

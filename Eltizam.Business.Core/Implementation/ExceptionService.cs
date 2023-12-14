@@ -35,13 +35,15 @@ namespace Eltizam.Business.Core.Implementation
         {
             try
             {
+                var userId = _helper.GetLoggedInUser()?.UserId ?? 1;
+
                 SqlParameter[] osqlParameter =
                 {
                     new SqlParameter("@Message", exception.Message),
                     new SqlParameter("@Source",  exception.Source),
                     new SqlParameter("@InnerException", Convert.ToString(exception.InnerException)),
                     new SqlParameter("@StackTrace", Convert.ToString(exception.StackTrace)),
-                    new SqlParameter("@CreatedBy", _helper.GetLoggedInUser().UserId)
+                    new SqlParameter("@CreatedBy",  userId)
                 };
 
                 await _repository.GetBySP(ProcedureMetastore.usp_InsertException, System.Data.CommandType.StoredProcedure, osqlParameter);

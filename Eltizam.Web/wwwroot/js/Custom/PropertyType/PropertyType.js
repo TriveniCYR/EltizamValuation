@@ -55,7 +55,7 @@ function DeletePropertyType() {
     if (IsDeletePerm) {
         var tid = $('#DeletePropertyTypeModel #Id').val();
         var by = LogInUserId;
-        ajaxServiceMethod(BaseURL + DeleteByIdUrl + "/" + tid + "?by=" + by, Delete, DeleteUserByIdSuccess, DeleteUserByIdError);
+        ajaxServiceMethod(BaseURL + DeleteByIdUrl + "/" + tid + "?by=" + by, Delete, DeleteUserByIdSuccess, DeleteFailure);
     }
     else {
         toastr.error(DeleteAccessDenied);
@@ -74,6 +74,4 @@ function DeleteUserByIdSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
-function DeleteUserByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
+ 

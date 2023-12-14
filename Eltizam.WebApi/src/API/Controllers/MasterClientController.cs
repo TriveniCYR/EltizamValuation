@@ -19,12 +19,11 @@ namespace Eltizam.WebApi.Controllers
         #region Properties
         private readonly IMasterClientService _clientServices;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private readonly IExceptionService _ExceptionService;
-        IExceptionService exceptionService;
+        private readonly IExceptionService _ExceptionService; 
         #endregion Properties
 
         #region Constructor
-        public MasterClientController(IMasterClientService clientServices, IResponseHandler<dynamic> ObjectResponse)
+        public MasterClientController(IMasterClientService clientServices, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService)
         {
             _clientServices = clientServices;
             _ObjectResponse = ObjectResponse;
@@ -107,7 +106,7 @@ namespace Eltizam.WebApi.Controllers
             catch (Exception ex)
             {
                 await _ExceptionService.LogException(ex);
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 

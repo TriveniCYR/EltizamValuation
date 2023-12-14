@@ -19,6 +19,7 @@ using Eltizam.Business.Core.Interface;
 using System.Data.SqlClient;
 using Eltizam.Utility.Enums;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -286,23 +287,42 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> DeleteProperty(int id,int? by)
         {
-            var entityProperty = _repository.Get(id);
-            var entityLocation = _detailrepository.Get(x => x.PropertyId == id);
-            entityLocation.ModifiedBy = by ?? entityLocation.ModifiedBy;
-            if (entityLocation != null)
-                _detailrepository.Remove(entityLocation);
-
-            var entityAmenity = _amenityrepository.GetAll().Where(x => x.PropertyId == id);
-            foreach (var item in entityAmenity)
+            try
             {
-                _amenityrepository.Remove(item);
+                var old = _repository.GetNoTracking(id);
+                DbParameter[] prm =
+                {
+                    new DbParameter("PropertyId", id, SqlDbType.Int), 
+                    new DbParameter("By",         1, SqlDbType.Int)
+                };
+
+                EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_Property_Delete, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);
+
+                var newP = _repository.Get2(id); 
+                //Do Audit Log --AUDITLOGUSER
+                await _auditLogService.CreateAuditLog<MasterProperty>(AuditActionTypeEnum.Update, old, newP, Enum.GetName(TableNameEnum.Master_Property), id);
+
+                // Return a success operation indicating successful deletion.
+                return DBOperation.Success;
             }
-            _repository.Remove(entityProperty);
+            catch (Exception ex)
+            { 
+                throw ex;
+            }
 
-            await _unitOfWork.SaveChangesAsync();
+            //var entityProperty = _repository.Get(id);
+            //var entityLocation = _detailrepository.Get(x => x.PropertyId == id);
+            //if (entityLocation != null)
+            //    _detailrepository.Remove(entityLocation);
 
-            // Return a success operation indicating successful deletion.
-            return DBOperation.Success;
+            //var entityAmenity = _amenityrepository.GetAll().Where(x => x.PropertyId == id);
+            //foreach (var item in entityAmenity)
+            //{
+            //    _amenityrepository.Remove(item);
+            //}
+            //_repository.Remove(entityProperty);
+
+            //await _unitOfWork.SaveChangesAsync(); 
         }
 
         public async Task<List<MasterPropertyModel>> GetMasterPropertyByFiltersAsync(int PropertyTypeId, int SubPropertyTypeId, int OwnershipTypeId)

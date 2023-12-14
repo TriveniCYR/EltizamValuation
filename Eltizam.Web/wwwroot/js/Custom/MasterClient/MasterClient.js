@@ -15,6 +15,7 @@ function DeletedClient() {
         toastr.error(DeleteAccessDenied);
     }
 }
+
 function DeleteClientByIdSuccess(data) {
     try {
         if (data._Success === true) {
@@ -27,10 +28,7 @@ function DeleteClientByIdSuccess(data) {
     } catch (e) {
         toastr.error('Error:' + e.message);
     }
-}
-function DeleteClientByIdError(x, y, z) {
-    toastr.error(ErrorMessage);
-}
+} 
 
 function InitializeClientList() {  
     var ajaxObject = {

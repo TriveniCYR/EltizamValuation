@@ -18,6 +18,9 @@ namespace Eltizam.Data.DataAccess.Core.Repositories
         Task<TEntity> GetNoTrackingAsync(int id);
 
         TEntity GetNoTracking(int id);
+        TEntity Get2(int id);
+
+        Task<TEntity> GetAsync2(int id);
 
         Task<List<TEntity>> GetAllAsync();
 

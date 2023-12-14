@@ -214,7 +214,7 @@ function DeleteRole() {
     if (IsDeletePerm) {
         var tempInAtiveID = $('#DeleteLocationModel #ID').val();
         var url = DeletLocationByIdUrl + "/" + tempInAtiveID;
-        ajaxServiceMethod(BaseURL + url, 'POST', DeleteRoleByIdSuccess);
+        ajaxServiceMethod(BaseURL + url, 'POST', DeleteRoleByIdSuccess, DeleteFailure); 
     }
     else {
         toastr.error(DeleteAccessDenied);
@@ -233,10 +233,5 @@ function DeleteRoleByIdSuccess(data) {
         }
     } catch (e) {
         toastr.error('Error:' + e.message);
-    }
-    function DeleteRoleByIdError(x, y, z) {
-        if (x.get)
-            toastr.error(ErrorMessage);
-        location.reload(true);
-    }
+    } 
 }

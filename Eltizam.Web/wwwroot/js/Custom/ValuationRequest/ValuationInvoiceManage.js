@@ -222,43 +222,42 @@ function GetInvoiceDetail(id){
         url: BaseURL + ValuationInvoiceById + '/'+id,
         "datatype": "json",
         success: function (response) {
-            debugger
             if (response._object != null) {
                 let modeId = response._object.transactionModeId;
                 document.getElementById('hdnTransactionStatusId').value = response._object.transactionStatusId;
                 document.getElementById('hdnTransactionModeId').value = response._object.transactionModeId;
                 if (modeId == 1) {
                     document.getElementById('CashAmount').value = response._object.amount;
-                    document.getElementById('CashTransactionDate').value = response._object.transactionDate;
+                    document.getElementById('CashTransactionDate').value = moment(response._object.transactionDate).format('DD-MMM-YYYY');
                     document.getElementById('CashTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 else if (modeId == 2) {
                     document.getElementById('ChequeAmount').value = response._object.amount;
-                    document.getElementById('ChequeTransactionDate').value = response._object.transactionDate;
-                    document.getElementById('ChequeRecievedDate').value = response._object.chequeRecievedDate;
+                    document.getElementById('ChequeTransactionDate').value = moment(response._object.transactionDate).format('DD-MMM-YYYY');
+                    document.getElementById('ChequeRecievedDate').value = moment(response._object.chequeRecievedDate).format('DD-MMM-YYYY');
                     document.getElementById('ChequeTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 else if (modeId == 3) {
                     document.getElementById('CardAmount').value = response._object.amount;
-                    document.getElementById('CardTransactionDate').value = response._object.transactionDate;
+                    document.getElementById('CardTransactionDate').value = moment(response._object.transactionDate).format('DD-MMM-YYYY');
                     document.getElementById('CardTransactionId').value = response._object.transactionId;
                     document.getElementById('CardTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 else if (modeId == 4) {
                     document.getElementById('BankAmount').value = response._object.amount;
-                    document.getElementById('BankTransactionDate').value = response._object.transactionDate;
+                    document.getElementById('BankTransactionDate').value = moment(response._object.transactionDate).format('DD-MMM-YYYY');
                     document.getElementById('BankTransactionId').value = response._object.transactionId;
                     document.getElementById('BankTransactionStatusId').value = response._object.transactionStatusId;
                 }
                 document.getElementById('CheckNumer').value = response._object.checkNumer;
                 document.getElementById('CheckBankName').value = response._object.checkBankName;
-                document.getElementById('CheckDate').value = response._object.checkDate;
-                document.getElementById('ChequeRecievedDate').value = response._object.chequeRecievedDate;
+                document.getElementById('CheckDate').value = response._object.checkDate
+                document.getElementById('ChequeRecievedDate').value =response._object.chequeRecievedDate;
                 document.getElementById('CardNumber').value = response._object.cardNumber;
                 document.getElementById('CardBankName').value = response._object.cardBankName;
                 document.getElementById('AccountBankName').value = response._object.accountBankName;
                 document.getElementById('CardHolderName').value = response._object.cardHolderName;
-                document.getElementById('ExpireDate').value = response._object.expireDate;
+                document.getElementById('ExpireDate').value = moment(response._object.expireDate).format('DD-MMM-YYYY');
                 document.getElementById('AccountHolderName').value = response._object.accountHolderName;
                 if (response._object.documents != null && response._object.documents.length > 0) {
                     var documents = response._object.documents;
@@ -310,7 +309,6 @@ function formatDateTo_ddMMMyyyy(date) {
 
 function BindTransactionstatus() {
     var id = 47;
-    debugger
     var cashStatusId = $("#CashTransactionStatusId");
     var chequeStatusId = $("#ChequeTransactionStatusId");
     var cardStatusId = $("#CardTransactionStatusId");

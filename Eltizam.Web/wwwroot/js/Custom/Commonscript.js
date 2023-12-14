@@ -182,7 +182,13 @@ $(document).ready(function () {
     }
 });
 
+function DeleteFailure(x, y, z) {
+    var _em = "";
+    if (x.responseJSON !== undefined && x.responseJSON._Message !== undefined)
+        _em = x.responseJSON._Message;
 
+    toastr.error(ErrorMessage + ":" + _em);
+}
 
 //Attach the event handler to any element
 $(document)
