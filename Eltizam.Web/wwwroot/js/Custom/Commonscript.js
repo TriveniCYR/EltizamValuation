@@ -140,7 +140,7 @@ $(document).ready(function () {
 
     ErrorDev.hide();
 
-    readsideNavToggle(); 
+    readsideNavToggle();
 
     formatreadonlydate();
 
@@ -164,7 +164,7 @@ $(document).ready(function () {
     if (IsApprovePerem === false) {
 
         $("#btnSaveApprove").remove();
-    } 
+    }
     if (IsAddPermQt === false) {
         $("#addNewQt").remove();
     }
@@ -182,7 +182,7 @@ $(document).ready(function () {
     hideLoader();
 
     Getactivenotifications();
-}); 
+});
 
 function Getactivenotifications() {
     ajaxServiceMethod(BaseURL + notifications, 'GET', NotificationCountSuccess, GetnotificationsError);
@@ -196,7 +196,7 @@ function NotificationCountSuccess(data) {
     document.getElementById('notificationcount').textContent = data.length;
 }
 
-function makeFormReadOnly() { 
+function makeFormReadOnly() {
     if ($("#PageViewMode").val() === "1") {
         var bdC = $(".bodyContent");
         var title = bdC.parent().find(".dashboardTitle");
@@ -267,13 +267,15 @@ if (action === "Add") {
 function formatreadonlydate() {
     var tdElements = document.querySelectorAll('.formatted-td-date-input');
 
-    tdElements.forEach(function (tdElement) {
-        var originalDate = new Date(tdElement.textContent);
-        var datePart = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-        var timePart = originalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    tdElements.forEach(function (e) { 
+        if (e.textContent !== undefined && e.textContent !== null && e.textContent !== "") {
+            var originalDate = new Date(e.textContent);
 
-        var formattedDate = datePart.replace(/\s/g, '-') + ' ' + timePart;
-        tdElement.textContent = formattedDate
+            var datePart = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+            var timePart = originalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }); 
+            var formattedDate = datePart.replace(/\s/g, '-') + ' ' + timePart;
+            e.textContent = formattedDate;
+        }
     });
 }
 
@@ -352,14 +354,14 @@ function BindDropdownsForDictionary(_url, _controlID, _retrunProperty, _val) {
         }
     });
 }
- 
-function BindCountryCode() { 
+
+function BindCountryCode() {
     $.ajax({
         type: "GET",
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            for (var k = 0; k < addressLength; k++) { 
+            for (var k = 0; k < addressLength; k++) {
                 var CountryCode = $("#Addresses_" + k + "__PhoneExt");
                 var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
 
@@ -402,13 +404,13 @@ function BindCountryCode() {
     });
 }
 
-function BindCountryIsd() { 
+function BindCountryIsd() {
     $.ajax({
         type: "GET",
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) {
-            for (var k = 0; k < addressLength; k++) { 
+            for (var k = 0; k < addressLength; k++) {
                 var CountryCode = $("#Addresses_" + k + "__PhoneExt");
                 var AlternatePhoneExt = $("#Addresses_" + k + "__AlternatePhoneExt");
 
