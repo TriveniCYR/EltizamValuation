@@ -2,9 +2,8 @@
     var isViewValue = getParameterByName('Isview');
     if (isViewValue === '1') {
         $('#masterdictionary').find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true);
-        $('#btnSaveEdit,#addnevalue').hide();
+        $('#btnSaveEdit,#addnevalue,#image').hide();
     }
-
 });
 
 
