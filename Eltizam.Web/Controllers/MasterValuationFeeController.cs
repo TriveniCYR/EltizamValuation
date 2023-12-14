@@ -179,7 +179,9 @@ namespace EltizamValuation.Web.Controllers
 				{
 					string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
 					var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
-					if (data._object is null)
+                    //Get Footer info
+                    FooterInfo(TableNameEnum.Master_ValuationFee, _cofiguration, id);
+                    if (data._object is null)
 						return NotFound();
 
 					return View("ValuationFeeDetail",data._object);

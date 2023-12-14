@@ -44,8 +44,8 @@ namespace Eltizam.Business.Models
         public string? ValuationFeeType { get; set; }
         public string? PropertyType { get; set; }
         public string? ClientType { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+        //public DateTime? CreatedDate { get; set; }
+        //public DateTime? ModifiedDate { get; set; }
         //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? FixedvaluationFees { get; set; }
         public bool IsActive { get; set; }
