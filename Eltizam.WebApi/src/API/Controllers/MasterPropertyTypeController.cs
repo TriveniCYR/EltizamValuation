@@ -20,16 +20,16 @@ namespace Eltizam.WebApi.Controllers
         private readonly IMasterPropertyTypeService _propertyTypeServices;
         private readonly IMasterPropertySubTypeService _propertySubTypeServices;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private readonly IExceptionService _ExceptionService;
-        IExceptionService exceptionService;
+        private readonly IExceptionService _ExceptionService; 
         #endregion Properties
 
         #region Constructor
-        public MasterPropertyTypeController(IMasterPropertyTypeService propertyTypeServices, IMasterPropertySubTypeService propertySubTypeServices, IResponseHandler<dynamic> ObjectResponse)
+        public MasterPropertyTypeController(IMasterPropertyTypeService propertyTypeServices, IMasterPropertySubTypeService propertySubTypeServices,
+               IExceptionService exceptionService, IResponseHandler<dynamic> ObjectResponse)
         {
             _propertyTypeServices = propertyTypeServices;
             _ObjectResponse = ObjectResponse;
-            // _ExceptionService = exceptionService;
+            _ExceptionService = exceptionService;
             _propertySubTypeServices = propertySubTypeServices;
         }
         #endregion Constructor

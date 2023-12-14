@@ -5,20 +5,11 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -252,7 +243,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (master_ClientModel.Addresses.Count > 0)
                 {
                     
-                    var entityAddressess = _repositoryAddress.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client" && x.IsDeleted == true).ToList();
+                    var entityAddressess = _repositoryAddress.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client" && (x.IsDeleted == false || x.IsDeleted == null)).ToList();
                     var allAddressId = entityAddressess.Count > 0 ? entityAddressess.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
                     
                     foreach (var address in master_ClientModel.Addresses)
@@ -326,7 +317,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (master_ClientModel.Contacts.Count > 0)
                 {
 
-                    var entityContacts = _repositoryContact.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client" && x.IsDeleted == true).ToList();
+                    var entityContacts = _repositoryContact.GetAll().Where(x => x.TableKeyId == objClient.Id && x.TableName == "Master_Client" && (x.IsDeleted == false || x.IsDeleted == null)).ToList();
                     var allContactId = entityContacts.Count > 0 ? entityContacts.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
 
                     foreach (var contact in master_ClientModel.Contacts)
