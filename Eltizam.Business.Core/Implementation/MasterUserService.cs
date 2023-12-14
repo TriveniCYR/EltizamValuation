@@ -348,7 +348,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (entityUser.Addresses.Count > 0)
                 {
 
-                    var entityAddressess = _addressRepository.GetAll().Where(x => x.TableKeyId == entityUser.Id && x.TableName == "Master_User" && x.IsDeleted == true).ToList();
+                    var entityAddressess = _addressRepository.GetAll().Where(x => x.TableKeyId == entityUser.Id && x.TableName == "Master_User" && (x.IsDeleted == false || x.IsDeleted == null)).ToList();
                     var allAddressId = entityAddressess.Count > 0 ? entityAddressess.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
 
                     foreach (var address in entityUser.Addresses)
@@ -424,7 +424,7 @@ namespace Eltizam.Business.Core.Implementation
                 if (entityUser.Qualifications.Count > 0)
                 {
 
-                    var entityContacts = _qualifyRepository.GetAll().Where(x => x.TableKeyId == entityUser.Id && x.TableName == "Master_User" && x.IsDeleted == true).ToList();
+                    var entityContacts = _qualifyRepository.GetAll().Where(x => x.TableKeyId == entityUser.Id && x.TableName == "Master_User" && (x.IsDeleted == false || x.IsDeleted == null)).ToList();
                     var allContactId = entityContacts.Count > 0 ? entityContacts.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
 
                     foreach (var qualify in entityUser.Qualifications)

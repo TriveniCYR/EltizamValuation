@@ -11,15 +11,16 @@ namespace Eltizam.Business.Models
         public string? UserName { get; set; }
         [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
-         ErrorMessage = "Enter upper case, lower case & special character only")]
+         ErrorMessage = "Only alphabetical characters are allowed.")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? FirstName { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
-         ErrorMessage = "Enter upper case, lower case & special character only")]
+         ErrorMessage = "Only alphabetical characters are allowed.")]
         public string? MiddleName { get; set; }
         [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
-         ErrorMessage = "Enter upper case, lower case & special character only")]
+         ErrorMessage = "Only alphabetical characters are allowed.")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? LastName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]

@@ -242,7 +242,7 @@ namespace Eltizam.Business.Core.Implementation
                 }
                 if (masterVendortModel.Addresses.Count > 0)
                 {
-                    var entityAddressess = _repositoryAddress.GetAll().Where(x => x.TableKeyId == masterVendortModel.Id && x.TableName == "Master_Vendor" && x.IsDeleted == true).ToList();
+                    var entityAddressess = _repositoryAddress.GetAll().Where(x => x.TableKeyId == masterVendortModel.Id && x.TableName == "Master_Vendor" && (x.IsDeleted == false || x.IsDeleted == null)).ToList();
                     var allAddressId = entityAddressess.Count > 0 ? entityAddressess.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
 
                     foreach (var address in masterVendortModel.Addresses)
@@ -313,7 +313,7 @@ namespace Eltizam.Business.Core.Implementation
                 }
                 if (masterVendortModel.Contacts.Count > 0)
                 {
-                    var entityContacts = _repositoryContact.GetAll().Where(x => x.TableKeyId == masterVendortModel.Id && x.TableName == "Master_User" && x.IsDeleted == true).ToList();
+                    var entityContacts = _repositoryContact.GetAll().Where(x => x.TableKeyId == masterVendortModel.Id && x.TableName == "Master_User" && (x.IsDeleted == false || x.IsDeleted == null)).ToList();
                     var allContactId = entityContacts.Count > 0 ? entityContacts.Select(x => x.Id).OrderBy(Id => Id).ToList() : null;
 
                     foreach (var contact in masterVendortModel.Contacts)

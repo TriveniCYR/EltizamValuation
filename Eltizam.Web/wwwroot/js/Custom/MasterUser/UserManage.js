@@ -112,40 +112,6 @@ function BindGender() {
     }
 }
 
-/*
-function BindCountryCode() {
-    var CountryCode = $("#Address_PhoneExt");
-    var AlternatePhone = $("#Address_AlternatePhoneExt");
-    var _val = $('#hdnPhoneExt').val();
-    var _valAlter = $('#hdnAlternatePhoneExt').val();
-
-    $.ajax({
-        type: "GET",
-        url: BaseURL + CountryList,
-        "datatype": "json",
-        success: function (response) {
-           
-            CountryCode.empty().append('<option selected="selected" value="">select</option>');
-            AlternatePhone.empty().append('<option selected="selected" value="">select</option>');
-            for (var i = 0; i < response.length; i++) {
-                CountryCode.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-                AlternatePhone.append($("<option></option>").val(response[i].isdCountryCode).html(response[i].isdCountryCode));
-            }
-            if (_val != "" || _valAlter != "") {
-                CountryCode.val(_val);
-                AlternatePhone.val(_valAlter);
-            }
-        },
-        failure: function (response) {
-            alert(response.responseText);
-        },
-        error: function (response) {
-            alert(response.responseText);
-            $("#loader").hide();
-        }
-    });
-}
-*/
 
 $('#Address_PinNo').keypress(function (e) {
     if ($('#Address_PinNo').val() == '' && e.which == 48) {
@@ -294,6 +260,50 @@ function removeParentDiv(element) {
 }
 
 
+function escape(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+
+function previewImage() {
+    var preview = document.getElementById('previewImage');
+    var fileInput = document.getElementById('fileInput');
+    var sizeError = document.getElementById('sizeError');
+
+    // Check if a file is selected
+    if (fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var img = new Image();
+            img.src = e.target.result;
+
+            img.onload = function () {
+                // Validate image size
+                var maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+                if (fileInput.files[0].size > maxSizeInBytes) {
+                    sizeError.style.display = 'inline-block';
+                    fileInput.value = ''; // Clear the file input
+                    preview.src = ''; // Clear the preview
+                }
+
+                else {
+                    sizeError.style.display = 'none';
+                    preview.src = e.target.result;
+                }
+            };
+        };
+
+        // Read the file as a data URL
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
+
+// Attach the function to the change event of the file input
+document.getElementById('fileInput').addEventListener('change', previewImage);
+
+
+
 // more address field on click
 function addMoreAddress() {
     const addMoreAddressBox = document.querySelector('.addMoreAddress:last-child');
@@ -387,7 +397,7 @@ function removeParentDivAddress(element, num) {
     }
     var addressContainer = $("#addresses-container");
     var count = addressContainer.children(".addMoreAddress").length;
-    for (i = num; i < count; i++) {
+    for (var i = num; i < count; i++) {
         addressContainer.children(".addMoreAddress")[i].querySelectorAll('[id]').forEach(element => {
             element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
         });
@@ -434,6 +444,58 @@ function validateForAddress() {
         toastr.error("Please fill valid email id in address section.");
         return false;
     }
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    if (count > 0) {
+        var emails = [];
+        var altEmails = [];
+        var phones = [];
+        var altPhones = [];
+        var landPhones = [];
+        for (i = 0; i < count; i++) {
+            var allemail = $("#Addresses_" + i + "__Email").val();
+            var allaltEmail = $("#Addresses_" + i + "__AlternateEmail").val();
+            var allphone = $("#Addresses_" + i + "__Phone").val();
+            var allaltPhone = $("#Addresses_" + i + "__AlternatePhone").val();
+            var alllandPhone = $("#Addresses_" + i + "__Landlinephone").val();
+
+            if (allemail != "") {
+                emails[i] = allemail;
+            }
+            if (allaltEmail != "") {
+                altEmails[i] = allaltEmail;
+            }
+            if (allphone != "") {
+                phones[i] = allphone;
+            }
+            if (allaltPhone != "") {
+                altPhones[i] = allaltPhone;
+            }
+            if (alllandPhone != "") {
+                landPhones[i] = alllandPhone;
+            }
+        }
+        for (i = 0; i < emails.length; i++) {
+            for (y = 0; y < altEmails.length; y++) {
+                if (emails[i] === altEmails[y]) {
+                    toastr.error("mail id can not be duplicate.");
+                    return false;
+                }
+                if (y > (altEmails.length - 1)) {
+                    if (altEmails[y] === altEmails[y + 1]) {
+                        toastr.error("mail id can not be duplicate.");
+                        return false;
+                    }
+                }
+            }
+            if (i < (emails.length - 1)) {
+                if (emails[i] === emails[i + 1]) {
+                    toastr.error("mail id can not be duplicate.");
+                    return false;
+                }
+            }
+        }
+    }
 
     return true;
 }
@@ -464,3 +526,63 @@ function validateForContact() {
     return true;
 }
 
+
+function displayFileNames(input) {
+    const fileInput = input;
+    const fileNamesInput = input.nextElementSibling;
+
+    const files = fileInput.files;
+    let fileNames = "";
+
+    for (let i = 0; i < files.length; i++) {
+        fileNames += files[i].name;
+        if (i < files.length - 1) {
+            fileNames += ", ";
+        }
+    }
+
+    fileNamesInput.value = fileNames;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Get the file input element
+    var fileInput = document.getElementById('fileInput');
+
+    // Add an event listener to the file input
+    fileInput.addEventListener('change', function () {
+        // Get the selected file
+        var file = fileInput.files[0];
+
+        // Check if a file is selected
+        if (file) {
+            // Check if the file type is an image
+            if (!file.type.startsWith('image/')) {
+                // Display an error message or handle the error as needed
+                toastr.error('Please select a valid image file.');
+                // Reset the file input (optional)
+                fileInput.value = '';
+            }
+        }
+    });
+});
+
+if (action === "Add" || action === "Edit") {
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('#DateOfBirth', {
+            dateFormat: 'd-M-Y',
+            defaultDate: 'today',
+            onChange: function (selectedDates, dateStr, instance) {
+                validateDate(selectedDates[0], instance);
+            }
+        });
+
+        function validateDate(selectedDate, instance) {
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (selectedDate > today) {
+                toastr.error("future Dates are not allowed");
+                instance.setDate('today');
+            }
+        }
+    });
+}
