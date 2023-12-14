@@ -71,15 +71,7 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<List<MasterAmenityListModel>>(jsonResponse);
 
                     //Get Footer info
-                    FooterInfo(TableNameEnum.Master_Property, _cofiguration, id);
-
-                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Property));
-                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    //if (footerRes.IsSuccessStatusCode)
-                    //{
-                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
-                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    //}
+                    FooterInfo(TableNameEnum.Master_Property, _cofiguration, id); 
 
                     if (data is null)
                         return NotFound();
@@ -188,10 +180,10 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterPropertyModel>>(jsonResponse);
+                    
                     //Get Footer info
-                    FooterInfo(TableNameEnum.Master_Property, _cofiguration, id);
-                    if (data._object is null)
-                        return NotFound();
+                    FooterInfo(TableNameEnum.Master_Property, _cofiguration, id, true);
+                   
 
                     return View(data._object);
                 }

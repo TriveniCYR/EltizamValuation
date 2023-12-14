@@ -47,17 +47,15 @@ namespace Eltizam.Web.Controllers
                 _helper.LogExceptions(e);
                 ViewBag.errormessage = Convert.ToString(e.StackTrace);
                 return View("Login");
-            } 
+            }
         }
 
-        public IActionResult RoleManage(int? id, string flag1)
+        public IActionResult RoleManage(int? id)
         {
-            ViewBag.IsEdit = id != null;
-            ViewBag.IsView= flag1 != null;
             MasterRoleEntity MasterRole = new MasterRoleEntity();
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
-            
+            var action = PermissionEnum.Edit;
+
             int roleId = _helper.GetLoggedInRoleId();
 
             if (!CheckRoleAccess(ModulePermissionEnum.RoleMaster, action, roleId))
@@ -76,7 +74,7 @@ namespace Eltizam.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterModuleEntity>>>(jsonResponse);
                     MasterRole.MasterModules = data._object.OrderBy(x => x.SortOrder).ToList();
                     return View(MasterRole);
-                } 
+                }
             }
             else
             {
@@ -101,70 +99,48 @@ namespace Eltizam.Web.Controllers
                     //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
                     //}
 
-                    if (data._object is null) 
-                        return NotFound(); 
+                    if (data._object is null)
+                        return NotFound();
 
                     List<MasterModuleEntity> _oListMasterModules = data._object.MasterModules.OrderBy(x => x.SortOrder).ToList();
                     data._object.MasterModules = _oListMasterModules;
                     return View(data._object);
-                } 
+                }
             }
 
             return View();
         }
 
-        public IActionResult RoleView(int? id, string flag1)
+        public IActionResult RoleView(int id)
         {
-            ViewBag.IsEdit = id != null;
-            ViewBag.IsView = flag1 != null;
-
-            var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
-            int roleId = _helper.GetLoggedInRoleId();
-            if (!CheckRoleAccess(ModulePermissionEnum.RoleMaster, action, roleId))
-                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-
             MasterRoleEntity MasterRole = new MasterRoleEntity();
+            //Check permissions for Get
+            var action = PermissionEnum.View;
 
+            int roleId = _helper.GetLoggedInRoleId();
 
-            if (id == null)
+            if (!CheckRoleAccess(ModulePermissionEnum.RoleMaster, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home); 
+
+            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+            APIRepository objapi = new(_cofiguration);
+            HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetRoleById + "/" + id, HttpMethod.Get, token).Result;
+
+            if (responseMessage.IsSuccessStatusCode)
             {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetAllModule + "/" + id, HttpMethod.Get, token).Result;
+                string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result; 
+                var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterRoleEntity>>(jsonResponse);
 
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                //Get Footer info
+                FooterInfo(TableNameEnum.Master_Role, _cofiguration, id, true);
+                 
+                List<MasterModuleEntity> _oListMasterModules = data._object.MasterModules.OrderBy(x => x.SortOrder).ToList();
+                data._object.MasterModules = _oListMasterModules;
 
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<List<MasterModuleEntity>>>(jsonResponse);
-                    FooterInfo(TableNameEnum.Master_Role, _cofiguration, id);
-                    MasterRole.MasterModules = data._object.OrderBy(x => x.SortOrder).ToList();
-                    return View(MasterRole);
-                }
-
-                return View();
+                return View("RoleManage", data._object);
             }
-            else
-            {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetRoleById + "/" + id, HttpMethod.Get, token).Result;
 
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterRoleEntity>>(jsonResponse);
-                    if (data._object is null)
-                    {
-                        return NotFound();
-                    }
-                    List<MasterModuleEntity> _oListMasterModules = data._object.MasterModules.OrderBy(x => x.SortOrder).ToList();
-                    data._object.MasterModules = _oListMasterModules;
-                    return View(data._object);
-                }
-                return NotFound();
-            }
+            return View();
         }
 
         [HttpPost]
@@ -192,7 +168,7 @@ namespace Eltizam.Web.Controllers
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.SaveRole, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterRole))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
-                { 
+                {
                     if (masterRole.Id > 0)
                     {
                         UtilityHelper.RemoveModuleRole(masterRole.Id);
@@ -227,13 +203,13 @@ namespace Eltizam.Web.Controllers
                     }
                 }
                 return RedirectToAction("Roles");
-            } 
+            }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
                 return RedirectToAction("Roles");
-            } 
-        }  
+            }
+        }
     }
 }

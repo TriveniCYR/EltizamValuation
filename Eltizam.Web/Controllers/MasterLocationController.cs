@@ -45,9 +45,7 @@ namespace EltizamValuation.Web.Controllers
 
                 return View("Login");
             }
-        }
-
-
+        } 
 
         public IActionResult LocationById(int id)
         {
@@ -79,14 +77,7 @@ namespace EltizamValuation.Web.Controllers
 
                     //Get Footer info
                     FooterInfo(TableNameEnum.Master_Location, _cofiguration, id);
-
-                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_Location));
-                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    //if (footerRes.IsSuccessStatusCode)
-                    //{
-                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
-                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    //}
+                     
 
                     if (data._object is null)
                         return NotFound();
@@ -97,20 +88,24 @@ namespace EltizamValuation.Web.Controllers
             }
         }
 
-        public IActionResult LocationManage(int? id, int Isview = 0)
+        public IActionResult LocationManage(int? id, int? IsView)
         {
             MasterLocationEntity masterlocation;
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
+            var action = IsView == 1 ? PermissionEnum.View : (id == null ? PermissionEnum.Add : PermissionEnum.Edit);
 
             int roleId = _helper.GetLoggedInRoleId();
             if (!CheckRoleAccess(ModulePermissionEnum.LocationMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
+
+            //Get Footer info
+            var vw = IsView == 1;
+            FooterInfo(TableNameEnum.Master_Location, _cofiguration, id, vw);
+
             if (id == null || id <= 0)
             {
-                masterlocation = new MasterLocationEntity();
-                ViewBag.IsView = Isview;
+                masterlocation = new MasterLocationEntity(); 
                 return View(masterlocation);
             }
             else
@@ -122,19 +117,14 @@ namespace EltizamValuation.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse);
-                    //Get Footer info
-                    FooterInfo(TableNameEnum.Master_Location, _cofiguration, id);
-                    if (data._object is null)
-                        return NotFound();
-                    ViewBag.IsView = Isview;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterLocationEntity>>(jsonResponse); 
+                      
                     return View(data._object);
                 }
                 return NotFound();
             }
         }
-
-
+         
         [HttpPost]
         public IActionResult LocationManage(int id, MasterLocationEntity masterlocation)
         {

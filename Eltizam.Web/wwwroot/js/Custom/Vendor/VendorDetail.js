@@ -1,4 +1,4 @@
- 
+
 
 $(document).ready(function () {
     BindCountry();
@@ -43,7 +43,7 @@ function accordianToggle(header) {
     } else {
         item.style.height = 'auto';
     }
-} 
+}
 
 function removeParentDiv(element) {
     const parentDiv = element.closest('.roundBorderBox');
@@ -261,25 +261,28 @@ function previewImage() {
 }
 
 // Attach the function to the change event of the file input
-document.getElementById('fileInput').addEventListener('change', previewImage);
+var inp = document.getElementById('fileInput');
+if (inp !== null)
+    inp.addEventListener('change', previewImage);
 
 
 document.addEventListener("DOMContentLoaded", function () {
     // Add an event listener to the form submission
-    document.getElementById("vendor").addEventListener("submit", function (event) {
-        // Call the custom validation function
-        if (!validatePhoneNumbers()) {
-            // If validation fails, prevent the form submission
-            event.preventDefault();
-        }
-    });
+    var ven = document.getElementById('vendor');
+    if (ven !== null) {
+        ven.addEventListener("submit", function (event) {
+            // Call the custom validation function
+            if (!validatePhoneNumbers()) {
+                // If validation fails, prevent the form submission
+                event.preventDefault();
+            }
+        });
+    }
 
     // Add change event listeners to relevant input fields
     document.getElementById("Address_Phone").addEventListener("change", validatePhoneNumbers);
     document.getElementById("Address_AlternatePhone").addEventListener("change", validatePhoneNumbers);
-    document.getElementById("Address_Landlinephone").addEventListener("change", validatePhoneNumbers);
-
-
+    document.getElementById("Address_Landlinephone").addEventListener("change", validatePhoneNumbers); 
 });
 
 function getNumericValue(inputValue) {

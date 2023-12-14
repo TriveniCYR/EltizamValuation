@@ -34,7 +34,7 @@
                     <input type="hidden" id="hdnClientType" value="@(Model == null ? 0 : Model.ClientTypeId)" />
                     <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
                     <div id="profile1" class="tabcontent">
-                        @* <h3 class="ptrl-20">Clinet Details</h3> *@
+                        @* <h5 class="ptrl-20">Clinet Details</h5> *@
                         <div class="inputSearchs">
                             <div class="tabSection">
 
@@ -107,7 +107,7 @@
                     </div>
 
                     <div id="profile2" class="tabcontent">
-                        @*  <h3 class="ptrl-20">Mailing Address</h3> *@
+                        @*  <h5 class="ptrl-20">Mailing Address</h5> *@
                         <div class="inputSearchs p-0">
                             <div class="tabSection" id="addresses-container">
                                 @for (int i = 0; i < Model.Addresses.Count; i++)
@@ -209,7 +209,7 @@
                         </div>
                     </div>
                     <div id="profile3" class="tabcontent">
-                        @* <h3 class="ptrl-20">Contact Details</h3> *@
+                        @* <h5 class="ptrl-20">Contact Details</h5> *@
                         <div class="inputSearchs p-0">
                             <div class="tabSection" id="contacts-container">
                                 @for (int i = 0; i < Model.Contacts.Count; i++)
@@ -270,7 +270,7 @@
                             <div class="tabSection">                                
                                 <div class="W-100">
                                     <div class="prevUpload roundBorderBox m-0">
-                                        <h3>Previously uploaded</h3>
+                                        <h5>Previously uploaded</h5>
                                         <div class="flex">
                                             @if (Model.Documents != null)
                                             {

@@ -13,21 +13,17 @@ namespace Eltizam.Web.Controllers
     [CustomAuthorizeAttribute]
     //[ExceptionsFilter]
     public class BaseController : Controller
-    {
-        //internal readonly IConfiguration _cofiguration; 
-        //public BaseController(IConfiguration configuration)
-        //{
-        //    _cofiguration = configuration; 
-        //}
-
+    { 
         /// <summary>
         /// Added by YReddy on 11/07/2023 for getting footer data
         /// </summary>
         /// <param name="enumT"></param>
         /// <param name="_cofiguration"></param>
         /// <param name="id"></param>
-        public void FooterInfo(TableNameEnum enumT, IConfiguration _cofiguration, int? id)
+        public void FooterInfo(TableNameEnum enumT, IConfiguration _cofiguration, int? id, bool? isView = false)
         {
+            ViewBag.PageViewMode = isView == true ? 1 : 0;
+
             if (id == null || id == 0)
                 return;
 
@@ -40,7 +36,7 @@ namespace Eltizam.Web.Controllers
             if (footerRes.IsSuccessStatusCode)
             {
                 string json = footerRes.Content.ReadAsStringAsync().Result;
-                ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
+                ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json); 
             }
         }
 
@@ -51,7 +47,7 @@ namespace Eltizam.Web.Controllers
         /// <param name="perEnum"></param>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        public bool CheckRoleAccess(ModulePermissionEnum enumP, PermissionEnum perEnum, int roleId, SubModuleEnum  enumSM = 0)
+        public bool CheckRoleAccess(ModulePermissionEnum enumP, PermissionEnum perEnum, int roleId, SubModuleEnum enumSM = 0)
         {
             var hasAccess = false;
             bool view = perEnum == PermissionEnum.View;
@@ -81,7 +77,7 @@ namespace Eltizam.Web.Controllers
         /// <param name="roleId"></param>
         /// <returns></returns>
         public RolePermissionModel GetRoleAccessValuations(ModulePermissionEnum enumP, int roleId, SubModuleEnum enumSM = 0)
-        {  
+        {
             var objPermssion = UtilityHelper.GetCntrActionAccess((int)enumP, roleId, (int)enumSM);
             return objPermssion;
         }

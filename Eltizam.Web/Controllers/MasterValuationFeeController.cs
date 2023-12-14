@@ -98,18 +98,10 @@ namespace EltizamValuation.Web.Controllers
         }
 
 
-        public IActionResult ValuationFeeManage(int? id, string view)
-        {
-            if (id != null)
-            {
-                ViewData["IsEdit"] = true;
-            }
-
-            if (view != null)
-            {
-                ViewData["IsView"] = true;
-            }
+        public IActionResult ValuationFeeManage(int? id)
+        { 
             MasterValuationFeesModel masterValuationFeesModel;
+
             //Check permissions for Get
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
             int roleId = _helper.GetLoggedInRoleId();
@@ -179,8 +171,10 @@ namespace EltizamValuation.Web.Controllers
 				{
 					string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
 					var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
+
                     //Get Footer info
-                    FooterInfo(TableNameEnum.Master_ValuationFee, _cofiguration, id);
+                    FooterInfo(TableNameEnum.Master_ValuationFee, _cofiguration, id, true);
+
                     if (data._object is null)
 						return NotFound();
 
