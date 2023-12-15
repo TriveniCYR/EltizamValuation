@@ -46,13 +46,13 @@ function InitializeVendorList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
-        },
-        {
-            "data": "companyName", "name": "Company Name", "render": function (data, type, row, meta) {
+            "data": "id", "name": "Id", "render": function (data, type, row, meta) {
                 // Add a hyperlink on id column
                 return '<a href="/MasterVendor/VendorDetail?id=' + row.id + '" title="View">' + data + '</a>';
             }
+        },
+        {
+            "data": "companyName", "name": "Company Name"
         },
         {
             "data": "estimattionDate", "name": "Estimation Date", "render": function (data, type, row, data) {
