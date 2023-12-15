@@ -49,6 +49,7 @@ namespace Eltizam.Business.Models
         //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? FixedvaluationFees { get; set; }
         public bool IsActive { get; set; }
+        public bool? IsDeleted { get; set; }
         public List<Master_PropertyTypeModel>? propertyTypeViewModels { get; set; }
         public List<Master_ClientTypeModel>? master_ClientTypeModels { get; set; }
         public List<MasterOwnershipTypeEntity>? masterOwnershipTypeEntities { get; set; }

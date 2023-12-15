@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,13 +32,14 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterAddress> _addressRepository { get; set; }
 
         private IRepository<MasterDocument> _documentRepository { get; set; }
+        private readonly IFileUploadService _fileUploadService;
 
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
 
         public ValuationAssessmentService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IAuditLogService auditLogService,
-                               IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
+                               IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration, IFileUploadService fileUploadService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -52,6 +54,7 @@ namespace Eltizam.Business.Core.Implementation
             configuration = _configuration;
             _helper = helper;
             _auditLogService = auditLogService;
+            _fileUploadService = fileUploadService;
         }
 
 
@@ -121,24 +124,26 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
             else
             {
-                if (model.SiteDescription.uploadDocument != null)
-                {
-                    foreach (var doc in model.SiteDescription.uploadDocument)
-                    {
-                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
-                        objUserDocument.IsActive = doc.IsActive;
-                        objUserDocument.TableKeyId = objUser.Id;
-                        objUserDocument.TableName = Enum.GetName(TableNameEnum.SiteDescription);
-                        objUserDocument.DocumentName = doc.DocumentName;
-                        objUserDocument.FileName = doc.FileName;
-                        objUserDocument.FilePath = doc.FilePath;
-                        objUserDocument.FileType = doc.FileType;
-                        objUserDocument.CreatedBy = model.SiteDescription.CreatedBy;
+               
+                await _fileUploadService.UploadFilesAsync(objUser.Id, Enum.GetName(TableNameEnum.SiteDescription), model.SiteDescription.uploadDocument, model.SiteDescription.CreatedBy);
+                //if (model.SiteDescription.uploadDocument != null)
+                //{
+                //    foreach (var doc in model.SiteDescription.uploadDocument)
+                //    {
+                //        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                //        objUserDocument.IsActive = doc.IsActive;
+                //        objUserDocument.TableKeyId = objUser.Id;
+                //        objUserDocument.TableName = Enum.GetName(TableNameEnum.SiteDescription);
+                //        objUserDocument.DocumentName = doc.DocumentName;
+                //        objUserDocument.FileName = doc.FileName;
+                //        objUserDocument.FilePath = doc.FilePath;
+                //        objUserDocument.FileType = doc.FileType;
+                //        objUserDocument.CreatedBy = model.SiteDescription.CreatedBy;
 
-                        _documentRepository.AddAsync(objUserDocument);
-                        await _unitOfWork.SaveChangesAsync();
-                    }
-                }
+                //        _documentRepository.AddAsync(objUserDocument);
+                //        await _unitOfWork.SaveChangesAsync();
+                //    }
+                //}
             }
 
 
@@ -189,25 +194,26 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
             else
             {
+                await _fileUploadService.UploadFilesAsync(comparable.Id, Enum.GetName(TableNameEnum.Comparable_Evidence), model.comparableEvidenceModel.uploadDocument, model.comparableEvidenceModel.CreatedBy);
 
-                if (model.comparableEvidenceModel.uploadDocument != null)
-                {
-                    foreach (var doc in model.comparableEvidenceModel.uploadDocument)
-                    {
-                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
-                        objUserDocument.IsActive = doc.IsActive;
-                        objUserDocument.TableKeyId = comparable.Id;
-                        objUserDocument.TableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
-                        objUserDocument.DocumentName = doc.DocumentName;
-                        objUserDocument.FileName = doc.FileName;
-                        objUserDocument.FilePath = doc.FilePath;
-                        objUserDocument.FileType = doc.FileType;
-                        objUserDocument.CreatedBy = model.comparableEvidenceModel.CreatedBy;
+                //if (model.comparableEvidenceModel.uploadDocument != null)
+                //{
+                //    foreach (var doc in model.comparableEvidenceModel.uploadDocument)
+                //    {
+                //        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                //        objUserDocument.IsActive = doc.IsActive;
+                //        objUserDocument.TableKeyId = comparable.Id;
+                //        objUserDocument.TableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
+                //        objUserDocument.DocumentName = doc.DocumentName;
+                //        objUserDocument.FileName = doc.FileName;
+                //        objUserDocument.FilePath = doc.FilePath;
+                //        objUserDocument.FileType = doc.FileType;
+                //        objUserDocument.CreatedBy = model.comparableEvidenceModel.CreatedBy;
 
-                        _documentRepository.AddAsync(objUserDocument);
-                        await _unitOfWork.SaveChangesAsync();
-                    }
-                }
+                //        _documentRepository.AddAsync(objUserDocument);
+                //        await _unitOfWork.SaveChangesAsync();
+                //    }
+                //}
             }
 
             objUser1 = _valutionrepository.GetAll().Where(x => x.RequestId == model.valuationAssessementModel.RequestId).FirstOrDefault();
@@ -257,25 +263,25 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
             else
             {
+                await _fileUploadService.UploadFilesAsync(objUser1.Id, Enum.GetName(TableNameEnum.Valuation_Assessement), model.valuationAssessementModel.uploadDocument, model.valuationAssessementModel.CreatedBy);
+                //if (model.valuationAssessementModel.uploadDocument != null)
+                //{
+                //    foreach (var doc in model.valuationAssessementModel.uploadDocument)
+                //    {
+                //        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                //        objUserDocument.IsActive = doc.IsActive;
+                //        objUserDocument.TableKeyId = objUser1.Id;
+                //        objUserDocument.TableName = Enum.GetName(TableNameEnum.Valuation_Assessement);
+                //        objUserDocument.DocumentName = doc.DocumentName;
+                //        objUserDocument.FileName = doc.FileName;
+                //        objUserDocument.FilePath = doc.FilePath;
+                //        objUserDocument.FileType = doc.FileType;
+                //        objUserDocument.CreatedBy = model.valuationAssessementModel.CreatedBy;
 
-                if (model.valuationAssessementModel.uploadDocument != null)
-                {
-                    foreach (var doc in model.valuationAssessementModel.uploadDocument)
-                    {
-                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
-                        objUserDocument.IsActive = doc.IsActive;
-                        objUserDocument.TableKeyId = objUser1.Id;
-                        objUserDocument.TableName = Enum.GetName(TableNameEnum.Valuation_Assessement);
-                        objUserDocument.DocumentName = doc.DocumentName;
-                        objUserDocument.FileName = doc.FileName;
-                        objUserDocument.FilePath = doc.FilePath;
-                        objUserDocument.FileType = doc.FileType;
-                        objUserDocument.CreatedBy = model.valuationAssessementModel.CreatedBy;
-
-                        _documentRepository.AddAsync(objUserDocument);
-                        await _unitOfWork.SaveChangesAsync();
-                    }
-                }
+                //        _documentRepository.AddAsync(objUserDocument);
+                //        await _unitOfWork.SaveChangesAsync();
+                //    }
+                //}
             }
 
 
@@ -358,24 +364,25 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
             else
             {
-                if (model.uploadDocument != null)
-                {
-                    foreach (var doc in model.uploadDocument)
-                    {
-                        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
-                        objUserDocument.IsActive = doc.IsActive;
-                        objUserDocument.TableKeyId = objUser.Id;
-                        objUserDocument.TableName = Enum.GetName(TableNameEnum.SiteDescription);
-                        objUserDocument.DocumentName = doc.DocumentName;
-                        objUserDocument.FileName = doc.FileName;
-                        objUserDocument.FilePath = doc.FilePath;
-                        objUserDocument.FileType = doc.FileType;
-                        objUserDocument.CreatedBy = model.CreatedBy;
+                await _fileUploadService.UploadFilesAsync(objUser.Id, Enum.GetName(TableNameEnum.SiteDescription), model.uploadDocument, model.CreatedBy);
+                //if (model.uploadDocument != null)
+                //{
+                //    foreach (var doc in model.uploadDocument)
+                //    {
+                //        objUserDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                //        objUserDocument.IsActive = doc.IsActive;
+                //        objUserDocument.TableKeyId = objUser.Id;
+                //        objUserDocument.TableName = Enum.GetName(TableNameEnum.SiteDescription);
+                //        objUserDocument.DocumentName = doc.DocumentName;
+                //        objUserDocument.FileName = doc.FileName;
+                //        objUserDocument.FilePath = doc.FilePath;
+                //        objUserDocument.FileType = doc.FileType;
+                //        objUserDocument.CreatedBy = model.CreatedBy;
 
-                        _documentRepository.AddAsync(objUserDocument);
-                        await _unitOfWork.SaveChangesAsync();
-                    }
-                }
+                //        _documentRepository.AddAsync(objUserDocument);
+                //        await _unitOfWork.SaveChangesAsync();
+                //    }
+                //}
             }
 
             return DBOperation.Success;

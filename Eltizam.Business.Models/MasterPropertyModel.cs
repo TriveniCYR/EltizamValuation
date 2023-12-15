@@ -47,6 +47,7 @@ namespace Eltizam.Business.Models
         public string? Description { get; set; }
       
         public string? Amenities { get; set; }
+        public bool? IsDeleted { get; set; }
         public MasterPropertyDetailModel PropertyDetail { get; set; }
         public List<MasterAmenityListModel>? AmenityList { get; set; }
     }

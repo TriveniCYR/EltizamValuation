@@ -42,7 +42,8 @@ namespace Eltizam.Business.Models
         [StringLength(250, MinimumLength = 1)]
         public string? Others { get; set; }
         public int? ModifiedBy { get; set; }
-        public int? CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
+        public bool? IsDeleted { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
         public DocumentFilesModel? Document { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }

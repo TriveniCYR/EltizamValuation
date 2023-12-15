@@ -51,5 +51,7 @@ namespace Eltizam.Business.Models
         public string? AlternatePhoneExt { get; set; }
         [StringLength(12, MinimumLength = 9)]
         public string? Landlinephone { get; set; }
+
+        public bool? IsDeleted { get; set; }
     }
 }

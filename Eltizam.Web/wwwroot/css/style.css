@@ -2332,3 +2332,10 @@ table.topQuotationDuesTable {
 .select2-container--default + .select2-container--default {
     display: none;
 }
+.bodyContent .yesNoToggle input[type="radio"] {
+    width: auto;
+    height: auto;
+    background-color: initial;
+    appearance: revert;
+    margin-right:7px;
+}
