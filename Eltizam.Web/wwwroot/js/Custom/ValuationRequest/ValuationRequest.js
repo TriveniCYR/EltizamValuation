@@ -128,8 +128,7 @@ function ConfirmationDeleteValuationRequest(id) {
     $('#DeletevalutionRequestModel #Id').val(id);
 }
 function DeleteValuationRequestType() {
-    var tid = $('#DeletevalutionRequestModel #Id').val();
-    debugger;
+    var tid = $('#DeletevalutionRequestModel #Id').val(); 
     ajaxServiceMethod(BaseURL + ValuationRequestDeleteById + "/" + tid, Delete, DeleteUserByIdSuccess, DeleteFailure);
 }
 function DeleteUserByIdSuccess(data) {

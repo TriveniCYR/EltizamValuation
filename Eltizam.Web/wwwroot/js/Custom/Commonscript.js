@@ -189,7 +189,7 @@ function Getactivenotifications() {
 }
 
 function GetnotificationsError(x, y, z) {
-    toastr.error("Something failed");
+    toastr.error("Something failed for notification pull");
 }
 
 function NotificationCountSuccess(data) {

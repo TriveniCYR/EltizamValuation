@@ -114,10 +114,7 @@ function BindPropertySub(id) {
     // });
 }
 
-function BindClient() {
-    //debugger;
-    //alert("hello");
-
+function BindClient() { 
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
     var _rpname = "clientType";
@@ -147,10 +144,7 @@ function BindClient() {
     //});
 }
 
-function BindOwnership() {
-    //debugger;
-    //alert("hello");
-
+function BindOwnership() { 
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
     var _rpname = "ownershipType";
@@ -200,8 +194,7 @@ function BindFurnished() {
     }
 }
 
-function BindCountry() {
-    debugger
+function BindCountry() { 
     var Country = $("#PropertyDetail_CountryId");
     var _val = $('#hdnCountry').val();
     var _rpname = "countryName";
@@ -216,8 +209,7 @@ function BindState(id) {
     BindDropdowns(StateList + '/' + id, State, _rpname, _val);
 }
 
-function BindCity(id) {
-
+function BindCity(id) { 
     var City = $("#PropertyDetail_CityId");
     var _val = $('#hdnCity').val();
     var _rpname = "cityName";

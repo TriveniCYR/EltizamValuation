@@ -48,10 +48,7 @@ $(document).ready(function () {
     }
 });
 
-function BindProperty() {
-    //alert("hello");
-   // debugger
-
+function BindProperty() { 
     var Property = $("#PropertyTypeId");
     var _val = $('#hdnPropertyType').val();
     var _rpname = "propertyType";
@@ -60,10 +57,7 @@ function BindProperty() {
 
 }
 
-function BindPropertySub(id) {
-   // debugger;
-    //alert("hello");
-
+function BindPropertySub(id) { 
     var PropertySubType = $("#PropertySubTypeId");
     var _val = $('#hdnPropertySubType').val();
     var _rpname = "propertySubType";
@@ -91,10 +85,7 @@ function BindPropertySub(id) {
     // });
 }
 
-function BindClient() {
-    //debugger;
-    //alert("hello");
-
+function BindClient() { 
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
     var _rpname = "clientType";
@@ -124,10 +115,7 @@ function BindClient() {
     //});
 }
 
-function BindOwnership() {
-    //debugger;
-    //alert("hello");
-
+function BindOwnership() { 
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
     var _rpname = "ownershipType";
