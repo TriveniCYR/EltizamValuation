@@ -43,13 +43,13 @@ function InitializeClientList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Clent Name"
-        },
-        {
-            "data": "clientName", "name": "Clent Name", "render": function (data, type, row, meta) {
+            "data": "id", "name": "Id", "render": function (data, type, row, meta) {
                 // Add a hyperlink to view
                 return '<a href="/MasterClient/ClientDetail?id=' + row.id + '" title="View">' + data + '</a>';
             }
+        },
+        {
+            "data": "clientName", "name": "Clent Name"
         },
         {
             "data": "clientType", "name": "Client Type"

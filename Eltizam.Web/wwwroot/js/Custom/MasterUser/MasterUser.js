@@ -77,13 +77,13 @@ function InitializeUserList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
-        },
-        {
-            "data": "userName", "name": "User Name", "render": function (data, type, row, meta) {
+            "data": "id", "name": "Id", "render": function (data, type, row, meta) {
                 // Add a hyperlink on id column
                 return '<a href="/MasterUser/UserDetail?id=' + row.id + '" title="View">' + data + '</a>';
             }
+        },
+        {
+            "data": "userName", "name": "User Name"
         },
         {
             "data": "department", "name": "Department"
