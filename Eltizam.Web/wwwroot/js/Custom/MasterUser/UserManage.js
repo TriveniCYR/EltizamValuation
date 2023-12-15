@@ -1,4 +1,7 @@
 var docId = 0;
+var phoneArray = [];
+var emailArray = [];
+
 $(document).ready(function () {
     BindDepartment();
     BindDesignation();
@@ -110,50 +113,6 @@ function BindGender() {
 }
 
 
-$('#Address_PinNo').keypress(function (e) {
-    if ($('#Address_PinNo').val() == '' && e.which == 48) {
-        return false;
-    }
-    else {
-        var charCode = (e.which) ? e.which : event.keyCode;
-        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-            return false;
-        }
-    }
-});
-$('#Address_Phone').keypress(function (e) {
-    if ($('#Address_Phone').val() == '' && e.which == 48) {
-        return false;
-    }
-    else {
-        var charCode = (e.which) ? e.which : event.keyCode;
-        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-            return false;
-        }
-    }
-});
-$('#Address_Landlinephone').keypress(function (e) {
-    if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
-        return false;
-    }
-    else {
-        var charCode = (e.which) ? e.which : event.keyCode;
-        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-            return false;
-        }
-    }
-});
-$('#Address_AlternatePhone').keypress(function (e) {
-    if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
-        return false;
-    }
-    else {
-        var charCode = (e.which) ? e.which : event.keyCode;
-        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-            return false;
-        }
-    }
-});
 $('#Qualification_YearOfInstitute').keypress(function (e) {
     if ($('#Qualification_YearOfInstitute').val() == '' && e.which == 48) {
         return false;
@@ -409,6 +368,8 @@ function removeParentDivAddress(element, num) {
 document.addEventListener("DOMContentLoaded", function () {
     // Add an event listener to the form submission
     document.getElementById("resource").addEventListener("submit", function (event) {
+        emailArray = [];
+        phoneArray = [];
         // Call the custom validation function
         if (!validateForAddress() || !validateForContact()) {
             // If validation fails, prevent the form submission
@@ -443,12 +404,12 @@ function validateForAddress() {
     }
     var addressContainer = $("#addresses-container");
     var count = addressContainer.children(".addMoreAddress").length;
+    var emails = [];
+    var altEmails = [];
+    var phones = [];
+    var altPhones = [];
+    var landPhones = [];
     if (count > 0) {
-        var emails = [];
-        var altEmails = [];
-        var phones = [];
-        var altPhones = [];
-        var landPhones = [];
         for (i = 0; i < count; i++) {
             var allemail = $("#Addresses_" + i + "__Email").val();
             var allaltEmail = $("#Addresses_" + i + "__AlternateEmail").val();
@@ -457,43 +418,38 @@ function validateForAddress() {
             var alllandPhone = $("#Addresses_" + i + "__Landlinephone").val();
 
             if (allemail != "") {
-                emails[i] = allemail;
+                //emails[i] = allemail;
+                emails.push(allemail);
             }
             if (allaltEmail != "") {
-                altEmails[i] = allaltEmail;
+                emails.push(allaltEmail);
             }
             if (allphone != "") {
-                phones[i] = allphone;
+                //phones[i] = allphone;
+                phones.push(allphone);
             }
             if (allaltPhone != "") {
-                altPhones[i] = allaltPhone;
+                phones.push(allaltPhone);
             }
             if (alllandPhone != "") {
-                landPhones[i] = alllandPhone;
+                phones.push(alllandPhone);
             }
         }
-        for (i = 0; i < emails.length; i++) {
-            for (y = 0; y < altEmails.length; y++) {
-                if (emails[i] === altEmails[y]) {
-                    toastr.error("mail id can not be duplicate.");
-                    return false;
-                }
-                if (y > (altEmails.length - 1)) {
-                    if (altEmails[y] === altEmails[y + 1]) {
-                        toastr.error("mail id can not be duplicate.");
-                        return false;
-                    }
-                }
-            }
-            if (i < (emails.length - 1)) {
-                if (emails[i] === emails[i + 1]) {
-                    toastr.error("mail id can not be duplicate.");
-                    return false;
-                }
+        emailArray = emails.sort(); 
+        for (var z = 0; z < emailArray.length - 1; z++) {
+            if (emailArray[z + 1] == emailArray[z]) {
+                toastr.error("Email can not be duplicated.");
+                return false;
             }
         }
-    }
-
+        phoneArray = phones.sort();
+        for (var y = 0; y < phoneArray.length - 1; y++) {
+            if (phoneArray[y + 1] == phoneArray[y]) {
+                toastr.error("phone number can not be duplicated.");
+                return false;
+            }
+        }
+    }    
     return true;
 }
 function isValidEmail(email) {
