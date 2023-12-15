@@ -2337,7 +2337,7 @@ table.topQuotationDuesTable {
     color: var(--blue);
     padding-left:1em;
 }
-}
+
 .bodyContent .yesNoToggle input[type="radio"] {
     width: auto;
     height: auto;
