@@ -26,6 +26,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequest> _repositoryValuation { get; set; }
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
         private readonly IAuditLogService _auditLogService;
+        private readonly IFileUploadService _fileUploadService;
         private readonly IHelper _helper;
         private readonly string _dbConnection;
         #endregion Properties
@@ -33,7 +34,7 @@ namespace Eltizam.Business.Core.Implementation
         #region Constructor
         public MasterClientService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IAuditLogService auditLogService,
           IHelper helper,
-           Microsoft.Extensions.Configuration.IConfiguration _configuration)
+           Microsoft.Extensions.Configuration.IConfiguration _configuration, IFileUploadService fileUploadService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -48,6 +49,7 @@ namespace Eltizam.Business.Core.Implementation
             _auditLogService = auditLogService;
 
             _dbConnection = DatabaseConnection.ConnString;
+            _fileUploadService = fileUploadService;
         }
         #endregion Constructor
 
@@ -377,23 +379,26 @@ namespace Eltizam.Business.Core.Implementation
                         await _unitOfWork.SaveChangesAsync();
                     }
                 }
-                if (master_ClientModel.uploadDocument != null)
-                {
-                    foreach (var doc in master_ClientModel.uploadDocument)
-                    {
-                        objDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
-                        objDocument.IsActive = doc.IsActive;
-                        objDocument.TableKeyId = objClient.Id;
-                        objDocument.TableName = Enum.GetName(TableNameEnum.Master_Client);
-                        objDocument.DocumentName = doc.DocumentName;
-                        objDocument.FileName = doc.FileName;
-                        objDocument.FilePath = doc.FilePath;
-                        objDocument.FileType = doc.FileType;
-                        objDocument.CreatedBy = doc.CreatedBy;
-                        _repositoryDocument.AddAsync(objDocument);
-                    }
-                    await _unitOfWork.SaveChangesAsync();
-                }
+
+                await _fileUploadService.UploadFilesAsync(objClient.Id, Enum.GetName(TableNameEnum.SiteDescription), master_ClientModel.uploadDocument, master_ClientModel.CreatedBy);
+                //if (model.SiteDescription.uploadDocument != null)
+                //if (master_ClientModel.uploadDocument != null)
+                //{
+                //    foreach (var doc in master_ClientModel.uploadDocument)
+                //    {
+                //        objDocument = _mapperFactory.Get<MasterDocumentModel, MasterDocument>(doc);
+                //        objDocument.IsActive = doc.IsActive;
+                //        objDocument.TableKeyId = objClient.Id;
+                //        objDocument.TableName = Enum.GetName(TableNameEnum.Master_Client);
+                //        objDocument.DocumentName = doc.DocumentName;
+                //        objDocument.FileName = doc.FileName;
+                //        objDocument.FilePath = doc.FilePath;
+                //        objDocument.FileType = doc.FileType;
+                //        objDocument.CreatedBy = doc.CreatedBy;
+                //        _repositoryDocument.AddAsync(objDocument);
+                //    }
+                //    await _unitOfWork.SaveChangesAsync();
+                //}
                 try
                 {
                     // Save changes to the database asynchronously.
