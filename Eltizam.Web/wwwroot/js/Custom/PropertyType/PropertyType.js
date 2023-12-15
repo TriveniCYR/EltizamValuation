@@ -19,7 +19,10 @@ function InitializePropertyTypeDataList() {
             "data": "id", "name": "Id"
         },
         {
-            "data": "propertyType", "name": "Property Type"
+            "data": "propertyType", "name": "Property Type", "render": function (data, type, row, meta) {
+                // Add a hyperlink to the propertyType column
+                return '<a href="/MasterPropertyType/PropertyTypeDetail?id=' + row.id + '" title="View">' + data + '</a>';
+            }
         },
         {
             "data": "subTypes", "name": "Property Sub Type(s)"
