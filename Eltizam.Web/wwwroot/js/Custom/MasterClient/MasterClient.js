@@ -46,7 +46,10 @@ function InitializeClientList() {
             "data": "id", "name": "Clent Name"
         },
         {
-            "data": "clientName", "name": "Clent Name"
+            "data": "clientName", "name": "Clent Name", "render": function (data, type, row, meta) {
+                // Add a hyperlink to view
+                return '<a href="/MasterClient/ClientDetail?id=' + row.id + '" title="View">' + data + '</a>';
+            }
         },
         {
             "data": "clientType", "name": "Client Type"

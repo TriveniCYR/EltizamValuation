@@ -80,7 +80,10 @@ function InitializeUserList() {
             "data": "id", "name": "Id"
         },
         {
-            "data": "userName", "name": "User Name"
+            "data": "userName", "name": "User Name", "render": function (data, type, row, meta) {
+                // Add a hyperlink on id column
+                return '<a href="/MasterUser/UserDetail?id=' + row.id + '" title="View">' + data + '</a>';
+            }
         },
         {
             "data": "department", "name": "Department"
