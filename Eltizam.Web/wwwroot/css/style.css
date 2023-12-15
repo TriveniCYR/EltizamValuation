@@ -2332,3 +2332,8 @@ table.topQuotationDuesTable {
 .select2-container--default + .select2-container--default {
     display: none;
 }
+
+.ahyperlink{
+    color: var(--blue);
+    padding-left:1em;
+}
