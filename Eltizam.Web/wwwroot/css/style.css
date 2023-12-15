@@ -2337,3 +2337,8 @@ table.topQuotationDuesTable {
     color: var(--blue);
     padding-left:1em;
 }
+
+a {
+    color: var(--blue);
+    padding-left: 1em; 
+}
