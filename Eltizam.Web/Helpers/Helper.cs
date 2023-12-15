@@ -1,4 +1,5 @@
-﻿using Eltizam.Utility.Models;
+﻿using Eltizam.Business.Models;
+using Eltizam.Utility.Models;
 using Eltizam.Utility.Utility;
 using Newtonsoft.Json;
 
@@ -83,5 +84,67 @@ namespace Eltizam.Web.Helpers
             //return objList.ToList();
             return objList.Distinct(new RolePermissionModelComparer()).ToList();
         }
+
+
+        public List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
+        {
+            List<MasterDocumentModel> uploadFiles = new List<MasterDocumentModel>();
+
+            if (document.Files == null || document.Files.Count == 0)
+            {
+                throw new ArgumentException("No files were uploaded.");
+            }
+
+            foreach (var file in document.Files)
+            {
+                if (file == null || file.Length == 0)
+                {
+                    continue;
+                }
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var docName = Path.GetFileNameWithoutExtension(file.FileName);
+                var filePath = Path.Combine("wwwroot/Uploads", fileName);
+                filePath = filePath.Replace("\\", "/");
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    // Use synchronous copy operation
+                    file.CopyTo(stream);
+                }
+
+                var upload = new MasterDocumentModel
+                {
+                    FileName = fileName,
+                    FilePath = filePath.Replace("wwwroot", ".."),
+                    DocumentName = docName,
+                    IsActive = true,
+                    FileType = GetFileType(file.ContentType),
+                    CreatedDate = null,
+                    CreatedName = ""
+                };
+
+                uploadFiles.Add(upload);
+            }
+
+            return uploadFiles;
+        }
+
+        private string GetFileType(string contentType)
+        {
+            switch (contentType)
+            {
+                case "image/jpeg":
+                case "image/png":
+                    return "Image";
+                case "application/msword":
+                    return "Word";
+                case "application/pdf":
+                    return "PDF";
+                default:
+                    return "Unknown";
+            }
+        }
+
     }
 }

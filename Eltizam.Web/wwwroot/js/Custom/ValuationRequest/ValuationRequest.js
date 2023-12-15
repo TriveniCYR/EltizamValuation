@@ -51,8 +51,13 @@ function InitializeValutionRequestDataList() {
                 return '<div class="checkboxColumn"><input type="checkbox" value="' + row.id + '"><div>';
             }
         },
+        
         {
-            "data": "referenceNO", "name": "ReferenceNO"
+            "data": "referenceNO", "name": "ReferenceNO", "render": function (data, type, row, meta) {
+                // Add a hyperlink to the ReferenceNO column
+               return '<a href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '&IsView=1" title="View">' + data + '</a>';
+
+            }
         },
         {
             "data": "clientType", "name": "Client Type", className: 'notexport actionColumn'

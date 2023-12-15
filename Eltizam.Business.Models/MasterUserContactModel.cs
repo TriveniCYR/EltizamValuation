@@ -16,5 +16,6 @@ namespace Eltizam.Business.Models
         public string Designation { get; set; }
         public string Mobile { get; set; }
         public int Status { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

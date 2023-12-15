@@ -2338,6 +2338,14 @@ table.topQuotationDuesTable {
     padding-left:1em;
 }
 
+.bodyContent .yesNoToggle input[type="radio"] {
+    width: auto;
+    height: auto;
+    background-color: initial;
+    appearance: revert;
+    margin-right:7px;
+} 
+
 a {
     color: var(--blue);
     padding-left: 1em; 

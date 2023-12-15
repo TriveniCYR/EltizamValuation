@@ -57,6 +57,7 @@ namespace Eltizam.Business.Models
         public int RoleId { get; set; }
 
         public bool IsActive { get; set; }
+        public bool? IsDeleted { get; set; }
 
         [Display(Name = "Password")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$",

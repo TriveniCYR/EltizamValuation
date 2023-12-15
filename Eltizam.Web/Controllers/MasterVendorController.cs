@@ -215,70 +215,7 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
-        private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
-        {
-            List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();
-            if (document.Files == null || document.Files.Count == 0)
-            {
-                throw new ArgumentException("No files were uploaded.");
-            }
-
-            var savedFileNames = new List<string>();
-
-            foreach (var file in document.Files)
-            {
-                if (file == null || file.Length == 0)
-                {
-                    continue;
-                }
-
-                // Check if the file type is allowed
-                var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
-                if (!allowedFileTypes.Contains(file.ContentType))
-                {
-                    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
-                }
-
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var filePath = Path.Combine("wwwroot/Uploads", fileName);
-
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyToAsync(stream);
-                }
-
-                // Save information about the uploaded file to the database
-                var upload = new MasterDocumentModel
-                {
-                    FileName = fileName,
-                    FilePath = filePath,
-                    DocumentName = document.DocumentName,
-                    IsActive =  true,
-                    FileType = GetFileType(file.ContentType)
-                };
-
-                uploadFils.Add(upload);
-            }
-            return uploadFils;
-        }
-
-        private string GetFileType(string contentType)
-        {
-            switch (contentType)
-            {
-                case "image/jpeg":
-                case "image/png":
-                    return "Image";
-                case "application/msword":
-                    return "Word";
-                case "application/pdf":
-                    return "PDF";
-                default:
-                    return "Unknown";
-            }
-        }
-
+       
         private MasterDocumentModel ProfileUpload(IFormFile pic)
         {
             MasterDocumentModel uploadFils = new MasterDocumentModel();

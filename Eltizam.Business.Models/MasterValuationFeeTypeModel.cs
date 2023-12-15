@@ -12,5 +12,6 @@ namespace Eltizam.Business.Models
         public string? ValuationFeeType { get; set; }
         public int? IsActive { get; set; }
         public int? CreatedBy { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

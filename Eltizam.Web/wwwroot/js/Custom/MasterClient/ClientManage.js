@@ -537,9 +537,10 @@ function ConfirmationDocument(id, isAction) {
 function DeleteDocument() {
     if (IsDeletePerm) {
         var id = $('#DeleteDocumentModel #ID').val();
+        var by = LogInUserId;
         if (id) {
             docId = id;
-            ajaxServiceMethod(BaseURL + DeleteClientDocument + "/" + docId, Delete, DeleteClientDocumentSuccess, DeleteClientDocumentError);
+            ajaxServiceMethod(BaseURL + DeleteClientDocument + "/" + docId + "?by=" + by, Delete, DeleteClientDocumentSuccess, DeleteClientDocumentError);
         }
     }
     else {

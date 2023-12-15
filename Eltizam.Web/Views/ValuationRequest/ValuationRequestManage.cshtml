@@ -14,8 +14,9 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
+    var isView=
     ViewData["Title"] = _md + _header; 
-
+  
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
     var isDelete = objPermssion.Delete ? 1 : 0;
     var isAdd = objPermssion.Add ? 1 : 0;
@@ -470,7 +471,14 @@
                                 </div>
                             </div>
                             <div class="text-right buttonArea bodyContent">
-                                <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a> 
+                                <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                                @if (ViewBag.IsView==1)
+                                {
+                                    <a href='/ValuationRequest/ValuationRequestManage?id=@Model.Id'>
+                                        <button type="button" class="lineBtn greyBtn mr-12">Edit</button>
+                                    </a>
+                                }
+
                                 <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
                                 @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                                 {
@@ -730,7 +738,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (Model.ValuationAssesment.SiteDescription.Documents != null)
+                                                            @if (Model.ValuationAssesment.SiteDescription.Documents != null && Model.ValuationAssesment.SiteDescription.Documents.Any())
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.SiteDescription.Documents)
                                                                 {
@@ -741,7 +749,7 @@
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
                                                                         @if (!isHideBtn)
                                                                         {
-                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                         } 
                                                                     </tr>
                                                                 }
@@ -856,7 +864,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (Model.ValuationAssesment.comparableEvidenceModel.Documents != null)
+                                                            @if (Model.ValuationAssesment.comparableEvidenceModel.Documents != null && Model. ValuationAssesment.comparableEvidenceModel.Documents.Any())
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.comparableEvidenceModel.Documents)
                                                                 {
@@ -867,7 +875,7 @@
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
                                                                         @if (!isHideBtn)
                                                                         {
-                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                         }
                                                                     </tr>
                                                                 }
@@ -992,7 +1000,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (Model.ValuationAssesment.valuationAssessementModel.Documents != null)
+                                                            @if (Model.ValuationAssesment.valuationAssessementModel.Documents != null && Model.ValuationAssesment.valuationAssessementModel.Documents.Any())
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.valuationAssessementModel.Documents)
                                                                 {
@@ -1003,7 +1011,7 @@
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
                                                                         @if (!isHideBtn)
                                                                         {
-                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                         }
                                                                     </tr>
                                                                 }

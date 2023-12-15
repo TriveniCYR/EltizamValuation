@@ -83,7 +83,8 @@ namespace Eltizam.Business.Models
         public int? LocationCountryId { get; set; }
         public int? LocationStateId { get; set; }
         public int? LocationCityId { get; set; }
-       
+        public bool? IsDeleted { get; set; }
+
         public List<MasterAmenityListModel>? AmenityList { get; set; }
         public MasterPropertyDetailModel? PropertyDetail { get; set; }
 
