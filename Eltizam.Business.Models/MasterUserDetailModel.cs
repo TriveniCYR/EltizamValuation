@@ -31,7 +31,7 @@ namespace Eltizam.Business.Models
         public int CreatedBy { get; set; }
         public int ProfileAttachmentId { get; set; }
         public string? ProfilePath { get; set; }
-
+        public string? Email { get; set; }
         public MasterUserAddressModel? Address { get; set; }
         public List<MasterUserAddressModel> Addresses { get; set; }
         public Master_QualificationModel? Qualification { get; set; }

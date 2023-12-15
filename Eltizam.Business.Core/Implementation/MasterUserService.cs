@@ -195,6 +195,7 @@ namespace Eltizam.Business.Core.Implementation
 
             var _userEntity = new MasterUserDetailModel();
             _userEntity = _mapperFactory.Get<MasterUser, MasterUserDetailModel>(await _repository.GetAsync(id));
+            
             if (_userEntity != null)
             {
                 DbParameter[] osqlParameter =
@@ -295,7 +296,7 @@ namespace Eltizam.Business.Core.Implementation
                     objUser.ResourceId = entityUser.ResourceId;
                     objUser.IsActive = entityUser.IsActive; 
                     objUser.RoleId = entityUser.RoleId; 
-                    objUser.Email = entityUser.Address?.Email ?? entityUser.Email;
+                    objUser.Email = entityUser.Email;
                     objUser.ModifiedBy = entityUser.ModifiedBy;
 
                     
