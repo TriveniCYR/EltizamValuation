@@ -150,22 +150,23 @@ function ConfirmationDocument(id, isAction) {
 function DeleteDocument() {
 
     docId = $('#DeleteDocumentModel #ID').val()
+    var by = LogInUserId;
     var action = $('#isAction').val();
     if (isDeleteSite && action === 'isSite') {
 
-        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
+        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by , Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
     else if (isDeleteEvidence && action === 'isEvidence') {
 
 
 
-        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
+        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by, Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
     else if (isDeleteAssesment && action === 'isAssesment') {
 
 
 
-        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId, Delete, DeleteDocumentSuccess, DeleteDocumentError);
+        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by, Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
 
 

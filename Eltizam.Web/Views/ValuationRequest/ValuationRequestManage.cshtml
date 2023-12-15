@@ -730,7 +730,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (Model.ValuationAssesment.SiteDescription.Documents != null)
+                                                            @if (Model.ValuationAssesment.SiteDescription.Documents != null && Model.ValuationAssesment.SiteDescription.Documents.Any())
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.SiteDescription.Documents)
                                                                 {
@@ -741,7 +741,7 @@
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
                                                                         @if (!isHideBtn)
                                                                         {
-                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isSite'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                         } 
                                                                     </tr>
                                                                 }
@@ -856,7 +856,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (Model.ValuationAssesment.comparableEvidenceModel.Documents != null)
+                                                            @if (Model.ValuationAssesment.comparableEvidenceModel.Documents != null && Model. ValuationAssesment.comparableEvidenceModel.Documents.Any())
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.comparableEvidenceModel.Documents)
                                                                 {
@@ -867,7 +867,7 @@
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
                                                                         @if (!isHideBtn)
                                                                         {
-                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isEvidence'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                         }
                                                                     </tr>
                                                                 }
@@ -992,7 +992,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (Model.ValuationAssesment.valuationAssessementModel.Documents != null)
+                                                            @if (Model.ValuationAssesment.valuationAssessementModel.Documents != null && Model.ValuationAssesment.valuationAssessementModel.Documents.Any())
                                                             {
                                                                 @foreach (var docs in Model.ValuationAssesment.valuationAssessementModel.Documents)
                                                                 {
@@ -1003,7 +1003,7 @@
                                                                         <td><a href="@docs.FilePath" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>
                                                                         @if (!isHideBtn)
                                                                         {
-                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><span>Delete</span><img src="../assets/trash.svg" alt="trash" /></a></td>
+                                                                            <td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(@docs.Id,'isAssesment'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>
                                                                         }
                                                                     </tr>
                                                                 }

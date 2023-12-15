@@ -15,7 +15,7 @@ namespace Eltizam.Business.Core.Interface
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
         Task<DBOperation> AddUpdateMasterClient(MasterClientModel model);
         Task<DBOperation> DeleteClient(int id, int? by);
-        Task<DBOperation> DeleteDocument(int id);
+        Task<DBOperation> DeleteDocument(int id, int? by);
 
 
     }

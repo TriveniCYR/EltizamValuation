@@ -453,7 +453,7 @@ namespace Eltizam.Business.Core.Implementation
             return _Clients;
         }
 
-        public async Task<DBOperation> DeleteDocument(int id)
+        public async Task<DBOperation> DeleteDocument(int id,int? by)
         {
             if (id > 0)
             {

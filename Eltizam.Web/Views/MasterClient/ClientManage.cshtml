@@ -346,7 +346,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if (Model.Documents != null)
+                                                    @if (Model.Documents != null && Model.Documents.Any())
                                                     {
                                                         @foreach (var docs in Model.Documents)
                                                         {
