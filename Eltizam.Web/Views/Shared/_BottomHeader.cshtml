@@ -28,17 +28,20 @@
         <div class="bodyContent footerAudit">
             <div class=" position-relative flex justify-between align-item-center">
                 <div>
-                    <input type="hidden" id="CreatedBy" value="@data.CreatedBy" /> 
-                    <span>Created By --> </span>
-                    <a class="lineBtn formAbtn" href="@href">@data.CreatedByName</a> <br/> 
-                    <span>Created Date --></span>  <span class="formatted-td-date-input">@data.CreatedDate.ToString()</span>
+                    <input type="hidden" id="CreatedBy" value="@data.CreatedBy" />
+                    <span>Created By  </span> <img src="../assets/arrow-narrow-right.svg" alt="hamburger-icon">
+                    <a class="ahyperlink" href="@href">@data.CreatedByName</a> <br />
+
+                    <span>Created Date</span> <img src="../assets/arrow-narrow-right.svg" alt="hamburger-icon">
+                    <span class="formatted-td-date-input">@data.CreatedDate.ToString()</span>
                 </div>
                 <div class="flex justify-between w-30 align-item-center">
                    <div> 
-                        <input type="hidden" id="ModifiedBy" value="@data.ModifiedBy" /> 
-                        <span>Last Updated By --></span>
-                        <a class="lineBtn formAbtn" href="@href2">@data.ModifiedByName</a> <br/>
-                        <span>Last Updated Date --></span>  <span class="formatted-td-date-input">@data.ModifiedDate.ToString()</span>
+                        <input type="hidden" id="ModifiedBy" value="@data.ModifiedBy" />
+                        <span>Last Updated By </span><img src="../assets/arrow-narrow-right.svg" alt="hamburger-icon">
+                        <a class="ahyperlink" href="@href2">@data.ModifiedByName</a> <br />
+                        <span>Last Updated Date </span> <img src="../assets/arrow-narrow-right.svg" alt="hamburger-icon">
+                        <span class="formatted-td-date-input">@data.ModifiedDate.ToString()</span>
                     </div>
                     <div class="text-right">
                         <a href="@href3" id="myLink">
