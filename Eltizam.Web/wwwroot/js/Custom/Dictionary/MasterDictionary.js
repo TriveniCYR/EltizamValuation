@@ -18,7 +18,10 @@ function InitializeDictionaryList() {
             "data": "id", "name": "Id"
         },
         {
-            "data": "description", "name": "Description"
+            "data": "description", "name": "Description", "render": function (data, type, row, meta) {
+                // Add a hyperlink to the description column
+                return '<a href="/MasterDictionary/MasterDictionaryManage?id=' + row.id + '&IsView=1">' + data + '</a>';
+            }
         },
         {
             "data": "values", "name": "Values"

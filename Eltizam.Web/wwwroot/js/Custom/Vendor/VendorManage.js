@@ -247,7 +247,67 @@ function validateForAddress() {
         toastr.error("Please fill valid email id in address section.");
         return false;
     }
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    var contactContainer = $("#contacts-container");
+    var countContact = contactContainer.children(".roundBorderBox").length;
 
+    var emails = [];
+    var altEmails = [];
+    var phones = [];
+    var altPhones = [];
+    var landPhones = [];
+    if (count > 0 && countContact > 0) {
+        for (i = 0; i < count; i++) {
+            var allemail = $("#Addresses_" + i + "__Email").val();
+            var allaltEmail = $("#Addresses_" + i + "__AlternateEmail").val();
+            var allphone = $("#Addresses_" + i + "__Phone").val();
+            var allaltPhone = $("#Addresses_" + i + "__AlternatePhone").val();
+            var alllandPhone = $("#Addresses_" + i + "__Landlinephone").val();
+
+            if (allemail != "") {
+                //emails[i] = allemail;
+                emails.push(allemail);
+            }
+            if (allaltEmail != "") {
+                emails.push(allaltEmail);
+            }
+            if (allphone != "") {
+                //phones[i] = allphone;
+                phones.push(allphone);
+            }
+            if (allaltPhone != "") {
+                phones.push(allaltPhone);
+            }
+            if (alllandPhone != "") {
+                phones.push(alllandPhone);
+            }
+        }
+        for (z = 0; z < countContact; z++) {
+            var contactEmail = $("#Contacts_" + z + "__Email").val();
+            var mobile = $("#Contacts_" + z + "__Mobile").val();
+            if (contactEmail != "") {
+                emails.push(contactEmail);
+            }
+            if (mobile != "") {
+                phones.push(mobile);
+            }
+        }
+        emailArray = emails.sort();
+        for (var z = 0; z < emailArray.length - 1; z++) {
+            if (emailArray[z + 1] == emailArray[z]) {
+                toastr.error("Email can not be duplicated.");
+                return false;
+            }
+        }
+        phoneArray = phones.sort();
+        for (var y = 0; y < phoneArray.length - 1; y++) {
+            if (phoneArray[y + 1] == phoneArray[y]) {
+                toastr.error("phone number can not be duplicated.");
+                return false;
+            }
+        }
+    }    
     return true;
 }
 function isValidEmail(email) {
@@ -407,108 +467,9 @@ function previewImage() {
 document.getElementById('fileInput').addEventListener('change', previewImage);
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Add an event listener to the form submission
-    document.getElementById("vendor").addEventListener("submit", function (event) {
-        // Call the custom validation function
-        if (!validatePhoneNumbers()) {
-            // If validation fails, prevent the form submission
-            event.preventDefault();
-        }
-    });
-
-    // Add change event listeners to relevant input fields
-    var addressContainer = $("#addresses-container");
-    var count = addressContainer.children(".addMoreAddress").length;
-    for (var i = 0; i < count; i++) {
-        document.getElementById("#Addresses_" + i + "__Phone").addEventListener("change", validatePhoneNumbers(i));
-        document.getElementById("Addresses_" + i + "__AlternatePhone").addEventListener("change", validatePhoneNumbers(i));
-        document.getElementById("Addresses_" + i + "__Landlinephone").addEventListener("change", validatePhoneNumbers(i));
-
-    }
-
-});
-
 function getNumericValue(inputValue) {
     // Extract only numeric values from the input, excluding any phone codes
     return inputValue.replace(/\D/g, "");
-}
-
-function validatePhoneNumbers(i) {
-    // Get numeric values of the phone number fields
-    var phoneExtNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__PhoneExt").value.trim());
-    var phoneNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__Phone").value.trim());
-    var alternatePhoneExtNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__AlternatePhoneExt").value.trim());
-    var alternatePhoneNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__AlternatePhone").value.trim());
-    var landlinePhoneNumeric = getNumericValue(document.getElementById("Addresses_" + i + "__Landlinephone").value.trim());
-
-    if (
-        (phoneNumeric !== "" && (phoneNumeric === alternatePhoneNumeric || phoneNumeric === landlinePhoneNumeric)) ||
-        (alternatePhoneNumeric !== "" && alternatePhoneNumeric === landlinePhoneNumeric)
-    ) {
-        // Display an alert or perform any other action to indicate the validation failure
-        /*alert(" Phone numbers,Alternate Phone and LandLine Phone should be different, considering prefixes.");*/
-        toastr.error(' Phone numbers,Alternate Phone and LandLine Phone should be different, considering prefixes.');
-        if (phoneNumeric === alternatePhoneNumeric) {
-            document.getElementById('Addresses_' + i + '__AlternatePhone').value = '';
-        }
-
-        if (alternatePhoneNumeric === landlinePhoneNumeric) {
-            document.getElementById('Addresses_' + i + '__Landlinephone').value = '';
-        }
-
-        if (phoneNumeric === landlinePhoneNumeric) {
-            document.getElementById('Addresses_' + i + '__Landlinephone').value = '';
-        }
-        return false;
-    }
-
-
-    return true;
-}
-    
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Add an event listener to the form submission
-    document.getElementById("vendor").addEventListener("submit", function (event) {
-
-        // Call the custom validation function
-        if (!validateEmails()) {
-            // If validation fails, prevent the form submission
-            event.preventDefault();
-            
-        }
-
-       
-    });
-
-    // Add change event listeners to relevant input fields
-    var addressContainer = $("#addresses-container");
-    var count = addressContainer.children(".addMoreAddress").length;
-    for (var i = 0; i < count; i++) {
-        // Add change event listeners to relevant input fields
-        document.getElementById("Addresses_" + i + "__Email").addEventListener("change", validateEmails(i));
-        document.getElementById("Addresses_" + i + "__AlternateEmail").addEventListener("change", validateEmails(i));
-    }
-});
-
-function validateEmails() {
-    console.log('validateEmails function is called');
-    // Get values of the email fields
-    var email = document.getElementById("Addresses_" + i + "__Email").value.trim();
-    var alternateEmail = document.getElementById("Addresses_" + i + "__AlternateEmail").value.trim();
-
-    // Check if Email and AlternateEmail are the same
-    if (email !== "" && alternateEmail !== "" && email === alternateEmail) {
-
-        toastr.error('Email and Alternate Email should be different.');
-        document.getElementById('Addresses_' + i + '__AlternateEmail').value = '';
-        return false;
-    }
-
-    //// Validation passed
-    return true;
 }
 
 
