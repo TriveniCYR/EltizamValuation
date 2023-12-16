@@ -14,5 +14,6 @@ namespace Eltizam.Business.Models
         public string? AmenityName { get; set; }
         public string? Icon { get; set; }
         public bool IsActive { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

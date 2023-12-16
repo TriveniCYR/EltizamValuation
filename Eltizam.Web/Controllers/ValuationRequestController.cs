@@ -93,6 +93,7 @@ namespace EltizamValuation.Web.Controllers
 
             //Get Footer info
             var vw = IsView == 1;
+            ViewBag.IsView = IsView;
             FooterInfo(TableNameEnum.ValuationRequest, _cofiguration, id, vw);
 
 
@@ -295,7 +296,7 @@ namespace EltizamValuation.Web.Controllers
 
                 if (masterQuotation.Document != null && masterQuotation.Document.Files != null)
                 {
-                    List<MasterDocumentModel> docs = FileUpload(masterQuotation.Document);
+                    List<MasterDocumentModel> docs = _helper.FileUpload(masterQuotation.Document);
                     masterQuotation.uploadDocument = docs;
                     masterQuotation.Document = null;
                 }
@@ -460,7 +461,7 @@ namespace EltizamValuation.Web.Controllers
 
                 if (masterInvoice.Document != null && masterInvoice.Document.Files != null)
                 {
-                    List<MasterDocumentModel> docs = FileUpload(masterInvoice.Document);
+                    List<MasterDocumentModel> docs =_helper .FileUpload(masterInvoice.Document);
                     masterInvoice.uploadDocument = docs;
                     masterInvoice.Document = null;
                 }
@@ -545,19 +546,19 @@ namespace EltizamValuation.Web.Controllers
 
                 if (valuationAssesment.SiteDescription.Document != null && valuationAssesment.SiteDescription.Document.Files != null)
                 {
-                    List<MasterDocumentModel> docs = FileUpload(valuationAssesment.SiteDescription.Document);
+                    List<MasterDocumentModel> docs = _helper.FileUpload(valuationAssesment.SiteDescription.Document);
                     valuationAssesment.SiteDescription.uploadDocument = docs;
                     valuationAssesment.SiteDescription.Document = null;
                 }
                 if (valuationAssesment.comparableEvidenceModel.Document != null && valuationAssesment.comparableEvidenceModel.Document.Files != null)
                 {
-                    List<MasterDocumentModel> docs = FileUpload(valuationAssesment.comparableEvidenceModel.Document);
+                    List<MasterDocumentModel> docs = _helper.FileUpload(valuationAssesment.comparableEvidenceModel.Document);
                     valuationAssesment.comparableEvidenceModel.uploadDocument = docs;
                     valuationAssesment.comparableEvidenceModel.Document = null;
                 }
                 if (valuationAssesment.valuationAssessementModel.Document != null && valuationAssesment.valuationAssessementModel.Document.Files != null)
                 {
-                    List<MasterDocumentModel> docs = FileUpload(valuationAssesment.valuationAssessementModel.Document);
+                    List<MasterDocumentModel> docs = _helper.FileUpload(valuationAssesment.valuationAssessementModel.Document);
                     valuationAssesment.valuationAssessementModel.uploadDocument = docs;
                     valuationAssesment.valuationAssessementModel.Document = null;
                 }
@@ -653,56 +654,51 @@ namespace EltizamValuation.Web.Controllers
 
             return RedirectToAction("Users");
         }
-        private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
-        {
-            List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();
-            if (document.Files == null || document.Files.Count == 0)
-            {
-                throw new ArgumentException("No files were uploaded.");
-            }
-            //var currentUser = _helper.GetLoggedInUserId();
-            var savedFileNames = new List<string>();
+      
+        //private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
+        //{
+        //    List<MasterDocumentModel> uploadFiles = new List<MasterDocumentModel>();
 
-            foreach (var file in document.Files)
-            {
-                if (file == null || file.Length == 0)
-                {
-                    continue;
-                }
+        //    if (document.Files == null || document.Files.Count == 0)
+        //    {
+        //        throw new ArgumentException("No files were uploaded.");
+        //    }
 
-                // Check if the file type is allowed
-                //var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
-                //if (!allowedFileTypes.Contains(file.ContentType))
-                //{
-                //    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
-                //}
+        //    foreach (var file in document.Files)
+        //    {
+        //        if (file == null || file.Length == 0)
+        //        {
+        //            continue;
+        //        }
 
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var docName = Path.GetFileNameWithoutExtension(file.FileName);
-                var filePath = Path.Combine("wwwroot/Uploads", fileName);
-                filePath = filePath.Replace("\\", "/");
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyToAsync(stream);
-                }
+        //        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+        //        var docName = Path.GetFileNameWithoutExtension(file.FileName);
+        //        var filePath = Path.Combine("wwwroot/Uploads", fileName);
+        //        filePath = filePath.Replace("\\", "/");
 
-                // Save information about the uploaded file to the database
-                var upload = new MasterDocumentModel
-                {
-                    FileName = fileName,
-                    FilePath = filePath.Replace("wwwroot", ".."),
-                    DocumentName = docName,
-                    IsActive = true,
-                    //CreatedBy = currentUser,
-                    FileType = GetFileType(file.ContentType),
-                    CreatedDate = null,
-                    CreatedName = ""
-                };
+        //        using (var stream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            // Use synchronous copy operation
+        //            file.CopyTo(stream);
+        //        }
 
-                uploadFils.Add(upload);
-            }
-            return uploadFils;
-        }
+        //        var upload = new MasterDocumentModel
+        //        {
+        //            FileName = fileName,
+        //            FilePath = filePath.Replace("wwwroot", ".."),
+        //            DocumentName = docName,
+        //            IsActive = true,
+        //            FileType = GetFileType(file.ContentType),
+        //            CreatedDate = null,
+        //            CreatedName = ""
+        //        };
+
+        //        uploadFiles.Add(upload);
+        //    }
+
+        //    return uploadFiles;
+        //}
+
 
         private int DeleteFile(int id, string? fileName)
         {
@@ -722,21 +718,21 @@ namespace EltizamValuation.Web.Controllers
             }
             return isDelete;
         }
-        private string GetFileType(string contentType)
-        {
-            switch (contentType)
-            {
-                case "image/jpeg":
-                case "image/png":
-                    return "Image";
-                case "application/msword":
-                    return "Word";
-                case "application/pdf":
-                    return "PDF";
-                default:
-                    return "Unknown";
-            }
-        }
+        //private string GetFileType(string contentType)
+        //{
+        //    switch (contentType)
+        //    {
+        //        case "image/jpeg":
+        //        case "image/png":
+        //            return "Image";
+        //        case "application/msword":
+        //            return "Word";
+        //        case "application/pdf":
+        //            return "PDF";
+        //        default:
+        //            return "Unknown";
+        //    }
+        //}
 
     }
 }

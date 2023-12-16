@@ -1,4 +1,5 @@
-﻿using Eltizam.Utility.Models;
+﻿using Eltizam.Business.Models;
+using Eltizam.Utility.Models;
 
 namespace Eltizam.Web.Helpers
 {
@@ -14,5 +15,6 @@ namespace Eltizam.Web.Helpers
         void LogExceptions(Exception ex);
 
         List<RolePermissionModel> GetMenusByRole(int loginRoleId);
+        List<MasterDocumentModel> FileUpload(DocumentFilesModel document);
     }
 }

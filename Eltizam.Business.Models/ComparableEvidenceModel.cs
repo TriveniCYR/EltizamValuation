@@ -28,11 +28,12 @@ namespace Eltizam.Business.Models
         public decimal? Price { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? AddtionalComments { get; set; }
-        public int? CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
         public DocumentFilesModel? Document { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }

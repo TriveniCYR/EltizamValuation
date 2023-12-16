@@ -35,13 +35,13 @@
             },
             buttons: [
                 {
-                    extend: 'excel', text: '<p class="m-0" style="position: absolute;top: -20px;width: 4em;">Export To </p> <i class="far fa-file-excel" style="font-size: x-large;"></i>', className: "btn-primary p-0", exportOptions:
+                    extend: 'excel', text: '<i class="far fa-file-excel" style="font-size: x-large;color:var(--green);"></i>', className: "btn-primary", exportOptions:
                     {
                         columns: ':not(.notexport)'
                     }
                 },
                 {
-                    extend: 'pdf', text: '<i class="far fa-file-pdf" style="font-size: x-large;"></i>', className: "btn-primary", exportOptions:
+                    extend: 'pdf', text: '<i class="far fa-file-pdf" style="font-size: x-large;color:var(--error);"></i>', className: "btn-primary", exportOptions:
                     {
                         columns: ':not(.notexport)'
                     }

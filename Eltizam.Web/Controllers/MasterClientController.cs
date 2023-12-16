@@ -122,7 +122,7 @@ namespace EltizamValuation.Web.Controllers
 
                 if (masterUser.Document != null && masterUser.Document.Files != null)
                 {
-                    List<MasterDocumentModel> docs = FileUpload(masterUser.Document);
+                    List<MasterDocumentModel> docs = _helper. FileUpload(masterUser.Document);
                     masterUser.uploadDocument = docs;
                     masterUser.Document = null;
                 }
@@ -218,72 +218,7 @@ namespace EltizamValuation.Web.Controllers
             }
         }
 
-        private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
-        {
-            List<MasterDocumentModel> uploadFils = new List<MasterDocumentModel>();
-            if (document.Files == null || document.Files.Count == 0)
-            {
-                throw new ArgumentException("No files were uploaded.");
-            }
-            var currentUser = _helper.GetLoggedInUserId();
-            var savedFileNames = new List<string>();
-
-            foreach (var file in document.Files)
-            {
-                if (file == null || file.Length == 0)
-                {
-                    continue;
-                }
-
-                // Check if the file type is allowed
-                //var allowedFileTypes = new List<string> { "image/jpeg", "image/png", "application/msword", "application/pdf" };
-                //if (!allowedFileTypes.Contains(file.ContentType))
-                //{
-                //    throw new ArgumentException($"File type '{file.ContentType}' is not allowed.");
-                //}
-
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var docName = Path.GetFileNameWithoutExtension(file.FileName);
-                var filePath = Path.Combine("wwwroot/Uploads", fileName);
-                filePath = filePath.Replace("\\", "/");
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyToAsync(stream);
-                }
-
-                // Save information about the uploaded file to the database
-                var upload = new MasterDocumentModel
-                {
-                    FileName = fileName,
-                    FilePath = filePath.Replace("wwwroot", ".."),
-                    DocumentName = docName,
-                    IsActive = true,
-                    CreatedBy = currentUser,
-                    FileType = file.ContentType,
-                    CreatedDate = null,
-                    CreatedName = ""
-                };
-
-                uploadFils.Add(upload);
-            }
-            return uploadFils;
-        }
-
-        private string GetFileType(string contentType)
-        {
-            switch (contentType)
-            {
-                case "image/jpeg":
-                case "image/png":
-                    return "Image";
-                case "application/msword":
-                    return "Word";
-                case "application/pdf":
-                    return "PDF";
-                default:
-                    return "Unknown";
-            }
-        }
+       
 
         private MasterDocumentModel ProfileUpload(IFormFile pic)
         {

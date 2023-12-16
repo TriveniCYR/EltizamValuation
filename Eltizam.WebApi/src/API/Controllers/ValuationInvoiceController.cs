@@ -111,11 +111,11 @@ namespace Eltizam.WebApi.Controllers
         }
 
         [HttpDelete("DeleteDocument/{id}")]
-        public async Task<IActionResult> DeleteDocument([FromRoute] int id)
+        public async Task<IActionResult> DeleteDocument([FromRoute] int id, int? by)
         {
             try
             {
-                DBOperation oResponse = await _ValuationInvoiceService.DeleteDocument(id);
+                DBOperation oResponse = await _ValuationInvoiceService.DeleteDocument(id, by);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else

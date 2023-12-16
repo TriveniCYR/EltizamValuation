@@ -196,6 +196,7 @@ namespace Eltizam.Business.Core.Implementation
 
             var _userEntity = new MasterUserDetailModel();
             _userEntity = _mapperFactory.Get<MasterUser, MasterUserDetailModel>(await _repository.GetAsync(id));
+            
             if (_userEntity != null)
             {
                 DbParameter[] osqlParameter =

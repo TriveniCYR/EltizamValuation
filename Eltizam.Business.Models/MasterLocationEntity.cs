@@ -47,6 +47,7 @@ namespace Eltizam.Business.Models
         public string? StatesEmirates { get; set; }
         public string? Description { get; set; }
         public bool IsActive { get; set; }
+        public bool? IsDeleted { get; set; }
     }
     public class MasterLocationList
     {

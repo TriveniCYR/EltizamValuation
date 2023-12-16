@@ -15,7 +15,10 @@ function InitializePropertyList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
+            "data": "id", "name": "Id", "render": function (data, type, row, meta) {
+                // Add a hyperlink on id column
+                return '<a href="/MasterProperty/PropertyDetail?id=' + row.id + '" title="View">' + data + '</a>';
+            }
         },
         {
             "data": "propertyName", "name": "Property Name"

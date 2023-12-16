@@ -1,4 +1,6 @@
 var docId = 0;
+var phoneArray = [];
+var emailArray = [];
 
 $(document).ready(function () {
     BindClientType();
@@ -223,6 +225,8 @@ function removeParentDivAddress(element, num) {
 document.addEventListener("DOMContentLoaded", function () {
     // Add an event listener to the form submission
     document.getElementById("client").addEventListener("submit", function (event) {
+        emailArray = [];
+        phoneArray = [];
         // Call the custom validation function
         if (!validateForAddress() || !validateForContact()) {
             // If validation fails, prevent the form submission
@@ -254,7 +258,67 @@ function validateForAddress() {
         toastr.error("Please fill valid email id in address section.");
         return false;
     }
+    var addressContainer = $("#addresses-container");
+    var count = addressContainer.children(".addMoreAddress").length;
+    var contactContainer = $("#contacts-container");
+    var countContact = contactContainer.children(".roundBorderBox").length;
+    
+    var emails = [];
+    var altEmails = [];
+    var phones = [];
+    var altPhones = [];
+    var landPhones = [];
+    if (count > 0 && countContact > 0) {
+        for (i = 0; i < count; i++) {
+            var allemail = $("#Addresses_" + i + "__Email").val();
+            var allaltEmail = $("#Addresses_" + i + "__AlternateEmail").val();
+            var allphone = $("#Addresses_" + i + "__Phone").val();
+            var allaltPhone = $("#Addresses_" + i + "__AlternatePhone").val();
+            var alllandPhone = $("#Addresses_" + i + "__Landlinephone").val();
 
+            if (allemail != "") {
+                //emails[i] = allemail;
+                emails.push(allemail);
+            }
+            if (allaltEmail != "") {
+                emails.push(allaltEmail);
+            }
+            if (allphone != "") {
+                //phones[i] = allphone;
+                phones.push(allphone);
+            }
+            if (allaltPhone != "") {
+                phones.push(allaltPhone);
+            }
+            if (alllandPhone != "") {
+                phones.push(alllandPhone);
+            }
+        }
+        for (z = 0; z < countContact; z++) {
+            var contactEmail = $("#Contacts_" + z + "__Email").val();
+            var mobile = $("#Contacts_" + z + "__Mobile").val();
+            if (contactEmail != "") {
+                emails.push(contactEmail);
+            }
+            if (mobile != "") {
+                phones.push(mobile);
+            }
+        }
+        emailArray = emails.sort();
+        for (var z = 0; z < emailArray.length - 1; z++) {
+            if (emailArray[z + 1] == emailArray[z]) {
+                toastr.error("Email can not be duplicated.");
+                return false;
+            }
+        }
+        phoneArray = phones.sort();
+        for (var y = 0; y < phoneArray.length - 1; y++) {
+            if (phoneArray[y + 1] == phoneArray[y]) {
+                toastr.error("phone number can not be duplicated.");
+                return false;
+            }
+        }
+    }    
     return true;
 }
 function isValidEmail(email) {
@@ -473,9 +537,10 @@ function ConfirmationDocument(id, isAction) {
 function DeleteDocument() {
     if (IsDeletePerm) {
         var id = $('#DeleteDocumentModel #ID').val();
+        var by = LogInUserId;
         if (id) {
             docId = id;
-            ajaxServiceMethod(BaseURL + DeleteClientDocument + "/" + docId, Delete, DeleteClientDocumentSuccess, DeleteClientDocumentError);
+            ajaxServiceMethod(BaseURL + DeleteClientDocument + "/" + docId + "?by=" + by, Delete, DeleteClientDocumentSuccess, DeleteClientDocumentError);
         }
     }
     else {

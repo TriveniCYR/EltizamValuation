@@ -30,11 +30,12 @@ namespace Eltizam.Business.Models
         public bool Insuarance { get; set; }
         public string? InsuranceDetails { get; set; }
 
-        public int? CreatedBy { get; set; }
+        public int CreatedBy { get; set; }
         public int? ModifiedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool IsActive { get; set; }
+        public bool? IsDeleted { get; set; }
         public List<MasterDocumentModel>? Documents { get; set; }
         public DocumentFilesModel? Document { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
