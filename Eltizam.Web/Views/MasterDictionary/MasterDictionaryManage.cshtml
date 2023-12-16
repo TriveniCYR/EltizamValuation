@@ -13,7 +13,7 @@
     var _header = "Dictionary Master";
     var _md = Model.Id > 0 ? "Edit" : "Add";
     ViewData["Title"] = _header;
-
+    
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
 
     var objPermssion = (RolePermissionModel)ViewBag.Access;
@@ -84,6 +84,12 @@
                         </div> 
 
                         <div class="text-right buttonArea bodyContent plr-0">
+                            @if (Model.Id > 0)
+                            {
+                                <a href='/MasterDictionary/MasterDictionaryManage?id=@Model.Id'>
+                                    <button type="button" id="edit" class="lineBtn greyBtn mr-12">Edit</button>
+                                </a>
+                            }
                             <a href='/MasterDictionary/Dictionary'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a> 
                             <button type="button" id="btnSaveEdit" onclick="SaveMasterDictionary()" class="bgBlue">Save</button>
                         </div>

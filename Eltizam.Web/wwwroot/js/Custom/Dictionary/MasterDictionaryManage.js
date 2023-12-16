@@ -4,6 +4,9 @@
         $('#masterdictionary').find('input,select,textarea,checkbox').attr('readonly', true).attr('disabled', true);
         $('#btnSaveEdit,#addnevalue,#image').hide();
     }
+    else {
+        $('#edit').hide();
+    }
 });
 
 function getParameterByName(name, url) {

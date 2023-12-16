@@ -15,13 +15,13 @@ function InitializeDictionaryList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
-        },
-        {
-            "data": "description", "name": "Description", "render": function (data, type, row, meta) {
+            "data": "id", "name": "Id", "render": function (data, type, row, meta) {
                 // Add a hyperlink to the description column
                 return '<a href="/MasterDictionary/MasterDictionaryManage?id=' + row.id + '&IsView=1">' + data + '</a>';
             }
+        },
+        {
+            "data": "description", "name": "Description"
         },
         {
             "data": "values", "name": "Values"
