@@ -209,7 +209,7 @@ namespace Eltizam.Business.Core.Implementation
                         objDocument.FileName = doc.FileName;
                         objDocument.FilePath = doc.FilePath;
                         objDocument.FileType = doc.FileType;
-                        objDocument.CreatedBy = doc.CreatedBy;
+                        objDocument.CreatedBy = entityQuatation.CreatedBy;
 
                         _repositoryDocument.AddAsync(objDocument);
                         await _unitOfWork.SaveChangesAsync();
