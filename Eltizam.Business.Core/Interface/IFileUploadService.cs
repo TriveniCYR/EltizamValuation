@@ -9,7 +9,7 @@ namespace Eltizam.Business.Core.Interface
 {
     public interface IFileUploadService
     {
-         Task<bool> UploadFilesAsync(int tableKeyId, string tableName, List<MasterDocumentModel> uploadDocuments, int createdBy);
+         Task<bool> UploadFilesAsync(int tableKeyId, string tableName, List<MasterDocumentModel> uploadDocuments, int? createdBy);
         
     }
 }

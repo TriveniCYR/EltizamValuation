@@ -380,7 +380,7 @@ namespace Eltizam.Business.Core.Implementation
                     }
                 }
 
-                await _fileUploadService.UploadFilesAsync(objClient.Id, Enum.GetName(TableNameEnum.SiteDescription), master_ClientModel.uploadDocument, master_ClientModel.CreatedBy);
+                await _fileUploadService.UploadFilesAsync(objClient.Id, Enum.GetName(TableNameEnum.Master_Client), master_ClientModel.uploadDocument, objClient.CreatedBy);
                 //if (model.SiteDescription.uploadDocument != null)
                 //if (master_ClientModel.uploadDocument != null)
                 //{

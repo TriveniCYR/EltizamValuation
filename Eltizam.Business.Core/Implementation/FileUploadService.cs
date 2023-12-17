@@ -23,7 +23,7 @@ namespace Eltizam.Business.Core.Implementation
 
         }
 
-        public async Task<bool> UploadFilesAsync(int tableKeyId, string tableName, List<MasterDocumentModel> uploadDocuments, int createdBy)
+        public async Task<bool> UploadFilesAsync(int tableKeyId, string tableName, List<MasterDocumentModel> uploadDocuments, int? createdBy)
         {
             if (uploadDocuments != null && uploadDocuments.Any())
             {
