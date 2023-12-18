@@ -25,6 +25,7 @@ namespace Eltizam.Business.Core.Interface
         Task<GlobalAuditFields?> GetGlobalAuditFields(int TableKeyId, string TableName);
 
         Task<List<MasterUserModel>> GetAllUserList();
+        Task<bool> IsEmailExists(string email, int? userId);
         Task<DBOperation> DeleteDocument(int id);
     }
 }

@@ -101,10 +101,6 @@ namespace Eltizam.WebApi.Controllers
                 {
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oUser.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
-                else if (oResponse == DBOperation.AlreadyExist)
-                {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.Conflict, (AppConstants.DuplicateRecordFound));
-                }
                 else
                     return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
@@ -220,7 +216,22 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
-
+        [HttpGet("CheckEmailExist")]
+        public async Task<IActionResult> CheckEmailExist( string email ,int? userid)
+        {
+            try
+            {
+                bool oResponse = await _MasterUserService.IsEmailExists(email, userid);
+                if (oResponse == true)
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DuplicateRecordFound);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
     }
 }

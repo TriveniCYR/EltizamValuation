@@ -187,7 +187,8 @@ $(document).ready(function () {
 });
 
 function Getactivenotifications() {
-    ajaxServiceMethod(BaseURL + notifications, 'GET', NotificationCountSuccess, GetnotificationsError);
+    var url = "?lastid=" + 0 + "&userId=" + LogInUserId + "&valId=" + 0;
+    ajaxServiceMethod(BaseURL + notifications + url, 'GET', NotificationCountSuccess, GetnotificationsError);
 }
 
 function GetnotificationsError(x, y, z) {
