@@ -26,11 +26,11 @@
                                 Property
                                 @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control searchable-dropdown" })
                             </label>
-                            <label for="">
+                            <label for="" style="width: 15% !important">
                                 From
                                 @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input", id = "FromDate" })
                             </label>
-                            <label for="">
+                            <label for="" style="width: 15% !important">
                                 To
                                 @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input", id = "ToDate" })
                             </label>
