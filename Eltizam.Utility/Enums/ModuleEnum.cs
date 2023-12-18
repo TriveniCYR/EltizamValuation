@@ -20,10 +20,7 @@ namespace Eltizam.Utility.Enums
         VendorMaster = 11,
         DictionaryMaster = 12,
         ValuationRequest = 13,
-        AuditLog = 14,
-        UserMaster = 15,
-        ClientTypeMaster = 16,
-
+        AuditLog = 14
     }
 
     public enum SubModuleEnum
