@@ -31,7 +31,9 @@ function InitializeAuditLogList() {
 
     var columnObject = [
         {
-            "data": "id", "name": "Id"
+            "data": "id", "name": "Id", "render": function (data, type, row, meta) {
+                return '<a href="/AuditLog/AuditLogDetailList?id=' + row.id + '&IsView=1" title="View">' + data + '</a>';
+            }
         },
         {
             "data": "createdByName", "name": "Created User"

@@ -16,7 +16,9 @@ function InitializeLocationDataList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
+            "data": "id", "name": "Id", "render": function (data, type, row, meta) {
+                return '<a href="/MasterLocation/LocationManage?id=' + row.id + '&IsView=1" title="View">' + data + '</a>';
+            }
         },
         {
             "data": "countryName", "name": "Country"

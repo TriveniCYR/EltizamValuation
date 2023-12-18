@@ -101,6 +101,7 @@ namespace EltizamValuation.Web.Controllers
 
             //Get Footer info
             var vw = IsView == 1;
+            ViewBag.IsView = IsView;
             FooterInfo(TableNameEnum.Master_Location, _cofiguration, id, vw);
 
             if (id == null || id <= 0)

@@ -38,6 +38,7 @@ namespace Eltizam.Business.Models
         [StringLength(250, MinimumLength = 1)]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? PropertyCondition { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? AdditionalNotes { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? Others { get; set; }
