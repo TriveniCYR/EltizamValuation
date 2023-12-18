@@ -24,7 +24,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterNotification> _repository { get; set; }
         private IRepository<ValuationRequest> _valuationrepository { get; set; }
         private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
-
+        private IRepository<MasterUser> _userrepository { get; set; }
         public MasterNotificationService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapperFactory mapperFactory)
         {
             _unitOfWork = unitOfWork;
@@ -32,7 +32,8 @@ namespace Eltizam.Business.Core.Implementation
             _configuration = configuration;
             _mapperFactory = mapperFactory;
             _valuationrepository = _unitOfWork.GetRepository<ValuationRequest>();
-            _statusrepository = _unitOfWork.GetRepository<ValuationRequestStatus>(); ;
+            _statusrepository = _unitOfWork.GetRepository<ValuationRequestStatus>(); 
+            _userrepository=_unitOfWork.GetRepository<MasterUser>();
         }
 
         /// <summary>
@@ -144,23 +145,19 @@ namespace Eltizam.Business.Core.Implementation
 
             if (userId != null && userId != 0)
             {
-                /*
-                //Get the role for userId
-                var roleId = from u in _repository.user.where(a>async.id = userId).First().RoleId
 
+                //Get the role for userId
+                var roleId = _userrepository.GetAll().Where(user => user.Id == userId).First().RoleId;
                 if (roleId == (int)RoleEnum.Approver)
                 {
                     result = result.Where(a => a.ApproverId == userId).ToList();
                 }
-                else if(roleId == (int)RoleEnum.Valuer)
+                else if (roleId == (int)RoleEnum.Valuer)
                 {
                     result = result.Where(a => a.ValuerId == userId).ToList();
                 }
                 else
                     result = result.Where(a => a.CreatedBy == userId).ToList();
-                */
-
-                result = result.Where(a => a.CreatedBy == userId).ToList();
             }
 
             if (valId != null && valId != 0)
