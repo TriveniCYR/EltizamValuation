@@ -13,5 +13,7 @@ namespace Eltizam.Business.Models
         public string? FromDate { get; set; }
         public string? ToDate { get; set; }
         public int? Pagesize { get; set; } = 5;
+        public int? LogInUserId { get; set; }
+        public int? TabId { get; set; } = 0;
     }
 }
