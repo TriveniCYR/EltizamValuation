@@ -103,7 +103,8 @@ namespace Eltizam.Web.Helpers
                 }
 
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var docName = Path.GetFileNameWithoutExtension(file.FileName);
+                //var docName = Path.GetFileNameWithoutExtension(file.FileName);
+                var docName = file.FileName;
                 var filePath = Path.Combine("wwwroot/Uploads", fileName);
                 filePath = filePath.Replace("\\", "/");
 
