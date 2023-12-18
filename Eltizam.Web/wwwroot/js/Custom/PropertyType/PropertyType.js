@@ -16,13 +16,14 @@ function InitializePropertyTypeDataList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
-        },
-        {
-            "data": "propertyType", "name": "Property Type", "render": function (data, type, row, meta) {
-                // Add a hyperlink to the propertyType column
+            "data": "id", "name": "Id","render": function (data, type, row, meta) {
                 return '<a href="/MasterPropertyType/PropertyTypeDetail?id=' + row.id + '" title="View">' + data + '</a>';
             }
+        },
+        {
+            "data": "propertyType", "name": "Property Type"
+               
+           
         },
         {
             "data": "subTypes", "name": "Property Sub Type(s)"
