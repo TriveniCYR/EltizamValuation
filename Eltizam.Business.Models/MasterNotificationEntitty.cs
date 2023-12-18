@@ -23,5 +23,7 @@ namespace Eltizam.Business.Models
         public int? Readby { get; set; }
         public DateTime? ReadDate { get; set; }
         public string ValRefNo { get; set; }
+        public int? ApproverId { get; set; }
+        public int? ValuerId { get; set; }
     }
 }

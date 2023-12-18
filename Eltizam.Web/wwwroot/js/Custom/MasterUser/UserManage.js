@@ -3,6 +3,16 @@ var phoneArray = [];
 var emailArray = [];
 
 $(document).ready(function () {
+
+    var emailInput = $("#Email");
+    emailInput.on('blur', function () {
+        // Get the value of the email input
+        var emailValue = $(this).val();
+        var recordId =  $('#hdnId').val()
+        var url = "?email=" + emailValue + "&userId=" + recordId;
+        ajaxServiceMethod(BaseURL + CheckEmailExistonRemote + url, 'GET', GetemailexistSuccess, GetemailexistError);
+    });
+
     BindDepartment();
     BindDesignation();
     BindRole();
@@ -19,6 +29,13 @@ $(document).ready(function () {
     BindGender();
 
 });
+function GetemailexistSuccess(data) {
+    console.log(data)
+    toastr.error("Email"+ data._Message);
+}
+function GetemailexistError(x, y, z) {
+    
+}
 
 function BindDepartment() {
     var Department = $("#DepartmentId");
@@ -539,3 +556,19 @@ if (action === "Add" || action === "Edit") {
         }
     });
 }
+$('#openModalLinklatestRequestsTable').on('blur', function () {
+    // Clear the table body before making a new request
+    $('#data-tablerequest tbody').empty();
+
+    checkemailexist()
+        .done(function (data) {
+            console.log(data);
+         
+        })
+        .fail(function () {
+            alert('Failed to fetch data for modal 1 from the API');
+        });
+    return false;
+});
+
+

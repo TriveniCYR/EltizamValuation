@@ -113,6 +113,7 @@ namespace Eltizam.Web.Controllers
 
         public IActionResult RoleView(int id)
         {
+            var IsView = 1;
             MasterRoleEntity MasterRole = new MasterRoleEntity();
             //Check permissions for Get
             var action = PermissionEnum.View;
@@ -130,7 +131,9 @@ namespace Eltizam.Web.Controllers
             {
                 string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result; 
                 var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterRoleEntity>>(jsonResponse);
-
+                
+                var vw = IsView == 1;
+                ViewBag.IsView = IsView;
                 //Get Footer info
                 FooterInfo(TableNameEnum.Master_Role, _cofiguration, id, true);
                  

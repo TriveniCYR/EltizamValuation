@@ -47,7 +47,7 @@ namespace Eltizam.Web.Helpers
         public static string DeleteUserDocumentById = "MasterUser/DeleteDocument";
         public static string GetGlobalAuditFields = "MasterUser/GetGlobalAuditFields";
         public static string GetUserNameList = "MasterUser/GetAllUserList";
-
+        public static string CheckEmailExist = "MasterUser/CheckEmailExist";
         #endregion User
 
         #region Designation

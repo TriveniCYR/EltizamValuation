@@ -5,7 +5,7 @@
 
 
 function Getnotifications(notificationid) { 
-    var userId = $("#userid").val();
+    var userId = LogInUserId;
     var valId = $("#valId").val();
     var url = "?lastid=" + notificationid + "&userId=" + userId + "&valId=" + valId;
 

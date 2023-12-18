@@ -49,11 +49,11 @@
                             <img src="~/assets/plus.svg" alt="plus"> Add New
                         </button>
                     </form>
-                
-                <button class="flex align-item-center lineBtn exportFile" onclick="assingApproverToggle()" id="isApprove">
+             
+                <button class="flex align-item-center lineBtn exportFile" onclick="assingApproverToggle()" id="isApprove" style="@(isApprove == 0 ? "display:none;" : "")">
                     <img src="../assets/user-shield.svg" alt="user">
                     Assign
-                </button> 
+                </button>
 
                 <div class="accordion-content inputSearchs" id="assingApprover" style="display:none">
                     <div class="flex justify-between">

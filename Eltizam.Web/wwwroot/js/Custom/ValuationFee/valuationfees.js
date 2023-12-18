@@ -48,13 +48,13 @@ function InitializeDataList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
-        },
-        {
-            "data": "valuationType", "name": "Valuation Type", "render": function (data, type, row, meta) {
+            "data": "id", "name": "Id", "render": function (data, type, row, meta) {
                 return '<a href="/MasterValuationFee/ValuationFeeDetail?id=' + row.id + '&IsView=1" title="View">' + data + '</a>';
 
             }
+        },
+        {
+            "data": "valuationType", "name": "Valuation Type"
         },
         {
             "data": "propertyType", "name": "Property Type"
