@@ -1045,9 +1045,9 @@ function BindQuatationList() {
                 $.each(response, function (index, object) {
                     var html = '';
 
+                    var url = '/ValuationRequest/ValuationQuotationManage?id=' + object.id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                    html += '<li><a title="View" href="/ValuationRequest/ValuationQuotationManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
-                    /*html += '<li><a title="Edit" href="/MasterVendor/VendorManage?id=' + object.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';*/
+                    html += '<li><a title="View" href=' + url +'><img src="../assets/view.svg" alt="view" />View</a></li>'; 
                     if (view == 2) {
                         html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeleteQuotationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteQuotation(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                     }
@@ -1056,7 +1056,7 @@ function BindQuatationList() {
                     } 
                     html += '</ul></div>'; 
 
-                    $('#QuatationTable tbody').append(' <tr id="' + object.id + '"><td>' + object.referenceNo + '</td> <td class="formatting">' + object.valuationFee + '</td><td class="formatting">' + object.vat
+                    $('#QuatationTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url +'>' + object.referenceNo + '</a></td> <td class="formatting">' + object.valuationFee + '</td><td class="formatting">' + object.vat
                         + '</td><td class="formatting">' + object.otherCharges + '</td><td class="formatting">' + object.discount + '</td><td class="formatting">' + object.totalFee + '</td><td>' + object.userName + '</td> <td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.statusName + '</td><td>' + html + '</td></tr>');
                 });
                 formatCurrencyInElements('formatting');
@@ -1083,9 +1083,9 @@ function BindInvoiceList() {
             if (response != null) {
                 $.each(response, function (index, object) {
                     var html = '';
-
+                    var url = '/ValuationRequest/ValuationInvoiceManage?id=' + object.id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                    html += '<li><a title="View" href="/ValuationRequest/ValuationInvoiceManage?id=' + object.id + '&vId=' + object.valuationRequestId + '&refNo=' + object.referenceNo + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    html += '<li><a title="View" href=' + url +'><img src="../assets/view.svg" alt="view" />View</a></li>';
                     if (view == 2) {
                         html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                     }
@@ -1094,7 +1094,7 @@ function BindInvoiceList() {
                     }
                     html += '</ul></div>';
 
-                    $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td>' + object.referenceNo + '</td><td>' + object.transactionMode
+                    $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.referenceNo +'</a></td><td>' + object.transactionMode
                         + '</td><td>' + object.transactionStatusName + '</td><td class="formatting">' + object.amount + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
                 });
             }
