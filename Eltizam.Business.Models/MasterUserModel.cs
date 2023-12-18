@@ -69,6 +69,11 @@ namespace Eltizam.Business.Models
         [CompareAttribute("Password", ErrorMessage = "Password and Confirm Password doesn't match.")]
         [DataType(DataType.Password)]
         public string? ConfirmPassowrd { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [DataType(DataType.EmailAddress)]
+        [MaxLength(50)]
+        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
         public string? Email { get; set; }
         public int ProfileAttachmentId { get; set; }
         public string? ProfilePath { get; set; }

@@ -174,7 +174,7 @@
                                         @Html.ValidationMessageFor(model => model.LicenseNo, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="Email">
-                                        Login Email
+                                         <p class="m-0">Login Email<span class="text-danger">*</span></p>
                                         @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = @SharedLocalizer["Login Email"] })
                                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                     </label>
@@ -249,7 +249,7 @@
                                             <label for="Email">
                                                 <p class="m-0">Email</p>
                                                 @Html.TextBoxFor(model => model.Addresses[i].Email, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Email"] })
-                                                @Html.ValidationMessageFor(model => model.Addresses[i].Email, "", new { @class = "text-danger" })
+                                             
                                             </label>
                                             <label for="AlternateEmail">
                                                 Alternate Email

@@ -101,10 +101,6 @@ namespace Eltizam.WebApi.Controllers
                 {
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oUser.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
                 }
-                else if (oResponse == DBOperation.AlreadyExist)
-                {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.Conflict, (AppConstants.DuplicateRecordFound));
-                }
                 else
                     return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }

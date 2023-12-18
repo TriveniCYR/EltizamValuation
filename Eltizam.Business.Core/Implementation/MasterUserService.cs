@@ -263,14 +263,7 @@ namespace Eltizam.Business.Core.Implementation
                 entityUser.Password = UtilityHelper.GenerateSHA256String(entityUser.Password);
                 entityUser.ConfirmPassowrd = entityUser.Password;
             }
-            if (entityUser != null && entityUser.Email != null && entityUser.Id == 0)
-            {
-                var result = IsEmailExists(entityUser.Email);
-                if (result)
-                {
-                    return DBOperation.AlreadyExist;
-                }
-            }
+            
            
            MasterUser objUser;
             MasterAddress objUserAddress;
