@@ -1117,7 +1117,7 @@ function ConfirmationDeleteQuotation(id) {
     $('#DeleteQuotationModel #Id').val(id);
 }
 function DeleteQuotation() {
-    if (IsDeletePerm) {
+    if (isDeleteQt) {
         var tempInAtiveID = $('#DeleteQuotationModel #Id').val();
         var by = LogInUserId;
         ajaxServiceMethod(BaseURL + DeleteQuotationByIdUrl + "/" + tempInAtiveID + "?by=" + by, Post, DeleteQuotationByIdSuccess, DeleteQuotationByIdError);
@@ -1156,7 +1156,7 @@ function ConfirmationDeleteInvoice(id) {
 function DeleteInvoice() {
     invoiceId = $('#DeleteInvoiceModel #ID').val()
     var by = LogInUserId;
-    if (IsDeletePerm) {
+    if (isDeleteIn) {
         var tempInAtiveID = $('#DeleteInvoiceModel #Id').val();
         ajaxServiceMethod(BaseURL + DeleteInvoiceByIdUrl + "/" + tempInAtiveID + "?by=" + by, Post, DeleteInvoiceByIdSuccess, DeleteInvoiceByIdError);
     }

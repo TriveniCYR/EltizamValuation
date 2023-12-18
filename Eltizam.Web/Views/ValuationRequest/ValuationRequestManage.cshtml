@@ -29,11 +29,13 @@
     var isAddQt = objPermssionQt.Add ? 1 : 0;
     var isEditQt = objPermssionQt.Edit ? 1 : 0;
     var isViewQt = objPermssionQt.View ? 1 : 0;
+    var isDeleteQt = objPermssionQt.Delete ? 1 : 0;
 
     var objPermssionIn = (RolePermissionModel)ViewBag.InvoiceAccess;
     var isAddIn = objPermssionIn.Add ? 1 : 0;
     var isEditIn = objPermssionIn.Edit ? 1 : 0;
     var isViewIn = objPermssionIn.View ? 1 : 0;
+    var isDeleteIn = objPermssionIn.Delete ? 1 : 0;
 
     var objPermssionSite = (RolePermissionModel)ViewBag.SiteDescription;
     var isAddSite = objPermssionSite.Add ? 1 : 0;
@@ -117,7 +119,9 @@
                             <input type="hidden" id="hdnRoleId" value=@roleId />
                             <input type="hidden" id="roleEnum" value=@roleId />
                             <input type="hidden" id="isDeleteSite" value="@isDeleteSite" />
+                            <input type="hidden" id="isDeleteQt" value="@isDeleteQt" />
                             <input type="hidden" id="isDeleteEvidence" value="@isDeleteEvidence" />
+                            <input type="hidden" id="isDeleteIn" value="@isDeleteIn" />
                             <input type="hidden" id="isDeleteAssesment" value="@isDeleteAssesment" />
                             <input type="hidden" id="isDeletePerm" value="@isDelete" />
                             <input type="hidden" id="isAction" />
@@ -475,8 +479,12 @@
                                         <button type="button" class="lineBtn greyBtn mr-12">Edit</button>
                                     </a>
                                 }
+                                 @if (roleId == (int)RoleEnum.Admin ||roleId == (int)RoleEnum.Requestor )
+                                {
 
-                                <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
+                                    <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
+                                }
+
                                 @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                                 {
                                     <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
@@ -630,7 +638,7 @@
                                 <label for="">
                                     <p class="m-0"> Floor<span class="text-danger">*</span></p>
                                     @Html.TextBoxFor(model => model.ValuationAssesment.SiteDescription.Floor, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Floor"] })
-                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.Location, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.SiteDescription.Floor, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
