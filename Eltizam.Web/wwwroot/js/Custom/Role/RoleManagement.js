@@ -16,11 +16,9 @@ function InitializeRoleDataList() {
     };
     var columnObject = [
         {
-            "data": "id", "name": "Id"
-            //, "render": function (data, type, row, meta) {
-            //    var url = "/MasterRole/RoleManage?id=";
-            //    return GetIdLinkCss(url, row.id);
-            //}
+            "data": "id", "name": "Id", "render": function (data, type, row, meta) {
+                return '<a href="/MasterRole/RoleView?id=' + row.id + '&IsView=1" title="View">' + data + '</a>';
+            }
         },
         {
             "data": "roleName", "name": "Role"
