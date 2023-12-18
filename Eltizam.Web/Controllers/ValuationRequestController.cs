@@ -87,10 +87,11 @@ namespace EltizamValuation.Web.Controllers
 
             //var action =id == null? PermissionEnum.Add:true? PermissionEnum.Edit: PermissionEnum.View;
             int roleId = _helper.GetLoggedInRoleId();
+            int userId = _helper.GetLoggedInUserId();
 
             if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
-                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home); 
+            
             //Get Footer info
             var vw = IsView == 1;
             ViewBag.IsView = IsView;
@@ -107,14 +108,14 @@ namespace EltizamValuation.Web.Controllers
 
             if (id == null || id <= 0)
             {
-                ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
+                ViewBag.CurrentUserId = userId;
 
                 //valuationRequestModel = new ValuationRequestModel(); 
                 return View("ValuationRequestManage", _ValuationEntity);
             }
             else
             {
-                ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
+                ViewBag.CurrentUserId = userId;
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationRequestGetById + "/" + id, HttpMethod.Get, token).Result;
@@ -122,8 +123,15 @@ namespace EltizamValuation.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestModel>>(jsonResponse); 
-                     
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestModel>>(jsonResponse);
+
+                    //Give access of only requestes which they beed assigned for
+                    if ((roleId == (int)RoleEnum.Valuer     && data._object.ValuerId != userId) ||
+                        (roleId == (int)RoleEnum.Approver   && data._object.ApproverId != userId))
+                    {
+                        return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                    } 
+
                     return View(data._object);
                 }
                 return NotFound();

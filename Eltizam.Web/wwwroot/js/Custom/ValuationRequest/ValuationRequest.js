@@ -22,6 +22,7 @@ function InitializeValutionRequestDataList() {
     var propertyName = $("#PropertyName").val() === null || $("#PropertyName").val() === '0' ? "" : $("#PropertyName").val(); 
     var fromDate = $("#FromDate").val() === undefined ? "" : $("#FromDate").val(); 
     var toDate = $("#ToDate").val() === undefined ? "" : $("#ToDate").val(); 
+    
 
     propertyTypeId  = GetIntegerVal(propertyTypeId); 
     requestStatusId = GetIntegerVal(requestStatusId);  
@@ -31,7 +32,7 @@ function InitializeValutionRequestDataList() {
     resourceId = GetIntegerVal(resourceId);
 
     hideSearchToggle();
-    var filters = "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate + '&valRef=' + valRef;
+    var filters = "?userName=" + userName + "&clientName=" + clientName + "&propertyName=" + propertyName + "&requestStatusId=" + requestStatusId + "&resourceId=" + resourceId + '&propertyTypeId=' + propertyTypeId + '&countryId=' + countryId + '&stateId=' + stateId + '&cityId=' + cityId + '&fromDate=' + fromDate + '&toDate=' + toDate + '&valRef=' + valRef + '&logInUserId=' + LogInUserId;
 
     var ajaxObject = {
         "url": BaseURL + GetAll + filters,

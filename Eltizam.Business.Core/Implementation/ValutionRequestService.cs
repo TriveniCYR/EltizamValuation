@@ -8,8 +8,6 @@ using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -17,7 +15,7 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class ValutionRequestService : IValutionRequestService
+    public class ValutionRequestService : IValuationRequestService
     {
         #region Properties
 
@@ -67,6 +65,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
                 new SqlParameter(AppConstants.P_SortDirection,      SortDir),
                 new SqlParameter(AppConstants.P_SearchText,         model.search?.value),
+                 new SqlParameter(AppConstants.LogInUserId,          filters.logInUserId),
                 new SqlParameter("UserName",                        filters.userName),
                 new SqlParameter("ClientName",                      filters.clientName),
                 new SqlParameter("PropertyName",                    filters.propertyName),
@@ -78,7 +77,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter("CityId",                          filters.cityId),
                 new SqlParameter("FromDate",                        filters.fromDate),
                 new SqlParameter("ToDate",                          filters.toDate),
-                new SqlParameter("ValRef",                          filters.valRef)
+                new SqlParameter("ValRef",                          filters.valRef)               
             };
 
             var Results = await _repository.GetBySP(ProcedureMetastore.usp_Valution_GetValuationList, CommandType.StoredProcedure, osqlParameter);

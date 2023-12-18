@@ -128,5 +128,6 @@ namespace Eltizam.Business.Models
         public string? fromDate { get; set; }
         public string? toDate { get; set; }
         public string? valRef { get; set; }
+        public int? logInUserId { get; set; }
     }
 }
