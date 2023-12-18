@@ -82,14 +82,11 @@
                         var displayStyleevidence = (objPermssionevidence.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                         var displayStyleAssesment = (objPermssionAssesment.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                     }
-                    <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')">Quotation Listing</button>
-
-                    <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payment Details</button>
+                    <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')">Quotations</button> 
+                    <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payments</button>
                     <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="tab_4">Site Description</button>
                     <button class="tablinks" style="display: @displayStyleevidence" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
-                    <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
-
-
+                    <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>  
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">
@@ -164,7 +161,7 @@
 
                                     <label for="" class="w-50 m-0" id="comment">
                                         Review Comment
-                                        @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer[""] })
+                                        @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
                                         @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -525,7 +522,7 @@
                                 <tr>
                                     <th>#Quotation</th>
                                     <th>Valuation Charges</th>
-                                    <th>Valuation Request Status</th>
+                                   @*  <th>Valuation Request Status</th> *@
                                     <th>VAT</th>
                                     <th>Other Charges</th>
                                     <th>Discount (%)</th>
@@ -575,10 +572,8 @@
                         <table id="InvoiceTable" class="table-striped">
                             <thead>
                                 <tr>
-                                    <th>#Invoice</th>
-                                    <th>Referenec No</th>
-                                    <th>Valuation Id</th>
-                                    <th>Valuation Request Status</th>
+                                    <th>#Invoice</th> 
+                                 @*    <th>Valuation Request Status</th> *@
                                     <th>Transaction Model</th>
                                     <th>Transaction Status</th>
                                     <th>Amount</th>
@@ -944,8 +939,8 @@
                                 <label for="">
                                     <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
-                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintenanceCost, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["AnnualMaintenanceCost"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintenanceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">

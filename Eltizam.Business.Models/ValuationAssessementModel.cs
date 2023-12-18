@@ -23,9 +23,9 @@ namespace Eltizam.Business.Models
         
         public int? LifeOfBuilding { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-       
+
         
-        public decimal? AnnualMaintainceCost { get; set; }
+        public decimal? AnnualMaintenanceCost { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public bool Insuarance { get; set; }
         public string? InsuranceDetails { get; set; }

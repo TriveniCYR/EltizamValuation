@@ -43,7 +43,7 @@ namespace Eltizam.Business.Core.Implementation
         /// <param name="statusId"></param>
         /// <returns></returns>
         public async Task<DBOperation> SendEmail(SendNotificationModel request)
-        {  
+        {
             try
             {
                 request.Body = request.Body?.Replace("[PValRefNoP]", request.ValRefNo).Replace("[PClientP]", request.Client).Replace("[PPropertyP]", request.Property)
@@ -56,25 +56,25 @@ namespace Eltizam.Business.Core.Implementation
                 var Em = request.ToEmailList;
                 if (Em.Contains(';'))
                 {
-                    foreach (var mail in Em.Split(';')) 
-                        message.To.Add(MailboxAddress.Parse(mail.Trim())); 
+                    foreach (var mail in Em.Split(';'))
+                        message.To.Add(MailboxAddress.Parse(mail.Trim()));
                 }
                 else
                     message.To.Add(MailboxAddress.Parse(Em));
 
                 // message.To.Add(MailboxAddress.Parse(request.ToEmailList));
-                message.Subject = _configuration.GetSection("ApiInfo:Environment").Value +" "+ request.Subject;
+                message.Subject = _configuration.GetSection("ApiInfo:Environment").Value + " " + request.Subject;
                 message.Body = new TextPart(TextFormat.Html) { Text = request.Body };
 
                 using var smtp = new SmtpClient();
                 smtp.Connect(_configuration.GetSection("SMTPDetails:Host").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
                 smtp.Authenticate(_configuration.GetSection("SMTPDetails:UserName").Value,
                     _configuration.GetSection("SMTPDetails:Password").Value);
-              
+
                 //Send email 
                 smtp.Send(message);
-                smtp.Disconnect(true); 
-                
+                smtp.Disconnect(true);
+
                 //Log email entry
                 var notification = new MasterNotification
                 {
@@ -88,19 +88,19 @@ namespace Eltizam.Business.Core.Implementation
                     CreatedBy = 1,
                     CreatedDate = DateTime.Now,
                     ReadBy = 0,
-                    ReadDate = null, 
+                    ReadDate = null,
                 };
 
-                _repository.AddAsync(notification); 
+                _repository.AddAsync(notification);
                 await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
-            { 
-                
-            } 
+            {
+
+            }
 
             return DBOperation.Success;
-        } 
+        }
 
         public SendNotificationModel GetValuationNotificationData(RecepientActionEnum subjectEnum, int valiadtionRequestId)
         {
@@ -112,7 +112,7 @@ namespace Eltizam.Business.Core.Implementation
 
             var result = EltizamDBHelper.ExecuteMappedReader<SendNotificationModel>(ProcedureMetastore.usp_ValuationRequest_GetNotificationData,
                          DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter).FirstOrDefault();
-           
+
             return result;
         }
 
@@ -135,20 +135,42 @@ namespace Eltizam.Business.Core.Implementation
                              Readby = notification.ReadBy,
                              ReadDate = notification.ReadDate,
                              ValRefNo = valuation.ReferenceNo,
-                             StatusId = notification.StatusId, 
-                             CreatedBy = valuation.CreatedBy, 
+                             StatusId = notification.StatusId,
+                             CreatedBy = valuation.CreatedBy,
+                             ApproverId = valuation.ApproverId,
+                             ValuerId = valuation.ValuerId
                          };
 
+
             if (userId != null && userId != 0)
-                result = result.Where(a => a.CreatedBy == userId).ToList(); 
-            if (valId != null && valId != 0) 
-                result = result.Where(a => a.ValuationRequestId == valId).ToList();  
+            {
+                /*
+                //Get the role for userId
+                var roleId = from u in _repository.user.where(a>async.id = userId).First().RoleId
+
+                if (roleId == (int)RoleEnum.Approver)
+                {
+                    result = result.Where(a => a.ApproverId == userId).ToList();
+                }
+                else if(roleId == (int)RoleEnum.Valuer)
+                {
+                    result = result.Where(a => a.ValuerId == userId).ToList();
+                }
+                else
+                    result = result.Where(a => a.CreatedBy == userId).ToList();
+                */
+
+                result = result.Where(a => a.CreatedBy == userId).ToList();
+            }
+
+            if (valId != null && valId != 0)
+                result = result.Where(a => a.ValuationRequestId == valId).ToList();
 
             List<MasterNotificationEntitty> finalResult;
             if (viewmore > 0)
             {
                 finalResult = result.ToList();
-            } 
+            }
             else
             {
                 finalResult = result.Where(x => x.Readby == 0).ToList();
@@ -173,7 +195,7 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async void UpdateValuationRequestStatus(int newStatusId,int id)
+        public async void UpdateValuationRequestStatus(int newStatusId, int id)
         {
             try
             {

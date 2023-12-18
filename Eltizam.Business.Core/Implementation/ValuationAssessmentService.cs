@@ -234,7 +234,7 @@ namespace Eltizam.Business.Core.Implementation
                     objUser1.MarketValue = model.valuationAssessementModel.MarketValue;
                     objUser1.MarketRate = model.valuationAssessementModel.MarketRate;
                     objUser1.LifeOfBuilding = model.valuationAssessementModel.LifeOfBuilding;
-                    objUser1.AnnualMaintainceCost = model.valuationAssessementModel.AnnualMaintainceCost;
+                    objUser1.AnnualMaintainceCost = model.valuationAssessementModel.AnnualMaintenanceCost;
                     objUser1.Insuarance = model.valuationAssessementModel.Insuarance;
                     objUser1.InsuranceDetails = model.valuationAssessementModel.InsuranceDetails;
                     objUser1.ModifiedBy = model.valuationAssessementModel.ModifiedBy;
@@ -491,7 +491,7 @@ namespace Eltizam.Business.Core.Implementation
                     objUser1.MarketValue = assesment.MarketValue;
                     objUser1.MarketRate = assesment.MarketRate;
                     objUser1.LifeOfBuilding = assesment.LifeOfBuilding;
-                    objUser1.AnnualMaintainceCost = assesment.AnnualMaintainceCost;
+                    objUser1.AnnualMaintainceCost = assesment.AnnualMaintenanceCost;
                     objUser1.Insuarance = assesment.Insuarance;
 
                     objUser1.ModifiedBy = assesment.ModifiedBy;

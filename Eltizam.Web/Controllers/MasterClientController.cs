@@ -238,7 +238,8 @@ namespace EltizamValuation.Web.Controllers
             }
 
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension(pic.FileName);
-            var docName = Path.GetFileNameWithoutExtension(pic.FileName);
+            //var docName = Path.GetFileNameWithoutExtension(pic.FileName);
+            var docName = pic.FileName;
             var filePath = Path.Combine("wwwroot/Uploads", fileName);
             filePath = filePath.Replace("\\", "/");
             using (var stream = new FileStream(filePath, FileMode.Create))

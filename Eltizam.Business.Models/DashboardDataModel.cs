@@ -26,6 +26,7 @@ namespace Eltizam.Business.Models
     {
         public int TotalClients { get; set; }
         public int TotalProjects { get; set; }
+        public int AssignedProjects { get; set; }
         public decimal TotalRevenue { get; set; }
         public decimal TotalDue { get; set; }
         public decimal CompletedPerc { get; set; }

@@ -81,5 +81,18 @@ namespace Eltizam.Web.Controllers
             var objPermssion = UtilityHelper.GetCntrActionAccess((int)enumP, roleId, (int)enumSM);
             return objPermssion;
         }
+
+        /// <summary>
+        /// Added by YReddy on 11/07/2023 for Check Rolewise Access
+        /// </summary>
+        /// <param name="enumP"></param>
+        /// <param name="perEnum"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        public bool CheckRoleValuationRequestAccess(int roleId, int? valrefId)
+        {
+            var hasAccess = false;   
+            return hasAccess;
+        }
     }
 }

@@ -16,24 +16,22 @@ namespace Eltizam.WebApi.Controllers
     public class ValuationRequestController : ControllerBase
     {
         #region Properties
-        private readonly IValutionRequestService _valutionServices;
+        private readonly IValuationRequestService _valuationServices;
 
-        private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private readonly IExceptionService _ExceptionService;
-        IExceptionService exceptionService;
+        private readonly IResponseHandler<dynamic> _ObjectResponse; 
         #endregion Properties
 
         #region Constructor
-        public ValuationRequestController(IValutionRequestService valutionServices, IResponseHandler<dynamic> ObjectResponse)
+        public ValuationRequestController(IValuationRequestService valutionServices, IResponseHandler<dynamic> ObjectResponse)
         {
-            _valutionServices = valutionServices;
+            _valuationServices = valutionServices;
             _ObjectResponse = ObjectResponse;
             // _ExceptionService = exceptionService;
         }
         #endregion Constructor
 
         [HttpPost, Route("GetAllValuationRequest")]
-        public async Task<IActionResult> GetAllValuationRequest([FromForm] DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId, int resourceId, int propertyTypeId, int countryId, int stateId, int cityId, string? fromDate, string? toDate, string? valRef)
+        public async Task<IActionResult> GetAllValuationRequest([FromForm] DataTableAjaxPostModel model, string? userName, string? clientName, string? propertyName, int requestStatusId, int resourceId, int propertyTypeId, int countryId, int stateId, int cityId, string? fromDate, string? toDate, string? valRef, int? logInUserId)
         {
             try
             {
@@ -50,10 +48,11 @@ namespace Eltizam.WebApi.Controllers
                     cityId = cityId,
                     fromDate = fromDate,
                     toDate = toDate,
-                    valRef = valRef
+                    valRef = valRef,
+                    logInUserId = logInUserId
                 };
 
-                return _ObjectResponse.CreateData(await _valutionServices.GetAll(model, filters), (Int32)HttpStatusCode.OK); 
+                return _ObjectResponse.CreateData(await _valuationServices.GetAll(model, filters), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -64,7 +63,7 @@ namespace Eltizam.WebApi.Controllers
         [HttpPost, Route("AssignApprover")]
         public async Task<IActionResult> AssignApprover([FromBody] AssignApprovorRequestModel model)
         {
-            DBOperation oResponse = await _valutionServices.AssignApprover(model);
+            DBOperation oResponse = await _valuationServices.AssignApprover(model);
             if (oResponse == DBOperation.Success)
             {
                 return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
@@ -76,7 +75,7 @@ namespace Eltizam.WebApi.Controllers
         [HttpPost, Route("AssignApproverStatus")]
         public async Task<IActionResult> AssignApproverStatus([FromBody] ApprovorStatusRequestModel model)
         {
-            DBOperation oResponse = await _valutionServices.AssignApproverStatus(model);
+            DBOperation oResponse = await _valuationServices.AssignApproverStatus(model);
             if (oResponse == DBOperation.Success)
             {
                 return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
@@ -91,7 +90,7 @@ namespace Eltizam.WebApi.Controllers
         {
             try
             {
-                return _ObjectResponse.CreateData(await _valutionServices.GetAllValuationMethod(), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _valuationServices.GetAllValuationMethod(), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
@@ -105,7 +104,7 @@ namespace Eltizam.WebApi.Controllers
         {
             try
             {
-                DBOperation oResponse = await _valutionServices.Upsert(oValuation);
+                DBOperation oResponse = await _valuationServices.Upsert(oValuation);
                 if (oResponse == DBOperation.Success)
                 {
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (oValuation.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
@@ -124,7 +123,7 @@ namespace Eltizam.WebApi.Controllers
         {
             try
             {
-                var oValuationEntity = await _valutionServices.GetById(id);
+                var oValuationEntity = await _valuationServices.GetById(id);
                 if (oValuationEntity != null && oValuationEntity.Id > 0)
                     return _ObjectResponse.Create(oValuationEntity, (Int32)HttpStatusCode.OK);
                 else
@@ -141,7 +140,7 @@ namespace Eltizam.WebApi.Controllers
         {
             try
             {
-                DBOperation oResponse = await _valutionServices.Delete(id);
+                DBOperation oResponse = await _valuationServices.Delete(id);
                 if (oResponse == DBOperation.Success)
                     return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else
@@ -156,7 +155,7 @@ namespace Eltizam.WebApi.Controllers
         [HttpPost, Route("ReviewerRequestStatus")]
         public async Task<IActionResult> ReviewerRequestStatus([FromBody] ValutionRequestForApproverModel model)
         {
-            DBOperation oResponse = await _valutionServices.ReviewerRequestStatus(model);
+            DBOperation oResponse = await _valuationServices.ReviewerRequestStatus(model);
             if (oResponse == DBOperation.Success)
             {
                 return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));

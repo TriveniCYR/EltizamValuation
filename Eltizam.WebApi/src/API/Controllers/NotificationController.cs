@@ -18,7 +18,7 @@ namespace EltizamValuation.WebApi.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
+        //private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         private readonly INotificationService _notificationService;
 
