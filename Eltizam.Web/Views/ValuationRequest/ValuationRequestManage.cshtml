@@ -164,7 +164,7 @@
 
                                     <label for="" class="w-50 m-0" id="comment">
                                         Review Comment
-                                        @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer[""] })
+                                        @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
                                         @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -944,8 +944,8 @@
                                 <label for="">
                                     <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["AnnualMaintainceCost"] })
-                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintenanceCost, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["AnnualMaintenanceCost"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintenanceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
