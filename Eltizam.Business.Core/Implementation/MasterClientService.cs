@@ -279,7 +279,7 @@ namespace Eltizam.Business.Core.Implementation
                                 objAddress.AlternatePhone = entityAddress.AlternatePhone;
                                 objAddress.AlternatePhoneExt = entityAddress.AlternatePhoneExt;
                                 objAddress.Landlinephone = entityAddress.Landlinephone;
-                                objAddress.IsActive = entityAddress.IsActive;
+                                //objAddress.IsActive = entityAddress.IsActive;
                                 objAddress.ModifiedBy = master_ClientModel.ModifiedBy;
                                 _repositoryAddress.UpdateAsync(objAddress);
 
@@ -297,6 +297,7 @@ namespace Eltizam.Business.Core.Implementation
                             objAddress.TableKeyId = objClient.Id; // Associate with the MasterClient entity.
                             objAddress.TableName = Enum.GetName(TableNameEnum.Master_Client);
                             objAddress.CreatedBy = master_ClientModel.CreatedBy;
+                            objAddress.IsActive = true;
                             _repositoryAddress.AddAsync(objAddress);
                             // Insert the new entity into the repository asynchronously.
                             await _unitOfWork.SaveChangesAsync();
@@ -343,7 +344,7 @@ namespace Eltizam.Business.Core.Implementation
                                 objContact.Email = entityAddress.Email;
                                 objContact.Mobile = entityAddress.Mobile;
                                 objContact.MobileExt = entityAddress.MobileExt;
-                                objContact.Status = entityAddress.Status;
+                                //objContact.Status = entityAddress.Status;
                                 objContact.ModifiedBy = master_ClientModel.ModifiedBy;
                                 _repositoryContact.UpdateAsync(objContact);
                                 //_repositoryContact.UpdateGraph(objContact, EntityState.Modified);
@@ -361,6 +362,7 @@ namespace Eltizam.Business.Core.Implementation
                             objContact.TableKeyId = objClient.Id;
                             objContact.TableName = Enum.GetName(TableNameEnum.Master_Client);
                             objContact.ModifiedBy = master_ClientModel.CreatedBy;
+                            objContact.Status = 1;
                             _repositoryContact.AddAsync(objContact);
                             // Insert the new entity into the repository asynchronously.
                             await _unitOfWork.SaveChangesAsync();
