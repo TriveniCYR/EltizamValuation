@@ -60,6 +60,7 @@ function submitFilterFormSuccess(data) {
     $('#completedPerc').text(widgets.completedPerc + '%');
     $('#pendingPerc').text(widgets.pendingPerc + '%');
     $('#totalDue').text(widgets.totalDue);
+    $('#assignprojects').text(widgets.assignedProjects);
 
     //RequestTable Start
 
