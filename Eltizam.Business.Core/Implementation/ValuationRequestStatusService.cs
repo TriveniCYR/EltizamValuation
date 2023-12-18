@@ -5,14 +5,8 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Resource;
 using Eltizam.Utility;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -25,8 +19,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequestStatus> _repository { get; set; }
         private readonly IHelper _helper;
         public ValuationRequestStatusService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
-                                  IHelper helper,
-                                 Microsoft.Extensions.Configuration.IConfiguration _configuration)
+                                             IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;

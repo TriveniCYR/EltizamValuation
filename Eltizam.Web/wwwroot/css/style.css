@@ -2344,4 +2344,9 @@ table.topQuotationDuesTable {
     background-color: initial;
     appearance: revert;
     margin-right:7px;
+} 
+
+a {
+    color: var(--blue);
+    padding-left: 1em; 
 }
