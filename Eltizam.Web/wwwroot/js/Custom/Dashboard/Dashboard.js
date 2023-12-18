@@ -43,10 +43,12 @@ function submitFilterForm() {
         PropertyId: $('#PropertyId').val(),
         ClientId: $('#ClientId').val(),
         FromDate: $('#FromDate').val() == "" ? "" : flatpickr.formatDate(new Date($('#FromDate').val()), 'Y-m-d'),
-        ToDate: $('#ToDate').val() == "" ? "" : flatpickr.formatDate(new Date($('#ToDate').val()), 'Y-m-d')
-
+        ToDate: $('#ToDate').val() == "" ? "" : flatpickr.formatDate(new Date($('#ToDate').val()), 'Y-m-d'),
+        LogInUserId: LogInUserId,
+        TabId: 0
     };
     showLoader();
+
     var formDataJson = JSON.stringify(formDataObject);
     ajaxServiceMethod(BaseURL + Dashboardurl, 'POST', submitFilterFormSuccess, submitFilterFormError, formDataJson);
 }
@@ -62,8 +64,7 @@ function submitFilterFormSuccess(data) {
     $('#totalDue').text(widgets.totalDue);
     $('#assignprojects').text(widgets.assignedProjects);
 
-    //RequestTable Start
-
+    //RequestTable Start 
     var latestRequestsTableBody = $('.latestRequestsTable tbody');
     latestRequestsTableBody.empty(); // Clear existing rows
 
@@ -174,6 +175,7 @@ function fetchDataForModal(tId) {
         LogInUserId: LogInUserId,
         TabId: tId
     };
+
     var formDataJson = JSON.stringify(formDataObject);
     return $.ajax({
         url: BaseURL + Dashboardurl,
