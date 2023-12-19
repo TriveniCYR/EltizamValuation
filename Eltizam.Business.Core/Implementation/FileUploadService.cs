@@ -38,7 +38,7 @@ namespace Eltizam.Business.Core.Implementation
                         FileName = doc.FileName,
                         FilePath = doc.FilePath,
                         FileType = doc.FileType,
-                        CreatedBy = createdBy
+                        CreatedBy = doc.CreatedBy
                     };
 
                     _documentRepository.AddAsync(objUserDocument);

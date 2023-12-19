@@ -26,16 +26,16 @@
                                 Property
                                 @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control searchable-dropdown" })
                             </label>
-                            <label for="">
+                            <label for="" style="width: 15% !important">
                                 From
                                 @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input", id = "FromDate" })
                             </label>
-                            <label for="">
+                            <label for="" style="width: 15% !important">
                                 To
                                 @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input", id = "ToDate" })
                             </label>
                             <button type="button" onclick="submitFilterForm()" class="blueBtn">Search</button>
-
+                            <button type="button" onclick="clearSearchFields()" class="blueBtn">Clear</button>
                         </div>
                     </form>
                 </div>
@@ -47,14 +47,15 @@
                             <img src="../assets/totalClientIcon.svg" alt="totalClientIcon">
                             Total Client
                         </p>
-                        <h3 id="totalClients"></h3>
+                        <h3><a href="/MasterClient/Clients" id="totalClients" style="text-decoration: none; color: inherit;"></a></h3>
                     </div>
                     <div class="dashboard-box">
                         <p class="flex justify-center align-item-center">
                             <img src="../assets/briefcase.svg" alt="briefcase">
                             Total Project
                         </p>
-                        <h3 id="totalProjects"></h3>
+                        <h3><a href="/ValuationRequest/ValuationRequests" id="totalProjects" style="text-decoration: none; color: inherit;"></a></h3>
+
                     </div>
                     <div class="dashboard-box">
                         <p class="flex justify-center align-item-center">
@@ -81,16 +82,16 @@
                 <div class="flex dashboard-status">
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h5>Latest requests</h5>
+                            <h5>Latest Requests</h5>
                             <a href="#" id="openModalLinklatestRequestsTable">View More</a>
                         </div>
                         <div class="scroll-x">
                             <table class="dashboardTable latestRequestsTable table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Client</th>
-                                        <th>Property</th>
                                         <th>Val Ref#</th>
+                                        <th>Property</th>
+                                        <th>Client</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -101,16 +102,16 @@
                     </div>
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h5>Latest Qutotation Sub</h5>
+                            <h5>Latest Quotations</h5>
                             <a href="#" id="openModalLinklatestQuotationsTable">View More</a>
                         </div>
                         <div class="scroll-x">
                             <table class="dashboardTable latestQuotationsTable table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Client</th>
-                                        <th>Property</th>
                                         <th>Val Ref#</th>
+                                        <th>Property</th>
+                                        <th>Client</th>
                                         <th>Quotation#</th>
                                         <th>Fee</th>
                                     </tr>
@@ -124,16 +125,16 @@
                 <div class="flex dashboard-status">
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h5>Top Projects in Valuation</h5>
+                            <h5>Top Valuation Projects</h5>
                             <a href="#" id="openModalLinktopValuationsTable">View More</a>
                         </div>
                         <div class="scroll-x">
                             <table class="dashboardTable topValuationsTable table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Client</th>
-                                        <th>Property</th>
                                         <th>Val Ref#</th>
+                                        <th>Property</th>
+                                        <th>Client</th>
                                         <th>Amount</th>
                                     </tr>
                                 </thead>
@@ -144,17 +145,17 @@
                     </div>
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h5>Top Quatuons Due</h5>
+                            <h5>Top Quotation Dues</h5>
                             <a href="#" id="openModalLinktopQuotationDuesTable">View More</a>
                         </div>
                         <div class="scroll-x">
                             <table class="dashboardTable topQuotationDuesTable table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Client</th>
-                                        <th>Property</th>
                                         <th>Val Ref#</th>
+                                        <th>Property</th>
                                         <th>Quotation#</th>
+                                        <th>Client</th>
                                         <th>Due</th>
                                     </tr>
                                 </thead>
@@ -203,9 +204,9 @@
                         <table id="data-tablerequest" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Client</th>
-                                    <th>Property</th>
                                     <th>Val Ref#</th>
+                                    <th>Property</th>
+                                    <th>Client</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -240,9 +241,9 @@
                     <table id="data-tablequaotation" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Client</th>
-                                <th>Property</th>
                                 <th>Val Ref#</th>
+                                <th>Property</th>
+                                <th>Client</th>
                                 <th>Quotation#</th>
                                 <th>Fee</th>
                             </tr>
@@ -277,9 +278,9 @@
                     <table id="data-tabletopValuations" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Client</th>
-                                <th>Property</th>
                                 <th>Val Ref#</th>
+                                <th>Property</th>
+                                <th>Client</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
@@ -309,21 +310,21 @@
             </div>
             <div class="modal-body">
                 <div style="max-height: 600px; overflow-y: auto;">
-                <!-- Table to display data -->
-                <table id="data-tableQuotationDues" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Client</th>
-                            <th>Property</th>
-                            <th>Val Ref#</th>
-                            <th>Quotation#</th>
-                            <th>Due</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data will be populated here -->
-                    </tbody>
-                </table>
+                    <!-- Table to display data -->
+                    <table id="data-tableQuotationDues" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Val Ref#</th>
+                                <th>Property</th>
+                                <th>Client</th>
+                                <th>Quotation#</th>
+                                <th>Due</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">

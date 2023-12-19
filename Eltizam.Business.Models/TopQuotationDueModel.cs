@@ -9,5 +9,6 @@ namespace Eltizam.Business.Models
     public class TopQuotationDueModel : CommonDashboardModel
     {
         public decimal QuotationFee { get; set; }
+        public string? QuotationNum { get; set; }
     }
 }
