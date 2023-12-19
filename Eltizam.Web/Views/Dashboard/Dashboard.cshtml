@@ -26,11 +26,11 @@
                                 Property
                                 @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control searchable-dropdown" })
                             </label>
-                            <label for="">
+                            <label for="" style="width: 15% !important">
                                 From
                                 @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input", id = "FromDate" })
                             </label>
-                            <label for="">
+                            <label for="" style="width: 15% !important">
                                 To
                                 @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input", id = "ToDate" })
                             </label>
@@ -82,7 +82,7 @@
                 <div class="flex dashboard-status">
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h5>Latest requests</h5>
+                            <h5>Latest Requests</h5>
                             <a href="#" id="openModalLinklatestRequestsTable">View More</a>
                         </div>
                         <div class="scroll-x">
@@ -102,7 +102,7 @@
                     </div>
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h5>Latest Qutotation Sub</h5>
+                            <h5>Latest Quotations</h5>
                             <a href="#" id="openModalLinklatestQuotationsTable">View More</a>
                         </div>
                         <div class="scroll-x">
@@ -125,7 +125,7 @@
                 <div class="flex dashboard-status">
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h5>Top Projects in Valuation</h5>
+                            <h5>Top Valuation Projects</h5>
                             <a href="#" id="openModalLinktopValuationsTable">View More</a>
                         </div>
                         <div class="scroll-x">
@@ -145,7 +145,7 @@
                     </div>
                     <div class="roundBorderBox w-50">
                         <div class="flex justify-between">
-                            <h5>Top Quatuons Due</h5>
+                            <h5>Top Quotation Dues</h5>
                             <a href="#" id="openModalLinktopQuotationDuesTable">View More</a>
                         </div>
                         <div class="scroll-x">

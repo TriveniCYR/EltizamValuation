@@ -30,6 +30,8 @@ var DeleteAccessDenied = "Delete permission not granted.";
 //Permission related things
 var IsDeletePerm = ($("#isDeletePerm").val() === "1" || $("#isDeletePerm").val() === 1);
 var isDeleteSite = ($("#isDeleteSite").val() === "1" || $("#isDeleteSite").val() === 1);
+var isDeleteQt = ($("#isDeleteQt").val() === "1" || $("#isDeleteQt").val() === 1);
+var isDeleteIn = ($("#isDeleteIn").val() === "1" || $("#isDeleteIn").val() === 1);
 var isDeleteEvidence = ($("#isDeleteEvidence").val() === "1" || $("#isDeleteEvidence").val() === 1);
 var isDeleteAssesment = ($("#isDeleteAssesment").val() === "1" || $("#isDeleteAssesment").val() === 1);
 var IsAddPerm = ($("#isAddPerm").val() === "1" || $("#isAddPerm").val() === 1);

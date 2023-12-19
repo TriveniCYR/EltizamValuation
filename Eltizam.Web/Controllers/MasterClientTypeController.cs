@@ -93,7 +93,7 @@ namespace EltizamValuation.Web.Controllers
                 var action = masterUser.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
 
                 int roleId = _helper.GetLoggedInRoleId();
-                if (!CheckRoleAccess(ModulePermissionEnum.ClientTypeMaster, action, roleId))
+                if (!CheckRoleAccess(ModulePermissionEnum.ClientMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
 

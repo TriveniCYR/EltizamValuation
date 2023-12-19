@@ -276,7 +276,7 @@ namespace Eltizam.Business.Core.Implementation
                                 objAddress.AlternatePhone = entityAddress.AlternatePhone;
                                 objAddress.AlternatePhoneExt = entityAddress.AlternatePhoneExt;
                                 objAddress.Landlinephone = entityAddress.Landlinephone;
-                                objAddress.IsActive = entityAddress.IsActive;
+                                //objAddress.IsActive = entityAddress.IsActive;
                                 objAddress.ModifiedBy = masterVendortModel.ModifiedBy;
                                 _repositoryAddress.UpdateAsync(objAddress);
                                 //_repositoryAddress.UpdateGraph(objAddress, EntityState.Modified);
@@ -293,6 +293,7 @@ namespace Eltizam.Business.Core.Implementation
                             objAddress.TableKeyId = objVendor.Id;
                             objAddress.TableName = "Master_Vendor";
                             objAddress.CreatedBy = masterVendortModel.CreatedBy;
+                            objAddress.IsActive = true;
                             _repositoryAddress.AddAsync(objAddress);
                             await _unitOfWork.SaveChangesAsync();
 
@@ -337,7 +338,7 @@ namespace Eltizam.Business.Core.Implementation
                                 objContact.Email = entityAddress.Email;
                                 objContact.MobileExt = entityAddress.MobileExt;
                                 objContact.Mobile = entityAddress.Mobile;
-                                objContact.Status = entityAddress.Status;
+                                //objContact.Status = entityAddress.Status;
                                 objContact.ModifiedBy = masterVendortModel.ModifiedBy;
                                 _repositoryContact.UpdateAsync(objContact);
                                 //_repositoryContact.UpdateGraph(objContact, EntityState.Modified);
@@ -355,6 +356,7 @@ namespace Eltizam.Business.Core.Implementation
                             objContact.TableKeyId = objVendor.Id;
                             objContact.TableName = "Master_Vendor";
                             objContact.ModifiedBy = masterVendortModel.CreatedBy;
+                            objContact.Status = 1;
                             _repositoryContact.AddAsync(objContact);
                             // Insert the new entity into the repository asynchronously.
                             await _unitOfWork.SaveChangesAsync();
