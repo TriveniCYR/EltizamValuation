@@ -95,6 +95,7 @@ namespace Eltizam.Web.Helpers
                 throw new ArgumentException("No files were uploaded.");
             }
 
+            int currentUser = GetLoggedInUserId();
             foreach (var file in document.Files)
             {
                 if (file == null || file.Length == 0)
@@ -107,7 +108,6 @@ namespace Eltizam.Web.Helpers
                 var docName = file.FileName;
                 var filePath = Path.Combine("wwwroot/Uploads", fileName);
                 filePath = filePath.Replace("\\", "/");
-
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     // Use synchronous copy operation
@@ -122,7 +122,8 @@ namespace Eltizam.Web.Helpers
                     IsActive = true,
                     FileType = GetFileType(file.ContentType),
                     CreatedDate = null,
-                    CreatedName = ""
+                    CreatedName = "",
+                    CreatedBy = currentUser
                 };
 
                 uploadFiles.Add(upload);
