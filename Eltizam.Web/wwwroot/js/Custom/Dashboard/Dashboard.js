@@ -290,4 +290,5 @@ function clearSearchFields() {
     document.getElementById("dashboardFilterForm").reset(); 
     $('#ClientId').val(null).trigger('change');
     $('#PropertyId').val(null).trigger('change');
+    initializeDashboard();
 }
