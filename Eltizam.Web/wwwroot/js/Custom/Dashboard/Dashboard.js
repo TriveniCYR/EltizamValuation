@@ -71,9 +71,9 @@ function submitFilterFormSuccess(data) {
     if (data._object.latestRequests.length != 0) {
         data._object.latestRequests.forEach(function (request) {
             var rowHtml = '<tr>' +
-                '<td>' + request.clientName + '</td>' +
+                '<td><a href="/ValuationRequest/ValuationRequestManage?id='+ request.valId + '&IsView=1">' + request.valRefNum + '</a></td>' +
                 '<td>' + request.propertyName + '</td>' +
-                '<td>' + request.valRefNum + '</td>' +
+                '<td>' + request.clientName + '</td>' +
                 '<td><span class="tableStatus" style="color: ' + request.colorCode + '; background-color: ' + request.backGroundColor + '; border: 1px solid ' + request.colorCode + ';">' + request.status + '</span></td>' +
                 '</tr>';
             latestRequestsTableBody.append(rowHtml);
@@ -92,9 +92,9 @@ function submitFilterFormSuccess(data) {
     if (data._object.latestQuotations.length != 0) {
         data._object.latestQuotations.forEach(function (quaotation) {
             var rowHtml = '<tr>' +
-                '<td>' + quaotation.clientName + '</td>' +
+                '<td><a href="/ValuationRequest/ValuationRequestManage?id=' + quaotation.valId + '&IsView=1">' + quaotation.valRefNum + '</a></td>' +
                 '<td>' + quaotation.propertyName + '</td>' +
-                '<td>' + quaotation.valRefNum + '</td>' +
+                '<td>' + quaotation.clientName + '</td>' +
                 '<td>' + quaotation.quotationNum + '</td>' +
                 '<td class="formatting">' + quaotation.quotationFee + '</td>' +
                 '</tr>';
@@ -117,9 +117,9 @@ function submitFilterFormSuccess(data) {
     if (data._object.topValuations.length != 0) {
         data._object.topValuations.forEach(function (valuation) {
             var rowHtml = '<tr>' +
-                '<td>' + valuation.clientName + '</td>' +
+                '<td><a href="/ValuationRequest/ValuationRequestManage?id=' + valuation.valId + '&IsView=1">' + valuation.valRefNum + '</a></td>' +
                 '<td>' + valuation.propertyName + '</td>' +
-                '<td>' + valuation.valRefNum + '</td>' +
+                '<td>' + valuation.clientName + '</td>' +
                 '<td class="formatting">' + valuation.valuationAmount + '</td>' +
                 '</tr>';
             topValuationsTableBody.append(rowHtml);
@@ -139,10 +139,10 @@ function submitFilterFormSuccess(data) {
     if (data._object.topQuotationDues.length != 0) {
         data._object.topQuotationDues.forEach(function (quotationdue) {
             var rowHtml = '<tr>' +
-                '<td>' + quotationdue.clientName + '</td>' +
+                '<td><a href="/ValuationRequest/ValuationRequestManage?id=' + quotationdue.valId + '&IsView=1">' + quotationdue.valRefNum + '</a></td>' +
                 '<td>' + quotationdue.propertyName + '</td>' +
-                '<td>' + quotationdue.valRefNum + '</td>' +
-                '<td>' + quotationdue.valRefNum + '</td>' +
+                '<td>' + quotationdue.quotationNum + '</td>' +
+                '<td>' + quotationdue.clientName + '</td>' +
                 '<td class="formatting">' + quotationdue.quotationFee + '</td>' +
                 '</tr>';
             topQuotationDuesTableBody.append(rowHtml);
@@ -195,9 +195,9 @@ $('#openModalLinklatestRequestsTable').on('click', function () {
             // Handle data for modal 1
             $.each(data._object.latestRequests, function (index, request) {
                 $('#data-tablerequest tbody').append('<tr>' +
+                    '<td><a href="/ValuationRequest/ValuationRequestManage?id=' + request.valId + '&IsView=1">' + request.valRefNum + '</a></td>' +
                     '<td>' + request.clientName + '</td>' +
                     '<td>' + request.propertyName + '</td>' +
-                    '<td>' + request.valRefNum + '</td>' +
                     '<td><span class="tableStatus" style="color: ' + request.colorCode + '; background-color: ' + request.backGroundColor + '; border: 1px solid ' + request.colorCode + ';">' + request.status + '</span></td>' +
                     '</tr>');
             });
@@ -219,9 +219,9 @@ $('#openModalLinklatestQuotationsTable').on('click', function () {
         .done(function (data) {
             $.each(data._object.latestQuotations, function (index, quaotation) {
                 $('#data-tablequaotation tbody').append('<tr>' +
+                    '<td><a href="/ValuationRequest/ValuationRequestManage?id=' + quaotation.valId + '&IsView=1">' + quaotation.valRefNum + '</a></td>' +
                     '<td>' + quaotation.clientName + '</td>' +
                     '<td>' + quaotation.propertyName + '</td>' +
-                    '<td>' + quaotation.valRefNum + '</td>' +
                     '<td>' + quaotation.quotationNum + '</td>' +
                     '<td class="formatting">' + quaotation.quotationFee + '</td>' +
                     '</tr>');
@@ -246,9 +246,9 @@ $('#openModalLinktopValuationsTable').on('click', function () {
             // Handle data for modal 1
             $.each(data._object.topValuations, function (index, valuation) {
                 $('#data-tabletopValuations tbody').append('<tr>' +
+                    '<td><a href="/ValuationRequest/ValuationRequestManage?id=' + valuation.valId + '&IsView=1">' + valuation.valRefNum + '</a></td>' +
                     '<td>' + valuation.clientName + '</td>' +
                     '<td>' + valuation.propertyName + '</td>' +
-                    '<td>' + valuation.valRefNum + '</td>' +
                     '<td class="formatting">' + valuation.valuationAmount + '</td>' +
                     '</tr>');
             });
@@ -256,7 +256,7 @@ $('#openModalLinktopValuationsTable').on('click', function () {
             $('#myModaltopValuationsTable').modal('show');
         })
         .fail(function () {
-            alert('Failed to fetch data for modal 1 from the API');
+            alert('Failed to fetch data for modal from the API');
         });
 
     return false;
@@ -270,10 +270,10 @@ $('#openModalLinktopQuotationDuesTable').on('click', function () {
             // Handle data for modal 1
             $.each(data._object.topQuotationDues, function (index, quotationdue) {
                 $('#data-tableQuotationDues tbody').append('<tr>' +
+                    '<td><a href="/ValuationRequest/ValuationRequestManage?id=' + quotationdue.valId + '&IsView=1">' + quotationdue.valRefNum + '</a></td>' +
                     '<td>' + quotationdue.clientName + '</td>' +
                     '<td>' + quotationdue.propertyName + '</td>' +
-                    '<td>' + quotationdue.valRefNum + '</td>' +
-                    '<td>' + quotationdue.valRefNum + '</td>' +
+                    '<td>' + quotationdue.quotationNum + '</td>' +
                     '<td class="formatting">' + quotationdue.quotationFee + '</td>' +
                     '</tr>');
             });
@@ -285,3 +285,9 @@ $('#openModalLinktopQuotationDuesTable').on('click', function () {
         });
     return false;
 });
+
+function clearSearchFields() {
+    document.getElementById("dashboardFilterForm").reset(); 
+    $('#ClientId').val(null).trigger('change');
+    $('#PropertyId').val(null).trigger('change');
+}
