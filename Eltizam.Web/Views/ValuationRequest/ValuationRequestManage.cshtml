@@ -476,7 +476,7 @@
                                 @if (ViewBag.IsView==1)
                                 {
                                     <a href='/ValuationRequest/ValuationRequestManage?id=@Model.Id'>
-                                        <button type="button" class="lineBtn greyBtn mr-12">Edit</button>
+                                        <button type="button" class=" blueBtn mr-12" style=" width:100px">Edit</button>
                                     </a>
                                 }
                                  @if (roleId == (int)RoleEnum.Admin ||roleId == (int)RoleEnum.Requestor )
@@ -485,7 +485,7 @@
                                     <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
                                 }
 
-                                @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
+                                @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer && ViewBag.IsView != 1)
                                 {
                                     <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
                                         Save
@@ -947,8 +947,8 @@
                                 <label for="">
                                     <p class="m-0">  Annual Maintenance Cost<span class="text-danger">*</span></p>
 
-                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintenanceCost, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["AnnualMaintenanceCost"] })
-                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintenanceCost, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, new { @class = "form-control price formatting", @placeholder = @SharedLocalizer["AnnualMaintenanceCost"] })
+                                    @Html.ValidationMessageFor(model => model.ValuationAssesment.valuationAssessementModel.AnnualMaintainceCost, "", new { @class = "text-danger" })
                                 </label>
                             </div>
                             <div class="flex">
