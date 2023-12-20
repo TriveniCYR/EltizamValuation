@@ -30,13 +30,14 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         
-        public async Task<List<ValuationRequestStatusModel>> GetAll(int roleId,string action)
+        public async Task<List<ValuationRequestStatusModel>> GetAll(int roleId,string action, int ValReqId )
         {
 
             DbParameter[] osqlParameter =
            {
                 new DbParameter("RoleId", roleId, SqlDbType.Int),
                 new DbParameter("Action", action, SqlDbType.VarChar),
+                new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
             };
             //var ValuationRequestDependencies = EltizamDBHelper.ExecuteMappedReader<ValuationRequestDependencies>(ProcedureMetastore.usp_ValuationRequest_GetDependencies, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
 

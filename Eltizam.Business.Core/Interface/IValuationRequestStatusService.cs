@@ -9,7 +9,7 @@ namespace Eltizam.Business.Core.Interface
 {
     public interface IValuationRequestStatusService
     {
-        Task<List<ValuationRequestStatusModel>> GetAll(int roleId, string action);
+        Task<List<ValuationRequestStatusModel>> GetAll(int roleId, string action, int ValReqId);
         Task<List<ValuationRequestStatusModel>> GetAllStatus();
     }
 }

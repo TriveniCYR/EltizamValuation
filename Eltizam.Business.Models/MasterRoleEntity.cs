@@ -16,6 +16,7 @@ namespace Eltizam.Business.Models
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Display(Name = "RoleName", ResourceType = typeof(Master))]
+        [StringLength(250, MinimumLength = 0)]
         public string RoleName { get; set; }
 
         [Display(Name = "Active", ResourceType = typeof(Master))]

@@ -56,15 +56,18 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterUserContact> MasterUserContacts { get; set; } = null!;
         public virtual DbSet<MasterValuationFee> MasterValuationFees { get; set; } = null!;
         public virtual DbSet<MasterValuationFeeType> MasterValuationFeeTypes { get; set; } = null!;
+        public virtual DbSet<MasterValuationStatus> MasterValuationStatuses { get; set; } = null!;
         public virtual DbSet<MasterVendor> MasterVendors { get; set; } = null!;
         public virtual DbSet<SiteDescription> SiteDescriptions { get; set; } = null!;
         public virtual DbSet<ValuationAssesment> ValuationAssesments { get; set; } = null!;
         public virtual DbSet<ValuationInvoice> ValuationInvoices { get; set; } = null!;
         public virtual DbSet<ValuationQuotation> ValuationQuotations { get; set; } = null!;
-        public virtual DbSet<ValuationQuotationStatus> ValuationQuotationStatuses { get; set; } = null!;
         public virtual DbSet<ValuationRequest> ValuationRequests { get; set; } = null!;
-        public virtual DbSet<ValuationRequestStatus> ValuationRequestStatuses { get; set; } = null!;
+        public virtual DbSet<ValuationRequest1> ValuationRequest1s { get; set; } = null!;
+        public virtual DbSet<ValuationRequestStatus1> ValuationRequestStatus1s { get; set; } = null!;
         public virtual DbSet<VwPropertyLocation> VwPropertyLocations { get; set; } = null!;
+        public virtual DbSet<VwUser> VwUsers { get; set; } = null!;
+        public virtual DbSet<VwValuationRequest> VwValuationRequests { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -1064,6 +1067,29 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<MasterValuationStatus>(entity =>
+            {
+                entity.ToTable("Master_ValuationStatus", "dbo");
+
+                entity.Property(e => e.BackGroundColor).HasMaxLength(50);
+
+                entity.Property(e => e.ColorCode)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StatusCode)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<MasterVendor>(entity =>
             {
                 entity.ToTable("Master_Vendor", "dbo");
@@ -1251,30 +1277,11 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasColumnType("decimal(18, 6)")
                     .HasColumnName("VAT");
 
-                entity.HasOne(d => d.Status)
-                    .WithMany(p => p.ValuationQuotations)
-                    .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Quotation__Statu__640DD89F");
-
                 entity.HasOne(d => d.ValuationRequest)
                     .WithMany(p => p.ValuationQuotations)
                     .HasForeignKey(d => d.ValuationRequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Quotation__Valua__5E54FF49");
-            });
-
-            modelBuilder.Entity<ValuationQuotationStatus>(entity =>
-            {
-                entity.ToTable("ValuationQuotationStatus", "dbo");
-
-                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
-
-                entity.Property(e => e.StatusName)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<ValuationRequest>(entity =>
@@ -1334,12 +1341,55 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .WithMany(p => p.ValuationRequests)
                     .HasForeignKey(d => d.StatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Valuation__Statu__6501FCD8");
+                    .HasConstraintName("FK__Valuation__Statu__7226EDCC");
             });
 
-            modelBuilder.Entity<ValuationRequestStatus>(entity =>
+            modelBuilder.Entity<ValuationRequest1>(entity =>
             {
-                entity.ToTable("ValuationRequestStatus", "dbo");
+                entity.HasNoKey();
+
+                entity.ToTable("ValuationRequest_1");
+
+                entity.Property(e => e.ApproverComment)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ApproverUpdateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AssignRemark)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtherReferenceNo)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("OtherReferenceNO");
+
+                entity.Property(e => e.ReferenceNo)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("ReferenceNO");
+
+                entity.Property(e => e.ValuationDate).HasColumnType("date");
+
+                entity.Property(e => e.ValuerComment)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValuerUpdateDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<ValuationRequestStatus1>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ValuationRequestStatus_1");
 
                 entity.Property(e => e.BackGroundColor).HasMaxLength(50);
 
@@ -1348,6 +1398,8 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ModifyDate).HasColumnType("datetime");
 
@@ -1405,6 +1457,117 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.Zone)
                     .HasMaxLength(250)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VwUser>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vw_User", "dbo");
+
+                entity.Property(e => e.CompanyName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ForgotPasswordDateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.ForgotPasswordToken)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LicenseNo)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MiddleName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RoleName).HasMaxLength(50);
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(501)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VwValuationRequest>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vw_ValuationRequest", "dbo");
+
+                entity.Property(e => e.ApproverComment)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ApproverUpdateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.AssignRemark)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BackGroundColor).HasMaxLength(50);
+
+                entity.Property(e => e.ColorCode)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OtherReferenceNo)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("OtherReferenceNO");
+
+                entity.Property(e => e.ReferenceNo)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("ReferenceNO");
+
+                entity.Property(e => e.StatusCode)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StatusName)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValuationDate).HasColumnType("date");
+
+                entity.Property(e => e.ValuerComment)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValuerUpdateDate).HasColumnType("datetime");
             });
 
             OnModelCreatingPartial(modelBuilder);

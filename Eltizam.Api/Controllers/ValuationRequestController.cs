@@ -15,7 +15,7 @@ namespace EltizamValuation.Api.Controllers
     public class ValuationRequestController : ControllerBase
     {
         #region Properties
-        private readonly IValutionRequestService _valutionServices;
+        private readonly IValuationRequestService _valutionServices;
 
         private readonly IResponseHandler<dynamic> _ObjectResponse;
         private readonly IExceptionService _ExceptionService;
@@ -23,7 +23,7 @@ namespace EltizamValuation.Api.Controllers
         #endregion Properties
 
         #region Constructor
-        public ValuationRequestController(IValutionRequestService valutionServices, IResponseHandler<dynamic> ObjectResponse)
+        public ValuationRequestController(IValuationRequestService valutionServices, IResponseHandler<dynamic> ObjectResponse)
         {
             _valutionServices = valutionServices;
             _ObjectResponse = ObjectResponse;
