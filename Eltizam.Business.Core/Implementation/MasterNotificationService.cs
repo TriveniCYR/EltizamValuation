@@ -8,6 +8,7 @@ using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
@@ -25,7 +26,8 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequest> _valuationrepository { get; set; }
         private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
         private IRepository<MasterUser> _userrepository { get; set; }
-        public MasterNotificationService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapperFactory mapperFactory)
+        private readonly IMemoryCache _memoryCache;
+        public MasterNotificationService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapperFactory mapperFactory, IMemoryCache memoryCache)
         {
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.GetRepository<MasterNotification>();
@@ -34,6 +36,7 @@ namespace Eltizam.Business.Core.Implementation
             _valuationrepository = _unitOfWork.GetRepository<ValuationRequest>();
             _statusrepository = _unitOfWork.GetRepository<ValuationRequestStatus>(); 
             _userrepository=_unitOfWork.GetRepository<MasterUser>();
+            _memoryCache = memoryCache;
         }
 
         /// <summary>
@@ -119,6 +122,14 @@ namespace Eltizam.Business.Core.Implementation
 
         public List<MasterNotificationEntitty> GetAll(int? viewmore, int? userId, int? valId)
         {
+            var cacheKey = $"NotificationsCache_{viewmore}_{userId}_{valId}";
+
+            // Get from cache first
+            var cacheData = _memoryCache.Get<List<MasterNotificationEntitty>>(cacheKey);
+            if (cacheData != null)
+            {
+                return cacheData;
+            }
             var notificationresult = _repository.GetAllAsync().Result.ToList();
             var valuationrequest = _valuationrepository.GetAllAsync().Result.ToList();
 
@@ -172,7 +183,8 @@ namespace Eltizam.Business.Core.Implementation
             {
                 finalResult = result.Where(x => x.Readby == 0).ToList();
             }
-
+            var expirationTime = DateTimeOffset.Now.AddMinutes(60.0);
+            _memoryCache.Set(cacheKey, finalResult, expirationTime);
             return finalResult;
         }
 
