@@ -78,11 +78,11 @@
                                         <tr>
                                             <th>Module</th>
                                             <th>Sub Module</th>
-                                            <th> <input type="checkbox" id="chkView" class="checkbox-checked" /> View</th>
-                                            <th> <input type="checkbox" id="chkAdd" class="checkbox-checked" /> Add</th>
-                                            <th><input type="checkbox" id="chkEdit" class="checkbox-checked" /> Edit</th>
-                                            <th><input type="checkbox" id="chkDelete" class="checkbox-checked" /> Delete</th>
-                                            <th><input type="checkbox" id="chkApprove" class="checkbox-checked" /> Approve</th>
+                                            <th> <input type="checkbox" id="chkView" class="checkbox-checked rolechk" /> View</th>
+                                            <th> <input type="checkbox" id="chkAdd" class="checkbox-checked rolechk" /> Add</th>
+                                            <th><input type="checkbox" id="chkEdit" class="checkbox-checked rolechk" /> Edit</th>
+                                            <th><input type="checkbox" id="chkDelete" class="checkbox-checked rolechk" /> Delete</th>
+                                            <th><input type="checkbox" id="chkApprove" class="checkbox-checked rolechk" /> Approve</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -96,11 +96,11 @@
                                             <tr>
                                                 <td>@Model.MasterModules[i].ModuleName</td>
                                                 <td></td>
-                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Edit, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Delete, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Approve, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.View, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Add, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Edit, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Delete, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
+                                                <td>@Html.CheckBoxFor(model => Model.MasterModules[i].RoleModulePermission.Approve, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
                                             </tr>
 
                                             @for (int j = 0; j < Model.MasterModules[i].MasterSubModules.Count; j++)
@@ -116,22 +116,22 @@
                                                     <td></td>
 
                                                     <td>@System.Text.RegularExpressions.Regex.Replace(Model.MasterModules[i].MasterSubModules[j].SubModuleName, "([a-z])([A-Z])", "$1 $2")</td>
-                                                    <td> @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.View, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Edit, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Delete, new { @class = "checkbox-checked", @checked = "checked" })</td>
-                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Approve, new { @class = "checkbox-checked", @checked = "checked" })</td>
+                                                    <td> @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.View, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
+                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
+                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Edit, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
+                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Delete, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
+                                                    <td>@Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Approve, new { @class = "checkbox-checked rolechk", @checked = "checked" })</td>
 
-                                                    @if (subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationRequest &&
-                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationQuotation &&
-                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationInvoice &&
-                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.SiteDescription &&
-                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ComparableEvidences &&
-                                                   subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationAssessement
+                                                    @if (  subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationRequest &&
+                                                           subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationQuotation &&
+                                                           subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationInvoice &&
+                                                           subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.SiteDescription &&
+                                                           subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ComparableEvidences &&
+                                                           subModId != (int)Eltizam.Utility.Enums.SubModuleEnum.ValuationAssessement
                                                    )
                                                     {
                                                         <td>
-                                                            @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked", @checked = "checked" })
+                                                            @Html.CheckBoxFor(model => Model.MasterModules[i].MasterSubModules[j].RoleModulePermission.Add, new { @class = "checkbox-checked rolechk", @checked = "checked" })
                                                         </td>
                                                     }
 

@@ -30,29 +30,22 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         
-        public async Task<List<ValuationRequestStatusModel>> GetAll(int roleId,string action, int ValReqId )
-        {
-
+        public async Task<List<ValuationRequestStatusModel>> GetAll(int? roleId = null, string? action = null, int? ValReqId = null)
+        { 
             DbParameter[] osqlParameter =
-           {
+            {
                 new DbParameter("RoleId", roleId, SqlDbType.Int),
                 new DbParameter("Action", action, SqlDbType.VarChar),
                 new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
-            };
-            //var ValuationRequestDependencies = EltizamDBHelper.ExecuteMappedReader<ValuationRequestDependencies>(ProcedureMetastore.usp_ValuationRequest_GetDependencies, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
-
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestStatusModel>(ProcedureMetastore.usp_ValuationRequestStatus_AllList,
-             DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+            }; 
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestStatusModel>(ProcedureMetastore.usp_Master_ValuationStatus_List, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
 
             return lstStf;
         }
 
         public async Task<List<ValuationRequestStatusModel>> GetAllStatus()
         {
-
-             var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestStatusModel>(ProcedureMetastore.usp_ValuationRequestStatusList,
-             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
-
+            var lstStf = await GetAll(); 
             return lstStf;
         }
     }
