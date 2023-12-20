@@ -2356,3 +2356,24 @@ a {
     width: 18px;
     cursor: pointer;
 }
+
+#rolemanage input[type=checkbox]:checked:after {
+    content: '\2713';
+    color: white;
+    position: absolute;
+    font-size: 11px;
+    left: 5px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    font-weight: bolder;
+}
+
+#rolemanage input[type=checkbox]:checked {
+    background-color: var(--blue);
+    appearance: none;
+    position: relative;
+    border: 0.5px solid white;
+    margin: 0;
+}

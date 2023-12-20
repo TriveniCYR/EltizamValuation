@@ -25,6 +25,8 @@ $('#chkAdd').change(function () {
         $("input[name*='RoleModulePermission.Add']").prop('checked', false);
     }
     $("[id^=MasterModules][type=checkbox]").change();
+    document.getElementById("chkView").checked = true;
+
 });
 
 $('#chkEdit').change(function () {
