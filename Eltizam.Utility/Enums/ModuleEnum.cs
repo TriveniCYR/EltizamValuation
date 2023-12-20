@@ -41,6 +41,13 @@ namespace Eltizam.Utility.Enums
         Admin = 4
     }
 
+    public enum StatusTypeEnum
+    {
+        Valuation = 1,
+        Quotation = 2,
+        Invoice = 3 
+    }
+
 
     public enum PermissionEnum
     {
