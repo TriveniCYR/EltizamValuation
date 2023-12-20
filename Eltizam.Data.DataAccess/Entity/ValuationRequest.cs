@@ -40,7 +40,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public virtual MasterUser? Approver { get; set; }
         public virtual MasterClient Client { get; set; } = null!;
         public virtual MasterProperty Property { get; set; } = null!;
-        public virtual ValuationRequestStatus Status { get; set; } = null!;
+        public virtual MasterValuationStatus Status { get; set; } = null!;
         public virtual ICollection<ComparableEvidence> ComparableEvidences { get; set; }
         public virtual ICollection<MasterNotification> MasterNotifications { get; set; }
         public virtual ICollection<SiteDescription> SiteDescriptions { get; set; }

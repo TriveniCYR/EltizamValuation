@@ -59,9 +59,25 @@ namespace Eltizam.Web.Controllers
 
             if (objPermssion != null)
             {
-                if ((view == objPermssion.View) || (add == objPermssion.Add) || (edit == objPermssion.Edit) || (assign == objPermssion.Approve))
+                if (objPermssion.View && view)
                 {
                     hasAccess = true;
+                }
+                else if (objPermssion.Add && add)
+                {
+                    hasAccess = true;
+                }
+                else if (objPermssion.Edit && edit)
+                {
+                    hasAccess = true;
+                }
+                else if (objPermssion.Approve && assign)
+                {
+                    hasAccess = true;
+                }
+                else
+                {
+                    hasAccess = false;
                 }
             }
 

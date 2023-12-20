@@ -37,11 +37,11 @@ namespace Eltizam.WebApi.Controllers
         
 
         [HttpGet("GetAll/{roleId}")]
-        public async Task<IActionResult> GetAll(int roleId,string action)
+        public async Task<IActionResult> GetAll(int roleId,string action, int ValReqId)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _RequestStatusService.GetAll(roleId, action), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _RequestStatusService.GetAll(roleId, action, ValReqId), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
