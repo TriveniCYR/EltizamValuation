@@ -22,7 +22,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public bool? IsDeleted { get; set; }
 
-        public virtual ValuationQuotationStatus Status { get; set; } = null!;
         public virtual ValuationRequest ValuationRequest { get; set; } = null!;
     }
 }
