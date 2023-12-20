@@ -427,13 +427,16 @@ var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text
 //    BindValuationRequestStatus(RoleId);
 //}
 function BindValuationRequestStatus() {
+    var ValReqId = parseInt($('#hdnId').val());
     /*alert("hello");*/
     var RequestStatus = $("#StatusId");
     var _val = $('#hdnStatusId').val();
     var _rpname = "statusName";
     var roleId=document.getElementById('hdnRoleId').value
+    
+    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId, RequestStatus, _rpname, _val);
+    
 
-    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action, RequestStatus, _rpname, _val);
    // var url = GetAllValuationRequestStatus + '/' + roleId + '?action=' + action;
 
 
