@@ -34,7 +34,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IRepository<MasterUser> _masteruserrepository;
         private readonly IRepository<MasterDictionaryDetail> _masterdictionaryrepository;
         private readonly IAuditLogService _auditLogService;
-        private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
+        private IRepository<MasterValuationStatus> _statusrepository { get; set; }
         #endregion Properties
 
         #region Constructor
@@ -50,7 +50,7 @@ namespace Eltizam.Business.Core.Implementation
             _notificationService = notificationService;
             _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
             _masterdictionaryrepository = _unitOfWork.GetRepository<MasterDictionaryDetail>();
-            _statusrepository = _unitOfWork.GetRepository<ValuationRequestStatus>();
+            _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>();
         }
         #endregion Constructor
 
@@ -153,7 +153,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             try
             {
-                var statusid = _statusrepository.GetAll().Where(x => x.StatusName == "Paymented").Select(x => x.Id).FirstOrDefault();
+                var statusid = _statusrepository.GetAll().Where(x => x.Status == "Paymented").Select(x => x.Id).FirstOrDefault();
                 _notificationService.UpdateValuationRequestStatus(statusid, objInvoice.ValuationRequestId);
 
                 string? username = _masteruserrepository.GetAll().Where(x => x.Id == objInvoice.CreatedBy).Select(x=>x.UserName).FirstOrDefault();

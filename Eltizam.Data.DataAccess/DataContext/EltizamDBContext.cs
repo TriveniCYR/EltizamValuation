@@ -1576,3 +1576,4 @@ namespace Eltizam.Data.DataAccess.DataContext
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
+

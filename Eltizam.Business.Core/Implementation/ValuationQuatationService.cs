@@ -37,7 +37,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly INotificationService _notificationService;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IRepository<MasterUser> _masteruserrepository;
-        private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
+        private IRepository<MasterValuationStatus> _statusrepository { get; set; }
         #endregion Properties
 
         #region Constructor
@@ -52,7 +52,7 @@ namespace Eltizam.Business.Core.Implementation
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
             _notificationService = notificationService;
             _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
-            _statusrepository = _unitOfWork.GetRepository<ValuationRequestStatus>();
+            _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>();
         }
 
         #endregion Constructor
@@ -218,7 +218,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             try
             {
-                var statusid = _statusrepository.GetAll().Where(x => x.StatusName == "Quoted").Select(x => x.Id).FirstOrDefault();
+                var statusid = _statusrepository.GetAll().Where(x => x.Status == "Quoted").Select(x => x.Id).FirstOrDefault();
                 _notificationService.UpdateValuationRequestStatus(statusid,objQuatation.ValuationRequestId);
               
                 string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_QuotationCreate.html");
