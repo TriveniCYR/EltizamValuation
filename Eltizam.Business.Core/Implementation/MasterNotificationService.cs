@@ -27,6 +27,8 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
         private IRepository<MasterUser> _userrepository { get; set; }
         private readonly IMemoryCache _memoryCache;
+        private string cacheKey = $"NotificationsCache";
+
         public MasterNotificationService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapperFactory mapperFactory, IMemoryCache memoryCache)
         {
             _unitOfWork = unitOfWork;
@@ -102,6 +104,10 @@ namespace Eltizam.Business.Core.Implementation
             {
 
             }
+            finally
+            {
+                InitiateNotificationCache();
+            }
 
             return DBOperation.Success;
         }
@@ -121,42 +127,18 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         public List<MasterNotificationEntitty> GetAll(int? viewmore, int? userId, int? valId)
-        {
-            var cacheKey = $"NotificationsCache_{viewmore}_{userId}_{valId}";
-
+        { 
             // Get from cache first
             var cacheData = _memoryCache.Get<List<MasterNotificationEntitty>>(cacheKey);
-            if (cacheData != null)
+            if (cacheData == null)
             {
-                return cacheData;
+                InitiateNotificationCache();
             }
-            var notificationresult = _repository.GetAllAsync().Result.ToList();
-            var valuationrequest = _valuationrepository.GetAllAsync().Result.ToList();
 
-            var result = from notification in notificationresult
-                         join valuation in valuationrequest on notification.ValuationRequestId equals valuation.Id
-                         orderby notification.Id descending
-                         select new MasterNotificationEntitty
-                         {
-                             Id = notification.Id,
-                             ValuationRequestId = notification.ValuationRequestId,
-                             Subject = notification.Subject,
-                             ToEmails = notification.ToEmails,
-                             Body = notification.Body,
-                             SentDatetime = notification.SentDatetime,
-                             Readby = notification.ReadBy,
-                             ReadDate = notification.ReadDate,
-                             ValRefNo = valuation.ReferenceNo,
-                             StatusId = notification.StatusId,
-                             CreatedBy = valuation.CreatedBy,
-                             ApproverId = valuation.ApproverId,
-                             ValuerId = valuation.ValuerId
-                         };
-
+            var result = _memoryCache.Get<List<MasterNotificationEntitty>>(cacheKey); ;
 
             if (userId != null && userId != 0)
             {
-
                 //Get the role for userId
                 var roleId = _userrepository.GetAll().Where(user => user.Id == userId).First().RoleId;
                 if (roleId == (int)RoleEnum.Approver)
@@ -182,10 +164,43 @@ namespace Eltizam.Business.Core.Implementation
             else
             {
                 finalResult = result.Where(x => x.Readby == 0).ToList();
-            }
-            var expirationTime = DateTimeOffset.Now.AddMinutes(60.0);
-            _memoryCache.Set(cacheKey, finalResult, expirationTime);
+            } 
+            
             return finalResult;
+        }
+
+
+        /// <summary>
+        /// Changed by YReddy on 12/20/23
+        /// For initiate cache of notifications
+        /// </summary>
+        public void InitiateNotificationCache()
+        {
+            var notificationresult = _repository.GetAllAsync().Result.ToList();
+            var valuationrequest = _valuationrepository.GetAllAsync().Result.ToList();
+
+            var results = from notification in notificationresult
+                          join valuation in valuationrequest on notification.ValuationRequestId equals valuation.Id
+                          orderby notification.Id descending
+                          select new MasterNotificationEntitty
+                          {
+                              Id = notification.Id,
+                              ValuationRequestId = notification.ValuationRequestId,
+                              Subject = notification.Subject,
+                              ToEmails = notification.ToEmails,
+                              Body = notification.Body,
+                              SentDatetime = notification.SentDatetime,
+                              Readby = notification.ReadBy,
+                              ReadDate = notification.ReadDate,
+                              ValRefNo = valuation.ReferenceNo,
+                              StatusId = notification.StatusId,
+                              CreatedBy = valuation.CreatedBy,
+                              ApproverId = valuation.ApproverId,
+                              ValuerId = valuation.ValuerId
+                          };
+
+            var expirationTime = DateTimeOffset.Now.AddMinutes(60.0);
+            _memoryCache.Set(cacheKey, results, expirationTime);
         }
 
 
