@@ -26,8 +26,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequest> _valuationrepository { get; set; }
         private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
         private IRepository<MasterUser> _userrepository { get; set; }
-        private readonly IMemoryCache _memoryCache;
-        private string cacheKey = $"NotificationsCache";
+        private readonly IMemoryCache _memoryCache; 
 
         public MasterNotificationService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapperFactory mapperFactory, IMemoryCache memoryCache)
         {
@@ -127,15 +126,17 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         public List<MasterNotificationEntitty> GetAll(int? viewmore, int? userId, int? valId)
-        { 
+        {
             // Get from cache first
-            var cacheData = _memoryCache.Get<List<MasterNotificationEntitty>>(cacheKey);
+            var cacheData1 = _memoryCache.Get(AppConstants.NotificationsCache);
+
+            var cacheData = _memoryCache.Get<List<MasterNotificationEntitty>>(AppConstants.NotificationsCache);
             if (cacheData == null)
             {
                 InitiateNotificationCache();
             }
 
-            var result = _memoryCache.Get<List<MasterNotificationEntitty>>(cacheKey); ;
+            var result = _memoryCache.Get<List<MasterNotificationEntitty>>(AppConstants.NotificationsCache);
 
             if (userId != null && userId != 0)
             {
@@ -199,8 +200,10 @@ namespace Eltizam.Business.Core.Implementation
                               ValuerId = valuation.ValuerId
                           };
 
+            List<MasterNotificationEntitty> finalResult = results.ToList();
+
             var expirationTime = DateTimeOffset.Now.AddMinutes(60.0);
-            _memoryCache.Set(cacheKey, results, expirationTime);
+            _memoryCache.Set(AppConstants.NotificationsCache, finalResult, expirationTime);
         }
 
 

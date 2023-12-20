@@ -43,6 +43,7 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string CreatedBy = "CreatedBy";
         public static string ModifiedBy = "ModifiedBy";
         public static string MenusCache = "MenusCache";
+        public static string NotificationsCache = "NotificationCache";
         public static string LogInUserId = "LogInUserId";
 
         public static DateTime DateTime = DateTime.Now; 
