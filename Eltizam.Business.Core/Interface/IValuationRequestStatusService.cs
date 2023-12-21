@@ -11,5 +11,6 @@ namespace Eltizam.Business.Core.Interface
     {
         Task<List<ValuationRequestStatusModel>> GetAll(int? roleId = null, string? action = null, int? ValReqId = null);
         Task<List<ValuationRequestStatusModel>> GetAllStatus();
+        Task<List<ValuationRequestStatusModel>> GetInvoiceTransactionStatus(int type);
     }
 }

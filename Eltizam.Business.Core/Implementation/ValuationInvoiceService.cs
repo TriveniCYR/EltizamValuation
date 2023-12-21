@@ -32,7 +32,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly int? _LoginUserId;
         private readonly INotificationService _notificationService;
         private readonly IRepository<MasterUser> _masteruserrepository;
-        private readonly IRepository<MasterDictionaryDetail> _masterdictionaryrepository;
+        //private readonly IRepository<MasterDictionaryDetail> _masterdictionaryrepository;
         private readonly IAuditLogService _auditLogService;
         private IRepository<MasterValuationStatus> _statusrepository { get; set; }
         #endregion Properties
@@ -49,7 +49,7 @@ namespace Eltizam.Business.Core.Implementation
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
             _notificationService = notificationService;
             _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
-            _masterdictionaryrepository = _unitOfWork.GetRepository<MasterDictionaryDetail>();
+            //_masterdictionaryrepository = _unitOfWork.GetRepository<MasterDictionaryDetail>();
             _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>();
         }
         #endregion Constructor
@@ -157,7 +157,7 @@ namespace Eltizam.Business.Core.Implementation
                 _notificationService.UpdateValuationRequestStatus(statusid, objInvoice.ValuationRequestId);
 
                 string? username = _masteruserrepository.GetAll().Where(x => x.Id == objInvoice.CreatedBy).Select(x=>x.UserName).FirstOrDefault();
-                string transactionstatus = _masterdictionaryrepository.Get(x => x.Id == objInvoice.TransactionStatusId).Description;
+                string transactionstatus = _statusrepository.Get(x => x.Id == objInvoice.TransactionStatusId).Status;
                 TransactionModeEnum mode = (TransactionModeEnum)objInvoice.TransactionModeId;
                 string? paymentmode = Enum.GetName(typeof(TransactionModeEnum), mode);
 

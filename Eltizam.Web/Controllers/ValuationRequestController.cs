@@ -235,7 +235,7 @@ namespace EltizamValuation.Web.Controllers
                 quotation = new ValuationQuatationListModel();
                 quotation.ValuationRequestId = vId;
                 quotation.ReferenceNo = refNo;
-                quotation.StatusId = 1;
+                quotation.StatusId = 13;
 
                 FooterInfo(TableNameEnum.ValuationQuotation, _cofiguration, id); 
                 return View(quotation);

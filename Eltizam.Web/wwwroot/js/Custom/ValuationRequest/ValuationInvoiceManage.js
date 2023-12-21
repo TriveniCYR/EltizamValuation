@@ -346,14 +346,14 @@ function formatDateTo_ddMMMyyyy(date) {
 }
 
 function BindTransactionstatus() {
-    var id = 47;
+    var id = 3;
     var cashStatusId = $("#CashTransactionStatusId");
     var chequeStatusId = $("#ChequeTransactionStatusId");
     var cardStatusId = $("#CardTransactionStatusId");
     var netStatusId = $("#BankTransactionStatusId");
     var _val = $("#hdnTransactionStatusId").val();
     var _payMode = $("#hdnTransactionModeId").val();
-    var _rpname = "description";
+    var _rpname = "statusName";
     //BindDropdowns(transactionStatus + '/' + id, transactionStatusId, _rpname, _val);
     $.ajax({
         type: Get,

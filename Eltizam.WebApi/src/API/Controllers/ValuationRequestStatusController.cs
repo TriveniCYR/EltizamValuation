@@ -61,6 +61,17 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
-
+        [HttpGet("GetInvoiceTransactionStatus/{type}")]
+        public async Task<IActionResult> GetInvoiceTransactionStatus(int type)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _RequestStatusService.GetInvoiceTransactionStatus(type), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
     }
 }
