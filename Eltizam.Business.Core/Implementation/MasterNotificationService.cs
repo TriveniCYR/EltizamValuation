@@ -24,7 +24,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private IRepository<MasterNotification> _repository { get; set; }
         private IRepository<ValuationRequest> _valuationrepository { get; set; }
-        private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
+        private IRepository<MasterValuationStatus> _statusrepository { get; set; }
         private IRepository<MasterUser> _userrepository { get; set; }
         private readonly IMemoryCache _memoryCache; 
 
@@ -35,7 +35,7 @@ namespace Eltizam.Business.Core.Implementation
             _configuration = configuration;
             _mapperFactory = mapperFactory;
             _valuationrepository = _unitOfWork.GetRepository<ValuationRequest>();
-            _statusrepository = _unitOfWork.GetRepository<ValuationRequestStatus>(); 
+            _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>(); 
             _userrepository=_unitOfWork.GetRepository<MasterUser>();
             _memoryCache = memoryCache;
         }

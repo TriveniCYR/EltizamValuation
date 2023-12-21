@@ -75,7 +75,7 @@
                             <div class="tabSection">
                                 <div class="flex mb-28">
                                     <label for="" class="w-50">
-                                        <p class="m-0">Transaction Status<span class="text-danger">*</span></p>
+                                        <p class="m-0">Status<span class="text-danger">*</span></p>
                                         @* <select id="CashTransactionStatusId" class="">
                                         </select> *@
                                         @Html.DropDownListFor(model => model.CashTransactionStatusId, new List<SelectListItem> { }, new { @class = "form-control  searchable-dropdown" })
@@ -107,7 +107,7 @@
                             <div class="tabSection">
                                 <div class="flex mb-28">
                                     <label for="" class="w-50">
-                                        <p class="m-0">Transaction Status<span class="text-danger">*</span></p>
+                                        <p class="m-0">Status<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.ChequeTransactionStatusId, new List<SelectListItem> { }, new { @class = "form-control  searchable-dropdown" })
                                     </label>
                                     <label for="" class="w-50">
@@ -152,14 +152,14 @@
                     </div>
                     <div id="pay3" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
-                            <h3>Add Credit Card Payment Details</h3>
+                            <h5>Credit Card Payment Details</h5>
                         </div>
                         <div class="inputSearchs">
                             <div class="tabSection">
 
                                 <div class="flex mb-28">
                                     <label for="" class="w-50">
-                                        <p class="m-0">Transaction Status<span class="text-danger">*</span></p>
+                                        <p class="m-0">Status<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.CardTransactionStatusId, new List<SelectListItem> { }, new { @class = "form-control  searchable-dropdown" })
                                     </label>
                                     <label for="" class="w-50">
@@ -212,13 +212,13 @@
                     </div>
                     <div id="pay4" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
-                            <h3>Add Net Banking Payment Details</h3>
+                            <h5>Net Banking Payment Details</h5>
                         </div>
                         <div class="inputSearchs">
                             <div class="tabSection">
                                 <div class="flex mb-28">
                                     <label for="" class="w-50">
-                                        <p class="m-0">Transaction Status<span class="text-danger">*</span></p>
+                                        <p class="m-0">Status<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.BankTransactionStatusId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
                                     </label>
                                     <label for="" class="w-50">
@@ -367,7 +367,7 @@
 
         var ValuationInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationInvoiceById";
         var UpsertValuationInvoice = "@Eltizam.Web.Helpers.APIURLHelper.UpsertValuationInvoice";
-        var transactionStatus = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryDescriptionById";
+        var transactionStatus = "@Eltizam.Web.Helpers.APIURLHelper.GetInvoiceTransactionStatus";
         var DeleteInvoiceDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteInvoiceDocument";
 
         var DeleteLabel = "@SharedLocalizer["Delete"]";
