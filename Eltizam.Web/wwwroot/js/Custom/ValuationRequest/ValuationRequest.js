@@ -105,7 +105,7 @@ function InitializeValutionRequestDataList() {
             "render": function (data, type, row, meta) { 
                 // Define a custom CSS style based on the color code 
                 var statusStyle = "color: " + row.colorCode + "; background-color: " + row.backGroundColor + ";border: 1px solid" + row.colorCode
-                return '<span class="tableStatus" style="' + statusStyle + '">' + data + '</span>';
+                return '<label class="tableStatus" style="' + statusStyle + '">' + data + '</label>';
             } 
         }, 
         {
@@ -115,6 +115,7 @@ function InitializeValutionRequestDataList() {
                 html += '<li><a title="View" href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '&IsView=1"><img src="../assets/view.svg" alt="view" />View</a></li>';
                 html += '<li><a title="Edit" href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
                 /*html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletevalutionRequestModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteValuationRequest(' + row.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';*/
+                html += '<li><a title="History" href="#" class="viewLink" data-val-req-id="' + row.id + '"><img src="../assets/view.svg" alt="view" /> History</a></li>';
                 html += '</ul></div>';
 
                 return html;
@@ -219,3 +220,40 @@ function AssignRequest() {
         }
     });
 }
+
+
+// Add a click event listener for the "View" link
+$(document).on('click', '.viewLink', function (e) {
+    e.preventDefault();
+    $('#data-table-statushistory tbody').empty();
+    // Get ValReqId from the data-val-req-id attribute
+    var valReqId = $(this).data('val-req-id');
+
+    // Fetch data from the API
+    $.ajax({
+        url: BaseURL + GetAllStatusHistory +'/' + valReqId,
+      
+        method: 'GET',
+        success: function (data) {
+            // Handle the data as needed (e.g., populate the modal)
+            console.log(data);
+            $.each(data, function (index, request) {
+                $('#data-table-statushistory tbody').append('<tr>' +
+                   
+                    '<td><span class="tableStatus" style="color: ' + request.colorCode + '; background-color: ' + request.backGroundColor + '; border: 1px solid ' + request.colorCode + ';">' + request.status + '</span></td>' +
+                    '<td>' + request.createdByName + '</td>' +
+                    '<td class="formatted-td-date-input">' + request.createdDate + '</td>' +
+                    
+                    '</tr>');
+            });
+            formatreadonlydate();
+            // Open your modal here and populate it with the fetched data
+            $('#requestHistorymodal').modal('show');
+
+        },
+        error: function (error) {
+            console.error('Error fetching data:', error);
+        }
+       
+    });
+});

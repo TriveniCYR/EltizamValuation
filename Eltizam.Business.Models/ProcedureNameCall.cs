@@ -76,6 +76,8 @@ namespace Eltizam.Business.Models
         public static string usp_ValuationRequestStatusList = "usp_ValuationRequestStatusList";
         public static string usp_Site_GetSiteDescriptionByRequestId = "usp_Site_GetSiteDescriptionByRequestId";
         public static string usp_Master_Valuation_InvoiceStatus_List = "usp_Master_Valuation_InvoiceStatus_List";
+        public static string usp_ValuationRequest_StatusHistory = "usp_ValuationRequest_StatusHistory";
+
 
 
         //AuditLog
