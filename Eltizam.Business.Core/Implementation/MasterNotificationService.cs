@@ -127,9 +127,7 @@ namespace Eltizam.Business.Core.Implementation
 
         public List<MasterNotificationEntitty> GetAll(int? viewmore, int? userId, int? valId)
         {
-            // Get from cache first
-            var cacheData1 = _memoryCache.Get(AppConstants.NotificationsCache);
-
+           
             var cacheData = _memoryCache.Get<List<MasterNotificationEntitty>>(AppConstants.NotificationsCache);
             if (cacheData == null)
             {
