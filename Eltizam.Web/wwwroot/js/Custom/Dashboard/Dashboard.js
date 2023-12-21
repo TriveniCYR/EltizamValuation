@@ -74,15 +74,13 @@ function submitFilterFormSuccess(data) {
                 '<td><a href="/ValuationRequest/ValuationRequestManage?id='+ request.valId + '&IsView=1">' + request.valRefNum + '</a></td>' +
                 '<td>' + request.propertyName + '</td>' +
                 '<td>' + request.clientName + '</td>' +
-                '<td><span class="tableStatus" style="color: ' + request.colorCode + '; background-color: ' + request.backGroundColor + '; border: 1px solid ' + request.colorCode + ';">' + request.status + '</span></td>' +
+                '<td><label class="tableStatus" style="color: ' + request.colorCode + '; background-color: ' + request.backGroundColor + '; border: 1px solid ' + request.colorCode + ';">' + request.status + '</label></td>' +
                 '</tr>';
             latestRequestsTableBody.append(rowHtml);
         });
     }
     else {
-        var rowHtml = '<tr>' +
-            '<td colspan="5">' + "No Data Available" + '</td>' +
-            '</tr>';
+        var rowHtml = '<tr><td colspan="4">' + "No Data Available" + '</td></tr>';
         latestRequestsTableBody.append(rowHtml);
     }
 
@@ -102,9 +100,7 @@ function submitFilterFormSuccess(data) {
         });
     }
     else {
-        var rowHtml = '<tr>' +
-            '<td colspan="5">' + "No Data Available" + '</td>' +
-            '</tr>';
+        var rowHtml = '<tr><td colspan="5">' + "No Data Available" + '</td></tr>';
         latestQuotationsTableBody.append(rowHtml);
     }
     //LatestQuotationsTable End
@@ -126,9 +122,7 @@ function submitFilterFormSuccess(data) {
         });
     }
     else {
-        var rowHtml = '<tr>' +
-            '<td colspan="4">' + "No Data Available" + '</td>' +
-            '</tr>';
+        var rowHtml = '<tr><td colspan="4">' + "No Data Available" + '</td></tr>';
         topValuationsTableBody.append(rowHtml);
     }
     //TopValuationsTable End
@@ -149,9 +143,7 @@ function submitFilterFormSuccess(data) {
         });
     }
     else {
-        var rowHtml = '<tr>' +
-            '<td colspan="4">' + "No Data Available" + '</td>' +
-            '</tr>';
+        var rowHtml = '<tr><td colspan="5">' + "No Data Available" + '</td></tr>';
         topQuotationDuesTableBody.append(rowHtml);
     }
 
