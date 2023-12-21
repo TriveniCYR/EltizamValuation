@@ -580,12 +580,11 @@
                         <table id="InvoiceTable" class="table-striped">
                             <thead>
                                 <tr>
-                                    <th>#Invoice</th> 
-                                 @*    <th>Valuation Request Status</th> *@
-                                    <th>Transaction Model</th>
-                                    <th>Transaction Status</th>
-                                    <th>Amount</th>
+                                    <th>#Invoice</th>
                                     <th>Transaction Date</th>
+                                    <th>Payment Mode</th>
+                                    <th>Status</th>
+                                    <th>Amount</th> 
                                     <th>Created By</th>
                                     <th>Creation Date</th>
                                     <th>Action</th>
@@ -596,6 +595,7 @@
                         </table>
                     </div>
                 </div>
+
                 <form asp-action="ValuationAssesmentManage" asp-controller="ValuationRequest" method="POST" enctype="multipart/form-data">
                     @Html.HiddenFor(model => model.Id)
                     <div id="profile4" class="tabcontent">
