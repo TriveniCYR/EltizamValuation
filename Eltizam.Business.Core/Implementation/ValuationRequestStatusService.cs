@@ -48,5 +48,17 @@ namespace Eltizam.Business.Core.Implementation
             var lstStf = await GetAll(); 
             return lstStf;
         }
+
+        public async Task<List<ValuationRequestHistoryStatusModel>> GetAllStatusHistory( int? ValReqId = null)
+        {
+            DbParameter[] osqlParameter =
+            {
+                
+                new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
+            };
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestHistoryStatusModel>(ProcedureMetastore.usp_ValuationRequest_StatusHistory, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+
+            return lstStf;
+        }
     }
 }

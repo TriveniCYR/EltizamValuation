@@ -62,5 +62,18 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
+        [HttpGet("GetAllStatusHistory/{ValReqId}")]
+        public async Task<IActionResult> GetAllStatusHistory(int ValReqId)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _RequestStatusService.GetAllStatusHistory(ValReqId), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
     }
 }
