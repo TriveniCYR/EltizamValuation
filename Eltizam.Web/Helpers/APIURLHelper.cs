@@ -219,6 +219,7 @@ namespace Eltizam.Web.Helpers
         public static string GetDictionaryDetailsById = "MasterDictionary/GetDictionaryDetailsById";
         public static string GetDictionaryDescriptionById = "MasterDictionary/GetDictionaryDescriptionById";
         public static string GetDictionaryWithSubDetails = "MasterDictionary/GetDictionaryWithSubDetails";
+        public static string GetInvoiceTransactionStatus = "ValuationRequestStatus/GetInvoiceTransactionStatus";
 
         #endregion Dictionary Management
 

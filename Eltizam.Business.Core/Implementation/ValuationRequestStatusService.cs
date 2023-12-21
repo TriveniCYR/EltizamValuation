@@ -6,6 +6,7 @@ using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
+using System;
 using System.Data;
 
 namespace Eltizam.Business.Core.Implementation
@@ -16,7 +17,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
 
-        private IRepository<ValuationRequestStatus> _repository { get; set; }
+        private IRepository<MasterValuationStatus> _repository { get; set; }
         private readonly IHelper _helper;
         public ValuationRequestStatusService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory,
                                              IHelper helper, Microsoft.Extensions.Configuration.IConfiguration _configuration)
@@ -24,7 +25,7 @@ namespace Eltizam.Business.Core.Implementation
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
 
-            _repository = _unitOfWork.GetRepository<ValuationRequestStatus>();
+            _repository = _unitOfWork.GetRepository<MasterValuationStatus>();
             configuration = _configuration;
             _helper = helper;
         }
@@ -46,6 +47,17 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<List<ValuationRequestStatusModel>> GetAllStatus()
         {
             var lstStf = await GetAll(); 
+            return lstStf;
+        }
+
+        public async Task<List<ValuationRequestStatusModel>> GetInvoiceTransactionStatus(int type)
+        {
+            DbParameter[] osqlParameter =
+            {
+                new DbParameter("Type", type, SqlDbType.Int)
+            };
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestStatusModel>(ProcedureMetastore.usp_Master_Valuation_InvoiceStatus_List, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+
             return lstStf;
         }
 
