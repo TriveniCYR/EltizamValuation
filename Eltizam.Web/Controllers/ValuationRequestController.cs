@@ -40,7 +40,7 @@ namespace EltizamValuation.Web.Controllers
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
             //Get module wise permissions
-            ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId);
+            ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
             ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
             ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
 
