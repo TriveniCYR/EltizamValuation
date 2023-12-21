@@ -37,6 +37,16 @@ function GetemailexistError(x, y, z) {
     
 }
 
+$("#DepartmentId").change(function () {
+    $("#validationDepartmentId").text("");
+});
+$("#DesignationId").change(function () {
+    $("#validationDesignationId").text("");
+});
+$("#ResourceId").change(function () {
+    $("#validationResourceId").text("");
+});
+
 function BindDepartment() {
     var Department = $("#DepartmentId");
     var _val = $('#hdnDeparment').val();
@@ -466,7 +476,30 @@ function validateForAddress() {
                 return false;
             }
         }
-    }    
+    }  
+    var errorMsgForAll = "";
+    if ($("#DepartmentId").val() === "" || $("#DepartmentId").val() === "0") {
+
+        $("#validationDepartmentId").text("The Department field is required.");
+        errorMsgForAll = "1";
+    }
+    if ($("#DesignationId").val() === "" || $("#DesignationId").val() === "0") {
+
+        $("#validationDesignationId").text("The Designation field is required.");
+        errorMsgForAll += "1";
+
+    }
+    if ($("#ResourceId").val() === "" || $("#ResourceId").val() === "0") {
+
+        $("#validationResourceId").text("The ResourceType field is required.");
+        errorMsgForAll += "1";
+
+    }
+    if (errorMsgForAll != "") {
+        toastr.error("Please fill mandate fields in profile section.");
+        return false;
+    }
+
     return true;
 }
 function isValidEmail(email) {

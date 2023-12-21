@@ -14,73 +14,26 @@ $(document).ready(function () {
     BindDepartment();
     BindDesignation();
     BindCountryCode();
-    $('#Address_Phone').keypress(function (e) {
-        if ($('#Address_Phone').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#Address_AlternatePhone').keypress(function (e) {
-        if ($('#Address_AlternatePhone').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#Address_Landlinephone').keypress(function (e) {
-        if ($('#Address_Landlinephone').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#Address_PinNo').keypress(function (e) {
-        if ($('#Address_PinNo').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
+});
 
-    $('#Contact_Mobile').keypress(function (e) {
-        if ($('#Contact_Mobile').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
-    $('#Address_PinNo').keypress(function (e) {
-        if ($('#Address_PinNo').val() == '' && e.which == 48) {
-            return false;
-        }
-        else {
-            var charCode = (e.which) ? e.which : event.keyCode;
-            if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-                return false;
-            }
-        }
-    });
+$("#client").submit(function () {
+    var errorMsgForAll = "";
+    if ($("#ClientTypeId").val() === "" || $("#ClientTypeId").val() === "0") {
+
+        $("#validationClientTypeId").text("The ClientType field is required.");
+        errorMsgForAll = "1";
+    }
+
+    if (errorMsgForAll != "") {
+        return false;
+    }
+
+    //$("#validationMessage").text("");
+    //return true;
+})
+
+$("#ClientTypeId").change(function () {
+    $("#validationClientTypeId").text("");
 });
 
 function profileTab(evt, cityName) {

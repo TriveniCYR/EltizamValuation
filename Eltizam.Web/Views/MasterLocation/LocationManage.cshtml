@@ -41,7 +41,8 @@
                             <label for="CountryId" class="w-50">
                                 <p class="m-0">Country<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown ", @onchange = "BindState(this.options[this.selectedIndex].value)"})
-                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" }) *@
+                                <p id="validationCountryId" class="text-danger"></p>
                             </label>
 
                             <label for="IsActive" class="w-50">
@@ -56,12 +57,14 @@
                             <label for="StateId" class="w-50">
                                 <p class="m-0">State<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown ",@onchange = "BindCity(this.options[this.selectedIndex].value)"})
-                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" }) *@
+                                <p id="validationStateId" class="text-danger"></p>
                             </label>
                             <label for="CityId" class="w-50">
                                 <p class="m-0">City / Emirates<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown "})
-                                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" }) *@
+                                <p id="validationCityId" class="text-danger"></p>
                             </label>
                         </div>
                         <div class="flex">
@@ -83,14 +86,16 @@
                             <label for="Geo-coordinates" class="w-50">
                                 <p class="m-0">Home Currency<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>{},  new { @class = "form-control searchable-dropdown "})
-                                @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" }) *@
+                                <p id="validationHomeCurrencyId" class="text-danger"></p>
                             </label>
                         </div>
                         <div class="flex">
                             <label for="Geo-coordinates" class="w-50">
                                 <p class="m-0">Foreign Currency<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem> { },  new { @class = "form-control searchable-dropdown " })
-                                @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" }) *@
+                                <p id="validationForeignCurrencyId" class="text-danger"></p>
                             </label>
                         </div>
                         <div class="flex">

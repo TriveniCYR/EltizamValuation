@@ -31,7 +31,6 @@ namespace Eltizam.Business.Models
         public string? ClientName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'ClientType' field is required.")]
         public int ClientTypeId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]

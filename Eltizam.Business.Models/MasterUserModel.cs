@@ -32,11 +32,9 @@ namespace Eltizam.Business.Models
         public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'Designation' field is required.")]
         public int DesignationId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'Department' field is required.")]
         public int DepartmentId { get; set; }
         [StringLength(50, MinimumLength = 10)]
         public string? LicenseNo { get; set; }
@@ -49,7 +47,6 @@ namespace Eltizam.Business.Models
         public int CompanyId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'ResourceI' field is required.")]
         public int ResourceId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]

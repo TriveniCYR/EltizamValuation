@@ -782,6 +782,65 @@ function BindState(id) {
 
 }
 
+$("#valuation").submit(function () {
+    var errorMsgForAll = "";
+    if ($("#StatusId").val() === "" || $("#StatusId").val() === null || $("#StatusId").val() === "0") {
+
+        $("#validationStatusId").text("The Status field is required.");
+        errorMsgForAll = "1";
+    }
+    if ($("#ClientTypeId").val() === "" || $("#ClientTypeId").val() === null || $("#ClientTypeId").val() === "0") {
+
+        $("#validationClientTypeId").text("The ClientType field is required.");
+        errorMsgForAll = "1";
+    }
+    if ($("#ClientId").val() === "" || $("#ClientId").val() === null || $("#ClientId").val() === "0") {
+
+        $("#validationClientId").text("The Client field is required.");
+        errorMsgForAll = "1";
+    }
+    if ($("#PropertyTypeId").val() === "" || $("#PropertyTypeId").val() === null || $("#PropertyTypeId").val() === "0") {
+
+        $("#validationPropertyTypeId").text("The PropertyType field is required.");
+        errorMsgForAll = "1";
+    }
+    if ($("#PropertySubTypeId").val() === "" || $("#PropertySubTypeId").val() === null || $("#PropertySubTypeId").val() === "0") {
+
+        $("#validationPropertySubTypeId").text("The PropertySubType field is required.");
+        errorMsgForAll = "1";
+    }
+    if ($("#PropertyId").val() === "" || $("#PropertyId").val() === null || $("#PropertyId").val() === "0") {
+
+        $("#validationPropertyId").text("The PropertyName field is required.");
+        errorMsgForAll = "1";
+    }
+    if (errorMsgForAll != "") {
+        return false;
+    }
+
+    //$("#validationMessage").text("");
+    //return true;
+})
+
+$("#StatusId").change(function () {
+    $("#validationStatusId").text("");
+});
+$("#ClientTypeId").change(function () {
+    $("#validationClientTypeId").text("");
+});
+$("#ClientId").change(function () {
+    $("#validationClientId").text("");
+});
+$("#PropertyTypeId").change(function () {
+    $("#validationPropertyTypeId").text("");
+});
+$("#PropertySubTypeId").change(function () {
+    $("#validationPropertySubTypeId").text("");
+});
+$("#PropertyId").change(function () {
+    $("#validationPropertyId").text("");
+});
+
 function BindLocationState(id) {
     var state = $("#PropertyDetail_StateId");
     var _val = $('#hdnLocationStateId').val();

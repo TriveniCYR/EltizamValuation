@@ -113,14 +113,16 @@
                                     <label for="DepartmentId">
                                         <p class="m-0">Department<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.DepartmentId, new List<SelectListItem>(), new { @class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer["Department"] })
-                                        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                                        @* @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" }) *@
+                                        <p id="validationDepartmentId" class="text-danger"></p>
                                     </label>
                                 </div>
                                 <div class="flex">
                                     <label for="DesignationId">
                                         <p class="m-0">Designation<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.DesignationId, new List<SelectListItem>(), new { @class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer["Designation"] })
-                                        @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" })
+                                       @*  @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "text-danger" }) *@
+                                        <p id="validationDesignationId" class="text-danger"></p>
                                     </label>
                                     <label for="DateOfBirth">
                                         <p class="m-0">Date of Birth<span class="text-danger">*</span></p>
@@ -137,7 +139,7 @@
                                     <label for="ResourceId">
                                         <p class="m-0">Resource Type<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.ResourceId, new List<SelectListItem>(), new { @class = "form-control searchable-dropdown", @placeholder = @SharedLocalizer[" Select ResourceType"] })
-                                        @Html.ValidationMessageFor(model => model.ResourceId, "", new { @class = "text-danger" })
+                                        <p id="validationResourceId" class="text-danger"></p>
                                     </label>
                                 </div>
                                 @if (Model.Id <= 0)

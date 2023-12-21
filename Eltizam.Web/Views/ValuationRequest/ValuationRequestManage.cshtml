@@ -94,7 +94,7 @@
                 <div id="profile1" class="tabcontent p-0">
                     <h5 class="ptrl-20">Valuation Details</h5>
                     <div class="inputSearchs p-0">
-                        <form asp-action="ValuationRequestManage">
+                        <form asp-action="ValuationRequestManage" id="valuation">
                             @Html.HiddenFor(model => model.Id)
                             @Html.HiddenFor(model => model.ReferenceNo)
 
@@ -160,7 +160,8 @@
                                     <label for="" class="w-50">
                                         <p class="m-0">Valuation Status<span class="text-danger">*</span></p>
                                         @Html.DropDownListFor(model => model.StatusId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
-                                        @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
+                                        @* @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" }) *@
+                                        <p id="validationStatusId" class="text-danger"></p>
                                     </label>
 
                                     <label for="" class="w-50 m-0" id="comment">
@@ -205,12 +206,14 @@
                                         <label for="" class="w-50">
                                             <p class="m-0">Client Type<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindClientByClientType(this.options[this.selectedIndex].value)" })
-                                            @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" })
+                                            @* @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" }) *@
+                                             <p id="validationClientTypeId" class="text-danger"></p>
                                         </label>
                                         <label for="" class="w-50">
                                             <p class="m-0">Client<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindClientDetailsByClientId(this.options[this.selectedIndex].value)" })
-                                            @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+                                            @* @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" }) *@
+                                            <p id="validationClientId" class="text-danger"></p>
                                         </label>
                                     </div>
                                     <div class="flex  mb-28">
@@ -285,12 +288,14 @@
                                         <label for="" class="w-50">
                                             <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertySub(this.options[this.selectedIndex].value);" })
-                                            @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" })
+                                            @* @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" }) *@
+                                            <p id="validationPropertyTypeId" class="text-danger"></p>
                                         </label>
                                         <label for="" class="w-50">
                                             <p class="m-0">Property SubType<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertyDetail()" })
-                                            @Html.ValidationMessageFor(model => model.PropertySubTypeId, "", new { @class = "text-danger" })
+                                            @* @Html.ValidationMessageFor(model => model.PropertySubTypeId, "", new { @class = "text-danger" }) *@
+                                            <p id="validationPropertySubTypeId" class="text-danger"></p>
                                         </label>
                                     </div>
                                     <div class="flex  mb-28">
@@ -303,7 +308,7 @@
                                         <label for="" class="w-50">
                                             <p class="m-0">Property Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)" })
-
+                                            <p id="validationPropertyId" class="text-danger"></p>
                                         </label>
                                     </div>
                                     <div class="flex mb-28">
