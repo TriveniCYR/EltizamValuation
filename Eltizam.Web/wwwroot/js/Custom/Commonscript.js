@@ -692,4 +692,21 @@ function displayFileNames(input) {
     fileNamesInput.value = fileNames;
 }
 
-// ======== End:  Scroller for page ============ 
+// ======== End:  Scroller for page  ============
+
+// ======== Start: Searchable drop down Validation ============
+
+
+//$('#PropertySubTypeId').parent().find('.field-validation-error')
+
+$('.searchable-dropdown').on('change', function () {
+    var selectval = $(this).val();
+  //  console.log(val1);
+    if (selectval > 0) {
+        var valcntrl = $(this).parent().find('.field-validation-error')
+        valcntrl.hide();
+    }
+});
+
+
+// ======== End:  SSearchable drop down Validation ============
