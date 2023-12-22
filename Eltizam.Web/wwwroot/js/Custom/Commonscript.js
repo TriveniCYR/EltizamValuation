@@ -701,10 +701,13 @@ function displayFileNames(input) {
 
 $('.searchable-dropdown').on('change', function () {
     var selectval = $(this).val();
+    var valcntrl = $(this).parent().find('.field-validation-error');
+
   //  console.log(val1);
-    if (selectval > 0) {
-        var valcntrl = $(this).parent().find('.field-validation-error')
+    if (selectval > 0) { 
         valcntrl.hide();
+    } else {
+        valcntrl.show();
     }
 });
 
