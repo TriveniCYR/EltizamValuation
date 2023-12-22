@@ -296,7 +296,7 @@ function addMoreAddress() {
     var email = $("#Addresses_" + (count - 1) + "__Email").val();
     var phoneExt = $("#Addresses_" + (count - 1) + "__PhoneExt").val();
     var phone = $("#Addresses_" + (count - 1) + "__Phone").val();
-    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || email == "" || phoneExt == "" || phone == "") {
+    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null|| phoneExt == "" || phone == "") {
         toastr.error("Please fill mandate fields in current section.");
         return false;
     }
@@ -414,14 +414,16 @@ function validateForAddress() {
     var phone = $("#Addresses_" + count + "__Phone").val();
     var AlternatePhone = $("#Addresses_" + count + "__AlternatePhone").val();
     var Landlinephone = $("#Addresses_" + count + "__Landlinephone").val();
-    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || email == "" || phoneExt == "" || phone == "") {
+    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || phoneExt == "" || phone == "") {
         toastr.error("Please fill mandate fields in address section.");
         return false;
     }
     // Function to validate email
-    if (!isValidEmail(email)) {
-        toastr.error("Please fill valid email id in address section.");
-        return false;
+    if (email != "" && email != null) {
+        if (!isValidEmail(email)) {
+            toastr.error("Please fill valid email id in address section.");
+            return false;
+        }
     }
 
     if (AlternateEmail != "" && AlternateEmail != null) {

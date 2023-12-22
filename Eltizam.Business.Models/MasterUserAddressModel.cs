@@ -35,7 +35,6 @@ namespace Eltizam.Business.Models
         [DataType(DataType.EmailAddress)]
         [MaxLength(50)]
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Please enter correct email")]
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? Email { get; set; }
         [DataType(DataType.EmailAddress)]
         [MaxLength(50)]
