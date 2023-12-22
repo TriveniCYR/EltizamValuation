@@ -249,18 +249,18 @@ function validateForAddress() {
         toastr.error("Please fill valid email id in address section.");
         return false;
     }
-    if (!isValidEmail(phone)) {
+    if (!isValidPhone(phone)) {
         toastr.error("Please fill valid phone number.");
         return false;
     }
     if (AlternatePhone != "" && AlternatePhone != null) {
-        if (!isValidEmail(AlternatePhone)) {
+        if (!isValidPhone(AlternatePhone)) {
             toastr.error("Please fill valid alter phone number.");
             return false;
         }
     }
     if (Landlinephone != "" && Landlinephone != null) {
-        if (!isValidEmail(Landlinephone)) {
+        if (!isValidPhone(Landlinephone)) {
             toastr.error("Please fill valid landline phone number.");
             return false;
         }
