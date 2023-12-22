@@ -92,8 +92,7 @@
                                         </p>
                                         @* <select id="ClientTypeId" name="ClientTypeId" class="form-control" asp-for="ClientTypeId"></select> *@
                                         @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
-                                        @* @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" }) *@
-                                        <p id="validationClientTypeId" class="text-danger"></p>
+                                        @Html.ValidationMessageFor(model => model.ClientTypeId, "", new { @class = "text-danger" }) 
                                     </label>
                                     <label for="FirstName">
                                         <p class="m-0">First Name<span class="text-danger">*</span></p>

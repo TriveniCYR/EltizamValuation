@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class MasterClientModel: GlobalAuditFields
+    public class MasterClientModel : GlobalAuditFields
     {
         public int Id { get; set; }
 
@@ -31,6 +31,7 @@ namespace Eltizam.Business.Models
         public string? ClientName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'ClientType' field is required.")]
         public int ClientTypeId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -38,7 +39,7 @@ namespace Eltizam.Business.Models
         public string? LicenseNumber { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-          [StringLength(250, MinimumLength = 1)]
+        [StringLength(250, MinimumLength = 1)]
         public string? Trnnumber { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]

@@ -7,9 +7,9 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var objPermssion = (RolePermissionModel)ViewBag.Access;
     var isAdd = objPermssion.Add ? 1 : 0;
-    var isEdit = objPermssion.Edit ? 1 : 0; 
+    var isEdit = objPermssion.Edit ? 1 : 0;
 
-    var _md = Model.Id > 0 ? "Edit" : "Add"; 
+    var _md = Model.Id > 0 ? "Edit" : "Add";
     var _header = "Location";
     ViewData["Title"] = "Location Manage";
 }
@@ -35,14 +35,13 @@
                         <input type="hidden" id="hdnHomeCurrencyId" value="@(Model.HomeCurrencyId == null ? 0 : Model.HomeCurrencyId)" />
                         <input type="hidden" id="hdnForeignCurrencyId" value="@(Model.ForeignCurrencyId == null ? 0 : Model.ForeignCurrencyId)" />
                         <input type="hidden" id="isAddPerm" value="@isAdd" />
-                        <input type="hidden" id="isEditPerm" value="@isEdit" /> 
+                        <input type="hidden" id="isEditPerm" value="@isEdit" />
                         @Html.HiddenFor(model=>model.Id)
                         <div class="flex">
                             <label for="CountryId" class="w-50">
                                 <p class="m-0">Country<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.CountryId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown ", @onchange = "BindState(this.options[this.selectedIndex].value)"})
-                                @* @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" }) *@
-                                <p id="validationCountryId" class="text-danger"></p>
+                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
                             </label>
 
                             <label for="IsActive" class="w-50">
@@ -57,14 +56,12 @@
                             <label for="StateId" class="w-50">
                                 <p class="m-0">State<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.StateId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown ",@onchange = "BindCity(this.options[this.selectedIndex].value)"})
-                                @* @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" }) *@
-                                <p id="validationStateId" class="text-danger"></p>
+                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
                             </label>
                             <label for="CityId" class="w-50">
                                 <p class="m-0">City / Emirates<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.CityId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown "})
-                                @* @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" }) *@
-                                <p id="validationCityId" class="text-danger"></p>
+                                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
@@ -86,16 +83,14 @@
                             <label for="Geo-coordinates" class="w-50">
                                 <p class="m-0">Home Currency<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.HomeCurrencyId, new List<SelectListItem>{},  new { @class = "form-control searchable-dropdown "})
-                                @* @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" }) *@
-                                <p id="validationHomeCurrencyId" class="text-danger"></p>
+                                @Html.ValidationMessageFor(model => model.HomeCurrencyId, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
                             <label for="Geo-coordinates" class="w-50">
                                 <p class="m-0">Foreign Currency<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.ForeignCurrencyId, new List<SelectListItem> { },  new { @class = "form-control searchable-dropdown " })
-                                @* @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" }) *@
-                                <p id="validationForeignCurrencyId" class="text-danger"></p>
+                                @Html.ValidationMessageFor(model => model.ForeignCurrencyId, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div class="flex">
@@ -112,7 +107,7 @@
 
                             }
 
-                         
+
                             @if (ViewBag.IsView != 1)
                             {
 

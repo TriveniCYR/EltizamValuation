@@ -21,12 +21,16 @@ namespace Eltizam.Business.Models
         public int? ValuationTimeFrame { get; set; }
         public int ClientId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'ClientType' field is required.")]
         public int ClientTypeId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Property' field is required.")]
         public int PropertyId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Property Type' field is required.")]
         public int PropertyTypeId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Property Sub Type' field is required.")]
         public int PropertySubTypeId { get; set; }
         public string? PropertySubType { get; set; }
         public int? OwnershipTypeId { get; set; }
@@ -36,7 +40,7 @@ namespace Eltizam.Business.Models
         public string? AdditionalUnits { get; set; }
         public int Furnished { get; set; }
         public string? ValuationPurpose { get; set; }
-         public decimal? BuildUpAreaSqFt { get; set; }
+        public decimal? BuildUpAreaSqFt { get; set; }
         public decimal? BuildUpAreaSqMtr { get; set; }
         public int? AgeOfConstruction { get; set; }
         public string? Parking { get; set; }
@@ -45,6 +49,7 @@ namespace Eltizam.Business.Models
         public string? PinCode { get; set; }
         public string? PropertyType { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Status' field is required.")]
         public int StatusId { get; set; }
         public int? ApproverId { get; set; }
         public string? ApproverName { get; set; }
