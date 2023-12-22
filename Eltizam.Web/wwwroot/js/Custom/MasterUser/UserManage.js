@@ -121,7 +121,7 @@ function BindCurrentCity(id, event) {
 
 function BindGender() {
     var Gender = $("#Gender");
-    Gender.empty().append('<option selected="selected" value="0">Please select</option>');
+    Gender.empty().append('<option selected="selected" value="">Please select</option>');
     Gender.append($("<option></option>").val('M').html('Male'));
     Gender.append($("<option></option>").val('F').html('Female'));
     if ($('#hdnGender').val() != 0) {
