@@ -153,22 +153,33 @@ namespace EltizamValuation.Web.Controllers
 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertUser, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterUser))).Result;
 
+                if (responseMessage.IsSuccessStatusCode && masterUser.Id == 0)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                    return RedirectToAction("Users");
+                }
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+
+                    return Redirect($"/MasterUser/UserManage?id={masterUser.Id}");
                 }
                 else
+                {
                     TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
-
+                    return RedirectToAction("UserManage", new { id = masterUser.Id });
+                }
             }
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-            }
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace); 
+                return Redirect($"/MasterUser/UserManage?id={masterUser.Id}");
 
-            return Redirect($"/MasterUser/UserManage?id={masterUser.Id}");
+            }
+            
         }
 
         [HttpGet]
