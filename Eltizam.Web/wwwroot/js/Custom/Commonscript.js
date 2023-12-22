@@ -704,7 +704,7 @@ $('.searchable-dropdown').on('change', function () {
     var valcntrl = $(this).parent().find('.field-validation-error');
 
   //  console.log(val1);
-    if (selectval === 0 || selectval === "" || selectval === undefined) { 
+    if (selectval == 0 || selectval === "" || selectval === undefined) { 
         valcntrl.show();
     } else {
         valcntrl.hide();
