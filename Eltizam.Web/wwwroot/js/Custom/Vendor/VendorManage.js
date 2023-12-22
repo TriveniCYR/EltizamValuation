@@ -238,6 +238,8 @@ function validateForAddress() {
     var email = $("#Addresses_" + count + "__Email").val();
     var phoneExt = $("#Addresses_" + count + "__PhoneExt").val();
     var phone = $("#Addresses_" + count + "__Phone").val();
+    var AlternatePhone = $("#Addresses_" + count + "__AlternatePhone").val();
+    var Landlinephone = $("#Addresses_" + count + "__Landlinephone").val();
     if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || email == "" || phoneExt == "" || phone == "") {
         toastr.error("Please fill mandate fields in address section.");
         return false;
@@ -246,6 +248,22 @@ function validateForAddress() {
     if (!isValidEmail(email)) {
         toastr.error("Please fill valid email id in address section.");
         return false;
+    }
+    if (!isValidPhone(phone)) {
+        toastr.error("Please fill valid phone number.");
+        return false;
+    }
+    if (AlternatePhone != "" && AlternatePhone != null) {
+        if (!isValidPhone(AlternatePhone)) {
+            toastr.error("Please fill valid alter phone number.");
+            return false;
+        }
+    }
+    if (Landlinephone != "" && Landlinephone != null) {
+        if (!isValidPhone(Landlinephone)) {
+            toastr.error("Please fill valid landline phone number.");
+            return false;
+        }
     }
     var addressContainer = $("#addresses-container");
     var count = addressContainer.children(".addMoreAddress").length;
@@ -313,6 +331,11 @@ function validateForAddress() {
 function isValidEmail(email) {
     var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(email);
+}
+
+function isValidPhone(phone) {
+    var phonePattern = /^[0-9]*$/;
+    return phonePattern.test(phone);
 }
 function validateForContact() {
     const roundBorderBox = document.querySelector('.roundBorderBox:last-child');
