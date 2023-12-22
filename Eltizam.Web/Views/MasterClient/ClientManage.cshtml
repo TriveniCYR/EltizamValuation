@@ -221,7 +221,7 @@
                                                     <div class="flex align-item-center flex-start m-0 phoneWithDrop">
                                                         @Html.DropDownListFor(model => model.Addresses[i].PhoneExt, new List<SelectListItem> { }, new { @class = "", @style="border-right: 0" })
 
-                                                        @Html.TextBoxFor(model => model.Addresses[i].Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked valiadteint", @placeholder = @SharedLocalizer["Phone"], @onclick="EmailValidation(event)" })
+                                                        @Html.TextBoxFor(model => model.Addresses[i].Phone, new {@autocomplete = "off", @class = "form-control checkbox-checked valiadteint", @placeholder = @SharedLocalizer["Phone"]})
 
                                                     </div>
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].Phone, "", new { @class = "text-danger" })
