@@ -145,14 +145,31 @@ function BindOwnership() {
     //});
 }
 function BindUnitType() {
+    var id = 22;
     var UnitType = $("#UnitType");
-    UnitType.empty().append('<option selected="selected" value="0">Please select</option>');
-    UnitType.append($("<option></option>").val('1BHK').html('1BHK'));
-    UnitType.append($("<option></option>").val('2BHK').html('2BHK'));
-    UnitType.append($("<option></option>").val('3BHK').html('3BHK'));
-    if ($('#hdnUnitType').val() != 0) {
-        UnitType.val($('#hdnUnitType').val());
-    }
+    var _rpname = "description";
+    $.ajax({
+        type: Get,
+        url: BaseURL + UnitTypeStatus + '/' + id,
+        "datatype": "json",
+        success: function (response) {
+            var _dd = _rpname;
+            UnitType.empty().append('<option selected="selected" value="">' + dftSel + '</option>');
+            for (var i = 0; i < response.length; i++) {
+                UnitType.append($("<option></option>").val(response[i][_dd]).html(response[i][_dd]));
+            }
+            if ($('#hdnUnitType').val() != 0) {
+                UnitType.val($('#hdnUnitType').val());
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
 }
 
 function BindFurnished() {
