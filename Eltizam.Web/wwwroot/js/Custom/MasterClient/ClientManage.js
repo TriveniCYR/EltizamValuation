@@ -179,7 +179,9 @@ function validateForAddress() {
     var countryId = $("#Addresses_" + count + "__CountryId").val();
     var stateId = $("#Addresses_" + count + "__StateId").val();
     var cityId = $("#Addresses_" + count + "__CityId").val();
+    var PinNumber = $("#Addresses_" + count + "__PinNo").val();
     var email = $("#Addresses_" + count + "__Email").val();
+    var AlternateEmail = $("#Addresses_" + count + "__AlternateEmail").val();
     var phoneExt = $("#Addresses_" + count + "__PhoneExt").val();
     var phone = $("#Addresses_" + count + "__Phone").val();
     var AlternatePhone = $("#Addresses_" + count + "__AlternatePhone").val();
@@ -193,6 +195,18 @@ function validateForAddress() {
     if (!isValidEmail(email)) {
         toastr.error("Please fill valid email id in address section.");
         return false;
+    }
+    if (AlternateEmail != "" && AlternateEmail != null) {
+        if (!isValidEmail(AlternateEmail)) {
+            toastr.error("Please fill valid alter email id in address section.");
+            return false;
+        }
+    }
+    if (PinNumber != "" && PinNumber != null) {
+        if (!isValidZipCode(PinNumber)) {
+            toastr.error("Please fill valid zip code.");
+            return false;
+        }
     }
     if (!isValidPhone(phone)) {
         toastr.error("Please fill valid phone number.");
@@ -278,7 +292,11 @@ function isValidEmail(email) {
     return emailPattern.test(email);
 }
 function isValidPhone(phone) {
-    var phonePattern = /^[0-9]*$/;
+    var phonePattern = /^[0-9]{9,12}$/;
+    return phonePattern.test(phone);
+}
+function isValidZipCode(phone) {
+    var phonePattern = /^[0-9]{5,10}$/;
     return phonePattern.test(phone);
 }
 function validateForContact() {
@@ -298,6 +316,10 @@ function validateForContact() {
     // Function to validate email
     if (!isValidEmail(email)) {
         toastr.error("Please fill valid email in contact section.");
+        return false;
+    }
+    if (!isValidPhone(mobile)) {
+        toastr.error("Please fill valid mobile number.");
         return false;
     }
     return true;
