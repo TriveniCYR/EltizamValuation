@@ -16,26 +16,6 @@ $(document).ready(function () {
     BindCountryCode();
 });
 
-$("#client").submit(function () {
-    var errorMsgForAll = "";
-    if ($("#ClientTypeId").val() === "" || $("#ClientTypeId").val() === "0") {
-
-        $("#validationClientTypeId").text("The ClientType field is required.");
-        errorMsgForAll = "1";
-    }
-
-    if (errorMsgForAll != "") {
-        return false;
-    }
-
-    //$("#validationMessage").text("");
-    //return true;
-})
-
-$("#ClientTypeId").change(function () {
-    $("#validationClientTypeId").text("");
-});
-
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");

@@ -37,16 +37,6 @@ function GetemailexistError(x, y, z) {
     
 }
 
-$("#DepartmentId").change(function () {
-    $("#validationDepartmentId").text("");
-});
-$("#DesignationId").change(function () {
-    $("#validationDesignationId").text("");
-});
-$("#ResourceId").change(function () {
-    $("#validationResourceId").text("");
-});
-
 function BindDepartment() {
     var Department = $("#DepartmentId");
     var _val = $('#hdnDeparment').val();
