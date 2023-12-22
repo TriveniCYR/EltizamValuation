@@ -101,11 +101,11 @@
                                     </label>
                                     <label for="">
                                         <p class="m-0">
-                                            Furnished
-                                            <span class="text-danger">*</span>
+                                            Furnished@*
+                                            <span class="text-danger">*</span>*@
                                         </p>
                                         @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
-                                        @Html.ValidationMessageFor(model => model.Furnished, "", new { @class = "text-danger" })
+                                        @*@Html.ValidationMessageFor(model => model.Furnished, "", new { @class = "text-danger" })*@
                                     </label>
                                 </div>
                                 <div class="flex mb-28">
