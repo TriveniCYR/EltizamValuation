@@ -28,6 +28,7 @@ namespace Eltizam.Web.Helpers
         public static string GetApproverList = "MasterUser/GetApproverList";
         public static string GetDesignationList = "MasterDesignation/GetDesignationList";
         public static string GetResourceTypeList = "MasterUser/GetResourceTypeList";
+        public static string GetApproverLevelList = "MasterUser/GetApproverLevelList";
         public static string GetCountryList = "MasterCountry/GetCountryList";
         public static string GetStateList = "MasterState/GetStateList";
         public static string GetStateListByCountryId = "MasterState/GetStateListByCountryId";

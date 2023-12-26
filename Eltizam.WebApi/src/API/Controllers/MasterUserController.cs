@@ -124,7 +124,18 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
-
+        [HttpGet("GetApproverLevelList")]
+        public async Task<IActionResult> GetApproverLevelList()
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _MasterUserService.GetApproverLevelList(), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         [HttpGet("GetRoleList")]
         public async Task<IActionResult> GetRoleList()
         {

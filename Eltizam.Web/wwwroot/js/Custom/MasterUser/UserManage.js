@@ -17,6 +17,7 @@ $(document).ready(function () {
     BindDesignation();
     BindRole();
     BindResourceType();
+    BindApproverLevel();
     BindCountry();
     BindCountryIsd();
 
@@ -67,7 +68,12 @@ function BindResourceType() {
     var _rpname = "resourceType";
     BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
 }
-
+function BindApproverLevel() {
+    var ApproverLevelType = $("#ApproverLevelId");
+    var _val = $('#hdnApproverLevelId').val();
+    var _rpname = "description";
+    BindDropdowns(ApproverLevelList, ApproverLevelType, _rpname, _val);
+}
 
 function BindCountry() {  
     for (var i = 0; i < addressLength; i++) {
