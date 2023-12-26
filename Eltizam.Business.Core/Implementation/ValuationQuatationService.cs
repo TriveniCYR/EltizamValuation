@@ -245,5 +245,18 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success; 
         }
 
+        public async Task<List<ValuationRequestApproverLevelModel>> GetApproverLevel(decimal Amount,int  ValReqId)
+        {
+            DbParameter[] osqlParameter =
+            {
+                new DbParameter("Amount", Amount, SqlDbType.Decimal),
+
+                new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
+            };
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestApproverLevelModel>(ProcedureMetastore.usp_ValuationRequest_ApproverLevel, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+
+            return lstStf;
+        }
+
     }
 }

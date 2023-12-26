@@ -122,6 +122,19 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
+        [HttpGet("GetApproverLevel")]
+        public async Task<IActionResult> GetApproverLevel(decimal Amount, int ValReqId)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(await _ValuationQuatatiionService.GetApproverLevel(Amount, ValReqId), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         #endregion API Methods  
     }
 }
