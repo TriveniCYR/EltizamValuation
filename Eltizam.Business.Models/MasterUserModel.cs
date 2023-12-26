@@ -54,8 +54,8 @@ namespace Eltizam.Business.Models
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'RoleId' field is required.")]
-        public int RoleId { get; set; }
-
+        public int RoleId { get; set; }        
+        public int ApproverLevelId { get; set; }
         public bool IsActive { get; set; }
         public bool? IsDeleted { get; set; }
 

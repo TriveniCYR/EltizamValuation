@@ -13,5 +13,7 @@ namespace Eltizam.Business.Core.Interface
         Task<ValuationRequestModel> GetById(int id);
         Task<DBOperation> Delete(int id);
         Task<DBOperation> ReviewerRequestStatus(ValutionRequestForApproverModel model);
+
+        Task<DBOperation> UpsertApproverLevels(int ValReqId, int CreatedBy, int ValQuotId, string RequestData);
     }
 }

@@ -34,5 +34,10 @@ namespace Eltizam.Business.Models
         public List<MasterDocumentModel>? Documents { get; set; }
         public List<MasterDocumentModel>? uploadDocument { get; set; }
         public DocumentFilesModel? Document { get; set; }
+        public string? ApproverIds { get; set; }
+        public int? ApproverId2 { get; set; }
+        public int? ApproverId3 { get; set; }
+        public int? ApproverId4 { get; set; }
+        public int? ApproverId5 { get; set; }
     }
 }

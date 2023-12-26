@@ -250,7 +250,7 @@
                                         <div class="pannel mt-28" style="height:auto;overflow:hidden">
                                             <div class="flex">
                                                 <label for="ContactPersonName">
-                                                    Contact Person Name
+                                                    <p class="m-0"> Contact Person Name<span class="text-danger">*</span></p>
                                                     @Html.TextBoxFor(model => model.Contacts[i].ContactPersonName, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Contact Person"] })
                                                     @Html.ValidationMessageFor(model => model.Contacts[i].ContactPersonName, "", new { @class = "text-danger" })
                                                 </label>

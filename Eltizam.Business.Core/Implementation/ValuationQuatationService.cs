@@ -30,6 +30,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private IRepository<ValuationQuotation> _repository { get; set; }
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
+        private IRepository<ValuationRequestApproverLevel> _repositoryApproverLevel { get; set; }
         private readonly IHelper _helper;
 
         private readonly IAuditLogService _auditLogService;
@@ -53,6 +54,7 @@ namespace Eltizam.Business.Core.Implementation
             _notificationService = notificationService;
             _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
             _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>();
+            _repositoryApproverLevel = _unitOfWork.GetRepository<ValuationRequestApproverLevel>();
         }
 
         #endregion Constructor
@@ -142,6 +144,7 @@ namespace Eltizam.Business.Core.Implementation
           
             ValuationQuotation objQuatation; 
             MasterDocument objDocument;
+            ValuationRequestApproverLevel objApproverLevel;
 
             string MainTableName = Enum.GetName(TableNameEnum.ValuationQuotation);
             int MainTableKey = entityQuatation.Id;
@@ -215,6 +218,20 @@ namespace Eltizam.Business.Core.Implementation
                         await _unitOfWork.SaveChangesAsync();
                     }
                 }
+            }
+            if (entityQuatation.ApproverIds != "")
+            {
+                DbParameter[] osqlParameter =
+                {
+                    new DbParameter("ValReqId", entityQuatation.ValuationRequestId, SqlDbType.Int),
+
+                    new DbParameter("CreatedBy", entityQuatation.CreatedBy, SqlDbType.Int),
+                     new DbParameter("ValQuotId", objQuatation.Id, SqlDbType.Int),
+                     new DbParameter("RequestData", entityQuatation.ApproverIds, SqlDbType.VarChar),
+                };
+
+                EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_UpsertApproverLevels, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+
             }
             try
             {
