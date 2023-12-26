@@ -89,7 +89,7 @@ namespace Eltizam.Business.Models
         public MasterPropertyDetailModel? PropertyDetail { get; set; }
 
         public ValuationAssesmentActionModel? ValuationAssesment { get; set; }
-        public string? Valuationapprovalvalues { get; set; }
+        public string? ValuationApprovalValues { get; set; }
         public List<ValuationRequestApproverLevelModel>? ValuationRequestApproverLevel { get; set; }
 
         //public ComparableEvidenceModel? ComparableEvidence { get; set; }
