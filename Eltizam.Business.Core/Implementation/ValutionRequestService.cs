@@ -471,5 +471,22 @@ namespace Eltizam.Business.Core.Implementation
                 return false;
             }
         }
+
+
+        public async Task<DBOperation> UpsertApproverLevels(int ValReqId, int CreatedBy, int ValQuotId, string RequestData)
+        {
+            DbParameter[] osqlParameter =
+            {
+                new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
+
+                new DbParameter("CreatedBy", CreatedBy, SqlDbType.Int),
+                 new DbParameter("ValQuotId", ValQuotId, SqlDbType.Int),
+                 new DbParameter("RequestData", RequestData, SqlDbType.VarChar),
+            };
+             EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_UpsertApproverLevels, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+
+            return DBOperation.Success; 
+        }
+
     }
 }

@@ -144,13 +144,13 @@
                                 {
                                     <div class="flex">
                                         <label for="Password">
-                                            Password
+                                            <p class="m-0">Password<span class="text-danger">*</span></p>
                                             @Html.PasswordFor(model => model.Password, new { @autocomplete = "off", @id = "password", @class = "form-control", @placeholder = @SharedLocalizer["Password"], @required = "" })
                                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                         </label>
                                         <label for="ConfirmPassowrd">
-                                            Confirm Passowrd
-                                            @Html.PasswordFor(model => model.ConfirmPassowrd, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["ConfirmPassword"] })
+                                            <p class="m-0"> Confirm Passowrd<span class="text-danger">*</span></p>
+                                             @Html.PasswordFor(model => model.ConfirmPassowrd, new { @autocomplete = "off", @class = "form-control", @placeholder = @SharedLocalizer["ConfirmPassword"] })
                                             @Html.ValidationMessageFor(model => model.ConfirmPassowrd, "", new { @class = "text-danger" })
                                         </label>
                                     </div>

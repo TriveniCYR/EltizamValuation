@@ -391,7 +391,7 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.NotFound;
             else
             {
-                var entityLocation = _repositoryAddress.GetAll().Where(x => x.TableKeyId == id && x.TableName == "Master_Client").ToList();
+                var entityLocation = _repositoryAddress.GetAll().Where(x => x.TableKeyId == id && x.TableName == "Master_Vendor").ToList();
                 if (entityLocation.Count > 0)
                 {
                     foreach (var addrs in entityLocation)
@@ -399,7 +399,7 @@ namespace Eltizam.Business.Core.Implementation
                         _repositoryAddress.Remove(addrs);
                     }
                 }
-                var entityContact = _repositoryContact.GetAll().Where(x => x.TableKeyId == id && x.TableName == "Master_Client").ToList();
+                var entityContact = _repositoryContact.GetAll().Where(x => x.TableKeyId == id && x.TableName == "Master_Vendor").ToList();
                 if (entityContact.Count > 0)
                 {
                     foreach (var contct in entityContact)
