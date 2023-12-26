@@ -46,6 +46,7 @@ namespace Eltizam.Business.Models
 
         // common master dropdown call
         public static string usp_ResourceType_AllList = "usp_ResourceType_AllList";
+        public static string usp_ApproverLevel_AllList = "usp_ApproverLevel_AllList";
         public static string usp_Role_AllList = "usp_Role_AllList";
         public static string usp_Department_AllList = "usp_Department_AllList";
         public static string usp_Designation_AllList = "usp_Designation_AllList";
@@ -78,6 +79,7 @@ namespace Eltizam.Business.Models
         public static string usp_Master_Valuation_InvoiceStatus_List = "usp_Master_Valuation_InvoiceStatus_List";
         public static string usp_ValuationRequest_StatusHistory = "usp_ValuationRequest_StatusHistory";
         public static string usp_ValuationRequest_ApproverLevel = "usp_ValuationRequest_ApproverLevel";
+        public static string usp_ValuationRequest_UpsertApproverLevels = "usp_ValuationRequest_UpsertApproverLevels";
 
 
 

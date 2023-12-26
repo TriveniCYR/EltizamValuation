@@ -164,5 +164,17 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
         }
 
+        [HttpPost, Route("UpsertApproverLevels")]
+        public async Task<IActionResult> UpsertApproverLevels(int ValReqId,int CreatedBy,int ValQuotId, string RequestData)
+        {
+            DBOperation oResponse = await _valuationServices.UpsertApproverLevels(ValReqId, CreatedBy, ValQuotId, RequestData);
+            if (oResponse == DBOperation.Success)
+            {
+                return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+            }
+            else
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        }
+
     }
 }

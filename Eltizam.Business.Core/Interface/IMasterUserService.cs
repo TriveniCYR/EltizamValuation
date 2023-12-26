@@ -18,6 +18,7 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> Upsert(MasterUserModel entityUser);
         Task<MasterUserDetailModel> GetById(int id); 
         Task<List<MasterResourceTypeModel>> GetResourceTypeList();
+        Task<List<MasterValuationRequestApproverLevelModel>> GetApproverLevelList();
         Task<List<MasterRoleModel>> GetRoleList();
         Task<List<MasterUserListModel>> GetApproverList(int id, string roleName);
         Task<DBOperation> Delete(int id);
