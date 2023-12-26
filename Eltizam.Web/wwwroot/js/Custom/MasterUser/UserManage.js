@@ -1,7 +1,6 @@
 var docId = 0;
 var phoneArray = [];
 var emailArray = [];
-
 $(document).ready(function () {
 
     var emailInput = $("#Email");
@@ -12,6 +11,8 @@ $(document).ready(function () {
         var url = "?email=" + emailValue + "&userId=" + recordId;
         ajaxServiceMethod(BaseURL + CheckEmailExistonRemote + url, 'GET', GetemailexistSuccess, GetemailexistError);
     });
+    //$("[for=ApproverLevelId]").hide();
+    IsApprovalLevelVisible($('#hdnRole').val() == 2) // RoleId= 2:Approver
 
     BindDepartment();
     BindDesignation();
@@ -20,7 +21,7 @@ $(document).ready(function () {
     BindApproverLevel();
     BindCountry();
     BindCountryIsd();
-    $("[for=ApproverLevelId]").hide();
+    
     var countryId = $('#hdnCountry_0').val();
     if (countryId != null || countryId != 0) {
         BindState(countryId);
@@ -645,12 +646,15 @@ $('#openModalLinklatestRequestsTable').on('blur', function () {
     return false;
 });
 $('#RoleId').on('change', function () {
-    var selectval = $("#RoleId option:selected").text();
-    if (selectval == 'Approver') {
+    var selectval = $("#RoleId").val(); 
+     IsApprovalLevelVisible(selectval == 2)
+});
+function IsApprovalLevelVisible(flag) {
+    if (flag) {
         $("[for=ApproverLevelId]").show();
     }
     else {
         $("[for=ApproverLevelId]").hide();
     }
-});
+}
 
