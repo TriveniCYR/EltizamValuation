@@ -182,9 +182,8 @@
                                 </div>
                                 <div class="flex">
                                     <label for="ApproverLevelId">
-                                        <p class="m-0">Approver Level<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.ApproverLevelId, new List<SelectListItem>(), new { @class = "form-control", @placeholder = @SharedLocalizer["Select Approver Level"] })
-                                        @Html.ValidationMessageFor(model => model.ApproverLevelId, "", new { @class = "text-danger" })
+                                        <p class="m-0">Approver Level</p>
+                                        @Html.DropDownListFor(model => model.ApproverLevelId, new List<SelectListItem>(), new { @class = "form-control"})                                       
                                     </label>
                                 </div>
                                 <div class="flex">

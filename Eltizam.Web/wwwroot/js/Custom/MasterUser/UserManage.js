@@ -20,7 +20,7 @@ $(document).ready(function () {
     BindApproverLevel();
     BindCountry();
     BindCountryIsd();
-
+    $("[for=ApproverLevelId]").hide();
     var countryId = $('#hdnCountry_0').val();
     if (countryId != null || countryId != 0) {
         BindState(countryId);
@@ -644,5 +644,13 @@ $('#openModalLinklatestRequestsTable').on('blur', function () {
         });
     return false;
 });
-
+$('#RoleId').on('change', function () {
+    var selectval = $("#RoleId option:selected").text();
+    if (selectval == 'Approver') {
+        $("[for=ApproverLevelId]").show();
+    }
+    else {
+        $("[for=ApproverLevelId]").hide();
+    }
+});
 
