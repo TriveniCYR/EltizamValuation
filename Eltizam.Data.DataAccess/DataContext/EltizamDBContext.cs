@@ -56,6 +56,7 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterUserContact> MasterUserContacts { get; set; } = null!;
         public virtual DbSet<MasterValuationFee> MasterValuationFees { get; set; } = null!;
         public virtual DbSet<MasterValuationFeeType> MasterValuationFeeTypes { get; set; } = null!;
+        public virtual DbSet<MasterValuationRequestApproverLevel> MasterValuationRequestApproverLevels { get; set; } = null!;
         public virtual DbSet<MasterValuationStatus> MasterValuationStatuses { get; set; } = null!;
         public virtual DbSet<MasterVendor> MasterVendors { get; set; } = null!;
         public virtual DbSet<SiteDescription> SiteDescriptions { get; set; } = null!;
@@ -63,8 +64,8 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<ValuationInvoice> ValuationInvoices { get; set; } = null!;
         public virtual DbSet<ValuationQuotation> ValuationQuotations { get; set; } = null!;
         public virtual DbSet<ValuationRequest> ValuationRequests { get; set; } = null!;
-        public virtual DbSet<ValuationRequest1> ValuationRequest1s { get; set; } = null!;
-        public virtual DbSet<ValuationRequestStatus1> ValuationRequestStatus1s { get; set; } = null!;
+        public virtual DbSet<ValuationRequestApproverLevel> ValuationRequestApproverLevels { get; set; } = null!;
+        public virtual DbSet<ValuationRequestStatusHistory> ValuationRequestStatusHistories { get; set; } = null!;
         public virtual DbSet<VwPropertyLocation> VwPropertyLocations { get; set; } = null!;
         public virtual DbSet<VwUser> VwUsers { get; set; } = null!;
         public virtual DbSet<VwValuationRequest> VwValuationRequests { get; set; } = null!;
@@ -1067,6 +1068,23 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<MasterValuationRequestApproverLevel>(entity =>
+            {
+                entity.ToTable("Master_ValuationRequestApproverLevel", "dbo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FromAmount).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ToAmount).HasColumnType("decimal(18, 2)");
+            });
+
             modelBuilder.Entity<MasterValuationStatus>(entity =>
             {
                 entity.ToTable("Master_ValuationStatus", "dbo");
@@ -1344,68 +1362,28 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasConstraintName("FK__Valuation__Statu__7226EDCC");
             });
 
-            modelBuilder.Entity<ValuationRequest1>(entity =>
+            modelBuilder.Entity<ValuationRequestApproverLevel>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.ToTable("ValuationRequest_1");
-
-                entity.Property(e => e.ApproverComment)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApproverUpdateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.AssignRemark)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.ToTable("ValuationRequestApproverLevel", "dbo");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.OtherReferenceNo)
-                    .HasMaxLength(500)
-                    .IsUnicode(false)
-                    .HasColumnName("OtherReferenceNO");
-
-                entity.Property(e => e.ReferenceNo)
-                    .HasMaxLength(500)
-                    .IsUnicode(false)
-                    .HasColumnName("ReferenceNO");
-
-                entity.Property(e => e.ValuationDate).HasColumnType("date");
-
-                entity.Property(e => e.ValuerComment)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ValuerUpdateDate).HasColumnType("datetime");
+                entity.HasOne(d => d.ValuationRequest)
+                    .WithMany(p => p.ValuationRequestApproverLevels)
+                    .HasForeignKey(d => d.ValuationRequestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Valuation__Valua__0DCF0841");
             });
 
-            modelBuilder.Entity<ValuationRequestStatus1>(entity =>
+            modelBuilder.Entity<ValuationRequestStatusHistory>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.ToTable("ValuationRequestStatus_1");
-
-                entity.Property(e => e.BackGroundColor).HasMaxLength(50);
-
-                entity.Property(e => e.ColorCode)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.ToTable("ValuationRequestStatusHistory", "dbo");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.ModifyDate).HasColumnType("datetime");
-
-                entity.Property(e => e.StatusName)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
+                entity.Property(e => e.StatusRemark).HasMaxLength(300);
             });
 
             modelBuilder.Entity<VwPropertyLocation>(entity =>
@@ -1576,4 +1554,3 @@ namespace Eltizam.Data.DataAccess.DataContext
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }
-

@@ -39,6 +39,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? UserName { get; set; }
         public int? ProfileAttachmentId { get; set; }
         public bool? IsDeleted { get; set; }
+        public int? ApproverLevelId { get; set; }
 
         public virtual MasterDepartment? Department { get; set; }
         public virtual MasterDesignation? Designation { get; set; }

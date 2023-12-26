@@ -13,6 +13,7 @@ namespace Eltizam.Data.DataAccess.Entity
             ValuationAssesments = new HashSet<ValuationAssesment>();
             ValuationInvoices = new HashSet<ValuationInvoice>();
             ValuationQuotations = new HashSet<ValuationQuotation>();
+            ValuationRequestApproverLevels = new HashSet<ValuationRequestApproverLevel>();
         }
 
         public int Id { get; set; }
@@ -47,5 +48,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public virtual ICollection<ValuationAssesment> ValuationAssesments { get; set; }
         public virtual ICollection<ValuationInvoice> ValuationInvoices { get; set; }
         public virtual ICollection<ValuationQuotation> ValuationQuotations { get; set; }
+        public virtual ICollection<ValuationRequestApproverLevel> ValuationRequestApproverLevels { get; set; }
     }
 }
