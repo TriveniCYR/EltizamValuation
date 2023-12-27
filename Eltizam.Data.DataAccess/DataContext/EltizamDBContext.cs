@@ -1366,6 +1366,10 @@ namespace Eltizam.Data.DataAccess.DataContext
             {
                 entity.ToTable("ValuationRequestApproverLevel", "dbo");
 
+                entity.Property(e => e.ApproverComment)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
