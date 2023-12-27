@@ -39,7 +39,7 @@ namespace EltizamValuation.WebApi.Controllers
 
         [HttpPost]
         [Route("Upsert")]
-        public async Task<IActionResult> Upsert([FromBody] MasterApproverLevelModel approverLevel)
+        public async Task<IActionResult>Upsert(MasterApproverLevelModel approverLevel)
         {
             try
             {

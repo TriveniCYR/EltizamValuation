@@ -31,6 +31,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequestApproverLevel> _valuationRequestApproverLevel { get; set; }
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
+
         private readonly INotificationService _notificationService;
 
         #endregion Properties

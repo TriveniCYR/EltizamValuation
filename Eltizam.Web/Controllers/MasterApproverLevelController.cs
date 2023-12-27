@@ -105,7 +105,7 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
             int roleId = _helper.GetLoggedInRoleId();
 
-            if (!CheckRoleAccess(ModulePermissionEnum.ApproverMaster, action, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.PropertyTypeMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id != null)
             {
