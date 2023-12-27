@@ -280,7 +280,7 @@ $('#openModalLinktopQuotationDuesTable').on('click', function () {
 
 function clearSearchFields() {
     document.getElementById("dashboardFilterForm").reset(); 
-    $('#ClientId').val(null).trigger('change');
-    $('#PropertyId').val(null).trigger('change');
+    $('#ClientId').val(0).trigger('change');
+    $('#PropertyId').val(0).trigger('change');
     initializeDashboard();
 }
