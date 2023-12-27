@@ -5,19 +5,12 @@ using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Resource;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
@@ -61,9 +54,9 @@ namespace Eltizam.Business.Core.Implementation
 
 
         public async Task<dynamic> GetValuationPDFData(int valId)
-        {
-
-            SqlParameter[] osqlParameter = {
+        { 
+            SqlParameter[] osqlParameter = 
+            {
                 new SqlParameter("@Id", valId)
             };
 
@@ -266,10 +259,10 @@ namespace Eltizam.Business.Core.Implementation
         {
             DbParameter[] osqlParameter =
             {
-                new DbParameter("Amount", Amount, SqlDbType.Decimal),
-
+                new DbParameter("Amount", Amount, SqlDbType.Decimal), 
                 new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
             };
+
             var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestApproverLevelModel>(ProcedureMetastore.usp_ValuationRequest_ApproverLevel, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
 
             return lstStf;

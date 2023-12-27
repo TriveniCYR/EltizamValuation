@@ -102,5 +102,8 @@ namespace Eltizam.Business.Models
         public static string usp_ApproverLevel_SearchAllList = "usp_ApproverLevel_SearchAllList";
         public static string usp_ApproverLevel_ListById = "usp_ApproverLevel_ListById";
 
+        //Master Notifications
+        public static string usp_MasterNotification_AllList = "usp_MasterNotification_AllList";
+
     }
 }

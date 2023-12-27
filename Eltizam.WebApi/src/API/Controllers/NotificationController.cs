@@ -58,17 +58,30 @@ namespace EltizamValuation.WebApi.Controllers
         }
 
         [HttpGet, Route("GetNotificationList")]
-        public async Task<IActionResult> GetNotificationList(int? lastid, int? userId, int? valId)
+        public async Task<IActionResult> GetNotificationList(int userId, int? valId, int? pagenum)
         {
             try
             {
-                return _ObjectResponse.CreateData(_notificationService.GetAll(lastid, userId, valId), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(_notificationService.GetAll(userId, valId, pagenum), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+        [HttpGet, Route("GetNotificationCount")]
+        public async Task<IActionResult> GetNotificationCount(int userId, int? valId)
+        {
+            try
+            {
+                return _ObjectResponse.CreateData(_notificationService.GetAllCount(userId, valId), (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         [HttpPost("UpdateNotificationReadBy")]
 
         public async Task<IActionResult> UpdateNotificationReadBy([FromQuery] int notificationid, [FromQuery] int ReadBy)

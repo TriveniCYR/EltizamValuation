@@ -1,21 +1,20 @@
-﻿$(document).ready(function () {
-    Getnotifications(0);
-}); 
+﻿var pageNum = 1;
+$(document).ready(function () {
+    Getnotifications(pageNum);
+});  
 
-
-
-function Getnotifications(notificationid) { 
+function Getnotifications(_pageNum) { 
     var userId = LogInUserId;
     var valId = $("#valId").val();
-    var url = "?lastid=" + notificationid + "&userId=" + userId + "&valId=" + valId;
 
+    var url = "?userId=" + userId + "&valId=" + valId + "&pagenum=" + _pageNum; 
     ajaxServiceMethod(BaseURL + notifications + url, 'GET', GetnotificationsSuccess, GetnotificationsError);
 }
 
 function GetnotificationsSuccess(data) { 
     $("#loader").show();
     var container = document.getElementById('notificationsContainer');
-    container.innerHTML = '';
+    //container.innerHTML = '';
 
     if (data.length === 0) {
         container.innerHTML = '<p>No notifications available.</p>';
@@ -41,14 +40,14 @@ function GetnotificationsSuccess(data) {
 
             container.innerHTML += accordionHtml;
 
-            if (index === data.length - 1) {
-                var viewMoreHtml = `
-                    <div class="flex justify-end mb-28">
-                        <a onclick="showMoreToggle(${notification.id})" style="padding-right: 20px;color: #25408f;font-weight: bold;cursor:pointer;">View More</a>
-                    </div>`;
+            //if (index === data.length - 1) {
+            //    var viewMoreHtml = `
+            //        <div class="flex justify-end mb-28">
+            //            <a onclick="showMoreToggle()" style="padding-right: 20px;color: #25408f;font-weight: bold;cursor:pointer;">View More</a>
+            //        </div>`;
 
-                container.innerHTML += viewMoreHtml;
-            }
+            //    container.innerHTML += viewMoreHtml;
+            //}
         });
     }
 
@@ -91,6 +90,8 @@ function markNotificationAsRead(notificationId, userId) {
             // Handle error if needed
         });
 }
-function showMoreToggle(notificationid) {
-    Getnotifications(notificationid);
+
+function showMoreToggle() {
+    pageNum = pageNum + 1;
+    Getnotifications(pageNum);
 }
