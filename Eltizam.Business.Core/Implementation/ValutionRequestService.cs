@@ -27,7 +27,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ComparableEvidence> _evidencerepository { get; set; }
         private IRepository<ValuationAssesment> _assesmenterepository { get; set; }
         private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
-
+        private IRepository<ValuationQuotation> _valuationQuotationrepository { get; set; }
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
         private readonly INotificationService _notificationService;
@@ -48,6 +48,7 @@ namespace Eltizam.Business.Core.Implementation
             _helper = helper;
             _notificationService = notificationService;
             _auditLogService = auditLogService;
+            _valuationQuotationrepository = _unitOfWork.GetRepository<ValuationQuotation>();
         }
         #endregion Constructor
 
@@ -239,12 +240,19 @@ namespace Eltizam.Business.Core.Implementation
             ValuationRequest objValuation;
             string MainTableName = Enum.GetName(TableNameEnum.ValuationRequest);
             int MainTableKey = entityValuation.Id;
+            
             try
             {
                 ValuationRequest OldEntity = null;
 
                 if (entityValuation.Id > 0)
                 {
+                    if (entityValuation.ValuationApprovalValues != null)
+                    {
+                        var quotid = _valuationQuotationrepository.GetAll().Where(x => x.ValuationRequestId == entityValuation.Id).Select(x => x.Id).First();
+                await UpsertApproverLevels(entityValuation.Id, 1, quotid, entityValuation.ValuationApprovalValues);
+                    }
+
                     OldEntity = _repository.GetNoTracking(entityValuation.Id);
                     objValuation = _repository.Get(entityValuation.Id);
 
@@ -482,7 +490,6 @@ namespace Eltizam.Business.Core.Implementation
             DbParameter[] osqlParameter =
             {
                 new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
-
                 new DbParameter("CreatedBy", CreatedBy, SqlDbType.Int),
                  new DbParameter("ValQuotId", ValQuotId, SqlDbType.Int),
                  new DbParameter("RequestData", RequestData, SqlDbType.VarChar),
