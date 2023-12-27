@@ -31,6 +31,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequestApproverLevel> _valuationRequestApproverLevel { get; set; }
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
+
         private readonly INotificationService _notificationService;
 
         #endregion Properties
@@ -203,7 +204,7 @@ namespace Eltizam.Business.Core.Implementation
                         
                         oldentity.ApproverComment = model.ApproverComment;
                         oldentity.StatusId = model.StatusId;
-                        oldentity.ModifiedBy = d.ModifiedBy;
+                        oldentity.ModifiedBy = model.LogInUserId;
                         _valuationRequestApproverLevel.UpdateAsync(oldentity);
                         await _unitOfWork.SaveChangesAsync();
 
@@ -218,7 +219,7 @@ namespace Eltizam.Business.Core.Implementation
                         var valuationEntity = _repository.Get(model.Id);
                          valuationEntity.ApproverComment = model.ApproverComment;
                         valuationEntity.StatusId = model.StatusId;
-                        valuationEntity.ModifiedBy = 2;
+                        valuationEntity.ModifiedBy = model.LogInUserId;
 
                         _repository.UpdateAsync(valuationEntity);
                         //_repository.UpdateGraph(OldEntity, EntityState.Modified);
