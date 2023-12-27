@@ -194,14 +194,15 @@ namespace Eltizam.Business.Core.Implementation
             {
                 if (model.StatusId > 0)
                 {
-                    var d = _valuationRequestApproverLevel.GetEntity(a => a.ApproverId == model.LogInUserId && a.ValuationRequestId == model.Id && a.StatusId == null);
+                    var d = _valuationRequestApproverLevel.GetEntity(a => a.ApproverId == 69 && a.ValuationRequestId == model.Id && a.StatusId == null);
                     if (d != null)
                     {
                         ValuationRequestApproverLevel oldentity = null;
-                        oldentity = _valuationRequestApproverLevel.GetNoTracking(model.Id);
+                        //oldentity = _valuationRequestApproverLevel.GetNoTracking(model.Id);
+                        oldentity = _valuationRequestApproverLevel.Get(x=>x.ValuationRequestId==model.Id);
                         oldentity.ApproverId = d.ApproverId;
-                        oldentity.ApproverComment = d.ApproverComment;
-                        oldentity.StatusId = d.StatusId;
+                        oldentity.ApproverComment = model.ApproverComment;
+                        oldentity.StatusId = model.StatusId;
                         oldentity.ModifiedBy = d.ModifiedBy;
                         _valuationRequestApproverLevel.UpdateAsync(oldentity);
                         await _unitOfWork.SaveChangesAsync();
