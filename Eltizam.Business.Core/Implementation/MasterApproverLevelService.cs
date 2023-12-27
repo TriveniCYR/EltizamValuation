@@ -119,10 +119,8 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
             string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
-            //string SortDir = model.order[0]?.dir;
-            string SortDir = "asc";
-
-
+            string SortDir = (model.order.Count > 0 ? model.order[0].dir : string.Empty);
+          
             SqlParameter[] osqlParameter =
             {
                 new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
