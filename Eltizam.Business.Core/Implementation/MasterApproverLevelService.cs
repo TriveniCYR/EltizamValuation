@@ -74,7 +74,7 @@ namespace Eltizam.Business.Core.Implementation
                     requestApprover.Description = Convert.ToString(approver.Description);
                     requestApprover.FromAmount = approver.FromAmount;
                     requestApprover.ToAmount = approver.ToAmount;
-                    requestApprover.CreatedBy = approver.CreatedBy;
+                    requestApprover.CreatedBy = (int)approver.CreatedBy;
                     requestApprover.IsDeleted = false;
                     requestApprover.IsActive = approver.IsActive;
                     requestApprover.ModifiedDate = AppConstants.DateTime;
@@ -98,7 +98,7 @@ namespace Eltizam.Business.Core.Implementation
                 requestApprover = _mapperFactory.Get<MasterApproverLevelModel, MasterValuationRequestApproverLevel>(approver);
                 requestApprover.CreatedDate = AppConstants.DateTime;
                 requestApprover.ModifiedBy = approver.ModifiedBy;
-                requestApprover.CreatedBy = approver.CreatedBy;
+                requestApprover.CreatedBy = (int)approver.CreatedBy;
                 requestApprover.IsDeleted = false;
 
                 // Insert the new entity into the repository asynchronously.
