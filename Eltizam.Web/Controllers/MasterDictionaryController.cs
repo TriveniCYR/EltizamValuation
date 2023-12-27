@@ -71,6 +71,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
                 masterDictionaryEntity = new MasterDictionaryEntity();
+                masterDictionaryEntity.IsActive = true;
                 return View(masterDictionaryEntity);
             }
             else

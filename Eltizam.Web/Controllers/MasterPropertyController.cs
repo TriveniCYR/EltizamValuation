@@ -61,6 +61,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
                 masterProperty = new MasterPropertyModel();
+                masterProperty.IsActive = true;
                 //masterProperty.AmenityList = 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);

@@ -106,7 +106,8 @@ namespace EltizamValuation.Web.Controllers
 
             if (id == null || id <= 0)
             {
-                masterlocation = new MasterLocationEntity(); 
+                masterlocation = new MasterLocationEntity();
+                masterlocation.IsActive = true;
                 return View(masterlocation);
             }
             else

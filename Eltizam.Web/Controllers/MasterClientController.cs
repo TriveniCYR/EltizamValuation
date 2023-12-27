@@ -69,6 +69,7 @@ namespace EltizamValuation.Web.Controllers
                     Addresses = new List<MasterAddressEntity>(),
                     Contacts = new List<MasterContactModel>()
                 };
+                viewModel.IsActive = true;
                 MasterAddressEntity addess = new MasterAddressEntity();
                 MasterContactModel contact = new MasterContactModel();
                 viewModel.Addresses.Add(addess);

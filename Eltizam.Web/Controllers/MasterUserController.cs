@@ -71,6 +71,7 @@ namespace EltizamValuation.Web.Controllers
                 MasterUserAddressModel addess = new MasterUserAddressModel();
                 Master_QualificationModel qualification = new Master_QualificationModel();
                 //masterUser.Addresses = new List<MasterAddressEntity>();
+                viewModel.IsActive = true;
                 viewModel.Addresses.Add(addess);
                 viewModel.Qualifications.Add(qualification);
                 return View(viewModel);

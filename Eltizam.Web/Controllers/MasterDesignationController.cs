@@ -132,6 +132,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
                 masterDesignation = new MasterDesignationEntity();
+                masterDesignation.IsActive = 1;
                 return View(masterDesignation);
             }
             else

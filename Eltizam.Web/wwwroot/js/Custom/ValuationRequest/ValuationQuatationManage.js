@@ -226,6 +226,12 @@ $(document).on('click', '#levelApprover', function (e) {
                     approverLevelIds[item.approverLevelId] = true;
                 });
                 var approverLevelIds = Object.keys(approverLevelIds).map(Number);
+                if (!approverLevelIds.includes(2)) {
+                    $("[for=ApproverId2]").hide();
+                }
+                if (!approverLevelIds.includes(3)) {
+                    $("[for=ApproverId3]").hide();
+                }
                 console.log(approverLevelIds);
                 if (data.length > 0) {
                     var _dd = _rpname;
