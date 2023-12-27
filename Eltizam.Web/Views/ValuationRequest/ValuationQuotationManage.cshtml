@@ -181,34 +181,40 @@
                 <div style="max-height: 600px;">
                     <!-- Table to display data -->
                     <div class="row">
-                        <div class="col-md-12">
-                            <label for="" class="w-50">
-                                <p class="m-0">Approvr Level 2<span class="text-danger"></span></p>
-                                @Html.DropDownListFor(model => model.ApproverId2, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
-                            </label>
-                            <label for="" class="w-50">
-                                <p class="m-0">Approvr Level 3<span class="text-danger"></span></p>
-                                @Html.DropDownListFor(model => model.ApproverId3, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
-                            </label>
+                        <div class="col-md-3">
                         </div>
-                        @* <div class="col-md-12">
-                            <label for="" class="w-50">
-                                <p class="m-0">Approvr Level 2<span class="text-danger"></span></p>
-                                @Html.DropDownListFor(model => model.ApproverId4, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
+                        <div class="col-md-6">
+                            <label for="ApproverId2" class="w-100">
+                                <p class="m-0">Approver Level 2<span class="text-danger"></span></p>
+                                @Html.DropDownList("ApproverId2", new List<SelectListItem> { }, new { @class = "form-control" })
                             </label>
-                            <label for="" class="w-50">
-                                <p class="m-0">Approvr Level 3<span class="text-danger"></span></p>
-                                @Html.DropDownListFor(model => model.ApproverId5, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
-                            </label>
-                        </div> *@
+                        </div>                        
+                        <div class="col-md-3">
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-9">
-                            &nbsp;
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="ApproverId3" class="w-100">
+                                <p class="m-0">Approver Level 3<span class="text-danger"></span></p>
+                                @Html.DropDownList("ApproverId3", new List<SelectListItem> { }, new { @class = "form-control" })
+                            </label>
                         </div>
                         <div class="col-md-3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-2">
                             <div class="buttonArea popup-btn">
-                                <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
                                 <button type="submit"  data-dismiss="modal" class="blueBtn" onclick="AssignLevelApprover()">Assign</button>
                             </div>
                         </div>
@@ -216,7 +222,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                @* <button type="button" class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button> *@
             </div>
         </div>
     </div>

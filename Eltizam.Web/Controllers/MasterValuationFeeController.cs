@@ -112,6 +112,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
 				masterValuationFeesModel = new MasterValuationFeesModel();
+                masterValuationFeesModel.IsActive = true;
                 return View(masterValuationFeesModel);
             }
             else

@@ -117,6 +117,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
                 masterPropertyType = new Master_PropertyTypeModel();
+                masterPropertyType.IsActive = true;
                 return View(masterPropertyType);
             }
             else

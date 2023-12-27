@@ -219,7 +219,7 @@ namespace Eltizam.Business.Core.Implementation
                     }
                 }
             }
-            if (entityQuatation.ApproverIds != "")
+            if (entityQuatation.ApproverIds != "" && entityQuatation.ApproverIds != null)
             {
                 DbParameter[] osqlParameter =
                 {

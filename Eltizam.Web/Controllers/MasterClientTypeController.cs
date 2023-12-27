@@ -58,6 +58,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
                 masterUser = new Master_ClientTypeModel();
+                masterUser.IsActive = true;
                 return View(masterUser);
             }
             else
