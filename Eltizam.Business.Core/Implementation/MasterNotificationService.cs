@@ -105,6 +105,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             finally
             {
+                _memoryCache.Remove(AppConstants.NotificationsCache);
                 InitiateNotificationCache();
             }
 
@@ -200,7 +201,7 @@ namespace Eltizam.Business.Core.Implementation
 
             List<MasterNotificationEntitty> finalResult = results.ToList();
 
-            var expirationTime = DateTimeOffset.Now.AddMinutes(60.0);
+            var expirationTime = DateTimeOffset.Now.AddHours(24);
             _memoryCache.Set(AppConstants.NotificationsCache, finalResult, expirationTime);
         }
 
