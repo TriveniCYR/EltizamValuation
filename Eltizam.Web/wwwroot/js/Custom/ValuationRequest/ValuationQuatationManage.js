@@ -259,8 +259,8 @@ function AssignLevelApprover() {
     var data1 = $("#ApproverId2").val();
     var data2 = $("#ApproverId3").val();
     var approverIds = {};
-    if (data1 == "0" || data1 == null || data2 == "0" || data2 == null) {
-        e.preventDefault();
+    if (data1 == "0" && data2 == "0") {
+        //e.preventDefault();
         return false;
     }
     $("#levelApprover").click()
