@@ -1,16 +1,4 @@
-﻿//function profileTab(evt, cityName) {
-//    var i, tabcontent, tablinks;
-//    tabcontent = document.getElementsByClassName("tabcontent");
-//    for (i = 0; i < tabcontent.length; i++) {
-//        tabcontent[i].style.display = "none";
-//    }
-//    tablinks = document.getElementsByClassName("tablinks");
-//    for (i = 0; i < tablinks.length; i++) {
-//        tablinks[i].className = tablinks[i].className.replace(" active", "");
-//    }
-//    document.getElementById(cityName).style.display = "block";
-//    evt.currentTarget.className += " active";
-//}
+﻿
 var docId = 0;
 var invoiceId = 0;
 function profileTab(evt, cityName) {
@@ -1254,6 +1242,24 @@ function changeLinkvaluation() {
     myLink.setAttribute('href', '/AuditLog/AuditLogDetailList?TableName=ValuationRequest&TableKey=' + id);
 }
 
+function updateHiddenInput() {
+    var selectedValues = [];
+
+    ["2LevelApproval", "3LevelApproval"].forEach(function (level) {
+        if (level == "2LevelApproval" || level == "3LevelApproval") {
+            var dropdownId = "select[id^='ApproverId_" + level + "']";
+
+            var selectedValue = $(dropdownId).val();
+
+            if (selectedValue) {
+                var numericLevel = level.match(/\d+/)[0];
+                selectedValues.push(numericLevel + "," + selectedValue);
+            }
+        }
+    });
+
+    $("#Valuationapprovalvalues").val(selectedValues.join(";"));
+}
 
 
 //#endregion Delete Invoice

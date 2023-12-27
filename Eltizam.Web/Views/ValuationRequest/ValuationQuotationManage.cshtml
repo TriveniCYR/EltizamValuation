@@ -50,6 +50,7 @@
                     @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.StatusId, new { @class = "control-label" })
+                    @Html.HiddenFor(model => model.ApproverIds, new { @class = "control-label" })
                     <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                     <div class="flex">
                         <label for="" class="w-50">
@@ -154,7 +155,7 @@
                         <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
                         @if (ViewBag.IsView != 1)
                         {
-                            <button type="submit" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;">
+                            <button id="levelApprover" type="submit" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;">
                                 Save
                             </button>
                         }
@@ -164,6 +165,62 @@
         </div>
     </div>
 </main>
+
+
+<!-- Modal for Latest requests -->
+<div class="modal fade" id="LevelApproverModal" tabindex="-1" role="dialog" aria-labelledby="MyLevelApprover">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Save Approver Level</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="max-height: 600px;">
+                    <!-- Table to display data -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="" class="w-50">
+                                <p class="m-0">Approvr Level 2<span class="text-danger"></span></p>
+                                @Html.DropDownListFor(model => model.ApproverId2, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
+                            </label>
+                            <label for="" class="w-50">
+                                <p class="m-0">Approvr Level 3<span class="text-danger"></span></p>
+                                @Html.DropDownListFor(model => model.ApproverId3, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
+                            </label>
+                        </div>
+                        @* <div class="col-md-12">
+                            <label for="" class="w-50">
+                                <p class="m-0">Approvr Level 2<span class="text-danger"></span></p>
+                                @Html.DropDownListFor(model => model.ApproverId4, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
+                            </label>
+                            <label for="" class="w-50">
+                                <p class="m-0">Approvr Level 3<span class="text-danger"></span></p>
+                                @Html.DropDownListFor(model => model.ApproverId5, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
+                            </label>
+                        </div> *@
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-3">
+                            <div class="buttonArea popup-btn">
+                                <button class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                                <button type="submit"  data-dismiss="modal" class="blueBtn" onclick="AssignLevelApprover()">Assign</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div id="DeleteDocumentModel" class="modal themeModal " role="dialog">
@@ -193,5 +250,9 @@
 </div>
 
 @section MyScripts {
-    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationQuatationManage.js?v=@jsVersion"></script>
+    <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationQuatationManage.js?v=@jsVersion"></script> 
+    <script>
+    var GetLevelApprover = "@Eltizam.Web.Helpers.APIURLHelper.GetApproverLevel";
+
+    </script>
 }
