@@ -26,7 +26,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IMapperFactory _mapperFactory;
         private readonly IConfiguration _configuration;
         private IRepository<MasterValuationRequestApproverLevel> _repository { get; set; }
-        
+        private IRepository<MasterUser> _UserRepository { get; set; }
 
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
@@ -39,7 +39,7 @@ namespace Eltizam.Business.Core.Implementation
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
-           
+            _UserRepository = _unitOfWork.GetRepository<MasterUser>();
             _configuration = configuration;
             _helper = helper;
             _notificationService = notificationService;
@@ -131,8 +131,14 @@ namespace Eltizam.Business.Core.Implementation
             };
             var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterApproverLevelModel>(ProcedureMetastore.usp_ApproverLevel_ListById, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
 
+            //var userlist = _UserRepository.FindAll(x => x.ApproverLevelId == Id).ToList();
+            //var userlistModel =  _mapperFactory.GetList<MasterUser, MasterUserModel>(userlist);
+            //lstStf.UsersList = userlistModel;
+
             return lstStf;
         }
+
+
 
 
     }

@@ -18,5 +18,7 @@ namespace Eltizam.Business.Models
         public DateTime ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }=false;
         public bool IsActive { get; set; }
+        public List<MasterUserModel> UsersList { get; set; }
+
     }
 }
