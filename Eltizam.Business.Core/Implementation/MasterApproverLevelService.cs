@@ -7,10 +7,12 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
+using Eltizam.Utility.Utility;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class MasterApproverLevelService: IMasterApproverLevelService
+    public class MasterApproverLevelService : IMasterApproverLevelService
     {
         #region Properties
 
@@ -44,7 +46,7 @@ namespace Eltizam.Business.Core.Implementation
             _helper = helper;
             _notificationService = notificationService;
             _auditLogService = auditLogService;
-            _repository= _unitOfWork.GetRepository<MasterValuationRequestApproverLevel>();
+            _repository = _unitOfWork.GetRepository<MasterValuationRequestApproverLevel>();
         }
         #endregion Constructor
 
@@ -52,7 +54,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> UpsertMasterValuationRequestApproverLevel(MasterApproverLevelModel approver)
         {
 
-           
+
             MasterValuationRequestApproverLevel requestApprover;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
@@ -73,7 +75,7 @@ namespace Eltizam.Business.Core.Implementation
                     requestApprover.FromAmount = approver.FromAmount;
                     requestApprover.ToAmount = approver.ToAmount;
                     requestApprover.CreatedBy = approver.CreatedBy;
-                    requestApprover.IsDeleted =false;
+                    requestApprover.IsDeleted = false;
                     requestApprover.IsActive = approver.IsActive;
                     requestApprover.ModifiedDate = AppConstants.DateTime;
                     requestApprover.ModifiedBy = approver.ModifiedBy;
@@ -105,7 +107,7 @@ namespace Eltizam.Business.Core.Implementation
                 await _unitOfWork.SaveChangesAsync();
             }
 
-            
+
 
             // Return an appropriate operation result.
             if (requestApprover.Id == 0)
@@ -114,13 +116,32 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<List<MasterApproverLevelModel>> GetAll()
+        public async Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model)
         {
-           
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterApproverLevelModel>(ProcedureMetastore.usp_ApproverLevel_List, DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+            string ColumnName = model.order.Count > 0 ? model.columns[model.order[0].column].data : string.Empty;
+            //string SortDir = model.order[0]?.dir;
+            string SortDir = "asc";
 
-            return lstStf;
+
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter(AppConstants.P_CurrentPageNumber,  model.start),
+                new SqlParameter(AppConstants.P_PageSize,           model.length),
+                new SqlParameter(AppConstants.P_SortColumn,         ColumnName),
+                new SqlParameter(AppConstants.P_SortDirection,      SortDir),
+                new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
+            };
+
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_ApproverLevel_SearchAllList, CommandType.StoredProcedure, osqlParameter);
+
+            //Get Pagination information
+            var res = UtilityHelper.GetPaginationInfo(Results);
+
+            DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterApproverLevelModel>());
+
+            return oDataTableResponseModel;
         }
+
 
         public async Task<MasterApproverLevelModel> GetById(int Id)
         {
