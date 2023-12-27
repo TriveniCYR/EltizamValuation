@@ -989,10 +989,12 @@ $('#btnSaveApprove').on('click', function () {
     var statusId = $("#StatusId").val();
     var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
     var Id = document.getElementById('Id').value;
+
     var data = {
         Id: Id,
         StatusId: statusId,
-        ApproverComment: approverComment
+        ApproverComment: approverComment,
+        LogInUserId: LogInUserId
     };
     var ValutionRequestForApproverModel = data;
 

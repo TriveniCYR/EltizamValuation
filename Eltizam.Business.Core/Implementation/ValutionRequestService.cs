@@ -31,6 +31,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequestApproverLevel> _valuationRequestApproverLevel { get; set; }
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
+
         private readonly INotificationService _notificationService;
 
         #endregion Properties
@@ -194,15 +195,16 @@ namespace Eltizam.Business.Core.Implementation
             {
                 if (model.StatusId > 0)
                 {
-                    var d = _valuationRequestApproverLevel.GetEntity(a => a.ApproverId == model.LogInUserId && a.ValuationRequestId == model.Id && a.StatusId == null);
+                    var d = _valuationRequestApproverLevel.Get(a => a.ValuationRequestId == model.Id && a.StatusId == null);
                     if (d != null)
                     {
                         ValuationRequestApproverLevel oldentity = null;
-                        oldentity = _valuationRequestApproverLevel.GetNoTracking(model.Id);
-                        oldentity.ApproverId = d.ApproverId;
-                        oldentity.ApproverComment = d.ApproverComment;
-                        oldentity.StatusId = d.StatusId;
-                        oldentity.ModifiedBy = d.ModifiedBy;
+                        //oldentity = _valuationRequestApproverLevel.GetNoTracking(model.Id);
+                        oldentity = _valuationRequestApproverLevel.Get(x=>x.ValuationRequestId==model.Id);
+                        
+                        oldentity.ApproverComment = model.ApproverComment;
+                        oldentity.StatusId = model.StatusId;
+                        oldentity.ModifiedBy = model.LogInUserId;
                         _valuationRequestApproverLevel.UpdateAsync(oldentity);
                         await _unitOfWork.SaveChangesAsync();
 
@@ -224,20 +226,20 @@ namespace Eltizam.Business.Core.Implementation
 
                         await _unitOfWork.SaveChangesAsync();
 
-                        try
-                        {
-                            //Do Audit Log --AUDITLOG 
-                            await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.Id);
+                        //try
+                        //{
+                        //    //Do Audit Log --AUDITLOG 
+                        //    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.Id);
 
-                            var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-                            var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-                            if (newstatusname != oldstatusname)
-                                await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
-                        }
-                        catch (Exception ex)
-                        {
+                        //    var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                        //    var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                        //    if (newstatusname != oldstatusname)
+                        //        await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
+                        //}
+                        //catch (Exception ex)
+                        //{
 
-                        }
+                        //}
                     }
                 }
                 else
