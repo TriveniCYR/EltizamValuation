@@ -16,7 +16,7 @@ function profileTab(evt, cityName) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
-   
+
 
     document.getElementById(cityName).style.height = "auto";
     document.getElementById(cityName).style.padding = "6px 12px";
@@ -82,8 +82,8 @@ function payTab(evt, payName) {
 }
 
 function getPDF(id) {
-   // id = 24;
-    var url1 = "/ValuationRequest/ValuationData/"+id;
+    // id = 24;
+    var url1 = "/ValuationRequest/ValuationData/" + id;
     $.get(url1, function (content1) {
         var w = window.open();
         w.document.open();
@@ -142,7 +142,7 @@ function DeleteDocument() {
     var action = $('#isAction').val();
     if (isDeleteSite && action === 'isSite') {
 
-        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by , Delete, DeleteDocumentSuccess, DeleteDocumentError);
+        ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by, Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
     else if (isDeleteEvidence && action === 'isEvidence') {
 
@@ -189,7 +189,7 @@ function DeleteDocumentError(x, y, z) {
 
 $(document).ready(function () {
 
-   
+
 
     var RoleEnum = {
         'Requestor': 1,
@@ -245,8 +245,8 @@ $(document).ready(function () {
     var inputElement64 = $('#ValuationAssesment_valuationAssessementModel_MarketValue');
     var inputElement65 = $('#ValuationAssesment_valuationAssessementModel_Insuarance');
     var inputElement66 = $('#ValuationAssesment_valuationAssessementModel_InsuranceDetails');
-    
-    
+
+
     if (roleId == RoleEnum.Approver || roleId == RoleEnum.Valuer) {
         inputElement1.prop('disabled', true);
         inputElement2.prop('disabled', true);
@@ -277,7 +277,7 @@ $(document).ready(function () {
             inputElement15.prop('disabled', false);
         }
     }
- 
+
     if (isViewHide == "2") {
         inputElement1.prop('disabled', true);
         inputElement2.prop('disabled', true);
@@ -325,18 +325,11 @@ $(document).ready(function () {
 
 
     if (roleId > 0) {
-        BindValuationRequestStatus(roleId, action)
-
-
+        BindValuationRequestStatus(roleId, action);
     }
 
-    /* $('#StatusId').trigger('change');*/
-
-    // BindProperty();
-    //BindValuationRequestStatus();
     GetValuationMethodLists();
     BindClientType();
-    // BindClientType();
     BindProperty();
     BindOwnership();
     BindUnitType();
@@ -347,13 +340,9 @@ $(document).ready(function () {
     GetValuerLists();
     BindQuatationList();
     BindInvoiceList();
-    /*BindPropertyDetail();*/
 
-    if (document.location.href.includes('id'))
-
-
-   /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/ {
-
+    if (document.location.href.includes('id')) { 
+        /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/ 
 
         var comingFromAPI = document.getElementById('hdnClientTypeId').value;
         var comingFromAPIClientId = document.getElementById('hdnClientId').value;
@@ -362,7 +351,7 @@ $(document).ready(function () {
 
         //var id =  document.getElementById('ClientTypeId').value
         // $('ClientTypeId').val() = $('hdnClientTypeId').val();
-        var ss = document.getElementById('ClientTypeId').value = document.getElementById('hdnClientTypeId').value;
+        // var ss = document.getElementById('ClientTypeId').value = document.getElementById('hdnClientTypeId').value; 
 
         //document.getElementById('ClientName').value
         // document.getElementById('ClientTypeId').value = ss;
@@ -373,15 +362,13 @@ $(document).ready(function () {
         /* document.getElementById("ClientTypeId").options[ss].selected = true;*/
         /*$("#ClientTypeId").get(0).selectedIndex = document.getElementById('hdnClientTypeId').value;*/
 
-        console.log($("#ClientTypeId").val(comingFromAPI));
+        //console.log($("#ClientTypeId").val(comingFromAPI));
 
         BindClientByClientType(comingFromAPI);
         BindClientDetailsByClientId(comingFromAPIClientId);
         BindPropertySub(comingFromAPIPropertyTypeId);
-        BindPropertyDetail();
-
+        BindPropertyDetail(); 
         BindPropertyDetailById(comingFromAPIPropertyId);
-
     }
 
     var HdnCountryId = $('#hdnCountry').val();
@@ -391,22 +378,22 @@ $(document).ready(function () {
     var HdnStateId = $('#hdnState').val();
     if (HdnStateId) {
         BindCity(HdnStateId);
-    } 
+    }
 });
 
 
-var selectedOption = $("#StatusId option:selected").text(); 
- 
-function BindValuationRequestStatus() { 
-    var ValReqId = parseInt($('#hdnId').val()); 
+var selectedOption = $("#StatusId option:selected").text();
+
+function BindValuationRequestStatus() {
+    var ValReqId = parseInt($('#hdnId').val());
     var RequestStatus = $("#StatusId");
     var _val = $('#hdnStatusId').val();
     var _rpname = "statusName";
     var roleId = $("#hdnRoleId").val();
-    
-    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId, RequestStatus, _rpname, _val); 
+
+    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId, RequestStatus, _rpname, _val);
 }
- 
+
 function BindClientType() {
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientTypeId').val();
@@ -436,7 +423,7 @@ function BindClientType() {
     //});
 }
 
-function BindClientByClientType(id) { 
+function BindClientByClientType(id) {
     var clients = $("#ClientId");
     var _val = $('#hdnClientId').val();
     var _rpname = "clientName";
@@ -462,7 +449,7 @@ function BindClientByClientType(id) {
     //});
 }
 
-function BindProperty() { 
+function BindProperty() {
     var Property = $("#PropertyTypeId");
     var _val = $('#hdnPropertyType').val();
     var _rpname = "propertyType";
@@ -492,7 +479,7 @@ function BindProperty() {
     //});
 }
 
-function BindPropertySub(id) { 
+function BindPropertySub(id) {
     var PropertySubType = $("#PropertySubTypeId");
     var _val = $('#hdnPropertySub').val();
     var _rpname = "propertySubType";
@@ -557,26 +544,20 @@ function BindPropertyDetail() {
         var PropertyTypeId = document.getElementById("PropertyTypeId").value;
         var PropertySubTypeId = document.getElementById("PropertySubTypeId").value;
         var OwnershipTypeId = document.getElementById("OwnershipTypeId").value;
-    }
-
-
+    } 
 
     if ((PropertyTypeId == null || PropertyTypeId == "") && (PropertySubTypeId == null || PropertySubTypeId == "") && (OwnershipTypeId == null || OwnershipTypeId == "")) {
-        alert("No id is passed");
         return false;
     }
     var Property = $("#PropertyId");
     var _val = $('#hdnPropertyId').val();
     var _rpname = "propertyName";
-
-    //BindDropdowns(OwnershipTypeList, OwnershipType, _rpname, _val);
+     
     $.ajax({
         type: Get,
         url: BaseURL + GetPropertyByFilters + '/' + PropertyTypeId + '/' + PropertySubTypeId + '/' + OwnershipTypeId,
         "datatype": "json",
-        success: function (response) {
-
-            //alert(response);
+        success: function (response) { 
             Property.empty().append('<option selected="selected" value="0">Please select</option>');
             for (var i = 0; i < response.length; i++) {
                 Property.append($("<option></option>").val(response[i].id).html(response[i].propertyName));
@@ -623,9 +604,7 @@ function BindPropertyDetailById(Id) {
             type: Get,
             url: BaseURL + GetPropertyById + '/' + Id,
             "datatype": "json",
-            success: function (response) {
-
-                //alert(response);
+            success: function (response) { 
                 document.getElementById('UnitType').value = response._object.unitType;
                 document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
                 document.getElementById('Furnished').value = response._object.furnished;
@@ -638,8 +617,7 @@ function BindPropertyDetailById(Id) {
                 document.getElementById('Description').value = response._object.description;
                 var AmenityList = response._object.amenityList;
 
-                for (i = 0; i < response._object.amenityList.length; i++) {
-                    //var _id = response._object.amenityList[i].id
+                for (i = 0; i < response._object.amenityList.length; i++) { 
                     if (response._object.amenityList[i].isActive == true) {
                         var ob = response._object.amenityList[i];
                         Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
@@ -647,6 +625,7 @@ function BindPropertyDetailById(Id) {
                             '<img src="/assets/' + ob.icon + '" class="amenitiesIcon" /> </label>')
                     }
                 }
+
                 var PropertyDetails = response._object.propertyDetail;
                 if (isAddValuation) {
                     document.getElementById('hdnLocationCountryId').value = PropertyDetails.countryId;
@@ -937,13 +916,13 @@ function GetValuationMethodLists() {
 }
 
 
-$('#btnSaveApprove').on('click', function () { 
-    var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();  
+$('#btnSaveApprove').on('click', function () {
+    var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
 
     var data = {
         Id: $("#Id").val(),
         StatusId: $("#StatusId").val(),
-        ApproverComment: approverComment, 
+        ApproverComment: approverComment,
         LogInUserId: LogInUserId
     };
     var ValutionRequestForApproverModel = data;
@@ -990,16 +969,16 @@ function BindQuatationList() {
 
                     var url = '/ValuationRequest/ValuationQuotationManage?id=' + object.id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                    html += '<li><a title="View" href=' + url +'><img src="../assets/view.svg" alt="view" />View</a></li>'; 
+                    html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     if (view == 2) {
                         html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeleteQuotationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteQuotation(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                     }
                     else {
                         html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteQuotationModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteQuotation(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
-                    } 
-                    html += '</ul></div>'; 
+                    }
+                    html += '</ul></div>';
 
-                    $('#QuatationTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url +'>' + object.referenceNo + '</a></td> <td class="formatting">' + object.valuationFee + '</td><td class="formatting">' + object.vat
+                    $('#QuatationTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.referenceNo + '</a></td> <td class="formatting">' + object.valuationFee + '</td><td class="formatting">' + object.vat
                         + '</td><td class="formatting">' + object.otherCharges + '</td><td class="formatting">' + object.discount + '</td><td class="formatting">' + object.totalFee + '</td><td>' + object.userName + '</td> <td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
                 });
                 formatCurrencyInElements('formatting');
@@ -1028,7 +1007,7 @@ function BindInvoiceList() {
                     var html = '';
                     var url = '/ValuationRequest/ValuationInvoiceManage?id=' + object.id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-                    html += '<li><a title="View" href=' + url +'><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     if (view == 2) {
                         html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
                     }
@@ -1155,7 +1134,7 @@ document.getElementById('defaultOpen').addEventListener('click', function () {
 
 function changeLinksite() {
     let id = $('#siteId').val();
-    
+
     // Get the anchor element by its id
     var myLink = document.getElementById('myLink');
 
@@ -1165,7 +1144,7 @@ function changeLinksite() {
 
 function changeLinkevidence() {
     let id = $('#compId').val();
-   
+
     // Get the anchor element by its id
     var myLink = document.getElementById('myLink');
 
