@@ -15,6 +15,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsDeleted { get; set; }
+        public int? StatusId { get; set; }
+        public string? ApproverComment { get; set; }
 
         public virtual ValuationRequest ValuationRequest { get; set; } = null!;
     }

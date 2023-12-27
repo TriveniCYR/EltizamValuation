@@ -12,6 +12,6 @@ namespace Eltizam.Business.Core.Interface
     {
          Task<DBOperation> UpsertMasterValuationRequestApproverLevel(MasterApproverLevelModel approver);
         Task<List<MasterApproverLevelModel>> GetAll();
-        Task<List<MasterApproverLevelModel>> GetById(int Id);
+        Task<MasterApproverLevelModel> GetById(int Id);
     }
 }

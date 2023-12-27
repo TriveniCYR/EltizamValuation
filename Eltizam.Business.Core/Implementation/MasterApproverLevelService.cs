@@ -122,18 +122,18 @@ namespace Eltizam.Business.Core.Implementation
             return lstStf;
         }
 
-        public async Task<List<MasterApproverLevelModel>> GetById(int Id)
+        public async Task<MasterApproverLevelModel> GetById(int Id)
         {
             DbParameter[] osqlParameter =
             {
 
                 new DbParameter("Id", Id, SqlDbType.Int),
             };
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterApproverLevelModel>(ProcedureMetastore.usp_ApproverLevel_ListById, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterApproverLevelModel>(ProcedureMetastore.usp_ApproverLevel_ListById, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter).FirstOrDefault();
 
-            //var userlist = _UserRepository.FindAll(x => x.ApproverLevelId == Id).ToList();
-            //var userlistModel =  _mapperFactory.GetList<MasterUser, MasterUserModel>(userlist);
-            //lstStf.UsersList = userlistModel;
+            var userlist = _UserRepository.FindAll(x => x.ApproverLevelId == Id).ToList();
+            var userlistModel = _mapperFactory.GetList<MasterUser, MasterUserModel>(userlist);
+            lstStf.UsersList = userlistModel;
 
             return lstStf;
         }
