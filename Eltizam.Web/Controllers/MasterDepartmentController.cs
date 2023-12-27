@@ -142,6 +142,7 @@ namespace EltizamValuation.Web.Controllers
             if (id == null || id <= 0)
             {
                 masterDepartment = new MasterDepartmentEntity();
+                masterDepartment.IsActive = 1;
                 return View(masterDepartment);
             }
             else

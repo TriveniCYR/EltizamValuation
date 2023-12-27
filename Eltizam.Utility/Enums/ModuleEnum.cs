@@ -130,6 +130,9 @@ namespace Eltizam.Utility.Enums
         [Description("Valuation Invoice")]
         ValuationInvoice = 18,
 
+        [Description("Approver Master")]
+        MasterApproverLevel = 18,
+
     }
 
 
