@@ -391,66 +391,22 @@ $(document).ready(function () {
     var HdnStateId = $('#hdnState').val();
     if (HdnStateId) {
         BindCity(HdnStateId);
-    }
-
-   
-
-
-    
-
+    } 
 });
 
 
-var selectedOption = $("#StatusId option:selected").text(); /*$(this).val().text();*/
-
-// Check if the selected option is "Rejected" and toggle the visibility of ApproverComment accordingly
-//if (selectedOption === 'Rejected') {
-//    $('#comment').show();
-//} else {
-//    $('#comment').hide();
-//}
-
-
-//if (RoleId == 2) {
-//    BindValuationRequestStatus(RoleId);
-//}
-function BindValuationRequestStatus() {
-    var ValReqId = parseInt($('#hdnId').val());
-    /*alert("hello");*/
+var selectedOption = $("#StatusId option:selected").text(); 
+ 
+function BindValuationRequestStatus() { 
+    var ValReqId = parseInt($('#hdnId').val()); 
     var RequestStatus = $("#StatusId");
     var _val = $('#hdnStatusId').val();
     var _rpname = "statusName";
-    var roleId=document.getElementById('hdnRoleId').value
+    var roleId = $("#hdnRoleId").val();
     
-    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId, RequestStatus, _rpname, _val);
-    
-
-   // var url = GetAllValuationRequestStatus + '/' + roleId + '?action=' + action;
-
-
+    BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId, RequestStatus, _rpname, _val); 
 }
-
-//function BindValuationRequestStatus(roleId) {
-//    var RequestStatus = $("#StatusId");
-//    var _val = $('#hdnStatusId').val();
-
-//    var _rpname = "statusName";
-
-  
-//    if (action == 'Add') {
-//        BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, '3'); // Assuming '3' is the id for "New"
-
-//       /* RequestStatus.prop('disabled', true);*/
-      
-//    }
-//    else {
-//          BindDropdowns(GetAllValuationRequestStatus + '/' + roleId, RequestStatus, _rpname, _val);
-//    }
-    
-//}
-
-
-
+ 
 function BindClientType() {
     var Client = $("#ClientTypeId");
     var _val = $('#hdnClientTypeId').val();
@@ -480,8 +436,7 @@ function BindClientType() {
     //});
 }
 
-function BindClientByClientType(id) {
-
+function BindClientByClientType(id) { 
     var clients = $("#ClientId");
     var _val = $('#hdnClientId').val();
     var _rpname = "clientName";
@@ -507,9 +462,7 @@ function BindClientByClientType(id) {
     //});
 }
 
-function BindProperty() {
-    //alert("hello");
-
+function BindProperty() { 
     var Property = $("#PropertyTypeId");
     var _val = $('#hdnPropertyType').val();
     var _rpname = "propertyType";
@@ -539,8 +492,7 @@ function BindProperty() {
     //});
 }
 
-function BindPropertySub(id) {
-
+function BindPropertySub(id) { 
     var PropertySubType = $("#PropertySubTypeId");
     var _val = $('#hdnPropertySub').val();
     var _rpname = "propertySubType";
@@ -985,14 +937,14 @@ function GetValuationMethodLists() {
 }
 
 
-$('#btnSaveApprove').on('click', function () {
-    var statusId = $("#StatusId").val();
-    var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
-    var Id = document.getElementById('Id').value;
+$('#btnSaveApprove').on('click', function () { 
+    var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();  
+
     var data = {
-        Id: Id,
-        StatusId: statusId,
-        ApproverComment: approverComment
+        Id: $("#Id").val(),
+        StatusId: $("#StatusId").val(),
+        ApproverComment: approverComment, 
+        LogInUserId: LogInUserId
     };
     var ValutionRequestForApproverModel = data;
 

@@ -80,7 +80,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter("CityId",                          filters.cityId),
                 new SqlParameter("FromDate",                        filters.fromDate),
                 new SqlParameter("ToDate",                          filters.toDate),
-                new SqlParameter("ValRef",                          filters.valRef)               
+                new SqlParameter("ValRef",                          filters.valRef)
             };
 
             var Results = await _repository.GetBySP(ProcedureMetastore.usp_Valution_GetValuationList, CommandType.StoredProcedure, osqlParameter);
@@ -189,61 +189,66 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> ReviewerRequestStatus(ValutionRequestForApproverModel model)
         {
+            int? By = model.LogInUserId;
+            var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
 
             if (model.StatusId > 0 && model.Id > 0)
             {
-                if (model.StatusId > 0)
+                var openApproval = _valuationRequestApproverLevel.Get(a => a.ValuationRequestId == model.Id && a.StatusId == null && a.ApproverId == By);
+                if (openApproval != null)
                 {
-                    var d = _valuationRequestApproverLevel.Get(a => a.ValuationRequestId == model.Id && a.StatusId == null);
-                    if (d != null)
-                    {
-                        ValuationRequestApproverLevel oldentity = null;
-                        //oldentity = _valuationRequestApproverLevel.GetNoTracking(model.Id);
-                        oldentity = _valuationRequestApproverLevel.Get(x=>x.ValuationRequestId==model.Id);
-                        
-                        oldentity.ApproverComment = model.ApproverComment;
-                     
-                        oldentity.ModifiedBy = d.ModifiedBy;
-                        _valuationRequestApproverLevel.UpdateAsync(oldentity);
-                        await _unitOfWork.SaveChangesAsync();
+                    ValuationRequestApproverLevel oldentity = null;
+                    oldentity = _valuationRequestApproverLevel.GetNoTracking(openApproval.Id);
 
-                    }
-                    else
-                    {
+                    var ent = _valuationRequestApproverLevel.Get(openApproval.Id);
+                    ent.ApproverComment = model.ApproverComment;
+                    ent.StatusId = model.StatusId;
+                    ent.ModifiedBy = By;
 
-                        ValuationRequest OldEntity = null;
-                        OldEntity = _repository.GetNoTracking(model.Id);
-                        var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
+                    //Update comment
+                    _valuationRequestApproverLevel.UpdateAsync(ent);
+                    await _unitOfWork.SaveChangesAsync();
 
-                        var valuationEntity = _repository.Get(model.Id);
-                         valuationEntity.ApproverComment = model.ApproverComment;
-                        valuationEntity.StatusId = model.StatusId;
-                        valuationEntity.ModifiedBy = 2;
+                    //Do Audit Log --AUDITLOG 
+                    await _auditLogService.CreateAuditLog<ValuationRequestApproverLevel>(AuditActionTypeEnum.Update, oldentity, ent, TableName, model.Id);
+                }
 
-                        _repository.UpdateAsync(valuationEntity);
-                        //_repository.UpdateGraph(OldEntity, EntityState.Modified);
 
-                        await _unitOfWork.SaveChangesAsync();
+                ValuationRequest OldEntity = null;
+                OldEntity = _repository.GetNoTracking(model.Id);
 
-                        //try
-                        //{
-                        //    //Do Audit Log --AUDITLOG 
-                        //    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.Id);
+                var valuationEntity = _repository.Get(model.Id);
 
-                        //    var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-                        //    var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-                        //    if (newstatusname != oldstatusname)
-                        //        await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
-                        //}
-                        //catch (Exception ex)
-                        //{
-
-                        //}
-                    }
+                //Get open approvals
+                var openApprovals = _valuationRequestApproverLevel.GetAllAsync(a => a.ValuationRequestId == model.Id && a.StatusId == null);
+                if (openApprovals != null)
+                {
+                    var nxtapp = openApprovals.Result.OrderBy(a => a.ApproverLevelId).FirstOrDefault();
+                    valuationEntity.ApproverId = nxtapp?.ApproverId;
                 }
                 else
                 {
-                    return DBOperation.NotFound;
+                    valuationEntity.ApproverComment = model.ApproverComment;
+                    valuationEntity.StatusId = model.StatusId;
+                    valuationEntity.ModifiedBy = By;
+                }
+
+                _repository.UpdateAsync(valuationEntity);
+                await _unitOfWork.SaveChangesAsync();
+
+                try
+                {
+                    //Do Audit Log --AUDITLOG 
+                    await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.Id);
+
+                    var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                    var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                    if (newstatusname != oldstatusname)
+                        await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
+                }
+                catch (Exception ex)
+                {
+
                 }
             }
             else
@@ -267,7 +272,7 @@ namespace Eltizam.Business.Core.Implementation
             ValuationRequest objValuation;
             string MainTableName = Enum.GetName(TableNameEnum.ValuationRequest);
             int MainTableKey = entityValuation.Id;
-            
+
             try
             {
                 ValuationRequest OldEntity = null;
@@ -277,7 +282,7 @@ namespace Eltizam.Business.Core.Implementation
                     if (entityValuation.ValuationApprovalValues != null)
                     {
                         var quotid = _valuationQuotationrepository.GetAll().Where(x => x.ValuationRequestId == entityValuation.Id).Select(x => x.Id).First();
-                await UpsertApproverLevels(entityValuation.Id, 1, quotid, entityValuation.ValuationApprovalValues);
+                        await UpsertApproverLevels(entityValuation.Id, 1, quotid, entityValuation.ValuationApprovalValues);
                     }
 
                     OldEntity = _repository.GetNoTracking(entityValuation.Id);
@@ -400,8 +405,8 @@ namespace Eltizam.Business.Core.Implementation
                 _ValuationEntity.LocationCityId = res.LocationCityId;
 
                 siteDescription = _mapperFactory.Get<SiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
-                approvellevel = await GetApproverLevel(0,id);
-                _ValuationEntity.ValuationRequestApproverLevel = approvellevel; 
+                approvellevel = await GetApproverLevel(0, id);
+                _ValuationEntity.ValuationRequestApproverLevel = approvellevel;
                 if (siteDescription != null)
                 {
                     _ValuationEntity.ValuationAssesment.SiteDescription = siteDescription;
@@ -463,7 +468,7 @@ namespace Eltizam.Business.Core.Implementation
                     }
                 }
 
-                
+
             }
 
             return _ValuationEntity;
@@ -487,14 +492,14 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<bool> SenddDetailsToEmail(RecepientActionEnum subjectEnum, int valuationrequestId)
         {
             try
-            { 
-                var notificationModel = _notificationService.GetValuationNotificationData(subjectEnum, valuationrequestId);  
+            {
+                var notificationModel = _notificationService.GetValuationNotificationData(subjectEnum, valuationrequestId);
 
                 string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_StatusChange.html");
                 if (subjectEnum == RecepientActionEnum.ValuationCreated)
                 {
                     strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_Created.html");
-                } 
+                }
                 strHtml = strHtml.Replace("[PValRefNoP]", notificationModel.ValRefNo);
                 strHtml = strHtml.Replace("[PDateP]", DateTime.Now.ToString("dd-MMM-yyyy"));
                 strHtml = strHtml.Replace("[PNewStatusP]", notificationModel.Status);
@@ -502,7 +507,7 @@ namespace Eltizam.Business.Core.Implementation
                 notificationModel.Subject = EnumHelper.GetDescription(subjectEnum);
                 notificationModel.Body = strHtml;
 
-                await _notificationService.SendEmail(notificationModel); 
+                await _notificationService.SendEmail(notificationModel);
                 return true;
             }
             catch (Exception)
@@ -521,9 +526,9 @@ namespace Eltizam.Business.Core.Implementation
                  new DbParameter("ValQuotId", ValQuotId, SqlDbType.Int),
                  new DbParameter("RequestData", RequestData, SqlDbType.VarChar),
             };
-             EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_UpsertApproverLevels, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+            EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_UpsertApproverLevels, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
 
-            return DBOperation.Success; 
+            return DBOperation.Success;
         }
 
 

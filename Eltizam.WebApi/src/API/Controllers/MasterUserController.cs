@@ -21,8 +21,7 @@ namespace Eltizam.WebApi.Controllers
 
        
         private readonly IConfiguration _configuration;
-        private readonly IResponseHandler<dynamic> _ObjectResponse;
-        //private readonly IStringLocalizer<Errors> _stringLocalizerError;
+        private readonly IResponseHandler<dynamic> _ObjectResponse; 
         private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         
@@ -124,6 +123,7 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
         [HttpGet("GetApproverLevelList")]
         public async Task<IActionResult> GetApproverLevelList()
         {
@@ -136,6 +136,7 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
         [HttpGet("GetRoleList")]
         public async Task<IActionResult> GetRoleList()
         {

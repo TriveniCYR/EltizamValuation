@@ -134,6 +134,8 @@ namespace Eltizam.Utility.Enums
         [Description("Approver Master")]
         MasterApproverLevel = 18,
 
+        [Description("Valuation Request Approver Level")]
+        ValuationRequestApproverLevel = 19, 
     }
 
 

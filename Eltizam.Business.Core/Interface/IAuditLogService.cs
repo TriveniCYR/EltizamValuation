@@ -6,8 +6,7 @@ namespace Eltizam.Business.Core.Interface
 {
     public interface IAuditLogService
     {
-        Task<bool> CreateAuditLog<TResult>(AuditActionTypeEnum auditActionType, TResult oldEntity, TResult newEntity,
-                   string? PTName = null, int? PTId = null) where TResult : new();
+        Task<bool> CreateAuditLog<TResult>(AuditActionTypeEnum auditActionType, TResult oldEntity, TResult newEntity, string? ParentTableName = null, int? ParentTableId = null) where TResult : new();
 
         Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model, int? UserName, string? TableName = null, DateTime? DateFrom = null, DateTime? DateTo = null);
 
