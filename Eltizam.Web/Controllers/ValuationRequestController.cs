@@ -509,23 +509,21 @@ namespace EltizamValuation.Web.Controllers
                 APIRepository objapi = new(_cofiguration);
 
                 ValutionRequestForApproverModel valuationRequestModelNew = new ValutionRequestForApproverModel();
-                valuationRequestModelNew.Id = id;
-
-                valuationRequestModelNew.StatusId = appoveRequestModel.StatusId;
-
+                valuationRequestModelNew.Id = id; 
+                valuationRequestModelNew.StatusId = appoveRequestModel.StatusId;     
                 valuationRequestModelNew.ApproverComment = appoveRequestModel.ApproverComment;
 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ReviewRequestStatus, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    TempData["StatusMessage"] = "Saved Successfully";
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     ModelState.Clear();
                     return RedirectToAction(nameof(ValuationRequests));
                 }
                 else
-                    TempData["StatusMessage"] = "Some Eror Occured";
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(_stringLocalizerShared["Error"]);
             }
             catch (Exception e)
             {

@@ -124,12 +124,7 @@ namespace EltizamValuation.Web.Controllers
                 int roleId = _helper.GetLoggedInRoleId();
                 if (!CheckRoleAccess(ModulePermissionEnum.VendorMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-
-                //if (!ModelState.IsValid)
-                //{
-                //    return View(masterUser);
-                //}
-
+                 
                 if (masterUser != null)
                 {
                     masterUser.Address = null;

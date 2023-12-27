@@ -72,7 +72,7 @@ namespace EltizamValuation.Web.Controllers
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuation, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(masterValuationFeesModel))).Result;
                 if (responseMessage.IsSuccessStatusCode && masterValuationFeesModel.Id==0)
                 {
-                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["Saved Successfully"]);
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     ModelState.Clear();
                     return RedirectToAction(nameof(ValuationFees));
@@ -80,13 +80,13 @@ namespace EltizamValuation.Web.Controllers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     //TempData["StatusMessage"] = "Saved Successfully";
-                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["Update Successfully"]);
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     ModelState.Clear();
                     return Redirect($"/MasterValuationFee/ValuationFeeManage?id={masterValuationFeesModel.Id}");
                 }
                 else
-                    TempData["StatusMessage"] = "Some Eror Occured";
+                    TempData[UserHelper.ErrorMessage] = "Some Eror Occured";
             }
             catch (Exception e)
             {
@@ -127,16 +127,7 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
 
                     //Get Footer info
-                    FooterInfo(TableNameEnum.Master_ValuationFee, _cofiguration, id);
-
-                    //var url = string.Format("{0}/{1}/{2}", APIURLHelper.GetGlobalAuditFields, id, Enum.GetName(TableNameEnum.Master_ValuationFee));
-                    //var footerRes = objapi.APICommunication(url, HttpMethod.Get, token).Result;
-                    //if (footerRes.IsSuccessStatusCode)
-                    //{
-                    //    string json = footerRes.Content.ReadAsStringAsync().Result;
-                    //    ViewBag.FooterInfo = JsonConvert.DeserializeObject<GlobalAuditFields>(json);
-                    //}
-
+                    FooterInfo(TableNameEnum.Master_ValuationFee, _cofiguration, id); 
 
                     if (data._object is null)
                         return NotFound();
@@ -184,38 +175,7 @@ namespace EltizamValuation.Web.Controllers
 				}
 				return NotFound();
 			}
-		}
-
-
-		//[HttpGet]
-  //      [Route("ValuationFees/ValuationView")]
-  //      public IActionResult ValuationView(int? id)
-  //      {
-
-  //          MasterValuationFeesModel masterValuationFeesModel;
-  //          if (id == null || id <= 0)
-  //          {
-		//		masterValuationFeesModel = new MasterValuationFeesModel();
-  //              return View(masterValuationFeesModel);
-  //          }
-  //          else
-  //          {
-  //              HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-  //              APIRepository objapi = new(_cofiguration);
-  //              HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.GetValuationById + "/" + id, HttpMethod.Get, token).Result;
-
-  //              if (responseMessage.IsSuccessStatusCode)
-  //              {
-  //                  string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-  //                  var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterValuationFeesModel>>(jsonResponse);
-  //                  if (data._object is null)
-  //                      return NotFound();
-
-  //                  return View(data._object);
-  //              }
-  //              return NotFound();
-  //          }
-  //      }
+		} 
     }
 }
 
