@@ -77,7 +77,11 @@ namespace EltizamValuation.WebApi.Controllers
         {
             try
             {
-                return _ObjectResponse.CreateData(await _approverLevelService.GetById(Id), (Int32)HttpStatusCode.OK);
+                var result = await _approverLevelService.GetById(Id);
+                if (result != null && result.Id > 0)
+                    return _ObjectResponse.Create(result, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
             catch (Exception ex)
             {
