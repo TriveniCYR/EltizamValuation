@@ -407,22 +407,22 @@ namespace Eltizam.Business.Core.Implementation
                 siteDescription = _mapperFactory.Get<SiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
                 approvellevel = await GetApproverLevel(0, id);
                 _ValuationEntity.ValuationRequestApproverLevel = approvellevel;
+
+
                 if (siteDescription != null)
                 {
                     _ValuationEntity.ValuationAssesment.SiteDescription = siteDescription;
                     DbParameter[] osqlParameter2 =
-               {
-                    new DbParameter(AppConstants.TableKeyId, siteDescription.Id, SqlDbType.Int),
-                    new DbParameter(AppConstants.TableName,  sitetableName, SqlDbType.VarChar),
-                };
+                    {
+                        new DbParameter(AppConstants.TableKeyId, siteDescription.Id, SqlDbType.Int),
+                        new DbParameter(AppConstants.TableName,  sitetableName, SqlDbType.VarChar),
+                     };
 
                     var siteDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
                                         DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
-                    if (siteDocuments != null)
-                    {
-                        _ValuationEntity.ValuationAssesment.SiteDescription.Documents = siteDocuments;
-                    }
-
+                   
+                    if (siteDocuments != null) 
+                        _ValuationEntity.ValuationAssesment.SiteDescription.Documents = siteDocuments;  
                 }
 
 
@@ -430,8 +430,7 @@ namespace Eltizam.Business.Core.Implementation
                 compevidence = _mapperFactory.Get<ComparableEvidence, ComparableEvidenceModel>(_evidencerepository.Get(x => x.RequestId == id));
 
                 if (compevidence != null)
-                {
-
+                { 
                     _ValuationEntity.ValuationAssesment.comparableEvidenceModel = compevidence;
                     DbParameter[] osqlParameter3 =
                     {
@@ -439,8 +438,9 @@ namespace Eltizam.Business.Core.Implementation
                         new DbParameter(AppConstants.TableName,  evidencetableName, SqlDbType.VarChar),
                     };
 
+
                     var compDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
-                                        DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter3);
+                                       DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter3);
                     if (compDocument != null)
                     {
                         _ValuationEntity.ValuationAssesment.comparableEvidenceModel.Documents = compDocument;
@@ -448,27 +448,24 @@ namespace Eltizam.Business.Core.Implementation
                 }
 
                 /////Assesment 
-                assement = _mapperFactory.Get<ValuationAssesment, ValuationAssessementModel>(_assesmenterepository.Get(x => x.RequestId == id));
-
+                assement = _mapperFactory.Get<ValuationAssesment, ValuationAssessementModel>(_assesmenterepository.Get(x => x.RequestId == id)); 
                 if (assement != null)
-                {
-
+                { 
                     _ValuationEntity.ValuationAssesment.valuationAssessementModel = assement;
-                    DbParameter[] osqlParameter4 =
-               {
-                    new DbParameter(AppConstants.TableKeyId, compevidence.Id, SqlDbType.Int),
-                    new DbParameter(AppConstants.TableName,  assesmenttableName, SqlDbType.VarChar),
-                };
 
-                    var assesmentDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
-                                        DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter4);
+                    DbParameter[] osqlParameter4 =
+                    {
+                        new DbParameter(AppConstants.TableKeyId, compevidence.Id, SqlDbType.Int),
+                        new DbParameter(AppConstants.TableName,  assesmenttableName, SqlDbType.VarChar),
+                    };
+
+                    var assesmentDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, 
+                                            DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter4);
                     if (assesmentDocument != null)
                     {
                         _ValuationEntity.ValuationAssesment.valuationAssessementModel.Documents = assesmentDocument;
                     }
-                }
-
-
+                }  
             }
 
             return _ValuationEntity;
@@ -523,11 +520,11 @@ namespace Eltizam.Business.Core.Implementation
             {
                 new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
                 new DbParameter("CreatedBy", CreatedBy, SqlDbType.Int),
-                 new DbParameter("ValQuotId", ValQuotId, SqlDbType.Int),
-                 new DbParameter("RequestData", RequestData, SqlDbType.VarChar),
+                new DbParameter("ValQuotId", ValQuotId, SqlDbType.Int),
+                new DbParameter("RequestData", RequestData, SqlDbType.VarChar),
             };
-            EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_UpsertApproverLevels, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
 
+            EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_UpsertApproverLevels, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter); 
             return DBOperation.Success;
         }
 
@@ -536,12 +533,11 @@ namespace Eltizam.Business.Core.Implementation
         {
             DbParameter[] osqlParameter =
             {
-                new DbParameter("Amount", Amount, SqlDbType.Decimal),
-
+                new DbParameter("Amount", Amount, SqlDbType.Decimal), 
                 new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
             };
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestApproverLevelModel>(ProcedureMetastore.usp_ValuationRequest_ApproverLevel, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
 
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestApproverLevelModel>(ProcedureMetastore.usp_ValuationRequest_ApproverLevel, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter); 
             return lstStf;
         }
     }
