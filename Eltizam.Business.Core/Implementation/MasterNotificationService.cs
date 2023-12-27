@@ -213,7 +213,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
             var finalResult = new List<MasterNotificationEntitty>(); 
-            bool IsCount = pagenum == 0 || pagenum == null;
+            bool IsCount = pagenum == null;
 
             DbParameter[] prm =
             {
