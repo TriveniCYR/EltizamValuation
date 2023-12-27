@@ -28,7 +28,6 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationAssesment> _assesmenterepository { get; set; }
         private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
         private IRepository<ValuationQuotation> _valuationQuotationrepository { get; set; }
-        private IRepository<ValuationRequestApproverLevel> _valuationApprovalrepository { get; set; }
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
         private readonly INotificationService _notificationService;
@@ -50,7 +49,6 @@ namespace Eltizam.Business.Core.Implementation
             _notificationService = notificationService;
             _auditLogService = auditLogService;
             _valuationQuotationrepository = _unitOfWork.GetRepository<ValuationQuotation>();
-            _valuationApprovalrepository = _unitOfWork.GetRepository<ValuationRequestApproverLevel>();
         }
         #endregion Constructor
 
@@ -141,56 +139,38 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> AssignApproverStatus(ApprovorStatusRequestModel model)
         {
-
-            if(model.StatusId >0 && model.ValuationRequestId >0)
+            if (model.ApprovorId > 0 && model.ValuationRequestId > 0)
             {
                 if (model.StatusId > 0)
                 {
-                    var d = _valuationApprovalrepository.GetEntity(a => a.ApproverId == model.LogInUserId && a.ValuationRequestId == model.ValuationRequestId && a.StatusId == null);
-                    if (d != null)
-                    {
-                        ValuationRequestApproverLevel oldentity = null;
-                        oldentity = _valuationApprovalrepository.GetNoTracking(model.ValuationRequestId);
-                        oldentity.ApproverId = d.ApproverId;
-                        oldentity.ApproverComment = d.ApproverComment;
-                        oldentity.StatusId = d.StatusId;
-                        oldentity.ModifiedBy = d.ModifiedBy;
-                        _valuationApprovalrepository.UpdateAsync(oldentity);
-                        await _unitOfWork.SaveChangesAsync();
+                    ValuationRequest OldEntity = null;
+                    OldEntity = _repository.GetNoTracking(model.ValuationRequestId);
+                    var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
 
+                    var valuationEntity = _repository.Get(model.ValuationRequestId);
+                    valuationEntity.ApproverId = model.ApprovorId;
+                    valuationEntity.ApproverComment = model.ApprovorComment;
+                    valuationEntity.StatusId = model.StatusId;
+                    valuationEntity.ModifiedBy = model.LogInUserId;
+
+                    _repository.UpdateAsync(valuationEntity);
+                    //_repository.UpdateGraph(OldEntity, EntityState.Modified);
+
+                    await _unitOfWork.SaveChangesAsync();
+
+                    try
+                    {
+                        //Do Audit Log --AUDITLOG 
+                        await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);
+
+                        var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                        var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                        if (newstatusname != oldstatusname)
+                            await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
                     }
-                    else
+                    catch (Exception ex)
                     {
 
-                        ValuationRequest OldEntity = null;
-                        OldEntity = _repository.GetNoTracking(model.ValuationRequestId);
-                        var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
-
-                        var valuationEntity = _repository.Get(model.ValuationRequestId);
-                        valuationEntity.ApproverId = model.ApprovorId;
-                        valuationEntity.ApproverComment = model.ApprovorComment;
-                        valuationEntity.StatusId = model.StatusId;
-                        valuationEntity.ModifiedBy = model.LogInUserId;
-
-                        _repository.UpdateAsync(valuationEntity);
-                        //_repository.UpdateGraph(OldEntity, EntityState.Modified);
-
-                        await _unitOfWork.SaveChangesAsync();
-
-                        try
-                        {
-                            //Do Audit Log --AUDITLOG 
-                            await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);
-
-                            var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-                            var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-                            if (newstatusname != oldstatusname)
-                                await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
                     }
                 }
                 else
