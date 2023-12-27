@@ -99,7 +99,7 @@ namespace Eltizam.Business.Models
         public static string usp_ValuationRequest_GetTopQuotationDue = "usp_ValuationRequest_GetTopQuotationDue";
 
         //Master Approver
-        public static string usp_ApproverLevel_List = "usp_ApproverLevel_List";
+        public static string usp_ApproverLevel_SearchAllList = "usp_ApproverLevel_SearchAllList";
         public static string usp_ApproverLevel_ListById = "usp_ApproverLevel_ListById";
 
     }

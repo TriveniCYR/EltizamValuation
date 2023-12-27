@@ -57,12 +57,14 @@ namespace EltizamValuation.WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        
+
+        [HttpPost, Route("GetAll")]
+        public async Task<IActionResult> GetAll([FromForm] DataTableAjaxPostModel model)
         {
             try
             {
-                return _ObjectResponse.CreateData(await _approverLevelService.GetAll(), (Int32)HttpStatusCode.OK);
+                return _ObjectResponse.CreateData(await _approverLevelService.GetAll(model), (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

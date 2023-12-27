@@ -11,7 +11,9 @@ namespace Eltizam.Business.Core.Interface
     public interface IMasterApproverLevelService
     {
          Task<DBOperation> UpsertMasterValuationRequestApproverLevel(MasterApproverLevelModel approver);
-        Task<List<MasterApproverLevelModel>> GetAll();
-        Task<List<MasterApproverLevelModel>> GetById(int Id);
+        
+        Task<MasterApproverLevelModel> GetById(int Id);
+
+        Task<DataTableResponseModel> GetAll(DataTableAjaxPostModel model);
     }
 }
