@@ -1,0 +1,107 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Eltizam.Web.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHttpContextAccessor HttpContextAccessor
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model Eltizam.Business.Models.MasterApproverLevelModel
+@{
+    ViewData["Title"] = @MasterLocalizer["Master Approver Level"];
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    Layout = "_Layout"; 
+}
+@{
+    var htmlAttributes = true;
+}
+<form>
+    <main>
+        <div class="whiteBoxShadow">
+            <div class="heading position-relative flex justify-between ">
+                @if (Model.Id > 0)
+                {
+                    <h3 class="dashboardTitle">VIEW Master Approver</h3>
+                    <div class="hamburger">
+                        <a class="greyBtn lineBtn formAbtn" asp-action="ApproverLevels">Master Approver</a>
+                        @*  <span onclick="resourceMaster()">Property Type Master</span> *@
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                        <span>View</span>
+                    </div>
+                }
+                else
+                {
+                    <h3 class="dashboardTitle">ADD Master Approver</h3>
+                    <div class="hamburger">
+                        <a class="greyBtn lineBtn formAbtn" asp-action="ApproverLevels">Master Approver</a>
+                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                        <span>Add</span>
+                    </div>
+                }
+            </div>
+            <div class="bodyContent">
+                <div class="inputSearchs p-0">
+                    <div class="tabSection">
+                        <input type="hidden" id="hdnApproverlevelId" value="@(Model == null ? 0 : Model.Id)" />
+                        @Html.HiddenFor(model=> model.IsActive)
+                        <div class="flex">
+                            <label for="" class="w-50">
+                                <p class="m-0">
+                                    Description
+                                    <span class="text-danger">*</span>
+                                </p>
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @disabled= htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Description"] } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </label>
+
+                            <label for="" class="w-50">
+                                Status
+                                <input disabled="@htmlAttributes" type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text" style="top:-20px;"></span>
+                            </label>
+                        </div>
+
+                        <div class="flex">
+                            <label for="" class="w-50">
+                                <p class="m-0">
+                                    FromAmount
+                                    <span class="text-danger">*</span>
+                                </p>
+                                @Html.EditorFor(model => model.FromAmount, new { htmlAttributes = new { @disabled= htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["FromAmount"] } })
+                                @Html.ValidationMessageFor(model => model.FromAmount, "", new { @class = "text-danger" })
+                            </label>
+
+                            <label for="" class="w-50">
+                                <p class="m-0">
+                                    ToAmount
+                                    <span class="text-danger">*</span>
+                                </p>
+                                @Html.EditorFor(model => model.ToAmount, new { htmlAttributes = new { @disabled= htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["ToAmount"] } })
+                                @Html.ValidationMessageFor(model => model.ToAmount, "", new { @class = "text-danger" })
+                            </label>
+                        </div>
+                     
+                        <div class="text-right buttonArea bodyContent plr-0">
+                            @if (Model.Id > 0)
+                            {
+                                <a href='/MasterApproverLevel/MasterApproverLevelManage?id=@Model.Id'>
+                                    <button type="button" class="blueBtn mr-12" style=" width:100px">Edit</button>
+                                </a>
+                            }
+                            <a href='/MasterApproverLevel/ApproverLevels'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</form>
+
+
+<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="~/js/custom/main.js?v=@jsVersion"></script>
+
