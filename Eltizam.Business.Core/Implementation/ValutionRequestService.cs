@@ -202,7 +202,7 @@ namespace Eltizam.Business.Core.Implementation
                         oldentity = _valuationRequestApproverLevel.Get(x=>x.ValuationRequestId==model.Id);
                         
                         oldentity.ApproverComment = model.ApproverComment;
-                     
+                        oldentity.StatusId = model.StatusId;
                         oldentity.ModifiedBy = d.ModifiedBy;
                         _valuationRequestApproverLevel.UpdateAsync(oldentity);
                         await _unitOfWork.SaveChangesAsync();
