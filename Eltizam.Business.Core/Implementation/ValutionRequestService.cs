@@ -405,7 +405,9 @@ namespace Eltizam.Business.Core.Implementation
                 _ValuationEntity.LocationCityId = res.LocationCityId;
 
                 siteDescription = _mapperFactory.Get<SiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
-                approvellevel = await GetApproverLevel(0, id);
+                
+                //Get approver level data
+                approvellevel = await GetApproverLevel(id);
                 _ValuationEntity.ValuationRequestApproverLevel = approvellevel;
 
 
@@ -529,12 +531,12 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async Task<List<ValuationRequestApproverLevelModel>> GetApproverLevel(decimal Amount, int ValReqId)
+        public async Task<List<ValuationRequestApproverLevelModel>> GetApproverLevel(int ValReqId, decimal? Amount = null)
         {
             DbParameter[] osqlParameter =
             {
-                new DbParameter("Amount", Amount, SqlDbType.Decimal), 
                 new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
+                new DbParameter("Amount", Amount,     SqlDbType.Decimal) 
             };
 
             var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestApproverLevelModel>(ProcedureMetastore.usp_ValuationRequest_ApproverLevel, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter); 
