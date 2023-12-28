@@ -12,7 +12,7 @@
 @{
     ViewData["Title"] = @MasterLocalizer["Master Approver Level"];
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    Layout = "_Layout"; 
+    Layout = "_Layout";
 }
 @{
     var htmlAttributes = true;
@@ -30,29 +30,20 @@
                         <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                         <span>View</span>
                     </div>
-                }
-                else
-                {
-                    <h3 class="dashboardTitle">ADD Master Approver</h3>
-                    <div class="hamburger">
-                        <a class="greyBtn lineBtn formAbtn" asp-action="ApproverLevels">Master Approver</a>
-                        <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                        <span>Add</span>
-                    </div>
-                }
+                } 
             </div>
             <div class="bodyContent">
                 <div class="inputSearchs p-0">
                     <div class="tabSection">
                         <input type="hidden" id="hdnApproverlevelId" value="@(Model == null ? 0 : Model.Id)" />
-                        @Html.HiddenFor(model=> model.IsActive)
+                        @Html.HiddenFor(model => model.IsActive)
                         <div class="flex">
                             <label for="" class="w-50">
                                 <p class="m-0">
                                     Description
                                     <span class="text-danger">*</span>
                                 </p>
-                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @disabled= htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Description"] } })
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @disabled = htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Description"] } })
                                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                             </label>
 
@@ -67,56 +58,48 @@
                         <div class="flex">
                             <label for="" class="w-50">
                                 <p class="m-0">
-                                    FromAmount
+                                    From Amount
                                     <span class="text-danger">*</span>
                                 </p>
-                                @Html.EditorFor(model => model.FromAmount, new { htmlAttributes = new { @disabled= htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["FromAmount"] } })
+                                @Html.EditorFor(model => model.FromAmount, new { htmlAttributes = new { @disabled = htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["FromAmount"] } })
                                 @Html.ValidationMessageFor(model => model.FromAmount, "", new { @class = "text-danger" })
                             </label>
 
                             <label for="" class="w-50">
                                 <p class="m-0">
-                                    ToAmount
+                                    To Amount
                                     <span class="text-danger">*</span>
                                 </p>
-                                @Html.EditorFor(model => model.ToAmount, new { htmlAttributes = new { @disabled= htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["ToAmount"] } })
+                                @Html.EditorFor(model => model.ToAmount, new { htmlAttributes = new { @disabled = htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["ToAmount"] } })
                                 @Html.ValidationMessageFor(model => model.ToAmount, "", new { @class = "text-danger" })
                             </label>
                         </div>
                         <div>
-                            <h5 class="B">User Details</h5>
+                            <h5 class="B">Approver(s) under this level</h5>
                             <div class="inputSearchs p-0">
-                                <table class="multipleValueTable valueReqTable" id="NewContactTable">
+                                <table class="table-striped" id="NewContactTable">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
                                             <th>User Name</th>
                                         </tr>
                                     </thead>
-                                 @if (Model.UsersList != null && Model.UsersList.Count > 0)
+                                    @if (Model.UsersList != null && Model.UsersList.Count > 0)
                                     {
                                         <tbody>
                                             @foreach (var item in Model.UsersList)
                                             {
                                                 <tr>
-                                                    <td> <a href="/MasterUser/UserManage?id=@item.Id">@item.Id</a>  </td>
-                                                    <td> <a href="/MasterUser/UserManage?id=@item.Id">@item.UserName</a>  </td>
+                                                    <td> <a href="/MasterUser/UserDetail?id=@item.Id">@item.Id</a>  </td>
+                                                    <td> @item.UserName </td>
                                                 </tr>
                                             }
                                         </tbody>
-                                    }
-                                    else
-                                    {
-                                        <tbody>
-                                                <tr>
-                                                    <td colspan="2"> No User Assigned to :  @Model.Description </td>
-                                                </tr>
-                                        </tbody>
-                                    }
+                                    } 
                                 </table>
                             </div>
                         </div>
-                     
+
                         <div class="text-right buttonArea bodyContent plr-0">
                             @if (Model.Id > 0)
                             {
