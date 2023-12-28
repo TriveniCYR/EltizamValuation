@@ -75,7 +75,11 @@ function InitializeAuditLogList() {
 
 function clearSearchFields() {
     document.getElementById("auditLogFilterForm").reset();
-    $('#UserName').val(0).trigger('change');
-    $('#ParentTableName').val(0).trigger('change');
+    $('#UserName').val();
+    $('#ParentTableName').val();
+    $('#FromDate').val();
+    $('#ToDate').val();
+
+
     InitializeAuditLogList();
 }
