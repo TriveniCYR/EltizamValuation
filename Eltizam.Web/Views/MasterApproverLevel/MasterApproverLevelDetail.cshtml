@@ -17,7 +17,7 @@
 @{
     var htmlAttributes = true;
 }
-<form>
+<form asp-action="MasterApproverLevelManage" method="post">
     <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative flex justify-between ">
@@ -90,7 +90,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>UserName</th>
+                                            <th>User Name</th>
                                         </tr>
                                     </thead>
                                  @if (Model.UsersList != null && Model.UsersList.Count > 0)
