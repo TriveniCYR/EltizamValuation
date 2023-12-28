@@ -118,7 +118,9 @@ namespace Eltizam.Business.Core.Implementation
                 objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice); 
 
                 var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
-                objInvoice.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_InvoiceRequest, lastReq?.Id + 1);
+
+                var id = string.Format("{0}-{1}", AppConstants.ID_InvoiceRequest, entityInvoice.ValuationRequestId);
+                objInvoice.ReferenceNo = string.Format("{0}{1}", id, lastReq?.Id + 1);
 
                 objInvoice.CreatedDate = AppConstants.DateTime;
                 objInvoice.CreatedBy = entityInvoice.CreatedBy ?? 1;

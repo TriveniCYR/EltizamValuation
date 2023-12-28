@@ -246,12 +246,12 @@
                                             <table id="ApproverLevelHistory" class="table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th>Approver Level</th>
-                                                        <th>Approver Assiged</th>
-                                                        <th>Updated By</th>
-                                                        <th>Updated Status</th>
+                                                        <th>Level</th>
+                                                        <th>Approver</th> 
+                                                        <th>Status</th>
                                                         <th>Comment</th>
-                                                        <th>Date</th>
+                                                        <th>Updated By</th>
+                                                        <th>Updated Date</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -259,8 +259,7 @@
                                                     {
                                                         <tr>
                                                             <td>@level.ApproverLevel</td>
-                                                            <td>@level.ApproverName</td>
-                                                            <td>@level.CreatedByName</td>
+                                                            <td>@level.ApproverName</td> 
                                                             @if (@level.Status != null)
                                                             {
                                                                 <td><span class="tableStatus" style="color: @level.ColorCode; background-color: @level.BackGroundColor; border: 1px solid @level.ColorCode;">@level.Status</span></td>
@@ -270,6 +269,7 @@
                                                                 <td></td>
                                                             }
                                                             <td>@level.ApproverComment</td>
+                                                            <td>@level.CreatedByName</td>
                                                             <td class="formatted-td-date-input">@level.CreatedDate.ToString() </td>
                                                         </tr>
                                                     }
