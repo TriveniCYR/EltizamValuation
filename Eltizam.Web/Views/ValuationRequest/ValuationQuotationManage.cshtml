@@ -84,7 +84,7 @@
                         </label>
                         <label for="userName" class="w-50">
                             <p class="m-0">Total evaluation Fees<span class="text-danger">*</span></p>
-                            @Html.EditorFor(model => model.TotalFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", @placeholder = "enter Total Fees" } })
+                            @Html.EditorFor(model => model.TotalFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", @placeholder = "enter Total Fees", @onchange = "GetApproverLevel(this.value,event)" } })
                             @Html.ValidationMessageFor(model => model.TotalFee, "", new { @class = "text-danger" })
                         </label>
                     </div>
@@ -169,53 +169,36 @@
 
 <!-- Modal for Latest requests -->
 <div class="modal fade" id="LevelApproverModal" tabindex="-1" role="dialog" aria-labelledby="MyLevelApprover">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:610px">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Save Approver Level</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" >
                 <div style="max-height: 600px;">
                     <!-- Table to display data -->
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="ApproverId2" class="w-100">
-                                <p class="m-0">Approver Level 2<span class="text-danger"></span></p>
-                                @Html.DropDownList("ApproverId2", new List<SelectListItem> { }, new { @class = "form-control" })
-                            </label>
-                        </div>                        
-                        <div class="col-md-3">
-                        </div>
+                    <div class="row" style="padding: 12px 60px">
+                        <label for="ApproverId2" class="w-100">
+                            <p class="m-0">Approver Level 2<span class="text-danger"></span></p>
+                            @Html.DropDownList("ApproverId2", new List<SelectListItem> { }, new { @class = "form-control" })
+                        </label>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="ApproverId3" class="w-100">
-                                <p class="m-0">Approver Level 3<span class="text-danger"></span></p>
-                                @Html.DropDownList("ApproverId3", new List<SelectListItem> { }, new { @class = "form-control" })
-                            </label>
-                        </div>
-                        <div class="col-md-3">
-                        </div>
+                    <div class="row" style="padding: 12px 60px">
+                        <label for="ApproverId3" class="w-100">
+                            <p class="m-0">Approver Level 3<span class="text-danger"></span></p>
+                            @Html.DropDownList("ApproverId3", new List<SelectListItem> { }, new { @class = "form-control" })
+                        </label>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            &nbsp;
-                        </div>
+                    <div class="row" style="padding: 12px 60px">
+
                     </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            &nbsp;
-                        </div>
-                        <div class="col-md-2">
-                            <div class="buttonArea popup-btn">
-                                <button type="submit"  data-dismiss="modal" class="blueBtn" onclick="AssignLevelApprover()">Assign</button>
+                    <div class=" w-100 text-right">
+                        <div>
+                            <div class="buttonArea">
+                                <button type="submit" data-dismiss="modal" class="blueBtn" style="padding:0 12px;margin: 20px 0 0 0;" onclick="AssignLevelApprover()">Assign</button>
                             </div>
                         </div>
                     </div>
