@@ -1,4 +1,5 @@
-﻿@using Eltizam.Utility.Models;
+﻿@using Eltizam.Business.Models
+@using Eltizam.Utility.Models;
 @using Eltizam.Utility.Enums;
 @using Microsoft.AspNetCore.Http
 @using Eltizam.Web.Controllers
@@ -58,6 +59,10 @@
 
     var htmlAttributes = true;
     var isHideBtn = ViewBag.PageViewMode == 1;
+
+    // Get distinct levels
+    var Levels = Model.ValuationRequestApproverLevel;
+    var distinctLevels = Levels?.Select(approverLevel => approverLevel.ApproverLevelId).Distinct();
 }
 
 <div id="PlaceHolderHere"></div>
@@ -185,42 +190,40 @@
                                     </label>
                                 </div>
                                 <div class="flex  mb-28">
-                                    @if (Model.ValuationRequestApproverLevel != null && Model.ValuationRequestApproverLevel.Count > 0)
+                                    @if (Levels != null && Levels.Count > 0)
                                     {
-                                        // Get distinct levels
-                                        var distinctLevels = Model.ValuationRequestApproverLevel
-                                        .Select(approverLevel => approverLevel.ApproverLevel)
-                                        .Distinct();
-
                                         // Iterate over each distinct level
-                                        foreach (var level in distinctLevels)
+                                        foreach (var lId in distinctLevels)
                                         {
-                                            if (level == "2 Level Approval" || level == "3 Level Approval")
+                                            var level = Levels.Where(a => a.ApproverLevelId == lId).First().ApproverLevel;
+                                            var dropdownId = $"ApproverLevelId_{lId}"; 
+                                            var curList = Levels.Where(approver => approver.ApproverLevelId == lId).ToList();
+                                            curList.Insert(0, new ValuationRequestApproverLevelModel()
                                             {
-                                                    <label for="" class="bodyContent p-0 w-50">
-                                                        @level
-                                                        @{
-                                                            var dropdownId = $"ApproverId_{level.Replace(" ", "")}";
-                                                            var dropdownValue = Model.ValuationRequestApproverLevel
-                                                            .FirstOrDefault(approver => approver.ApproverLevel == level && approver.IsSelected == 1)?.ApproverId.ToString();
-                                                        }
-                                                        @Html.DropDownListFor(model => dropdownValue,
-                                            new SelectList(Model.ValuationRequestApproverLevel
-                                            .Where(approver => approver.ApproverLevel == level)
-                                            .Select(approver => new SelectListItem
-                                            {
-                                            Value = approver.ApproverId.ToString(),
-                                            Text = approver.ApproverName
-                                            }), "Value", "Text"),
-                                            new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
-                                                    </label>
-                                            }
+                                                 ApproverLevelId = lId, 
+                                                 ApproverLevel = level, 
+                                                 ApproverId = 0, 
+                                                 ApproverName = "--select--"
+                                            });
+
+                                            var ddSelected = Levels.FirstOrDefault(approver => approver.ApproverLevelId == lId && approver.IsSelected == 1)?.ApproverId.ToString();
+
+                                            //append to page
+                                            <label for="" class="bodyContent p-0 w-50">
+                                                @level
+
+                                                @Html.DropDownListFor(model => ddSelected, new SelectList(curList.Select(approver => new SelectListItem
+                                                {
+                                                    Value = approver.ApproverId.ToString(),
+                                                    Text = approver.ApproverName
+                                                }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
+                                            </label>
                                         }
                                     }
-                                    </div>
+                                </div>
                                  <div class="flex  mb-28">
                                  <label for="" class="w-50">
-                                        Valuation Time Frame
+                                        Valuation Time Frame (In Days)
                                         @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
                                         @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
                                     </label>
