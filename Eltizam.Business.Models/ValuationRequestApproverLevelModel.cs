@@ -16,5 +16,5 @@ namespace Eltizam.Business.Models
         public string ApproverName { get; set; }
         public int ? IsSelected { get; set; }
 
-    }
+    } 
 }

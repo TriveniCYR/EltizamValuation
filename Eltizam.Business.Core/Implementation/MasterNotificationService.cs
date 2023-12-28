@@ -26,7 +26,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationRequest> _valuationrepository { get; set; }
         private IRepository<MasterValuationStatus> _statusrepository { get; set; }
         private IRepository<MasterUser> _userrepository { get; set; }
-        private readonly IMemoryCache _memoryCache; 
+        private readonly IMemoryCache _memoryCache;
 
         public MasterNotificationService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapperFactory mapperFactory, IMemoryCache memoryCache)
         {
@@ -35,8 +35,8 @@ namespace Eltizam.Business.Core.Implementation
             _configuration = configuration;
             _mapperFactory = mapperFactory;
             _valuationrepository = _unitOfWork.GetRepository<ValuationRequest>();
-            _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>(); 
-            _userrepository=_unitOfWork.GetRepository<MasterUser>();
+            _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>();
+            _userrepository = _unitOfWork.GetRepository<MasterUser>();
             _memoryCache = memoryCache;
         }
 
@@ -106,7 +106,7 @@ namespace Eltizam.Business.Core.Implementation
             finally
             {
                 _memoryCache.Remove(AppConstants.NotificationsCache);
-                InitiateNotificationCache();
+                //InitiateNotificationCache();
             }
 
             return DBOperation.Success;
@@ -126,17 +126,12 @@ namespace Eltizam.Business.Core.Implementation
             return result;
         }
 
-        public List<MasterNotificationEntitty> GetAll(int? viewmore, int? userId, int? valId)
+        public List<MasterNotificationEntitty> GetAll(int userId, int? valId, int? pagenum)
         {
-           
-            var cacheData = _memoryCache.Get<List<MasterNotificationEntitty>>(AppConstants.NotificationsCache);
-            if (cacheData == null)
-            {
-                InitiateNotificationCache();
-            }
+            int count = 0;
+            var finalResult = InitiateNotificationCache(userId, valId, pagenum, out count);
 
-            var result = _memoryCache.Get<List<MasterNotificationEntitty>>(AppConstants.NotificationsCache);
-
+            /*
             if (userId != null && userId != 0)
             {
                 //Get the role for userId
@@ -157,16 +152,26 @@ namespace Eltizam.Business.Core.Implementation
                 result = result.Where(a => a.ValuationRequestId == valId).ToList();
 
             List<MasterNotificationEntitty> finalResult;
-            if (viewmore > 0)
+            if (lastid > 0)
             {
                 finalResult = result.ToList();
             }
             else
             {
                 finalResult = result.Where(x => x.Readby == 0).ToList();
-            } 
-            
+            }
+            */
+
             return finalResult;
+        }
+
+
+        public int GetAllCount(int userId, int? valId)
+        {
+            int count = 0;
+            InitiateNotificationCache(userId, valId, null, out count);
+
+            return count;
         }
 
 
@@ -174,8 +179,9 @@ namespace Eltizam.Business.Core.Implementation
         /// Changed by YReddy on 12/20/23
         /// For initiate cache of notifications
         /// </summary>
-        public void InitiateNotificationCache()
+        public List<MasterNotificationEntitty> InitiateNotificationCache(int userId, int? valId, int? pagenum, out int count)
         {
+            /*
             var notificationresult = _repository.GetAllAsync().Result.ToList();
             var valuationrequest = _valuationrepository.GetAllAsync().Result.ToList();
 
@@ -200,9 +206,50 @@ namespace Eltizam.Business.Core.Implementation
                           };
 
             List<MasterNotificationEntitty> finalResult = results.ToList();
+            */
+            //bool IsCount = lastid == 0 || lastid == null;
 
-            var expirationTime = DateTimeOffset.Now.AddHours(24);
-            _memoryCache.Set(AppConstants.NotificationsCache, finalResult, expirationTime);
+
+
+
+            var finalResult = new List<MasterNotificationEntitty>(); 
+            bool IsCount = pagenum == null;
+
+            DbParameter[] prm =
+            {
+                new DbParameter(AppConstants.LogInUserId, userId, SqlDbType.Int),
+                new DbParameter("ValReqId",               valId,  SqlDbType.Int),
+                new DbParameter("IsCount",                IsCount, SqlDbType.Bit),
+                new DbParameter("PageNum",                pagenum, SqlDbType.Int)
+            };
+
+            if (IsCount == true)
+            {
+                var cnt = EltizamDBHelper.ExecuteMappedReader<NotificationCount>(ProcedureMetastore.usp_MasterNotification_AllList,
+                                  DatabaseConnection.ConnString, CommandType.StoredProcedure, prm);
+                count = cnt[0].TotalRecords; 
+                return finalResult;
+            }
+            else
+            {
+                /* 
+                    var cacheData = _memoryCache.Get<List<MasterNotificationEntitty>>(AppConstants.NotificationsCache);
+
+                    if (cacheData == null)
+                    { 
+                        var expirationTime = DateTimeOffset.Now.AddHours(24);
+                        _memoryCache.Set(AppConstants.NotificationsCache, finalResult, expirationTime);
+                    }
+                    else
+                        finalResult = _memoryCache.Get<List<MasterNotificationEntitty>>(AppConstants.NotificationsCache);
+                */
+
+                finalResult = EltizamDBHelper.ExecuteMappedReader<MasterNotificationEntitty>(ProcedureMetastore.usp_MasterNotification_AllList,
+                              DatabaseConnection.ConnString, CommandType.StoredProcedure, prm);
+
+                count = finalResult.Count;
+                return finalResult;
+            }
         }
 
 
@@ -216,8 +263,8 @@ namespace Eltizam.Business.Core.Implementation
                 _repository.UpdateAsync(tobeupdateddata);
                 await _unitOfWork.SaveChangesAsync();
             }
-            return DBOperation.Success;
 
+            return DBOperation.Success;
         }
 
 

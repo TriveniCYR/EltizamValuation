@@ -17,7 +17,7 @@ namespace Eltizam.Business.Models
         public string? Body { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? SentDatetime { get; set; }
-        public byte IsEmailSent { get; set; }
+        public bool IsEmailSent { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public int? Readby { get; set; }
@@ -25,5 +25,10 @@ namespace Eltizam.Business.Models
         public string ValRefNo { get; set; }
         public int? ApproverId { get; set; }
         public int? ValuerId { get; set; }
+    }
+
+    public class NotificationCount
+    {
+        public int TotalRecords { get; set; }  
     }
 }

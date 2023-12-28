@@ -244,6 +244,7 @@ namespace Eltizam.Web.Helpers
         
         public static string DeleteDocument = "ValuationAssessment/DeleteDocument";
         public static string GetNotificationList = "Notification/GetNotificationList";
+        public static string GetNotificationCount = "Notification/GetNotificationCount";
         public static string UpdateNotification = "Notification/UpdateNotificationReadBy";
         public static string GetAllStatusHistory = "ValuationRequestStatus/GetAllStatusHistory";
         #endregion Valuation Request 

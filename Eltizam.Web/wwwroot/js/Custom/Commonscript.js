@@ -186,17 +186,17 @@ $(document).ready(function () {
     Getactivenotifications();
 });
 
-function Getactivenotifications() {
-    var url = "?lastid=" + 0 + "&userId=" + LogInUserId + "&valId=" + 0;
-    ajaxServiceMethod(BaseURL + notifications + url, 'GET', NotificationCountSuccess, GetnotificationsError);
+function Getactivenotifications() { 
+    var url = "?userId=" + LogInUserId + "&valId=" + 0;
+    ajaxServiceMethod(BaseURL + notificationsCnt + url, 'GET', NotificationCountSuccess, GetnotificationsError);
 }
 
 function GetnotificationsError(x, y, z) {
     toastr.error("Something failed for notification pull");
 }
 
-function NotificationCountSuccess(data) {
-    document.getElementById('notificationcount').textContent = data.length;
+function NotificationCountSuccess(data) { 
+    document.getElementById('notificationcount').textContent = data;
 }
 
 function makeFormReadOnly() {
