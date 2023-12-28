@@ -74,7 +74,6 @@ namespace Eltizam.Business.Core.Implementation
                     requestApprover.Description = Convert.ToString(approver.Description);
                     requestApprover.FromAmount = approver.FromAmount;
                     requestApprover.ToAmount = approver.ToAmount;
-                    requestApprover.CreatedBy = (int)approver.CreatedBy;
                     requestApprover.IsDeleted = false;
                     requestApprover.IsActive = approver.IsActive;
                     requestApprover.ModifiedDate = AppConstants.DateTime;

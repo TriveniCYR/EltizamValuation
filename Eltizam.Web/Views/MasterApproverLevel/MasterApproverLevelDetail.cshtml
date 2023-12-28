@@ -67,7 +67,7 @@
                         <div class="flex">
                             <label for="" class="w-50">
                                 <p class="m-0">
-                                    FromAmount
+                                    From Amount
                                     <span class="text-danger">*</span>
                                 </p>
                                 @Html.EditorFor(model => model.FromAmount, new { htmlAttributes = new { @disabled= htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["FromAmount"] } })
@@ -76,7 +76,7 @@
 
                             <label for="" class="w-50">
                                 <p class="m-0">
-                                    ToAmount
+                                    To Amount
                                     <span class="text-danger">*</span>
                                 </p>
                                 @Html.EditorFor(model => model.ToAmount, new { htmlAttributes = new { @disabled= htmlAttributes, @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["ToAmount"] } })
