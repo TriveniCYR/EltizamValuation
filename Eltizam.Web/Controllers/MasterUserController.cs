@@ -176,11 +176,11 @@ namespace EltizamValuation.Web.Controllers
             catch (Exception e)
             {
                 _helper.LogExceptions(e);
-                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace); 
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
                 return Redirect($"/MasterUser/UserManage?id={masterUser.Id}");
 
             }
-            
+
         }
 
         [HttpGet]
@@ -191,8 +191,12 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Edit : PermissionEnum.View;
 
             int roleId = _helper.GetLoggedInRoleId();
+            int loginId = _helper.GetLoggedInUserId();
             if (!CheckRoleAccess(ModulePermissionEnum.ResourceMaster, action, roleId))
-                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            {
+                if (id != loginId)
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
 
             MasterUserModel masterUser;
             if (id == null || id <= 0)
@@ -249,7 +253,7 @@ namespace EltizamValuation.Web.Controllers
 
             return RedirectToAction("Users");
         }
-       
+
         public async Task<BlobResponse> UploadToBlob(IFormFile file)
         {
             BlobHandler blob = new BlobHandler();
@@ -315,7 +319,7 @@ namespace EltizamValuation.Web.Controllers
             }
             return isDelete;
         }
-      
+
 
     }
 }

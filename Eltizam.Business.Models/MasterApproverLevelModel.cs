@@ -23,8 +23,13 @@ namespace Eltizam.Business.Models
         public decimal ToAmount { get; set; }
         public bool IsDeleted { get; set; }=false;
         public bool IsActive { get; set; }
-        [NotMapped]
-        public List<MasterUserModel>? UsersList { get; set; }
+        public List<ApproverUserModel>? UsersList { get; set; }
 
+    }
+
+    public class ApproverUserModel
+    {
+        public int Id { get; set; } 
+        public string? UserName { get; set; }    
     }
 }
