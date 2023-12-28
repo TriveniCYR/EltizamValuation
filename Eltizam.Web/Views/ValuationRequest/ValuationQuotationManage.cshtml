@@ -84,7 +84,7 @@
                         </label>
                         <label for="userName" class="w-50">
                             <p class="m-0">Total evaluation Fees<span class="text-danger">*</span></p>
-                            @Html.EditorFor(model => model.TotalFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", @placeholder = "enter Total Fees" } })
+                            @Html.EditorFor(model => model.TotalFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", @placeholder = "enter Total Fees", @onchange = "GetApproverLevel(this.value,event)" } })
                             @Html.ValidationMessageFor(model => model.TotalFee, "", new { @class = "text-danger" })
                         </label>
                     </div>

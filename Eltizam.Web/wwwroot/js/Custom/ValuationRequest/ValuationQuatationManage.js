@@ -2,8 +2,9 @@ $(document).ready(function () {
     //document.getElementById('ValuationFee').value == 0.000000 ? document.getElementById('ValuationFee').placeholder = 'Enter Valuation Fee' : document.getElementById('ValuationFee').value;
     //document.getElementById('Vat').value == null ? '': document.getElementById('Vat').value;
 });
+var levelData = [];
 $('#ValuationFee').keypress(function (e) {
-    
+
     if ($('#ValuationFee').val() == '' && (e.which == 48 || e.charCode == 46)) {
         return false;
     }
@@ -174,6 +175,65 @@ $('#FixedvaluationFees').keypress(function (e) {
 //    $("#ApprovrLevelId2");
 //}
 // Add a click event listener for the "View" link
+function GetApproverLevel(amount, event) {
+    debugger
+    var approvrLevel2 = $("#ApproverId2");
+    var approvrLevel3 = $("#ApproverId3");
+    var _rpname = "approverName";
+    var totalAmount = amount;
+    $.ajax({
+        type: Get,
+        url: BaseURL + GetLevelApprover + '?Amount=' + totalAmount,
+        "datatype": "json",
+        success: function (data) {
+            // Handle the data as needed (e.g., populate the modal)
+            console.log(data);
+            if (data.length > 0) {
+                levelData = data;
+                var approverLevelIds = {};
+                $.each(data, function (index, item) {
+                    approverLevelIds[item.approverLevelId] = true;
+                });
+                var approverLevelIds = Object.keys(approverLevelIds).map(Number);
+                if (!approverLevelIds.includes(2)) {
+                    $("[for=ApproverId2]").hide();
+                }
+                else {
+                    $("[for=ApproverId2]").show();
+                }
+                if (!approverLevelIds.includes(3)) {
+                    $("[for=ApproverId3]").hide();
+                }
+                else {
+                    $("[for=ApproverId3]").show();
+                }
+                console.log(approverLevelIds);
+                var _dd = _rpname;
+                approvrLevel2.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
+                approvrLevel3.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].approverLevelId == 2) {
+                        approvrLevel2.append($("<option></option>").val(data[i].approverId).html(data[i][_dd]));
+                    }
+                    if (data[i].approverLevelId == 3) {
+                        approvrLevel3.append($("<option></option>").val(data[i].approverId).html(data[i][_dd]));
+                    }
+                }
+                // Open your modal here and populate it with the fetched data
+                //$('#LevelApproverModal').modal('show');
+                //return false;
+            }
+            else {
+                levelData = [];
+                return true;
+            }
+        },
+        error: function (error) {
+            console.error('Error fetching data:', error);
+        }
+
+    });
+}
 $(document).on('click', '#levelApprover', function (e) {
     // Get amount from form
     var totalAmount = $('#TotalFee').val();
@@ -206,58 +266,19 @@ $(document).on('click', '#levelApprover', function (e) {
         //var commaString = approverIds.join(',');
         console.log(commaString);
         document.getElementById('ApproverIds').value = commaString;
+        return true;
     }
     else {
-        e.preventDefault();
-        var approvrLevel2 = $("#ApproverId2");
-        var approvrLevel3 = $("#ApproverId3");
-        var _rpname = "approverName";
-        // Fetch data from the API
-        $.ajax({
-            type: Get,
-            url: BaseURL + GetLevelApprover + '?Amount=' + totalAmount,
-            "datatype": "json",
-            success: function (data) {
-                // Handle the data as needed (e.g., populate the modal)
-                console.log(data);
-                var approverLevelIds = {};
-
-                $.each(data, function (index, item) {
-                    approverLevelIds[item.approverLevelId] = true;
-                });
-                var approverLevelIds = Object.keys(approverLevelIds).map(Number);
-                if (!approverLevelIds.includes(2)) {
-                    $("[for=ApproverId2]").hide();
-                }
-                if (!approverLevelIds.includes(3)) {
-                    $("[for=ApproverId3]").hide();
-                }
-                console.log(approverLevelIds);
-                if (data.length > 0) {
-                    var _dd = _rpname;
-                    approvrLevel2.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
-                    approvrLevel3.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
-                    for (var i = 0; i < data.length; i++) {
-                        if (data[i].approverLevelId == 2) {
-                            approvrLevel2.append($("<option></option>").val(data[i].approverId).html(data[i][_dd]));
-                        }
-                        if (data[i].approverLevelId == 3) {
-                            approvrLevel3.append($("<option></option>").val(data[i].approverId).html(data[i][_dd]));
-                        }
-                    }
-                    // Open your modal here and populate it with the fetched data
-                    $('#LevelApproverModal').modal('show');
-                    return false;
-                }
-                else {
-                    return true;
-                }
-            },
-            error: function (error) {
-                console.error('Error fetching data:', error);
-            }
-
-        });
+        if (levelData.length > 0) {
+            e.preventDefault();
+            hideLoader();
+            // Fetch data from the API
+            $('#LevelApproverModal').modal('show');
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 });
 
