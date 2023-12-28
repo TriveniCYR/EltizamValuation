@@ -284,7 +284,7 @@ namespace Eltizam.Business.Core.Implementation
                     if (entityValuation.ValuationApprovalValues != null)
                     {
                         //var quotid = _valuationQuotationrepository.GetAll().Where(x => x.ValuationRequestId == entityValuation.Id).Select(x => x.Id).First();
-                        await UpsertApproverLevels(entityValuation.Id, entityValuation.ModifiedBy, entityValuation.ValuationApprovalValues);
+                        await UpsertApproverLevels(entityValuation.Id, entityValuation.ValuationApprovalValues, entityValuation.ModifiedBy);
                     }
 
                     OldEntity = _repository.GetNoTracking(entityValuation.Id);
@@ -518,12 +518,13 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async Task<DBOperation> UpsertApproverLevels(int ValReqId, int CreatedBy, string RequestData)
+        public async Task<DBOperation> UpsertApproverLevels(int ValReqId, string RequestData, int? CreatedBy, int? ValQuotId = null)
         {
             DbParameter[] osqlParameter =
             {
-                new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
-                new DbParameter("CreatedBy", CreatedBy, SqlDbType.Int), 
+                new DbParameter("ValReqId",    ValReqId, SqlDbType.Int),
+                new DbParameter("CreatedBy",   CreatedBy, SqlDbType.Int),
+                new DbParameter("ValQuotId",   ValQuotId, SqlDbType.Int),
                 new DbParameter("RequestData", RequestData, SqlDbType.VarChar),
             };
 
