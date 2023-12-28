@@ -7,7 +7,7 @@ $(document).ready(function () {
     emailInput.on('blur', function () {
         // Get the value of the email input
         var emailValue = $(this).val();
-        var recordId =  $('#hdnId').val()
+        var recordId = $('#hdnId').val()
         var url = "?email=" + emailValue + "&userId=" + recordId;
         ajaxServiceMethod(BaseURL + CheckEmailExistonRemote + url, 'GET', GetemailexistSuccess, GetemailexistError);
     });
@@ -21,7 +21,7 @@ $(document).ready(function () {
     BindApproverLevel();
     BindCountry();
     BindCountryIsd();
-    
+
     var countryId = $('#hdnCountry_0').val();
     if (countryId != null || countryId != 0) {
         BindState(countryId);
@@ -33,10 +33,10 @@ $(document).ready(function () {
 });
 function GetemailexistSuccess(data) {
     console.log(data)
-    toastr.error("Email"+ data._Message);
+    toastr.error("Email" + data._Message);
 }
 function GetemailexistError(x, y, z) {
-    
+
 }
 
 function BindDepartment() {
@@ -55,7 +55,7 @@ function BindDesignation() {
 }
 
 function BindRole() {
- 
+
     var Role = $("#RoleId");
     var _val = $('#hdnRole').val();
     var _rpname = "roleName";
@@ -63,7 +63,7 @@ function BindRole() {
     BindDropdowns(RoleList, Role, _rpname, _val);
 }
 
-function BindResourceType() { 
+function BindResourceType() {
     var ResourceType = $("#ResourceId");
     var _val = $('#hdnResourceType').val();
     var _rpname = "resourceType";
@@ -76,7 +76,7 @@ function BindApproverLevel() {
     BindDropdowns(ApproverLevelList, ApproverLevelType, _rpname, _val);
 }
 
-function BindCountry() {  
+function BindCountry() {
     for (var i = 0; i < addressLength; i++) {
         var Country = $("#Addresses_" + i + "__CountryId");
         var _val = $('#hdnCountry_' + i).val();
@@ -85,7 +85,7 @@ function BindCountry() {
     }
 }
 
-function BindState(id) { 
+function BindState(id) {
     for (var i = 0; i < addressLength; i++) {
         var State = $("#Addresses_" + i + "__StateId");
         var CountryId = $('#hdnCountry_' + i).val();
@@ -96,7 +96,7 @@ function BindState(id) {
     }
 }
 
-function BindCity(id) { 
+function BindCity(id) {
     for (var i = 0; i < addressLength; i++) {
         var City = $("#Addresses_" + i + "__CityId");
         var _val = $('#hdnCity_' + i).val();
@@ -166,7 +166,7 @@ function DeleteDocument() {
 function DeleteUserDocumentSuccess(data) {
     try {
         if (data._Success === true) {
-            $('#'+docId).remove();
+            $('#' + docId).remove();
             toastr.success(RecordDelete);
         }
         else {
@@ -280,7 +280,9 @@ function previewImage() {
 }
 
 // Attach the function to the change event of the file input
-document.getElementById('fileInput').addEventListener('change', previewImage);
+var dd = document.getElementById('fileInput');
+if (dd !== null && dd !== undefined)
+    dd.addEventListener('change', previewImage);
 
 
 
@@ -303,7 +305,7 @@ function addMoreAddress() {
     var email = $("#Addresses_" + (count - 1) + "__Email").val();
     var phoneExt = $("#Addresses_" + (count - 1) + "__PhoneExt").val();
     var phone = $("#Addresses_" + (count - 1) + "__Phone").val();
-    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null|| phoneExt == "" || phone == "") {
+    if (address1 == "" || countryId == "0" || countryId == null || stateId == 0 || stateId == null || cityId == 0 || cityId == null || phoneExt == "" || phone == "") {
         toastr.error("Please fill mandate fields in current section.");
         return false;
     }
@@ -391,17 +393,20 @@ function removeParentDivAddress(element, num) {
 
 document.addEventListener("DOMContentLoaded", function () {
     // Add an event listener to the form submission
-    document.getElementById("resource").addEventListener("submit", function (event) {
-        emailArray = [];
-        phoneArray = [];
-        // Call the custom validation function
-        if (!validateForAddress() || !validateForContact()) {
-            // If validation fails, prevent the form submission
-            $('#loading-wrapper').hide();
-            event.preventDefault();
-        }
-    });
+    var res = document.getElementById("resource");
 
+    if (res !== null) {
+        document.getElementById("resource").addEventListener("submit", function (event) {
+            emailArray = [];
+            phoneArray = [];
+            // Call the custom validation function
+            if (!validateForAddress() || !validateForContact()) {
+                // If validation fails, prevent the form submission
+                $('#loading-wrapper').hide();
+                event.preventDefault();
+            }
+        });
+    } 
 });
 
 function validateForAddress() {
@@ -494,7 +499,7 @@ function validateForAddress() {
                 phones.push(alllandPhone);
             }
         }
-        emailArray = emails.sort(); 
+        emailArray = emails.sort();
         for (var z = 0; z < emailArray.length - 1; z++) {
             if (emailArray[z + 1] == emailArray[z]) {
                 toastr.error("Email can not be duplicated.");
@@ -508,7 +513,7 @@ function validateForAddress() {
                 return false;
             }
         }
-    }  
+    }
     var errorMsgForAll = "";
     if ($("#DepartmentId").val() === "" || $("#DepartmentId").val() === "0") {
 
@@ -593,22 +598,24 @@ document.addEventListener('DOMContentLoaded', function () {
     // Get the file input element
     var fileInput = document.getElementById('fileInput');
 
-    // Add an event listener to the file input
-    fileInput.addEventListener('change', function () {
-        // Get the selected file
-        var file = fileInput.files[0];
+    if (fileInput !== null) {
+        // Add an event listener to the file input
+        fileInput.addEventListener('change', function () {
+            // Get the selected file
+            var file = fileInput.files[0];
 
-        // Check if a file is selected
-        if (file) {
-            // Check if the file type is an image
-            if (!file.type.startsWith('image/')) {
-                // Display an error message or handle the error as needed
-                toastr.error('Please select a valid image file.');
-                // Reset the file input (optional)
-                fileInput.value = '';
+            // Check if a file is selected
+            if (file) {
+                // Check if the file type is an image
+                if (!file.type.startsWith('image/')) {
+                    // Display an error message or handle the error as needed
+                    toastr.error('Please select a valid image file.');
+                    // Reset the file input (optional)
+                    fileInput.value = '';
+                }
             }
-        }
-    });
+        });
+    }
 });
 
 if (action === "Add" || action === "Edit") {
@@ -638,7 +645,7 @@ $('#openModalLinklatestRequestsTable').on('blur', function () {
     checkemailexist()
         .done(function (data) {
             console.log(data);
-         
+
         })
         .fail(function () {
             alert('Failed to fetch data for modal 1 from the API');
@@ -646,8 +653,8 @@ $('#openModalLinklatestRequestsTable').on('blur', function () {
     return false;
 });
 $('#RoleId').on('change', function () {
-    var selectval = $("#RoleId").val(); 
-     IsApprovalLevelVisible(selectval == 2)
+    var selectval = $("#RoleId").val();
+    IsApprovalLevelVisible(selectval == 2)
 });
 function IsApprovalLevelVisible(flag) {
     if (flag) {

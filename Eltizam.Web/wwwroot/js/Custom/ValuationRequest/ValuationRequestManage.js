@@ -341,8 +341,8 @@ $(document).ready(function () {
     BindQuatationList();
     BindInvoiceList();
 
-    if (document.location.href.includes('id')) { 
-        /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/ 
+    if (document.location.href.includes('id')) {
+        /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/
 
         var comingFromAPI = document.getElementById('hdnClientTypeId').value;
         var comingFromAPIClientId = document.getElementById('hdnClientId').value;
@@ -367,7 +367,7 @@ $(document).ready(function () {
         BindClientByClientType(comingFromAPI);
         BindClientDetailsByClientId(comingFromAPIClientId);
         BindPropertySub(comingFromAPIPropertyTypeId);
-        BindPropertyDetail(); 
+        BindPropertyDetail();
         BindPropertyDetailById(comingFromAPIPropertyId);
     }
 
@@ -544,7 +544,7 @@ function BindPropertyDetail() {
         var PropertyTypeId = document.getElementById("PropertyTypeId").value;
         var PropertySubTypeId = document.getElementById("PropertySubTypeId").value;
         var OwnershipTypeId = document.getElementById("OwnershipTypeId").value;
-    } 
+    }
 
     if ((PropertyTypeId == null || PropertyTypeId == "") && (PropertySubTypeId == null || PropertySubTypeId == "") && (OwnershipTypeId == null || OwnershipTypeId == "")) {
         return false;
@@ -552,12 +552,12 @@ function BindPropertyDetail() {
     var Property = $("#PropertyId");
     var _val = $('#hdnPropertyId').val();
     var _rpname = "propertyName";
-     
+
     $.ajax({
         type: Get,
         url: BaseURL + GetPropertyByFilters + '/' + PropertyTypeId + '/' + PropertySubTypeId + '/' + OwnershipTypeId,
         "datatype": "json",
-        success: function (response) { 
+        success: function (response) {
             Property.empty().append('<option selected="selected" value="0">Please select</option>');
             for (var i = 0; i < response.length; i++) {
                 Property.append($("<option></option>").val(response[i].id).html(response[i].propertyName));
@@ -604,7 +604,7 @@ function BindPropertyDetailById(Id) {
             type: Get,
             url: BaseURL + GetPropertyById + '/' + Id,
             "datatype": "json",
-            success: function (response) { 
+            success: function (response) {
                 document.getElementById('UnitType').value = response._object.unitType;
                 document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
                 document.getElementById('Furnished').value = response._object.furnished;
@@ -617,7 +617,7 @@ function BindPropertyDetailById(Id) {
                 document.getElementById('Description').value = response._object.description;
                 var AmenityList = response._object.amenityList;
 
-                for (i = 0; i < response._object.amenityList.length; i++) { 
+                for (i = 0; i < response._object.amenityList.length; i++) {
                     if (response._object.amenityList[i].isActive == true) {
                         var ob = response._object.amenityList[i];
                         Amentiesdiv.append('<label for="" class="position-relative checkboxBtn w-30">' +
@@ -1174,19 +1174,15 @@ function changeLinkvaluation() {
 }
 
 function updateHiddenInput() {
-    var selectedValues = [];
+    var selectedValues = []; 
+    ["ApproverLevelId_2", "ApproverLevelId_3"].forEach(function (lId) {
+        var dropdownId = "select[id^='" + lId + "']";
+        var selectedValue = $(dropdownId).val();
 
-    ["2LevelApproval", "3LevelApproval"].forEach(function (level) {
-        if (level == "2LevelApproval" || level == "3LevelApproval") {
-            var dropdownId = "select[id^='ApproverId_" + level + "']";
-
-            var selectedValue = $(dropdownId).val();
-
-            if (selectedValue) {
-                var numericLevel = level.match(/\d+/)[0];
-                selectedValues.push(numericLevel + "," + selectedValue);
-            }
-        }
+        if (selectedValue) {
+            var id = lId.match(/\d+/)[0];
+            selectedValues.push(id + "," + selectedValue);
+        } 
     });
 
     $("#Valuationapprovalvalues").val(selectedValues.join(";"));

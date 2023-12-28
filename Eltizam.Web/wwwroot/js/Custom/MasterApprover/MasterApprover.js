@@ -39,7 +39,7 @@ function InitializeApproverMasterTableDataList() {
                 var html = '';
                 html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                 html += '<li><a title="View" href="/MasterApproverLevel/MasterApproverLevelDetail?id=' + row.id + '"><img src="../assets/view.svg" alt="view" />View</a></li>';
-                html += '<li><a title="Edit" href="/MasterApproverLevel/MasterApproverLevelDetail?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
+                html += '<li><a title="Edit" href="/MasterApproverLevel/MasterApproverLevelManage?id=' + row.id + '"><img src="../assets/edit.svg" alt="edit" />Edit</a></li>';
                 html += '</ul></div>';
 
                 return html;
