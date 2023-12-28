@@ -68,6 +68,12 @@
 	  <ProjectReference Include="..\Infrastructure\ValuationWeb.Persistence.csproj" />
 	</ItemGroup>
 
+
+
+	<ItemGroup>
+	  <Folder Include="ConfigBackup\" />
+	</ItemGroup>
+
 	<PropertyGroup>
 		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 	</PropertyGroup>
