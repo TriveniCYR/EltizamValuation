@@ -55,31 +55,31 @@
                     <div class="flex">
                         <label for="" class="w-50">
                             <p class="m-0">Valuation Fees (AED)<span class="text-danger">*</span></p>
-                            @Html.EditorFor(model => model.ValuationFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", @placeholder = "enter Valuation Fees (AED)" } })
+                            @Html.EditorFor(model => model.ValuationFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", @placeholder = "enter Valuation Fees (AED)" } })
                             @Html.ValidationMessageFor(model => model.ValuationFee, "", new { @class = "text-danger" })
                         </label>
                         <label for="" class="w-50">
                             <p class="m-0">VAT (Percent)<span class="text-danger">*</span></p>
-                            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", @placeholder = "enter VAT (Percent)" } })
+                            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", @placeholder = "enter VAT (Percent)" } })
                             @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
                         </label>
                     </div>
                     <div class="flex">
                         <label for="" class="w-50">
                             <p class="m-0">Other Charges<span class="text-danger">*</span></p>
-                            @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", placeholder = "enter other charges" } })
+                            @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", placeholder = "enter other charges" } })
                             @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
                         </label>
                         <label for="" class="w-50">
                             Valuation Instructor Charges
-                            @Html.EditorFor(model => model.InstructorCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", placeholder = "enter Instructor charges" } })
+                            @Html.EditorFor(model => model.InstructorCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", placeholder = "enter Instructor charges" } })
                             @Html.ValidationMessageFor(model => model.InstructorCharges, "", new { @class = "text-danger" })
                         </label>
                     </div>
                     <div class="flex mb-28">
                         <label for="userName" class="w-50">
-                            Discount (%)
-                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", placeholder = "enter Discount" } })
+                            Discount
+                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", placeholder = "enter Discount" } })
                             @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
                         </label>
                         <label for="userName" class="w-50">
@@ -172,42 +172,38 @@
     <div class="modal-dialog">
         <div class="modal-content" style="width:610px">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Save Approver Level</h4>
+                <h5 class="modal-title" id="myModalLabel">Approver Level(s)</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" >
-                <div style="max-height: 600px;">
+                <div>
                     <!-- Table to display data -->
                     <div class="row" style="padding: 12px 60px">
                         <label for="ApproverId2" class="w-100">
-                            <p class="m-0">Approver Level 2<span class="text-danger"></span></p>
+                            <p class="m-0">2 Level Approver<span class="text-danger"></span></p>
                             @Html.DropDownList("ApproverId2", new List<SelectListItem> { }, new { @class = "form-control" })
                         </label>
                     </div>
+
                     <div class="row" style="padding: 12px 60px">
                         <label for="ApproverId3" class="w-100">
-                            <p class="m-0">Approver Level 3<span class="text-danger"></span></p>
+                            <p class="m-0">3 Level Approver<span class="text-danger"></span></p>
                             @Html.DropDownList("ApproverId3", new List<SelectListItem> { }, new { @class = "form-control" })
                         </label>
-                    </div>
-                    <div class="row" style="padding: 12px 60px">
+                    </div> 
 
-                    </div>
                     <div class=" w-100 text-right">
                         <div>
                             <div class="buttonArea">
-                                <button type="submit" data-dismiss="modal" class="blueBtn" style="padding:0 12px;margin: 20px 0 0 0;" onclick="AssignLevelApprover()">Assign</button>
+                                <button type="submit" data-dismiss="modal" class="blueBtn" onclick="AssignLevelApprover()">Assign</button>
+                                <button type="button" class="greyBtn" data-dismiss="modal">Cancel</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                @* <button type="button" class="gray" data-dismiss="modal">@SharedLocalizer["Cancel"]</button> *@
-            </div>
+            </div> 
         </div>
     </div>
 </div>

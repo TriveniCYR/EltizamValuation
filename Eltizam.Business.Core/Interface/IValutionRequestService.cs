@@ -14,6 +14,6 @@ namespace Eltizam.Business.Core.Interface
         Task<DBOperation> Delete(int id);
         Task<DBOperation> ReviewerRequestStatus(ValutionRequestForApproverModel model);
 
-        Task<DBOperation> UpsertApproverLevels(int ValReqId, int CreatedBy, int ValQuotId, string RequestData);
+        Task<DBOperation> UpsertApproverLevels(int ValReqId, string RequestData, int? CreatedBy, int? ValQuotId = null);
     }
 }
