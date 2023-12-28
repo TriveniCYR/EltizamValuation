@@ -221,10 +221,11 @@ namespace Eltizam.Business.Core.Implementation
                 var valuationEntity = _repository.Get(model.Id);
 
                 //Get open approvals
-                var openApprovals = _valuationRequestApproverLevel.GetAllAsync(a => a.ValuationRequestId == model.Id && a.StatusId == null);
-                if (openApprovals != null)
+                var openApprovals = _valuationRequestApproverLevel.GetAllAsync(a => a.ValuationRequestId == model.Id && a.StatusId == null).Result.ToList();
+                
+                if (openApprovals != null && openApprovals.Count >0 )
                 {
-                    var nxtapp = openApprovals.Result.OrderBy(a => a.ApproverLevelId).FirstOrDefault();
+                    var nxtapp = openApprovals.OrderBy(a => a.ApproverLevelId).FirstOrDefault();
                     valuationEntity.ApproverId = nxtapp?.ApproverId;
                 }
                 else
