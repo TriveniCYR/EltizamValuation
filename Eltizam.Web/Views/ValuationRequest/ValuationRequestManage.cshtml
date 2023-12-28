@@ -215,15 +215,13 @@
                                         Approver Comment
                                         @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
                                         @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
-                                    </label> *@
-
-                                    <div class="flex  mb-28">
-                                        <label for="" class="w-50">
-                                            Valuation Time Frame (In Days)
-                                            @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
-                                            @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
-                                        </label>
-                                    </div>
+                                    </label> *@ 
+                                   
+                                    <label for="" class="w-50">
+                                        Valuation Time Frame (In Days)
+                                        @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
+                                        @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
+                                    </label> 
 
                                     <label for="" class="bodyContent p-0 w-50">
                                         Method of Valuation
@@ -236,7 +234,7 @@
 
 
                             @* Added by YReddy for approval level history *@
-                            @if (LevelsApproved != null)
+                            @if (LevelsApproved != null && LevelsApproved.Count > 0)
                             {
                                 <div class="roundBorderBox ptrl-20">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
@@ -263,7 +261,14 @@
                                                             <td>@level.ApproverLevel</td>
                                                             <td>@level.ApproverName</td>
                                                             <td>@level.CreatedByName</td>
-                                                            <td><span class="tableStatus" style="color: @level.ColorCode; background-color: @level.BackGroundColor; border: 1px solid @level.ColorCode;">@level.Status</span></td>
+                                                            @if (@level.Status != null)
+                                                            {
+                                                                <td><span class="tableStatus" style="color: @level.ColorCode; background-color: @level.BackGroundColor; border: 1px solid @level.ColorCode;">@level.Status</span></td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td></td>
+                                                            }
                                                             <td>@level.ApproverComment</td>
                                                             <td class="formatted-td-date-input">@level.CreatedDate.ToString() </td>
                                                         </tr>
@@ -304,7 +309,7 @@
                                         </label>
                                         <label for="" class="w-50">
                                             TRN Expiry Date
-                                            <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" disabled="disabled">
+                                            @Html.TextBoxFor(model => model.TrnexpiryDate, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["TRN Expiry Date"] }) 
                                         </label>
                                     </div>
 

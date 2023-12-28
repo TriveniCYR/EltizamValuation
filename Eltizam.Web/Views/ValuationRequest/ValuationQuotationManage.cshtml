@@ -78,7 +78,7 @@
                     </div>
                     <div class="flex mb-28">
                         <label for="userName" class="w-50">
-                            Discount (%)
+                            Discount
                             @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", placeholder = "enter Discount" } })
                             @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
                         </label>
