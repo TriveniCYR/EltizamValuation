@@ -63,6 +63,8 @@
     // Get distinct levels
     var Levels = Model.ValuationRequestApproverLevel;
     var distinctLevels = Levels?.Select(approverLevel => approverLevel.ApproverLevelId).Distinct();
+    var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList();
+
 }
 
 <div id="PlaceHolderHere"></div>
@@ -229,6 +231,48 @@
                                     </label>
                                     </div>
                             </div>
+
+
+                            @* Added by YReddy for approval level history *@
+                             @if (LevelsApproved != null)
+                            {
+                                <div class="roundBorderBox ptrl-20"> 
+                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                        <p>Approver(s) level history</p>
+                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                    </div> 
+                                    <div class="inputSearchs p-0">  
+                                        <div class="flex m-0">
+                                            <table id="ApproverLevelHistory" class="table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Approver Level</th>
+                                                        <th>Approver Assiged</th>
+                                                        <th>Updated By</th>
+                                                        <th>Updated Status</th> 
+                                                        <th>Comment</th>
+                                                        <th>Date</th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody> 
+                                                    @foreach (var level in LevelsApproved)
+                                                    {
+                                                        <tr>
+                                                            <td>@level.ApproverLevel</td>
+                                                            <td>@level.ApproverName</td>
+                                                            <td>@level.CreatedByName</td>
+                                                            <td><span class="tableStatus" style="color: @level.ColorCode; background-color: @level.BackGroundColor; border: 1px solid @level.ColorCode;">@level.Status</span></td>
+                                                            <td>@level.ApproverComment</td> 
+                                                            <td class="formatted-td-date-input">@level.CreatedDate.ToString() </td> 
+                                                        </tr>
+                                                    } 
+                                                </tbody>
+                                            </table>
+                                        </div>  
+                                    </div> 
+                                </div>
+                            }
+
                             <div class="roundBorderBox ptrl-20">
                                 <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
                                     <p>Client Details</p>
@@ -307,6 +351,7 @@
                                 </div>
 
                             </div>
+
                             <div class="roundBorderBox ptrl-20">
                                 <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
                                     <p>Property Details</p>
@@ -508,6 +553,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="text-right buttonArea bodyContent">
                                 <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
                                 @if (ViewBag.IsView == 1)

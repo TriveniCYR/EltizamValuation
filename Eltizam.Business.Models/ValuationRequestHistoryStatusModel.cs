@@ -8,7 +8,7 @@ namespace Eltizam.Business.Models
 {
     public class ValuationRequestHistoryStatusModel
     {
-        public string ReferenceNO { get; set; }
+        public string? ReferenceNO { get; set; }
         public int StatusId { get; set; }
         public string StatusCode { get; set; }
         public string Status { get; set; }
@@ -16,7 +16,6 @@ namespace Eltizam.Business.Models
         public string BackGroundColor { get; set; }
         public DateTime CreatedDate { get; set; }
         public int CreatedBy { get; set; }
-        public string CreatedByName { get; set; }
-
+        public string CreatedByName { get; set; } 
     }
 }
