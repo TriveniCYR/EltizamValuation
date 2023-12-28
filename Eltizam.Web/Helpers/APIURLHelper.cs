@@ -258,7 +258,7 @@ namespace Eltizam.Web.Helpers
         #endregion AuditLog
 
         #region MasterApproverLevel
-        public static string UpsertMasterApproverLevel = "MasterApproverLevel​/Upsert";
+        public static string UpsertMasterApproverLevel = "MasterApproverLevel/Upsert";
         public static string GetMasterApproverLevelById = "MasterApproverLevel/GetById";
         public static string GetMasterApproverLevelsList = "MasterApproverLevel/GetAll";
 
