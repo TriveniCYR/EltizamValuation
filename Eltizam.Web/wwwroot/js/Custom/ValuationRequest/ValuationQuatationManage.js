@@ -319,3 +319,22 @@ function DeleteUserDocumentSuccess(data) {
 function DeleteUserDocumentError(x, y, z) {
     toastr.error(ErrorMessage);
 }
+//------------Calculations-----------------
+$('.clsCalculateFee').on('change', function () {
+    var ValuationFee = $('#ValuationFee').val();
+    var Vat = $('#Vat').val();
+    var OtherCharges = $('#OtherCharges').val();
+    var InstructorCharges = $('#InstructorCharges').val();
+    var Discount = $('#Discount').val();
+
+    ValuationFee = ValuationFee == '' ? 0 : parseFloat(ValuationFee);
+    Vat = Vat == '' ? 0 : parseFloat(Vat);
+    OtherCharges = OtherCharges == '' ? 0 : parseFloat(OtherCharges);
+    InstructorCharges = InstructorCharges == '' ? 0 : parseFloat(InstructorCharges);
+    Discount = Discount == '' ? 0 : parseFloat(Discount);
+
+    var result = ValuationFee + Vat + OtherCharges + InstructorCharges - Discount;
+    result = isNaN(result) ? 0 : result;
+    $('#TotalFee').val(result);    
+});
+

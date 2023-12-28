@@ -55,31 +55,31 @@
                     <div class="flex">
                         <label for="" class="w-50">
                             <p class="m-0">Valuation Fees (AED)<span class="text-danger">*</span></p>
-                            @Html.EditorFor(model => model.ValuationFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", @placeholder = "enter Valuation Fees (AED)" } })
+                            @Html.EditorFor(model => model.ValuationFee, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", @placeholder = "enter Valuation Fees (AED)" } })
                             @Html.ValidationMessageFor(model => model.ValuationFee, "", new { @class = "text-danger" })
                         </label>
                         <label for="" class="w-50">
                             <p class="m-0">VAT (Percent)<span class="text-danger">*</span></p>
-                            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", @placeholder = "enter VAT (Percent)" } })
+                            @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", @placeholder = "enter VAT (Percent)" } })
                             @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
                         </label>
                     </div>
                     <div class="flex">
                         <label for="" class="w-50">
                             <p class="m-0">Other Charges<span class="text-danger">*</span></p>
-                            @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", placeholder = "enter other charges" } })
+                            @Html.EditorFor(model => model.OtherCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", placeholder = "enter other charges" } })
                             @Html.ValidationMessageFor(model => model.OtherCharges, "", new { @class = "text-danger" })
                         </label>
                         <label for="" class="w-50">
                             Valuation Instructor Charges
-                            @Html.EditorFor(model => model.InstructorCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", placeholder = "enter Instructor charges" } })
+                            @Html.EditorFor(model => model.InstructorCharges, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", placeholder = "enter Instructor charges" } })
                             @Html.ValidationMessageFor(model => model.InstructorCharges, "", new { @class = "text-danger" })
                         </label>
                     </div>
                     <div class="flex mb-28">
                         <label for="userName" class="w-50">
                             Discount (%)
-                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price", placeholder = "enter Discount" } })
+                            @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control disabletxtbox formatting price clsCalculateFee", placeholder = "enter Discount" } })
                             @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
                         </label>
                         <label for="userName" class="w-50">
