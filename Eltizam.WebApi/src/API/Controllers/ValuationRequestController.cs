@@ -167,7 +167,7 @@ namespace Eltizam.WebApi.Controllers
         [HttpPost, Route("UpsertApproverLevels")]
         public async Task<IActionResult> UpsertApproverLevels(int ValReqId,int CreatedBy,int ValQuotId, string RequestData)
         {
-            DBOperation oResponse = await _valuationServices.UpsertApproverLevels(ValReqId, CreatedBy, ValQuotId, RequestData);
+            DBOperation oResponse = await _valuationServices.UpsertApproverLevels(ValReqId, RequestData, CreatedBy, ValQuotId);
             if (oResponse == DBOperation.Success)
             {
                 return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));

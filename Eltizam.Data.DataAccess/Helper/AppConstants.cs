@@ -48,7 +48,7 @@ namespace Eltizam.Data.DataAccess.Helper
 
         public static DateTime DateTime = DateTime.Now; 
         public static string DateFormat1 = DateTime.Now.ToString("dd-MMM-yyyy");
-        public static string DateFormat2 = DateTime.Now.ToString("yyMM");
+        public static string DateFormat2 = DateTime.Now.ToString("yyMMdd");
 
 
         public static string ID_ValuationRequest = string.Format("VR{0}", DateFormat2);

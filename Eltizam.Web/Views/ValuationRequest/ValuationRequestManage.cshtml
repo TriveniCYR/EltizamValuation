@@ -136,7 +136,7 @@
                             <input type="hidden" id="siteId" value="@(Model == null ? 0 : Model.ValuationAssesment.SiteDescription.Id)" />
                             <input type="hidden" id="assesmentId" value="@(Model == null ? 0 : Model.ValuationAssesment.valuationAssessementModel.Id)" />
                             <input type="hidden" id="valuationdetailsId" value="@(Model == null ? 0 : Model.Id)" />
-                           <input type="hidden" id="Valuationapprovalvalues" name="ValuationApprovalValues" />
+                            <input type="hidden" id="Valuationapprovalvalues" name="ValuationApprovalValues" />
 
                             <div class="ptrl-20">
                                 <div class="flex  mb-28">
@@ -150,20 +150,7 @@
                                         @Html.TextBoxFor(model => model.OtherReferenceNo, new { @class = "form-control", @placeholder = @SharedLocalizer["Other Reference no"] })
                                         @Html.ValidationMessageFor(model => model.OtherReferenceNo, "", new { @class = "text-danger" })
                                     </label>
-                                </div>
-                                <div class="flex  mb-28">
-                                    <label for="" class="w-50">
-                                        Approver Name
-                                        @Html.DropDownList("ApproverId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown " })
-                                        @*  <input type="text" placeholder="Clyde" disabled> *@
-                                    </label>
-                                    <label for="" class="w-50">
-                                        Valuer Name
-                                        @Html.DropDownList("ValuerId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
-                                        @* <input type="text" placeholder="Clyde" disabled> *@
-                                    </label>
-
-                                </div>
+                                </div> 
 
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
@@ -172,25 +159,24 @@
                                         @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
                                     </label>
 
-                                    <label for="" class="w-50 m-0" id="comment">
-                                        Review Comment
-                                        @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
-                                        @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
-                                    </label>
-                                </div>
-                                <div class="flex  mb-28">
                                     <label for="" class="w-50 m-0">
                                         <p class="m-0">Valuation Date<span class="text-danger">*</span></p>
                                         <input type="text" class="formatted-date-input" id="ValuationDate" name="ValuationDate" asp-for="ValuationDate">
                                         @Html.ValidationMessageFor(model => model.ValuationDate, "", new { @class = "text-danger" })
                                     </label>
-                                    <label for="" class="bodyContent p-0 w-50">
-                                        Method of Valuation
-                                        <div class="flex m-0 valuationType">
-                                            @Html.DropDownList("ValuationModeId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
-                                        </div>
+                                </div>
+
+                                <div class="flex  mb-28">
+                                    <label for="" class="w-50">
+                                        Approver Name
+                                        @Html.DropDownList("ApproverId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown " }) 
+                                    </label>
+                                    <label for="" class="w-50">
+                                        Valuer Name
+                                        @Html.DropDownList("ValuerId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
                                     </label>
                                 </div>
+
                                 <div class="flex  mb-28">
                                     @if (Levels != null && Levels.Count > 0)
                                     {
@@ -198,14 +184,14 @@
                                         foreach (var lId in distinctLevels)
                                         {
                                             var level = Levels.Where(a => a.ApproverLevelId == lId).First().ApproverLevel;
-                                            var dropdownId = $"ApproverLevelId_{lId}"; 
+                                            var dropdownId = $"ApproverLevelId_{lId}";
                                             var curList = Levels.Where(approver => approver.ApproverLevelId == lId).ToList();
                                             curList.Insert(0, new ValuationRequestApproverLevelModel()
                                             {
-                                                 ApproverLevelId = lId, 
-                                                 ApproverLevel = level, 
-                                                 ApproverId = 0, 
-                                                 ApproverName = "--select--"
+                                                ApproverLevelId = lId,
+                                                ApproverLevel = level,
+                                                ApproverId = 0,
+                                                ApproverName = "--select--"
                                             });
 
                                             var ddSelected = Levels.FirstOrDefault(approver => approver.ApproverLevelId == lId && approver.IsSelected == 1)?.ApproverId.ToString();
@@ -215,61 +201,82 @@
                                                 @level
 
                                                 @Html.DropDownListFor(model => ddSelected, new SelectList(curList.Select(approver => new SelectListItem
-                                                {
-                                                    Value = approver.ApproverId.ToString(),
-                                                    Text = approver.ApproverName
-                                                }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
+                                               {
+                                                   Value = approver.ApproverId.ToString(),
+                                                   Text = approver.ApproverName
+                                               }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
                                             </label>
                                         }
                                     }
                                 </div>
-                                 <div class="flex  mb-28">
-                                 <label for="" class="w-50">
+
+                                <div class="flex  mb-28">
+                                   @*  <label for="" class="w-50 m-0" id="comment">
+                                        Approver Comment
+                                        @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
+                                        @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
+                                    </label> *@ 
+                                   
+                                    <label for="" class="w-50">
                                         Valuation Time Frame (In Days)
                                         @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
                                         @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
+                                    </label> 
+
+                                    <label for="" class="bodyContent p-0 w-50">
+                                        Method of Valuation
+                                        <div class="flex m-0 valuationType">
+                                            @Html.DropDownList("ValuationModeId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
+                                        </div>
                                     </label>
-                                    </div>
+                                </div>  
                             </div>
 
 
                             @* Added by YReddy for approval level history *@
-                             @if (LevelsApproved != null)
+                            @if (LevelsApproved != null && LevelsApproved.Count > 0)
                             {
-                                <div class="roundBorderBox ptrl-20"> 
+                                <div class="roundBorderBox ptrl-20">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
                                         <p>Approver(s) level history</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
-                                    </div> 
-                                    <div class="inputSearchs p-0">  
+                                    </div>
+                                    <div class="inputSearchs p-0">
                                         <div class="flex m-0">
                                             <table id="ApproverLevelHistory" class="table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th>Approver Level</th>
-                                                        <th>Approver Assiged</th>
-                                                        <th>Updated By</th>
-                                                        <th>Updated Status</th> 
+                                                        <th>Level</th>
+                                                        <th>Approver</th> 
+                                                        <th>Status</th>
                                                         <th>Comment</th>
-                                                        <th>Date</th> 
+                                                        <th>Updated By</th>
+                                                        <th>Updated Date</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody> 
+                                                <tbody>
                                                     @foreach (var level in LevelsApproved)
                                                     {
                                                         <tr>
                                                             <td>@level.ApproverLevel</td>
-                                                            <td>@level.ApproverName</td>
+                                                            <td>@level.ApproverName</td> 
+                                                            @if (@level.Status != null)
+                                                            {
+                                                                <td><span class="tableStatus" style="color: @level.ColorCode; background-color: @level.BackGroundColor; border: 1px solid @level.ColorCode;">@level.Status</span></td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td></td>
+                                                            }
+                                                            <td>@level.ApproverComment</td>
                                                             <td>@level.CreatedByName</td>
-                                                            <td><span class="tableStatus" style="color: @level.ColorCode; background-color: @level.BackGroundColor; border: 1px solid @level.ColorCode;">@level.Status</span></td>
-                                                            <td>@level.ApproverComment</td> 
-                                                            <td class="formatted-td-date-input">@level.CreatedDate.ToString() </td> 
+                                                            <td class="formatted-td-date-input">@level.CreatedDate.ToString() </td>
                                                         </tr>
-                                                    } 
+                                                    }
                                                 </tbody>
                                             </table>
-                                        </div>  
-                                    </div> 
+                                        </div>
+                                    </div>
                                 </div>
                             }
 
@@ -302,7 +309,7 @@
                                         </label>
                                         <label for="" class="w-50">
                                             TRN Expiry Date
-                                            <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" disabled="disabled">
+                                            @Html.TextBoxFor(model => model.TrnexpiryDate, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["TRN Expiry Date"] }) 
                                         </label>
                                     </div>
 
@@ -315,7 +322,7 @@
 
                                     <h5>Addrress Details</h5>
                                     <div class="flex m-0">
-                                        <table class="multipleValueTable valueReqTable" id="NewAddressTable">
+                                        <table class="table-striped" id="NewAddressTable">
                                             <thead>
                                                 <tr>
                                                     <th>Address 1</th>
@@ -334,7 +341,7 @@
 
                                     <h5>Contact Details</h5>
                                     <div class="inputSearchs p-0">
-                                        <table class="multipleValueTable valueReqTable" id="NewContactTable">
+                                        <table class="table-striped" id="NewContactTable">
                                             <thead>
                                                 <tr>
                                                     <th>Contact Person Name</th>
@@ -1272,6 +1279,6 @@
         var UpdateLabel = "@SharedLocalizer["Update"]";
         var isViewHide = "@ViewBag.IsView";
         var isAddValuation = (@Model.Id == 0);
-                                                                                        // var isViewQt = objPermssionQt.View ? true : false;
+                // var isViewQt = objPermssionQt.View ? true : false;
     </script>
 }

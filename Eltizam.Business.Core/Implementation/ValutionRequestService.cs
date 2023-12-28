@@ -26,7 +26,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<SiteDescription> _siterepository { get; set; }
         private IRepository<ComparableEvidence> _evidencerepository { get; set; }
         private IRepository<ValuationAssesment> _assesmenterepository { get; set; }
-        private IRepository<ValuationRequestStatus> _statusrepository { get; set; }
+        private IRepository<MasterValuationStatus> _statusrepository { get; set; }
         private IRepository<ValuationQuotation> _valuationQuotationrepository { get; set; }
         private IRepository<ValuationRequestApproverLevel> _valuationRequestApproverLevel { get; set; }
         private readonly IAuditLogService _auditLogService;
@@ -41,7 +41,7 @@ namespace Eltizam.Business.Core.Implementation
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
-            _statusrepository = _unitOfWork.GetRepository<ValuationRequestStatus>();
+            _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>();
             _repository = _unitOfWork.GetRepository<ValuationRequest>();
             _siterepository = _unitOfWork.GetRepository<SiteDescription>();
             _evidencerepository = _unitOfWork.GetRepository<ComparableEvidence>();
@@ -166,8 +166,8 @@ namespace Eltizam.Business.Core.Implementation
                         //Do Audit Log --AUDITLOG 
                         await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.ValuationRequestId);
 
-                        var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-                        var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                        var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.Status).FirstOrDefault();
+                        var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.Status).FirstOrDefault();
                         if (newstatusname != oldstatusname)
                             await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
                     }
@@ -243,8 +243,8 @@ namespace Eltizam.Business.Core.Implementation
                     //Do Audit Log --AUDITLOG 
                     await _auditLogService.CreateAuditLog<ValuationRequest>(AuditActionTypeEnum.Update, OldEntity, valuationEntity, TableName, model.Id);
 
-                    var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
-                    var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                    var newstatusname = _statusrepository.GetAll().Where(x => x.Id == valuationEntity.StatusId).Select(x => x.Status).FirstOrDefault();
+                    var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.Status).FirstOrDefault();
                     if (newstatusname != oldstatusname)
                         await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, valuationEntity.Id);
                 }
@@ -283,8 +283,8 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     if (entityValuation.ValuationApprovalValues != null)
                     {
-                        var quotid = _valuationQuotationrepository.GetAll().Where(x => x.ValuationRequestId == entityValuation.Id).Select(x => x.Id).First();
-                        await UpsertApproverLevels(entityValuation.Id, 1, quotid, entityValuation.ValuationApprovalValues);
+                        //var quotid = _valuationQuotationrepository.GetAll().Where(x => x.ValuationRequestId == entityValuation.Id).Select(x => x.Id).First();
+                        await UpsertApproverLevels(entityValuation.Id, entityValuation.ValuationApprovalValues, entityValuation.ModifiedBy);
                     }
 
                     OldEntity = _repository.GetNoTracking(entityValuation.Id);
@@ -310,8 +310,8 @@ namespace Eltizam.Business.Core.Implementation
 
                         try
                         {
-                            var newstatusname = _statusrepository.GetAll().Where(x => x.Id == objValuation.StatusId).Select(x => x.StatusName).FirstOrDefault();
-                            var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.StatusName).FirstOrDefault();
+                            var newstatusname = _statusrepository.GetAll().Where(x => x.Id == objValuation.StatusId).Select(x => x.Status).FirstOrDefault();
+                            var oldstatusname = _statusrepository.GetAll().Where(x => x.Id == OldEntity.StatusId).Select(x => x.Status).FirstOrDefault();
 
                             if (newstatusname != oldstatusname)
                                 await SenddDetailsToEmail(RecepientActionEnum.ValuationStatusChanged, objValuation.Id);
@@ -518,13 +518,13 @@ namespace Eltizam.Business.Core.Implementation
         }
 
 
-        public async Task<DBOperation> UpsertApproverLevels(int ValReqId, int CreatedBy, int ValQuotId, string RequestData)
+        public async Task<DBOperation> UpsertApproverLevels(int ValReqId, string RequestData, int? CreatedBy, int? ValQuotId = null)
         {
             DbParameter[] osqlParameter =
             {
-                new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
-                new DbParameter("CreatedBy", CreatedBy, SqlDbType.Int),
-                new DbParameter("ValQuotId", ValQuotId, SqlDbType.Int),
+                new DbParameter("ValReqId",    ValReqId, SqlDbType.Int),
+                new DbParameter("CreatedBy",   CreatedBy, SqlDbType.Int),
+                new DbParameter("ValQuotId",   ValQuotId, SqlDbType.Int),
                 new DbParameter("RequestData", RequestData, SqlDbType.VarChar),
             };
 
