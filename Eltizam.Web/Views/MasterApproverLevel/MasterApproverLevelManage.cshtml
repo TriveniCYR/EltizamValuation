@@ -35,10 +35,9 @@
             <div class="bodyContent">
                 <div class="inputSearchs p-0">
                     <div class="tabSection">
-                        <input type="hidden" id="hdnmasterapproverId" value="@(Model == null ? 0 : Model.Id)" />
+                        <input type="hidden" id="hdnmasterapproverId" name="Id" value="@(Model == null ? 0 : Model.Id)" />
                         <input type="hidden" id="isAddPerm" value="@isAdd" />
                         <input type="hidden" id="isEditPerm" value="@isEdit" />
-                        @Html.HiddenFor(model=> model.IsActive)
                         <div class="flex">
                             <label for="" class="w-50">
                                 <p class="m-0">
@@ -48,12 +47,11 @@
                                 @Html.TextBoxFor(model => model.Description, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["Description"] } })
                                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                             </label>
-
-                            <label for="" class="w-50">
+                            <label for="IsActive" class="w-50">
                                 Status
-                                <input type="checkbox" id="isActiveT" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
-                                <label class="label-switch" for="isActiveT"></label>
-                                <span class="info-text" style="top:-20px;"></span>
+                                <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                <label class="label-switch" for="IsActive"></label>
+                                <span class="info-text"></span>
                             </label>
                         </div>
                         <div class="flex">
@@ -106,22 +104,15 @@
                         </div>
                     </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-</form>
-
-
+        </main>
+    </form>
 <script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="~/js/custom/main.js?v=@jsVersion"></script>
 <script type="text/javascript" src="~/js/custom/MasterApprover/MasterApproverLevel.js?v=@jsVersion"></script>
 
-@section MyScripts
-    {
-    <script>
-        var UpsertMasterApprover = "@Eltizam.Web.Helpers.APIURLHelper.UpsertMasterApproverLevel";
-    </script>
-}
+
 
 

@@ -21,16 +21,16 @@
 <div class="flex">
     <main class="w-100">
         <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
-            <h3 class="dashboardTitle">Master Approver</h3>
+            <h3 class="dashboardTitle">Approver Master</h3>
             <div class="buttonArea flex align-item-center">
 
-                <form asp-action="MasterApproverLevelManage" asp-controller="MasterApproverLevel" method="GET">
+                @*<form asp-action="MasterApproverLevelManage" asp-controller="MasterApproverLevel" method="GET">
                     <input type="hidden" id="isAddPerm" value="@isAdd" />
                     <input type="hidden" id="isEditPerm" value="@isEdit" />
-                    <button class="flex align-item-center blueBtn" id="addNew">
-                        <img src="~/assets/plus.svg" alt="plus"> Add New
-                    </button>
-                </form>
+                    @*  <button class="flex align-item-center blueBtn" id="addNew">
+                    <img src="~/assets/plus.svg" alt="plus"> Add New
+                    </button> 
+                </form>*@
             </div>
         </div>
         <div class="scroll-x whiteWithPadding">
@@ -52,14 +52,12 @@
     </main>
 </div>
 @section MyScripts
-    {
+{
     @Html.Partial("_DataTablePartial")
-    <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script>
-
+    <script type="text/javascript" src="~/js/custom/DynamicDataTable.js?v=@jsVersion"></script> 
     <script type="text/javascript" src="~/js/custom/MasterApprover/MasterApprover.js?v=@jsVersion"></script>
 
-    <script>
-
+    <script> 
         var GetAll = "@Eltizam.Web.Helpers.APIURLHelper.GetMasterApproverLevelsList";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var StatusMessage = '@TempData["StatusMessage"]';
