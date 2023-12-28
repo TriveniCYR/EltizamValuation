@@ -257,3 +257,16 @@ $(document).on('click', '.viewLink', function (e) {
        
     });
 });
+    
+function clearSearchFields() {
+    document.getElementById("valuationFilterForm").reset();
+    $('#RequestStatusId').val(0).trigger('change');
+    $('#PropertyTypeId').val(0).trigger('change');
+    $('#CountryId').val(0).trigger('change');
+    $('#StateId').empty();
+    $('#CityId').empty();
+    $('#PropertyName').val(0).trigger('change');
+    $('#ClientName').val(0).trigger('change');
+    $('#ResourceId').val(0).trigger('change');
+    InitializeValutionRequestDataList();
+}

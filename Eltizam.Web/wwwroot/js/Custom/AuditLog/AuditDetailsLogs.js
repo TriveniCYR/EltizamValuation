@@ -60,4 +60,7 @@ function InitializeAuditLogHistoryList() {
 
 //#endregion
 
-
+function clearSearchFields() {
+    document.getElementById("auditDetailFilterForm").reset();
+    InitializeAuditLogHistoryList();
+}

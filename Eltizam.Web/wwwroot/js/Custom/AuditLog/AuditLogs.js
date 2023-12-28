@@ -73,3 +73,9 @@ function InitializeAuditLogList() {
 //#endregion
 
 
+function clearSearchFields() {
+    document.getElementById("auditLogFilterForm").reset();
+    $('#UserName').val(0).trigger('change');
+    $('#ParentTableName').val(0).trigger('change');
+    InitializeAuditLogList();
+}
