@@ -15,6 +15,7 @@
                 document.getElementById('ToAmount').value = '';
                 toastr.error('To Amount must be greater than or equal to From Amount.');
             }
+           
         }
     });
 
