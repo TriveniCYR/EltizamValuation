@@ -36,7 +36,7 @@ namespace EltizamValuation.Web.Controllers
 
             //Check permissions
             int roleId = _helper.GetLoggedInRoleId();
-            if (!CheckRoleAccess(ModulePermissionEnum.ResourceMaster, PermissionEnum.View, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.ApproverMaster, PermissionEnum.View, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             return View();
         }
@@ -51,7 +51,7 @@ namespace EltizamValuation.Web.Controllers
                 var action = masterapproverlevel.Id == 0 ? PermissionEnum.Add : PermissionEnum.Edit;
 
                 int roleId = _helper.GetLoggedInRoleId();
-                if (!CheckRoleAccess(ModulePermissionEnum.PropertyTypeMaster, action, roleId))
+                if (!CheckRoleAccess(ModulePermissionEnum.ApproverMaster, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
                 //Fill audit logs field
@@ -105,7 +105,7 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
             int roleId = _helper.GetLoggedInRoleId();
 
-            if (!CheckRoleAccess(ModulePermissionEnum.PropertyTypeMaster, action, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.ApproverMaster, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             if (id != null)
             {

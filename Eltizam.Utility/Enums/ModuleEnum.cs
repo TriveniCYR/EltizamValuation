@@ -21,7 +21,7 @@ namespace Eltizam.Utility.Enums
         DictionaryMaster = 12,
         ValuationRequest = 13,
         AuditLog = 14,
-        ApproverMaster=15
+        ApproverMaster=16
     }
 
     public enum SubModuleEnum
