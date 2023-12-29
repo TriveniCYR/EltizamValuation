@@ -5,6 +5,7 @@
         if (!isNaN(fromAmount) && !isNaN(toAmount) && fromAmount > toAmount) {
             toastr.error('From Amount must be less than or equal to To Amount.');
             event.preventDefault();
+            hideLoader();
         }
     });
 });
