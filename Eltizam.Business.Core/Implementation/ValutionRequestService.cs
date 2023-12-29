@@ -299,6 +299,7 @@ namespace Eltizam.Business.Core.Implementation
                         objValuation.ValuationModeId = entityValuation.ValuationModeId;
                         objValuation.PropertyId = entityValuation.PropertyId;
                         objValuation.ClientId = entityValuation.ClientId;
+                        objValuation.ApproverComment = entityValuation.ApproverComment;
                         objValuation.ModifiedBy = entityValuation.ModifiedBy;
 
                         _repository.UpdateAsync(objValuation); 
