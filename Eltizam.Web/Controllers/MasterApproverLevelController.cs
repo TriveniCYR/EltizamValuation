@@ -36,7 +36,7 @@ namespace EltizamValuation.Web.Controllers
 
             //Check permissions
             int roleId = _helper.GetLoggedInRoleId();
-            if (!CheckRoleAccess(ModulePermissionEnum.ResourceMaster, PermissionEnum.View, roleId))
+            if (!CheckRoleAccess(ModulePermissionEnum.ApproverMaster, PermissionEnum.View, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             return View();
         }
