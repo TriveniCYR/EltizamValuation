@@ -21,9 +21,11 @@ function GetnotificationsSuccess(data) {
     }
     else {
         data.forEach(function (notification, index) {
+            var fnt = notification.readDate !== null && notification.readDate !== undefined ? 500 : 900;
+
             var accordionHtml = `
                 <div class="auditLog-acc roundBorderBox m-0 mb-28">
-                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this,${notification.id})">
+                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this,${notification.id})" style="font-weight: ${fnt};">
                         <div class="flex notificationInside">
                             <img src="../assets/bell.svg" alt="bell" class="cursor-pointer">
                             <p>${notification.valRefNo} / </p>

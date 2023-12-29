@@ -58,6 +58,12 @@ function InitializeAuditLogHistoryList() {
 }
 
 
-//#endregion
+//#endregion 
 
+function clearSearchFields() {
+    document.getElementById("auditDetailFilterForm").reset();
+    $('#FromDate').val();
+    $('#ToDate').val();
 
+    InitializeAuditLogHistoryList();
+}

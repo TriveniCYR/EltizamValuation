@@ -54,8 +54,8 @@ namespace Eltizam.Business.Core.Implementation
 
 
         public async Task<dynamic> GetValuationPDFData(int valId)
-        { 
-            SqlParameter[] osqlParameter = 
+        {
+            SqlParameter[] osqlParameter =
             {
                 new SqlParameter("@Id", valId)
             };
@@ -88,7 +88,7 @@ namespace Eltizam.Business.Core.Implementation
             var quottationList = EltizamDBHelper.ExecuteMappedReader<ValuationQuatationListModel>(ProcedureMetastore.usp_Quotation_GetQuotationByRequestId,
                                 DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
 
-            return quottationList; 
+            return quottationList;
         }
 
         public async Task<ValuationQuatationListModel> GetQuatationById(int id)
@@ -109,33 +109,55 @@ namespace Eltizam.Business.Core.Implementation
                 var quatationDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
                                     DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
 
-                if (quatationDocuments != null) 
-                    _quatationEntity.Documents = quatationDocuments; 
+                if (quatationDocuments != null)
+                    _quatationEntity.Documents = quatationDocuments;
             }
 
             return _quatationEntity;
         }
 
 
-        public async Task<DBOperation> QuatationDelete(int id ,int? by)
+        public async Task<DBOperation> QuatationDelete(int id, int? by)
         {
-            var entityQuatation = _repository.Get(x => x.Id == id);
+            try
+            {
+                var applevels = _repositoryApproverLevel.GetAllAsync(a => a.ValuationQuotationId == id).Result.ToList();
 
-            if (entityQuatation == null)
-                return DBOperation.NotFound;
+                if (applevels != null && applevels.Count > 0)
+                {
+                    foreach (var applevel in applevels)
+                    {
+                        //Delete Approver level for quotation
+                        var applevl = _repositoryApproverLevel.Get(x => x.Id == applevel.Id);
 
-            _repository.Remove(entityQuatation);
+                        _repositoryApproverLevel.Remove(applevl);
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                }
 
-            await _unitOfWork.SaveChangesAsync();
+                
+                //Delete quotations
+                var entityQuatation = _repository.Get(x => x.Id == id); 
+                if (entityQuatation == null)
+                    return DBOperation.NotFound;
 
-            return DBOperation.Success;
+                _repository.Remove(entityQuatation); 
+                await _unitOfWork.SaveChangesAsync();
+
+
+                return DBOperation.Success;
+            }
+            catch (Exception ex)
+            { 
+                throw ex;
+            }
         }
 
 
         public async Task<DBOperation> Upsert(ValuationQuatationListModel entityQuatation)
         {
-          
-            ValuationQuotation objQuatation; 
+
+            ValuationQuotation objQuatation;
             MasterDocument objDocument;
             ValuationRequestApproverLevel objApproverLevel;
 
@@ -180,14 +202,15 @@ namespace Eltizam.Business.Core.Implementation
                 var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
                 objQuatation = _mapperFactory.Get<ValuationQuatationListModel, ValuationQuotation>(entityQuatation);
 
-                objQuatation.ReferenceNo = string.Format("{0}{1}", AppConstants.ID_QuotationsRequest, lastReq?.Id + 1); 
+                var id = string.Format("{0}-{1}", AppConstants.ID_QuotationsRequest, entityQuatation.ValuationRequestId);
+                objQuatation.ReferenceNo = string.Format("{0}{1}", id, lastReq?.Id + 1);
                 objQuatation.CreatedDate = AppConstants.DateTime;
                 objQuatation.CreatedBy = entityQuatation.CreatedBy ?? 1;
 
                 _repository.AddAsync(objQuatation);
                 await _unitOfWork.SaveChangesAsync();
             }
-            
+
             if (objQuatation.Id == 0)
                 return DBOperation.Error;
 
@@ -229,11 +252,11 @@ namespace Eltizam.Business.Core.Implementation
             try
             {
                 var statusid = _statusrepository.GetAll().Where(x => x.Status == "Quoted").Select(x => x.Id).FirstOrDefault();
-                _notificationService.UpdateValuationRequestStatus(statusid,objQuatation.ValuationRequestId);
-              
+                _notificationService.UpdateValuationRequestStatus(statusid, objQuatation.ValuationRequestId);
+
                 string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_QuotationCreate.html");
-        
-                strHtml = strHtml.Replace("[PDateP]", objQuatation.CreatedDate.ToString("dd-MMM-yyyy")); 
+
+                strHtml = strHtml.Replace("[PDateP]", objQuatation.CreatedDate.ToString("dd-MMM-yyyy"));
                 strHtml = strHtml.Replace("[ValuationFees]", objQuatation.ValuationFee.ToString());
                 strHtml = strHtml.Replace("[VAT]", objQuatation.Vat.ToString());
                 strHtml = strHtml.Replace("[OtherCharges]", objQuatation.OtherCharges.ToString());
@@ -243,23 +266,23 @@ namespace Eltizam.Business.Core.Implementation
 
                 var notificationModel = _notificationService.GetValuationNotificationData(RecepientActionEnum.QuaotationCreation, objQuatation.ValuationRequestId);
                 notificationModel.Subject = EnumHelper.GetDescription(RecepientActionEnum.QuaotationCreation);
-                notificationModel.Body = strHtml; 
+                notificationModel.Body = strHtml;
 
                 await _notificationService.SendEmail(notificationModel);
             }
             catch (Exception ex)
-            { 
+            {
                 throw ex;
             }
 
-            return DBOperation.Success; 
+            return DBOperation.Success;
         }
 
-        public async Task<List<ValuationRequestApproverLevelModel>> GetApproverLevel(decimal Amount,int  ValReqId)
+        public async Task<List<ValuationRequestApproverLevelModel>> GetApproverLevel(decimal Amount, int ValReqId)
         {
             DbParameter[] osqlParameter =
             {
-                new DbParameter("Amount", Amount, SqlDbType.Decimal), 
+                new DbParameter("Amount", Amount, SqlDbType.Decimal),
                 new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
             };
 

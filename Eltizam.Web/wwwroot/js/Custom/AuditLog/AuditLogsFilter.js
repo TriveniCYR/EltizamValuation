@@ -1,6 +1,5 @@
 
-$(document).ready(function () {
-   
+$(document).ready(function () { 
     BindAuditLogTableName();
     BindUserName();
 });
@@ -19,7 +18,7 @@ function BindAuditLogTableName() {
         url: BaseURL + GetAuditTableNameList,
         "datatype": "json",
         success: function (response) {
-            console.log(response);
+           // console.log(response);
             
             TableName.empty().append('<option selected="selected" value="">-- select --</option>');
             for (var i = 0; i < response.length; i++) {
@@ -55,5 +54,4 @@ function assignToggleFilter() {
         x.style.display = "none";
     }
 }
-
-
+ 

@@ -13,7 +13,12 @@
     <div class="w-100 position-relative">
         <main class="w-100">
             <div class="flex justify-between mt-20 mobile_flexColumn position-relative">
-                <h3 class="dashboardTitle">Log History</h3> 
+                <h3 class="dashboardTitle">Log History</h3>  
+                <div class="hamburger" style="margin-top: 1em;">
+                    <a class="greyBtn lineBtn formAbtn" href="/AuditLog/Logs">Audit Logs</a>
+                    <img src="../assets/right-arrow.svg" alt="hamburger-icon">
+                    <span>History</span>
+                </div>
             </div>
 
             <div class="accordion valueAdvance"> 
@@ -24,7 +29,7 @@
                         <h5>Advanced Search</h5>
                         <span class="cursor-pointer" onclick="assignToggleFilter()">X</span>
                     </div>
-                    <form> 
+                    <form id="auditDetailFilterForm">
                         <div class="flex flex-start"> 
                             <label for="fromDate">
                                 <p class="m-0">From</p>
@@ -38,6 +43,7 @@
 
                         <div class="text-center">
                             <button type="button" class="blueBtn" onclick="InitializeAuditLogHistoryList()">Search</button>
+                            <button type="button" onclick="clearSearchFields()" class="blueBtn">Clear</button>
                         </div>
 
                     </form>
