@@ -211,11 +211,11 @@
                                 </div>
 
                                 <div class="flex  mb-28">
-                                   @*  <label for="" class="w-50 m-0" id="comment">
+                                    <label for="" class="w-50 m-0" id="comment">
                                         Approver Comment
                                         @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
                                         @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
-                                    </label> *@ 
+                                    </label> 
                                    
                                     <label for="" class="w-50">
                                         Valuation Time Frame (In Days)
@@ -769,7 +769,7 @@
                                         <p>External Information</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
-                                    <div class="panel" style="display: none;">
+                                    <div class="panel">
                                         <div class="flex">
                                             <label for="" class="w-100">
                                                 <p class="m-0"> Property Condition<span class="text-danger">*</span></p>

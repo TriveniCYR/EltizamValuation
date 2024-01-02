@@ -24,10 +24,14 @@ function InitializeApproverMasterTableDataList() {
             "data": "description", "name": "Description"
         },
         {
-            "data": "fromAmount", "name": "From Amount"
+            "data": "fromAmount", "name": "From Amount", "render": function (data, type, row, meta) {
+                return '<span class="formatting">'+data+'</span>';
+            }
         },
         {
-            "data": "toAmount", "name": "To Amount"
+            "data": "toAmount", "name": "To Amount", "render": function (data, type, row, meta) {
+                return '<span class="formatting">'+data+'</span>';
+            }
         },
         {
             "data": "isActive", "name": "Active", "render": function (data, type, row, meta) {
@@ -47,5 +51,9 @@ function InitializeApproverMasterTableDataList() {
         }
     ];
 
-    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
+    var dataTable = IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
+
+    dataTable.on('init.dt', function () {
+        formatCurrencyInElements('formatting');
+    });
 }

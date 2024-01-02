@@ -221,19 +221,16 @@ namespace Eltizam.Business.Core.Implementation
                 var valuationEntity = _repository.Get(model.Id);
 
                 //Get open approvals
-                var openApprovals = _valuationRequestApproverLevel.GetAllAsync(a => a.ValuationRequestId == model.Id && a.StatusId == null).Result.ToList();
-                
+                var openApprovals = _valuationRequestApproverLevel.GetAllAsync(a => a.ValuationRequestId == model.Id && a.StatusId == null).Result.ToList(); 
                 if (openApprovals != null && openApprovals.Count >0 )
                 {
                     var nxtapp = openApprovals.OrderBy(a => a.ApproverLevelId).FirstOrDefault();
                     valuationEntity.ApproverId = nxtapp?.ApproverId;
                 }
-                else
-                {
-                    valuationEntity.ApproverComment = model.ApproverComment;
-                    valuationEntity.StatusId = model.StatusId;
-                    valuationEntity.ModifiedBy = By;
-                }
+                else 
+                    valuationEntity.StatusId = model.StatusId;  
+                valuationEntity.ModifiedBy = By;
+                valuationEntity.ApproverComment = model.ApproverComment;
 
                 _repository.UpdateAsync(valuationEntity);
                 await _unitOfWork.SaveChangesAsync();
@@ -302,10 +299,10 @@ namespace Eltizam.Business.Core.Implementation
                         objValuation.ValuationModeId = entityValuation.ValuationModeId;
                         objValuation.PropertyId = entityValuation.PropertyId;
                         objValuation.ClientId = entityValuation.ClientId;
+                        objValuation.ApproverComment = entityValuation.ApproverComment;
                         objValuation.ModifiedBy = entityValuation.ModifiedBy;
-                        _repository.UpdateAsync(objValuation);
-                        //_repository.UpdateGraph(objValuation, EntityState.Modified);
 
+                        _repository.UpdateAsync(objValuation); 
                         await _unitOfWork.SaveChangesAsync();
 
                         try
