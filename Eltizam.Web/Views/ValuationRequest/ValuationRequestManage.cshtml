@@ -211,25 +211,26 @@
                                 </div>
 
                                 <div class="flex  mb-28">
-                                   @*  <label for="" class="w-50 m-0" id="comment">
+                                    <label for="" class="w-50 m-0" id="comment">
                                         Approver Comment
                                         @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
                                         @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
-                                    </label> *@ 
+                                    </label> 
                                    
                                     <label for="" class="w-50">
                                         Valuation Time Frame (In Days)
                                         @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
                                         @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
                                     </label> 
-
-                                    <label for="" class="bodyContent p-0 w-50">
+                                </div>  
+                                <div class="flex  mb-28">                                    
+                                    <label for="" class="w-50">
                                         Method of Valuation
                                         <div class="flex m-0 valuationType">
                                             @Html.DropDownList("ValuationModeId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
                                         </div>
                                     </label>
-                                </div>  
+                                </div>
                             </div>
 
 

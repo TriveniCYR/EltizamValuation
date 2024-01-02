@@ -36,7 +36,7 @@ function DeleteUserByIdSuccess(data) {
  
 
 function InitializeDataList() {
-    var setDefaultOrder = [0, 'asc'];
+    var setDefaultOrder = [0, 'desc'];
     var ajaxObject = {
         "url": BaseURL + ValuationFees,
         "type": Post,
