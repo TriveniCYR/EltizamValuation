@@ -1,6 +1,7 @@
-﻿
+﻿ 
 var docId = 0;
 var invoiceId = 0;
+
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -135,29 +136,20 @@ function ConfirmationDocument(id, isAction) {
 
 }
 
-function DeleteDocument() {
-
+function DeleteDocument() { 
     docId = $('#DeleteDocumentModel #ID').val()
     var by = LogInUserId;
     var action = $('#isAction').val();
-    if (isDeleteSite && action === 'isSite') {
 
+    if (isDeleteSite && action === 'isSite') { 
         ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by, Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
-    else if (isDeleteEvidence && action === 'isEvidence') {
-
-
-
+    else if (isDeleteEvidence && action === 'isEvidence') { 
         ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by, Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
-    else if (isDeleteAssesment && action === 'isAssesment') {
-
-
-
+    else if (isDeleteAssesment && action === 'isAssesment') { 
         ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by, Delete, DeleteDocumentSuccess, DeleteDocumentError);
-    }
-
-
+    } 
     else {
         toastr.error(DeleteAccessDenied);
     }
@@ -179,17 +171,16 @@ function DeleteDocumentSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
-
-
+ 
 function DeleteDocumentError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-
-
+ 
 $(document).ready(function () {
 
-
+    var roleId = document.getElementById('hdnRoleId').value;
+    var role = $('#LogInRoleName').val();
 
     var RoleEnum = {
         'Requestor': 1,
@@ -200,7 +191,7 @@ $(document).ready(function () {
 
 
 
-    var roleId = document.getElementById('hdnRoleId').value;
+    /*var roleId = document.getElementById('hdnRoleId').value;
     var inputElement1 = $('#ApproverId');
     var inputElement2 = $('#OtherReferenceNo');
     var inputElement3 = $('#ValuerId');
@@ -321,6 +312,25 @@ $(document).ready(function () {
         inputElement64.prop('disabled', true);
         inputElement65.prop('disabled', true);
         inputElement66.prop('disabled', true);
+    } 
+    */
+
+    $("#profile1 :input").attr("disabled", true);
+    $('#StatusId').attr("disabled", false); 
+
+    if (roleId === RoleEnum.Approver.toString()) {
+        $("#profile4 :input").attr("disabled", true);
+        $("#profile5 :input").attr("disabled", true);
+        $("#profile6 :input").attr("disabled", true);
+         
+        $('#ApproverComment').attr("disabled", false); 
+    }
+    else if (roleId === RoleEnum.Valuer.toString()) {
+        $("#profile1 :input").attr("disabled", true);  
+    }
+    else {
+        $("[id*='editables'] :input").attr("disabled", false);
+        $("[id^='ReferenceNo']").attr("disabled", true); 
     }
 
 
@@ -858,10 +868,7 @@ function BindAmenityDetail() {
     if ((PropertyTypeId == null || PropertyTypeId == "")) {
         alert("No id is passed");
         return false;
-    }
-    // var OwnershipType = $("#OwnershipTypeId");
-    //var _val = $('#hdnOwnershipType').val();
-    //var _rpname = "ownershipType";
+    } 
 
     //BindDropdowns(OwnershipTypeList, OwnershipType, _rpname, _val);
     $.ajax({

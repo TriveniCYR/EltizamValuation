@@ -7,6 +7,7 @@ using Eltizam.Utility.Utility;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Localization;
@@ -148,6 +149,7 @@ namespace Eltizam.Web.Controllers
             HttpContext.Session.SetString(UserHelper.LogInUserId, Convert.ToString(oUserDetail.UserId));
             HttpContext.Session.SetString(UserHelper.LogInRoleId, Convert.ToString(oUserDetail.RoleId));
             HttpContext.Session.SetString(UserHelper.LogInUserName, oUserDetail.UserName);
+            HttpContext.Session.SetString(UserHelper.LogInRoleName, oUserDetail.RoleName);
         }
 
 

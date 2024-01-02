@@ -15,8 +15,7 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
-    var isView =
-    ViewData["Title"] = _md + _header;
+    var isView = ViewData["Title"] = _md + _header;
 
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
     var isDelete = objPermssion.Delete ? 1 : 0;
@@ -112,11 +111,10 @@
                             <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
                             <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
                             <input type="hidden" id="isApprovePerm" value="@isApprove" />
+                            
                             <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
-                            <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
-                            @*  <input type="hidden" id="hdnStatusId" value="@(Model == null ? 0 : Model.StatusId)" />   *@
-                            <input type="hidden" id="hdnStatusId" value="@(_md == "Add" ? 3 : (Model == null ? 0 : Model.StatusId))" />
-
+                            <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" /> 
+                            <input type="hidden" id="hdnStatusId" value="@(_md == "Add" ? 3 : (Model == null ? 0 : Model.StatusId))" /> 
                             <input type="hidden" id="hdnClientId" value="@(Model == null ? 0 : Model.ClientId)" />
                             <input type="hidden" id="hdnApproverId" value="@(Model == null ? 0 : Model.ApproverId)" />
                             <input type="hidden" id="hdnValuationModeId" value="@(Model == null ? 0 : Model.ValuationModeId)" />
@@ -138,19 +136,18 @@
                             <input type="hidden" id="valuationdetailsId" value="@(Model == null ? 0 : Model.Id)" />
                             <input type="hidden" id="Valuationapprovalvalues" name="ValuationApprovalValues" />
 
-                            <div class="ptrl-20">
+                            <div class="ptrl-20" id="editables0">
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Val. Ref#
                                         @Html.TextBoxFor(model => model.ReferenceNo, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Valuation Reference no"] })
-                                        @*  <input type="text" placeholder="12837187236" disabled> *@
-                                    </label>
+                                     </label>
                                     <label for="" class="w-50">
                                         Other Reference no
                                         @Html.TextBoxFor(model => model.OtherReferenceNo, new { @class = "form-control", @placeholder = @SharedLocalizer["Other Reference no"] })
                                         @Html.ValidationMessageFor(model => model.OtherReferenceNo, "", new { @class = "text-danger" })
                                     </label>
-                                </div> 
+                                </div>
 
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
@@ -169,8 +166,9 @@
                                 <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Approver Name
-                                        @Html.DropDownList("ApproverId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown " }) 
+                                        @Html.DropDownList("ApproverId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown " })
                                     </label>
+
                                     <label for="" class="w-50">
                                         Valuer Name
                                         @Html.DropDownList("ValuerId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
@@ -198,16 +196,30 @@
 
                                             //append to page
                                             <label for="" class="bodyContent p-0 w-50">
-                                                @level
-
+                                                @level 
                                                 @Html.DropDownListFor(model => ddSelected, new SelectList(curList.Select(approver => new SelectListItem
-                                               {
-                                                   Value = approver.ApproverId.ToString(),
-                                                   Text = approver.ApproverName
-                                               }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
+                                                {
+                                                       Value = approver.ApproverId.ToString(),
+                                                       Text = approver.ApproverName
+                                                }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
                                             </label>
                                         }
                                     }
+                                </div>
+
+                                <div class="flex  mb-28"> 
+                                    <label for="" class="w-50">
+                                        Method of Valuation
+                                        <div class="flex m-0 valuationType">
+                                            @Html.DropDownList("ValuationModeId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
+                                        </div>
+                                    </label>
+
+                                    <label for="" class="w-50">
+                                        Valuation Time Frame (In Days)
+                                        @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
+                                        @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
+                                    </label>
                                 </div>
 
                                 <div class="flex  mb-28">
@@ -216,20 +228,6 @@
                                         @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
                                         @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
                                     </label> 
-                                   
-                                    <label for="" class="w-50">
-                                        Valuation Time Frame (In Days)
-                                        @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
-                                        @Html.ValidationMessageFor(model => model.ValuationTimeFrame, "", new { @class = "text-danger" })
-                                    </label> 
-                                </div>  
-                                <div class="flex  mb-28">                                    
-                                    <label for="" class="w-50">
-                                        Method of Valuation
-                                        <div class="flex m-0 valuationType">
-                                            @Html.DropDownList("ValuationModeId", new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
-                                        </div>
-                                    </label>
                                 </div>
                             </div>
 
@@ -239,7 +237,7 @@
                             {
                                 <div class="roundBorderBox ptrl-20">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
-                                        <p>Approver(s) level history</p>
+                                        <p>Approver(s) history</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
                                     <div class="inputSearchs p-0">
@@ -248,7 +246,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Level</th>
-                                                        <th>Approver</th> 
+                                                        <th>Approver</th>
                                                         <th>Status</th>
                                                         <th>Comment</th>
                                                         <th>Updated By</th>
@@ -260,7 +258,7 @@
                                                     {
                                                         <tr>
                                                             <td>@level.ApproverLevel</td>
-                                                            <td>@level.ApproverName</td> 
+                                                            <td>@level.ApproverName</td>
                                                             @if (@level.Status != null)
                                                             {
                                                                 <td><span class="tableStatus" style="color: @level.ColorCode; background-color: @level.BackGroundColor; border: 1px solid @level.ColorCode;">@level.Status</span></td>
@@ -291,7 +289,7 @@
                                     <input type="hidden" id="hdnCountry" value="@(Model == null ? 0 : Model.CountryId)" />
                                     <input type="hidden" id="hdnState" value="@(Model == null ? 0 : Model.StateId)" />
                                     <input type="hidden" id="hdnCity" value="@(Model == null ? 0 : Model.CityId)" />
-                                    <div class="flex  mb-28">
+                                    <div class="flex  mb-28" id="editables1">
                                         <label for="" class="w-50">
                                             <p class="m-0">Client Type<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.ClientTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindClientByClientType(this.options[this.selectedIndex].value)" })
@@ -310,7 +308,7 @@
                                         </label>
                                         <label for="" class="w-50">
                                             TRN Expiry Date
-                                            @Html.TextBoxFor(model => model.TrnexpiryDate, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["TRN Expiry Date"] }) 
+                                            @Html.TextBoxFor(model => model.TrnexpiryDate, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["TRN Expiry Date"] })
                                         </label>
                                     </div>
 
@@ -372,7 +370,7 @@
                                     <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
                                     <input type="hidden" id="hdnPropertyId" value="@(Model.PropertyId)" />
                                     <input type="hidden" id="hdnPropertyName" value="@(Model == null ? 0 : Model.PropertyName)" />
-                                    <div class="flex  mb-28">
+                                    <div class="flex  mb-28" id="editables2">
                                         <label for="" class="w-50">
                                             <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertySub(this.options[this.selectedIndex].value);" })
@@ -384,7 +382,7 @@
                                             @Html.ValidationMessageFor(model => model.PropertySubTypeId, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
-                                    <div class="flex  mb-28">
+                                    <div class="flex  mb-28" id="editables3">
                                         <label for="" class="w-50">
                                             <p class="m-0">Type of Ownership</p>
                                             @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertyDetail()" })
@@ -564,23 +562,26 @@
 
                             <div class="text-right buttonArea bodyContent">
                                 <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
+                                
                                 @if (ViewBag.IsView == 1)
                                 {
                                     <a href='/ValuationRequest/ValuationRequestManage?id=@Model.Id'>
                                         <button type="button" class=" blueBtn mr-12" style=" width:100px">Edit</button>
                                     </a>
                                 }
-                                @if (roleId == (int)RoleEnum.Admin || roleId == (int)RoleEnum.Requestor)
-                                {
+                                else 
+                                { 
+                                    @if (roleId == (int)RoleEnum.Admin || roleId == (int)RoleEnum.Requestor)
+                                    { 
+                                        <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
+                                    }
 
-                                    <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
-                                }
-
-                                @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer && ViewBag.IsView != 1)
-                                {
-                                    <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
-                                        Save
-                                    </button>
+                                    @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
+                                    {
+                                        <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
+                                            Save
+                                        </button>
+                                    }
                                 }
                             </div>
                         </form>
@@ -1279,7 +1280,6 @@
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
         var isViewHide = "@ViewBag.IsView";
-        var isAddValuation = (@Model.Id == 0);
-                // var isViewQt = objPermssionQt.View ? true : false;
+        var isAddValuation = @Model.Id == 0; 
     </script>
 }
