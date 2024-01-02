@@ -351,11 +351,11 @@ $('.clsCalculateFee').on('change', function () {
     var InstructorCharges = $('#InstructorCharges').val();
     var Discount = $('#Discount').val();
 
-    ValuationFee = ValuationFee == '' ? 0 : parseFloat(ValuationFee);
-    Vat = Vat == '' ? 0 : parseFloat(Vat);
-    OtherCharges = OtherCharges == '' ? 0 : parseFloat(OtherCharges);
-    InstructorCharges = InstructorCharges == '' ? 0 : parseFloat(InstructorCharges);
-    Discount = Discount == '' ? 0 : parseFloat(Discount);
+    ValuationFee = ValuationFee == '' ? 0 : parseFloat(ValuationFee.replace(',', ''));
+    Vat = Vat == '' ? 0 : parseFloat(Vat.replace(',', ''));
+    OtherCharges = OtherCharges == '' ? 0 : parseFloat(OtherCharges.replace(',', ''));
+    InstructorCharges = InstructorCharges == '' ? 0 : parseFloat(InstructorCharges.replace(',', ''));
+    Discount = Discount == '' ? 0 : parseFloat(Discount.replace(',', ''));
 
     var result = ValuationFee + Vat + OtherCharges + InstructorCharges - Discount;
     result = isNaN(result) ? 0 : result;
