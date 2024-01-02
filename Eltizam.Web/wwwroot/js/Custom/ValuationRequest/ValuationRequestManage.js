@@ -315,9 +315,7 @@ $(document).ready(function () {
     } 
     */
 
-    $("#profile1 :input").attr("disabled", true);
-    $('#StatusId').attr("disabled", false); 
-
+    $("#profile1 :input").attr("disabled", true); 
     if (roleId === RoleEnum.Approver.toString()) {
         $("#profile4 :input").attr("disabled", true);
         $("#profile5 :input").attr("disabled", true);
@@ -332,7 +330,7 @@ $(document).ready(function () {
         $("[id*='editables'] :input").attr("disabled", false);
         $("[id^='ReferenceNo']").attr("disabled", true); 
     }
-
+    $('#StatusId').attr("disabled", false); 
 
     if (roleId > 0) {
         BindValuationRequestStatus(roleId, action);
