@@ -175,7 +175,7 @@ $('#FixedvaluationFees').keypress(function (e) {
 //    $("#ApprovrLevelId2");
 //}
 // Add a click event listener for the "View" link
-function GetApproverLevel(amount, event) { 
+function GetApproverLevel(amount) { 
     var approvrLevel2 = $("#ApproverId2");
     var approvrLevel3 = $("#ApproverId3");
     var _rpname = "approverName";
@@ -360,5 +360,10 @@ $('.clsCalculateFee').on('change', function () {
     var result = ValuationFee + Vat + OtherCharges + InstructorCharges - Discount;
     result = isNaN(result) ? 0 : result;
     $('#TotalFee').val(result);    
+    if (ValuationFee != "" && Vat != "" && OtherCharges != "")
+    {
+        GetApproverLevel(result);
+    }
+    //GetApproverLevel(result);
 });
 
