@@ -63,18 +63,7 @@ namespace Eltizam.Business.Core.Implementation
             DataSet dsCommercial = await _repository.GetDataSetBySP("stp_npd_GetValuationDataforPDF", System.Data.CommandType.StoredProcedure, osqlParameter);
 
             dynamic pdfObjects = new ExpandoObject();
-            pdfObjects.ValuationRequest = dsCommercial.Tables[0];
-            //DropdownObjects.CommercialYear = dsCommercial.Tables[1];
-            //DropdownObjects.PIDFStrength = dsCommercial.Tables[2];
-            //DropdownObjects.PIDF = dsCommercial.Tables[3];
-            //DropdownObjects.BusinessUnit = dsCommercial.Tables[4];
-            //DropdownObjects.Currency = dsCommercial.Tables[5];
-            //DropdownObjects.PackagingType = dsCommercial.Tables[6];
-            //DropdownObjects.PackSize = dsCommercial.Tables[7];
-            //DropdownObjects.FinalSelection = dsCommercial.Tables[8];
-            //DropdownObjects.PIDFCommercialMaster = dsCommercial.Tables[9];
-            //DropdownObjects.PBFOutSourceData = dsCommercial.Tables[10];
-            //DropdownObjects.CountryList = dsCommercial.Tables[11];
+            pdfObjects.ValuationRequest = dsCommercial.Tables[0];      
             return dsCommercial;
         }
 
