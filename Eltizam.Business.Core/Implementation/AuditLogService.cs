@@ -79,7 +79,7 @@ namespace Eltizam.Business.Core.Implementation
                     TableKeyId = TableKeyId,
                     TableName = TableName,
                     ParentTableKeyId = PTId,
-                    ParentTableName = PTName//?.Replace("_", ""),
+                    ParentTableName = PTName.Replace("_", ""),
                 };
 
                 if (entityAudit.Log != "[]")
