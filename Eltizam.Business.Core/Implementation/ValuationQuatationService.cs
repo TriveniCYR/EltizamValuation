@@ -60,7 +60,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter("@Id", valId)
             };
 
-            DataSet dsCommercial = await _repository.GetDataSetBySP("stp_npd_GetValuationDataforPDF", System.Data.CommandType.StoredProcedure, osqlParameter);
+            DataSet dsCommercial = await _repository.GetDataSetBySP("usp_ValuationRequest_ReportData", System.Data.CommandType.StoredProcedure, osqlParameter);
 
             dynamic pdfObjects = new ExpandoObject();
             pdfObjects.ValuationRequest = dsCommercial.Tables[0];      
