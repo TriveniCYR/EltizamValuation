@@ -41,6 +41,7 @@
                     <input type="hidden" id="hdnClientType" value="@(Model == null ? 0 : Model.ClientTypeId)" />
                     <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
                     <input type="hidden" id="hdnValuationFeeType" value="@(Model == null ? 0 : Model.ValuationFeeTypeId)" />
+                    <input type="hidden" id="hdnValuationType" value="@(Model == null ? 0 : Model.ValuationType)" />
                     @* <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" /> *@
 
                     <div class="">
@@ -102,13 +103,12 @@
                             </label>
 
                         </div>
+
                         <div class="flex">
-                            <label for="">
+                            <label for="" class="w-50">
                                 Valuation Type
                                 <div class="flex m-0 valuationType">
-                                    @Html.DropDownList("ValuationType", new List<SelectListItem>{
-                                    new SelectListItem{ Text="General", Value = "6" },
-                                    new SelectListItem{ Text="Fixed", Value = "5" }}, new {  @class = "form-control" , @disabled=htmlAttributes,htmlAttributes})
+                                    @Html.DropDownList("ValuationType", new List<SelectListItem>{}, new { @class = "form-control searchable-dropdown" })
 
                                 </div>
                             </label>
@@ -205,7 +205,8 @@
         var ClientTypeList = "@Eltizam.Web.Helpers.APIURLHelper.GetSearchClientType";
         var OwnershipTypeList = "@Eltizam.Web.Helpers.APIURLHelper.OwnershipTypeList";//GetAllOwnershipType";
         var ValuationFeeTypeList = "@Eltizam.Web.Helpers.APIURLHelper.ValuationFeeTypeList";//GetAllValuationFeeType";
-        var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";
+        var PropertyByIdSubType = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByPropertyTypeId";        
+        var GetDictionaryWithSubDetails = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryWithSubDetails";
 
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]";
