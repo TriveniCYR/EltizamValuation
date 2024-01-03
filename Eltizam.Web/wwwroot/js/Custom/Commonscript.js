@@ -30,7 +30,7 @@ var ErrorToaster = ErrorToast.val();
 var ErrorDev = $("#errorBanner");
 
 //Fixed messages
-var SucessMsg = "Request saved successfully.";
+var SucessMsg = "Action performed successfully.";
 var ErrorMsg = "Some error occurred while processing request.";
 var DeleteAccessDenied = "Delete permission not granted.";
 
