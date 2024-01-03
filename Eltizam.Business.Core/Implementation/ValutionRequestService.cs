@@ -15,13 +15,15 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class ValutionRequestService : IValuationRequestService
+    public class ValuationRequestService : IValuationRequestService
     {
         #region Properties
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
         private readonly IConfiguration _configuration;
+
+        private IRepository<MasterUser> _userrepo { get; set; }
         private IRepository<ValuationRequest> _repository { get; set; }
         private IRepository<SiteDescription> _siterepository { get; set; }
         private IRepository<ComparableEvidence> _evidencerepository { get; set; }
@@ -32,12 +34,12 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
 
-        private readonly INotificationService _notificationService;
+        private readonly IMasterNotificationService _notificationService;
 
         #endregion Properties
 
         #region Constructor
-        public ValutionRequestService(IAuditLogService auditLogService, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration configuration, INotificationService notificationService)
+        public ValuationRequestService(IAuditLogService auditLogService, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration configuration, IMasterNotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -52,6 +54,7 @@ namespace Eltizam.Business.Core.Implementation
             _auditLogService = auditLogService;
             _valuationQuotationrepository = _unitOfWork.GetRepository<ValuationQuotation>();
             _valuationRequestApproverLevel = _unitOfWork.GetRepository<ValuationRequestApproverLevel>();
+            _userrepo = _unitOfWork.GetRepository<MasterUser>();
         }
         #endregion Constructor
 
@@ -195,42 +198,55 @@ namespace Eltizam.Business.Core.Implementation
 
             if (model.StatusId > 0 && model.Id > 0)
             {
-                var openApproval = _valuationRequestApproverLevel.Get(a => a.ValuationRequestId == model.Id && a.StatusId == null && a.ApproverId == By);
-                if (openApproval != null)
-                {
-                    ValuationRequestApproverLevel oldentity = null;
-                    oldentity = _valuationRequestApproverLevel.GetNoTracking(openApproval.Id);
-
-                    var ent = _valuationRequestApproverLevel.Get(openApproval.Id);
-                    ent.ApproverComment = model.ApproverComment;
-                    ent.StatusId = model.StatusId;
-                    ent.ModifiedBy = By;
-
-                    //Update comment
-                    _valuationRequestApproverLevel.UpdateAsync(ent);
-                    await _unitOfWork.SaveChangesAsync();
-
-                    //Do Audit Log --AUDITLOG 
-                    await _auditLogService.CreateAuditLog<ValuationRequestApproverLevel>(AuditActionTypeEnum.Update, oldentity, ent, TableName, model.Id);
-                }
-
-
                 ValuationRequest OldEntity = null;
                 OldEntity = _repository.GetNoTracking(model.Id);
 
                 var valuationEntity = _repository.Get(model.Id);
 
-                //Get open approvals
-                var openApprovals = _valuationRequestApproverLevel.GetAllAsync(a => a.ValuationRequestId == model.Id && a.StatusId == null).Result.ToList(); 
-                if (openApprovals != null && openApprovals.Count >0 )
+                //Get open approvals for approver
+                var user = _userrepo.Get(model.LogInUserId ?? 1);
+
+                //approver flow
+                if (user != null && user.RoleId == (int)RoleEnum.Approver)
                 {
-                    var nxtapp = openApprovals.OrderBy(a => a.ApproverLevelId).FirstOrDefault();
-                    valuationEntity.ApproverId = nxtapp?.ApproverId;
+                    var openApproval = _valuationRequestApproverLevel.Get(a => a.ValuationRequestId == model.Id && a.StatusId == null && a.ApproverId == By);
+                    if (openApproval != null)
+                    {
+                        ValuationRequestApproverLevel oldentity = null;
+                        oldentity = _valuationRequestApproverLevel.GetNoTracking(openApproval.Id);
+
+                        var ent = _valuationRequestApproverLevel.Get(openApproval.Id);
+                        ent.ApproverComment = model.ApproverComment;
+                        ent.StatusId = model.StatusId;
+                        ent.ModifiedBy = By;
+
+                        //Update comment
+                        _valuationRequestApproverLevel.UpdateAsync(ent);
+                        await _unitOfWork.SaveChangesAsync();
+
+                        //Do Audit Log --AUDITLOG 
+                        await _auditLogService.CreateAuditLog<ValuationRequestApproverLevel>(AuditActionTypeEnum.Update, oldentity, ent, TableName, model.Id);
+                    }
+
+                    //Get open approvals
+                    var openApprovals = _valuationRequestApproverLevel.GetAllAsync(a => a.ValuationRequestId == model.Id && a.StatusId == null).Result.ToList();
+                    if (openApprovals != null && openApprovals.Count > 0)
+                    {
+                        var nxtapp = openApprovals.OrderBy(a => a.ApproverLevelId).FirstOrDefault();
+                        valuationEntity.ApproverId = nxtapp?.ApproverId;
+                    }
+                    else
+                        valuationEntity.StatusId = model.StatusId;
+                    valuationEntity.ModifiedBy = By;
+                    valuationEntity.ApproverComment = model.ApproverComment;
                 }
-                else 
-                    valuationEntity.StatusId = model.StatusId;  
-                valuationEntity.ModifiedBy = By;
-                valuationEntity.ApproverComment = model.ApproverComment;
+
+                //Valuer status updates
+                else if (user != null && user.RoleId == (int)RoleEnum.Valuer)
+                {
+                    valuationEntity.StatusId = model.StatusId;
+                    valuationEntity.ModifiedBy = By;
+                }
 
                 _repository.UpdateAsync(valuationEntity);
                 await _unitOfWork.SaveChangesAsync();

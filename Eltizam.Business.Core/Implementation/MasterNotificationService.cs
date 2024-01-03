@@ -17,7 +17,7 @@ using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Implementation
 {
-    public class MasterNotificationService : INotificationService
+    public class MasterNotificationService : IMasterNotificationService
     {
         private readonly IConfiguration _configuration;
         private readonly IUnitOfWork _unitOfWork;
@@ -107,6 +107,48 @@ namespace Eltizam.Business.Core.Implementation
             {
                 _memoryCache.Remove(AppConstants.NotificationsCache);
                 //InitiateNotificationCache();
+            }
+
+            return DBOperation.Success;
+        }
+
+        public async Task<DBOperation> SendEmail2(SendNotificationModel request)
+        {
+            try
+            { 
+                var message = new MimeMessage();
+                message.From.Add(MailboxAddress.Parse(_configuration.GetSection("SMTPDetails:FromEmail").Value));
+
+                //Parse email data
+                var Em = request.ToEmailList;
+                if (Em.Contains(';'))
+                {
+                    foreach (var mail in Em.Split(';'))
+                        message.To.Add(MailboxAddress.Parse(mail.Trim()));
+                }
+                else
+                    message.To.Add(MailboxAddress.Parse(Em));
+
+                // message.To.Add(MailboxAddress.Parse(request.ToEmailList));
+                message.Subject = _configuration.GetSection("ApiInfo:Environment").Value + " " + request.Subject;
+                message.Body = new TextPart(TextFormat.Html) { Text = request.Body };
+
+                using var smtp = new SmtpClient();
+                smtp.Connect(_configuration.GetSection("SMTPDetails:Host").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
+                smtp.Authenticate(_configuration.GetSection("SMTPDetails:UserName").Value,
+                    _configuration.GetSection("SMTPDetails:Password").Value);
+
+                //Send email 
+                smtp.Send(message);
+                smtp.Disconnect(true); 
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                _memoryCache.Remove(AppConstants.NotificationsCache); 
             }
 
             return DBOperation.Success;

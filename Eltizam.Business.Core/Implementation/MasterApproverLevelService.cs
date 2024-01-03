@@ -32,12 +32,12 @@ namespace Eltizam.Business.Core.Implementation
 
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
-        private readonly INotificationService _notificationService;
+        private readonly IMasterNotificationService _notificationService;
 
         #endregion Properties
 
         #region Constructor
-        public MasterApproverLevelService(IAuditLogService auditLogService, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration configuration, INotificationService notificationService)
+        public MasterApproverLevelService(IAuditLogService auditLogService, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration configuration, IMasterNotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;

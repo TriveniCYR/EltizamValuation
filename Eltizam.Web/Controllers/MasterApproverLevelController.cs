@@ -4,7 +4,6 @@ using Eltizam.Resource;
 using Eltizam.Utility.Enums;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;

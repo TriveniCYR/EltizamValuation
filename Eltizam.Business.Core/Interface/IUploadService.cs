@@ -1,11 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Eltizam.Data.DataAccess.Entity;
+﻿using Eltizam.Data.DataAccess.Entity;
+using Microsoft.AspNetCore.Http;
 using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace Eltizam.Business.Core.Interface

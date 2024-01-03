@@ -42,7 +42,7 @@ namespace Eltizam.Business.Core.Resolver
             services.AddTransient<IMasterClientService, MasterClientService>();
             services.AddTransient<IMasterClientTypeService, MasterClientTypeService>();
             services.AddTransient<IMasterDictionaryService, MasterDictionaryService>();
-            services.AddTransient<IValuationRequestService, ValutionRequestService>();
+            services.AddTransient<IValuationRequestService, ValuationRequestService>();
             services.AddTransient<IValuationRequestStatusService, ValuationRequestStatusService>();
             services.AddTransient<IValuationQuatationService, ValuationQuatationService>();
             services.AddTransient<IValuationInvoiceService, ValuationInvoiceService>();
