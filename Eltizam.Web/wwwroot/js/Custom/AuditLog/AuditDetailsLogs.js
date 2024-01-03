@@ -29,6 +29,9 @@ function InitializeAuditLogHistoryList() {
 
     var columnObject = [
         {
+            "data": "id", "name": "Id"
+        }, 
+        {
             "data": "createdByName", "name": "Updated By"
         }, 
         {
