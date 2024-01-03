@@ -24,7 +24,7 @@ function BindState(id) {
     var state = $("#StateId");
     var _val = $('#hdnState').val();
     var _rpname = "stateName";
-
+    //$("#CityId").empty();
     BindDropdowns(stateListUrl + '/' + id, state, _rpname, _val);
 }
 
