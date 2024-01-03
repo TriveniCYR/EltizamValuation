@@ -19,9 +19,9 @@ namespace EltizamValuation.WebApi.Controllers
         private readonly IExceptionService _ExceptionService;
         private readonly IMasterNotificationService _notificationService;
 
-        public NotificationController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, IMasterNotificationService notificationService)
+        public NotificationController(IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, IMasterNotificationService notificationService)
         {
-            _configuration = configuration;
+            //_configuration = configuration;
             _ObjectResponse = ObjectResponse;
             _ExceptionService = exceptionService;
             _notificationService = notificationService;

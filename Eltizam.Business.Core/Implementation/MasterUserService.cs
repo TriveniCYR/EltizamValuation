@@ -14,7 +14,7 @@
                 Body = strHtml,
                 Subject = "Forgot Password",
                 ToEmailList = entityUser.Email
-            };            var res = _notification.SendEmail2(not);            //var res = email.SendMail(entityUser.Email, string.Empty, "Eltizam - Forgot Password", strHtml, GetSMTPConfiguration());             EmailLogHistory emailLogHistory = new EmailLogHistory();            emailLogHistory.FromAddress = configuration.GetSection("SMTPDetails").GetSection("FromEmail").Value;//entityUser.Email;
+            };            var res = _notification.SendEmail2(notification);            //var res = email.SendMail(entityUser.Email, string.Empty, "Eltizam - Forgot Password", strHtml, GetSMTPConfiguration());             EmailLogHistory emailLogHistory = new EmailLogHistory();            emailLogHistory.FromAddress = configuration.GetSection("SMTPDetails").GetSection("FromEmail").Value;//entityUser.Email;
 
             emailLogHistory.ToAddress = notification.ToEmailList;            emailLogHistory.Subject = notification.Subject;            emailLogHistory.EmailResponse = "";            emailLogHistory.CreatedBy = 1;            //emailLogHistory.CreatedDate = AppConstants.DateTime;            emailLogHistory.Body = notification.Body;            emailLogHistory.IsSent = DBOperation.Success == res.Result;                        _emailLog.AddAsync(emailLogHistory);            await _unitOfWork.SaveChangesAsync();
 
