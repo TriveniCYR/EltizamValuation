@@ -30,16 +30,7 @@ function InitializeAuditLogHistoryList() {
     var columnObject = [
         {
             "data": "id", "name": "Id"
-        }, 
-        {
-            "data": "createdByName", "name": "Updated By"
-        }, 
-        {
-            "data": "createdDate", "name": "Updated Date", class: "formatted-td-date-input",
-            "render": function (data, type, row, data) {
-                return moment(row.createdDate).format(defaultDateFormat);
-            }
-        },
+        },  
         {
             "data": "propertyName", "name": "Field Name"
         },
@@ -54,7 +45,16 @@ function InitializeAuditLogHistoryList() {
             "render": function (data, type, row, data) {
                 return row.propertyName.indexOf('Date') > -1 ? moment(row.oldValue).format(defaultDateFormat) : row.newValue;
             }
-        } 
+        },
+        {
+            "data": "createdByName", "name": "Updated By"
+        },
+        {
+            "data": "createdDate", "name": "Updated Date", class: "formatted-td-date-input",
+            "render": function (data, type, row, data) {
+                return moment(row.createdDate).format(defaultDateFormat);
+            }
+        }
     ];
 
     IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);

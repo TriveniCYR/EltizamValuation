@@ -34,17 +34,7 @@ function InitializeAuditLogList() {
             "data": "id", "name": "Id", "render": function (data, type, row, meta) {
                 return '<a href="/AuditLog/AuditLogDetailList?id=' + row.id + '&IsView=1" title="View">' + data + '</a>';
             }
-        },
-        {
-            "data": "createdByName", "name": "Created User"
-        },
-        {
-            "data": "createdDate", "name": "Created Date",
-
-            "render": function (data, type, row, data) {
-                return moment(row.createdDate).format('DD-MMM-YYYY');
-            }
-        },
+        }, 
         //{
         //    "data": "actionType", "name": "Action Type"
         //}, 
@@ -59,6 +49,16 @@ function InitializeAuditLogList() {
         },
         {
             "data": "parentTableName", "name": "Parent Module Name"
+        },
+        {
+            "data": "createdByName", "name": "Created User"
+        },
+        {
+            "data": "createdDate", "name": "Created Date",
+
+            "render": function (data, type, row, data) {
+                return moment(row.createdDate).format('DD-MMM-YYYY');
+            }
         },
         {
             "data": "id", className: 'notexport actionColumn', "name": "Action", "render": function (data, type, row, meta) {
