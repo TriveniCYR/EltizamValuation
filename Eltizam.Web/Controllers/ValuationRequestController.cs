@@ -74,14 +74,14 @@ namespace EltizamValuation.Web.Controllers
 
         [HttpGet]
         public IActionResult ValuationRequestManage(int? id, int? IsView)
-        { 
-            var _ValuationEntity = new ValuationRequestModel(); 
+        {
+            var _ValuationEntity = new ValuationRequestModel();
 
             _ValuationEntity.ValuationAssesment = new ValuationAssesmentActionModel();
             _ValuationEntity.ValuationAssesment.SiteDescription = new SiteDescriptionModel();
             _ValuationEntity.ValuationAssesment.comparableEvidenceModel = new ComparableEvidenceModel();
             _ValuationEntity.ValuationAssesment.valuationAssessementModel = new ValuationAssessementModel();
-           
+
             //Check permissions for Get
             var action = IsView == 1 ? PermissionEnum.View : (id == null ? PermissionEnum.Add : PermissionEnum.Edit);
 
@@ -90,8 +90,8 @@ namespace EltizamValuation.Web.Controllers
             int userId = _helper.GetLoggedInUserId();
 
             if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
-                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home); 
-            
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
             //Get Footer info
             var vw = IsView == 1;
             ViewBag.IsView = IsView;
@@ -126,11 +126,11 @@ namespace EltizamValuation.Web.Controllers
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestModel>>(jsonResponse);
 
                     //Give access of only requestes which they beed assigned for
-                    if ((roleId == (int)RoleEnum.Valuer     && data._object.ValuerId != userId) ||
-                        (roleId == (int)RoleEnum.Approver   && data._object.ApproverId != userId))
+                    if ((roleId == (int)RoleEnum.Valuer && data._object.ValuerId != userId) ||
+                        (roleId == (int)RoleEnum.Approver && data._object.ApproverId != userId))
                     {
                         return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-                    } 
+                    }
 
                     return View(data._object);
                 }
@@ -144,42 +144,27 @@ namespace EltizamValuation.Web.Controllers
         {
             try
             {
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
-
-                //ValuationRequestModel entity = new ValuationRequestModel(); 
-                //entity.ApproverId = request.ApproverId;
-                //entity.ValuerId = request.ValuerId;
-                //entity.ValuationModeId = request.ValuationModeId;
-                //entity.ValuationTimeFrame = request.ValuationTimeFrame;
-                //entity.ValuationDate = request.ValuationDate;
-                //entity.StatusId = request.StatusId;
-                ////entity.PropertyId = request.PropertyId;
-                //entity.ClientId = request.ClientId;
-                //entity.ReferenceNo = request.ReferenceNo;
-                //entity.OtherReferenceNo = request.OtherReferenceNo;
-                //Fill audit logs field
-
                 request.Id = id;
                 if (request.Id == 0)
                     request.CreatedBy = _helper.GetLoggedInUserId();
                 request.ModifiedBy = _helper.GetLoggedInUserId();
 
-                //valuationRequestModelNew.ValuationDate = valuationRequestModel.ValuationDate;
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(request))).Result;
 
-                if (responseMessage.IsSuccessStatusCode && request.Id == 0)
-                {
-                    TempData[UserHelper.SuccessMessage] = AppConstants.ActionSuccess;
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    return RedirectToAction(nameof(ValuationRequests));
-                }
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);   
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(request))).Result;
+                 
+
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     TempData[UserHelper.SuccessMessage] = AppConstants.ActionSuccess;
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={request.Id}");
-                }
+
+                    if (request.Id == 0)
+                        return RedirectToAction(nameof(ValuationRequests));
+                    else
+                        return Redirect($"/ValuationRequest/ValuationRequestManage?id={request.Id}");
+                } 
                 else
                     TempData[UserHelper.ErrorMessage] = AppConstants.ActionFailed;
             }
@@ -237,7 +222,7 @@ namespace EltizamValuation.Web.Controllers
                 quotation.ReferenceNo = refNo;
                 quotation.StatusId = 13;
 
-                FooterInfo(TableNameEnum.ValuationQuotation, _cofiguration, id); 
+                FooterInfo(TableNameEnum.ValuationQuotation, _cofiguration, id);
                 return View(quotation);
             }
             else
@@ -250,7 +235,7 @@ namespace EltizamValuation.Web.Controllers
                 {
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationQuatationListModel>>(jsonResponse);
-                     
+
                     ////Get Footer info
                     FooterInfo(TableNameEnum.ValuationQuotation, _cofiguration, id, true);
 
@@ -259,14 +244,14 @@ namespace EltizamValuation.Web.Controllers
                 return NotFound();
             }
         }
-        
+
         [HttpPost]
         public IActionResult ValuationQuotationManage(int id, ValuationQuatationListModel masterQuotation)
         {
             try
             {
                 //Check permissions for Get
-                var action = id == null ? PermissionEnum.Add : PermissionEnum.View; 
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
 
                 int roleId = _helper.GetLoggedInRoleId();
 
@@ -327,7 +312,7 @@ namespace EltizamValuation.Web.Controllers
             {
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
-            } 
+            }
 
             return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterQuotation.ValuationRequestId}");
         }
@@ -335,10 +320,10 @@ namespace EltizamValuation.Web.Controllers
         [HttpGet]
         public IActionResult ValuationInvoiceManage(int? id, int vId, string refNo)
         {
-            ValuationInvoiceListModel invoice; 
+            ValuationInvoiceListModel invoice;
 
             //Check permissions for Get
-            var action = id == null ? PermissionEnum.Add : PermissionEnum.View; 
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
 
             int roleId = _helper.GetLoggedInRoleId();
 
@@ -348,7 +333,7 @@ namespace EltizamValuation.Web.Controllers
             //Get module wise permissions
             ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
             ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
-            ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice); 
+            ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
 
             bool hasInvoiceViewAccess = ViewBag.QuotationAccess?.View ?? false;
             bool hasInvoiceEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
@@ -365,7 +350,7 @@ namespace EltizamValuation.Web.Controllers
             else if (action == PermissionEnum.Add && !hasInvoiceAddAccess)
             {
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-            } 
+            }
 
             if (id == null || id <= 0)
             {
@@ -469,7 +454,7 @@ namespace EltizamValuation.Web.Controllers
 
                 if (masterInvoice.Document != null && masterInvoice.Document.Files != null)
                 {
-                    List<MasterDocumentModel> docs =_helper .FileUpload(masterInvoice.Document);
+                    List<MasterDocumentModel> docs = _helper.FileUpload(masterInvoice.Document);
                     masterInvoice.uploadDocument = docs;
                     masterInvoice.Document = null;
                 }
@@ -504,13 +489,13 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult ReviewerRequestStatus(int id, ValutionRequestForApproverModel appoveRequestModel)
         {
             try
-            { 
+            {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
                 ValutionRequestForApproverModel valuationRequestModelNew = new ValutionRequestForApproverModel();
-                valuationRequestModelNew.Id = id; 
-                valuationRequestModelNew.StatusId = appoveRequestModel.StatusId;     
+                valuationRequestModelNew.Id = id;
+                valuationRequestModelNew.StatusId = appoveRequestModel.StatusId;
                 valuationRequestModelNew.ApproverComment = appoveRequestModel.ApproverComment;
 
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ReviewRequestStatus, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
@@ -596,7 +581,7 @@ namespace EltizamValuation.Web.Controllers
                 else if (action == PermissionEnum.Add && !hasSiteDescriptionViewAccess)
                 {
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-                } 
+                }
 
 
                 if (valuationAssesment.SiteDescription.Id == 0)
@@ -629,7 +614,7 @@ namespace EltizamValuation.Web.Controllers
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
             //return RedirectToAction("ValuationRequests");
-            return Redirect($"/ValuationRequest/ValuationRequestManage?id={valuationAssesment.SiteDescription.ValuationRequestId}"); 
+            return Redirect($"/ValuationRequest/ValuationRequestManage?id={valuationAssesment.SiteDescription.ValuationRequestId}");
         }
 
         [HttpGet]
@@ -660,7 +645,7 @@ namespace EltizamValuation.Web.Controllers
 
             return RedirectToAction("Users");
         }
-      
+
         //private List<MasterDocumentModel> FileUpload(DocumentFilesModel document)
         //{
         //    List<MasterDocumentModel> uploadFiles = new List<MasterDocumentModel>();
