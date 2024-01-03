@@ -203,6 +203,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 // Create a new MasterClient entity from the model for insertion.
                 objClient = _mapperFactory.Get<MasterClientModel, MasterClient>(master_ClientModel);
+                objClient.MiddleName = master_ClientModel.MiddleName == null ? "" : master_ClientModel.MiddleName;
                 objClient.CreatedDate = AppConstants.DateTime;
                 objClient.CreatedBy = master_ClientModel.CreatedBy; 
 
