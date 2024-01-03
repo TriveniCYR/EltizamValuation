@@ -170,11 +170,11 @@ $(document).ready(function () {
     }
     if (IsEditPerm === false) {
         $("#btnSaveEdit").remove();
-    }
-    if (IsApprovePerem === false) {
-
         $("#btnSaveApprove").remove();
     }
+    //if (IsApprovePerem === false) { 
+    //    $("#btnSaveApprove").remove();
+    //}
     if (IsAddPermQt === false) {
         $("#addNewQt").remove();
     }

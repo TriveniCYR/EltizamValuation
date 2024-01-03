@@ -315,13 +315,16 @@ $(document).ready(function () {
         $('#ApproverComment').attr("disabled", false); 
     }
     else if (roleId === RoleEnum.Valuer.toString()) {
-        $("#profile1 :input").attr("disabled", true);  
+        $("#profile1 :input").attr("disabled", true); 
     }
     else {
         $("[id*='editables'] :input").attr("disabled", false);
         $("[id^='ReferenceNo']").attr("disabled", true); 
     }
+    //common settings
     $('#StatusId').attr("disabled", false); 
+    $("#profile1 [type='button']").attr("disabled", false);
+    $("#profile1 [type='submit']").attr("disabled", false);
 
     if (roleId > 0) {
         BindValuationRequestStatus(roleId, action);
@@ -914,9 +917,10 @@ function GetValuationMethodLists() {
 
 $('#btnSaveApprove').on('click', function () {
     var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
+    var _id = $("#Id").val();
 
     var data = {
-        Id: $("#Id").val(),
+        Id: _id,
         StatusId: $("#StatusId").val(),
         ApproverComment: approverComment,
         LogInUserId: LogInUserId
@@ -936,7 +940,7 @@ $('#btnSaveApprove').on('click', function () {
         success: function (response) {
             toastr.success(SucessMsg);
             setTimeout(function () {
-                window.location.href = "/ValuationRequest/ValuationRequests";
+                window.location.href = "/ValuationRequest/ValuationRequestManage?id=" + _id;
             }, 1000);
         },
         failure: function (response) {
