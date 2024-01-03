@@ -32,11 +32,11 @@
                     <form id="auditLogFilterForm">
                         <div class="flex flex-start"> 
                             <label for="UserName">
-                                <p class="m-0">UserName</p>
+                                <p class="m-0">Updated By</p>
                                 @Html.DropDownListFor(model => model.UserName, new List<SelectListItem> { }, new { id = "UserName", @class = "form-control searchable-dropdown" })
                             </label>
                             <label for="ParentTableName">
-                                <p class="m-0">TableName</p>
+                                <p class="m-0">Module Name</p>
                                 @Html.DropDownListFor(model => model.ParentTableName, new List<SelectListItem> { }, new { id = "ParentTableName", @class = "form-control searchable-dropdown" })
                             </label>
                             <label for="fromDate" style="margin-left:0px;">
