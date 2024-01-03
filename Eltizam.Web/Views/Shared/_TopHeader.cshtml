@@ -31,9 +31,12 @@
             <input type="hidden" id="LogInRoleId" value="@_URoleId" />
             <input type="hidden" id="LogInRoleName" value="@_URoleName" />
 
-            <p class="visible-in-web">@_UName</p>
+            <p class="visible-in-web">@_UName <br /> 
+                <span>@_URoleName</span>
+            </p>
+
             <img src="~/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" />
-            <div id="profileMenu" class="actionItem" style="width: 80%;display: none;margin-left: 2em;">
+            <div id="profileMenu" class="actionItem" style="width: 95%;display: none;margin:1.2em 0em 0em 0em;">
                 <ul>
                     <li>
                         <a href="@_act">

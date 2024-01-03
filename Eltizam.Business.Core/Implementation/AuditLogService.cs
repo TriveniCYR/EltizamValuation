@@ -66,8 +66,7 @@ namespace Eltizam.Business.Core.Implementation
                 int logCreatedBy = Convert.ToInt32(pInfo.GetValue(newEntity, null));
 
                 //Get table Name, Id
-                //var TableName = typeof(TResult).Name;
-                var TableName = PTName;
+                var TableName = typeof(TResult).Name; 
                 var TableKeyId = Convert.ToInt32(GetPrimaryKey<TResult>(oldEntity));
 
                 //Save Audit Log
@@ -80,7 +79,7 @@ namespace Eltizam.Business.Core.Implementation
                     TableKeyId = TableKeyId,
                     TableName = TableName,
                     ParentTableKeyId = PTId,
-                    ParentTableName = PTName?.Replace("_", ""),
+                    ParentTableName = PTName//?.Replace("_", ""),
                 };
 
                 if (entityAudit.Log != "[]")
