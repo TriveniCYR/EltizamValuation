@@ -12,9 +12,9 @@ function accordianToggle(header) {
 $('#ValuationType').change(function () {
     var general = document.getElementById("general");
     var fixed = document.getElementById("fixed");
-    var valuationType = document.getElementById('ValuationType').value;
+    var valuationType = $("#ValuationType option:selected").text();
     //alert("You entered " + valuationType + " for your gender<br>");
-    if (valuationType === "5") {
+    if (valuationType === "Fixed") {
         general.style.display = "none";
         fixed.style.display = "block";
 
@@ -24,7 +24,7 @@ $('#ValuationType').change(function () {
         document.getElementById('TotalValuationFees').value = null;
 
 
-    } else if (valuationType === "6") {
+    } else if (valuationType === "General") {
         fixed.style.display = "none";
         general.style.display = "block";
         document.getElementById('FixedvaluationFees').value = null;
@@ -40,18 +40,19 @@ $(document).ready(function () {
     BindClient();
     BindOwnership();
     BindValuationFeeType();
+    GetValuationTypeLists();
 
     ///For Dropdown Change
-    var general = document.getElementById("general");
-    var fixed = document.getElementById("fixed");
-    var valuationType = document.getElementById('ValuationType').value;
-    if (valuationType === "5") {
-        general.style.display = "none";
-        fixed.style.display = "block";
-    } else if (valuationType === "6") {
-        fixed.style.display = "none";
-        general.style.display = "block";
-    }
+    //var general = document.getElementById("general");
+    //var fixed = document.getElementById("fixed");
+    //var valuationType = document.getElementById('ValuationType').value;
+    //if (valuationType === "5") {
+    //    general.style.display = "none";
+    //    fixed.style.display = "block";
+    //} else if (valuationType === "6") {
+    //    fixed.style.display = "none";
+    //    general.style.display = "block";
+    //}
 
     /// End For Dropdown Change
     var HdnId = $('#hdnProperty').val();
@@ -60,6 +61,80 @@ $(document).ready(function () {
     }
 });
 
+function ShowValuationTypeProperties() {
+    var general = document.getElementById("general");
+    var fixed = document.getElementById("fixed");
+    var valuationType = $("#ValuationType option:selected").text();
+    if (valuationType === "Fixed") {
+        general.style.display = "none";
+        fixed.style.display = "block";
+    } else if (valuationType === "General") {
+        fixed.style.display = "none";
+        general.style.display = "block";
+    }
+}
+function GetValuationTypeLists() {
+    var ValuationType = $("#ValuationType");
+    var _val = $('#hdnValuationType').val();
+    var _rpname = "description";
+    var description = "ValuationType";
+    // var currentUserId = "@ViewBag.CurrentUserId";
+    $.ajax({
+        type: Get,
+        url: BaseURL + GetDictionaryWithSubDetails + '?description=' + description,
+        "datatype": "json",
+        success: function (response) {
+            var _dd = _rpname;
+            var data = response.values;
+            var generalId = 0;
+            $.each(data, function (index, item) {
+                (item.description == "General")
+                {
+                    generalId = item.id;
+                }
+            });
+            if (_val == "") {
+                _val = generalId;
+            }
+            for (var i = 0; i < data.length; i++) {
+                ValuationType.append($("<option></option>").val(data[i].id).html(data[i][_dd]));
+            }
+            if (_val != 0) {
+                ValuationType.val(_val);
+            }
+            ShowValuationTypeProperties();
+            //else {
+            //    ValuationType.html("General");
+            //}
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+    //BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?description=' + description, ValuationType, _rpname, _val);
+
+}
+
+$(document).on('click', '#btnSaveEdit', function (e) {
+    // Get amount from form
+    var valuationType = $("#ValuationType option:selected").text();
+    if (valuationType == "Fixed") {
+        var fixedvaluationFee = $('#FixedvaluationFees').val();
+        if (fixedvaluationFee == "") {
+            e.preventDefault();
+            toastr.error("Please fill fixed valuation Fees.");
+            hideLoader();
+            return false;
+        }
+    }
+    else {
+            return true;
+    }
+});
 function BindProperty() { 
     var Property = $("#PropertyTypeId");
     var _val = $('#hdnProperty').val();
