@@ -28,14 +28,14 @@ namespace Eltizam.Business.Core.Implementation
 
         private readonly IAuditLogService _auditLogService;
         private readonly int? _LoginUserId;
-        private readonly INotificationService _notificationService;
+        private readonly IMasterNotificationService _notificationService;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IRepository<MasterUser> _masteruserrepository;
         private IRepository<MasterValuationStatus> _statusrepository { get; set; }
         #endregion Properties
 
         #region Constructor
-        public ValuationQuatationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IAuditLogService auditLogService, INotificationService notificationService)
+        public ValuationQuatationService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IAuditLogService auditLogService, IMasterNotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
