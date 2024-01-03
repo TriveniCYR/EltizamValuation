@@ -43,7 +43,7 @@ $(document).ready(function () {
     var general = document.getElementById("general");
     var fixed = document.getElementById("fixed");
     var valuationType = document.getElementById('ValuationType').value;
-    if (valuationType === "2") {
+    if (valuationType === "5") {
         general.style.display = "none";
         fixed.style.display = "block";
     } else if (valuationType === "1") {

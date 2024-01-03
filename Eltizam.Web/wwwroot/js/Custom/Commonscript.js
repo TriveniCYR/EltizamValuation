@@ -719,5 +719,17 @@ $('.searchable-dropdown').on('change', function () {
     }
 });
 
+// Add an additional event listener for when the dropdown loses focus
+$('.searchable-dropdown').on('blur', function () {
+    var selectval = $(this).val();
+    var valcntrl = $(this).parent().find('.field-validation-error');
+
+    if (selectval == 0 || selectval === "" || selectval === undefined) {
+        valcntrl.show();
+    } else {
+        valcntrl.hide();
+    }
+});
+
 
 // ======== End:  SSearchable drop down Validation ============
