@@ -9,6 +9,14 @@ var setDefaultOrder = [0, 'desc'];
 var ShowMenuCache = "showMenuCache";
 var defaultDateFormat = 'DD-MMM-YYYY hh:mm A';
 
+//Role Enum
+var RoleEnum = {
+    'Requestor': 1,
+    'Approver': 2,
+    'Valuer': 3,
+    'Admin': 4
+}; 
+
 //API methods
 var Post = 'POST';
 var Get = 'GET';

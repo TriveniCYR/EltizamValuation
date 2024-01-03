@@ -180,16 +180,7 @@ function DeleteDocumentError(x, y, z) {
 $(document).ready(function () {
 
     var roleId = document.getElementById('hdnRoleId').value;
-    var role = $('#LogInRoleName').val();
-
-    var RoleEnum = {
-        'Requestor': 1,
-        'Approver': 2,
-        'Valuer': 3,
-        'Admin': 4
-    };
-
-
+    //var role = $('#LogInRoleName').val(); 
 
     /*var roleId = document.getElementById('hdnRoleId').value;
     var inputElement1 = $('#ApproverId');
