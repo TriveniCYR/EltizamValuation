@@ -2113,7 +2113,7 @@ div#amentiesdiv label {
     }
 
         .dashboard-status .dashboard-box h3 {
-            font-size: 2em;
+            font-size: 1.5em;
             margin-top: 16px;
             color: var(--blue);
         }

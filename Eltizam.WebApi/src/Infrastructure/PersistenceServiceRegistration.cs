@@ -50,7 +50,7 @@ namespace ValuationWeb.Persistence
             services.AddTransient<IMasterRoleModulePermission, MasterRoleModulePermissionService>();
             services.AddSingleton<IMemoryCache, MemoryCache>();
             services.AddTransient<IMasterModuleService, MasterModuleService>();
-            services.AddTransient<IValuationRequestService, ValutionRequestService>();
+            services.AddTransient<IValuationRequestService, ValuationRequestService>();
             services.AddTransient<IMasterValuationFeesService, MasterValuationFeesService>();
             services.AddTransient<IMasterValuationFeeTypeService, MasterValuationFeeTypeService>();
             services.AddTransient<IMasterPropertyService, MasterPropertyService>();
@@ -62,7 +62,7 @@ namespace ValuationWeb.Persistence
             services.AddTransient<IMasterOwnershipTypeService, MasterOwnershipTypeService>();
             services.AddTransient<IAuditLogService, AuditLogService>();
             services.AddTransient<IValuationAssessmentService, ValuationAssessmentService>();
-            services.AddTransient<INotificationService, MasterNotificationService>();
+            services.AddTransient<IMasterNotificationService, MasterNotificationService>();
             services.AddTransient<IFileUploadService, FileUploadService>();
             services.AddTransient<IMasterApproverLevelService, MasterApproverLevelService>();
             return services;

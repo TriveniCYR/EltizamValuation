@@ -10,7 +10,7 @@ namespace Eltizam.Data.DataAccess.Helper
     {
         public static string ConnectionStringkey = "ConnectionStrings:EltizamDBConn";
 
-        public static string msgLinkToResetpasswordSentOnEmail = "Forgot password link sent to the given email successfully."; 
+        public static string msgLinkToResetpasswordSentOnEmail = "Forgot password link sent successfully."; 
         public static string SomeErrorOccurred = "Some error occurred"; 
         public static string msgEmailAddressNotExistIndatabase = "Entered email address is not found"; 
         public static string msgPasswordResetSuccessfully = "Password Reset successfully"; 

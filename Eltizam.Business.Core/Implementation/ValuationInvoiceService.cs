@@ -30,7 +30,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
-        private readonly INotificationService _notificationService;
+        private readonly IMasterNotificationService _notificationService;
         private readonly IRepository<MasterUser> _masteruserrepository;
         //private readonly IRepository<MasterDictionaryDetail> _masterdictionaryrepository;
         private readonly IAuditLogService _auditLogService;
@@ -38,7 +38,7 @@ namespace Eltizam.Business.Core.Implementation
         #endregion Properties
 
         #region Constructor
-        public ValuationInvoiceService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IAuditLogService auditLogService, INotificationService notificationService)
+        public ValuationInvoiceService(IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IAuditLogService auditLogService, IMasterNotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;

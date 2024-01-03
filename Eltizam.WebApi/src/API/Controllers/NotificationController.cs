@@ -1,12 +1,11 @@
-﻿using Eltizam.Data.DataAccess.Helper;
-using Microsoft.AspNetCore.Mvc;
-using static Eltizam.Utility.Enums.GeneralEnum;
-using System.Net;
-using Eltizam.WebApi.Filters;
+﻿using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
-using Eltizam.Business.Core.Interface;
+using Eltizam.Data.DataAccess.Helper;
+using Eltizam.WebApi.Filters;
 using Eltizam.WebApi.Helpers.Response;
-using Eltizam.Business.Core.Implementation;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using static Eltizam.Utility.Enums.GeneralEnum;
 
 namespace EltizamValuation.WebApi.Controllers
 {
@@ -15,14 +14,12 @@ namespace EltizamValuation.WebApi.Controllers
     [ApiController]
     [AuthorizeAttribute]
     public class NotificationController : ControllerBase
-    {
-        private readonly IConfiguration _configuration;
-        private readonly IResponseHandler<dynamic> _ObjectResponse;
-        //private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
+    { 
+        private readonly IResponseHandler<dynamic> _ObjectResponse; 
         private readonly IExceptionService _ExceptionService;
-        private readonly INotificationService _notificationService;
+        private readonly IMasterNotificationService _notificationService;
 
-        public NotificationController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, INotificationService notificationService)
+        public NotificationController(IConfiguration configuration, IResponseHandler<dynamic> ObjectResponse, IExceptionService exceptionService, IMasterNotificationService notificationService)
         {
             _configuration = configuration;
             _ObjectResponse = ObjectResponse;
