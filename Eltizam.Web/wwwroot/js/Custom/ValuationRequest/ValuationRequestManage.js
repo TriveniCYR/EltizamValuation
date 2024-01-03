@@ -306,25 +306,33 @@ $(document).ready(function () {
     } 
     */
 
-    $("#profile1 :input").attr("disabled", true); 
+    
+    $("[id^='ReferenceNo']").attr("disabled", true); 
+        //Approvder settings
     if (roleId === RoleEnum.Approver.toString()) {
+        $("#profile1 :input").attr("disabled", true); 
         $("#profile4 :input").attr("disabled", true);
         $("#profile5 :input").attr("disabled", true);
         $("#profile6 :input").attr("disabled", true);
          
         $('#ApproverComment').attr("disabled", false); 
     }
+        //Valuer settings
     else if (roleId === RoleEnum.Valuer.toString()) {
         $("#profile1 :input").attr("disabled", true); 
     }
-    else {
-        $("[id*='editables'] :input").attr("disabled", false);
-        $("[id^='ReferenceNo']").attr("disabled", true); 
-    }
-    //common settings
+    //
+    //else {
+    //    $("[id*='editables'] :input").attr("disabled", false);
+    //}
+
+    //common settings  
     $('#StatusId').attr("disabled", false); 
     $("#profile1 [type='button']").attr("disabled", false);
     $("#profile1 [type='submit']").attr("disabled", false);
+    $("#profile1 [type='hidden']").attr("disabled", false);
+
+
 
     if (roleId > 0) {
         BindValuationRequestStatus(roleId, action);
