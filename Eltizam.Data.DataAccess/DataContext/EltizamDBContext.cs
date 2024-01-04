@@ -61,11 +61,14 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<MasterVendor> MasterVendors { get; set; } = null!;
         public virtual DbSet<SiteDescription> SiteDescriptions { get; set; } = null!;
         public virtual DbSet<ValuationAssesment> ValuationAssesments { get; set; } = null!;
+        public virtual DbSet<ValuationComparableEvidence> ValuationComparableEvidences { get; set; } = null!;
         public virtual DbSet<ValuationInvoice> ValuationInvoices { get; set; } = null!;
         public virtual DbSet<ValuationQuotation> ValuationQuotations { get; set; } = null!;
         public virtual DbSet<ValuationRequest> ValuationRequests { get; set; } = null!;
         public virtual DbSet<ValuationRequestApproverLevel> ValuationRequestApproverLevels { get; set; } = null!;
         public virtual DbSet<ValuationRequestStatusHistory> ValuationRequestStatusHistories { get; set; } = null!;
+        public virtual DbSet<ValuationSiteDescription> ValuationSiteDescriptions { get; set; } = null!;
+        public virtual DbSet<VwDictonaryChild> VwDictonaryChildren { get; set; } = null!;
         public virtual DbSet<VwPropertyLocation> VwPropertyLocations { get; set; } = null!;
         public virtual DbSet<VwUser> VwUsers { get; set; } = null!;
         public virtual DbSet<VwValuationRequest> VwValuationRequests { get; set; } = null!;
@@ -132,6 +135,8 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.FromAddress)
                     .HasMaxLength(365)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Subject)
                     .HasMaxLength(365)
@@ -613,11 +618,21 @@ namespace Eltizam.Data.DataAccess.DataContext
             {
                 entity.ToTable("Master_Notification", "dbo");
 
+                entity.HasIndex(e => new { e.Id, e.ValuationRequestId }, "idx_idvalreqid");
+
+                entity.Property(e => e.Body).IsUnicode(false);
+
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ReadDate).HasColumnType("datetime");
 
                 entity.Property(e => e.SentDatetime).HasColumnType("datetime");
+
+                entity.Property(e => e.Subject)
+                    .HasMaxLength(900)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ToEmails).IsUnicode(false);
 
                 entity.HasOne(d => d.ValuationRequest)
                     .WithMany(p => p.MasterNotifications)
@@ -671,6 +686,10 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.PropertyName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UnitNumber)
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
@@ -1200,6 +1219,30 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasConstraintName("FK_ValuationAssesment_ValuationRequest");
             });
 
+            modelBuilder.Entity<ValuationComparableEvidence>(entity =>
+            {
+                entity.ToTable("ValuationComparableEvidence", "dbo");
+
+                entity.Property(e => e.AddtionalComments).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.RateSqFt).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Remarks).HasMaxLength(250);
+
+                entity.Property(e => e.Type).HasMaxLength(50);
+
+                entity.HasOne(d => d.Request)
+                    .WithMany(p => p.ValuationComparableEvidences)
+                    .HasForeignKey(d => d.RequestId)
+                    .HasConstraintName("FK_ValuationComparableEvidence_ValuationRequest");
+            });
+
             modelBuilder.Entity<ValuationInvoice>(entity =>
             {
                 entity.ToTable("ValuationInvoice", "dbo");
@@ -1388,6 +1431,72 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.StatusRemark).HasMaxLength(300);
+            });
+
+            modelBuilder.Entity<ValuationSiteDescription>(entity =>
+            {
+                entity.ToTable("ValuationSiteDescription", "dbo");
+
+                entity.Property(e => e.AdditionComment)
+                    .HasMaxLength(750)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AdditionalNotes)
+                    .HasMaxLength(750)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ExternalArea).HasColumnType("decimal(16, 8)");
+
+                entity.Property(e => e.InternalArea).HasColumnType("decimal(16, 8)");
+
+                entity.Property(e => e.Location)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Others)
+                    .HasMaxLength(750)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PropertyCondition)
+                    .HasMaxLength(750)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Storage)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ValuationRequest)
+                    .WithMany(p => p.ValuationSiteDescriptions)
+                    .HasForeignKey(d => d.ValuationRequestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ValuationSiteDescription_ValuationRequest");
+            });
+
+            modelBuilder.Entity<VwDictonaryChild>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vw_DictonaryChild", "dbo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DetailDescription)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DictionaryCode)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<VwPropertyLocation>(entity =>

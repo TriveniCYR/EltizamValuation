@@ -181,6 +181,7 @@ namespace Eltizam.Business.Core.Implementation
                     objProperty.Parking = masterproperty.Parking;
                     objProperty.ParkingBayNo = masterproperty.ParkingBayNo;
                     objProperty.Description = masterproperty.Description;
+                    objProperty.UnitNumber = masterproperty.UnitNumber;
                     objProperty.ModifiedBy = masterproperty.ModifiedBy;
 
                     _repository.UpdateAsync(objProperty);

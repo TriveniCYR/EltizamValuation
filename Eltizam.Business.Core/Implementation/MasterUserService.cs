@@ -50,7 +50,7 @@
 
 
 
-        /// <summary>        /// User save code        ///         /// </summary>        /// <param name="entityUser"></param>        /// <returns></returns>                                                                                                                                                                           public async Task<DBOperation> Upsert(MasterUserModel entityUser)        {
+        /// <summary>        /// User save code        ///         /// </summary>        /// <param name="entityUser"></param>        /// <returns></returns>        public async Task<DBOperation> Upsert(MasterUserModel entityUser)        {
             //var By = _helper.GetLoggedInUser().UserId;
             if (!string.IsNullOrEmpty(entityUser.Password) && entityUser.Id <= 0)            {                entityUser.Password = UtilityHelper.GenerateSHA256String(entityUser.Password);                entityUser.ConfirmPassowrd = entityUser.Password;            }
 
@@ -65,7 +65,7 @@
                 OldEntity = _repository.GetNoTracking(entityUser.Id);
 
                 objUser = _repository.Get(entityUser.Id);                if (objUser != null)                {
-                    objUser.FirstName = entityUser.FirstName;                    objUser.MiddleName = entityUser.MiddleName;                    objUser.LastName = entityUser.LastName;                    objUser.UserName = entityUser.UserName;                    objUser.Gender = entityUser.Gender;                    objUser.DateOfBirth = entityUser.DateOfBirth;                    objUser.DepartmentId = entityUser.DepartmentId;                    objUser.DesignationId = entityUser.DesignationId;                    objUser.LicenseNo = entityUser.LicenseNo;                    objUser.CompanyId = entityUser.CompanyId;                    objUser.CompanyName = entityUser.CompanyName;                    objUser.ResourceId = entityUser.ResourceId;                    objUser.IsActive = entityUser.IsActive;
+                    objUser.FirstName = entityUser.FirstName;                    objUser.MiddleName = entityUser.MiddleName;                    objUser.LastName = entityUser.LastName;                    objUser.UserName = entityUser.UserName;                    objUser.GenderId = entityUser.GenderId;                    objUser.DateOfBirth = entityUser.DateOfBirth;                    objUser.DepartmentId = entityUser.DepartmentId;                    objUser.DesignationId = entityUser.DesignationId;                    objUser.LicenseNo = entityUser.LicenseNo;                    objUser.CompanyId = entityUser.CompanyId;                    objUser.CompanyName = entityUser.CompanyName;                    objUser.ResourceId = entityUser.ResourceId;                    objUser.IsActive = entityUser.IsActive;
                     objUser.RoleId = entityUser.RoleId;
                     objUser.ApproverLevelId = entityUser.ApproverLevelId;
                     objUser.Email = entityUser.Email;                    objUser.ModifiedBy = entityUser.ModifiedBy;

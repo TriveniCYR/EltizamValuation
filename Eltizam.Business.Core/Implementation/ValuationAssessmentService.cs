@@ -26,9 +26,9 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
         private readonly Microsoft.Extensions.Configuration.IConfiguration configuration;
-        private IRepository<ComparableEvidence> _repository { get; set; }
+        private IRepository<ValuationComparableEvidence> _repository { get; set; }
         private IRepository<ValuationAssesment> _valutionrepository { get; set; }
-        private IRepository<SiteDescription> _siteRepository { get; set; }
+        private IRepository<ValuationSiteDescription> _siteRepository { get; set; }
         private IRepository<MasterAddress> _addressRepository { get; set; }
 
         private IRepository<MasterDocument> _documentRepository { get; set; }
@@ -45,8 +45,8 @@ namespace Eltizam.Business.Core.Implementation
             _mapperFactory = mapperFactory;
 
 
-            _repository = _unitOfWork.GetRepository<ComparableEvidence>();
-            _siteRepository = _unitOfWork.GetRepository<SiteDescription>();
+            _repository = _unitOfWork.GetRepository<ValuationComparableEvidence>();
+            _siteRepository = _unitOfWork.GetRepository<ValuationSiteDescription>();
             _valutionrepository = _unitOfWork.GetRepository<ValuationAssesment>();
             _addressRepository = _unitOfWork.GetRepository<MasterAddress>();
 
@@ -61,9 +61,9 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> ValuationAssesmentUpsert(ValuationAssesmentActionModel model)
         {
           
-            SiteDescription objUser;
+            ValuationSiteDescription objUser;
 
-            ComparableEvidence comparable;
+            ValuationComparableEvidence comparable;
             ValuationAssesment objUser1;
             MasterDocument objUserDocument;
             objUser = _siteRepository.GetAll().Where(x => x.ValuationRequestId == model.SiteDescription.ValuationRequestId).FirstOrDefault();
@@ -77,7 +77,7 @@ namespace Eltizam.Business.Core.Implementation
                 string MainTableName = Enum.GetName(TableNameEnum.SiteDescription);
                 int MainTableKey = objUser.Id;
                 //Get current Entiry --AUDITLOGUSER
-                SiteDescription OldEntity = null;
+                ValuationSiteDescription OldEntity = null;
                 OldEntity = _siteRepository.GetNoTracking(objUser.Id);
                 objUser = _siteRepository.Get(objUser.Id);
 
@@ -106,12 +106,12 @@ namespace Eltizam.Business.Core.Implementation
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<SiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
+                    await _auditLogService.CreateAuditLog<ValuationSiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
                 }
             }
             else
             {
-                objUser = _mapperFactory.Get<SiteDescriptionModel, SiteDescription>(model.SiteDescription);
+                objUser = _mapperFactory.Get<SiteDescriptionModel, ValuationSiteDescription>(model.SiteDescription);
 
                 objUser.CreatedBy = model.SiteDescription.CreatedBy;
 
@@ -155,7 +155,7 @@ namespace Eltizam.Business.Core.Implementation
                 string MaincomparableTableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
 
                 //Get current Entiry --AUDITLOGUSER
-                ComparableEvidence OldEntity = null;
+                ValuationComparableEvidence OldEntity = null;
                 OldEntity = _repository.GetNoTracking(comparable.Id);
 
                 comparable = _repository.Get(comparable.Id);
@@ -175,12 +175,12 @@ namespace Eltizam.Business.Core.Implementation
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<ComparableEvidence>(AuditActionTypeEnum.Update, OldEntity, comparable, MaincomparableTableName, MaincomparableTableKey);
+                    await _auditLogService.CreateAuditLog<ValuationComparableEvidence>(AuditActionTypeEnum.Update, OldEntity, comparable, MaincomparableTableName, MaincomparableTableKey);
                 }
             }
             else
             {
-                comparable = _mapperFactory.Get<ComparableEvidenceModel, ComparableEvidence>(model.comparableEvidenceModel);
+                comparable = _mapperFactory.Get<ComparableEvidenceModel, ValuationComparableEvidence>(model.comparableEvidenceModel);
 
                 comparable.CreatedBy = model.comparableEvidenceModel.CreatedBy;
                 comparable.IsActive = model.comparableEvidenceModel.IsActive;
@@ -308,7 +308,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> SideDescriptionUpsert(SiteDescriptionModel model)
         {
 
-            SiteDescription objUser;
+            ValuationSiteDescription objUser;
             MasterDocument objUserDocument;
 
             string MainTableName = Enum.GetName(TableNameEnum.SiteDescription);
@@ -318,7 +318,7 @@ namespace Eltizam.Business.Core.Implementation
             if (model.Id > 0)
             {
                 //Get current Entiry --AUDITLOGUSER
-                SiteDescription OldEntity = null;
+                ValuationSiteDescription OldEntity = null;
                 OldEntity = _siteRepository.GetNoTracking(model.Id);
 
                 objUser = _siteRepository.Get(model.Id);
@@ -346,12 +346,12 @@ namespace Eltizam.Business.Core.Implementation
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<SiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
+                    await _auditLogService.CreateAuditLog<ValuationSiteDescription>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
                 }
             }
             else
             {
-                objUser = _mapperFactory.Get<SiteDescriptionModel, SiteDescription>(model);
+                objUser = _mapperFactory.Get<SiteDescriptionModel, ValuationSiteDescription>(model);
 
                 objUser.CreatedBy = model.CreatedBy;
 
@@ -390,7 +390,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> EvidenceUpsert(ComparableEvidenceModel evidence)
         {
 
-            ComparableEvidence objUser;
+            ValuationComparableEvidence objUser;
             MasterAddress objUserAddress;
             MasterQualification objUserQualification;
             MasterDocument objUserDocument;
@@ -402,7 +402,7 @@ namespace Eltizam.Business.Core.Implementation
             if (evidence.Id > 0)
             {
                 //Get current Entiry --AUDITLOGUSER
-                ComparableEvidence OldEntity = null;
+                ValuationComparableEvidence OldEntity = null;
                 OldEntity = _repository.GetNoTracking(evidence.Id);
 
                 objUser = _repository.Get(evidence.Id);
@@ -423,12 +423,12 @@ namespace Eltizam.Business.Core.Implementation
                     await _unitOfWork.SaveChangesAsync();
 
                     //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<ComparableEvidence>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
+                    await _auditLogService.CreateAuditLog<ValuationComparableEvidence>(AuditActionTypeEnum.Update, OldEntity, objUser, MainTableName, MainTableKey);
                 }
             }
             else
             {
-                objUser = _mapperFactory.Get<ComparableEvidenceModel, ComparableEvidence>(evidence);
+                objUser = _mapperFactory.Get<ComparableEvidenceModel, ValuationComparableEvidence>(evidence);
 
                 objUser.CreatedBy = evidence.CreatedBy;
                 objUser.IsActive = evidence.IsActive;
