@@ -1555,8 +1555,8 @@ table.popupTable {
 }
 
     .inputSearchs .form .checkboxBtn input:checked + p {
-        background-color: var(--blue);
-        color: white;
+        /*background-color: var(--blue);
+        color: white;*/
         font-size: 15px;
         font-weight: 500;
     }

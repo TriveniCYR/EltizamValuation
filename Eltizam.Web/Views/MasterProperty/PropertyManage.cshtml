@@ -156,6 +156,11 @@
                                         @Html.TextBoxFor(model => model.Description, new { @class = "form-control",  @placeholder = @SharedLocalizer["Description"] })
 
                                     </label>
+                                    <label for="">
+                                        UnitNumber
+                                        @Html.TextBoxFor(model => model.UnitNumber, new { @class = "form-control",  @placeholder = @SharedLocalizer["UnitNumber"] })
+
+                                    </label>
 
                                 </div>
                                 <div class="flex mb-28">
@@ -168,8 +173,12 @@
                                 </div>
                             </div>
                         </div>
-                        <h3 class="blueHeading">Amenities</h3>
-                        <div class="inputSearchs">
+                        <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                            <p>Amenities</p>
+                            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                        </div>
+                       @*  <h3 class="blueHeading">Amenities</h3> *@
+                        <div class="inputSearchs p-0">
                             <div class="form">
                                 <div class="flex mb-28 flex-start" id="amentiesdiv">
                                     @{

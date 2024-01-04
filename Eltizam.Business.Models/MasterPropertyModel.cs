@@ -45,7 +45,8 @@ namespace Eltizam.Business.Models
         public string? ParkingBayNo { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? Description { get; set; }
-      
+        public string? UnitNumber { get; set; }
+
         public string? Amenities { get; set; }
         public bool? IsDeleted { get; set; }
         public MasterPropertyDetailModel PropertyDetail { get; set; }

@@ -463,7 +463,11 @@
                                         </label>
                                     </div>
 
-                                    <h5 class="blueHeading mb-16"> Amenities</h5>
+                                    @* <h5 class="blueHeading mb-16"> Amenities</h5> *@
+                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                        <p>Amenities</p>
+                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                    </div>
                                     <div class="inputSearchs p-0">
                                         <div class="form">
                                             <div class="flex mb-28 flex-start" id="amentiesdiv">
@@ -487,7 +491,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h5 class="blueHeading mb-16">Property Location</h5>
+                                   @*  <h5 class="blueHeading mb-16">Property Location</h5> *@
+                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                        <p>Property Location</p>
+                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                    </div>
                                     <div class="inputSearchs p-0">
                                         <input type="hidden" id="hdnLocationCountryId" value="@(Model == null ? 0 : Model.LocationCountryId)" />
                                         <input type="hidden" id="hdnLocationStateId" value="@(Model == null ? 0 : Model.LocationStateId)" />
