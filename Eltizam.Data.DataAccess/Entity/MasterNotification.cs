@@ -9,7 +9,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ValuationRequestId { get; set; }
         public int? StatusId { get; set; }
         public string? Subject { get; set; }
-        public string ToEmails { get; set; } = null!;
+        public string? ToEmails { get; set; }
         public string? Body { get; set; }
         public DateTime? SentDatetime { get; set; }
         public bool IsEmailSent { get; set; }

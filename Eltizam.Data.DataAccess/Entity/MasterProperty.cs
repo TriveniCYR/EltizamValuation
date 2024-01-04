@@ -34,6 +34,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public bool? IsDeleted { get; set; }
+        public string? UnitNumber { get; set; }
 
         public virtual ICollection<MasterPropertyAmenity> MasterPropertyAmenities { get; set; }
         public virtual ICollection<MasterPropertyLocation> MasterPropertyLocations { get; set; }

@@ -11,9 +11,11 @@ namespace Eltizam.Data.DataAccess.Entity
             MasterNotifications = new HashSet<MasterNotification>();
             SiteDescriptions = new HashSet<SiteDescription>();
             ValuationAssesments = new HashSet<ValuationAssesment>();
+            ValuationComparableEvidences = new HashSet<ValuationComparableEvidence>();
             ValuationInvoices = new HashSet<ValuationInvoice>();
             ValuationQuotations = new HashSet<ValuationQuotation>();
             ValuationRequestApproverLevels = new HashSet<ValuationRequestApproverLevel>();
+            ValuationSiteDescriptions = new HashSet<ValuationSiteDescription>();
         }
 
         public int Id { get; set; }
@@ -46,8 +48,10 @@ namespace Eltizam.Data.DataAccess.Entity
         public virtual ICollection<MasterNotification> MasterNotifications { get; set; }
         public virtual ICollection<SiteDescription> SiteDescriptions { get; set; }
         public virtual ICollection<ValuationAssesment> ValuationAssesments { get; set; }
+        public virtual ICollection<ValuationComparableEvidence> ValuationComparableEvidences { get; set; }
         public virtual ICollection<ValuationInvoice> ValuationInvoices { get; set; }
         public virtual ICollection<ValuationQuotation> ValuationQuotations { get; set; }
         public virtual ICollection<ValuationRequestApproverLevel> ValuationRequestApproverLevels { get; set; }
+        public virtual ICollection<ValuationSiteDescription> ValuationSiteDescriptions { get; set; }
     }
 }
