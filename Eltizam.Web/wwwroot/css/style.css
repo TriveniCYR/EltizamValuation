@@ -637,13 +637,19 @@ th {
     color: white;
 }
 
-    th:first-child, th:last-child {
-        border-radius: 4px 0 0 0;
-    }
+.sec th {
+    background-color: #576aa0;
+    color: white;
+    padding: 6px !important;
+}
 
-    th:last-child {
-        border-radius: 0 4px 0 0;
-    }
+th:first-child, th:last-child {
+    border-radius: 4px 0 0 0;
+}
+
+th:last-child {
+    border-radius: 0 4px 0 0;
+}
 
 tbody tr:last-child td:first-child {
     border-radius: 0 0 0 4px;
