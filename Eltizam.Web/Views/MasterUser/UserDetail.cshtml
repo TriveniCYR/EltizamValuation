@@ -99,7 +99,7 @@
                                 <div class="flex">
                                     <label for="Gender">
                                         Gender
-                                        @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>(),  new { @disabled=htmlAttributes, @class= "form-control",  @placeholder = @SharedLocalizer["Select Gender"] })
+                                        @Html.DropDownListFor(model => model.GenderId, new List<SelectListItem>(),  new { @disabled=htmlAttributes, @class= "form-control",  @placeholder = @SharedLocalizer["Select Gender"] })
                                     </label>
                                     <label for="ResourceId">
                                         Resource Type
@@ -365,6 +365,7 @@
         var DesignationList = "@Eltizam.Web.Helpers.APIURLHelper.GetDesignationList";
         var DepartmentList = "@Eltizam.Web.Helpers.APIURLHelper.GetDepartmentList";
         var ApproverLevelList = "@Eltizam.Web.Helpers.APIURLHelper.GetApproverLevelList";
+        var GetDictionaryWithSubDetails = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryWithSubDetails";
 
         var addressContainer = $("#addresses-container");
         var addressLength = addressContainer.children(".addMoreAddress").length;

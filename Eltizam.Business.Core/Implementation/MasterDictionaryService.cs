@@ -310,7 +310,7 @@ namespace Eltizam.Business.Core.Implementation
             var desc = await _repository.GetAsync(a =>
                                (DictionaryId == null || a.Id == DictionaryId) &&
                                (Description == null || a.Description == Description) &&
-                               (Code == null || a.Description == Code));
+                               (Code == null || a.DictionaryCode == Code));
 
             if (desc != null)
             {

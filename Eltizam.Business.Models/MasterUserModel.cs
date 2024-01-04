@@ -22,21 +22,17 @@ namespace Eltizam.Business.Models
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Only alphabetical characters are allowed.")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        public string? LastName { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        public string? LastName { get; set; }        
         public string? Gender { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Designation' field is required.")]
+        public int? GenderId { get; set; }
         public IFormFile? File { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
-
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'Designation' field is required.")]
         public int DesignationId { get; set; }
-
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'Department' field is required.")]
         public int DepartmentId { get; set; }
         [StringLength(50, MinimumLength = 10)]
         public string? LicenseNo { get; set; }
