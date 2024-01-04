@@ -320,9 +320,12 @@
                                             @Html.TextBoxFor(model => model.LicenseNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["License Number"] })
                                         </label>
                                     </div>
+                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                        <p>Addrress Details</p>
+                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                    </div>
 
-                                    <h5>Addrress Details</h5>
-                                    <div class="flex m-0">
+                                   <div class="inputSearchs p-0">
                                         <table class="table-striped" id="NewAddressTable">
                                             <thead>
                                                 <tr>
@@ -339,8 +342,10 @@
                                         </table>
                                     </div>
 
-
-                                    <h5>Contact Details</h5>
+                                    <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                        <p>Contact Details</p>
+                                        <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                    </div>
                                     <div class="inputSearchs p-0">
                                         <table class="table-striped" id="NewContactTable">
                                             <thead>
