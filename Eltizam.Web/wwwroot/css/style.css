@@ -1537,7 +1537,7 @@ table.popupTable {
 }
 
 .inputSearchs .form .checkboxBtn p {
-    font-size: 16px;
+    font-size: 17px;
     position: absolute;
     left: 0;
     right: 0;
@@ -2223,9 +2223,9 @@ table.multipleValueTable {
     filter: brightness(0.5);
 }
 
-.checkboxBtn input[type="checkbox"]:checked ~ .amenitiesIcon {
+/*.checkboxBtn input[type="checkbox"]:checked ~ .amenitiesIcon {
     filter: none;
-}
+}*/
 
 /* search button on dashboard */
 .inputSearchs form .dashboardSearch label {

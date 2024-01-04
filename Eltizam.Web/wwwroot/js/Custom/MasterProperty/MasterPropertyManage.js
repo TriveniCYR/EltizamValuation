@@ -17,19 +17,7 @@ function profileTab(evt, cityName) {
     document.getElementById(cityName).style.border = "1px solid var(--blue)";
     evt.currentTarget.className += " active";
 }
-document.getElementById("defaultOpen").click();
-
-// accordian function here
-function accordianToggle(header) {
-    const item = header.nextElementSibling;
-    if (item.style.height === 'auto') {
-        item.style.height = 0;
-    } else {
-        item.style.height = 'auto';
-    }
-}
-//accordian function end
- 
+document.getElementById("defaultOpen").click(); 
 
 $(document).ready(function () {
     if ($("#hdnPropertyType").val() != 0) {

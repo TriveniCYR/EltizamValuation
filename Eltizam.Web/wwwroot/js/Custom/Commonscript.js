@@ -86,8 +86,7 @@ function formatCurrencyInElements(className) {
 $(document).ready(function () {
     formatCurrencyInElements('formatting');
     // Assuming your elements have the class 'price'
-    const elements = document.getElementsByClassName('price');
-
+    const elements = document.getElementsByClassName('price'); 
     // Iterate through the elements and attach the event listener to each
     for (const element of elements) {
         element.addEventListener('input', function (event) {
@@ -129,8 +128,7 @@ $(document).ready(function () {
     }
 
     // Assuming your elements have the class 'valiadteint'
-    const intelements = document.getElementsByClassName('valiadteint');
-
+    const intelements = document.getElementsByClassName('valiadteint'); 
     // Iterate through the elements and attach the event listener to each
     for (const element of intelements) {
         element.addEventListener('input', function (event) {
@@ -189,9 +187,15 @@ $(document).ready(function () {
         $("#btnSaveEditIn").remove();
     }
 
+    // Default close accordan
+    $('.accordianDetails').each(function (i) {
+        var header = $(this)[0];
+        accordianToggleDefault(header);
+    });
+
     hideLoader();
 
-    Getactivenotifications();
+    Getactivenotifications(); 
 });
 
 function Getactivenotifications() { 
@@ -630,8 +634,9 @@ function scrollToTop() {
     document.documentElement.scrollTop = 0;
 }
 
-// accordian here
-function accordianToggle(header) {
+ 
+// accordian function here
+function accordianToggleHeight(header) {
     const item = header.nextElementSibling;
     if (item.style.height === 'auto') {
         item.style.height = 0;
@@ -639,6 +644,22 @@ function accordianToggle(header) {
         item.style.height = 'auto';
     }
 }
+
+
+// accordian function here
+function accordianToggle(header) {
+    const item = header.nextElementSibling;
+    if (item.style.display === 'block') {
+        item.style.display = 'none';
+    } else {
+        item.style.display = 'block';
+    }
+} 
+function accordianToggleDefault(header) {
+    const item = header.nextElementSibling; 
+    item.style.display = 'none';
+}
+
 
 //Remove parent dynamic created page
 function removeParentDiv(element) {
