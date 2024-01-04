@@ -42,16 +42,16 @@ function GetemailexistError(x, y, z) {
 function BindDepartment() {
     var Department = $("#DepartmentId");
     var _val = $('#hdnDeparment').val();
-    var _rpname = "department";
-
-    BindDropdowns(DepartmentList, Department, _rpname, _val);
+    var _rpname = "description";
+    var description = "DEPARTMENT";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Department, _rpname, _val);
 }
 function BindDesignation() {
     var Designation = $("#DesignationId");
     var _val = $('#hdnDesignation').val();
-    var _rpname = "designation";
-
-    BindDropdowns(DesignationList, Designation, _rpname, _val);
+    var _rpname = "description";
+    var description = "DESIGNATION";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Designation, _rpname, _val);
 }
 
 function BindRole() {
@@ -66,8 +66,9 @@ function BindRole() {
 function BindResourceType() {
     var ResourceType = $("#ResourceId");
     var _val = $('#hdnResourceType').val();
-    var _rpname = "resourceType";
-    BindDropdowns(ResourceTypeList, ResourceType, _rpname, _val);
+    var _rpname = "description";
+    var description = "RESOURCE_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ResourceType, _rpname, _val);
 }
 function BindApproverLevel() {
     var ApproverLevelType = $("#ApproverLevelId");
@@ -127,13 +128,11 @@ function BindCurrentCity(id, event) {
 }
 
 function BindGender() {
-    var Gender = $("#Gender");
-    Gender.empty().append('<option selected="selected" value="">Please select</option>');
-    Gender.append($("<option></option>").val('M').html('Male'));
-    Gender.append($("<option></option>").val('F').html('Female'));
-    if ($('#hdnGender').val() != 0) {
-        Gender.val($('#hdnGender').val());
-    }
+    var Gender = $("#GenderId");
+    var _val = $('#hdnGenderId').val();
+    var _rpname = "description";
+    var description = "GENDER";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Gender, _rpname, _val);
 }
 
 
