@@ -134,7 +134,7 @@ function BindCountry() {
         url: BaseURL + CountryList,
         "datatype": "json",
         success: function (response) { 
-            Country.empty().append('<option selected="selected" value="0">Please select</option>');
+            Country.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
             for (var i = 0; i < response.length; i++) {
                 Country.append($("<option></option>").val(response[i].id).html(response[i].countryName));
             }
@@ -161,7 +161,7 @@ function BindState() {
         "datatype": "json",
         success: function (response) {
             ;
-            State.empty().append('<option selected="selected" value="0">Please select</option>');
+            State.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
             for (var i = 0; i < response.length; i++) {
                 State.append($("<option></option>").val(response[i].id).html(response[i].stateName));
             }
@@ -187,7 +187,7 @@ function BindCity() {
         "datatype": "json",
         success: function (response) {
             ;
-            City.empty().append('<option selected="selected" value="0">Please select</option>');
+            City.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
             for (var i = 0; i < response.length; i++) {
                 City.append($("<option></option>").val(response[i].id).html(response[i].cityName));
             }

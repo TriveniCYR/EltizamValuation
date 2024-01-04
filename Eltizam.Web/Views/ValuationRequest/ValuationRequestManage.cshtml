@@ -391,7 +391,7 @@
                                     </div>
                                     <div class="flex  mb-28" id="editables3">
                                         <label for="" class="w-50">
-                                            <p class="m-0">Type of Ownership</p>
+                                            <p class="m-0">Ownership Type</p>
                                             @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertyDetail()" })
                                             @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" })
                                         </label>
@@ -399,6 +399,7 @@
                                         <label for="" class="w-50">
                                             <p class="m-0">Property Name<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertyDetailById(this.options[this.selectedIndex].value)" })
+                                            @Html.ValidationMessageFor(model => model.PropertyId, "", new { @class = "text-danger" })
                                         </label>
                                     </div>
                                     <div class="flex mb-28">
