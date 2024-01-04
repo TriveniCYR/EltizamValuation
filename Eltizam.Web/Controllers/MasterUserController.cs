@@ -87,6 +87,19 @@ namespace EltizamValuation.Web.Controllers
                     string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
                     var data = JsonConvert.DeserializeObject<APIResponseEntity<MasterUserModel>>(jsonResponse);
 
+                    if (data._object is null)
+                        return NotFound();
+
+                    if (data._object.Addresses.Count == 0)
+                    {
+                        MasterUserAddressModel addess = new MasterUserAddressModel();
+                        data._object.Addresses.Add(addess);
+                    }
+                    if (data._object.Qualifications.Count == 0)
+                    {
+                        Master_QualificationModel qualification = new Master_QualificationModel();
+                        data._object.Qualifications.Add(qualification);
+                    }
                     //Get Footer info
                     FooterInfo(TableNameEnum.Master_User, _cofiguration, id);
 
