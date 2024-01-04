@@ -49,11 +49,11 @@ namespace Eltizam.Business.Models
         public int CompanyId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'ResourceI' field is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Resource' field is required.")]
         public int ResourceId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'RoleId' field is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Role' field is required.")]
         public int RoleId { get; set; }        
         public int ApproverLevelId { get; set; }
         public bool IsActive { get; set; }
@@ -61,7 +61,7 @@ namespace Eltizam.Business.Models
 
         [Display(Name = "Password")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$",
-         ErrorMessage = "Password should be atleast 8 characters with one number, upper case, lower case & special character e.g. @$!5%B*gr&")]
+         ErrorMessage = "Password should be atleast 8 and maximum 16 characters with one number, upper case, lower case & special character e.g. @$!5%B*gr&")]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
 
