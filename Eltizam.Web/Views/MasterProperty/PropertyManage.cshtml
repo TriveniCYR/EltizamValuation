@@ -74,14 +74,14 @@
                                         @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="">
-                                        Property SubType Name
+                                        Property Sub Type 
                                         @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown",/*  @disabled = "disabled" */})
                                     </label>
                                 </div>
                                 <div class="flex mb-28">
                                     <label for="">
                                         <p class="m-0">
-                                            Type of Ownership
+                                            Ownership Type
                                             <span class="text-danger">*</span>
                                         </p>
                                         @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})

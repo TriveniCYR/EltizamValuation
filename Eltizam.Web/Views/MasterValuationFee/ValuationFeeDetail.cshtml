@@ -63,13 +63,11 @@
                         </div>
                         <div class="flex">
                             <label for="" class="w-50">
-                                Property SubType Name
-                                @*  <input type="text" placeholder="enter Property SubType Name"> *@
+                                Property Sub Type   
                                 @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes/*  @disabled = "disabled" */})
                             </label>
                             <label for="" class="w-50">
-                                Type of Ownership
-                                @* <input type="text" placeholder="enter Type of Ownership"> *@
+                                Ownership Type 
                                 @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @disabled=htmlAttributes, @class = "form-control",htmlAttributes})
                             </label>
 

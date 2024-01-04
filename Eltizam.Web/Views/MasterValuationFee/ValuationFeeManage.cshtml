@@ -62,12 +62,12 @@
                         </div>
                         <div class="flex">
                             <label for="" class="w-50">
-                                <p class="m-0">Property SubType Name<span class="text-danger">*</span></p>
+                                <p class="m-0">Property Sub Type<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown",/*  @disabled = "disabled" */})
                                 @Html.ValidationMessageFor(model => model.PropertySubTypeId, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">
-                                <p class="m-0">Type of Ownership<span class="text-danger">*</span></p>
+                                <p class="m-0">Ownership Type<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
                                 @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" })
                             </label>
