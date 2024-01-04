@@ -1,14 +1,4 @@
 ﻿ 
-// accordian function here
-function accordianToggle(header) {
-    const item = header.nextElementSibling;
-    if (item.style.display === 'block') {
-        item.style.display = 'none';
-    } else {
-        item.style.display = 'block';
-    }
-}
-    //accordian function end
 $('#ValuationType').change(function () {
     var general = document.getElementById("general");
     var fixed = document.getElementById("fixed");

@@ -41,9 +41,7 @@ function redirectToValuationAssesment() {
 }
 document.getElementById("defaultOpen").click();
 
-
-
-
+ 
 function toggleInput(answer) {
     const yesInput = document.getElementById('yesInput');
     const yesField = document.getElementById('yesField');
@@ -55,17 +53,7 @@ function toggleInput(answer) {
         yesInput.style.display = 'none';
         yesField.removeAttribute('required');
     }
-}
-
-
-function accordianToggle(header) {
-    const item = header.nextElementSibling;
-    if (item.style.display === 'block') {
-        item.style.display = 'none';
-    } else {
-        item.style.display = 'block';
-    }
-}
+} 
 
 // payemnt option JS here 
 function payTab(evt, payName) {
