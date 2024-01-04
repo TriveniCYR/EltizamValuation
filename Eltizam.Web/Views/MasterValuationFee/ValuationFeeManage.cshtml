@@ -52,15 +52,13 @@
                                 <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)"})
                                 @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" })
-                            </label>
-                            <label for="" class="w-50">
+                            </label>                            
+                            <label for="IsActive" class="w-50">
                                 Status
-
-                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" value="@Model.IsActive" @(Model.IsActive ? "checked" : "") required />
-                                <label class="label-switch" for="addLocation"></label>
-                                <span class="info-text" style="top:-20px;"></span>
+                                <input class='input-switch' type="checkbox" asp-for="IsActive" />
+                                <label class="label-switch" for="IsActive"></label>
+                                <span class="info-text"></span>
                             </label>
-                            
                         </div>
                         <div class="flex">
                             <label for="" class="w-50">
