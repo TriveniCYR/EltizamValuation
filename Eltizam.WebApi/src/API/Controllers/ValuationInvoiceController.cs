@@ -1,9 +1,6 @@
-﻿using Eltizam.Business.Core.Implementation;
-using Eltizam.Business.Core.Interface;
+﻿using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Models;
 using Eltizam.Data.DataAccess.Helper;
-using Eltizam.Resource;
-using Eltizam.WebApi.Filters;
 using Eltizam.WebApi.Helpers.Response;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -20,7 +17,7 @@ namespace Eltizam.WebApi.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IResponseHandler<dynamic> _ObjectResponse;
-        private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
+        //private Microsoft.Extensions.Hosting.IHostingEnvironment _env;
         private readonly IExceptionService _ExceptionService;
         private readonly IValuationInvoiceService _ValuationInvoiceService;
 

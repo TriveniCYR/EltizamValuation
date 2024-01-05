@@ -41,116 +41,115 @@
                     <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
                     <div id="profile1" class="tabcontent">
                         @* <h3 class="blueHeading">Property Details</h3> *@
-                        <div class="inputSearchs">
-
-                            <div class="tabSection">
+                        <div class="inputSearchs"> 
+                             <div class="tabSection">
                                 <div class="flex mb-28">
                                     <label for="">
                                         <p class="m-0">Property Name<span class="text-danger">*</span></p>
                                         @Html.TextBoxFor(model => model.PropertyName, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Property Name"] })
-                                        @Html.ValidationMessageFor(model => model.PropertyName, "", new { @disabled = htmlAttributes, @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.PropertyName, "", new { @class = "text-danger" })
                                     </label>
+                                    <label for="Status">
+                                        Status
+                                        <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" asp-for="@Model.IsActive" disabled="disabled" />
+                                        <label class="label-switch" for="addLocation"></label>
+                                        <span class="info-text" style="top:-20px;"></span>
+                                    </label> 
+                                </div>
+                                <div class="flex mb-28">
                                     <label for="">
                                         <p class="m-0">
                                             Property Type
                                             <span class="text-danger">*</span>
                                         </p>
-                                        @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)", @required = "required" })
-                                        @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @disabled = htmlAttributes, @class = "text-danger" })
+                                        @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)", @required = "required" })
+                                        @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" })
                                     </label>
-
-                                </div>
-                                <div class="flex mb-28">
                                     <label for="">
                                         Property Sub Type
-                                        @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control",/*  @disabled = "disabled" */})
+                                        @Html.DropDownListFor(model => model.PropertySubTypeId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown",/*  @disabled = "disabled" */})
                                     </label>
+                                </div>
+                                <div class="flex mb-28">
                                     <label for="">
                                         <p class="m-0">
                                             Ownership Type
                                             <span class="text-danger">*</span>
                                         </p>
-                                        @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @disabled = htmlAttributes, @class = "text-danger" })
+                                        @Html.DropDownListFor(model => model.OwnershipTypeId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
+                                        @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" })
+                                    </label>
+                                    <label for="">
+                                        <p class="m-0">Unit Type<span class="text-danger">*</span></p>
+                                        @Html.DropDownListFor(model => model.UnitType, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
+                                        @Html.ValidationMessageFor(model => model.UnitType, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex mb-28">
                                     <label for="">
-                                        <p class="m-0">Unit Type<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.UnitType, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @disabled = htmlAttributes, @class = "text-danger" })
+                                        Unit Numer
+                                        @Html.TextBoxFor(model => model.UnitNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Unit Number"] })
+                                        @Html.ValidationMessageFor(model => model.UnitNumber, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="">
                                         Additional Units
                                         @Html.TextBoxFor(model => model.AdditionalUnits, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Additional Unit"] })
-
-                                    </label>
+                                        @Html.ValidationMessageFor(model => model.AdditionalUnits, "", new { @class = "text-danger" })
+                                    </label> 
                                 </div>
                                 <div class="flex mb-28">
-                                    <label for="">
-                                        <p class="m-0">
-                                            Furnished
-                                            <span class="text-danger">*</span>
-                                        </p>
-                                        @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @disabled = htmlAttributes, @class = "text-danger" })
-                                    </label>
                                     <label for="">
                                         Purpose of Valuation
                                         @Html.TextBoxFor(model => model.ValuationPurpose, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Valuation Purpose"] })
-
+                                        @Html.ValidationMessageFor(model => model.ValuationPurpose, "", new { @class = "text-danger" })
                                     </label>
-                                </div>
-                                <div class="flex mb-28">
                                     <label for="">
                                         <p class="m-0">
                                             Built Up Area (Sq.Ft)
                                             <span class="text-danger">*</span>
                                         </p>
-                                        @Html.TextBoxFor(model => model.BuildUpAreaSqFt, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Area in Sq Ft"] })
-                                        @Html.ValidationMessageFor(model => model.BuildUpAreaSqFt, "", new { @disabled = htmlAttributes, @class = "text-danger" })
+                                        @Html.TextBoxFor(model => model.BuildUpAreaSqFt, new { @disabled = htmlAttributes, @class = "form-control price", @placeholder = @SharedLocalizer["Area in Sq Ft"] })
+                                        @Html.ValidationMessageFor(model => model.BuildUpAreaSqFt, "", new { @class = "text-danger" })
                                     </label>
+                                </div>
+                                <div class="flex mb-28">
                                     <label for="">
                                         <p class="m-0">
                                             Built up Area (Sq.Meter)
                                             <span class="text-danger">*</span>
                                         </p>
-                                        @Html.TextBoxFor(model => model.BuildUpAreaSqMtr, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
-                                        @Html.ValidationMessageFor(model => model.BuildUpAreaSqMtr, "", new { @disabled = htmlAttributes, @class = "text-danger" })
+                                        @Html.TextBoxFor(model => model.BuildUpAreaSqMtr, new { @disabled = htmlAttributes, @class = "form-control price", @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
+                                        @Html.ValidationMessageFor(model => model.BuildUpAreaSqMtr, "", new { @class = "text-danger" })
+                                    </label>
+                                    <label for="">
+                                        Age of construction (In Years)
+                                        @Html.TextBoxFor(model => model.AgeOfConstruction, new { @disabled = htmlAttributes, @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Age Of Construction"] })
+
                                     </label>
                                 </div>
                                 <div class="flex mb-28">
-                                    <label for="">
-                                        Age of construction (In Years)
-                                        @Html.TextBoxFor(model => model.AgeOfConstruction, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
-
-                                    </label>
                                     <label for="">
                                         Parking
                                         @Html.TextBoxFor(model => model.Parking, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Parking"] })
 
                                     </label>
-                                </div>
-                                <div class="flex mb-28">
                                     <label for="">
                                         Parking BAY Number
                                         @Html.TextBoxFor(model => model.ParkingBayNo, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Parking Bay No"] })
 
                                     </label>
+                                </div>
+                                <div class="flex mb-28">
                                     <label for="">
                                         Description
                                         @Html.TextBoxFor(model => model.Description, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Description"] })
-
                                     </label>
-                                </div>
-
-                                <div class="flex mb-28">
                                     <label for="">
-                                        Unit Numer
-                                        @Html.TextBoxFor(model => model.UnitNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Unit Number"] })
-                                    </label>
+                                        Furnished
+                                        @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
+                                    </label> 
                                 </div>
-                            </div>
+                            </div>  
                         </div>
 
                         <div class="addMoreAddress roundBorderBox inputSearchs">

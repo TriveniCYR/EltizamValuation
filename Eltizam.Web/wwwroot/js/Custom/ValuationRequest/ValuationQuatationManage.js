@@ -237,53 +237,53 @@ function GetApproverLevel(amount) {
 }
 
 
-$(document).on('click', '#levelApprover', function (e) {
-    // Get amount from form
-    var totalAmount = $('#TotalFee').val();
-    var valuationFee = $('#ValuationFee').val();
-    var valuationVat = $('#Vat').val();
-    var otherCharges = $('#OtherCharges').val();
-    if (totalAmount == "" && valuationFee == "" || valuationVat == "" && otherCharges == "") {
-        toastr.error("Please fill mendate fields.");
-        hideLoader();
-        return false;
-    }
-    var data1 = $("#ApproverId2").val();
-    var data2 = $("#ApproverId3").val();
-    var approverIds = [];
-    if ((data1 != "0" && data1 != null) || (data2 != "0" && data2 != null)) {
-        var commaString = "";
-        if (data1 != "0" && data1 != null) {
-            approverIds.push(2);
-            approverIds.push(data1);
-            commaString = approverIds.join(',');
-            commaString += ";"
-            approverIds = [];
-        }
-        if (data2 != "0" && data2 != null) {
-            approverIds.push(3);
-            approverIds.push(data2);
-            commaString += approverIds.join(',');
-            commaString += ";"
-        }
-        //var commaString = approverIds.join(',');
-        console.log(commaString);
-        document.getElementById('ApproverIds').value = commaString;
-        return true;
-    }
-    else {
-        if (levelData.length > 0) {
-            e.preventDefault();
-            hideLoader();
-            // Fetch data from the API
-            $('#LevelApproverModal').modal('show');
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-});
+//$(document).on('click', '#levelApprover', function (e) {
+//    // Get amount from form
+//    var totalAmount = $('#TotalFee').val();
+//    var valuationFee = $('#ValuationFee').val();
+//    var valuationVat = $('#Vat').val();
+//    var otherCharges = $('#OtherCharges').val();
+//    if (totalAmount == "" && valuationFee == "" || valuationVat == "" && otherCharges == "") {
+//        toastr.error("Please fill mendate fields.");
+//        hideLoader();
+//        return false;
+//    }
+//    var data1 = $("#ApproverId2").val();
+//    var data2 = $("#ApproverId3").val();
+//    var approverIds = [];
+//    if ((data1 != "0" && data1 != null) || (data2 != "0" && data2 != null)) {
+//        var commaString = "";
+//        if (data1 != "0" && data1 != null) {
+//            approverIds.push(2);
+//            approverIds.push(data1);
+//            commaString = approverIds.join(',');
+//            commaString += ";"
+//            approverIds = [];
+//        }
+//        if (data2 != "0" && data2 != null) {
+//            approverIds.push(3);
+//            approverIds.push(data2);
+//            commaString += approverIds.join(',');
+//            commaString += ";"
+//        }
+//        //var commaString = approverIds.join(',');
+//        console.log(commaString);
+//        document.getElementById('ApproverIds').value = commaString;
+//        return true;
+//    }
+//    else {
+//        if (levelData.length > 0) {
+//            e.preventDefault();
+//            hideLoader();
+//            // Fetch data from the API
+//            $('#LevelApproverModal').modal('show');
+//            return false;
+//        }
+//        else {
+//            return true;
+//        }
+//    }
+//});
 
 function AssignLevelApprover() {
     var data1 = $("#ApproverId2").val();
@@ -360,10 +360,10 @@ $('.clsCalculateFee').on('change', function () {
     var result = ValuationFee + Vat + OtherCharges + InstructorCharges - Discount;
     result = isNaN(result) ? 0 : result;
     $('#TotalFee').val(result);    
-    if (ValuationFee != "" && Vat != "" && OtherCharges != "")
-    {
-        GetApproverLevel(result);
-    }
+    //if (ValuationFee != "" && Vat != "" && OtherCharges != "")
+    //{
+    //    GetApproverLevel(result);
+    //}
     //GetApproverLevel(result);
 });
 

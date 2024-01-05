@@ -150,17 +150,18 @@ function BindCity(id) {
     var _rpname = "cityName";
     BindDropdowns(CityList + '/' + id, City, _rpname, _val);
 }
-$('#ParkingBayNo').keypress(function (e) {  
-    if ($('#ParkingBayNo').val() == '' && e.which == 48) {
-        return false;
-    }
-    else {
-        var charCode = (e.which) ? e.which : event.keyCode;
-        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
-            return false;
-        }
-    }
-});
+//$('#ParkingBayNo').keypress(function (e) {  
+//    if ($('#ParkingBayNo').val() == '' && e.which == 48) {
+//        return false;
+//    }
+//    else {
+//        var charCode = (e.which) ? e.which : event.keyCode;
+//        if (String.fromCharCode(charCode).match(/[^0-9]/g)) {
+//            return false;
+//        }
+//    }
+//});
+
 $('#PropertyDetail_Pincode').keypress(function (e) {
     if ($('#PropertyDetail_Pincode').val() == '' && e.which == 48) {
         return false;
@@ -172,8 +173,7 @@ $('#PropertyDetail_Pincode').keypress(function (e) {
         }
     }
 });
-$('#PropertyDetail_Longitude').on("keypress", function (e) {
-    debugger
+$('#PropertyDetail_Longitude').on("keypress", function (e) { 
     if ($('#PropertyDetail_Longitude').val() == '' && e.which == 48) {
         return false;
         return false;

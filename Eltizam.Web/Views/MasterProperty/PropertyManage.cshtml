@@ -95,18 +95,15 @@
                                 </div>
                                 <div class="flex mb-28">
                                     <label for="">
+                                        Unit Numer <span class="text-danger">*</span>
+                                        @Html.TextBoxFor(model => model.UnitNumber, new { @class = "form-control", @placeholder = @SharedLocalizer["Unit Number"] })
+                                        @Html.ValidationMessageFor(model => model.UnitNumber, "", new { @class = "text-danger" })
+                                    </label>
+                                    <label for="">
                                         Additional Units
                                         @Html.TextBoxFor(model => model.AdditionalUnits, new { @class = "form-control", @placeholder = @SharedLocalizer["Additional Unit"] })
                                         @Html.ValidationMessageFor(model => model.AdditionalUnits, "", new { @class = "text-danger" })
-                                    </label>
-                                    <label for="">
-                                        <p class="m-0">
-                                            Furnished@*
-                                            <span class="text-danger">*</span>*@
-                                        </p>
-                                        @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
-                                        @*@Html.ValidationMessageFor(model => model.Furnished, "", new { @class = "text-danger" })*@
-                                    </label>
+                                    </label> 
                                 </div>
                                 <div class="flex mb-28">
                                     <label for="">
@@ -156,13 +153,13 @@
                                         @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @SharedLocalizer["Description"] }) 
                                     </label>
                                     <label for="">
-                                        Unit Numer
-                                        @Html.TextBoxFor(model => model.UnitNumber, new { @class = "form-control", @placeholder = @SharedLocalizer["Unit Number"] })
-                                    </label>
-
+                                        Furnished
+                                        @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
+                                    </label> 
                                 </div>
                             </div>
                         </div> 
+
                         <div class="addMoreAddress roundBorderBox inputSearchs">
                             <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
                                 <p>Amenities</p>

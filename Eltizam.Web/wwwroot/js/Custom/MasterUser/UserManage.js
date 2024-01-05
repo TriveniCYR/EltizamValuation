@@ -607,26 +607,28 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-if (action === "Add" || action === "Edit") {
-    document.addEventListener('DOMContentLoaded', function () {
-        flatpickr('#DateOfBirth', {
-            dateFormat: 'd-M-Y',
-            defaultDate: 'today',
-            onChange: function (selectedDates, dateStr, instance) {
-                validateDate(selectedDates[0], instance);
-            }
-        });
+ 
+//document.addEventListener('DOMContentLoaded', function () {
+//    flatpickr('#DateOfBirth', {
+//        dateFormat: flatDateformat,
+//        defaultDate: 'today',
+//        maxDate: 'today',
 
-        function validateDate(selectedDate, instance) {
-            var today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (selectedDate > today) {
-                toastr.error("future Dates are not allowed");
-                instance.setDate('today');
-            }
-        }
-    });
+//        onChange: function (selectedDates, dateStr, instance) {
+//            validateDate(selectedDates[0], instance);
+//        }
+//    }); 
+//});
+
+function validateDate(selectedDate, instance) {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDate > today) {
+        toastr.error("future Dates are not allowed");
+        instance.setDate('today');
+    }
 }
+ 
 $('#openModalLinklatestRequestsTable').on('blur', function () {
     // Clear the table body before making a new request
     $('#data-tablerequest tbody').empty();
