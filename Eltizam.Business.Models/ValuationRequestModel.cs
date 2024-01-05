@@ -1,10 +1,5 @@
 ﻿using Eltizam.Resource.Resources;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
@@ -46,6 +41,7 @@ namespace Eltizam.Business.Models
         public string? Parking { get; set; }
         public string? ParkingBayNo { get; set; }
         public string? Description { get; set; }
+        public string? UnitNumber { get; set; }
         public string? PinCode { get; set; }
         public string? PropertyType { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -63,11 +59,7 @@ namespace Eltizam.Business.Models
 
         [StringLength(250, MinimumLength = 0)]
         public string? ApproverComment { get; set; }
-        public DateTime? ApproverUpdateDate { get; set; }
-        //public int? CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        //public int? ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime? ApproverUpdateDate { get; set; }  
         public int? ValuerId { get; set; }
         public string? ValuerComment { get; set; }
         public DateTime? ValuerUpdateDate { get; set; }
@@ -83,21 +75,18 @@ namespace Eltizam.Business.Models
         public int? LocationCountryId { get; set; }
         public int? LocationStateId { get; set; }
         public int? LocationCityId { get; set; }
-        public bool? IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }   
+        public string? ValuationApprovalValues { get; set; }
+        public string? StatusName { get; set; }
+        public string? ColorCode { get; set; }
+        public string? BackGroundColor { get; set; }
+
 
         public List<MasterAmenityListModel>? AmenityList { get; set; }
-        public MasterPropertyDetailModel? PropertyDetail { get; set; }
-
+        public MasterPropertyDetailModel? PropertyDetail { get; set; } 
         public ValuationAssesmentActionModel? ValuationAssesment { get; set; }
-        public string? ValuationApprovalValues { get; set; }
-        public List<ValuationRequestApproverLevelModel>? ValuationRequestApproverLevel { get; set; }
-
-        //public ComparableEvidenceModel? ComparableEvidence { get; set; }
-
-        //public ValuationAssessementModel? ValuationAssessement { get; set; }
-
+        public List<ValuationRequestApproverLevelModel>? ValuationRequestApproverLevel { get; set; } 
         public DocumentFilesModel? Document { get; set; }
-
         public List<MasterDocumentModel>? Documents { get; set; }
 
         //public Master_ClientTypeModel? master_ClientType { get; set; }

@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="bodyContent">
-            <div class="whiteBoxShadow m-0 ">
+           @*  <div class="whiteBoxShadow m-0 ">
                 <div class="bodyContent footerAudit">
                     <div class=" position-relative flex justify-between align-item-center">
                         <h5 class="m-0">
@@ -43,7 +43,7 @@
                         </h5>
                     </div>
                 </div>
-            </div>
+            </div> *@
             <div class="inputSearchs uploadDocBox p-0">
                 <form asp-action="ValuationQuotationManage" autocomplete="off" asp-controller="ValuationRequest" method="post" enctype="multipart/form-data">
                     @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
@@ -105,7 +105,10 @@
                                 }
                                 <div class="W-100">
                                     <div class="prevUpload roundBorderBox m-0">
-                                        <h5>Previously uploaded</h5>
+                                        <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                            <p>Previously uploaded</p>
+                                            <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                        </div>
                                         <div class="scroll-x">
                                             <table id="UserTableDocument" class="table-striped">
                                                 <thead>

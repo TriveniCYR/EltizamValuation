@@ -328,9 +328,9 @@ function BindClientType() {
 
     var ClientType = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
-    var _rpname = "clientType";
-
-    BindDropdowns(ClientTypeList, ClientType, _rpname, _val);
+    var _rpname = "description";
+    var description = "CLIENT_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ClientType, _rpname, _val);
 }
 
 function BindCountry() { 
@@ -383,23 +383,24 @@ function BindCurrentCity(id, event) {
     BindDropdowns(CityList + '/' + id, City, _rpname, _val);
 }
 
-
 function BindDepartment() {
     for (var i = 0; i < contactLength; i++) {
         var Department = $("#Contacts_" + i + "__DepartmentId");
         var _val = $('#hdnDeparment_' + i).val();
-        var _rpname = "department";
-
-        BindDropdowns(DepartmentList, Department, _rpname, _val);
+        var _rpname = "description";
+        var description = "DEPARTMENT";
+        BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Department, _rpname, _val);
+        //BindDropdowns(DepartmentList, Department, _rpname, _val);
     }
 }
 function BindDesignation() {
     for (var i = 0; i < contactLength; i++) {
         var Designation = $("#Contacts_" + i + "__DesignationId");
         var _val = $('#hdnDesignation_' + i).val();
-        var _rpname = "designation";
-
-        BindDropdowns(DesignationList, Designation, _rpname, _val);
+        var _rpname = "description";
+        var description = "DESIGNATION";
+        BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Designation, _rpname, _val);
+        //BindDropdowns(DesignationList, Designation, _rpname, _val);
     }
 }
 

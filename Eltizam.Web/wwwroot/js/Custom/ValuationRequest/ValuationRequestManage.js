@@ -392,34 +392,16 @@ function BindValuationRequestStatus() {
     BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId, RequestStatus, _rpname, _val);
 }
 
-function BindClientType() {
-    var Client = $("#ClientTypeId");
-    var _val = $('#hdnClientTypeId').val();
-    var _rpname = "clientType";
 
-    BindDropdowns(ClientTypeList, Client, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + ClientTypeList,
-    //    "datatype": "json",
-    //    success: function (response) { 
-    //        Client.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response._object.length; i++) {
-    //            Client.append($("<option></option>").val(response._object[i].id).html(response._object[i].clientType));
-    //        }
-    //        if ($('#hdnClientType').val() != 0) {
-    //            Client.val($('#hdnClientType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+function BindClientType() {
+
+    var ClientType = $("#ClientTypeId");
+    var _val = $('#hdnClientType').val();
+    var _rpname = "description";
+    var description = "CLIENT_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ClientType, _rpname, _val);
 }
+
 
 function BindClientByClientType(id) {
     var clients = $("#ClientId");
@@ -576,13 +558,31 @@ function BindPropertyDetail() {
 
 function BindUnitType() {
     var UnitType = $("#UnitType");
-    UnitType.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
-    UnitType.append($("<option></option>").val('1BHK').html('1BHK'));
-    UnitType.append($("<option></option>").val('2BHK').html('2BHK'));
-    UnitType.append($("<option></option>").val('3BHK').html('3BHK'));
-    if ($('#hdnUnitType').val() != 0) {
-        UnitType.val($('#hdnUnitType').val());
-    }
+    var _rpname = "description";
+    var description = 'UNIT_TYPE';
+    $.ajax({
+        type: Get,
+        url: BaseURL + GetDictionaryWithSubDetails + '?code=' + description,
+        "datatype": "json",
+        success: function (response) {
+            var data = response.values;
+            var _dd = _rpname;
+            UnitType.empty().append('<option selected="selected" value="">' + dftSel + '</option>');
+            for (var i = 0; i < data.length; i++) {
+                UnitType.append($("<option></option>").val(data[i][_dd]).html(data[i][_dd]));
+            }
+            if ($('#hdnUnitType').val() != 0) {
+                UnitType.val($('#hdnUnitType').val());
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
 }
 
 function BindFurnished() {
@@ -605,6 +605,7 @@ function BindPropertyDetailById(Id) {
             success: function (response) {
                 document.getElementById('UnitType').value = response._object.unitType;
                 document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
+                document.getElementById('UnitNumber').value = response._object.unitNumber;
                 document.getElementById('Furnished').value = response._object.furnished;
                 document.getElementById('ValuationPurpose').value = response._object.valuationPurpose;
                 document.getElementById('BuildUpAreaSqFt').value = response._object.buildUpAreaSqFt;

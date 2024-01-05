@@ -18,7 +18,7 @@
     if (Model.Id <= 0)
     {
         _id1 = _cls;
-    }
+    } 
 }
 
 <main>
@@ -35,18 +35,6 @@
             </div>
         </div>
         <div class="bodyContent">
-            <div class="whiteBoxShadow m-0 ">
-                <div class="bodyContent footerAudit">
-                    <div class=" position-relative flex justify-between align-item-center">
-                        <h5 class="m-0">
-                            Valuation Id : @Html.DisplayFor(model => model.ValuationRequestId)
-                        </h5>
-                        <h5 class="m-0">
-                            Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                        </h5>
-                    </div>
-                </div>
-            </div>
            @*  <h3 class="ptrl-20">Select Payment Mode</h3> *@
             <form asp-action="ValuationInvoiceManage" method="POST" enctype="multipart/form-data" id="invoice">
                 <div class="paymentOption">
@@ -275,7 +263,10 @@
                         }
                         <div class="W-100">
                             <div class="prevUpload roundBorderBox m-0">
-                                <h5>Previously uploaded</h5>
+                                <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
+                                    <p>Previously uploaded</p>
+                                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                                </div>
                                 <div class="scroll-x">
                                     <table id="InvoiceTableDocument" class="table-striped">
                                         <thead>
