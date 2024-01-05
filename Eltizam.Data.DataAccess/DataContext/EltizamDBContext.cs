@@ -63,6 +63,9 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<ValuationAssesment> ValuationAssesments { get; set; } = null!;
         public virtual DbSet<ValuationComparableEvidence> ValuationComparableEvidences { get; set; } = null!;
         public virtual DbSet<ValuationInvoice> ValuationInvoices { get; set; } = null!;
+        public virtual DbSet<ValuationPayment> ValuationPayments { get; set; } = null!;
+        public virtual DbSet<ValuationPaymentInvoice> ValuationPaymentInvoices { get; set; } = null!;
+        public virtual DbSet<ValuationPaymentInvoiceMap> ValuationPaymentInvoiceMaps { get; set; } = null!;
         public virtual DbSet<ValuationQuotation> ValuationQuotations { get; set; } = null!;
         public virtual DbSet<ValuationRequest> ValuationRequests { get; set; } = null!;
         public virtual DbSet<ValuationRequestApproverLevel> ValuationRequestApproverLevels { get; set; } = null!;
@@ -308,11 +311,6 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("TRNNumber");
-
-                entity.HasOne(d => d.ClientType)
-                    .WithMany(p => p.MasterClients)
-                    .HasForeignKey(d => d.ClientTypeId)
-                    .HasConstraintName("FK_Master_Client_Master_ClientType");
             });
 
             modelBuilder.Entity<MasterClientContact>(entity =>
@@ -691,10 +689,6 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.UnitNumber)
                     .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UnitType)
-                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ValuationPurpose)
@@ -1281,7 +1275,7 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ChequeRecievedDate).HasColumnType("datetime");
+                entity.Property(e => e.ChequeRecievedDate).HasColumnType("date");
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
@@ -1296,7 +1290,7 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false)
                     .HasColumnName("ReferenceNO");
 
-                entity.Property(e => e.TransactionDate).HasColumnType("datetime");
+                entity.Property(e => e.TransactionDate).HasColumnType("date");
 
                 entity.Property(e => e.TransactionId)
                     .HasMaxLength(100)
@@ -1307,6 +1301,122 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasForeignKey(d => d.ValuationRequestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Valuation__Valua__67DE6983");
+            });
+
+            modelBuilder.Entity<ValuationPayment>(entity =>
+            {
+                entity.ToTable("ValuationPayment", "dbo");
+
+                entity.Property(e => e.AccountBankName)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.AccountHolderName)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(18, 6)");
+
+                entity.Property(e => e.Balance).HasColumnType("decimal(18, 6)");
+
+                entity.Property(e => e.CardBankName)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CardHolderName)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CardNumber)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CheckBankName)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CheckDate).HasColumnType("date");
+
+                entity.Property(e => e.CheckNumer)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ChequeRecievedDate).HasColumnType("date");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ExpireDate).HasColumnType("date");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Note).IsUnicode(false);
+
+                entity.Property(e => e.ReferenceNo)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("ReferenceNO");
+
+                entity.Property(e => e.TransactionDate).HasColumnType("date");
+
+                entity.Property(e => e.TransactionId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ValuationRequest)
+                    .WithMany(p => p.InverseValuationRequest)
+                    .HasForeignKey(d => d.ValuationRequestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Valuation__Valua__4707859D");
+            });
+
+            modelBuilder.Entity<ValuationPaymentInvoice>(entity =>
+            {
+                entity.ToTable("ValuationPaymentInvoice", "dbo");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(18, 6)");
+
+                entity.Property(e => e.Balance).HasColumnType("decimal(18, 6)");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.InvoiceNo)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Note).IsUnicode(false);
+
+                entity.Property(e => e.TransactionDate).HasColumnType("date");
+
+                entity.HasOne(d => d.ValuationRequest)
+                    .WithMany(p => p.InverseValuationRequest)
+                    .HasForeignKey(d => d.ValuationRequestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Valuation__Valua__3E723F9C");
+            });
+
+            modelBuilder.Entity<ValuationPaymentInvoiceMap>(entity =>
+            {
+                entity.ToTable("ValuationPaymentInvoiceMap", "dbo");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Note).IsUnicode(false);
+
+                entity.HasOne(d => d.ValuationQuotation)
+                    .WithMany(p => p.ValuationPaymentInvoiceMaps)
+                    .HasForeignKey(d => d.ValuationQuotationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Valuation__Valua__4242D080");
+
+                entity.HasOne(d => d.ValuationReceivedInvoice)
+                    .WithMany(p => p.ValuationPaymentInvoiceMaps)
+                    .HasForeignKey(d => d.ValuationReceivedInvoiceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Valuation__Valua__4336F4B9");
             });
 
             modelBuilder.Entity<ValuationQuotation>(entity =>
@@ -1564,6 +1674,14 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
 
+                entity.Property(e => e.Department)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Designation)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Email)
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -1583,6 +1701,10 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false)
                     .IsFixedLength();
 
+                entity.Property(e => e.GenderName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.LastName)
                     .HasMaxLength(250)
                     .IsUnicode(false);
@@ -1599,6 +1721,10 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ResourceType)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.RoleName).HasMaxLength(50);

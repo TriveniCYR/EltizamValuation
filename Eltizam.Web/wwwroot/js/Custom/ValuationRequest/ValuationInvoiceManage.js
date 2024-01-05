@@ -1,10 +1,12 @@
 var docId = 0;
 $(document).ready(function () {
+    BindTransactionMode();
     if (document.location.href.includes('id')){
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
     }
     BindTransactionstatus();
+    
 });
 
 
@@ -417,4 +419,35 @@ function DeleteUserDocumentSuccess(data) {
 }
 function DeleteUserDocumentError(x, y, z) {
     toastr.error(ErrorMessage);
+}
+
+
+function BindTransactionMode() {
+
+    var TransactionMode = $("#TransactionModeId");
+    var _val = 0;
+    var _rpname = "description";
+    var description = "TRANSACTION_MODE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, TransactionMode, _rpname, _val);
+}
+
+if (action === "Add") {
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('#TransactionDate', {
+            dateFormat: 'd-M-Y',
+            defaultDate: 'today',
+            onChange: function (selectedDates, dateStr, instance) {
+                validateDate(selectedDates[0], instance);
+            }
+        });
+
+        function validateDate(selectedDate, instance) {
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (selectedDate < today) {
+                toastr.error("Previous Dates are not allowed");
+                instance.setDate('today');
+            }
+        }
+    });
 }

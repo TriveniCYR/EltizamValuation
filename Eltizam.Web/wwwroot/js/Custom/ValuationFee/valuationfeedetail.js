@@ -69,11 +69,11 @@ function GetValuationTypeLists() {
     var ValuationType = $("#ValuationType");
     var _val = $('#hdnValuationType').val();
     var _rpname = "description";
-    var description = "ValuationType";
+    var description = "VALUATION_TYPE";
     // var currentUserId = "@ViewBag.CurrentUserId";
     $.ajax({
         type: Get,
-        url: BaseURL + GetDictionaryWithSubDetails + '?description=' + description,
+        url: BaseURL + GetDictionaryWithSubDetails + '?code=' + description,
         "datatype": "json",
         success: function (response) {
             var _dd = _rpname;

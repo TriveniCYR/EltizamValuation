@@ -5,11 +5,6 @@ namespace Eltizam.Data.DataAccess.Entity
 {
     public partial class MasterClientType
     {
-        public MasterClientType()
-        {
-            MasterClients = new HashSet<MasterClient>();
-        }
-
         public int Id { get; set; }
         public string ClientType { get; set; } = null!;
         public bool? IsActive { get; set; }
@@ -18,7 +13,5 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
         public bool? IsDeleted { get; set; }
-
-        public virtual ICollection<MasterClient> MasterClients { get; set; }
     }
 }

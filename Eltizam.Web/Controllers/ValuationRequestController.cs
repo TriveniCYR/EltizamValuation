@@ -7,6 +7,7 @@ using Eltizam.Utility.Utility;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using System;
@@ -47,6 +48,59 @@ namespace EltizamValuation.Web.Controllers
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }
+
+        [HttpGet]
+        public IActionResult ValuationInvoices(int vId, string refNo)
+        {
+            ValuationInvoicePaymentModel invoices;
+
+            invoices = new ValuationInvoicePaymentModel();
+            invoices.ValuationRequestId = vId;
+            
+            ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
+            return View(invoices);
+        }
+
+        [HttpPost]
+        public IActionResult ValuationInvoicesManage(int id, ValuationInvoicePaymentModel invoice)
+        {
+            try
+            {
+                //Check permissions for Get
+                var action = id == null ? PermissionEnum.Edit : PermissionEnum.Add;
+
+                //int roleId = _helper.GetLoggedInRoleId();
+                //if (!CheckRoleAccess(ModulePermissionEnum.LocationMaster, action, roleId))
+                //    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+
+               
+                if (invoice.Id == 0)
+                    invoice.CreatedBy = _helper.GetLoggedInUserId();
+                invoice.ModifiedBy = _helper.GetLoggedInUserId();
+
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertInvoice, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(invoice))).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                }
+                else
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+            }
+
+            return Redirect($"/ValuationRequest/ValuationRequestManage?id={invoice.ValuationRequestId}");
+        }
+
 
 
         [HttpGet]

@@ -570,6 +570,8 @@ function BindPropertyDetailById(Id) {
                     document.getElementById('hdnLocationCountryId').value = PropertyDetails.countryId;
                     document.getElementById('hdnLocationStateId').value = PropertyDetails.stateId;
                     document.getElementById('hdnLocationCityId').value = PropertyDetails.cityId;
+                    document.getElementById('hdnUnitType').value = response._object.unitType;
+                    document.getElementById('hdnFurnished').value = response._object.furnished;
                 }
                 document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
                 document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
@@ -582,9 +584,13 @@ function BindPropertyDetailById(Id) {
                 document.getElementById('PropertyDetail_Address2').value = PropertyDetails.address2;
                 document.getElementById('PropertyDetail_Pincode').value = PropertyDetails.pincode;
                 document.getElementById('PropertyDetail_Landmark').value = PropertyDetails.landmark;
-
+                BindLocationCountry();
                 BindLocationState(PropertyDetails.countryId);
                 BindLocationCity(PropertyDetails.stateId);
+                if (isAddValuation) {
+                    BindUnitType();
+                    //BindFurnished();
+                }
             },
             failure: function (response) {
                 alert(response.responseText);
@@ -844,10 +850,11 @@ function GetValuationMethodLists() {
     var statusId = $("#ValuationModeId");
     var _val = $('#hdnValuationModeId').val();
     var _rpname = "description";
-    var description = "Valuation Method";
+    //var description = "Valuation Method";
     // var currentUserId = "@ViewBag.CurrentUserId";
 
-    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?description=' + description, statusId, _rpname, _val);
+    var description = "VALUATION_METHOD";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, statusId, _rpname, _val);
 
 }
 

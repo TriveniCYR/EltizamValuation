@@ -126,6 +126,44 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+
+        [HttpPost]
+        [Route("UpsertInvoice")]
+        public async Task<IActionResult> UpsertInvoice(ValuationInvoicePaymentModel model)
+        {
+            try
+            {
+                DBOperation oResponse = await _ValuationInvoiceService.UpsertInvoice(model);
+                if (oResponse == DBOperation.Success)
+                {
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (model.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+                }
+                else
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpGet, Route("GetPaymentInvoiceById/{id}")]
+        public async Task<IActionResult> GetPaymentInvoiceById([FromRoute] int id)
+        {
+            try
+            {
+                var oLocationEntity = await _ValuationInvoiceService.GetPaymentInvoiceById(id);
+                if (oLocationEntity != null && oLocationEntity.Id > 0)
+                    return _ObjectResponse.Create(oLocationEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
     }
 }
