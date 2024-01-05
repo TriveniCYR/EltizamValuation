@@ -145,14 +145,14 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
-        [HttpGet, Route("GetPaymentInvoiceById/{id}")]
-        public async Task<IActionResult> GetPaymentInvoiceById([FromRoute] int id)
+        [HttpGet, Route("GetPaymentInvoiceById/{requestId}")]
+        public async Task<IActionResult> GetPaymentInvoiceById([FromRoute] int requestId)
         {
             try
             {
-                var oLocationEntity = await _ValuationInvoiceService.GetInvoiceById(id);
-                if (oLocationEntity != null && oLocationEntity.Id > 0)
-                    return _ObjectResponse.Create(oLocationEntity, (Int32)HttpStatusCode.OK);
+                var oinvoiceEntity = await _ValuationInvoiceService.GetPaymentInvoiceById(requestId);
+                if (oinvoiceEntity != null)
+                    return _ObjectResponse.Create(oinvoiceEntity, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }
