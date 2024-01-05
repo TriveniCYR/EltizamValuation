@@ -301,7 +301,7 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.TrnexpiryDate)
-                    .HasColumnType("datetime")
+                    .HasColumnType("date")
                     .HasColumnName("TRNExpiryDate");
 
                 entity.Property(e => e.Trnnumber)
@@ -920,7 +920,7 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
+                entity.Property(e => e.DateOfBirth).HasColumnType("date");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(100)
