@@ -466,6 +466,11 @@
                                             @Html.TextBoxFor(model => model.Description, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Description"] })
 
                                         </label>
+                                          <label for="" class="w-50">
+                                            Unit Number
+                                            @Html.TextBoxFor(model => model.UnitNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["UnitNumber"] })
+
+                                        </label>
                                     </div>
 
                                     @* <h5 class="blueHeading mb-16"> Amenities</h5> *@
