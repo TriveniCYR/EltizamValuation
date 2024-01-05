@@ -1,0 +1,155 @@
+﻿@model Eltizam.Business.Models.DashboardFilterModel;
+@using Eltizam.Utility.Models
+@inject IConfiguration Configuration
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
+@{
+    string jsVersion = @Configuration.GetSection("StaticJS")["version"];
+    var _header = "Dashboard";
+    ViewData["Title"] = _header;
+}
+
+<main>
+    <div class="whiteBoxShadow">
+        <div class="heading position-relative flex justify-between">
+            <h3 class="dashboardTitle">@_header</h3>
+        </div>
+        <div class="bodyContent">
+            <div class="whiteBoxShadow">
+                <div class="inputSearchs">
+                    <form id="dashboardFilterForm">
+                        <div class="flex dashboardSearch">
+                            <label for="ClientTypeId">
+                                Client
+                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId", @class = "form-control searchable-dropdown" })
+                            </label>
+                            <label for="PropertyId">
+                                Property
+                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control searchable-dropdown" })
+                            </label>
+                            <label for="" style="width: 15% !important">
+                                From
+                                @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input", id = "FromDate" })
+                            </label>
+                            <label for="" style="width: 15% !important">
+                                To
+                                @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input", id = "ToDate" })
+                            </label>
+                            <button type="button" onclick="submitFilterForm()" class="blueBtn">Search</button>
+                            <button type="button" onclick="clearSearchFields()" class="blueBtn">Clear</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="whiteBoxShadow" >
+                    <table>
+                        <tr>
+                            <td><div id="Pie_chartContainer" style="height: 370px; width: 100%;"></div></td>
+                            <td><div id="Bar_chartContainer" style="height: 370px; width: 100%;"></div></td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                <div class="flex dashboard-status">
+                    <div class="roundBorderBox w-50">
+                        <div class="flex justify-between">
+                            <h5>Latest Requests</h5>
+                            <a href="#" id="openModalLinklatestRequestsTable">View More</a>
+                        </div>
+                        <div class="scroll-x">
+                            <table class="dashboardTable latestRequestsTable table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Val Ref#</th>
+                                        <th>Property</th>
+                                        <th>Client</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="roundBorderBox w-50">
+                        <div class="flex justify-between">
+                            <h5>Latest Quotations</h5>
+                            <a href="#" id="openModalLinklatestQuotationsTable">View More</a>
+                        </div>
+                        <div class="scroll-x">
+                            <table class="dashboardTable latestQuotationsTable table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Val Ref#</th>
+                                        <th>Property</th>
+                                        <th>Client</th>
+                                        <th>Quotation#</th>
+                                        <th>Fee</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex dashboard-status">
+                    <div class="roundBorderBox w-50">
+                        <div class="flex justify-between">
+                            <h5>Top Valuation Projects</h5>
+                            <a href="#" id="openModalLinktopValuationsTable">View More</a>
+                        </div>
+                        <div class="scroll-x">
+                            <table class="dashboardTable topValuationsTable table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Val Ref#</th>
+                                        <th>Property</th>
+                                        <th>Client</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="roundBorderBox w-50">
+                        <div class="flex justify-between">
+                            <h5>Top Quotation Dues</h5>
+                            <a href="#" id="openModalLinktopQuotationDuesTable">View More</a>
+                        </div>
+                        <div class="scroll-x">
+                            <table class="dashboardTable topQuotationDuesTable table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Val Ref#</th>
+                                        <th>Property</th>
+                                        <th>Quotation#</th>
+                                        <th>Client</th>
+                                        <th>Due</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+@section MyScripts {
+    <script type="text/javascript" src="~/js/custom/Dashboard/DashboardExtClient.js?v=@jsVersion"></script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+    <script>
+        //#region Setup API Url
+        var AllClient = "@Eltizam.Web.Helpers.APIURLHelper.GetClientByClientTypeId";
+        var AllProperty = "@Eltizam.Web.Helpers.APIURLHelper.GetPropertyByFilters";
+        var Dashboardurl = "@Eltizam.Web.Helpers.APIURLHelper.DashboardDetails"
+    </script>
+
+}
