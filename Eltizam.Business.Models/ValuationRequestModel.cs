@@ -46,6 +46,7 @@ namespace Eltizam.Business.Models
         public string? Parking { get; set; }
         public string? ParkingBayNo { get; set; }
         public string? Description { get; set; }
+        public string? UnitNumber { get; set; }
         public string? PinCode { get; set; }
         public string? PropertyType { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
