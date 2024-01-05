@@ -41,14 +41,15 @@ namespace Eltizam.Business.Models
         public bool IsActive { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? Parking { get; set; }
-        [StringLength(25, MinimumLength = 1)]
+        //[StringLength(25, MinimumLength = 1)]
         public string? ParkingBayNo { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? Description { get; set; }
-        public string? UnitNumber { get; set; }
-
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        public string UnitNumber { get; set; }  
         public string? Amenities { get; set; }
         public bool? IsDeleted { get; set; }
+
         public MasterPropertyDetailModel PropertyDetail { get; set; }
         public List<MasterAmenityListModel>? AmenityList { get; set; }
     }
