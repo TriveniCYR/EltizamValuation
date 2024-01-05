@@ -338,6 +338,7 @@ $(document).ready(function () {
     GetValuerLists();
     BindQuatationList();
     BindInvoiceList();
+    /*BindPaymentInvoiceList();*/
 
     if (document.location.href.includes('id')) {
         /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/
@@ -975,6 +976,41 @@ function BindInvoiceList() {
     });
 }
 
+//function BindPaymentInvoiceList() {
+//    let id = $('#hdnId').val();
+//    $.ajax({
+//        type: Get,
+//        url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
+//        "datatype": "json",
+//        success: function (response) {
+//            if (response != null) {
+//                $.each(response, function (index, object) {
+//                    var html = '';
+//                    var url = '/ValuationInvoice/GetPaymentInvoiceById?id=' + object.id;
+//                    html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+//                    html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
+//                    if (view == 2) {
+//                        html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+//                    }
+//                    else {
+//                        html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+//                    }
+//                    html += '</ul></div>';
+
+//                    $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.referenceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+//                        + '</td><td>' + object.transactionStatusName + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+//                });
+//            }
+//        },
+//        failure: function (response) {
+//            alert(response.responseText);
+//        },
+//        error: function (response) {
+//            alert(response.responseText);
+//            $("#loader").hide();
+//        }
+//    });
+//}
 
 
 

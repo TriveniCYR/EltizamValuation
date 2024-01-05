@@ -118,6 +118,7 @@ namespace Eltizam.Web.Helpers
         public static string ValuationInvoiceById = "ValuationInvoice/GetInvoiceById";
         public static string DeleteInvoiceById = "ValuationInvoice/Delete";
         public static string DeleteInvoiceDocument = "ValuationInvoice/DeleteDocument";
+       
 
         #endregion Quotation
 
@@ -249,6 +250,7 @@ namespace Eltizam.Web.Helpers
         public static string UpdateNotification = "Notification/UpdateNotificationReadBy";
         public static string GetAllStatusHistory = "ValuationRequestStatus/GetAllStatusHistory";
         public static string UpsertInvoice = "ValuationInvoice/UpsertInvoice";
+        public static string GetPaymentInvoiceById = "ValuationInvoice/GetPaymentInvoiceById";
         #endregion Valuation Request 
 
         #region AuditLog

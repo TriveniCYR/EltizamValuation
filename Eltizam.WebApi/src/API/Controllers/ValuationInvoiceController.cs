@@ -148,7 +148,7 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
-        [HttpGet, Route("GetPaymentInvoiceById/{requestId}")]
+        [HttpGet, Route("GetPaymentInvoiceById")]
         public async Task<IActionResult> GetPaymentInvoiceById([FromRoute] int requestId)
         {
             try
