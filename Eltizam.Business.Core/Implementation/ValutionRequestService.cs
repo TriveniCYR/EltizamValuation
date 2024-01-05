@@ -207,7 +207,7 @@ namespace Eltizam.Business.Core.Implementation
                 //approver flow
                 if (user != null && user.RoleId == (int)RoleEnum.Approver)
                 {
-                    var openApproval = _valuationRequestApproverLevel.Get(a => a.ValuationRequestId == model.Id && a.StatusId == null && a.ApproverId == By);
+                    var openApproval = _valuationRequestApproverLevel.Get(a => a.ValuationRequestId == model.Id && a.ApproverId == By); //&& a.StatusId == null
                     if (openApproval != null)
                     {
                         ValuationRequestApproverLevel oldentity = null;

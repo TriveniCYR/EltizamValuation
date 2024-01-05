@@ -126,6 +126,27 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+
+        [HttpPost]
+        [Route("UpsertInvoice")]
+        public async Task<IActionResult> UpsertInvoice(ValuationInvoicePaymentModel model)
+        {
+            try
+            {
+                DBOperation oResponse = await _ValuationInvoiceService.UpsertInvoice(model);
+                if (oResponse == DBOperation.Success)
+                {
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (model.Id > 0 ? AppConstants.UpdateSuccess : AppConstants.InsertSuccess));
+                }
+                else
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
     }
 }

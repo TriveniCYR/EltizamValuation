@@ -37,5 +37,9 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? RoleName { get; set; }
         public int? IsApprover { get; set; }
         public int? IsValuer { get; set; }
+        public string? GenderName { get; set; }
+        public string? Department { get; set; }
+        public string? Designation { get; set; }
+        public string? ResourceType { get; set; }
     }
 }
