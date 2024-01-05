@@ -46,7 +46,7 @@ function removeParentDiv(element, num) {
     var contactContainer = $("#contacts-container");
     var count = contactContainer.children(".roundBorderBox").length;
     for (i = num; i < count; i++) {
-        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[id]').forEach(element => { 
+        contactContainer.children(".roundBorderBox")[i].querySelectorAll('[id]').forEach(element => {
             element.id = element.id.replace("_" + (i + 1) + "", "_" + i);
         });
         contactContainer.children(".roundBorderBox")[i].querySelectorAll('[name]').forEach(element => {
@@ -100,7 +100,7 @@ function addMoreAddress() {
     var addressContainer = $("#addresses-container");
     var count = addressContainer.children(".addMoreAddress").length;
     clonedDiv.querySelectorAll('[id]').forEach(element => {
-        element.id = element.id.replace("_" + (count - 1)+"", "_" + count);
+        element.id = element.id.replace("_" + (count - 1) + "", "_" + count);
     });
     clonedDiv.querySelectorAll('[name]').forEach(element => {
         element.name = element.name.replace("[" + (count - 1) + "]", "[" + count + "]");
@@ -119,7 +119,7 @@ function addMoreAddress() {
     if (count == 1) {
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
-        minusDiv.innerHTML = ' <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this,'+count+')"> ';
+        minusDiv.innerHTML = ' <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this,' + count + ')"> ';
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
 
     }
@@ -228,7 +228,7 @@ function validateForAddress() {
     var count = addressContainer.children(".addMoreAddress").length;
     var contactContainer = $("#contacts-container");
     var countContact = contactContainer.children(".roundBorderBox").length;
-    
+
     var emails = [];
     var altEmails = [];
     var phones = [];
@@ -284,7 +284,7 @@ function validateForAddress() {
                 return false;
             }
         }
-    }    
+    }
     return true;
 }
 function isValidEmail(email) {
@@ -333,7 +333,7 @@ function BindClientType() {
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ClientType, _rpname, _val);
 }
 
-function BindCountry() { 
+function BindCountry() {
     for (var i = 0; i < addressLength; i++) {
         var Country = $("#Addresses_" + i + "__CountryId");
         var _val = $('#hdnCountry_' + i).val();
@@ -445,7 +445,7 @@ function previewFiles() {
             else if (file.type.startsWith('text/') || file.type === 'application/json') {
                 // Display text content for text and JSON files
                 div.innerHTML = '<strong>' + escape(file.name) + '</strong><br><pre>' + escape(e.target.result) + '</pre>';
-            } 
+            }
             else if (file.type === 'application/pdf') {
                 // Display PDF preview using PDF.js
                 var pdfPreview = document.createElement('iframe');
@@ -582,32 +582,33 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-if (action === "Add") {
-    document.addEventListener('DOMContentLoaded', function () {
-        flatpickr('#TrnexpiryDate', {
-            dateFormat: 'd-M-Y',
-            defaultDate: 'today',
-            onChange: function (selectedDates, dateStr, instance) {
-                validateDate(selectedDates[0], instance);
-            }
-        });
 
-        function validateDate(selectedDate, instance) {
-            var today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (selectedDate < today) {
-                toastr.error("Previous Dates are not allowed");
-                instance.setDate('today');
-            }
-        }
-    });
+//document.addEventListener('DOMContentLoaded', function () {
+//    flatpickr('#TrnexpiryDate', {
+//        dateFormat: flatDateformat,
+//        defaultDate: 'today',
+//        minDate: "today",
+//        onChange: function (selectedDates, dateStr, instance) {
+//            validateDate(selectedDates[0], instance);
+//        }
+//    });
+//});
+
+function validateDate(selectedDate, instance) {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDate < today) {
+        toastr.error("Previous Dates are not allowed");
+        instance.setDate('today');
+    }
 }
 
 
 
-   
 
-    
+
+
+
 
 
 

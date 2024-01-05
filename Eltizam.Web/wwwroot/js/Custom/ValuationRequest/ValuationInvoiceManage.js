@@ -434,7 +434,7 @@ function BindTransactionMode() {
 if (action === "Add") {
     document.addEventListener('DOMContentLoaded', function () {
         flatpickr('#TransactionDate', {
-            dateFormat: 'd-M-Y',
+            dateFormat: flatDateformat,
             defaultDate: 'today',
             onChange: function (selectedDates, dateStr, instance) {
                 validateDate(selectedDates[0], instance);

@@ -126,8 +126,8 @@
                                         <p class="m-0">
                                             TRN Expire Date
                                             <span class="text-danger">*</span>
-                                        </p>
-                                        <input type="text" id="TrnexpiryDate" name="TrnexpiryDate" class="formatted-date-input" asp-for="TrnexpiryDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                        </p> 
+                                        <input type="text" class="formatted-date-input" id="TrnexpiryDate" name="TrnexpiryDate" asp-for="TrnexpiryDate">
                                         @Html.ValidationMessageFor(model => model.TrnexpiryDate, "", new { @class = "text-danger" })
                                     </label>
                                 </div>

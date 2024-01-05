@@ -25,7 +25,7 @@ namespace Eltizam.Business.Models
         public string? LastName { get; set; }        
         public string? Gender { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'Designation' field is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Gender' field is required.")]
         public int? GenderId { get; set; }
         public IFormFile? File { get; set; }
 

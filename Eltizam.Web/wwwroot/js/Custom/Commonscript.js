@@ -8,6 +8,7 @@ var BaseURL = $('#hdnAPIURL').val();
 var setDefaultOrder = [0, 'desc'];
 var ShowMenuCache = "showMenuCache";
 var defaultDateFormat = 'DD-MMM-YYYY hh:mm A';
+var flatDateformat = 'd-m-Y';
 
 //Role Enum
 var RoleEnum = {
@@ -56,33 +57,7 @@ var action = ($("#md").val())
 var view = ($("#View").val())
 var userid = parseInt($("#userid").val(), 10);
 
-function formatCurrencyInElements(className) {
-    const elements = document.querySelectorAll(`.${className}`);
-    elements.forEach(function (element) {
-        if (element.tagName === 'INPUT') {
-            const formatInput = (inputElement) => {
-                const inputText = inputElement.value;
-                const hasNegativeSign = inputText.includes('-');
-                const numericValue = parseFloat(inputText.replace(/[^\d.]/g, ''));
-                if (!isNaN(numericValue)) {
-                    inputElement.value = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 6 });
-                }
-            };
-            formatInput(element);
 
-            element.addEventListener('blur', function () {
-                formatInput(this);
-            });
-        } else {
-            const elementText = element.textContent;
-            const hasNegativeSign = elementText.includes('-');
-            const numericValue = parseFloat(elementText.replace(/[^\d.]/g, ''));
-            if (!isNaN(numericValue)) {
-                element.textContent = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 2 });
-            }
-        }
-    });
-}
 $(document).ready(function () {
     formatCurrencyInElements('formatting');
     // Assuming your elements have the class 'price'
@@ -195,6 +170,34 @@ $(document).ready(function () {
     Getactivenotifications(); 
 });
 
+function formatCurrencyInElements(className) {
+    const elements = document.querySelectorAll(`.${className}`);
+    elements.forEach(function (element) {
+        if (element.tagName === 'INPUT') {
+            const formatInput = (inputElement) => {
+                const inputText = inputElement.value;
+                const hasNegativeSign = inputText.includes('-');
+                const numericValue = parseFloat(inputText.replace(/[^\d.]/g, ''));
+                if (!isNaN(numericValue)) {
+                    inputElement.value = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 6 });
+                }
+            };
+            formatInput(element);
+
+            element.addEventListener('blur', function () {
+                formatInput(this);
+            });
+        } else {
+            const elementText = element.textContent;
+            const hasNegativeSign = elementText.includes('-');
+            const numericValue = parseFloat(elementText.replace(/[^\d.]/g, ''));
+            if (!isNaN(numericValue)) {
+                element.textContent = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 2 });
+            }
+        }
+    });
+}
+
 function Getactivenotifications() { 
     var url = "?userId=" + LogInUserId + "&valId=" + 0;
     ajaxServiceMethod(BaseURL + notificationsCnt + url, 'GET', NotificationCountSuccess, GetnotificationsError);
@@ -259,21 +262,29 @@ $(document)
         }
     });
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () { 
     flatpickr('.formatted-date-input', {
-        dateFormat: 'd-M-Y'
+        dateFormat: flatDateformat, 
+    });
+
+    flatpickr('#TrnexpiryDate', {
+        dateFormat: flatDateformat,
+        minDate: 'today' 
+    });
+
+    flatpickr('#DateOfBirth', {
+        dateFormat: flatDateformat,
+        maxDate: 'today' 
     });
 });
 
 if (action === "Add") {
     document.addEventListener('DOMContentLoaded', function () {
         flatpickr('.formatted-date-input', {
-            dateFormat: 'd-M-Y',
+            dateFormat: flatDateformat,
             defaultDate: 'today'
-
         });
-    }
-    )
+    });
 }
 
 function formatreadonlydate() {
