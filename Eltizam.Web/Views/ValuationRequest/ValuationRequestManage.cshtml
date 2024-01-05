@@ -404,6 +404,7 @@
                                     <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
                                     <input type="hidden" id="hdnPropertyId" value="@(Model.PropertyId)" />
                                     <input type="hidden" id="hdnPropertyName" value="@(Model == null ? 0 : Model.PropertyName)" />
+                                    <input type="hidden" id="hdnUnitType" value="@(Model == null ? 0 : Model.UnitType)" />
                                     <div class="flex  mb-28" id="editables2">
                                         <label for="" class="w-50">
                                             <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
@@ -451,7 +452,7 @@
                                         </label>
                                         <label for="" class="w-50">
                                             Purpose of Valuation
-                                            @Html.TextBoxFor(model => model.ValuationPurpose, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Valuation Purpose"] })
+                                            @Html.TextBoxFor(model => model.ValuationPurpose, new { @disabled = htmlAttributes, @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Purpose"] })
 
                                         </label>
                                     </div>
@@ -473,7 +474,7 @@
                                     </div>
                                     <div class="flex mb-28">
                                         <label for="" class="w-50">
-                                            Age of construction
+                                            Age of construction (Years)
                                             @Html.TextBoxFor(model => model.AgeOfConstruction, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
 
                                         </label>

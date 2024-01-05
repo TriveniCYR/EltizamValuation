@@ -110,33 +110,13 @@ function BindOwnership() {
     var description = "OWNERSHIP_TYPE";
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, OwnershipType, _rpname, _val); 
 }
+
 function BindUnitType() {
     var UnitType = $("#UnitType");
     var _rpname = "description";
+    var _val = $('#hdnUnitType').val();
     var description = 'UNIT_TYPE';
-    $.ajax({
-        type: Get,
-        url: BaseURL + GetDictionaryWithSubDetails + '?code=' + description,
-        "datatype": "json",
-        success: function (response) {
-            var data = response.values;
-            var _dd = _rpname;
-            UnitType.empty().append('<option selected="selected" value="">' + dftSel + '</option>');
-            for (var i = 0; i < data.length; i++) {
-                UnitType.append($("<option></option>").val(data[i][_dd]).html(data[i][_dd]));
-            }
-            if ($('#hdnUnitType').val() != 0) {
-                UnitType.val($('#hdnUnitType').val());
-            }
-        },
-        failure: function (response) {
-            alert(response.responseText);
-        },
-        error: function (response) {
-            alert(response.responseText);
-            $("#loader").hide();
-        }
-    });
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, UnitType, _rpname, _val);
 }
 
 function BindFurnished() {
