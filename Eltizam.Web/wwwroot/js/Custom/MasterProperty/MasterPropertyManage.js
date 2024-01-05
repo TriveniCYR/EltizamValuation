@@ -133,18 +133,19 @@ function BindOwnership() {
     //});
 }
 function BindUnitType() {
-    var id = 22;
     var UnitType = $("#UnitType");
     var _rpname = "description";
+    var description = 'UNIT_TYPE';
     $.ajax({
         type: Get,
-        url: BaseURL + UnitTypeStatus + '/' + id,
+        url: BaseURL + GetDictionaryWithSubDetails + '?code=' + description,
         "datatype": "json",
         success: function (response) {
+            var data = response.values;
             var _dd = _rpname;
             UnitType.empty().append('<option selected="selected" value="">' + dftSel + '</option>');
-            for (var i = 0; i < response.length; i++) {
-                UnitType.append($("<option></option>").val(response[i][_dd]).html(response[i][_dd]));
+            for (var i = 0; i < data.length; i++) {
+                UnitType.append($("<option></option>").val(data[i][_dd]).html(data[i][_dd]));
             }
             if ($('#hdnUnitType').val() != 0) {
                 UnitType.val($('#hdnUnitType').val());
