@@ -26,7 +26,8 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapperFactory _mapperFactory;
         private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
-        private IRepository<ValuationInvoice> _repository;        
+        private IRepository<ValuationInvoice> _repository;
+        private IRepository<ValuationPaymentInvoice> _InvoiceMap;
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
         private readonly IHelper _helper;
         private readonly int? _LoginUserId;
@@ -45,12 +46,13 @@ namespace Eltizam.Business.Core.Implementation
             _repository = _unitOfWork.GetRepository<ValuationInvoice>();
             _repositoryDocument = _unitOfWork.GetRepository<MasterDocument>();
             _helper = helper;
-            _auditLogService = auditLogService; 
+            _auditLogService = auditLogService;
             _LoginUserId = _helper.GetLoggedInUser()?.UserId;
             _notificationService = notificationService;
             _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
             //_masterdictionaryrepository = _unitOfWork.GetRepository<MasterDictionaryDetail>();
             _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>();
+            _InvoiceMap = _unitOfWork.GetRepository<ValuationPaymentInvoice>();
         }
         #endregion Constructor
 
@@ -65,18 +67,18 @@ namespace Eltizam.Business.Core.Implementation
             var invoiceList = EltizamDBHelper.ExecuteMappedReader<ValuationInvoiceListModel>(ProcedureMetastore.usp_Invoice_GetInvoiceByRequestId,
                                 DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
 
-            return invoiceList; 
+            return invoiceList;
         }
 
         public async Task<DBOperation> Upsert(ValuationInvoiceListModel entityInvoice)
-        { 
-            ValuationInvoice objInvoice; 
+        {
+            ValuationInvoice objInvoice;
             MasterDocument objDocument;
             string MainTableName = Enum.GetName(TableNameEnum.ValuationInvoice);
             int MainTableKey = entityInvoice.Id;
 
             if (entityInvoice.Id > 0)
-            { 
+            {
                 ValuationInvoice OldEntity = null;
                 OldEntity = _repository.GetNoTracking(entityInvoice.Id);
 
@@ -100,7 +102,7 @@ namespace Eltizam.Business.Core.Implementation
                     objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
                     objInvoice.Note = entityInvoice.Note;
                     objInvoice.ModifiedDate = AppConstants.DateTime;
-                    objInvoice.ModifiedBy = entityInvoice.ModifiedBy; 
+                    objInvoice.ModifiedBy = entityInvoice.ModifiedBy;
 
                     _repository.UpdateAsync(objInvoice);
                     await _unitOfWork.SaveChangesAsync();
@@ -115,7 +117,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
-                objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice); 
+                objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice);
 
                 var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
 
@@ -127,7 +129,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 _repository.AddAsync(objInvoice);
                 await _unitOfWork.SaveChangesAsync();
-            } 
+            }
 
             if (objInvoice.Id == 0)
                 return DBOperation.Error;
@@ -158,26 +160,26 @@ namespace Eltizam.Business.Core.Implementation
                 var statusid = _statusrepository.GetAll().Where(x => x.Status == "Paymented").Select(x => x.Id).FirstOrDefault();
                 _notificationService.UpdateValuationRequestStatus(statusid, objInvoice.ValuationRequestId);
 
-                string? username = _masteruserrepository.GetAll().Where(x => x.Id == objInvoice.CreatedBy).Select(x=>x.UserName).FirstOrDefault();
+                string? username = _masteruserrepository.GetAll().Where(x => x.Id == objInvoice.CreatedBy).Select(x => x.UserName).FirstOrDefault();
                 string transactionstatus = _statusrepository.Get(x => x.Id == objInvoice.TransactionStatusId).Status;
                 TransactionModeEnum mode = (TransactionModeEnum)objInvoice.TransactionModeId;
                 string? paymentmode = Enum.GetName(typeof(TransactionModeEnum), mode);
 
                 string strHtml = File.ReadAllText(@"wwwroot\Uploads\HTMLTemplates\ValuationRequest_InvoiceCreate.html");
-                strHtml = strHtml.Replace("[PDateP]", objInvoice.CreatedDate.ToString("dd-MMM-yyyy")); 
+                strHtml = strHtml.Replace("[PDateP]", objInvoice.CreatedDate.ToString("dd-MMM-yyyy"));
                 strHtml = strHtml.Replace("[Amount]", objInvoice.Amount.ToString());
-                strHtml = strHtml.Replace("[Transaction]", transactionstatus); 
+                strHtml = strHtml.Replace("[Transaction]", transactionstatus);
                 strHtml = strHtml.Replace("[PaymentMode]", paymentmode);
                 strHtml = strHtml.Replace("[Date]", objInvoice.TransactionDate?.ToString("dd-MMM-yyyy"));
 
                 var notificationModel = _notificationService.GetValuationNotificationData(RecepientActionEnum.InvoiceCreation, objInvoice.ValuationRequestId);
                 notificationModel.Body = strHtml;
-                notificationModel.Subject = EnumHelper.GetDescription(RecepientActionEnum.InvoiceCreation); 
-                
+                notificationModel.Subject = EnumHelper.GetDescription(RecepientActionEnum.InvoiceCreation);
+
                 await _notificationService.SendEmail(notificationModel);
             }
             catch (Exception ex)
-            {  
+            {
             }
             return DBOperation.Success;
         }
@@ -219,7 +221,7 @@ namespace Eltizam.Business.Core.Implementation
 
             return DBOperation.Success;
         }
-        public async Task<DBOperation> DeleteDocument(int id,int? by)
+        public async Task<DBOperation> DeleteDocument(int id, int? by)
         {
             if (id > 0)
             {
@@ -234,5 +236,64 @@ namespace Eltizam.Business.Core.Implementation
             // Return a success operation indicating successful deletion.
             return DBOperation.Success;
         }
+
+        public async Task<DBOperation> UpsertInvoice(ValuationInvoicePaymentModel invoice)
+        {
+
+            // Create a Master_PropertyType object.
+            ValuationPaymentInvoice objIvoiceType;
+
+            // Check if the entity has an ID greater than 0 (indicating an update).
+            if (invoice.Id > 0)
+            {
+                // Get the existing entity from the repository.
+                objIvoiceType = _InvoiceMap.Get(invoice.Id);
+
+                // If the entity exists, update its properties.
+                if (objIvoiceType != null)
+                {
+                    objIvoiceType.InvoiceNo = invoice.InvoiceNo;
+                    objIvoiceType.Amount = invoice.Amount;
+                    objIvoiceType.Balance = invoice.Balance;
+                    objIvoiceType.Note = invoice.Note;
+                    objIvoiceType.TransactionModeId=invoice.TransactionModeId;
+                    objIvoiceType.TransactionDate = invoice.TransactionDate;
+                    objIvoiceType.ModifiedDate = AppConstants.DateTime;
+                    objIvoiceType.ModifiedBy = invoice.ModifiedBy;
+
+                    // Update the entity in the repository asynchronously.
+                    _InvoiceMap.UpdateAsync(objIvoiceType);
+                }
+                else
+                {
+                    // Return a not found operation if the entity does not exist.
+                    return DBOperation.NotFound;
+                }
+            }
+            else
+            {
+                // Create a new Master_PropertyType entity from the model for insertion.
+                objIvoiceType = _mapperFactory.Get<ValuationInvoicePaymentModel, ValuationPaymentInvoice>(invoice);
+                objIvoiceType.CreatedDate = AppConstants.DateTime;
+                objIvoiceType.ModifiedDate = AppConstants.DateTime;
+                objIvoiceType.ModifiedBy = invoice.ModifiedBy;
+                objIvoiceType.CreatedBy = invoice.CreatedBy;
+
+                // Insert the new entity into the repository asynchronously.
+                _InvoiceMap.AddAsync(objIvoiceType);
+            }
+
+            // Save changes to the database asynchronously.
+            await _unitOfWork.SaveChangesAsync();
+
+            // Return an appropriate operation result.
+            if (objIvoiceType.Id == 0)
+                return DBOperation.Error;
+
+            return DBOperation.Success;
+        }
+
+
+
     }
 }

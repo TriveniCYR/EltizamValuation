@@ -676,7 +676,11 @@
                     </div>
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center p-0">
-                            <h5>Invoice Listing</h5>
+                            <h5>Payment Listing</h5>
+
+                            <a href="/ValuationRequest/ValuationInvoices?vId=@Model.Id&refNo=@Model.ReferenceNo">
+                                <button class="blueBtn" style="width:120px" id="addNewIn"> Add Invoice</button>
+                            </a>
                             @if (!isHideBtn)
                             {
                                 <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">

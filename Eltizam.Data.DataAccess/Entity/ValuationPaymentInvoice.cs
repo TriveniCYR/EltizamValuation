@@ -3,23 +3,21 @@ using System.Collections.Generic;
 
 namespace Eltizam.Data.DataAccess.Entity
 {
-    public partial class ValuationQuotation
+    public partial class ValuationPaymentInvoice
     {
-        public ValuationQuotation()
+        public ValuationPaymentInvoice()
         {
+            InverseValuationRequest = new HashSet<ValuationPaymentInvoice>();
             ValuationPaymentInvoiceMaps = new HashSet<ValuationPaymentInvoiceMap>();
         }
 
         public int Id { get; set; }
-        public string ReferenceNo { get; set; } = null!;
         public int ValuationRequestId { get; set; }
-        public int StatusId { get; set; }
-        public decimal ValuationFee { get; set; }
-        public decimal Vat { get; set; }
-        public decimal? OtherCharges { get; set; }
-        public decimal? InstructorCharges { get; set; }
-        public decimal? Discount { get; set; }
-        public decimal? TotalFee { get; set; }
+        public string InvoiceNo { get; set; } = null!;
+        public int TransactionModeId { get; set; }
+        public DateTime? TransactionDate { get; set; }
+        public decimal Amount { get; set; }
+        public decimal? Balance { get; set; }
         public string? Note { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -27,7 +25,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public DateTime? ModifiedDate { get; set; }
         public bool? IsDeleted { get; set; }
 
-        public virtual ValuationRequest ValuationRequest { get; set; } = null!;
+        public virtual ValuationPaymentInvoice ValuationRequest { get; set; } = null!;
+        public virtual ICollection<ValuationPaymentInvoice> InverseValuationRequest { get; set; }
         public virtual ICollection<ValuationPaymentInvoiceMap> ValuationPaymentInvoiceMaps { get; set; }
     }
 }
