@@ -29,7 +29,6 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ComparableEvidence> _evidencerepository { get; set; }
         private IRepository<ValuationAssesment> _assesmenterepository { get; set; }
         private IRepository<MasterValuationStatus> _statusrepository { get; set; }
-        private IRepository<ValuationQuotation> _valuationQuotationrepository { get; set; }
         private IRepository<ValuationRequestApproverLevel> _valuationRequestApproverLevel { get; set; }
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
@@ -52,7 +51,6 @@ namespace Eltizam.Business.Core.Implementation
             _helper = helper;
             _notificationService = notificationService;
             _auditLogService = auditLogService;
-            _valuationQuotationrepository = _unitOfWork.GetRepository<ValuationQuotation>();
             _valuationRequestApproverLevel = _unitOfWork.GetRepository<ValuationRequestApproverLevel>();
             _userrepo = _unitOfWork.GetRepository<MasterUser>();
         }
@@ -318,7 +316,7 @@ namespace Eltizam.Business.Core.Implementation
                         objValuation.ApproverComment = entityValuation.ApproverComment;
                         objValuation.ModifiedBy = entityValuation.ModifiedBy;
 
-                        _repository.UpdateAsync(objValuation); 
+                        _repository.UpdateAsync(objValuation);
                         await _unitOfWork.SaveChangesAsync();
 
                         try
@@ -418,9 +416,12 @@ namespace Eltizam.Business.Core.Implementation
                 _ValuationEntity.LocationCountryId = res.LocationCountryId;
                 _ValuationEntity.LocationStateId = res.LocationStateId;
                 _ValuationEntity.LocationCityId = res.LocationCityId;
+                _ValuationEntity.StatusName = res.StatusName;
+                _ValuationEntity.ColorCode = res.ColorCode;
+                _ValuationEntity.BackGroundColor = res.BackGroundColor;
 
                 siteDescription = _mapperFactory.Get<SiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
-                
+
                 //Get approver level data
                 approvellevel = await GetApproverLevel(id);
                 _ValuationEntity.ValuationRequestApproverLevel = approvellevel;
@@ -437,9 +438,9 @@ namespace Eltizam.Business.Core.Implementation
 
                     var siteDocuments = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
                                         DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
-                   
-                    if (siteDocuments != null) 
-                        _ValuationEntity.ValuationAssesment.SiteDescription.Documents = siteDocuments;  
+
+                    if (siteDocuments != null)
+                        _ValuationEntity.ValuationAssesment.SiteDescription.Documents = siteDocuments;
                 }
 
 
@@ -447,7 +448,7 @@ namespace Eltizam.Business.Core.Implementation
                 compevidence = _mapperFactory.Get<ComparableEvidence, ComparableEvidenceModel>(_evidencerepository.Get(x => x.RequestId == id));
 
                 if (compevidence != null)
-                { 
+                {
                     _ValuationEntity.ValuationAssesment.comparableEvidenceModel = compevidence;
                     DbParameter[] osqlParameter3 =
                     {
@@ -465,9 +466,9 @@ namespace Eltizam.Business.Core.Implementation
                 }
 
                 /////Assesment 
-                assement = _mapperFactory.Get<ValuationAssesment, ValuationAssessementModel>(_assesmenterepository.Get(x => x.RequestId == id)); 
+                assement = _mapperFactory.Get<ValuationAssesment, ValuationAssessementModel>(_assesmenterepository.Get(x => x.RequestId == id));
                 if (assement != null)
-                { 
+                {
                     _ValuationEntity.ValuationAssesment.valuationAssessementModel = assement;
 
                     DbParameter[] osqlParameter4 =
@@ -476,13 +477,13 @@ namespace Eltizam.Business.Core.Implementation
                         new DbParameter(AppConstants.TableName,  assesmenttableName, SqlDbType.VarChar),
                     };
 
-                    var assesmentDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId, 
+                    var assesmentDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
                                             DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter4);
                     if (assesmentDocument != null)
                     {
                         _ValuationEntity.ValuationAssesment.valuationAssessementModel.Documents = assesmentDocument;
                     }
-                }  
+                }
             }
 
             return _ValuationEntity;
@@ -541,7 +542,7 @@ namespace Eltizam.Business.Core.Implementation
                 new DbParameter("RequestData", RequestData, SqlDbType.VarChar),
             };
 
-            EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_UpsertApproverLevels, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter); 
+            EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_UpsertApproverLevels, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
             return DBOperation.Success;
         }
 
@@ -551,10 +552,10 @@ namespace Eltizam.Business.Core.Implementation
             DbParameter[] osqlParameter =
             {
                 new DbParameter("ValReqId", ValReqId, SqlDbType.Int),
-                new DbParameter("Amount", Amount,     SqlDbType.Decimal) 
+                new DbParameter("Amount", Amount,     SqlDbType.Decimal)
             };
 
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestApproverLevelModel>(ProcedureMetastore.usp_ValuationRequest_ApproverLevel, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter); 
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestApproverLevelModel>(ProcedureMetastore.usp_ValuationRequest_ApproverLevel, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
             return lstStf;
         }
     }

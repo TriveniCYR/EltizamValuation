@@ -64,6 +64,8 @@
     var distinctLevels = Levels?.Select(approverLevel => approverLevel.ApproverLevelId).Distinct();
     var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList();
 
+    var color = "";
+    var bgcolor = "";
 }
 
 <div id="PlaceHolderHere"></div>
@@ -80,6 +82,31 @@
         </div>
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
+
+                @if (Model.Id > 0)
+                {
+                    color = Model.ColorCode;
+                    bgcolor = Model.BackGroundColor;
+
+                    <div class="whiteBoxShadow m-0" id="footerAudit">
+                        <div class=" position-relative flex justify-between align-item-center" style="margin: 10px 10px 5px 15px;font-size: 16px;">
+                            <label style="font-size:16px;">
+                                Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                            </label>
+                            <label style="font-size:16px;">
+                                Client : @Html.DisplayFor(model => model.ClientName)
+                            </label>
+                            <label style="font-size:16px;">
+                                Property : @Html.DisplayFor(model => model.PropertyName)
+                            </label>
+                            <label style="font-size:16px;">
+                                Status : <label class="tableStatusBanner" style="color: @color; background-color: @bgcolor; border: 1px solid @color;">@Model.StatusName</label>
+                            </label>
+                        </div>
+                    </div>
+                }
+
+
                 <div class="tab flex flex-start m-0 ptrl-20">
 
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Valuation Details</button>
@@ -111,10 +138,10 @@
                             <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
                             <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
                             <input type="hidden" id="isApprovePerm" value="@isApprove" />
-                            
+
                             <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
-                            <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" /> 
-                            <input type="hidden" id="hdnStatusId" value="@(_md == "Add" ? 3 : (Model == null ? 0 : Model.StatusId))" /> 
+                            <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
+                            <input type="hidden" id="hdnStatusId" value="@(_md == "Add" ? 3 : (Model == null ? 0 : Model.StatusId))" />
                             <input type="hidden" id="hdnClientId" value="@(Model == null ? 0 : Model.ClientId)" />
                             <input type="hidden" id="hdnApproverId" value="@(Model == null ? 0 : Model.ApproverId)" />
                             <input type="hidden" id="hdnValuationModeId" value="@(Model == null ? 0 : Model.ValuationModeId)" />
@@ -141,7 +168,7 @@
                                     <label for="" class="w-50">
                                         Val. Ref#
                                         @Html.TextBoxFor(model => model.ReferenceNo, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Valuation Reference no"] })
-                                     </label>
+                                    </label>
                                     <label for="" class="w-50">
                                         Other Reference no
                                         @Html.TextBoxFor(model => model.OtherReferenceNo, new { @class = "form-control", @placeholder = @SharedLocalizer["Other Reference no"] })
@@ -173,7 +200,7 @@
                                         Approver Comment
                                         @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
                                         @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
-                                    </label> 
+                                    </label>
                                 </div>
 
                                 <div class="flex  mb-28">
@@ -200,29 +227,29 @@
                                             var dropdownId = $"ApproverLevelId_{lId}";
                                             var curList = Levels.Where(approver => approver.ApproverLevelId == lId).ToList();
                                             curList.Insert(0, new ValuationRequestApproverLevelModel()
-                                            {
-                                                ApproverLevelId = lId,
-                                                ApproverLevel = level,
-                                                ApproverId = 0,
-                                                ApproverName = "--select--"
-                                            });
+                    {
+                        ApproverLevelId = lId,
+                        ApproverLevel = level,
+                        ApproverId = 0,
+                        ApproverName = "--select--"
+                    });
 
                                             var ddSelected = Levels.FirstOrDefault(approver => approver.ApproverLevelId == lId && approver.IsSelected == 1)?.ApproverId.ToString();
 
                                             //append to page
                                             <label for="" class="bodyContent p-0 w-50">
-                                                @level 
+                                                @level
                                                 @Html.DropDownListFor(model => ddSelected, new SelectList(curList.Select(approver => new SelectListItem
-                                                {
-                                                       Value = approver.ApproverId.ToString(),
-                                                       Text = approver.ApproverName
-                                                }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
+                                   {
+                                       Value = approver.ApproverId.ToString(),
+                                       Text = approver.ApproverName
+                                   }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
                                             </label>
                                         }
                                     }
                                 </div>
 
-                                <div class="flex  mb-28">   
+                                <div class="flex  mb-28">
                                     <label for="" class="w-50">
                                         Valuation Time Frame (In Days)
                                         @Html.TextBoxFor(model => model.ValuationTimeFrame, new { @class = "form-control valiadteint", @placeholder = @SharedLocalizer["Valuation Time Frame"] })
@@ -230,7 +257,7 @@
                                     </label>
                                 </div>
 
-                              
+
                             </div>
 
 
@@ -325,7 +352,7 @@
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                                     </div>
 
-                                   <div class="inputSearchs p-0">
+                                    <div class="inputSearchs p-0">
                                         <table class="table-striped sec" id="NewAddressTable">
                                             <thead>
                                                 <tr>
@@ -467,7 +494,7 @@
                                             @Html.TextBoxFor(model => model.Description, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Description"] })
 
                                         </label>
-                                          <label for="" class="w-50">
+                                        <label for="" class="w-50">
                                             Unit Number
                                             @Html.TextBoxFor(model => model.UnitNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["UnitNumber"] })
 
@@ -502,7 +529,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                   @*  <h5 class="blueHeading mb-16">Property Location</h5> *@
+                                    @*  <h5 class="blueHeading mb-16">Property Location</h5> *@
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
                                         <p>Property Location</p>
                                         <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
@@ -583,17 +610,17 @@
 
                             <div class="text-right buttonArea bodyContent">
                                 <a href='/ValuationRequest/ValuationRequests'> <button type="button" class="lineBtn greyBtn mr-12">Cancel</button></a>
-                                
+
                                 @if (ViewBag.IsView == 1)
                                 {
                                     <a href='/ValuationRequest/ValuationRequestManage?id=@Model.Id'>
                                         <button type="button" class=" blueBtn mr-12" style=" width:100px">Edit</button>
                                     </a>
                                 }
-                                else 
-                                { 
+                                else
+                                {
                                     @if (roleId == (int)RoleEnum.Admin || roleId == (int)RoleEnum.Requestor)
-                                    { 
+                                    {
                                         <button type="submit" class="blueBtn" id="btnSaveEdit" style="width:100px">Save</button>
                                     }
 
@@ -611,7 +638,7 @@
 
 
                 <div id="profile2" class="tabcontent">
-                    <div class="whiteBoxShadow m-0 ">
+                   @*  <div class="whiteBoxShadow m-0 ">
                         <div class="bodyContent footerAudit">
                             <div class=" position-relative flex justify-between align-item-center m-0">
                                 <h5 class="m-0">
@@ -622,7 +649,7 @@
                                 </h5>
                             </div>
                         </div>
-                    </div>
+                    </div> *@
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center plr-0">
                             <h5>Quotation Listing</h5>
@@ -662,7 +689,7 @@
 
 
                 <div id="profile3" class="tabcontent">
-                    <div class="whiteBoxShadow m-0 ">
+                   @*  <div class="whiteBoxShadow m-0 ">
                         <div class="bodyContent footerAudit">
                             <div class=" position-relative flex justify-between align-item-center m-0">
                                 <h5 class="m-0">
@@ -673,7 +700,7 @@
                                 </h5>
                             </div>
                         </div>
-                    </div>
+                    </div> *@
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center p-0">
                             <h5>Invoice Listing</h5>
@@ -712,7 +739,7 @@
                 <form asp-action="ValuationAssesmentManage" asp-controller="ValuationRequest" method="POST" enctype="multipart/form-data">
                     @Html.HiddenFor(model => model.Id)
                     <div id="profile4" class="tabcontent">
-                        <div class="whiteBoxShadow m-0 ">
+                        @* <div class="whiteBoxShadow m-0 ">
                             <div class="bodyContent footerAudit">
                                 <div class=" position-relative flex justify-between align-item-center m-0">
                                     <h5 class="m-0">
@@ -723,7 +750,7 @@
                                     </h5>
                                 </div>
                             </div>
-                        </div>
+                        </div> *@
                         <h5 class="ptrl-20">Structural Information</h5>
                         <div class="inputSearchs">
 
@@ -896,7 +923,7 @@
 
                     <div id="profile5" class="tabcontent">
                         <div class="whiteBoxShadow m-0 ">
-                            <div class="bodyContent footerAudit">
+                          @*   <div class="bodyContent footerAudit">
                                 <div class=" position-relative flex justify-between align-item-center m-0">
                                     <h5 class="m-0">
                                         Valuation Id : @Html.DisplayFor(model => model.Id)
@@ -905,7 +932,7 @@
                                         Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
                                     </h5>
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
                         <h5 class="ptrl-20">Comparable Evidences</h5>
                         <div class="inputSearchs">
@@ -1022,7 +1049,7 @@
 
                     <div id="profile6" class="tabcontent">
                         <div class="whiteBoxShadow m-0 ">
-                            <div class="bodyContent footerAudit">
+                            @* <div class="bodyContent footerAudit">
                                 <div class=" position-relative flex justify-between align-item-center m-0">
                                     <h5 class="m-0">
                                         Valuation Id : @Html.DisplayFor(model => model.Id)
@@ -1031,7 +1058,7 @@
                                         Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
                                     </h5>
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
                         <h5 class="ptrl-20">Valuation Evidences</h5>
                         <div class="inputSearchs">
@@ -1249,7 +1276,7 @@
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationRequestManage.js?v=@jsVersion"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-     <!-- html-to-pdfmake file: -->
+    <!-- html-to-pdfmake file: -->
     <script src="https://cdn.jsdelivr.net/npm/html-to-pdfmake/browser.js"></script>
     <script>
         //var DeleteValuationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteValuationById";
@@ -1293,6 +1320,6 @@
         var AddLabel = "@SharedLocalizer["Add"]";
         var UpdateLabel = "@SharedLocalizer["Update"]";
         var isViewHide = "@ViewBag.IsView";
-        var isAddValuation = @Model.Id == 0; 
+        var isAddValuation = @Model.Id == 0;
     </script>
 }
