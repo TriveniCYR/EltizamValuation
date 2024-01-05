@@ -36,17 +36,17 @@ function BindCity(id) {
     BindDropdowns(cityListUrl + '/' + id, city, _rpname, _val);
 }
 function BindCurrencyHome() { 
-    var id = 7;
     var currencyId = $("#HomeCurrencyId");
     var _val = $('#hdnHomeCurrencyId').val();
     var _rpname = "description";
-    BindDropdowns(currencyUrl + '/' + id, currencyId, _rpname, _val);
+    var description = "CURRENCY";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, currencyId, _rpname, _val);
 }
 function BindCurrencyForeign() { 
-    var id = 7;
     var currencyId = $("#ForeignCurrencyId");
     var _val = $('#hdnForeignCurrencyId').val();
     var _rpname = "description";
-    BindDropdowns(currencyUrl + '/' + id, currencyId, _rpname, _val);
+    var description = "CURRENCY";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, currencyId, _rpname, _val);
 }
  
