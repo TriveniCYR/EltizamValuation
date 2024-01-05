@@ -106,31 +106,9 @@ function BindClient() {
 function BindOwnership() { 
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
-    var _rpname = "ownershipType";
-
-    BindDropdowns(OwnershipTypeList, OwnershipType, _rpname, _val);
-    //$.ajax({
-    //    type: "POST",
-    //    url: $('#hdnBaseURL').val() + OwnershipTypeList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
-    //        OwnershipType.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.data.length; i++) {
-    //            OwnershipType.append($("<option></option>").val(response.data[i].id).html(response.data[i].ownershipType));
-    //        }
-    //        if ($('#hdnOwnershipType').val() != 0) {
-    //            OwnershipType.val($('#hdnOwnershipType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    var _rpname = "description";
+    var description = "OWNERSHIP_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, OwnershipType, _rpname, _val); 
 }
 function BindUnitType() {
     var UnitType = $("#UnitType");
@@ -163,12 +141,10 @@ function BindUnitType() {
 
 function BindFurnished() {
     var Furnished = $("#Furnished");
-    Furnished.empty().append('<option selected="selected" value="0">--select--</option>');
-    Furnished.append($("<option></option>").val(1).html('Yes'));
-    //Furnished.append($("<option></option>").val(0).html('No'));
-    if ($('#hdnFurnished').val() != 0) {
-        Furnished.val($('#hdnFurnished').val());
-    }
+    var _val = $('#hdnFurnished').val();
+    var _rpname = "description";
+    var description = "PROPERTY_FURNISHED";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Furnished, _rpname, _val);    
 }
 
 

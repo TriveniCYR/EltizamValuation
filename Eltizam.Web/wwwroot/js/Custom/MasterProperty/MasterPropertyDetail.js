@@ -190,12 +190,10 @@ function BindUnitType() {
 }
 function BindFurnished() {
     var Furnished = $("#Furnished");
-    Furnished.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
-    Furnished.append($("<option></option>").val(1).html('Yes'));
-    Furnished.append($("<option></option>").val(0).html('No'));
-    if ($('#hdnFurnished').val() != 0) {
-        Furnished.val($('#hdnFurnished').val());
-    }
+    var _val = $('#hdnFurnished').val();
+    var _rpname = "description";
+    var description = "PROPERTY_FURNISHED";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Furnished, _rpname, _val);
 }
 
 function BindCountry() { 
