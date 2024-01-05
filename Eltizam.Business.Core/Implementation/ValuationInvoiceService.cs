@@ -293,12 +293,17 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<ValuationInvoicePaymentModel> GetPaymentInvoiceById(int id)
-        {
-            var _LocationEntity = new ValuationInvoicePaymentModel();
-            _LocationEntity = _mapperFactory.Get<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAsync(id));
+        //public async Task<ValuationInvoicePaymentModel> GetPaymentInvoiceById(int id)
+        //{
+        //    var _LocationEntity = new ValuationInvoicePaymentModel();
+        //    _LocationEntity = _mapperFactory.Get<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAsync(id));
 
-            return _LocationEntity;
+        //    return _LocationEntity;
+        //}
+
+        public async Task<List<ValuationInvoicePaymentModel>> GetPaymentInvoiceById(int requestId)
+        {
+            return _mapperFactory.GetList<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAllAsync());
         }
 
 
