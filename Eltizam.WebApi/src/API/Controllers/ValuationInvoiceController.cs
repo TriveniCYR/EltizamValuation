@@ -147,6 +147,23 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
+
+        [HttpGet, Route("GetPaymentInvoiceById/{id}")]
+        public async Task<IActionResult> GetPaymentInvoiceById([FromRoute] int id)
+        {
+            try
+            {
+                var oLocationEntity = await _ValuationInvoiceService.GetPaymentInvoiceById(id);
+                if (oLocationEntity != null && oLocationEntity.Id > 0)
+                    return _ObjectResponse.Create(oLocationEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
         #endregion API Methods
     }
 }
