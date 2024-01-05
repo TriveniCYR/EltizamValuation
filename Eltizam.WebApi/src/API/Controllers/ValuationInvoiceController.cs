@@ -153,9 +153,9 @@ namespace Eltizam.WebApi.Controllers
         {
             try
             {
-                var oLocationEntity = await _ValuationInvoiceService.GetPaymentInvoiceById(id);
-                if (oLocationEntity != null && oLocationEntity.Id > 0)
-                    return _ObjectResponse.Create(oLocationEntity, (Int32)HttpStatusCode.OK);
+                var oinvoiceEntity = await _ValuationInvoiceService.GetPaymentInvoiceById(id);
+                if (oinvoiceEntity != null && oinvoiceEntity.Id > 0)
+                    return _ObjectResponse.Create(oinvoiceEntity, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }

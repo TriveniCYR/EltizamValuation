@@ -240,7 +240,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> UpsertInvoice(ValuationInvoicePaymentModel invoice)
         {
 
-            // Create a Master_PropertyType object.
+            
             ValuationPaymentInvoice objIvoiceType;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
@@ -249,7 +249,7 @@ namespace Eltizam.Business.Core.Implementation
                 // Get the existing entity from the repository.
                 objIvoiceType = _InvoiceMap.Get(invoice.Id);
 
-                // If the entity exists, update its properties.
+                // If the entity exists, update its invoice.
                 if (objIvoiceType != null)
                 {
                     objIvoiceType.InvoiceNo = invoice.InvoiceNo;
@@ -272,7 +272,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
-                // Create a new Master_PropertyType entity from the model for insertion.
+                
                 objIvoiceType = _mapperFactory.Get<ValuationInvoicePaymentModel, ValuationPaymentInvoice>(invoice);
                 objIvoiceType.CreatedDate = AppConstants.DateTime;
                 objIvoiceType.ModifiedDate = AppConstants.DateTime;
@@ -291,6 +291,14 @@ namespace Eltizam.Business.Core.Implementation
                 return DBOperation.Error;
 
             return DBOperation.Success;
+        }
+
+        public async Task<ValuationInvoicePaymentModel> GetPaymentInvoiceById(int id)
+        {
+            var _LocationEntity = new ValuationInvoicePaymentModel();
+            _LocationEntity = _mapperFactory.Get<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAsync(id));
+
+            return _LocationEntity;
         }
 
 
