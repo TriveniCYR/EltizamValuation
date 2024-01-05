@@ -558,13 +558,31 @@ function BindPropertyDetail() {
 
 function BindUnitType() {
     var UnitType = $("#UnitType");
-    UnitType.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
-    UnitType.append($("<option></option>").val('1BHK').html('1BHK'));
-    UnitType.append($("<option></option>").val('2BHK').html('2BHK'));
-    UnitType.append($("<option></option>").val('3BHK').html('3BHK'));
-    if ($('#hdnUnitType').val() != 0) {
-        UnitType.val($('#hdnUnitType').val());
-    }
+    var _rpname = "description";
+    var description = 'UNIT_TYPE';
+    $.ajax({
+        type: Get,
+        url: BaseURL + GetDictionaryWithSubDetails + '?code=' + description,
+        "datatype": "json",
+        success: function (response) {
+            var data = response.values;
+            var _dd = _rpname;
+            UnitType.empty().append('<option selected="selected" value="">' + dftSel + '</option>');
+            for (var i = 0; i < data.length; i++) {
+                UnitType.append($("<option></option>").val(data[i][_dd]).html(data[i][_dd]));
+            }
+            if ($('#hdnUnitType').val() != 0) {
+                UnitType.val($('#hdnUnitType').val());
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
 }
 
 function BindFurnished() {
