@@ -605,6 +605,7 @@ function BindPropertyDetailById(Id) {
             success: function (response) {
                 document.getElementById('UnitType').value = response._object.unitType;
                 document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
+                document.getElementById('UnitNumber').value = response._object.unitNumber;
                 document.getElementById('Furnished').value = response._object.furnished;
                 document.getElementById('ValuationPurpose').value = response._object.valuationPurpose;
                 document.getElementById('BuildUpAreaSqFt').value = response._object.buildUpAreaSqFt;
