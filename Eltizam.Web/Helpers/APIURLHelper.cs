@@ -234,6 +234,7 @@ namespace Eltizam.Web.Helpers
         public static string ValuationInvoiceList = "ValuationInvoice/GetInvoiceList";
         public static string UpsertValuationRequest = "ValuationRequest/Upsert";
         public static string ValuationRequestGetById = "ValuationRequest/GetById";
+        public static string ValuationRequestGetHeaderInfoById = "ValuationRequest/GetHeaderInfoById";
         public static string ValuationRequestDeleteById = "ValuationRequest/Delete";
         public static string ReviewRequestStatus = "ValuationRequest/ReviewerRequestStatus";
         public static string GetRequestStatus = "ValuationRequestStatus/GetAllStatus";

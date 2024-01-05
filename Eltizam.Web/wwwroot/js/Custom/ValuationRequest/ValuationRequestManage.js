@@ -396,7 +396,7 @@ function BindValuationRequestStatus() {
 function BindClientType() {
 
     var ClientType = $("#ClientTypeId");
-    var _val = $('#hdnClientType').val();
+    var _val = $('#hdnClientTypeId').val();
     var _rpname = "description";
     var description = "CLIENT_TYPE";
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ClientType, _rpname, _val);
@@ -465,53 +465,16 @@ function BindPropertySub(id) {
     var _rpname = "propertySubType";
 
     BindDropdowns(PropertyByIdSubType + '/' + id, PropertySubType, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + PropertyByIdSubType + '/' + id,
-    //    "datatype": "json",
-    //    success: function (response) { 
-    //        PropertySubType.empty().append($("<option></option>").val(response._object.id).html(response._object.propertySubType));  
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
 }
 
 
 function BindOwnership() {
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
-    var _rpname = "ownershipType";
-
-    BindDropdowns(OwnershipTypeList, OwnershipType, _rpname, _val);
-    //$.ajax({
-    //    type: "POST",
-    //    url: $('#hdnBaseURL').val() + OwnershipTypeList,
-    //    "datatype": "json",
-    //    success: function (response) { 
-    //        OwnershipType.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.data.length; i++) {
-    //            OwnershipType.append($("<option></option>").val(response.data[i].id).html(response.data[i].ownershipType));
-    //        }
-    //        if ($('#hdnOwnershipType').val() != 0) {
-    //            OwnershipType.val($('#hdnOwnershipType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    var _rpname = "description";
+    var description = "OWNERSHIP_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, OwnershipType, _rpname, _val);
 }
-
 
 function BindPropertyDetail() {
     if (document.location.href.includes('id')) {
@@ -558,23 +521,18 @@ function BindPropertyDetail() {
 
 function BindUnitType() {
     var UnitType = $("#UnitType");
-    UnitType.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
-    UnitType.append($("<option></option>").val('1BHK').html('1BHK'));
-    UnitType.append($("<option></option>").val('2BHK').html('2BHK'));
-    UnitType.append($("<option></option>").val('3BHK').html('3BHK'));
-    if ($('#hdnUnitType').val() != 0) {
-        UnitType.val($('#hdnUnitType').val());
-    }
+    var _rpname = "description";
+    var _val = $('#hdnUnitType').val();
+    var description = 'UNIT_TYPE';
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, UnitType, _rpname, _val);
 }
 
 function BindFurnished() {
     var Furnished = $("#Furnished");
-    Furnished.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
-    Furnished.append($("<option></option>").val(1).html('Yes'));
-    Furnished.append($("<option></option>").val(0).html('No'));
-    if ($('#hdnFurnished').val() != 0) {
-        Furnished.val($('#hdnFurnished').val());
-    }
+    var _val = $('#hdnFurnished').val();
+    var _rpname = "description";
+    var description = "PROPERTY_FURNISHED";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Furnished, _rpname, _val);
 }
 
 function BindPropertyDetailById(Id) {
@@ -995,7 +953,7 @@ function BindInvoiceList() {
                     }
                     html += '</ul></div>';
 
-                    $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.referenceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+                    $('#PaymentTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.referenceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
                         + '</td><td>' + object.transactionStatusName + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
                 });
             }

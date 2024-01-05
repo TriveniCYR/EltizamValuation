@@ -22,9 +22,15 @@ namespace Eltizam.Business.Models
         public string? PropertySubType { get; set; } 
         public int PropertyId { get; set; }
         public string? PropertyName { get; set; }
+        public int? UnitType { get; set; }
+        public int Furnished { get; set; }
         public int? LocationCountryId { get; set; }
         public int? LocationStateId { get; set; }
         public int? LocationCityId { get; set; }
+
+        public string? StatusName { get; set; }
+        public string? ColorCode { get; set; }
+        public string? BackGroundColor { get; set; }
 
         //     r.Id, r.ReferenceNO, c.Id ClientId, c.ClientName, c.ClientTypeId, ct.ClientType, p.PropertyTypeId, pt.PropertyType,  
         //p.OwnershipTypeId, o.OwnershipType, p.PropertySubTypeId, sp.PropertySubType

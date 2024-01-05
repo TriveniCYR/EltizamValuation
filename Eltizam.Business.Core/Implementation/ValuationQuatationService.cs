@@ -72,7 +72,7 @@ namespace Eltizam.Business.Core.Implementation
             DbParameter[] osqlParameter2 =
             {
                     new DbParameter("RequestId", requestId, SqlDbType.Int),
-                };
+            };
 
             var quottationList = EltizamDBHelper.ExecuteMappedReader<ValuationQuatationListModel>(ProcedureMetastore.usp_Quotation_GetQuotationByRequestId,
                                 DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
@@ -224,20 +224,21 @@ namespace Eltizam.Business.Core.Implementation
                     }
                 }
             }
-            if (entityQuatation.ApproverIds != "" && entityQuatation.ApproverIds != null)
+
+            //if (entityQuatation.ApproverIds != "" && entityQuatation.ApproverIds != null)
             {
                 DbParameter[] osqlParameter =
                 {
-                    new DbParameter("ValReqId", entityQuatation.ValuationRequestId, SqlDbType.Int),
-
+                    new DbParameter("ValReqId", entityQuatation.ValuationRequestId, SqlDbType.Int), 
                     new DbParameter("CreatedBy", entityQuatation.CreatedBy, SqlDbType.Int),
-                     new DbParameter("ValQuotId", objQuatation.Id, SqlDbType.Int),
-                     new DbParameter("RequestData", entityQuatation.ApproverIds, SqlDbType.VarChar),
+                    new DbParameter("ValQuotId", objQuatation.Id,           SqlDbType.Int),
+                    new DbParameter("RequestData", entityQuatation.ApproverIds, SqlDbType.VarChar),
                 };
 
                 EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_UpsertApproverLevels, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
-
             }
+
+
             try
             {
                 var statusid = _statusrepository.GetAll().Where(x => x.Status == "Quoted").Select(x => x.Id).FirstOrDefault();
