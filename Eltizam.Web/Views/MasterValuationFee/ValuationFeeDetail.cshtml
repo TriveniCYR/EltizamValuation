@@ -129,8 +129,7 @@
                                         @Html.ValidationMessageFor(model => model.ValuationFees, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="" class="w-50">
-                                        VAT (Percent)
-
+                                        VAT Amount
                                         @Html.EditorFor(model => model.Vat, new { htmlAttributes = new { @disabled=htmlAttributes, @autocomplete = "off", @class = "form-control", @placeholder="enter VAT (Percent)",htmlAttributes} })
                                         @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
                                     </label>
