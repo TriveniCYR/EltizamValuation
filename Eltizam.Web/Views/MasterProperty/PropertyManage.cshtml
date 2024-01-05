@@ -153,9 +153,11 @@
                                 <div class="flex mb-28">
                                     <label for="">
                                         Description
-                                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @SharedLocalizer["Description"] })
-
+                                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @SharedLocalizer["Description"] }) 
                                     </label>
+                                    <label for="">
+                                        Unit Numer
+                                        @Html.TextBoxFor(model => model.UnitNumber, new { @class = "form-control", @placeholder = @SharedLocalizer["Unit Number"] })
                                     </label>
 
                                 </div>

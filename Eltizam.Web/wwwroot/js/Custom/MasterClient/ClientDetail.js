@@ -120,7 +120,7 @@ function BindClientType() {
     //    url: $('#hdnBaseURL').val() + ClientTypeList,
     //    "datatype": "json",
     //    success: function (response) {
-    //        ClientType.empty().append('<option selected="selected" value="0">Please select</option>');
+    //        ClientType.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
     //        for (var i = 0; i < response.length; i++) {
     //            ClientType.append($("<option></option>").val(response[i].id).html(response[i].clientType));
     //        }

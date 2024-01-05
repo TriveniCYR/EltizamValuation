@@ -188,10 +188,7 @@ $(document).ready(function () {
     }
 
     // Default close accordan
-    $('.accordianDetails').each(function (i) {
-        var header = $(this)[0];
-        accordianToggleDefault(header);
-    });
+    AccordianSettings(0); 
 
     hideLoader();
 
@@ -501,14 +498,15 @@ function profileMenu() {
     } else {
         x.style.display = "none";
     }
-}
+} 
 
 
-
-
-// ======== Start: Validation form things ============
-$(document).on('click', 'form button[type=submit]', function (e) {
+// ======== Start: Validation form things ============ 
+$(document).on('click', 'form button[type=submit]', function (e) { 
     showLoader();
+
+    //Open Accordians
+    AccordianSettings(1);
 
     setTimeout(function () {
         ValidateTabAndPage();
@@ -528,7 +526,7 @@ function ValidateTabAndPage() {
     }
 
     if (err !== "") {
-        FormattedError(err);
+        FormattedError(err); 
     }
 }
 
@@ -550,6 +548,35 @@ function CloseErrorBanner() {
 
 // ======== End: Validation form things ============
 
+
+// ======== Start: accordian things ============
+
+// accordian function here  
+function accordianToggle(header) {
+    const item = header.nextElementSibling;
+    if (item.style.display === 'block') {
+        item.style.display = 'none';
+    } else {
+        item.style.display = 'block';
+    }
+
+    //if (item.style.height === 'auto') {
+    //    item.style.height = 0;
+    //} else {
+    //    item.style.height = 'auto';
+    //}
+}
+
+// close/show accordian
+function AccordianSettings(show) {
+    $('.accordianDetails').each(function (i) { 
+        const item = $(this)[0].nextElementSibling;
+        //item.style.height = 0;
+        item.style.display = show === 1 ? 'block' : 'none';
+    });
+} 
+
+// ======== End: accordian things ============
 
 
 
@@ -633,32 +660,7 @@ function scrollToTop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
-
  
-// accordian function here
-function accordianToggleHeight(header) {
-    const item = header.nextElementSibling;
-    if (item.style.height === 'auto') {
-        item.style.height = 0;
-    } else {
-        item.style.height = 'auto';
-    }
-}
-
-
-// accordian function here
-function accordianToggle(header) {
-    const item = header.nextElementSibling;
-    if (item.style.display === 'block') {
-        item.style.display = 'none';
-    } else {
-        item.style.display = 'block';
-    }
-} 
-function accordianToggleDefault(header) {
-    const item = header.nextElementSibling; 
-    item.style.display = 'none';
-}
 
 
 //Remove parent dynamic created page

@@ -39,9 +39,7 @@ $(document).ready(function () {
     }
 });
 
-function BindProperty() {
-    //alert("hello");
-    // debugger
+function BindProperty() { 
 
     var Property = $("#PropertyTypeId");
     var _val = $('#hdnPropertyType').val();
@@ -164,7 +162,7 @@ function BindOwnership() {
 }
 function BindUnitType() {
     var UnitType = $("#UnitType");
-    UnitType.empty().append('<option selected="selected" value="0">Please select</option>');
+    UnitType.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
     UnitType.append($("<option></option>").val('1BHK').html('1BHK'));
     UnitType.append($("<option></option>").val('2BHK').html('2BHK'));
     UnitType.append($("<option></option>").val('3BHK').html('3BHK'));
@@ -175,7 +173,7 @@ function BindUnitType() {
 
 function BindFurnished() {
     var Furnished = $("#Furnished");
-    Furnished.empty().append('<option selected="selected" value="0">Please select</option>');
+    Furnished.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
     Furnished.append($("<option></option>").val(1).html('Yes'));
     Furnished.append($("<option></option>").val(0).html('No'));
     if ($('#hdnFurnished').val() != 0) {
