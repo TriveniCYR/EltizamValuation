@@ -1,20 +1,11 @@
 ﻿using Eltizam.Resource.Resources;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class ValuationQuatationListModel
+    public class ValuationQuatationListModel : ValuationRequestHeader
     {
-        public int Id { get; set; }
-        public string ReferenceNo { get; set; } = null!;
-        public int ValuationRequestId { get; set; }
-        public int StatusId { get; set; }
-        public string? StatusName { get; set; }
+        public int Id { get; set; }  
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? ValuationFee { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -39,5 +30,17 @@ namespace Eltizam.Business.Models
         public int? ApproverId3 { get; set; }
         public int? ApproverId4 { get; set; }
         public int? ApproverId5 { get; set; }
+    }
+
+    public class ValuationRequestHeader
+    {
+        public string ReferenceNo { get; set; } = null!;
+        public int ValuationRequestId { get; set; }
+        public int StatusId { get; set; }
+        public string? StatusName { get; set; }
+        public string? ColorCode { get; set; }
+        public string? BackGroundColor { get; set; }
+        public string? PropertyName { get; set; }
+        public string? ClientName { get; set; } 
     }
 }

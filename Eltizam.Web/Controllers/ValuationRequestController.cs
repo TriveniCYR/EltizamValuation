@@ -354,9 +354,29 @@ namespace EltizamValuation.Web.Controllers
 
             if (id == null || id <= 0)
             {
-                invoice = new ValuationInvoiceListModel();
-                invoice.ValuationRequestId = vId;
-                invoice.ReferenceNo = refNo;
+                invoice = new ValuationInvoiceListModel(); 
+
+                //Get basic infro
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationRequestGetHeaderInfoById + "/" + vId, HttpMethod.Get, token).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestDependencies>>(jsonResponse);
+
+                    if (data != null && data._object != null)
+                    {
+                        invoice.ValuationRequestId = vId;
+                        invoice.ReferenceNo = data._object.ReferenceNO;
+                        invoice.StatusName = data._object.StatusName;
+                        invoice.ColorCode = data._object.ColorCode;
+                        invoice.BackGroundColor = data._object.BackGroundColor;
+                        invoice.ClientName = data._object.ClientName;
+                        invoice.PropertyName = data._object.PropertyName;
+                    }
+                }
 
                 //Get Footer info
                 FooterInfo(TableNameEnum.ValuationInvoice, _cofiguration, id);

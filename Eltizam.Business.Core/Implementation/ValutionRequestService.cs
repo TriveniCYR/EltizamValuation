@@ -372,6 +372,16 @@ namespace Eltizam.Business.Core.Implementation
             }
         }
 
+        public async Task<ValuationRequestDependencies> GetValuationRequestInfo(int Id)
+        {
+            DbParameter[] osqlParameter =
+            {
+                new DbParameter("Id", Id, SqlDbType.Int),
+            }; 
+            var res = EltizamDBHelper.ExecuteMappedReader<ValuationRequestDependencies>(ProcedureMetastore.usp_ValuationRequest_GetDependencies,
+                      DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter).FirstOrDefault(); 
+            return res;
+        }
 
         public async Task<ValuationRequestModel> GetById(int id)
         {
@@ -392,13 +402,7 @@ namespace Eltizam.Business.Core.Implementation
             _ValuationEntity.ValuationAssesment.valuationAssessementModel = new ValuationAssessementModel();
             _ValuationEntity.ValuationRequestApproverLevel = new List<ValuationRequestApproverLevelModel>();
 
-            DbParameter[] osqlParameter =
-            {
-                new DbParameter("Id", id, SqlDbType.Int),
-            };
-
-            var res = EltizamDBHelper.ExecuteMappedReader<ValuationRequestDependencies>(ProcedureMetastore.usp_ValuationRequest_GetDependencies,
-                      DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter).FirstOrDefault();
+            var res = await GetValuationRequestInfo(id);
 
             if (res != null)
             {
@@ -409,10 +413,12 @@ namespace Eltizam.Business.Core.Implementation
                 _ValuationEntity.PropertyName = res.PropertyType;
                 _ValuationEntity.PropertySubTypeId = res.PropertySubTypeId;
                 _ValuationEntity.PropertySubType = res.PropertySubType;
-                _ValuationEntity.OwnershipTypeId = res.OwnershipTypeId;
+                _ValuationEntity.OwnershipTypeId = res.OwnershipTypeId; 
                 _ValuationEntity.OwnershipType = res.OwnershipType;
                 _ValuationEntity.PropertyId = res.PropertyId;
                 _ValuationEntity.PropertyName = res.PropertyName;
+                _ValuationEntity.UnitType = res.UnitType;
+                _ValuationEntity.Furnished = res.Furnished;
                 _ValuationEntity.LocationCountryId = res.LocationCountryId;
                 _ValuationEntity.LocationStateId = res.LocationStateId;
                 _ValuationEntity.LocationCityId = res.LocationCityId;

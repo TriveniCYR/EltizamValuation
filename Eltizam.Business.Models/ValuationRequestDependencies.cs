@@ -22,6 +22,8 @@ namespace Eltizam.Business.Models
         public string? PropertySubType { get; set; } 
         public int PropertyId { get; set; }
         public string? PropertyName { get; set; }
+        public int? UnitType { get; set; }
+        public int Furnished { get; set; }
         public int? LocationCountryId { get; set; }
         public int? LocationStateId { get; set; }
         public int? LocationCityId { get; set; }
