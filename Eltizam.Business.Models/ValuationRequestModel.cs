@@ -31,7 +31,7 @@ namespace Eltizam.Business.Models
         public int? OwnershipTypeId { get; set; }
         public string? PropertyName { get; set; }
         public string? OwnershipType { get; set; }
-        public string? UnitType { get; set; }
+        public int? UnitType { get; set; }
         public string? AdditionalUnits { get; set; }
         public int Furnished { get; set; }
         public string? ValuationPurpose { get; set; }

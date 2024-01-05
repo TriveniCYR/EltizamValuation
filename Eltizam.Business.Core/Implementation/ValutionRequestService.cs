@@ -413,10 +413,12 @@ namespace Eltizam.Business.Core.Implementation
                 _ValuationEntity.PropertyName = res.PropertyType;
                 _ValuationEntity.PropertySubTypeId = res.PropertySubTypeId;
                 _ValuationEntity.PropertySubType = res.PropertySubType;
-                _ValuationEntity.OwnershipTypeId = res.OwnershipTypeId;
+                _ValuationEntity.OwnershipTypeId = res.OwnershipTypeId; 
                 _ValuationEntity.OwnershipType = res.OwnershipType;
                 _ValuationEntity.PropertyId = res.PropertyId;
                 _ValuationEntity.PropertyName = res.PropertyName;
+                _ValuationEntity.UnitType = res.UnitType;
+                _ValuationEntity.Furnished = res.Furnished;
                 _ValuationEntity.LocationCountryId = res.LocationCountryId;
                 _ValuationEntity.LocationStateId = res.LocationStateId;
                 _ValuationEntity.LocationCityId = res.LocationCityId;

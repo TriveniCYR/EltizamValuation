@@ -22,7 +22,7 @@ namespace Eltizam.Business.Models
         [Range(1, int.MaxValue, ErrorMessage = "The 'OwnershipType' field is required.")]
         public int OwnershipTypeId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        public string UnitType { get; set; }
+        public int UnitType { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? AdditionalUnits { get; set; }
         //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
