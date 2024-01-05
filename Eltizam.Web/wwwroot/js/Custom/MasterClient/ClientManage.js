@@ -328,9 +328,9 @@ function BindClientType() {
 
     var ClientType = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
-    var _rpname = "clientType";
-
-    BindDropdowns(ClientTypeList, ClientType, _rpname, _val);
+    var _rpname = "description";
+    var description = "CLIENT_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ClientType, _rpname, _val);
 }
 
 function BindCountry() { 

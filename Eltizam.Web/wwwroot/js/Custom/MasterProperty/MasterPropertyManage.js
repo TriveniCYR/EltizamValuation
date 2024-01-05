@@ -170,7 +170,7 @@ function BindCity(id) {
     var _rpname = "cityName";
     BindDropdowns(CityList + '/' + id, City, _rpname, _val);
 }
-$('#ParkingBayNo').keypress(function (e) {
+$('#ParkingBayNo').keypress(function (e) {  
     if ($('#ParkingBayNo').val() == '' && e.which == 48) {
         return false;
     }
