@@ -72,7 +72,7 @@ namespace Eltizam.Business.Core.Implementation
             DbParameter[] osqlParameter2 =
             {
                     new DbParameter("RequestId", requestId, SqlDbType.Int),
-                };
+            };
 
             var quottationList = EltizamDBHelper.ExecuteMappedReader<ValuationQuatationListModel>(ProcedureMetastore.usp_Quotation_GetQuotationByRequestId,
                                 DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);

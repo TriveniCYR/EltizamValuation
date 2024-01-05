@@ -135,6 +135,25 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
+        [HttpGet, Route("GetHeaderInfoById/{id}")]
+        public async Task<IActionResult> GetHeaderInfoById([FromRoute] int id)
+        {
+            try
+            {
+                var oValuationEntity = await _valuationServices.GetValuationRequestInfo(id);
+
+                if (oValuationEntity != null && oValuationEntity.Id > 0)
+                    return _ObjectResponse.Create(oValuationEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+         
+
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

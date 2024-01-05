@@ -35,7 +35,24 @@
             </div>
         </div>
         <div class="bodyContent">
-           @*  <h3 class="ptrl-20">Select Payment Mode</h3> *@
+
+            <div class="whiteBoxShadow m-0" id="footerAudit">
+                <div class=" position-relative flex justify-between align-item-center" style="margin: 10px 10px 5px 15px;font-size: 16px;">
+                    <label style="font-size:16px;">
+                        Val. Ref# : @Model.ReferenceNo
+                    </label>
+                    <label style="font-size:16px;">
+                        Client : @Model.ClientName
+                    </label>
+                    <label style="font-size:16px;">
+                        Property : @Model.PropertyName
+                    </label>
+                    <label style="font-size:16px;">
+                        Status : <label class="tableStatusBanner" style="color: @Model.ColorCode; background-color: @Model.BackGroundColor; border: 1px solid @Model.ColorCode;">@Model.StatusName</label>
+                    </label>
+                </div>
+            </div>
+
             <form asp-action="ValuationInvoiceManage" method="POST" enctype="multipart/form-data" id="invoice">
                 <div class="paymentOption">
                     <div class="payTab">

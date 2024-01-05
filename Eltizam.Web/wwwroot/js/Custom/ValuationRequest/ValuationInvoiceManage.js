@@ -299,16 +299,7 @@ function GetInvoiceDetail(id){
                 document.getElementById('AccountHolderName').value = response._object.accountHolderName;
                 if (response._object.documents != null && response._object.documents.length > 0) {
                     var documents = response._object.documents;
-                    $.each(documents, function (index, object) {
-                        //var html = '';
-                        //html += '<tr id="' + object.id + '">';
-                        //html += '<td>' + object.DocumentName + '</td>';
-                        //html += '<td class="formatted-td-date-input">' + moment(object.CreatedDate).format('DD-MMM-YYYY') + '</td>';
-                        //html += '<td class="formatted-td-date-input">' + object.CreatedName + '</td>';
-                        //html += '<td><a href="' + object.FilePath + '" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td>';
-                        //html += '<td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument('+object.Id+'); return false;"><img src="../assets/trash.svg" alt="trash" /></a></td>';
-                        //html += '</tr>';                      
-
+                    $.each(documents, function (index, object) { 
                         $('#InvoiceTableDocument tbody').append(' <tr id="' + object.id + '"><td>' + object.documentName + '</td><td class="formatted-td-date-input">' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.createdName + '</td> <td><a href="' + object.filePath + '" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td><td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" /></a></td></tr>');
                     });
                 }

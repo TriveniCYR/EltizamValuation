@@ -62,10 +62,7 @@
     // Get distinct levels
     var Levels = Model.ValuationRequestApproverLevel;
     var distinctLevels = Levels?.Select(approverLevel => approverLevel.ApproverLevelId).Distinct();
-    var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList();
-
-    var color = "";
-    var bgcolor = "";
+    var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList(); 
 }
 
 <div id="PlaceHolderHere"></div>
@@ -80,27 +77,25 @@
                 <input type="hidden" id="md" value="@_md" />
             </div>
         </div>
+
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
-
                 @if (Model.Id > 0)
-                {
-                    color = Model.ColorCode;
-                    bgcolor = Model.BackGroundColor;
-
+                { 
                     <div class="whiteBoxShadow m-0" id="footerAudit">
                         <div class=" position-relative flex justify-between align-item-center" style="margin: 10px 10px 5px 15px;font-size: 16px;">
                             <label style="font-size:16px;">
-                                Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                                Val. Ref# : @Model.ReferenceNo
                             </label>
                             <label style="font-size:16px;">
-                                Client : @Html.DisplayFor(model => model.ClientName)
+                                Client : @Model.ClientName
                             </label>
                             <label style="font-size:16px;">
-                                Property : @Html.DisplayFor(model => model.PropertyName)
+                                Property : @Model.PropertyName
                             </label>
                             <label style="font-size:16px;">
-                                Status : <label class="tableStatusBanner" style="color: @color; background-color: @bgcolor; border: 1px solid @color;">@Model.StatusName</label>
+                                Status : <label class="tableStatusBanner" style="color: @Model.ColorCode; background-color: @Model.BackGroundColor; border: 1px solid @Model.ColorCode;">
+                                         @Model.StatusName</label>
                             </label>
                         </div>
                     </div>
@@ -108,7 +103,6 @@
 
 
                 <div class="tab flex flex-start m-0 ptrl-20">
-
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Valuation Details</button>
                     @{
                         var displayStyleQt = (objPermssionQt.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
@@ -117,9 +111,9 @@
                         var displayStyleevidence = (objPermssionevidence.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                         var displayStyleAssesment = (objPermssionAssesment.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                     }
-                    <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')">Quotations</button>
-                    <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')">Payments</button>
-                    <button class="tablinks" style="display:@displayStyleSite " onclick="profileTab(event, 'profile4')" id="tab_4">Site Description</button>
+                    <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')" id="tab_2">Quotations</button>
+                    <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')" id="tab_3">Invoices/Payments</button>
+                    <button class="tablinks" style="display: @displayStyleSite " onclick="profileTab(event, 'profile4')" id="tab_4">Site Description</button>
                     <button class="tablinks" style="display: @displayStyleevidence" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
                     <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
                 </div>
@@ -473,7 +467,7 @@
                                     </div>
                                     <div class="flex mb-28">
                                         <label for="" class="w-50">
-                                            Age of construction
+                                            Age of construction (In Years)
                                             @Html.TextBoxFor(model => model.AgeOfConstruction, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
 
                                         </label>
@@ -638,21 +632,21 @@
 
 
                 <div id="profile2" class="tabcontent">
-                   @*  <div class="whiteBoxShadow m-0 ">
-                        <div class="bodyContent footerAudit">
-                            <div class=" position-relative flex justify-between align-item-center m-0">
-                                <h5 class="m-0">
-                                    Valuation Id : @Html.DisplayFor(model => model.Id)
-                                </h5>
-                                <h5 class="m-0">
-                                    Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                </h5>
-                            </div>
-                        </div>
+                    @*  <div class="whiteBoxShadow m-0 ">
+                    <div class="bodyContent footerAudit">
+                    <div class=" position-relative flex justify-between align-item-center m-0">
+                    <h5 class="m-0">
+                    Valuation Id : @Html.DisplayFor(model => model.Id)
+                    </h5>
+                    <h5 class="m-0">
+                    Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                    </h5>
+                    </div>
+                    </div>
                     </div> *@
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center plr-0">
-                            <h5>Quotation Listing</h5>
+                            <h5>Quotations</h5>
                             @if (!isHideBtn)
                             {
                                 <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
@@ -670,14 +664,12 @@
                                 <tr>
                                     <th>#Quotation</th>
                                     <th>Valuation Charges</th>
-                                    @*  <th>Valuation Request Status</th> *@
                                     <th>VAT</th>
                                     <th>Other Charges</th>
                                     <th>Discount (%)</th>
                                     <th>Total Valuation Charge</th>
                                     <th>Created By</th>
                                     <th>Creation Date</th>
-                                    @* <th>Status</th> *@
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -689,24 +681,12 @@
 
 
                 <div id="profile3" class="tabcontent">
-                   @*  <div class="whiteBoxShadow m-0 ">
-                        <div class="bodyContent footerAudit">
-                            <div class=" position-relative flex justify-between align-item-center m-0">
-                                <h5 class="m-0">
-                                    Valuation Id : @Html.DisplayFor(model => model.Id)
-                                </h5>
-                                <h5 class="m-0">
-                                    Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                </h5>
-                            </div>
-                        </div>
-                    </div> *@
                     <div class="buttonArea">
                         <div class="flex justify-between align-item-center p-0">
-                            <h5>Invoice Listing</h5>
+                            <h5>Invoices</h5>
                             @if (!isHideBtn)
                             {
-                                <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
+                                <a href="/ValuationRequest/InvoiceManage?vId=@Model.Id">
                                     <button class="blueBtn" style="width:120px" id="addNewIn">
                                         <img src="../assets/plus.svg" alt="plus">
                                         Add New
@@ -734,22 +714,56 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="buttonArea">
+                        <div class="flex justify-between align-item-center p-0">
+                            <h5>Payments</h5>
+                            @if (!isHideBtn)
+                            {
+                                <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id">
+                                    <button class="blueBtn" style="width:120px" id="addNewIn">
+                                        <img src="../assets/plus.svg" alt="plus">
+                                        Add New
+                                    </button>
+                                </a>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="scroll-x">
+                        <table id="PaymentTable" class="table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#Payment</th>
+                                    <th>Transaction Date</th>
+                                    <th>Payment Mode</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Created By</th>
+                                    <th>Creation Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <form asp-action="ValuationAssesmentManage" asp-controller="ValuationRequest" method="POST" enctype="multipart/form-data">
                     @Html.HiddenFor(model => model.Id)
                     <div id="profile4" class="tabcontent">
                         @* <div class="whiteBoxShadow m-0 ">
-                            <div class="bodyContent footerAudit">
-                                <div class=" position-relative flex justify-between align-item-center m-0">
-                                    <h5 class="m-0">
-                                        Valuation Id : @Html.DisplayFor(model => model.Id)
-                                    </h5>
-                                    <h5 class="m-0">
-                                        Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                    </h5>
-                                </div>
-                            </div>
+                        <div class="bodyContent footerAudit">
+                        <div class=" position-relative flex justify-between align-item-center m-0">
+                        <h5 class="m-0">
+                        Valuation Id : @Html.DisplayFor(model => model.Id)
+                        </h5>
+                        <h5 class="m-0">
+                        Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                        </h5>
+                        </div>
+                        </div>
                         </div> *@
                         <h5 class="ptrl-20">Structural Information</h5>
                         <div class="inputSearchs">
@@ -923,15 +937,15 @@
 
                     <div id="profile5" class="tabcontent">
                         <div class="whiteBoxShadow m-0 ">
-                          @*   <div class="bodyContent footerAudit">
-                                <div class=" position-relative flex justify-between align-item-center m-0">
-                                    <h5 class="m-0">
-                                        Valuation Id : @Html.DisplayFor(model => model.Id)
-                                    </h5>
-                                    <h5 class="m-0">
-                                        Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                    </h5>
-                                </div>
+                            @*   <div class="bodyContent footerAudit">
+                            <div class=" position-relative flex justify-between align-item-center m-0">
+                            <h5 class="m-0">
+                            Valuation Id : @Html.DisplayFor(model => model.Id)
+                            </h5>
+                            <h5 class="m-0">
+                            Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                            </h5>
+                            </div>
                             </div> *@
                         </div>
                         <h5 class="ptrl-20">Comparable Evidences</h5>
@@ -1050,14 +1064,14 @@
                     <div id="profile6" class="tabcontent">
                         <div class="whiteBoxShadow m-0 ">
                             @* <div class="bodyContent footerAudit">
-                                <div class=" position-relative flex justify-between align-item-center m-0">
-                                    <h5 class="m-0">
-                                        Valuation Id : @Html.DisplayFor(model => model.Id)
-                                    </h5>
-                                    <h5 class="m-0">
-                                        Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
-                                    </h5>
-                                </div>
+                            <div class=" position-relative flex justify-between align-item-center m-0">
+                            <h5 class="m-0">
+                            Valuation Id : @Html.DisplayFor(model => model.Id)
+                            </h5>
+                            <h5 class="m-0">
+                            Val. Ref# : @Html.DisplayFor(model => model.ReferenceNo)
+                            </h5>
+                            </div>
                             </div> *@
                         </div>
                         <h5 class="ptrl-20">Valuation Evidences</h5>
