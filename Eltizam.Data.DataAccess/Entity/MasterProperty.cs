@@ -17,9 +17,9 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? PropertyTypeId { get; set; }
         public int? PropertySubTypeId { get; set; }
         public int? OwnershipTypeId { get; set; }
-        public int? UnitType { get; set; }
+        public int? UnitTypeId { get; set; }
         public string? AdditionalUnits { get; set; }
-        public int? Furnished { get; set; }
+        public int? FurnishedId { get; set; }
         public string? ValuationPurpose { get; set; }
         public decimal? BuildUpAreaSqFt { get; set; }
         public decimal? BuildUpAreaSqMtr { get; set; }

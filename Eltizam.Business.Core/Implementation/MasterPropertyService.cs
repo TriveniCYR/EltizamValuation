@@ -170,9 +170,9 @@ namespace Eltizam.Business.Core.Implementation
                     objProperty.PropertyTypeId = masterproperty.PropertyTypeId;
                     objProperty.PropertySubTypeId = masterproperty.PropertySubTypeId;
                     objProperty.OwnershipTypeId = masterproperty.OwnershipTypeId;
-                    objProperty.UnitType = masterproperty.UnitType;
+                    objProperty.UnitTypeId = masterproperty.UnitTypeId;
                     objProperty.AdditionalUnits = masterproperty.AdditionalUnits;
-                    objProperty.Furnished = masterproperty.Furnished;
+                    objProperty.FurnishedId = masterproperty.FurnishedId;
                     objProperty.ValuationPurpose = masterproperty.ValuationPurpose;
                     objProperty.BuildUpAreaSqFt = masterproperty.BuildUpAreaSqFt;
                     objProperty.BuildUpAreaSqMtr = masterproperty.BuildUpAreaSqMtr;

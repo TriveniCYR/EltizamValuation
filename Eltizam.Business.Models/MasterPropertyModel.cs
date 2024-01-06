@@ -22,12 +22,12 @@ namespace Eltizam.Business.Models
         [Range(1, int.MaxValue, ErrorMessage = "The 'OwnershipType' field is required.")]
         public int OwnershipTypeId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        public int UnitType { get; set; }
+        public int UnitTypeId { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? AdditionalUnits { get; set; }
         //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         //[Range(1, int.MaxValue, ErrorMessage = "The 'Furnished' field is required.")]
-        public int Furnished { get; set; }
+        public int FurnishedId { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? ValuationPurpose { get; set; }
         //[StringLength(25, MinimumLength = 1)]

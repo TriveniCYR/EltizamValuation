@@ -36,8 +36,8 @@
                     <input type="hidden" id="hdnPropertyType" value="@(Model == null ? 0 : Model.PropertyTypeId)" />
                     <input type="hidden" id="hdnPropertySubType" value="@(Model == null ? 0 : Model.PropertySubTypeId)" />
                     <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
-                    <input type="hidden" id="hdnUnitType" value="@(Model == null ? 0 : Model.UnitType)" />
-                    <input type="hidden" id="hdnFurnished" value="@(Model == null ? 0 : Model.Furnished)" />
+                    <input type="hidden" id="hdnUnitType" value="@(Model == null ? 0 : Model.UnitTypeId)" />
+                    <input type="hidden" id="hdnFurnished" value="@(Model == null ? 0 : Model.FurnishedId)" />
                     <input type="hidden" id="hdnId" asp-for="Id" value="@(Model == null ? 0 : Model.Id)" />
                     <div id="profile1" class="tabcontent">
                         @* <h3 class="blueHeading">Property Details</h3> *@
@@ -81,8 +81,8 @@
                                     </label>
                                     <label for="">
                                         <p class="m-0">Unit Type<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.UnitType, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
-                                        @Html.ValidationMessageFor(model => model.UnitType, "", new { @class = "text-danger" })
+                                        @Html.DropDownListFor(model => model.UnitTypeId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
+                                        @Html.ValidationMessageFor(model => model.UnitTypeId, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
                                 <div class="flex mb-28">
@@ -149,7 +149,7 @@
                                     </label>
                                     <label for="">
                                         Furnished
-                                        @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
+                                        @Html.DropDownListFor(model => model.FurnishedId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
                                     </label> 
                                 </div>
                             </div>  

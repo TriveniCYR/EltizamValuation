@@ -301,9 +301,7 @@ function addMoreAddress() {
     if (count == 1) {
         const minusDiv = document.createElement('div');
         minusDiv.className = 'text-right';
-        minusDiv.innerHTML = `
-    <img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">
-        `;
+        minusDiv.innerHTML = `<img src="../assets/minus-icon.svg" alt="minus-icon" class="minus-icon cursor-pointer" onclick="removeParentDivAddress(this)">`;
         clonedDiv.insertBefore(minusDiv, clonedDiv.firstChild);
     }
     addMoreAddressBox.parentElement.insertBefore(clonedDiv, addMoreAddressBox.nextSibling);
@@ -503,28 +501,26 @@ function validateForAddress() {
             }
         }
     }
-    var errorMsgForAll = "";
-    if ($("#DepartmentId").val() === "" || $("#DepartmentId").val() === "0") {
 
+    /*
+    var errorMsgForAll = ""; 
+    if ($("#DepartmentId").val() === "" || $("#DepartmentId").val() === "0") { 
         $("#validationDepartmentId").text("The Department field is required.");
         errorMsgForAll = "1";
     }
-    if ($("#DesignationId").val() === "" || $("#DesignationId").val() === "0") {
-
+    if ($("#DesignationId").val() === "" || $("#DesignationId").val() === "0") { 
         $("#validationDesignationId").text("The Designation field is required.");
-        errorMsgForAll += "1";
-
+        errorMsgForAll += "1"; 
     }
-    if ($("#ResourceId").val() === "" || $("#ResourceId").val() === "0") {
-
+    if ($("#ResourceId").val() === "" || $("#ResourceId").val() === "0") { 
         $("#validationResourceId").text("The ResourceType field is required.");
-        errorMsgForAll += "1";
-
+        errorMsgForAll += "1"; 
     }
     if (errorMsgForAll != "") {
         toastr.error("Please fill mandate fields in profile section.");
         return false;
     }
+    */
 
     return true;
 }

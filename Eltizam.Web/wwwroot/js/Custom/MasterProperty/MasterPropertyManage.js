@@ -112,7 +112,7 @@ function BindOwnership() {
 }
 
 function BindUnitType() {
-    var UnitType = $("#UnitType");
+    var UnitType = $("#UnitTypeId");
     var _rpname = "description";
     var _val = $('#hdnUnitType').val();
     var description = 'UNIT_TYPE';
@@ -120,7 +120,7 @@ function BindUnitType() {
 }
 
 function BindFurnished() {
-    var Furnished = $("#Furnished");
+    var Furnished = $("#FurnishedId");
     var _val = $('#hdnFurnished').val();
     var _rpname = "description";
     var description = "PROPERTY_FURNISHED";
