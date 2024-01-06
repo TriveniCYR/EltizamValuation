@@ -141,13 +141,13 @@
                                         <div class="pannel" style="height:auto;overflow:hidden">
                                             <div class="flex">
                                                 <label for="address1">
-                                                    <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
-                                                    @Html.TextBoxFor(model => model.Addresses[i].Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 1"] })
+                                                    <p class="m-0">Address<span class="text-danger">*</span></p>
+                                                    @Html.TextBoxFor(model => model.Addresses[i].Address1, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address"] })
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].Address1, "", new { @class = "text-danger" })
                                                 </label>
                                                 <label for="address2">
-                                                    Address Line 2
-                                                    @Html.TextBoxFor(model => model.Addresses[i].Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address Line 2"] })
+                                                    Address (2)
+                                                    @Html.TextBoxFor(model => model.Addresses[i].Address2, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Address (2)"] })
                                                 </label>
                                             </div>
                                             <div class="flex">

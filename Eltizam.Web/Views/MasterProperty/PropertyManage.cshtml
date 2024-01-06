@@ -250,14 +250,14 @@
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Longitude, "", new { @class = "text-danger" })
                                             </label>
                                             <label for="">
-                                                <p class="m-0">Address Line 1<span class="text-danger">*</span></p>
+                                                <p class="m-0">Address<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Address1, new { @class = "form-control", @placeholder = @SharedLocalizer["Address1"] })
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Address1, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
                                         <div class="flex">
                                             <label for="">
-                                                Address Line 2
+                                                Address (2)
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Address2, new { @class = "form-control", @placeholder = @SharedLocalizer["Address2"] })
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Address2, "", new { @class = "text-danger" })
                                             </label>
