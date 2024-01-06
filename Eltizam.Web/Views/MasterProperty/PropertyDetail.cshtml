@@ -87,7 +87,10 @@
                                 </div>
                                 <div class="flex mb-28">
                                     <label for="">
-                                        Unit Numer
+                                        <p class="m-0">
+                                            Unit Number
+                                            <span class="text-danger">*</span>
+                                        </p>
                                         @Html.TextBoxFor(model => model.UnitNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Unit Number"] })
                                         @Html.ValidationMessageFor(model => model.UnitNumber, "", new { @class = "text-danger" })
                                     </label>
