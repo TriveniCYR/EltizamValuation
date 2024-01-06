@@ -7,6 +7,9 @@ namespace Eltizam.Data.DataAccess.Entity
     {
         public string? PropertyName { get; set; }
         public string? TotalAddress { get; set; }
+        public string? CityName { get; set; }
+        public string? StateName { get; set; }
+        public string? CountryName { get; set; }
         public int? Id { get; set; }
         public int? PropertyId { get; set; }
         public int? CountryId { get; set; }
@@ -24,5 +27,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? ModifiedBy { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

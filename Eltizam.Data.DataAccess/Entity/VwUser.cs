@@ -41,5 +41,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? Department { get; set; }
         public string? Designation { get; set; }
         public string? ResourceType { get; set; }
+        public string? ApproverLevel { get; set; }
     }
 }

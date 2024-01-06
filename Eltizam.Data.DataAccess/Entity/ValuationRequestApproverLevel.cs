@@ -7,7 +7,7 @@ namespace Eltizam.Data.DataAccess.Entity
     {
         public int Id { get; set; }
         public int ValuationRequestId { get; set; }
-        public int ValuationQuotationId { get; set; }
+        public int? ValuationQuotationId { get; set; }
         public int ApproverLevelId { get; set; }
         public int ApproverId { get; set; }
         public int CreatedBy { get; set; }
