@@ -34,8 +34,10 @@ namespace Eltizam.Business.Models
         public DateTime DateOfBirth { get; set; }
         public int DesignationId { get; set; }
         public int DepartmentId { get; set; }
-        [StringLength(50, MinimumLength = 10)]
+
+        [StringLength(50, MinimumLength = 8)]
         public string? LicenseNo { get; set; }
+
         [StringLength(250, MinimumLength = 1)]
         [RegularExpression(@"^[a-zA-Z][\sa-zA-Z]*",
          ErrorMessage = "Enter upper case, lower case & special character only")]
