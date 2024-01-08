@@ -46,20 +46,21 @@ namespace EltizamValuation.Web.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult ValuationInvoices(int vId)
-        {
-            ValuationInvoicePaymentModel invoices;
+        //[HttpGet]
+        //public IActionResult ValuationInvoices(int vId)
+        //{
+        //    ValuationInvoicePaymentModel invoices;
 
-            invoices = new ValuationInvoicePaymentModel();
-            invoices.ValuationRequestId = vId;
+        //    invoices = new ValuationInvoicePaymentModel();
+        //    invoices.ValuationRequestId = vId;
 
-            //Get basic info
-            ValReqHeaderInfo(vId);
+        //    //Get basic info
+        //    ValReqHeaderInfo(vId);
 
-            ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
-            return View(invoices);
-        }
+        //    ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
+        //    return View(invoices);
+        //}
+
 
         [HttpGet]
         public IActionResult ValuationPaymentInvoiceManage(int? id, int vId)
