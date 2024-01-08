@@ -92,7 +92,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     new DbParameter("PropertyId", id, SqlDbType.Int),
                 };
-                var amenityList = EltizamDBHelper.ExecuteMappedReader<MasterAmenityListModel>(ProcedureMetastore.usp_Amenity_GetAmenityByPropertyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
+                var amenityList = EltizamDBHelper.ExecuteMappedReader<MasterAmenityListModel>(ProcedureMetastore.usp_Property_Amenity_GetById, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
 
                 if (amenityList != null)
                 {
@@ -103,7 +103,7 @@ namespace Eltizam.Business.Core.Implementation
                 {
                     new DbParameter("PropertyId", id, SqlDbType.Int),
                 };
-                var detailLocation = EltizamDBHelper.ExecuteSingleMappedReader<MasterPropertyDetailModel>(ProcedureMetastore.usp_PropertyLocation_GetLocationByPropertyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
+                var detailLocation = EltizamDBHelper.ExecuteSingleMappedReader<MasterPropertyDetailModel>(ProcedureMetastore.usp_Property_Location_GetById, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter1);
 
                 if (detailLocation != null)
                 {
@@ -129,7 +129,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
             };
 
-            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Property_Search_GetPropertyList, System.Data.CommandType.StoredProcedure, osqlParameter);
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Property_SearchAllList, System.Data.CommandType.StoredProcedure, osqlParameter);
 
             var res = UtilityHelper.GetPaginationInfo(Results);
             DataTableResponseModel oDataTableResponseModel = new DataTableResponseModel(model.draw, res.Item1, res.Item1, Results.DataTableToList<MasterPropertyListModel>());
@@ -144,7 +144,7 @@ namespace Eltizam.Business.Core.Implementation
                 new DbParameter("PropertyId", 0, SqlDbType.Int),
             };
 
-            var amenityList = EltizamDBHelper.ExecuteMappedReader<MasterAmenityListModel>(ProcedureMetastore.usp_Amenity_GetAmenityByPropertyId, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
+            var amenityList = EltizamDBHelper.ExecuteMappedReader<MasterAmenityListModel>(ProcedureMetastore.usp_Property_Amenity_GetById, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter);
             return amenityList;
         }
 
