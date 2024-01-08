@@ -8,15 +8,11 @@ using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 using static Eltizam.Utility.Enums.GeneralEnum;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -61,11 +57,11 @@ namespace Eltizam.Business.Core.Implementation
         {
             DbParameter[] osqlParameter2 =
             {
-                    new DbParameter("RequestId", requestId, SqlDbType.Int),
-                };
+                new DbParameter("RequestId", requestId, SqlDbType.Int),
+            };
 
             var invoiceList = EltizamDBHelper.ExecuteMappedReader<ValuationInvoiceListModel>(ProcedureMetastore.usp_Invoice_GetInvoiceByRequestId,
-                                DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                              DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
 
             return invoiceList;
         }
@@ -77,58 +73,65 @@ namespace Eltizam.Business.Core.Implementation
             string MainTableName = Enum.GetName(TableNameEnum.ValuationInvoice);
             int MainTableKey = entityInvoice.Id;
 
-            if (entityInvoice.Id > 0)
+            if (entityInvoice.InvoiceIds.Length > 0)
             {
-                ValuationInvoice OldEntity = null;
-                OldEntity = _repository.GetNoTracking(entityInvoice.Id);
-
-                objInvoice = _repository.Get(entityInvoice.Id);
-
-                if (objInvoice != null)
+                if (entityInvoice.Id > 0)
                 {
-                    objInvoice.ReferenceNo = entityInvoice.ReferenceNo;
-                    objInvoice.ValuationRequestId = entityInvoice.ValuationRequestId;
-                    objInvoice.TransactionModeId = entityInvoice.TransactionModeId;
-                    objInvoice.TransactionStatusId = entityInvoice.TransactionStatusId;
-                    objInvoice.Amount = entityInvoice.Amount;
-                    objInvoice.CheckNumer = entityInvoice.CheckNumer;
-                    objInvoice.CheckBankName = entityInvoice.CheckBankName;
-                    objInvoice.CheckDate = entityInvoice.CheckDate;
-                    objInvoice.CardNumber = entityInvoice.CardNumber;
-                    objInvoice.CardBankName = entityInvoice.CardBankName;
-                    objInvoice.CardHolderName = entityInvoice.CardHolderName;
-                    objInvoice.ExpireDate = entityInvoice.ExpireDate;
-                    objInvoice.AccountBankName = entityInvoice.AccountBankName;
-                    objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
-                    objInvoice.Note = entityInvoice.Note;
-                    objInvoice.ModifiedDate = AppConstants.DateTime;
-                    objInvoice.ModifiedBy = entityInvoice.ModifiedBy;
+                    ValuationInvoice OldEntity = null;
+                    OldEntity = _repository.GetNoTracking(entityInvoice.Id);
 
-                    _repository.UpdateAsync(objInvoice);
-                    await _unitOfWork.SaveChangesAsync();
+                    objInvoice = _repository.Get(entityInvoice.Id);
 
-                    //Do Audit Log --AUDITLOGUSER
-                    await _auditLogService.CreateAuditLog<ValuationInvoice>(AuditActionTypeEnum.Update, OldEntity, objInvoice, MainTableName, MainTableKey);
+                    if (objInvoice != null)
+                    {
+                        objInvoice.ReferenceNo = entityInvoice.ReferenceNo;
+                        objInvoice.ValuationRequestId = entityInvoice.ValuationRequestId;
+                        objInvoice.TransactionModeId = entityInvoice.TransactionModeId;
+                        objInvoice.TransactionStatusId = entityInvoice.TransactionStatusId;
+                        objInvoice.Amount = entityInvoice.Amount;
+                        objInvoice.CheckNumer = entityInvoice.CheckNumer;
+                        objInvoice.CheckBankName = entityInvoice.CheckBankName;
+                        objInvoice.CheckDate = entityInvoice.CheckDate;
+                        objInvoice.CardNumber = entityInvoice.CardNumber;
+                        objInvoice.CardBankName = entityInvoice.CardBankName;
+                        objInvoice.CardHolderName = entityInvoice.CardHolderName;
+                        objInvoice.ExpireDate = entityInvoice.ExpireDate;
+                        objInvoice.AccountBankName = entityInvoice.AccountBankName;
+                        objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
+                        objInvoice.Note = entityInvoice.Note;
+                        objInvoice.ModifiedDate = AppConstants.DateTime;
+                        objInvoice.ModifiedBy = entityInvoice.ModifiedBy;
+
+                        _repository.UpdateAsync(objInvoice);
+                        await _unitOfWork.SaveChangesAsync();
+
+                        //Do Audit Log --AUDITLOGUSER
+                        await _auditLogService.CreateAuditLog<ValuationInvoice>(AuditActionTypeEnum.Update, OldEntity, objInvoice, MainTableName, MainTableKey);
+                    }
+                    else
+                    {
+                        return DBOperation.NotFound;
+                    }
                 }
                 else
                 {
-                    return DBOperation.NotFound;
+                    objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice);
+
+                    var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
+
+                    var id = string.Format("{0}-{1}", AppConstants.ID_InvoiceRequest, entityInvoice.ValuationRequestId);
+                    objInvoice.ReferenceNo = string.Format("{0}{1}", id, lastReq?.Id + 1);
+
+                    objInvoice.CreatedDate = AppConstants.DateTime;
+                    objInvoice.CreatedBy = entityInvoice.CreatedBy ?? 1;
+
+                    _repository.AddAsync(objInvoice);
+                    await _unitOfWork.SaveChangesAsync();
                 }
             }
             else
             {
-                objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice);
-
-                var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
-
-                var id = string.Format("{0}-{1}", AppConstants.ID_InvoiceRequest, entityInvoice.ValuationRequestId);
-                objInvoice.ReferenceNo = string.Format("{0}{1}", id, lastReq?.Id + 1);
-
-                objInvoice.CreatedDate = AppConstants.DateTime;
-                objInvoice.CreatedBy = entityInvoice.CreatedBy ?? 1;
-
-                _repository.AddAsync(objInvoice);
-                await _unitOfWork.SaveChangesAsync();
+                return DBOperation.NotFound;
             }
 
             if (objInvoice.Id == 0)
@@ -136,6 +139,18 @@ namespace Eltizam.Business.Core.Implementation
 
             else
             {
+                if(objInvoice.Id> 0 && entityInvoice.InvoiceIds.Length > 0)
+                {
+                    DbParameter[] osqlParameter =
+                    {
+                        new DbParameter("InvoiceId",    objInvoice.Id, SqlDbType.Int),
+                        new DbParameter("CreatedBy",   entityInvoice.CreatedBy, SqlDbType.Int),
+                        new DbParameter("@PaymentInvoiceIds",   entityInvoice.InvoiceIds, SqlDbType.Int),
+                    };
+
+                    EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationPayment_UpsertInvoicesMap, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+                    
+                }
                 if (entityInvoice.uploadDocument != null)
                 {
                     foreach (var doc in entityInvoice.uploadDocument)
@@ -293,19 +308,42 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        //public async Task<ValuationInvoicePaymentModel> GetPaymentInvoiceById(int id)
-        //{
-        //    var _LocationEntity = new ValuationInvoicePaymentModel();
-        //    _LocationEntity = _mapperFactory.Get<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAsync(id));
+        public async Task<ValuationInvoicePaymentModel> PaymentInvoiceById(int id)
+        {
+            var _LocationEntity = new ValuationInvoicePaymentModel();
+            _LocationEntity = _mapperFactory.Get<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAsync(id));
 
-        //    return _LocationEntity;
-        //}
+            return _LocationEntity;
+        }
+
 
         public async Task<List<ValuationInvoicePaymentModel>> GetPaymentInvoiceById(int requestId)
         {
-            return _mapperFactory.GetList<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAllAsync());
+            DbParameter[] osqlParameter =
+            {
+                new DbParameter("RequestId", requestId, SqlDbType.Int),
+            };
+            var res = EltizamDBHelper.ExecuteMappedReader<ValuationInvoicePaymentModel>(ProcedureMetastore.usp_Invoice_GetInvoicePaymentByValuationRequestId,
+                      DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+            return res;
         }
 
+
+        public async Task<DBOperation> DeletePyamentInvoice(int id, int? by)
+        {
+            if (id > 0)
+            {
+
+                var payment = _InvoiceMap.Get(id);
+                if (payment != null)
+                {
+                    _InvoiceMap.Remove(payment);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+            // Return a success operation indicating successful deletion.
+            return DBOperation.Success;
+        }
 
 
     }

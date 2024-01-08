@@ -13,5 +13,6 @@
         public static string ErrorMessage = "ErrorMessage";
         public static string SuccessMessage = "SuccessMessage"; 
         public static string IsManagement = "IsManagement";
+        public static string ValReqHeader = "ValReqHeader";
     }
 }

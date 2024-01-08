@@ -36,10 +36,12 @@ namespace Eltizam.Business.Models
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [StringLength(250, MinimumLength = 1)]
+        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Trnnumber can only contain letters and numbers.")]
         public string? LicenseNumber { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [StringLength(250, MinimumLength = 1)]
+        [StringLength(250, MinimumLength = 1, ErrorMessage = "The TRN Number field is required.")]
+        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "The TRN Number can only contain letters and numbers.")]
         public string? Trnnumber { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
