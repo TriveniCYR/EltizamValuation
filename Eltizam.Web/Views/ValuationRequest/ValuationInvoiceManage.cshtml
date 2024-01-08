@@ -81,6 +81,7 @@
                         @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
                         @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
                         @Html.HiddenFor(model => model.TransactionModeId, new { @class = "control-label" })
+                        @Html.HiddenFor(model => model.InvoiceIds, new { @class = "control-label" })
                         <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
                         <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
                         <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
@@ -332,7 +333,7 @@
                                 </a>
                                 @if (Model.Id == 0)
                                 {
-                                    <button type="submit" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="return SaveInvoice()">
+                                    <button type="submit" id="savePaymentInvoice" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="return SaveInvoice()">
                                         Save
                                     </button>
                                 }
