@@ -505,8 +505,8 @@ namespace EltizamValuation.Web.Controllers
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             }
 
-            invoice = new ValuationInvoiceListModel();
-            
+            invoice = new ValuationInvoiceListModel(); 
+
             //Get basic info
             ValReqHeaderInfo(vId);
 

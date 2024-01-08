@@ -1,6 +1,7 @@
 ﻿@using Eltizam.Business.Models
 @using Eltizam.Utility.Models;
 @using Eltizam.Utility.Enums;
+@using Eltizam.Web.Helpers
 @using Microsoft.AspNetCore.Http
 @using Eltizam.Web.Controllers
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -62,7 +63,9 @@
     // Get distinct levels
     var Levels = Model.ValuationRequestApproverLevel;
     var distinctLevels = Levels?.Select(approverLevel => approverLevel.ApproverLevelId).Distinct();
-    var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList(); 
+    var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList();
+    
+    var _valRegHeader = (ValuationRequestDependencies)TempData[UserHelper.ValReqHeader];
 }
 
 <div id="PlaceHolderHere"></div>
@@ -80,22 +83,22 @@
 
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
-                @if (Model.Id > 0)
+                @if (Model.Id > 0 && _valRegHeader != null)
                 {
                     <div class="whiteBoxShadow m-0" id="valReqHeader">
                         <div class=" position-relative flex justify-between align-item-center" style="margin: 10px 10px 5px 15px;font-size: 16px;">
                             <label style="font-size:16px;">
-                                Val. Ref# : @Model.ReferenceNo
+                                Val. Ref# : @_valRegHeader.ReferenceNo
                             </label>
                             <label style="font-size:16px;">
-                                Client : @Model.ClientName
+                                Client : @_valRegHeader.ClientName
                             </label>
                             <label style="font-size:16px;">
-                                Property : @Model.PropertyName
+                                Property : @_valRegHeader.PropertyName
                             </label>
                             <label style="font-size:16px;">
-                                Status : <label class="tableStatusBanner" style="color: @Model.ColorCode; background-color: @Model.BackGroundColor; border: 1px solid @Model.ColorCode;">
-                                    @Model.StatusName
+                                Status : <label class="tableStatusBanner" style="color: @_valRegHeader.ColorCode; background-color: @_valRegHeader.BackGroundColor; border: 1px solid @_valRegHeader.ColorCode;">
+                                    @_valRegHeader.StatusName
                                 </label>
                             </label>
 

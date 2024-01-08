@@ -25,7 +25,7 @@ namespace Eltizam.Business.Models
         public DateTime TransactionDate { get; set; }
 
         public decimal Amount { get; set; }
-        public decimal Balance { get; set; }
+        public decimal? Balance { get; set; }
         public string? Note { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

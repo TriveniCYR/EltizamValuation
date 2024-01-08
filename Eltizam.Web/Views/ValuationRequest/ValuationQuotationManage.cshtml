@@ -19,6 +19,7 @@
     var objPermssion = (RolePermissionModel)ViewBag.Access;
     var isDelete = objPermssion.Delete ? 1 : 0;
 
+    var vId = 0;
     var _valRegHeader = (ValuationRequestDependencies)TempData[UserHelper.ValReqHeader];
 }
 
@@ -30,7 +31,7 @@
             <div class="hamburger">
                 <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">Valuation Requests</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                <a class="greyBtn lineBtn formAbtn" href="ValuationRequestManage?id=@Model.ValuationRequestId">Valuation Details</a>
+                <a class="greyBtn lineBtn formAbtn" href="ValuationRequestManage?id=@vId">Valuation Details</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <span>@_md @_header</span>
             </div>
@@ -38,11 +39,13 @@
         <div class="bodyContent">  
             @if (_valRegHeader != null)
             {
+                vId = @_valRegHeader.Id;
                 var clr = @_valRegHeader.ColorCode;
+
                 <div class="whiteBoxShadow m-0" id="valReqHeader">
                     <div class=" position-relative flex justify-between align-item-center" style="margin: 10px 10px 5px 15px;font-size: 16px;">
                         <label style="font-size:16px;">
-                            Val. Ref# : @_valRegHeader.ReferenceNO
+                            Val. Ref# : @_valRegHeader.ReferenceNo
                         </label>
                         <label style="font-size:16px;">
                             Client : @_valRegHeader.ClientName
@@ -65,6 +68,7 @@
                     @Html.HiddenFor(model => model.StatusId, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.ApproverIds, new { @class = "control-label" })
                     <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
+
                     <div class="flex">
                         <label for="" class="w-50">
                             <p class="m-0">Valuation Fees (AED)<span class="text-danger">*</span></p>
@@ -168,7 +172,7 @@
                         </div>
                     </div>
                     <div class="text-right ptrl-20 buttonArea bodyContent plr-0">
-                        <a href="/ValuationRequest/ValuationRequestManage?id=@Model.ValuationRequestId"> 
+                        <a href="/ValuationRequest/ValuationRequestManage?id=@vId">
                             <button type="button" class="lineBtn greyBtn mr-12">Cancel</button>
                         </a>
                         @if (ViewBag.IsView != 1)
