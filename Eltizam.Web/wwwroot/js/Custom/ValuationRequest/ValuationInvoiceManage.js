@@ -502,6 +502,7 @@ if (action === "Add") {
 //        }
 //    });
 //}
+
 function BindPaymentInvoiceList() {
     let id = $('#hdnValuationRequestId').val();
     $.ajax({
@@ -514,7 +515,7 @@ function BindPaymentInvoiceList() {
                 $.each(response._object, function (index, object) {
                     var html = '';
                     var html2 = '';
-                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
+                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id + '&vId=' + id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                     html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     html += '</ul></div>';

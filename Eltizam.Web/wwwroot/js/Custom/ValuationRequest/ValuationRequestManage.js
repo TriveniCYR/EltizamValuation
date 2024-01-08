@@ -988,7 +988,7 @@ function BindPaymentInvoiceList() {
                 debugger
                 $.each(response._object, function (index, object) {
                     var html = '';
-                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
+                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id + '&vId=' + id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                     html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     if (view == 2) {

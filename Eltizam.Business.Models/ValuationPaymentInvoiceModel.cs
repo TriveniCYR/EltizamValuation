@@ -16,12 +16,11 @@ namespace Eltizam.Business.Models
         public string InvoiceNo { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'TransactionMode' field is required.")]
-        public int TransactionModeId { get; set; }
-       
-        public string? TransactionMode { get; set; }
-      
+        public int TransactionModeId { get; set; } 
+        public string? TransactionMode { get; set; } 
         public string? UserName { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime TransactionDate { get; set; }
 
         public decimal Amount { get; set; }

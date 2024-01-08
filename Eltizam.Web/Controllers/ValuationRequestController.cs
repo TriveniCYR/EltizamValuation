@@ -103,8 +103,7 @@ namespace EltizamValuation.Web.Controllers
             invoice = new ValuationInvoicePaymentModel();
 
             //Get basic info
-            ValReqHeaderInfo(vId);
-
+            ValReqHeaderInfo(vId); 
              
             HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
             APIRepository objapi = new(_cofiguration);

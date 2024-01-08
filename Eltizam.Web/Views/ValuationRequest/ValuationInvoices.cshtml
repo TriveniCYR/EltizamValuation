@@ -73,7 +73,7 @@
                                     Date
                                     <span class="text-danger">*</span>
                                 </p>
-                                <input type="text" id="TrnexpiryDate" name="TransactionDate" class="formatted-date-input" asp-for="TransactionDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                <input type="text" id="TrnexpiryDate" name="TransactionDate" class="formatted-date-input" asp-for="TransactionDate">
                                 @Html.ValidationMessageFor(model => model.TransactionDate, "", new { @class = "text-danger" })
                             </label>
                         </div>  
