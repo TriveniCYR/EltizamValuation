@@ -402,7 +402,7 @@
                                     <input type="hidden" id="hdnFurnishedId" value="@(Model == null ? 0 : Model.FurnishedId)" />
                                     <div class="flex  mb-28" id="editables2">
                                         <label for="" class="w-50">
-                                            <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
+                                            <p class="m-0">Property Type<span class="text-danger">*</span></p>
                                             @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertySub(this.options[this.selectedIndex].value);" })
                                             @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" })
                                         </label>
@@ -432,10 +432,10 @@
                                             @*    @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
                                         </label>
                                         <label for="" class="w-50">
-                                            Additional Units
-                                            @Html.TextBoxFor(model => model.AdditionalUnits, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Additional Unit"] })
+                                            Unit Number
+                                            @Html.TextBoxFor(model => model.UnitNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["UnitNumber"] })
 
-                                        </label>
+                                        </label> 
                                     </div>
                                     <div class="flex mb-28">
                                         <label for=" class=" w-50"">
@@ -474,25 +474,28 @@
 
                                         </label>
                                         <label for="" class="w-50">
+                                            Additional Units
+                                            @Html.TextBoxFor(model => model.AdditionalUnits, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Additional Unit"] })
+
+                                        </label> 
+                                    </div>
+                                    <div class="flex mb-28">
+                                        <label for="" class="w-50">
                                             Parking
                                             @Html.TextBoxFor(model => model.Parking, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Parking"] })
 
                                         </label>
-                                    </div>
-                                    <div class="flex mb-28">
                                         <label for="" class="w-50">
                                             Parking BAY Number
                                             @Html.TextBoxFor(model => model.ParkingBayNo, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Parking Bay No"] })
 
-                                        </label>
+                                        </label> 
+                                    </div>
+
+                                    <div>
                                         <label for="" class="w-50">
                                             Description
                                             @Html.TextBoxFor(model => model.Description, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Description"] })
-
-                                        </label>
-                                        <label for="" class="w-50">
-                                            Unit Number
-                                            @Html.TextBoxFor(model => model.UnitNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["UnitNumber"] })
 
                                         </label>
                                     </div>

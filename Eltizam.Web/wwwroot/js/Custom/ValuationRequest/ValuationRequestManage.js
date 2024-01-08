@@ -571,8 +571,8 @@ function BindPropertyDetailById(Id) {
                     document.getElementById('hdnLocationCountryId').value = PropertyDetails.countryId;
                     document.getElementById('hdnLocationStateId').value = PropertyDetails.stateId;
                     document.getElementById('hdnLocationCityId').value = PropertyDetails.cityId;
-                    document.getElementById('hdnUnitType').value = response._object.unitType;
-                    document.getElementById('hdnFurnished').value = response._object.furnished;
+                    document.getElementById('hdnUnitTypeId').value = response._object.unitTypeId;
+                    document.getElementById('hdnFurnishedId').value = response._object.furnishedId;
                 }
                 document.getElementById('PropertyDetail_CountryId').value = PropertyDetails.countryId;
                 document.getElementById('PropertyDetail_StateId').value = PropertyDetails.stateId;
@@ -585,12 +585,14 @@ function BindPropertyDetailById(Id) {
                 document.getElementById('PropertyDetail_Address2').value = PropertyDetails.address2;
                 document.getElementById('PropertyDetail_Pincode').value = PropertyDetails.pincode;
                 document.getElementById('PropertyDetail_Landmark').value = PropertyDetails.landmark;
+
                 BindLocationCountry();
                 BindLocationState(PropertyDetails.countryId);
                 BindLocationCity(PropertyDetails.stateId);
+
                 if (isAddValuation) {
                     BindUnitType();
-                    //BindFurnished();
+                    BindFurnished();
                 }
             },
             failure: function (response) {
