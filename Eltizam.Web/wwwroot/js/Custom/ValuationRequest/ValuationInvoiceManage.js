@@ -2,7 +2,7 @@ var docId = 0;
 $(document).ready(function () {
     BindPaymentInvoiceList();
     BindTransactionMode();
-    var dd = 0;
+    updateTotalAmount();
     if (document.location.href.includes('id')){
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
@@ -466,30 +466,66 @@ if (action === "Add") {
     });
 }
 
+//function BindPaymentInvoiceList() {
+//    let id = $('#hdnValuationRequestId').val();
+//    $.ajax({
+//        type: Get,
+//        url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
+//        "datatype": "json",
+//        success: function (response) {
+//            if (response != null) {
+//                debugger
+//                $.each(response._object, function (index, object) {
+//                    var html = '';
+//                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
+//                    html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+//                    html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
+//                    //if (view == 2) {
+//                    //    html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeletePaymentInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePaymentInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+//                    //}
+//                    //else {
+//                    //    html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletePaymentInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePaymentInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+//                    //}
+//                    html += '</ul></div>';
+
+//                    $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><input type="checkbox" value="' + object.id + '"></td><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+//                        + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+//                });
+//            }
+//        },
+//        failure: function (response) {
+//            alert(response.responseText);
+//        },
+//        error: function (response) {
+//            alert(response.responseText);
+//            $("#loader").hide();
+//        }
+//    });
+//}
 function BindPaymentInvoiceList() {
     let id = $('#hdnValuationRequestId').val();
     $.ajax({
-        type: Get,
+        type: 'GET',
         url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
-        "datatype": "json",
+        datatype: "json",
         success: function (response) {
             if (response != null) {
-                debugger
+                debugger;
                 $.each(response._object, function (index, object) {
                     var html = '';
                     var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                     html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
-                    //if (view == 2) {
-                    //    html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeletePaymentInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePaymentInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
-                    //}
-                    //else {
-                    //    html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletePaymentInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePaymentInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
-                    //}
                     html += '</ul></div>';
 
-                    $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><input type="checkbox" value="' + object.id + '"></td><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
-                        + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                    var rowHtml = ' <tr id="' + object.id + '"><td><input type="checkbox" value="' + object.id + '" class="invoiceCheckbox"></td><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+                        + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>';
+
+                    $('#InvoiceTable tbody').append(rowHtml);
+                });
+
+                   $('#InvoiceTable tbody').on('change', '.invoiceCheckbox', function () {
+                    updateTotalAmount();
                 });
             }
         },
@@ -501,6 +537,22 @@ function BindPaymentInvoiceList() {
             $("#loader").hide();
         }
     });
+}
+
+function updateTotalAmount() {
+    // Get all checked checkboxes
+    var checkedCheckboxes = $('.invoiceCheckbox:checked');
+
+    // Calculate the sum of amounts from checked checkboxes
+    var sum = 0;
+    checkedCheckboxes.each(function () {
+        var row = $(this).closest('tr');
+        var amount = parseFloat(row.find('.formatting').text());
+        sum += amount;
+    });
+
+    // Update the total amount textbox with the calculated sum
+    $('#CashAmount').val(sum).prop('readonly', true);
 }
 
 //$(document).on('click', '#savePaymentInvoice', function (e) {
