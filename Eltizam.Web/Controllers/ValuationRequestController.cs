@@ -61,89 +61,70 @@ namespace EltizamValuation.Web.Controllers
             return View(invoices);
         }
 
-        //[HttpGet]
-        //public IActionResult ValuationPaymentInvoiceManage(int? id, int vId, string refNo)
-        //{
-        //    ValuationInvoicePaymentModel invoice;
+        [HttpGet]
+        public IActionResult ValuationPaymentInvoiceManage(int? id)
+        {
+            ValuationInvoicePaymentModel invoice;
 
-        //    //Check permissions for Get
-        //    var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
+            //Check permissions for Get
+            var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
 
-        //    int roleId = _helper.GetLoggedInRoleId();
+            int roleId = _helper.GetLoggedInRoleId();
 
-        //    if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
-        //        return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
-        //    //Get module wise permissions
-        //    ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
-        //    ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
-        //    ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
+            //Get module wise permissions
+            ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
+            ViewBag.QuotationAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationQuotation);
+            ViewBag.InvoiceAccess = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationInvoice);
 
-        //    bool hasInvoiceViewAccess = ViewBag.QuotationAccess?.View ?? false;
-        //    bool hasInvoiceEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
-        //    bool hasInvoiceAddAccess = ViewBag.QuotationAccess?.Add ?? false;
+            bool hasInvoiceViewAccess = ViewBag.QuotationAccess?.View ?? false;
+            bool hasInvoiceEditAccess = ViewBag.QuotationAccess?.Edit ?? false;
+            bool hasInvoiceAddAccess = ViewBag.QuotationAccess?.Add ?? false;
 
-        //    if (action == PermissionEnum.View && !hasInvoiceViewAccess)
-        //    {
-        //        return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-        //    }
-        //    else if (action == PermissionEnum.Edit && !hasInvoiceEditAccess)
-        //    {
-        //        return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-        //    }
-        //    else if (action == PermissionEnum.Add && !hasInvoiceAddAccess)
-        //    {
-        //        return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-        //    }
+            if (action == PermissionEnum.View && !hasInvoiceViewAccess)
+            {
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
+            else if (action == PermissionEnum.Edit && !hasInvoiceEditAccess)
+            {
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
+            else if (action == PermissionEnum.Add && !hasInvoiceAddAccess)
+            {
+                return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+            }
 
-        //    invoice = new ValuationInvoicePaymentModel();
-        //    //Get basic infro
-        //    HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-        //    APIRepository objapi = new(_cofiguration);
-        //    HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationRequestGetHeaderInfoById + "/" + vId, HttpMethod.Get, token).Result;
+            invoice = new ValuationInvoicePaymentModel();
+            //Get basic infro
+            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+            APIRepository objapi = new(_cofiguration);
+            if (id == null || id <= 0)
+            {
+                //Get Footer info
+                FooterInfo(TableNameEnum.ValuationInvoice, _cofiguration, id);
+                return View(invoice);
+            }
+            else
+            {
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string _token);
+                APIRepository _objapi = new(_cofiguration);
+                HttpResponseMessage _responseMessage = _objapi.APICommunication(APIURLHelper.PaymentInvoiceById + "/" + id, HttpMethod.Get, _token).Result;
 
-        //    if (responseMessage.IsSuccessStatusCode)
-        //    {
-        //        string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-        //        var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestDependencies>>(jsonResponse);
+                if (_responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = _responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationInvoicePaymentModel>>(jsonResponse);
 
-        //        //if (data != null && data._object != null)
-        //        //{
-        //        //    invoice.ValuationRequestId = vId;
-        //        //    invoice.ReferenceNo = data._object.ReferenceNO;
-        //        //    invoice.StatusName = data._object.StatusName;
-        //        //    invoice.ColorCode = data._object.ColorCode;
-        //        //    invoice.BackGroundColor = data._object.BackGroundColor;
-        //        //    invoice.ClientName = data._object.ClientName;
-        //        //    invoice.PropertyName = data._object.PropertyName;
-        //        //}
-        //    }
-
-        //    if (id == null || id <= 0)
-        //    {
-        //        //Get Footer info
-        //        FooterInfo(TableNameEnum.ValuationInvoice, _cofiguration, id);
-        //        return View(invoice);
-        //    }
-        //    else
-        //    {
-        //        HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string _token);
-        //        APIRepository _objapi = new(_cofiguration);
-        //        HttpResponseMessage _responseMessage = _objapi.APICommunication(APIURLHelper.GetPaymentInvoiceById + "/" + id, HttpMethod.Get, _token).Result;
-
-        //        if (_responseMessage.IsSuccessStatusCode)
-        //        {
-        //            string jsonResponse = _responseMessage.Content.ReadAsStringAsync().Result;
-        //            var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationInvoiceListModel>>(jsonResponse);
-
-        //            //Get Footer info
-        //            FooterInfo(TableNameEnum.ValuationInvoice, _cofiguration, id, true);
-
-        //            return View(data._object);
-        //        }
-        //        return NotFound();
-        //    }
-        //}
+                    ////Get Footer info
+                    FooterInfo(TableNameEnum.ValuationInvoice, _cofiguration, id, true);
+                   
+                    return View("ValuationInvoices", data._object);
+                }
+                return NotFound();
+            }
+        }
 
 
         [HttpPost]

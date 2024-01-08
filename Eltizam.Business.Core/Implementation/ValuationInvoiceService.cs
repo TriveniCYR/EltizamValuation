@@ -8,6 +8,7 @@ using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -293,19 +294,42 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        //public async Task<ValuationInvoicePaymentModel> GetPaymentInvoiceById(int id)
-        //{
-        //    var _LocationEntity = new ValuationInvoicePaymentModel();
-        //    _LocationEntity = _mapperFactory.Get<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAsync(id));
+        public async Task<ValuationInvoicePaymentModel> PaymentInvoiceById(int id)
+        {
+            var _LocationEntity = new ValuationInvoicePaymentModel();
+            _LocationEntity = _mapperFactory.Get<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAsync(id));
 
-        //    return _LocationEntity;
-        //}
+            return _LocationEntity;
+        }
+
 
         public async Task<List<ValuationInvoicePaymentModel>> GetPaymentInvoiceById(int requestId)
         {
-            return _mapperFactory.GetList<ValuationPaymentInvoice, ValuationInvoicePaymentModel>(await _InvoiceMap.GetAllAsync());
+            DbParameter[] osqlParameter =
+            {
+                new DbParameter("RequestId", requestId, SqlDbType.Int),
+            };
+            var res = EltizamDBHelper.ExecuteMappedReader<ValuationInvoicePaymentModel>(ProcedureMetastore.usp_Invoice_GetInvoicePaymentByValuationRequestId,
+                      DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+            return res;
         }
 
+
+        public async Task<DBOperation> DeletePyamentInvoice(int id, int? by)
+        {
+            if (id > 0)
+            {
+
+                var payment = _InvoiceMap.Get(id);
+                if (payment != null)
+                {
+                    _InvoiceMap.Remove(payment);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+            // Return a success operation indicating successful deletion.
+            return DBOperation.Success;
+        }
 
 
     }

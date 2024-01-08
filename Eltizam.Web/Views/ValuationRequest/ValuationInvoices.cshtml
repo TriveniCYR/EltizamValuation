@@ -32,12 +32,27 @@
                 <div class="inputSearchs p-0">
                     <div class="tabSection">
                         <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
+                        <input type="hidden" id="hdnTransactionModeId" value="@(Model == null ? 0 : Model.TransactionModeId)" />
 
-                        @* <input type="hidden" id="hdnId" value="@(Model.Id == null ? 0 : Model.Id)" /> *@
-                         @*  <input type="hidden" id="isAddPerm" value="@isAdd" />
-                        <input type="hidden" id="isEditPerm" value="@isEdit" /> *@
                         @Html.HiddenFor(model=>model.Id)
                         @Html.HiddenFor(model=>model.ValuationRequestId)
+                        <div class="flex">
+                            <label for="" class="w-50">
+                                <p class="m-0">TransactionMode<span class="text-danger">*</span></p>
+                                @Html.DropDownListFor(model => model.TransactionModeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
+                                @Html.ValidationMessageFor(model => model.TransactionModeId, "", new { @class = "text-danger" })
+
+                            </label>
+
+                            <label for="TrnexpiryDate">
+                                <p class="m-0">
+                                    Transaction Date
+                                    <span class="text-danger">*</span>
+                                </p>
+                                <input type="text" id="TrnexpiryDate" name="TransactionDate" class="formatted-date-input" asp-for="TransactionDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                @Html.ValidationMessageFor(model => model.TransactionDate, "", new { @class = "text-danger" })
+                            </label>
+                        </div>  
                         
                         <div class="flex">
                             <label for="resourceType" class="w-50">
@@ -55,35 +70,13 @@
                                 Balance
                                 @Html.TextBoxFor(model => model.Balance,  new { @class = "form-control  " })
                             </label>
-                            <label for="" class="w-50">
-                                Note
-                                @Html.TextBoxFor(model => model.Note,  new { @class = "form-control  " })
-                            </label>
-
-
-                          
+                           
                         </div>
-                        <div class="flex">
-                            <label for="" class="w-50">
-                                <p class="m-0">TransactionMode<span class="text-danger">*</span></p>
-                                @Html.DropDownListFor(model => model.TransactionModeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
-                                @Html.ValidationMessageFor(model => model.TransactionModeId, "", new { @class = "text-danger" })
-
-                            </label>
-
-                            <label for="TrnexpiryDate">
-                                <p class="m-0">
-                                    TRN Expire Date
-                                    <span class="text-danger">*</span>
-                                </p>
-                                <input type="text" id="TrnexpiryDate" name="TransactionDate" class="formatted-date-input" asp-for="TransactionDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
-                                @Html.ValidationMessageFor(model => model.TransactionDate, "", new { @class = "text-danger" })
-                            </label>
-                        </div>
+                       
                         
                         
                         <div class="text-right buttonArea bodyContent plr-0">
-                            <a class="greyBtn lineBtn formAbtn" asp-action="ValuationInvoicesManage">@SharedLocalizer["Cancel"]</a>
+                            <a class="greyBtn lineBtn formAbtn" asp-action="ValuationInvoices">@SharedLocalizer["Cancel"]</a>
 
                           
                                 <button type="submit" class="bgBlue">Save</button>
@@ -99,10 +92,15 @@
     </main>
 </form>
 
+
+
+
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationInvoiceManage.js?v=@jsVersion"></script>
     <script>
         
         var GetDictionaryWithSubDetails = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryWithSubDetails";
+        var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
+       
     </script>
 }}

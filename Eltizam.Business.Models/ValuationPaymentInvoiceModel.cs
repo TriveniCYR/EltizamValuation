@@ -1,4 +1,5 @@
-﻿using Eltizam.Resource.Resources;
+﻿using AutoMapper.Configuration.Annotations;
+using Eltizam.Resource.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,6 +17,10 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'TransactionMode' field is required.")]
         public int TransactionModeId { get; set; }
+       
+        public string? TransactionMode { get; set; }
+      
+        public string? UserName { get; set; }
 
         public DateTime TransactionDate { get; set; }
 

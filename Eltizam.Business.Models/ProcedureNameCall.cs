@@ -80,6 +80,7 @@ namespace Eltizam.Business.Models
         public static string usp_ValuationRequest_StatusHistory = "usp_ValuationRequest_StatusHistory";
         public static string usp_ValuationRequest_ApproverLevel = "usp_ValuationRequest_ApproverLevel";
         public static string usp_ValuationRequest_UpsertApproverLevels = "usp_ValuationRequest_UpsertApproverLevels";
+        public static string usp_Invoice_GetInvoicePaymentByValuationRequestId = "usp_Invoice_GetInvoicePaymentByValuationRequestId";
 
 
 

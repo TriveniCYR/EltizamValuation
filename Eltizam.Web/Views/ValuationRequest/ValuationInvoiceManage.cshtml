@@ -53,7 +53,28 @@
                 </div>
             </div>
 
+
+
             <form asp-action="ValuationInvoiceManage" method="POST" enctype="multipart/form-data" id="invoice">
+                <div class="scroll-x">
+                    <table id="InvoiceTable" class="table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>#Invoice</th>
+                                <th>Transaction Date</th>
+                                <th>Payment Mode</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <th>Created By</th>
+                                <th>Creation Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="paymentOption">
                     <div class="payTab">
                         @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
@@ -72,10 +93,14 @@
                         <button class="payTabLink" type="button" onclick="payTab(event, 'pay4', 4)" id="@_id4">Net Banking</button>
                     </div>
 
+
+
                     <div id="pay1" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
                             <h5>Cash Payment Details</h5>
                         </div>
+
+                       
                         <div class="inputSearchs">
                             <div class="tabSection">
                                 <div class="flex mb-28">
@@ -377,7 +402,7 @@
         var UpsertValuationInvoice = "@Eltizam.Web.Helpers.APIURLHelper.UpsertValuationInvoice";
         var transactionStatus = "@Eltizam.Web.Helpers.APIURLHelper.GetInvoiceTransactionStatus";
         var DeleteInvoiceDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteInvoiceDocument";
-
+        var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";

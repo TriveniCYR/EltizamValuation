@@ -1,11 +1,13 @@
 var docId = 0;
 $(document).ready(function () {
+    BindPaymentInvoiceList();
     BindTransactionMode();
     if (document.location.href.includes('id')){
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
     }
     BindTransactionstatus();
+    
     
 });
 
@@ -425,7 +427,7 @@ function DeleteUserDocumentError(x, y, z) {
 function BindTransactionMode() {
 
     var TransactionMode = $("#TransactionModeId");
-    var _val = 0;
+    var _val = $("#hdnTransactionModeId").val();
     var _rpname = "description";
     var description = "TRANSACTION_MODE";
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, TransactionMode, _rpname, _val);
@@ -448,6 +450,43 @@ if (action === "Add") {
                 toastr.error("Previous Dates are not allowed");
                 instance.setDate('today');
             }
+        }
+    });
+}
+
+function BindPaymentInvoiceList() {
+    let id = $('#hdnValuationRequestId').val();
+    $.ajax({
+        type: Get,
+        url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
+        "datatype": "json",
+        success: function (response) {
+            if (response != null) {
+                debugger
+                $.each(response._object, function (index, object) {
+                    var html = '';
+                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
+                    html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+                    html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    //if (view == 2) {
+                    //    html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeletePaymentInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePaymentInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                    //}
+                    //else {
+                    //    html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletePaymentInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePaymentInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                    //}
+                    html += '</ul></div>';
+
+                    $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><input type="checkbox" value="' + object.id + '"></td><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+                        + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                });
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
         }
     });
 }
