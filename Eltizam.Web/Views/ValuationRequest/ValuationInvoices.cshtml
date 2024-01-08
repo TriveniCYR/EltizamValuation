@@ -11,9 +11,9 @@
     var _header = " Valuation Invoice";
     var _md = @Model.Id > 0 ? "View" : "Add";
     ViewData["Title"] = _md + _header;
-
-    var vId = 0;
+     
     var _valRegHeader = (ValuationRequestDependencies)TempData[UserHelper.ValReqHeader];
+    var vId = (_valRegHeader != null) ? _valRegHeader.Id : 0;
 }
 <!-- system user master -->
 <form asp-action="ValuationInvoicesManage" autocomplete="off" asp-controller="ValuationRequest" method="post">

@@ -1,11 +1,11 @@
 ﻿@using Eltizam.Business.Models
 @using Eltizam.Utility.Models
 @using Eltizam.Web.Helpers
-@model Eltizam.Business.Models.ValuationInvoiceListModel;
+@model Eltizam.Business.Models.ValuationInvoiceListModel
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Master> MasterLocalizer
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Eltizam.Resource.Shared> SharedLocalizer
-
 @inject IConfiguration Configuration
+
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = " Valuation Invoice";
@@ -22,8 +22,9 @@
         _id1 = _cls;
     }
 
-    var vId = 0;
+
     var _valRegHeader = (ValuationRequestDependencies)TempData[UserHelper.ValReqHeader];
+    var vId = (_valRegHeader != null) ? _valRegHeader.Id : 0;
 }
 
 <main>
@@ -33,7 +34,7 @@
             <div class="hamburger">
                 <a class="greyBtn lineBtn formAbtn" asp-action="ValuationRequests">Valuation Requests</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
-                <a class="greyBtn lineBtn formAbtn" href="ValuationRequestManage?id=@Model.ValuationRequestId">Valuation Details</a>
+                <a class="greyBtn lineBtn formAbtn" href="ValuationRequestManage?id=@vId">Valuation Details</a>
                 <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
                 <input type="hidden" id="md" value="@_md" />
                 <span>@_md @_header</span>

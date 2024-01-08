@@ -66,6 +66,7 @@
     var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList();
     
     var _valRegHeader = (ValuationRequestDependencies)TempData[UserHelper.ValReqHeader];
+    var vId = (_valRegHeader != null) ? _valRegHeader.Id : 0;
 }
 
 <div id="PlaceHolderHere"></div>
