@@ -29,6 +29,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? AlternatePhoneExt { get; set; }
         public string? PhoneExt { get; set; }
         public bool? IsDeleted { get; set; }
+        public string? Zone { get; set; }
 
         public virtual MasterCity? City { get; set; }
     }

@@ -171,11 +171,11 @@
                                     objUserAddress.Address2 = entityAddress.Address2;
                                     objUserAddress.Address3 = entityAddress.Address3;
                                     objUserAddress.Landmark = entityAddress.Landmark;
-                                    objUserAddress.PinNo = entityAddress.PinNo;
                                     objUserAddress.CountryId = entityAddress.CountryId;
                                     objUserAddress.StateId = entityAddress.StateId; ;
                                     objUserAddress.CityId = entityAddress.CityId;
                                     objUserAddress.PinNo = entityAddress.PinNo;
+                                    objUserAddress.Zone = entityAddress.Zone;
                                     objUserAddress.Email = entityAddress.Email;
                                     objUserAddress.AlternateEmail = entityAddress.AlternateEmail;
                                     objUserAddress.Phone = entityAddress.Phone;

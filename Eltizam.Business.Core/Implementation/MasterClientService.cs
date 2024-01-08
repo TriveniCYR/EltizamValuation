@@ -273,6 +273,7 @@ namespace Eltizam.Business.Core.Implementation
                                 objAddress.StateId = entityAddress.StateId;
                                 objAddress.CityId = entityAddress.CityId;
                                 objAddress.PinNo = entityAddress.PinNo;
+                                objAddress.Zone = entityAddress.Zone;
                                 objAddress.Email = entityAddress.Email;
                                 objAddress.AlternateEmail = entityAddress.AlternateEmail;
                                 objAddress.PhoneExt = entityAddress.PhoneExt;

@@ -197,25 +197,30 @@
                                                     @Html.DropDownListFor(model => model.Addresses[i].CityId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].CityId, "", new { @class = "text-danger" })
                                                 </label>
+                                                <label for="Zone">
+                                                    Sector /Zone
+                                                    @Html.TextBoxFor(model => model.Addresses[i].Zone, new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @SharedLocalizer["Sector /Zone"] })
+                                                    @Html.ValidationMessageFor(model => model.Addresses[i].Zone, "", new { @class = "text-danger" })
+                                                </label>
+                                            </div>
+                                            <div class="flex">
                                                 <label for="PinNo">
                                                     Zip / PO Box
                                                     @Html.TextBoxFor(model => model.Addresses[i].PinNo, new { @autocomplete = "off", @class = "form-control checkbox-checked valiadteint", @placeholder = @SharedLocalizer["Zip / PO Box"] })
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].PinNo, "", new { @class = "text-danger" })
                                                 </label>
-                                            </div>
-                                            <div class="flex">
                                                 <label for="Email">
                                                     <p class="m-0">Email<span class="text-danger">*</span></p>
                                                     @Html.TextBoxFor(model => model.Addresses[i].Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].Email, "", new { @class = "text-danger" })
                                                 </label>
+                                            </div>
+                                            <div class="flex">
                                                 <label for="AlternateEmail">
                                                     Alternate Email
                                                     @Html.TextBoxFor(model => model.Addresses[i].AlternateEmail, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Alternate Email"] })
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].AlternateEmail, "", new { @class = "text-danger" })
                                                 </label>
-                                            </div>
-                                            <div class="flex">
                                                 <label for="Phone">
                                                     <p class="m-0">Phone<span class="text-danger">*</span></p>
                                                     <div class="flex align-item-center flex-start m-0 phoneWithDrop">
@@ -227,6 +232,8 @@
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].Phone, "", new { @class = "text-danger" })
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].PhoneExt, "", new { @class = "text-danger" })
                                                 </label>
+                                            </div>
+                                            <div class="flex">
                                                 <label for="AlternatePhone">
                                                     Alternate Phone
                                                     <div class="flex align-item-center flex-start m-0 phoneWithDrop">
@@ -238,8 +245,6 @@
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].AlternatePhone, "", new { @class = "text-danger" })
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].AlternatePhoneExt, "", new { @class = "text-danger" })
                                                 </label>
-                                            </div>
-                                            <div class="flex">
                                                 <label for="">
                                                     Landline phone
                                                     @Html.TextBoxFor(model => model.Addresses[i].Landlinephone, new {@autocomplete = "off", @class = "form-control checkbox-checked valiadteint",  @placeholder = @SharedLocalizer["Landline phone"] })

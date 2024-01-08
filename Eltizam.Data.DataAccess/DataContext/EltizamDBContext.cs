@@ -212,6 +212,10 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Zone)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
                 entity.HasOne(d => d.City)
                     .WithMany(p => p.MasterAddresses)
                     .HasForeignKey(d => d.CityId)
