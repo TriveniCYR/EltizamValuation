@@ -513,12 +513,19 @@ function BindPaymentInvoiceList() {
                 debugger;
                 $.each(response._object, function (index, object) {
                     var html = '';
+                    var html2 = '';
                     var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                     html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     html += '</ul></div>';
+                    if (object.isCompleted == 1) {
 
-                    var rowHtml = ' <tr id="' + object.id + '"><td><input type="checkbox" value="' + object.id + '" class="invoiceCheckbox"></td><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+                        html2 = object.id;
+                    }
+                    else {
+                        html2 = '<input type="checkbox" value="' + object.id + '" class="invoiceCheckbox">';
+                    }
+                    var rowHtml = ' <tr id="' + object.id + '"><td>'+ html2 + '</td><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
                         + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>';
 
                     $('#InvoiceTable tbody').append(rowHtml);
