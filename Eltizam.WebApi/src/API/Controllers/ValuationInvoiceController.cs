@@ -146,13 +146,50 @@ namespace Eltizam.WebApi.Controllers
         }
 
         [HttpGet, Route("GetPaymentInvoiceById")]
-        public async Task<IActionResult> GetPaymentInvoiceById([FromRoute] int requestId)
+        public async Task<IActionResult> GetPaymentInvoiceById(int requestId)
         {
             try
             {
                 var oinvoiceEntity = await _ValuationInvoiceService.GetPaymentInvoiceById(requestId);
                 if (oinvoiceEntity != null)
                     return _ObjectResponse.Create(oinvoiceEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        
+
+        [HttpGet, Route("PaymentInvoiceById/{id}")]
+        public async Task<IActionResult> PaymentInvoiceById(int id)
+        {
+            try
+            {
+                var oinvoiceEntity = await _ValuationInvoiceService.PaymentInvoiceById(id);
+                if (oinvoiceEntity != null)
+                    return _ObjectResponse.Create(oinvoiceEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+
+        [HttpDelete("DeletePyamentInvoice/{id}")]
+        public async Task<IActionResult> DeletePyamentInvoice([FromRoute] int id, int? by)
+        {
+            try
+            {
+                DBOperation oResponse = await _ValuationInvoiceService.DeletePyamentInvoice(id, by);
+                if (oResponse == DBOperation.Success)
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, AppConstants.DeleteSuccess);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }

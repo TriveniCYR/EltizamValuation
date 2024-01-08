@@ -61,13 +61,35 @@
                 </div>
             }
 
+
+
             <form asp-action="ValuationInvoiceManage" method="POST" enctype="multipart/form-data" id="invoice">
+                <div class="scroll-x">
+                    <table id="InvoiceTable" class="table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>#Invoice</th>
+                                <th>Transaction Date</th>
+                                <th>Payment Mode</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <th>Created By</th>
+                                <th>Creation Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="paymentOption">
                     <div class="payTab">
                         @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                         @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
                         @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
                         @Html.HiddenFor(model => model.TransactionModeId, new { @class = "control-label" })
+                        @Html.HiddenFor(model => model.InvoiceIds, new { @class = "control-label" })
                         <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
                         <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
                         <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
@@ -80,10 +102,14 @@
                         <button class="payTabLink" type="button" onclick="payTab(event, 'pay4', 4)" id="@_id4">Net Banking</button>
                     </div>
 
+
+
                     <div id="pay1" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
                             <h5>Cash Payment Details</h5>
                         </div>
+
+                       
                         <div class="inputSearchs">
                             <div class="tabSection">
                                 <div class="flex mb-28">
@@ -315,7 +341,7 @@
                                 </a>
                                 @if (Model.Id == 0)
                                 {
-                                    <button type="submit" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="return SaveInvoice()">
+                                    <button type="submit" id="savePaymentInvoice" class="blueBtn" style="width: 100px;border-radius: 4px;padding: 12px;" onclick="return SaveInvoice()">
                                         Save
                                     </button>
                                 }
@@ -385,7 +411,8 @@
         var UpsertValuationInvoice = "@Eltizam.Web.Helpers.APIURLHelper.UpsertValuationInvoice";
         var transactionStatus = "@Eltizam.Web.Helpers.APIURLHelper.GetInvoiceTransactionStatus";
         var DeleteInvoiceDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteInvoiceDocument";
-
+        var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
+        var GetDictionaryWithSubDetails = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryWithSubDetails";
         var DeleteLabel = "@SharedLocalizer["Delete"]";
         var ErrorMessage = "@SharedLocalizer["Error"]";
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";

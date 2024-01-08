@@ -338,7 +338,7 @@ $(document).ready(function () {
     GetValuerLists();
     BindQuatationList();
     BindInvoiceList();
-    /*BindPaymentInvoiceList();*/
+    BindPaymentInvoiceList();
 
     if (document.location.href.includes('id')) {
         /* if (document.getElementById('hdnClientTypeId').value != "0" || document.getElementById('hdnClientTypeId').value != '')*/
@@ -977,41 +977,42 @@ function BindInvoiceList() {
     });
 }
 
-//function BindPaymentInvoiceList() {
-//    let id = $('#hdnId').val();
-//    $.ajax({
-//        type: Get,
-//        url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
-//        "datatype": "json",
-//        success: function (response) {
-//            if (response != null) {
-//                $.each(response, function (index, object) {
-//                    var html = '';
-//                    var url = '/ValuationInvoice/GetPaymentInvoiceById?id=' + object.id;
-//                    html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
-//                    html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
-//                    if (view == 2) {
-//                        html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
-//                    }
-//                    else {
-//                        html += '<li><a title="Delete" data-toggle="modal" data-target="#DeleteInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeleteInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
-//                    }
-//                    html += '</ul></div>';
+function BindPaymentInvoiceList() {
+    let id = $('#hdnId').val();
+    $.ajax({
+        type: Get,
+        url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
+        "datatype": "json",
+        success: function (response) {
+            if (response != null) {
+                debugger
+                $.each(response._object, function (index, object) {
+                    var html = '';
+                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
+                    html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
+                    html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
+                    if (view == 2) {
+                        html += '<li style="display:none"><a title="Delete" data-toggle="modal" data-target="#DeletePaymentInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePaymentInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                    }
+                    else {
+                        html += '<li><a title="Delete" data-toggle="modal" data-target="#DeletePaymentInvoiceModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDeletePaymentInvoice(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" />Delete</a></li>';
+                    }
+                    html += '</ul></div>';
 
-//                    $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.referenceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
-//                        + '</td><td>' + object.transactionStatusName + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
-//                });
-//            }
-//        },
-//        failure: function (response) {
-//            alert(response.responseText);
-//        },
-//        error: function (response) {
-//            alert(response.responseText);
-//            $("#loader").hide();
-//        }
-//    });
-//}
+                    $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+                        + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                });
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
 
 
 
@@ -1083,6 +1084,41 @@ function DeleteInvoiceByIdSuccess(data) {
     }
 }
 function DeleteInvoiceByIdError(x, y, z) {
+    toastr.error(ErrorMessage);
+}
+
+//invoice Payment
+
+function ConfirmationDeletePaymentInvoice(id) {
+    $('#DeletePaymentInvoiceModel #Id').val(id);
+}
+function DeleteInvoice() {
+    invoiceId = $('#DeletePaymentInvoiceModel #ID').val()
+    var by = LogInUserId;
+    if (isDeleteIn) {
+        var tempInAtiveID = $('#DeletePaymentInvoiceModel #Id').val();
+        ajaxServiceMethod(BaseURL + DeletePyamentInvoice + "/" + tempInAtiveID + "?by=" + by, Delete, DeletePaymentInvoiceByIdSuccess, DeletePaymentInvoiceByIdError);
+    }
+    else {
+        toastr.error(DeleteAccessDenied);
+    }
+}
+function DeletePaymentInvoiceByIdSuccess(data) {
+    try {
+        if (data._Success === true) {
+            invoiceCurrentId = $('#DeletePaymentInvoiceModel #Id').val()
+            /*$('#' + tableId).DataTable().draw();*/
+            $('#' + invoiceCurrentId).remove();
+            toastr.success(RecordDelete);
+        }
+        else {
+            toastr.error(data._Message);
+        }
+    } catch (e) {
+        toastr.error('Error:' + e.message);
+    }
+}
+function DeletePaymentInvoiceByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
