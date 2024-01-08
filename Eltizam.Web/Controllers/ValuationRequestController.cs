@@ -318,7 +318,7 @@ namespace EltizamValuation.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult ValuationQuotationManage(int? id, int vId, string refNo)
+        public IActionResult ValuationQuotationManage(int? id, int vId)
         {
             ValuationQuatationListModel quotation;
             //Check permissions for Get
@@ -367,13 +367,15 @@ namespace EltizamValuation.Web.Controllers
 
                 if (data != null && data._object != null)
                 {
-                    quotation.ValuationRequestId = vId;
-                    quotation.ReferenceNo = data._object.ReferenceNO;
-                    quotation.StatusName = data._object.StatusName;
-                    quotation.ColorCode = data._object.ColorCode;
-                    quotation.BackGroundColor = data._object.BackGroundColor;
-                    quotation.ClientName = data._object.ClientName;
-                    quotation.PropertyName = data._object.PropertyName;
+                    //quotation.ValuationRequestId = vId;
+                    //quotation.ReferenceNo = data._object.ReferenceNO;
+                    //quotation.StatusName = data._object.StatusName;
+                    //quotation.ColorCode = data._object.ColorCode;
+                    //quotation.BackGroundColor = data._object.BackGroundColor;
+                    //quotation.ClientName = data._object.ClientName;
+                    //quotation.PropertyName = data._object.PropertyName;
+
+                    TempData[UserHelper.ValReqHeader] = data._object;
                 }
             }
 
@@ -477,7 +479,7 @@ namespace EltizamValuation.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult ValuationInvoiceManage(int? id, int vId, string refNo)
+        public IActionResult ValuationInvoiceManage(int? id, int vId)
         {
             ValuationInvoiceListModel invoice;
 
@@ -524,14 +526,16 @@ namespace EltizamValuation.Web.Controllers
 
                 if (data != null && data._object != null)
                 {
-                    invoice.ValuationRequestId = vId;
-                    invoice.ReferenceNo = data._object.ReferenceNO;
-                    invoice.StatusName = data._object.StatusName;
-                    invoice.ColorCode = data._object.ColorCode;
-                    invoice.BackGroundColor = data._object.BackGroundColor;
-                    invoice.ClientName = data._object.ClientName;
-                    invoice.PropertyName = data._object.PropertyName;
-                }
+                    //invoice.ValuationRequestId = vId;
+                    //invoice.ReferenceNo = data._object.ReferenceNO;
+                    //invoice.StatusName = data._object.StatusName;
+                    //invoice.ColorCode = data._object.ColorCode;
+                    //invoice.BackGroundColor = data._object.BackGroundColor;
+                    //invoice.ClientName = data._object.ClientName;
+                    //invoice.PropertyName = data._object.PropertyName;
+
+                    TempData[UserHelper.ValReqHeader] = data._object;
+                } 
             }  
 
             if (id == null || id <= 0)

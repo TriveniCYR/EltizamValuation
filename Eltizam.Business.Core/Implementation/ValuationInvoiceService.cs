@@ -7,16 +7,8 @@ using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 using static Eltizam.Utility.Enums.GeneralEnum;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Eltizam.Business.Core.Implementation
 {
@@ -61,11 +53,11 @@ namespace Eltizam.Business.Core.Implementation
         {
             DbParameter[] osqlParameter2 =
             {
-                    new DbParameter("RequestId", requestId, SqlDbType.Int),
-                };
+                new DbParameter("RequestId", requestId, SqlDbType.Int),
+            };
 
             var invoiceList = EltizamDBHelper.ExecuteMappedReader<ValuationInvoiceListModel>(ProcedureMetastore.usp_Invoice_GetInvoiceByRequestId,
-                                DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
+                              DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParameter2);
 
             return invoiceList;
         }
