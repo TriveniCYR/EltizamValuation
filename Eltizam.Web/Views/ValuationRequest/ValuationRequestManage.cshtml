@@ -398,8 +398,8 @@
                                     <input type="hidden" id="hdnOwnershipType" value="@(Model == null ? 0 : Model.OwnershipTypeId)" />
                                     <input type="hidden" id="hdnPropertyId" value="@(Model.PropertyId)" />
                                     <input type="hidden" id="hdnPropertyName" value="@(Model == null ? 0 : Model.PropertyName)" />
-                                    <input type="hidden" id="hdnUnitType" value="@(Model == null ? 0 : Model.UnitType)" />
-                                    <input type="hidden" id="hdnFurnished" value="@(Model == null ? 0 : Model.Furnished)" />
+                                    <input type="hidden" id="hdnUnitTypeId" value="@(Model == null ? 0 : Model.UnitTypeId)" />
+                                    <input type="hidden" id="hdnFurnishedId" value="@(Model == null ? 0 : Model.FurnishedId)" />
                                     <div class="flex  mb-28" id="editables2">
                                         <label for="" class="w-50">
                                             <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
@@ -428,7 +428,7 @@
                                     <div class="flex mb-28">
                                         <label for="" class="w-50">
                                             Unit Type
-                                            @Html.DropDownListFor(model => model.UnitType, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
+                                            @Html.DropDownListFor(model => model.UnitTypeId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control searchable-dropdown" })
                                             @*    @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
                                         </label>
                                         <label for="" class="w-50">
@@ -442,7 +442,7 @@
                                             <p class="m-0">
                                                 Furnished
                                             </p>
-                                            @Html.DropDownListFor(model => model.Furnished, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control" })
+                                            @Html.DropDownListFor(model => model.FurnishedId, new List<SelectListItem> { }, new { @disabled = htmlAttributes, @class = "form-control" })
                                             @* @Html.ValidationMessageFor(model => model.OwnershipTypeId, "", new { @class = "text-danger" }) *@
                                         </label>
                                         <label for="" class="w-50">

@@ -521,16 +521,16 @@ function BindPropertyDetail() {
 }
 
 function BindUnitType() {
-    var UnitType = $("#UnitType");
+    var UnitType = $("#UnitTypeId");
     var _rpname = "description";
-    var _val = $('#hdnUnitType').val();
+    var _val = $('#hdnUnitTypeId').val();
     var description = 'UNIT_TYPE';
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, UnitType, _rpname, _val);
 }
 
 function BindFurnished() {
-    var Furnished = $("#Furnished");
-    var _val = $('#hdnFurnished').val();
+    var Furnished = $("#FurnishedId");
+    var _val = $('#hdnFurnishedId').val();
     var _rpname = "description";
     var description = "PROPERTY_FURNISHED";
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Furnished, _rpname, _val);
@@ -544,10 +544,10 @@ function BindPropertyDetailById(Id) {
             url: BaseURL + GetPropertyById + '/' + Id,
             "datatype": "json",
             success: function (response) {
-                document.getElementById('UnitType').value = response._object.unitType;
+                document.getElementById('UnitTypeId').value = response._object.unitTypeId;
                 document.getElementById('AdditionalUnits').value = response._object.additionalUnits;
                 document.getElementById('UnitNumber').value = response._object.unitNumber;
-                document.getElementById('Furnished').value = response._object.furnished;
+                document.getElementById('FurnishedId').value = response._object.furnishedId;
                 document.getElementById('ValuationPurpose').value = response._object.valuationPurpose;
                 document.getElementById('BuildUpAreaSqFt').value = response._object.buildUpAreaSqFt;
                 document.getElementById('BuildUpAreaSqMtr').value = response._object.buildUpAreaSqMtr;
