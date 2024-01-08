@@ -23,7 +23,7 @@ namespace Eltizam.Business.Models
          ErrorMessage = "Only alphabetical characters are allowed.")]
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? LastName { get; set; }        
-        public string? Gender { get; set; }
+        //public string? Gender { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'Gender' field is required.")]
         public int? GenderId { get; set; }

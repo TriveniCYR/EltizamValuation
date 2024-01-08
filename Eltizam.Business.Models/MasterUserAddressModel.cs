@@ -54,7 +54,7 @@ namespace Eltizam.Business.Models
         [StringLength(12, MinimumLength = 5)]
         public string? AlternatePhone { get; set; }
 
-        [StringLength(12, MinimumLength = 5)]
+        //[StringLength(12, MinimumLength = 2)]
         public string? AlternatePhoneExt { get; set; }
        
         [StringLength(12, MinimumLength = 5)]
