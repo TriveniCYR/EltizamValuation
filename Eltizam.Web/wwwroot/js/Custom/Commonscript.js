@@ -8,7 +8,7 @@ var BaseURL = $('#hdnAPIURL').val();
 var setDefaultOrder = [0, 'desc'];
 var ShowMenuCache = "showMenuCache";
 var defaultDateFormat = 'DD-MMM-YYYY hh:mm A';
-var flatDateformat = 'd-m-Y';
+var flatDateformat = 'd-M-Y';
 
 //Role Enum
 var RoleEnum = {
@@ -60,6 +60,14 @@ var userid = parseInt($("#userid").val(), 10);
 
 $(document).ready(function () {
     formatCurrencyInElements('formatting');
+
+    //Apply format related things
+    formatreadonlydate();
+    formatpagedates_asperpicker();
+
+    //Show calender
+    ApplyFlatPickerCalenderformat();
+
     // Assuming your elements have the class 'price'
     const elements = document.getElementsByClassName('price'); 
     // Iterate through the elements and attach the event listener to each
@@ -124,9 +132,7 @@ $(document).ready(function () {
     ErrorDev.hide();
 
     readsideNavToggle();
-
-    formatreadonlydate();
-
+    
     makeFormReadOnly();
 
     //Toaster related things
@@ -262,34 +268,44 @@ $(document)
         }
     });
 
-document.addEventListener('DOMContentLoaded', function () { 
+
+// ========== Start: Flatpicker Date format fixes ==========
+function ApplyFlatPickerCalenderformat() { 
     flatpickr('.formatted-date-input', {
-        dateFormat: flatDateformat, 
+        dateFormat: flatDateformat,
     });
+     
+    //$('.formatted-date-input').flatpickr({
+    //    dateFormat: flatDateformat,
+    //});
 
     flatpickr('#TrnexpiryDate', {
         dateFormat: flatDateformat,
-        minDate: 'today' 
+        minDate: 'today'
     });
 
     flatpickr('#DateOfBirth', {
         dateFormat: flatDateformat,
-        maxDate: 'today' 
+        maxDate: 'today'
     });
-});
 
-if (action === "Add") {
-    document.addEventListener('DOMContentLoaded', function () {
-        flatpickr('.formatted-date-input', {
-            dateFormat: flatDateformat,
-            defaultDate: 'today'
+    if (action === "Add") {
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr('.formatted-date-input', {
+                dateFormat: flatDateformat,
+                defaultDate: 'today'
+            });
         });
-    });
-}
+    }
 
-function formatreadonlydate() {
+    //document.addEventListener('DOMContentLoaded', function () { 
+    //});
+} 
+
+//Used to format footer dates
+function formatreadonlydate() { 
+    //var eln = elements === undefined ? '.formatted-td-date-input': elements;
     var tdElements = document.querySelectorAll('.formatted-td-date-input');
-
     tdElements.forEach(function (e) { 
         if (e.textContent !== undefined && e.textContent !== null && e.textContent !== "") {
             var originalDate = new Date(e.textContent);
@@ -301,6 +317,35 @@ function formatreadonlydate() {
         }
     });
 }
+
+//Used to format page level dates
+function formatpagedates_asperpicker(e) { 
+    var tdElements = document.querySelectorAll('.formatted-date-input');   
+    tdElements.forEach(function (e) {
+        var _val = e.defaultValue;
+
+        if (_val !== undefined && _val !== null && _val !== "" && _val !== "") {   
+            var array = _val.split('-');  
+
+            const month = getMonth(array[1]);  
+            var formattedDate = array[0] + '-' + month + '-' + array[2];
+
+            e.defaultValue = formattedDate;
+            e.textContent = formattedDate;
+        }
+    });
+}
+
+function getMonth(e) { 
+    var objDate = new Date();
+    objDate.setDate(1);
+    objDate.setMonth(e - 1); 
+
+    var locale = "en-us", month = objDate.toLocaleString(locale, { month: "short" }); 
+    return month;
+}
+
+// ========== End: Flatpicker Date format fixes ==========
 
 function showLoader() {
     $('#loading-wrapper').show();
@@ -504,6 +549,15 @@ function readsideNavToggle() {
 
 function profileMenu() {
     var x = document.getElementById("profileMenu");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+} 
+
+function showValuationActions() {
+    var x = document.getElementById("ValuationActions");
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {

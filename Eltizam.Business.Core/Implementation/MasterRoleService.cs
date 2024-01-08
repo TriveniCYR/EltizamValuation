@@ -141,7 +141,7 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter(AppConstants.P_SearchText,         model.search?.value)
             };
 
-            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Role_AllList, CommandType.StoredProcedure, osqlParameter);
+            var Results = await _repository.GetBySP(ProcedureMetastore.usp_Role_SearchAllList, CommandType.StoredProcedure, osqlParameter);
 
             //Get Pagination information
             var res = UtilityHelper.GetPaginationInfo(Results);

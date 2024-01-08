@@ -21,6 +21,7 @@ namespace Eltizam.Business.Models
         public string? Address3 { get; set; }
         [StringLength(10, MinimumLength = 5)]
         public string? PinNo { get; set; }
+        public string? Zone { get; set; }
         public string? Landmark { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -56,7 +57,7 @@ namespace Eltizam.Business.Models
         [StringLength(12, MinimumLength = 5)]
         public string? AlternatePhone { get; set; }
 
-        [StringLength(12, MinimumLength = 5)]
+       // [StringLength(12, MinimumLength = 1)]
         public string? AlternatePhoneExt { get; set; }
 
         [StringLength(12, MinimumLength = 5)]

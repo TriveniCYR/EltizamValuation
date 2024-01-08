@@ -20,6 +20,7 @@ namespace Eltizam.Business.Models
        
         [StringLength(10, MinimumLength = 5)]
         public string? PinNo { get; set; }
+        public string? Zone { get; set; }
         
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'Country' field is required.")]
@@ -54,7 +55,7 @@ namespace Eltizam.Business.Models
         [StringLength(12, MinimumLength = 5)]
         public string? AlternatePhone { get; set; }
 
-        [StringLength(12, MinimumLength = 5)]
+        //[StringLength(12, MinimumLength = 2)]
         public string? AlternatePhoneExt { get; set; }
        
         [StringLength(12, MinimumLength = 5)]

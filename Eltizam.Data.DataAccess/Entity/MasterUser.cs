@@ -16,7 +16,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string FirstName { get; set; } = null!;
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
-        public string? Gender { get; set; }
+        //public string? Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public int? DepartmentId { get; set; }
         public int? DesignationId { get; set; }

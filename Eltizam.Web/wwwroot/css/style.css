@@ -779,9 +779,9 @@ table .userPic {
     .actionItem ul li {
         list-style: none;
         text-align: left;
-        padding: 10px;
+        padding: 7px;
         border-bottom: 1px solid var(--grey);
-        width: 103px;
+       /* width: 103px;*/
         cursor: pointer;
         display: flex;
         font-size: 14px;

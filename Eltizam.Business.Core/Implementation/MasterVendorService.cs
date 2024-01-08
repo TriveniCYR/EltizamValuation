@@ -264,11 +264,11 @@ namespace Eltizam.Business.Core.Implementation
                                 objAddress.Address2 = entityAddress.Address2;
                                 objAddress.Address3 = entityAddress.Address3;
                                 objAddress.Landmark = entityAddress.Landmark;
-                                objAddress.PinNo = entityAddress.PinNo;
                                 objAddress.CountryId = entityAddress.CountryId;
                                 objAddress.StateId = entityAddress.StateId;
                                 objAddress.CityId = entityAddress.CityId;
                                 objAddress.PinNo = entityAddress.PinNo;
+                                objAddress.Zone = entityAddress.Zone;
                                 objAddress.Email = entityAddress.Email;
                                 objAddress.AlternateEmail = entityAddress.AlternateEmail;
                                 objAddress.PhoneExt = entityAddress.PhoneExt;
