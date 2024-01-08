@@ -44,7 +44,7 @@
 
                             </label>
 
-                            <label for="TrnexpiryDate">
+                            <label for="TransactionDate">
                                 <p class="m-0">
                                     Transaction Date
                                     <span class="text-danger">*</span>
@@ -55,12 +55,12 @@
                         </div>  
                         
                         <div class="flex">
-                            <label for="resourceType" class="w-50">
+                            <label for="InvoiceNo" class="w-50">
                                 <p class="m-0">InvoiceNo<span class="text-danger">*</span></p>
                                 @Html.TextBoxFor(model => model.InvoiceNo,  new { @class = "form-control " })
                                 @Html.ValidationMessageFor(model => model.InvoiceNo, "", new { @class = "text-danger" })
                             </label>
-                            <label for="Geo-coordinates" class="w-50">
+                            <label for="Amount" class="w-50">
                                 Amount
                                 @Html.TextBoxFor(model => model.Amount,  new { @class = "form-control  " })
                             </label>
