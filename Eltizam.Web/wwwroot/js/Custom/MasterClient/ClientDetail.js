@@ -112,36 +112,14 @@ function profileTab(evt, cityName) {
 document.getElementById("defaultOpen").click();
  
 
-function BindClientType() {  
+function BindClientType() {
+
     var ClientType = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
-    var _rpname = "clientType";
-
-    BindDropdowns(ClientTypeList, ClientType, _rpname, _val);
-    //$.ajax({
-    //    type: "GET",
-    //    url: $('#hdnBaseURL').val() + ClientTypeList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        ClientType.empty().append('<option selected="selected" value="0">' + dftSel + '</option>');
-    //        for (var i = 0; i < response.length; i++) {
-    //            ClientType.append($("<option></option>").val(response[i].id).html(response[i].clientType));
-    //        }
-    //        if ($('#hdnClientType').val() != 0) {
-    //            ClientType.val($('#hdnClientType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    var _rpname = "description";
+    var description = "CLIENT_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ClientType, _rpname, _val);
 }
-
-
 function removeParentDiv(element) {
     const parentDiv = element.closest('.roundBorderBox');
     if (parentDiv) {
