@@ -36,6 +36,9 @@ namespace Eltizam.Data.DataAccess.Entity
         public bool? IsDeleted { get; set; }
         public string? UnitNumber { get; set; }
 
+        public virtual MasterDictionaryDetail? Furnished { get; set; }
+        public virtual MasterDictionaryDetail? OwnershipType { get; set; }
+        public virtual MasterDictionaryDetail? UnitType { get; set; }
         public virtual ICollection<MasterPropertyAmenity> MasterPropertyAmenities { get; set; }
         public virtual ICollection<MasterPropertyLocation> MasterPropertyLocations { get; set; }
         public virtual ICollection<ValuationRequest> ValuationRequests { get; set; }

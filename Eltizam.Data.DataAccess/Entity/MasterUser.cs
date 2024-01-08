@@ -42,8 +42,8 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ApproverLevelId { get; set; }
         public int? GenderId { get; set; }
 
-        public virtual MasterDepartment? Department { get; set; }
-        public virtual MasterDesignation? Designation { get; set; }
+        public virtual MasterDictionaryDetail? Department { get; set; }
+        public virtual MasterDictionaryDetail? Designation { get; set; }
         public virtual ICollection<MasterUserAddress> MasterUserAddresses { get; set; }
         public virtual ICollection<MasterUserContact> MasterUserContacts { get; set; }
         public virtual ICollection<ValuationRequest> ValuationRequests { get; set; }

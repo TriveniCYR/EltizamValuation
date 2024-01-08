@@ -30,6 +30,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ProfileAttachmentId { get; set; }
         public bool? IsDeleted { get; set; }
 
+        public virtual MasterDictionaryDetail? ClientType { get; set; }
         public virtual ICollection<MasterClientContact> MasterClientContacts { get; set; }
         public virtual ICollection<ValuationRequest> ValuationRequests { get; set; }
     }

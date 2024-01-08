@@ -71,7 +71,9 @@ namespace Eltizam.Data.DataAccess.DataContext
         public virtual DbSet<ValuationRequestApproverLevel> ValuationRequestApproverLevels { get; set; } = null!;
         public virtual DbSet<ValuationRequestStatusHistory> ValuationRequestStatusHistories { get; set; } = null!;
         public virtual DbSet<ValuationSiteDescription> ValuationSiteDescriptions { get; set; } = null!;
+        public virtual DbSet<VwClient> VwClients { get; set; } = null!;
         public virtual DbSet<VwDictonaryChild> VwDictonaryChildren { get; set; } = null!;
+        public virtual DbSet<VwProperty> VwProperties { get; set; } = null!;
         public virtual DbSet<VwPropertyLocation> VwPropertyLocations { get; set; } = null!;
         public virtual DbSet<VwUser> VwUsers { get; set; } = null!;
         public virtual DbSet<VwValuationRequest> VwValuationRequests { get; set; } = null!;
@@ -311,6 +313,11 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("TRNNumber");
+
+                entity.HasOne(d => d.ClientType)
+                    .WithMany(p => p.MasterClients)
+                    .HasForeignKey(d => d.ClientTypeId)
+                    .HasConstraintName("FK_DictionaryDetail_ClientTypeId");
             });
 
             modelBuilder.Entity<MasterClientContact>(entity =>
@@ -694,6 +701,21 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.ValuationPurpose)
                     .HasMaxLength(250)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Furnished)
+                    .WithMany(p => p.MasterPropertyFurnisheds)
+                    .HasForeignKey(d => d.FurnishedId)
+                    .HasConstraintName("FK_DictionaryDetail_FurnishedId");
+
+                entity.HasOne(d => d.OwnershipType)
+                    .WithMany(p => p.MasterPropertyOwnershipTypes)
+                    .HasForeignKey(d => d.OwnershipTypeId)
+                    .HasConstraintName("FK_DictionaryDetail_OwnershipTypeId");
+
+                entity.HasOne(d => d.UnitType)
+                    .WithMany(p => p.MasterPropertyUnitTypes)
+                    .HasForeignKey(d => d.UnitTypeId)
+                    .HasConstraintName("FK_DictionaryDetail_UnitTypeId");
             });
 
             modelBuilder.Entity<MasterPropertyAmenity>(entity =>
@@ -959,14 +981,14 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasComputedColumnSql("(([FirstName]+' ')+[LastName])", false);
 
                 entity.HasOne(d => d.Department)
-                    .WithMany(p => p.MasterUsers)
+                    .WithMany(p => p.MasterUserDepartments)
                     .HasForeignKey(d => d.DepartmentId)
-                    .HasConstraintName("FK_Master_User_Master_Department");
+                    .HasConstraintName("FK_DictionaryDetail");
 
                 entity.HasOne(d => d.Designation)
-                    .WithMany(p => p.MasterUsers)
+                    .WithMany(p => p.MasterUserDesignations)
                     .HasForeignKey(d => d.DesignationId)
-                    .HasConstraintName("FK_Master_User_Master_Designation");
+                    .HasConstraintName("FK_DictionaryDetail_Designation");
             });
 
             modelBuilder.Entity<MasterUserAddress>(entity =>
@@ -1586,6 +1608,66 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasConstraintName("FK_ValuationSiteDescription_ValuationRequest");
             });
 
+            modelBuilder.Entity<VwClient>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vw_Client", "dbo");
+
+                entity.Property(e => e.ClientName)
+                    .HasMaxLength(752)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ClientType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Company)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Dictionary)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DictionaryCode)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LicenseNumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Logo)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MiddleName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.TrnexpiryDate)
+                    .HasColumnType("date")
+                    .HasColumnName("TRNExpiryDate");
+
+                entity.Property(e => e.Trnnumber)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("TRNNumber");
+            });
+
             modelBuilder.Entity<VwDictonaryChild>(entity =>
             {
                 entity.HasNoKey();
@@ -1609,6 +1691,73 @@ namespace Eltizam.Data.DataAccess.DataContext
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<VwProperty>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("vw_Property", "dbo");
+
+                entity.Property(e => e.AdditionalUnits)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Amenities)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.BuildUpAreaSqFt).HasColumnType("decimal(18, 6)");
+
+                entity.Property(e => e.BuildUpAreaSqMtr).HasColumnType("decimal(18, 6)");
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Furnished)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.OwnershipType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Parking)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ParkingBayNo)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PropertyName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PropertySubType)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PropertyType)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UnitNumber)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UnitType)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValuationPurpose)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<VwPropertyLocation>(entity =>
             {
                 entity.HasNoKey();
@@ -1624,6 +1773,14 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.BuildingProject)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CityName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CountryName)
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
@@ -1651,6 +1808,10 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
+                entity.Property(e => e.StateName)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.TotalAddress)
                     .HasMaxLength(1510)
                     .IsUnicode(false);
@@ -1666,13 +1827,17 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.ToView("vw_User", "dbo");
 
+                entity.Property(e => e.ApproverLevel)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.CompanyName)
                     .HasMaxLength(250)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-                entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
+                entity.Property(e => e.DateOfBirth).HasColumnType("date");
 
                 entity.Property(e => e.Department)
                     .HasMaxLength(50)
