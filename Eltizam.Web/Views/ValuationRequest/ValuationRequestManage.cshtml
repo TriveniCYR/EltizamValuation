@@ -282,10 +282,10 @@
                                             <label for="" class="bodyContent p-0 w-50">
                                                 @level
                                                 @Html.DropDownListFor(model => ddSelected, new SelectList(curList.Select(approver => new SelectListItem
-                                   {
-                                       Value = approver.ApproverId.ToString(),
-                                       Text = approver.ApproverName
-                                   }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
+                                                {
+                                                   Value = approver.ApproverId.ToString(),
+                                                   Text = approver.ApproverName
+                                                }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
                                             </label>
                                         }
                                     }
