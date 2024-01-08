@@ -12,13 +12,13 @@ namespace Eltizam.Business.Models
         public string? ReferenceNo { get; set; }
         public int ClientId { get; set; }
         public string? ClientName { get; set; }
-        public int? ClientTypeId { get; set; }
+        public int ClientTypeId { get; set; }
         public string? ClientType { get; set; }
         public int PropertyTypeId { get; set; }
         public string? PropertyType { get; set; }
         public int? OwnershipTypeId { get; set; }
         public string? OwnershipType { get; set; }
-        public int? PropertySubTypeId { get; set; }
+        public int PropertySubTypeId { get; set; }
         public string? PropertySubType { get; set; } 
         public int PropertyId { get; set; }
         public string? PropertyName { get; set; }
