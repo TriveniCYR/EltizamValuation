@@ -7,9 +7,7 @@ $(document).ready(function () {
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
     }
-    BindTransactionstatus();
-
-
+    BindTransactionstatus(); 
 });
 
 
@@ -362,6 +360,7 @@ function BindTransactionstatus() {
     var _payMode = $("#hdnTransactionModeId").val();
     var _rpname = "statusName";
     //BindDropdowns(transactionStatus + '/' + id, transactionStatusId, _rpname, _val);
+
     $.ajax({
         type: Get,
         url: BaseURL + transactionStatus + '/' + id,
@@ -510,8 +509,7 @@ function BindPaymentInvoiceList() {
         url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
         datatype: "json",
         success: function (response) {
-            if (response != null) {
-                debugger;
+            if (response != null) { 
                 $.each(response._object, function (index, object) {
                     var html = '';
                     var html2 = '';

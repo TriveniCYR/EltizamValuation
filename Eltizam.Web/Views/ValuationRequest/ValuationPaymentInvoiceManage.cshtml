@@ -15,8 +15,9 @@
     var _valRegHeader = (ValuationRequestDependencies)TempData[UserHelper.ValReqHeader];
     var vId = (_valRegHeader != null) ? _valRegHeader.Id : 0;
 }
+
 <!-- system user master -->
-<form asp-action="ValuationInvoicesManage" autocomplete="off" asp-controller="ValuationRequest" method="post">
+<form asp-action="ValuationPaymentInvoiceManage" autocomplete="off" asp-controller="ValuationRequest" method="post">
     <main>
         <div class="whiteBoxShadow">
             <div class="heading position-relative flex justify-between">
@@ -30,6 +31,7 @@
                     <span>@_md @_header</span>
                 </div>
             </div>
+
             <div class="bodyContent">
                 @if (_valRegHeader != null)
                 {
@@ -108,17 +110,14 @@
             </div> 
         </div>
     </main>
-</form>
-
+</form> 
 
 
 
 @section MyScripts {
     <script type="text/javascript" src="~/js/custom/ValuationRequest/ValuationInvoiceManage.js?v=@jsVersion"></script>
-    <script>
-        
+    <script> 
         var GetDictionaryWithSubDetails = "@Eltizam.Web.Helpers.APIURLHelper.GetDictionaryWithSubDetails";
-        var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
-       
+        var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById"; 
     </script>
 }}

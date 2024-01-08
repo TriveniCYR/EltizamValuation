@@ -1,5 +1,4 @@
 ﻿using Eltizam.Business.Models;
-using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Resource;
 using Eltizam.Utility.Enums;
@@ -7,12 +6,9 @@ using Eltizam.Utility.Utility;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
-using System;
 using System.Data;
-using System.Security.Cryptography;
 
 namespace EltizamValuation.Web.Controllers
 {
@@ -128,7 +124,7 @@ namespace EltizamValuation.Web.Controllers
                     ////Get Footer info
                     FooterInfo(TableNameEnum.ValuationInvoice, _cofiguration, id, true);
                    
-                    return View("ValuationInvoices", data._object);
+                    return View("ValuationPaymentInvoiceManage", data._object);
                 }
                 return NotFound();
             }
@@ -136,7 +132,7 @@ namespace EltizamValuation.Web.Controllers
 
 
         [HttpPost]
-        public IActionResult ValuationInvoicesManage(int id, ValuationInvoicePaymentModel invoice)
+        public IActionResult ValuationPaymentInvoiceManage(int id, ValuationInvoicePaymentModel invoice)
         {
             try
             {

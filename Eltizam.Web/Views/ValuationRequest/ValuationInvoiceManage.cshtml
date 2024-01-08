@@ -8,7 +8,7 @@
 
 @{
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
-    var _header = " Valuation Invoice";
+    var _header = " Valuation Payment";
     var _md = @Model.Id > 0 ? "View" : "Add";
     ViewData["Title"] = _md + _header;
 

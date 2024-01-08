@@ -984,8 +984,7 @@ function BindPaymentInvoiceList() {
         url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
         "datatype": "json",
         success: function (response) {
-            if (response != null) {
-                debugger
+            if (response != null) { 
                 $.each(response._object, function (index, object) {
                     var html = '';
                     var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id + '&vId=' + id;
