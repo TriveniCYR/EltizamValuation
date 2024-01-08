@@ -2,6 +2,7 @@ var docId = 0;
 $(document).ready(function () {
     BindPaymentInvoiceList();
     BindTransactionMode();
+    var dd = 0;
     if (document.location.href.includes('id')){
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
@@ -210,6 +211,17 @@ function SaveInvoice() {
         return false;
     }
     else {        
+        var ids = '';
+        // check invoice ids selection
+        $("#InvoiceTable  tbody").find("input:checkbox:checked").each(function () {
+            ids += this.value + ',';
+        });
+        ids = ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
+        if (ids.length == 0) {
+            toastr.error("Please select atleast one invoice to payment.");
+            return false;
+        } 
+        $("#InvoiceIds").val(ids);
         return true;
     }
 }
@@ -490,3 +502,11 @@ function BindPaymentInvoiceList() {
         }
     });
 }
+
+//$(document).on('click', '#savePaymentInvoice', function (e) {
+//    // check invoice ids selection
+
+//    // Get amount from form
+
+//}
+
