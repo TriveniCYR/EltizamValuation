@@ -12,6 +12,6 @@ namespace EltizamValuation.Web.Controllers
         public IActionResult DashboardExtClient()
         {
             return View();
-        }
+        }               
     }
 }

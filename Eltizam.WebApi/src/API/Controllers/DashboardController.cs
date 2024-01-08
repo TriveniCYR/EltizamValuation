@@ -75,6 +75,29 @@ namespace EltizamValuation.WebApi.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("GetClientPieChart/{id}")]
+        public async Task<IActionResult> GetClientPieChart(int id)
+        {
+            try
+            {
+                var _data = await _dashboardService.GetClientPieChartData();
+
+                if (_data != null)
+                {
+                    return _ObjectResponse.Create(_data, (Int32)HttpStatusCode.OK);
+                }
+                else
+                    return _ObjectResponse.Create(string.Empty, (Int32)HttpStatusCode.NotFound);
+            }
+            catch (Exception ex)
+            {
+                await _ExceptionService.LogException(ex);
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
         #endregion API Methods 
     }
 }
