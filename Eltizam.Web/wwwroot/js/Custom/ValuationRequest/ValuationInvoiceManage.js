@@ -3,13 +3,13 @@ $(document).ready(function () {
     BindPaymentInvoiceList();
     BindTransactionMode();
     updateTotalAmount();
-    if (document.location.href.includes('id')){
+    if (document.location.href.includes('id')) {
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
     }
     BindTransactionstatus();
-    
-    
+
+
 });
 
 
@@ -52,7 +52,7 @@ var InvoiceRequest = {
 
 };
 
-function SaveInvoice() { 
+function SaveInvoice() {
     var ErrMsg = "";
     var modeId = $('#hdnTabId').val();
     document.getElementById('TransactionModeId').value = parseInt(modeId);
@@ -95,19 +95,19 @@ function SaveInvoice() {
         document.getElementById('CardHolderName').value = '';
         document.getElementById('ExpireDate').value = '';
     }
-    if(modeId=='1') {
+    if (modeId == '1') {
         let transactionStatusId = $("#CashTransactionStatusId").val();
         let amouont = $("#CashAmount").val();
-        let transactionDate = $("#CashTransactionDate").val(); 
+        let transactionDate = $("#CashTransactionDate").val();
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            ErrMsg += "Select Transaction."; 
+            ErrMsg += "Select Transaction.";
         }
         else if (amouont == '') {
-            ErrMsg += "Enter Amount."; 
+            ErrMsg += "Enter Amount.";
         }
         else if (transactionDate == '') {
-            ErrMsg += "Enter Transaction Date."; 
-        } 
+            ErrMsg += "Enter Transaction Date.";
+        }
 
         //InvoiceRequest.TransactionDate = transactionDate;
         //InvoiceRequest.Amount = amouont;
@@ -123,68 +123,68 @@ function SaveInvoice() {
         let amouont = $("#ChequeAmount").val();
         let transactionDate = $("#ChequeTransactionDate").val();
         let chequeNumber = $("#CheckNumer").val();
-        let chequeBankName = $("#CheckBankName").val(); 
-        let chequeRecievedDate = $("#ChequeRecievedDate").val(); 
+        let chequeBankName = $("#CheckBankName").val();
+        let chequeRecievedDate = $("#ChequeRecievedDate").val();
 
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
-            ErrMsg += "Select Transaction."; 
+            ErrMsg += "Select Transaction.";
             hideLoader();
         }
         else if (amouont == '') {
-            ErrMsg += "Enter Amount."; 
+            ErrMsg += "Enter Amount.";
         }
         else if (transactionDate == '') {
             ErrMsg += "Enter Transaction Date.";
         }
         else if (chequeRecievedDate == '') {
-            ErrMsg += "Enter Cheque Recieved Date."; 
+            ErrMsg += "Enter Cheque Recieved Date.";
         }
         else if (chequeNumber == '') {
-            ErrMsg += "Enter Cheque No."; 
+            ErrMsg += "Enter Cheque No.";
         }
         else if (chequeBankName == '') {
-            ErrMsg += "Enter Bank Name."; 
+            ErrMsg += "Enter Bank Name.";
         }
     }
 
-    else if(modeId=='3') {
+    else if (modeId == '3') {
         let transactionStatusId = $("#CardTransactionStatusId").val();
         let amouont = $("#CardAmount").val();
         let transactionDate = $("#CardTransactionDate").val();
         let transactionId = $("#CardTransactionId").val();
         let creditCardNumber = $("#CardNumber").val();
         let bankName = $("#CardBankName").val();
-        let nameOnCard = $("#CardHolderName").val(); 
+        let nameOnCard = $("#CardHolderName").val();
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             ErrMsg += "Select Transaction.";
         }
         else if (amouont == '') {
-            ErrMsg += "Enter Transaction Date."; 
+            ErrMsg += "Enter Transaction Date.";
         }
         else if (transactionDate == '') {
-            ErrMsg += "Enter Amount."; 
+            ErrMsg += "Enter Amount.";
         }
         else if (creditCardNumber == '') {
-            ErrMsg += "Enter Card Number."; 
+            ErrMsg += "Enter Card Number.";
         }
         else if (bankName == '') {
-            ErrMsg += "Enter Bank Name."; 
+            ErrMsg += "Enter Bank Name.";
         }
         else if (nameOnCard == '') {
-            ErrMsg += "Enter Holder Name."; 
+            ErrMsg += "Enter Holder Name.";
         }
         else if (transactionId == '') {
-            ErrMsg += "Enter Transaction Id."; 
+            ErrMsg += "Enter Transaction Id.";
         }
     }
 
-    else if(modeId=='4') {
+    else if (modeId == '4') {
         let transactionStatusId = $("#BankTransactionStatusId").val();
         let amouont = $("#BankAmount").val();
         let transactionDate = $("#BankTransactionDate").val();
         let transactionId = $("#BankTransactionId").val();
         let bankName = $("#AccountBankName").val();
-        let accountNumber = $("#AccountHolderName").val(); 
+        let accountNumber = $("#AccountHolderName").val();
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             ErrMsg += "Select Transaction.";
         }
@@ -204,7 +204,7 @@ function SaveInvoice() {
             ErrMsg += "Enter Transaction Id.";
         }
     }
-     
+
     if (ErrMsg !== "") {
         toastr.error(ErrMsg);
         hideLoader();
@@ -270,10 +270,10 @@ function validateInput(input) {
     input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
 }
 
-function GetInvoiceDetail(id){
+function GetInvoiceDetail(id) {
     $.ajax({
         type: "GET",
-        url: BaseURL + ValuationInvoiceById + '/'+id,
+        url: BaseURL + ValuationInvoiceById + '/' + id,
         "datatype": "json",
         success: function (response) {
             if (response._object != null) {
@@ -307,7 +307,7 @@ function GetInvoiceDetail(id){
                 document.getElementById('CheckNumer').value = response._object.checkNumer;
                 document.getElementById('CheckBankName').value = response._object.checkBankName;
                 document.getElementById('CheckDate').value = response._object.checkDate
-                document.getElementById('ChequeRecievedDate').value =response._object.chequeRecievedDate;
+                document.getElementById('ChequeRecievedDate').value = response._object.chequeRecievedDate;
                 document.getElementById('CardNumber').value = response._object.cardNumber;
                 document.getElementById('CardBankName').value = response._object.cardBankName;
                 document.getElementById('AccountBankName').value = response._object.accountBankName;
@@ -315,18 +315,18 @@ function GetInvoiceDetail(id){
                 document.getElementById('AccountHolderName').value = response._object.accountHolderName;
                 if (response._object.documents != null && response._object.documents.length > 0) {
                     var documents = response._object.documents;
-                    $.each(documents, function (index, object) { 
+                    $.each(documents, function (index, object) {
                         $('#InvoiceTableDocument tbody').append(' <tr id="' + object.id + '"><td>' + object.documentName + '</td><td class="formatted-td-date-input">' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + object.createdName + '</td> <td><a href="' + object.filePath + '" download target="_blank"><img src="../assets/download.svg" alt="download" /></a></td><td><a title="Delete" data-toggle="modal" data-target="#DeleteDocumentModel" data-backdrop="static" data-keyboard="false" onclick="ConfirmationDocument(' + object.id + ');"><img src="../assets/trash.svg" alt="trash" /></a></td></tr>');
                     });
                 }
                 else {
-                    $('#InvoiceTableDocument tbody').append('<tr><td colspan="5">NA</td></tr>')                    
+                    $('#InvoiceTableDocument tbody').append('<tr><td colspan="5">NA</td></tr>')
                 }
             }
-            else{
+            else {
                 toastr.error("Something is occured");
                 setTimeout(function () {
-                window.location.href = "/ValuationRequest/ValuationRequestManage/" + request.ValuationRequestId;
+                    window.location.href = "/ValuationRequest/ValuationRequestManage/" + request.ValuationRequestId;
                 }, 1000);
             }
         },
@@ -513,18 +513,25 @@ function BindPaymentInvoiceList() {
                 debugger;
                 $.each(response._object, function (index, object) {
                     var html = '';
+                    var html2 = '';
                     var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                     html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     html += '</ul></div>';
+                    if (object.isCompleted == 1) {
 
-                    var rowHtml = ' <tr id="' + object.id + '"><td><input type="checkbox" value="' + object.id + '" class="invoiceCheckbox"></td><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+                        html2 = object.id;
+                    }
+                    else {
+                        html2 = '<input type="checkbox" value="' + object.id + '" class="invoiceCheckbox">';
+                    }
+                    var rowHtml = ' <tr id="' + object.id + '"><td>'+ html2 + '</td><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
                         + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>';
 
                     $('#InvoiceTable tbody').append(rowHtml);
                 });
 
-                   $('#InvoiceTable tbody').on('change', '.invoiceCheckbox', function () {
+                $('#InvoiceTable tbody').on('change', '.invoiceCheckbox', function () {
                     updateTotalAmount();
                 });
             }
@@ -552,7 +559,24 @@ function updateTotalAmount() {
     });
 
     // Update the total amount textbox with the calculated sum
-    $('#CashAmount').val(sum).prop('readonly', true);
+    var modeId = $('#hdnTabId').val();
+    if (modeId == 1) {
+        $('#CashAmount').val(sum).prop('readonly', true);
+
+    }
+
+    else if (modeId == 2) {
+        $('#ChequeAmount').val(sum).prop('readonly', true);
+    }
+    else if (modeId == 3) {
+        $('#CardAmount').val(sum).prop('readonly', true);
+
+    }
+    else if (modeId == 4)
+    {
+        $('#BankAmount').val(sum).prop('readonly', true);
+
+    }
 }
 
 //$(document).on('click', '#savePaymentInvoice', function (e) {
