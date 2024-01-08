@@ -62,7 +62,7 @@
     // Get distinct levels
     var Levels = Model.ValuationRequestApproverLevel;
     var distinctLevels = Levels?.Select(approverLevel => approverLevel.ApproverLevelId).Distinct();
-    var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList(); 
+    var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList();
 }
 
 <div id="PlaceHolderHere"></div>
@@ -81,7 +81,7 @@
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
                 @if (Model.Id > 0)
-                { 
+                {
                     <div class="whiteBoxShadow m-0" id="footerAudit">
                         <div class=" position-relative flex justify-between align-item-center" style="margin: 10px 10px 5px 15px;font-size: 16px;">
                             <label style="font-size:16px;">
@@ -95,8 +95,56 @@
                             </label>
                             <label style="font-size:16px;">
                                 Status : <label class="tableStatusBanner" style="color: @Model.ColorCode; background-color: @Model.BackGroundColor; border: 1px solid @Model.ColorCode;">
-                                         @Model.StatusName</label>
+                                    @Model.StatusName
+                                </label>
                             </label>
+
+                            <div class="flex align-item-center position-relative" onclick="showValuationActions()">
+                                <label class="visible-in-web">
+                                    Valuation Actions<br>
+                                </label>
+
+                                <img src="/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" style="width: 2em;background-color: var(--blue);margin-left: 1em;">
+                                <div id="ValuationActions" class="actionItem" style="width: 95%;display: none;margin:1.2em 0em 0em 0em;">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                Mark as Quoted
+                                            </a>
+                                        </li>  
+                                         <li>
+                                            <a href="#">
+                                                Mark as Paid
+                                            </a>
+                                        </li>  
+                                         <li>
+                                            <a href="#">
+                                                Submitted to Approver
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                Submitted to Valuer
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                Approved
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                Rejected
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                Cancelled
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 }
@@ -435,7 +483,7 @@
                                             Unit Number
                                             @Html.TextBoxFor(model => model.UnitNumber, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["UnitNumber"] })
 
-                                        </label> 
+                                        </label>
                                     </div>
                                     <div class="flex mb-28">
                                         <label for=" class=" w-50"">
@@ -477,7 +525,7 @@
                                             Additional Units
                                             @Html.TextBoxFor(model => model.AdditionalUnits, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Additional Unit"] })
 
-                                        </label> 
+                                        </label>
                                     </div>
                                     <div class="flex mb-28">
                                         <label for="" class="w-50">
@@ -489,7 +537,7 @@
                                             Parking BAY Number
                                             @Html.TextBoxFor(model => model.ParkingBayNo, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Parking Bay No"] })
 
-                                        </label> 
+                                        </label>
                                     </div>
 
                                     <div>
@@ -1340,7 +1388,7 @@
         var ValuationRequestGetById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestGetById";
         var RequeStatusReview = "@Eltizam.Web.Helpers.APIURLHelper.ReviewRequestStatus";
         var GetSiteDescriptionList = "@Eltizam.Web.Helpers.APIURLHelper.GetSiteDescriptionList";
-         var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
+        var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
 
         var DeleteAssesmentDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDocument";
         //#region Static Messae Init

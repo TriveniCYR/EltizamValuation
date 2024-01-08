@@ -164,16 +164,13 @@ namespace Eltizam.Business.Core.Implementation
             return resp;
         }
         public async Task<List<AuditLogModelResponse>> GetLogDetailsByFilters(string? TableName, int? Id = null, int? TableKey = null, DateTime? DateFrom = null, DateTime? DateTo = null)
-        {
-            // var users = await _repository.GetAllAsync();
-            //TableName = "MasterUser";
-
-            var entityAuditLogs = await _repository.FindAllAsync(x =>
-                   (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
-                && (TableKey == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
-                && (DateFrom == null || x.CreatedDate >= DateFrom)
-                && (DateTo == null || x.CreatedDate <= DateTo)
-                && (Id == null || x.Id == Id));
+        { 
+            var entityAuditLogs =  await _repository.FindAllAsync(x =>
+                                   (TableName == null || (x.ParentTableName == TableName || x.TableName == TableName))
+                                && (TableKey == null || (x.ParentTableKeyId == TableKey || x.TableKeyId == TableKey))
+                                && (DateFrom == null || x.CreatedDate >= DateFrom)
+                                && (DateTo == null || x.CreatedDate <= DateTo)
+                                && (Id == null || x.Id == Id));
 
             var res = new List<AuditLogModelResponse>();
             foreach (var log in entityAuditLogs)
@@ -196,11 +193,7 @@ namespace Eltizam.Business.Core.Implementation
                     CreatedByName = usr == null ? "" : usr.FirstName + ' ' + usr.LastName, // Use null-conditional operator
                     AuditLogListData = _AuditLogListData?.ToList(),
                 });
-            }
-
-
-
-
+            } 
             return res;
         }
 

@@ -99,11 +99,9 @@ namespace Eltizam.Business.Core.Implementation
         }
 
         public async Task<List<Master_PropertyTypeModel>> GetAllList()
-        {
-
-            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_GetAll,
-
-             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
+        { 
+            var lstStf = EltizamDBHelper.ExecuteMappedReader<Master_PropertyTypeModel>(ProcedureMetastore.usp_PropertyType_SearchAllList, 
+                         DatabaseConnection.ConnString, CommandType.StoredProcedure, null);
 
             return lstStf;
         }

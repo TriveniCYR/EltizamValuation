@@ -311,7 +311,7 @@
             var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterResourceTypeModel>(ProcedureMetastore.usp_ResourceType_AllList,             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);            return lstStf;        }
         public async Task<List<MasterApproverLevelModel>> GetApproverLevelList()        {
             var lstStf = _mapperFactory.GetList<MasterValuationRequestApproverLevel, MasterApproverLevelModel>(_approverLevelRepository.GetAll().ToList());
-            return lstStf;        }        public async Task<List<MasterRoleModel>> GetRoleList()        {            var lId = _helper.GetLoggedInUser()?.UserId;            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterRoleModel>(ProcedureMetastore.usp_Role_AllList,             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);            return lstStf;        }        public async Task<DBOperation> Delete(int id)        {            var entityUser = _repository.Get(x => x.Id == id);            if (entityUser == null)                return DBOperation.NotFound;            else            {                var entityLocation = _addressRepository.Get(x => x.TableKeyId == id && x.TableName == "Master_User");                if (entityLocation != null)                    _addressRepository.Remove(entityLocation);                var entityContact = _documentRepository.Get(x => x.TableKeyId == id && x.TableName == "Master_User");                if (entityContact != null)                    _documentRepository.Remove(entityContact);                _repository.Remove(entityUser);                await _unitOfWork.SaveChangesAsync();
+            return lstStf;        }        public async Task<List<MasterRoleModel>> GetRoleList()        {            var lId = _helper.GetLoggedInUser()?.UserId;            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterRoleModel>(ProcedureMetastore.usp_Role_SearchAllList,             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);            return lstStf;        }        public async Task<DBOperation> Delete(int id)        {            var entityUser = _repository.Get(x => x.Id == id);            if (entityUser == null)                return DBOperation.NotFound;            else            {                var entityLocation = _addressRepository.Get(x => x.TableKeyId == id && x.TableName == "Master_User");                if (entityLocation != null)                    _addressRepository.Remove(entityLocation);                var entityContact = _documentRepository.Get(x => x.TableKeyId == id && x.TableName == "Master_User");                if (entityContact != null)                    _documentRepository.Remove(entityContact);                _repository.Remove(entityUser);                await _unitOfWork.SaveChangesAsync();
 
                 // Return a success operation indicating successful deletion.
                 return DBOperation.Success;            }        }        public async Task<DBOperation> ChangePassword(ChangePasswordModel entityUser)        {
@@ -321,33 +321,10 @@
                     await _unitOfWork.SaveChangesAsync();                }                else                {                    return DBOperation.NotFound;                }            }
 
             return DBOperation.Success;        }        public async Task<List<MasterUserListModel>> GetApproverList(int id, string roleName)        {            DbParameter[] osqlParameter1 =
-            {                 new DbParameter("UserId", id, SqlDbType.Int),                 new DbParameter("RoleName", roleName, SqlDbType.VarChar)            };            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserListModel>(ProcedureMetastore.usp_Approver_AllList,                         DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter1);            return lstStf;        }
+            {                 new DbParameter("UserId", id, SqlDbType.Int),                 new DbParameter("RoleName", roleName, SqlDbType.VarChar)            };            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserListModel>(ProcedureMetastore.usp_Approver_AllList,                         DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter1);            return lstStf;        } 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /// <summary>        /// Get Footer by Table Name, Key        /// </summary>        /// <param name="TableKeyId"></param>        /// <param name="TableName"></param>        /// <returns></returns>                                                                                                                                                                                                                                                                                                                                                                                                                                            public async Task<GlobalAuditFields?> GetGlobalAuditFields(int TableKeyId, string TableName)        {            DbParameter[] p1 =            {                 new DbParameter(AppConstants.TableKeyId, TableKeyId, SqlDbType.Int),                 new DbParameter(AppConstants.TableName, TableName, SqlDbType.VarChar)            };            var data = EltizamDBHelper.ExecuteSingleMappedReader<GlobalAuditFields>(ProcedureMetastore.usp_GetPageFooterDetails,                       DatabaseConnection.ConnString, CommandType.StoredProcedure, p1);            data.TableName = TableName;            return data;        }        public async Task<List<MasterUserModel>> GetAllUserList()        {            var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserModel>(ProcedureMetastore.usp_User_AllList,             DatabaseConnection.ConnString, CommandType.StoredProcedure, null);            return lstStf;        }        public async Task<DBOperation> DeleteDocument(int id)        {            if (id > 0)
+        /// <summary>        /// Get Footer by Table Name, Key        /// </summary>        /// <param name="TableKeyId"></param>        /// <param name="TableName"></param>        /// <returns></returns>        public async Task<GlobalAuditFields?> GetGlobalAuditFields(int TableKeyId, string TableName)        {            DbParameter[] p1 =            {                 new DbParameter(AppConstants.TableKeyId, TableKeyId, SqlDbType.Int),                 new DbParameter(AppConstants.TableName, TableName, SqlDbType.VarChar)            };            var data = EltizamDBHelper.ExecuteSingleMappedReader<GlobalAuditFields>(ProcedureMetastore.usp_GetPageFooterDetails,                       DatabaseConnection.ConnString, CommandType.StoredProcedure, p1);            data.TableName = TableName;            return data;        }        public async Task<List<MasterUserModel>> GetAllUserList()        {             var lstStf = EltizamDBHelper.ExecuteMappedReader<MasterUserModel>(ProcedureMetastore.usp_User_SearchAllList,                         DatabaseConnection.ConnString, CommandType.StoredProcedure, null);            return lstStf;        }        public async Task<DBOperation> DeleteDocument(int id)        {            if (id > 0)
             {
 
                 var entityDoc = _documentRepository.Get(id);                if (entityDoc != null)                {                    _documentRepository.Remove(entityDoc);                    await _unitOfWork.SaveChangesAsync();                }            }

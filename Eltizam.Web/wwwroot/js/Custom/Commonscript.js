@@ -8,7 +8,7 @@ var BaseURL = $('#hdnAPIURL').val();
 var setDefaultOrder = [0, 'desc'];
 var ShowMenuCache = "showMenuCache";
 var defaultDateFormat = 'DD-MMM-YYYY hh:mm A';
-var flatDateformat = 'd-m-Y';
+var flatDateformat = 'd-M-Y';
 
 //Role Enum
 var RoleEnum = {
@@ -504,6 +504,15 @@ function readsideNavToggle() {
 
 function profileMenu() {
     var x = document.getElementById("profileMenu");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+} 
+
+function showValuationActions() {
+    var x = document.getElementById("ValuationActions");
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {
