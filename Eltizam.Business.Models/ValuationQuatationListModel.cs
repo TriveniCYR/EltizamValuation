@@ -8,6 +8,7 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public int ValuationRequestId { get; set; }
         public int? StatusId { get; set; }
+        public string? ReferenceNo { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? ValuationFee { get; set; }
