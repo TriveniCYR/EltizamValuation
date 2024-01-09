@@ -76,8 +76,9 @@
                     <table id="InvoiceTable" class="table-striped">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th></th>
                                 <th>#Invoice</th>
+                                <th>Reference No</th>
                                 <th>Transaction Date</th>
                                 <th>Payment Mode</th>
                                  <th>Amount</th>
@@ -95,11 +96,11 @@
                     <div class="payTab mb-16">
                         @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                         @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
-                        @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
+                       @*  @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" }) *@
                         @Html.HiddenFor(model => model.TransactionModeId, new { @class = "control-label" })
                         @Html.HiddenFor(model => model.InvoiceIds, new { @class = "control-label" })
                         <input type="hidden" id="hdnValuationRequestId" value="@(Model == null ? 0 : Model.ValuationRequestId)" />
-                        <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
+                        @* <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" /> *@
                         <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                         <input type="hidden" id="hdnTransactionStatusId" value="@(Model == null ? 0 : Model.TransactionStatusId)" />
                         <input type="hidden" id="hdnTransactionModeId" value="@(Model == null ? 0 : Model.TransactionModeId)" />

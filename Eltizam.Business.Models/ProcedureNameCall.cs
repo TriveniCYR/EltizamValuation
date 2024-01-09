@@ -72,13 +72,13 @@ namespace Eltizam.Business.Models
         public static string usp_ValuationMethod_AllList = "usp_ValuationMethod_AllList";
         public static string usp_Quotation_GetQuotationByRequestId = "usp_Quotation_GetQuotationByRequestId";
         public static string usp_Invoice_GetInvoiceByRequestId = "usp_Invoice_GetInvoiceByRequestId";
-        public static string usp_ValuationRequestStatusList = "usp_ValuationRequestStatusList";
+        //public static string usp_ValuationRequestStatusList = "usp_ValuationRequestStatusList";
         public static string usp_Site_GetSiteDescriptionByRequestId = "usp_Site_GetSiteDescriptionByRequestId";
         public static string usp_Master_Valuation_InvoiceStatus_List = "usp_Master_Valuation_InvoiceStatus_List";
         public static string usp_ValuationRequest_StatusHistory = "usp_ValuationRequest_StatusHistory";
         public static string usp_ValuationRequest_ApproverLevel = "usp_ValuationRequest_ApproverLevel";
         public static string usp_ValuationRequest_UpsertApproverLevels = "usp_ValuationRequest_UpsertApproverLevels";
-        public static string usp_Invoice_GetInvoicePaymentByValuationRequestId = "usp_Invoice_GetInvoicePaymentByValuationRequestId";
+        public static string usp_ValuationInvoice_SearchAllList = "usp_ValuationInvoice_SearchAllList";
         public static string usp_ValuationPayment_UpsertInvoicesMap = "usp_ValuationPayment_UpsertInvoicesMap";
 
 

@@ -3,9 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Eltizam.Business.Models
 {
-    public class ValuationQuatationListModel : ValuationRequestHeader
+    public class ValuationQuatationListModel //: ValuationRequestHeader
     {
-        public int Id { get; set; }  
+        public int Id { get; set; }
+        public int ValuationRequestId { get; set; }
+        public int? StatusId { get; set; }
+        public string? ReferenceNo { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public decimal? ValuationFee { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]

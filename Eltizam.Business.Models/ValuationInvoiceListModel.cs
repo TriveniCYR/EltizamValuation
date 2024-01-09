@@ -2,10 +2,12 @@
 
 namespace Eltizam.Business.Models
 {
-    public class ValuationInvoiceListModel : ValuationRequestHeader
+    public class ValuationInvoiceListModel // ValuationRequestHeader
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public int TransactionModeId { get; set; }
+        public int ValuationRequestId { get; set; }
+        public string? ReferenceNo { get; set; }
         public string? TransactionMode { get; set; }
         public int TransactionStatusId { get; set; }
         public int? CashTransactionStatusId { get; set; }

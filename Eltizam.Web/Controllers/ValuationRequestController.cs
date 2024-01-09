@@ -332,8 +332,7 @@ namespace EltizamValuation.Web.Controllers
 
             if (id == null || id <= 0)
             {  
-                quotation.StatusId = 13;
-
+                quotation.StatusId = 13; 
                 FooterInfo(TableNameEnum.ValuationQuotation, _cofiguration, id);
                 return View(quotation);
             }
