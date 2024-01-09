@@ -583,5 +583,29 @@ namespace Eltizam.Business.Core.Implementation
             var lstStf = EltizamDBHelper.ExecuteMappedReader<ValuationRequestApproverLevelModel>(ProcedureMetastore.usp_ValuationRequest_ApproverLevel, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
             return lstStf;
         }
+
+        public async Task<DBOperation> ApproverActionComment(ApproverActionCommentModel model)
+        {
+            if (model.RequestId > 0)
+            {
+                DbParameter[] osqlParameter =
+                {
+                    new DbParameter("ValReqId",    model.RequestId, SqlDbType.Int),
+                    new DbParameter("CreatedBy",   model.CreatedBy, SqlDbType.Int),
+                    new DbParameter("Comment",   model.Comment, SqlDbType.VarChar),
+                    new DbParameter("StatusCode",   model.StatusCode, SqlDbType.VarChar),
+                };
+
+                EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_PerformActions, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+
+                return DBOperation.Success;
+
+            }
+            else
+            {
+                return DBOperation.NotFound;
+            }
+            return DBOperation.Success;
+        }
     }
 }
