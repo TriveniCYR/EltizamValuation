@@ -78,65 +78,58 @@ namespace Eltizam.Business.Core.Implementation
             string MainTableName = Enum.GetName(TableNameEnum.ValuationInvoice);
             int MainTableKey = entityInvoice.Id;
 
-            if (entityInvoice.InvoiceIds.Length > 0)
+            if (entityInvoice.Id > 0)
             {
-                if (entityInvoice.Id > 0)
+                ValuationInvoice OldEntity = null;
+                OldEntity = _repository.GetNoTracking(entityInvoice.Id);
+
+                objInvoice = _repository.Get(entityInvoice.Id);
+
+                if (objInvoice != null)
                 {
-                    ValuationInvoice OldEntity = null;
-                    OldEntity = _repository.GetNoTracking(entityInvoice.Id);
+                    objInvoice.ReferenceNo = entityInvoice.ReferenceNo;
+                    objInvoice.ValuationRequestId = entityInvoice.ValuationRequestId;
+                    objInvoice.TransactionModeId = entityInvoice.TransactionModeId;
+                    objInvoice.TransactionStatusId = entityInvoice.TransactionStatusId;
+                    objInvoice.Amount = entityInvoice.Amount;
+                    objInvoice.CheckNumer = entityInvoice.CheckNumer;
+                    objInvoice.CheckBankName = entityInvoice.CheckBankName;
+                    objInvoice.CheckDate = entityInvoice.CheckDate;
+                    objInvoice.CardNumber = entityInvoice.CardNumber;
+                    objInvoice.CardBankName = entityInvoice.CardBankName;
+                    objInvoice.CardHolderName = entityInvoice.CardHolderName;
+                    objInvoice.ExpireDate = entityInvoice.ExpireDate;
+                    objInvoice.AccountBankName = entityInvoice.AccountBankName;
+                    objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
+                    objInvoice.Note = entityInvoice.Note;
+                    objInvoice.ModifiedDate = AppConstants.DateTime;
+                    objInvoice.ModifiedBy = entityInvoice.ModifiedBy;
 
-                    objInvoice = _repository.Get(entityInvoice.Id);
+                    _repository.UpdateAsync(objInvoice);
+                    await _unitOfWork.SaveChangesAsync();
 
-                    if (objInvoice != null)
-                    {
-                        objInvoice.ReferenceNo = entityInvoice.ReferenceNo;
-                        objInvoice.ValuationRequestId = entityInvoice.ValuationRequestId;
-                        objInvoice.TransactionModeId = entityInvoice.TransactionModeId;
-                        objInvoice.TransactionStatusId = entityInvoice.TransactionStatusId;
-                        objInvoice.Amount = entityInvoice.Amount;
-                        objInvoice.CheckNumer = entityInvoice.CheckNumer;
-                        objInvoice.CheckBankName = entityInvoice.CheckBankName;
-                        objInvoice.CheckDate = entityInvoice.CheckDate;
-                        objInvoice.CardNumber = entityInvoice.CardNumber;
-                        objInvoice.CardBankName = entityInvoice.CardBankName;
-                        objInvoice.CardHolderName = entityInvoice.CardHolderName;
-                        objInvoice.ExpireDate = entityInvoice.ExpireDate;
-                        objInvoice.AccountBankName = entityInvoice.AccountBankName;
-                        objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
-                        objInvoice.Note = entityInvoice.Note;
-                        objInvoice.ModifiedDate = AppConstants.DateTime;
-                        objInvoice.ModifiedBy = entityInvoice.ModifiedBy;
-
-                        _repository.UpdateAsync(objInvoice);
-                        await _unitOfWork.SaveChangesAsync();
-
-                        //Do Audit Log --AUDITLOGUSER
-                        await _auditLogService.CreateAuditLog<ValuationInvoice>(AuditActionTypeEnum.Update, OldEntity, objInvoice, MainTableName, MainTableKey);
-                    }
-                    else
-                    {
-                        return DBOperation.NotFound;
-                    }
+                    //Do Audit Log --AUDITLOGUSER
+                    await _auditLogService.CreateAuditLog<ValuationInvoice>(AuditActionTypeEnum.Update, OldEntity, objInvoice, MainTableName, MainTableKey);
                 }
                 else
                 {
-                    objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice);
-
-                    var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
-
-                    var id = string.Format("{0}-{1}", AppConstants.ID_InvoiceRequest, entityInvoice.ValuationRequestId);
-                    objInvoice.ReferenceNo = string.Format("{0}{1}", id, lastReq?.Id + 1);
-
-                    objInvoice.CreatedDate = AppConstants.DateTime;
-                    objInvoice.CreatedBy = entityInvoice.CreatedBy ?? 1;
-
-                    _repository.AddAsync(objInvoice);
-                    await _unitOfWork.SaveChangesAsync();
+                    return DBOperation.NotFound;
                 }
             }
             else
             {
-                return DBOperation.NotFound;
+                objInvoice = _mapperFactory.Get<ValuationInvoiceListModel, ValuationInvoice>(entityInvoice);
+
+                var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
+
+                var id = string.Format("{0}-{1}", AppConstants.ID_InvoiceRequest, entityInvoice.ValuationRequestId);
+                objInvoice.ReferenceNo = string.Format("{0}{1}", id, lastReq?.Id + 1);
+
+                objInvoice.CreatedDate = AppConstants.DateTime;
+                objInvoice.CreatedBy = entityInvoice.CreatedBy ?? 1;
+
+                _repository.AddAsync(objInvoice);
+                await _unitOfWork.SaveChangesAsync();
             }
 
             if (objInvoice.Id == 0)
@@ -144,7 +137,7 @@ namespace Eltizam.Business.Core.Implementation
 
             else
             {
-                if(objInvoice.Id> 0 && entityInvoice.InvoiceIds.Length > 0)
+                if (objInvoice.Id > 0 && entityInvoice.InvoiceIds.Length > 0)
                 {
                     DbParameter[] osqlParameter =
                     {
@@ -154,7 +147,7 @@ namespace Eltizam.Business.Core.Implementation
                     };
 
                     EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationPayment_UpsertInvoicesMap, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
-                    
+
                 }
                 if (entityInvoice.uploadDocument != null)
                 {
@@ -260,7 +253,7 @@ namespace Eltizam.Business.Core.Implementation
         public async Task<DBOperation> UpsertInvoice(ValuationInvoicePaymentModel invoice)
         {
 
-            
+
             ValuationPaymentInvoice objIvoiceType;
 
             // Check if the entity has an ID greater than 0 (indicating an update).
@@ -276,7 +269,7 @@ namespace Eltizam.Business.Core.Implementation
                     objIvoiceType.Amount = invoice.Amount;
                     objIvoiceType.Balance = invoice.Balance;
                     objIvoiceType.Note = invoice.Note;
-                    objIvoiceType.TransactionModeId=invoice.TransactionModeId;
+                    objIvoiceType.TransactionModeId = invoice.TransactionModeId;
                     objIvoiceType.TransactionDate = invoice.TransactionDate;
                     objIvoiceType.ModifiedDate = AppConstants.DateTime;
                     objIvoiceType.ModifiedBy = invoice.ModifiedBy;
@@ -292,7 +285,7 @@ namespace Eltizam.Business.Core.Implementation
             }
             else
             {
-                
+
                 objIvoiceType = _mapperFactory.Get<ValuationInvoicePaymentModel, ValuationPaymentInvoice>(invoice);
                 objIvoiceType.CreatedDate = AppConstants.DateTime;
                 objIvoiceType.ModifiedDate = AppConstants.DateTime;
