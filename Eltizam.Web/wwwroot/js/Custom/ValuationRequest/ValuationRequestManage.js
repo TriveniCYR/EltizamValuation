@@ -1226,7 +1226,7 @@ function BindValuationAction() {
             $.each(response, function (index, object) {
                 //var statusCodeString = "'" + object.statusCode + "'";
                
-                $('#ValuationActions ul').append(' <li style="text-align: center; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + object.id + ');">' + object.statusName + '</li>');
+                $('#ValuationActions ul').append(' <li /*class="tableStatusBanner"*/ style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + object.id + ');"><span style="text-align:center;">' + object.statusName + '</span></li>');
             })
         },
         failure: function (response) {
@@ -1258,6 +1258,10 @@ function AssignApproverAction() {
     var comment = $('#ActionComment').val();
     var requestId = $('#hdnId').val();
 
+    if (comment == "") {
+        toastr.error("Please enter comment.");
+        return false;
+    }
     var modelReq = {
         Id: requestId,
         StatusId: statusId,
