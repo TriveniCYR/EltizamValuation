@@ -195,5 +195,16 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
         }
 
+        [HttpPost, Route("ApproverActionComment")]
+        public async Task<IActionResult> ApproverActionComment([FromBody] ApproverActionCommentModel model)
+        {
+            DBOperation oResponse = await _valuationServices.ApproverActionComment(model);
+            if (oResponse == DBOperation.Success)
+            {
+                return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+            }
+            else
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        }
     }
 }
