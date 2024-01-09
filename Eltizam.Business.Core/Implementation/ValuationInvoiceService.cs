@@ -76,25 +76,25 @@ namespace Eltizam.Business.Core.Implementation
 
                 objInvoice = _repository.Get(entityInvoice.Id);
 
-                if (objInvoice != null)
-                {
-                    objInvoice.ReferenceNo = entityInvoice.ReferenceNo;
-                    objInvoice.ValuationRequestId = entityInvoice.ValuationRequestId;
-                    objInvoice.TransactionModeId = entityInvoice.TransactionModeId;
-                    objInvoice.TransactionStatusId = entityInvoice.TransactionStatusId;
-                    objInvoice.Amount = entityInvoice.Amount;
-                    objInvoice.CheckNumer = entityInvoice.CheckNumer;
-                    objInvoice.CheckBankName = entityInvoice.CheckBankName;
-                    objInvoice.CheckDate = entityInvoice.CheckDate;
-                    objInvoice.CardNumber = entityInvoice.CardNumber;
-                    objInvoice.CardBankName = entityInvoice.CardBankName;
-                    objInvoice.CardHolderName = entityInvoice.CardHolderName;
-                    objInvoice.ExpireDate = entityInvoice.ExpireDate;
-                    objInvoice.AccountBankName = entityInvoice.AccountBankName;
-                    objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
-                    objInvoice.Note = entityInvoice.Note;
-                    objInvoice.ModifiedDate = AppConstants.DateTime;
-                    objInvoice.ModifiedBy = entityInvoice.ModifiedBy;
+                    if (objInvoice != null)
+                    {
+                        objInvoice.ReferenceNo = objInvoice.ReferenceNo;
+                        objInvoice.ValuationRequestId = objInvoice.ValuationRequestId;
+                        objInvoice.TransactionModeId = entityInvoice.TransactionModeId;
+                        objInvoice.TransactionStatusId = entityInvoice.TransactionStatusId;
+                        objInvoice.Amount = entityInvoice.Amount;
+                        objInvoice.CheckNumer = entityInvoice.CheckNumer;
+                        objInvoice.CheckBankName = entityInvoice.CheckBankName;
+                        objInvoice.CheckDate = entityInvoice.CheckDate;
+                        objInvoice.CardNumber = entityInvoice.CardNumber;
+                        objInvoice.CardBankName = entityInvoice.CardBankName;
+                        objInvoice.CardHolderName = entityInvoice.CardHolderName;
+                        objInvoice.ExpireDate = entityInvoice.ExpireDate;
+                        objInvoice.AccountBankName = entityInvoice.AccountBankName;
+                        objInvoice.AccountHolderName = entityInvoice.AccountHolderName;
+                        objInvoice.Note = entityInvoice.Note;
+                        objInvoice.ModifiedDate = AppConstants.DateTime;
+                        objInvoice.ModifiedBy = entityInvoice.ModifiedBy;
 
                     _repository.UpdateAsync(objInvoice);
                     await _unitOfWork.SaveChangesAsync();
@@ -113,7 +113,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
 
-                    var id = string.Format("{0}-{1}", AppConstants.ID_PaymentRequest, entityInvoice.ValuationRequestId);
+                    var id = string.Format("{0}-{1}", AppConstants.ID_PaymentRequest, objInvoice.ValuationRequestId);
                     objInvoice.ReferenceNo = string.Format("{0}{1}", id, lastReq?.Id + 1);
 
                 objInvoice.CreatedDate = AppConstants.DateTime;
@@ -321,7 +321,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 new DbParameter("RequestId", requestId, SqlDbType.Int),
             };
-            var res = EltizamDBHelper.ExecuteMappedReader<ValuationInvoicePaymentModel>(ProcedureMetastore.usp_Invoice_GetInvoicePaymentByValuationRequestId,
+            var res = EltizamDBHelper.ExecuteMappedReader<ValuationInvoicePaymentModel>(ProcedureMetastore.usp_ValuationInvoice_SearchAllList,
                       DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
 
             return res;

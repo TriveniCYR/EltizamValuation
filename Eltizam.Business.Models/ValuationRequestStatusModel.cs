@@ -10,6 +10,9 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public string? StatusName { get; set; }
-        
+        public string? StatusCode { get; set; }
+        public string? ColorCode { get; set; }
+        public string? BackGroundColor { get; set; }
+
     }
 }
