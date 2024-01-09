@@ -584,7 +584,7 @@ namespace Eltizam.Business.Core.Implementation
                     new DbParameter("StatusCode",   model.StatusCode, SqlDbType.VarChar),
                 };
 
-                EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationPayment_UpsertInvoicesMap, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
+                EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_PerformActions, DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
 
                 return DBOperation.Success;
 
