@@ -110,42 +110,7 @@
 
                                 <img src="/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" style="width: 2em;background-color: var(--blue);margin-left: 1em;">
                                 <div id="ValuationActions" class="actionItem" style="width: 95%;display: none;margin:1.2em 0em 0em 0em;">
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                Mark as Quoted
-                                            </a>
-                                        </li>  
-                                         <li>
-                                            <a href="#">
-                                                Mark as Paid
-                                            </a>
-                                        </li>  
-                                         <li>
-                                            <a href="#">
-                                                Submitted to Approver
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Submitted to Valuer
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Approved
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Rejected
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Cancelled
-                                            </a>
-                                        </li>
+                                    <ul>                                        
                                     </ul>
                                 </div>
                             </div>
@@ -678,7 +643,7 @@
                                     @if (roleId == (int)RoleEnum.Approver || roleId == (int)RoleEnum.Valuer)
                                     {
                                         <button type="button" class="blueBtn" id="btnSaveApprove" style="width:100px">
-                                            Save
+                                            Submit
                                         </button>
                                     }
                                 }
@@ -757,11 +722,10 @@
                         <table id="InvoiceTable" class="table-striped">
                             <thead>
                                 <tr>
-                                   
                                     <th>#Invoice</th>
+                                    <th>Reference No</th>
                                     <th>Transaction Date</th>
                                     <th>Payment Mode</th>
-                                    <th>Status</th>
                                     <th>Amount</th>
                                     <th>Created By</th>
                                     <th>Creation Date</th>
@@ -1349,6 +1313,44 @@
 </div>
 
 
+<!-- Modal for Latest requests -->
+<div class="modal fade" id="ValuationApproverAction" tabindex="-1" role="dialog" aria-labelledby="MyLevelApprover">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:610px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Approver Action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <!-- Table to display data -->
+                    <input type="hidden" id="hdnActionStatusId" value="" />
+                    <div class="inputSearchs">
+                        <form>
+                        <div class="row" style="padding: 12px 60px">
+                            <label for="Comments" class="w-100">
+                                <p class="m-0">Action Comment<span class="text-danger"></span></p>
+                                <input type="text" id="ActionComment" placeholder="Comment" />
+                            </label>
+                        </div>
+                        </form>
+                    </div>
+                    <div class=" w-100 text-right">
+                        <div>
+                            <div class="buttonArea">
+                                <button type="submit" data-dismiss="modal" class="blueBtn" onclick="AssignApproverAction()">Assign</button>
+                                <button type="button" class="greyBtn" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -1416,12 +1418,14 @@
         var DeleteQuotationByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteQuotationById";
         var DeleteInvoiceByIdUrl = "@Eltizam.Web.Helpers.APIURLHelper.DeleteInvoiceById";
         var ValuationRequestGetById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestGetById";
-        var RequeStatusReview = "@Eltizam.Web.Helpers.APIURLHelper.ReviewRequestStatus";
+        var UpdateRequestStatus = "@Eltizam.Web.Helpers.APIURLHelper.UpdateRequestStatus";
         var GetSiteDescriptionList = "@Eltizam.Web.Helpers.APIURLHelper.GetSiteDescriptionList";
          var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
         var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
         var DeletePyamentInvoice = "@Eltizam.Web.Helpers.APIURLHelper.DeletePyamentInvoice";
         var DeleteAssesmentDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDocument";
+        var DeleteAssesmentDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDocument";
+        var SaveApproverAction = "@Eltizam.Web.Helpers.APIURLHelper.UpdateApproverAction";
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]";
 

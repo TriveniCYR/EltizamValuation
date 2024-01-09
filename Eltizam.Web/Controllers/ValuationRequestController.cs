@@ -45,22 +45,7 @@ namespace EltizamValuation.Web.Controllers
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }
-
-        //[HttpGet]
-        //public IActionResult ValuationInvoices(int vId)
-        //{
-        //    ValuationInvoicePaymentModel invoices;
-
-        //    invoices = new ValuationInvoicePaymentModel();
-        //    invoices.ValuationRequestId = vId;
-
-        //    //Get basic info
-        //    ValReqHeaderInfo(vId);
-
-        //    ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
-        //    return View(invoices);
-        //}
-
+         
 
         [HttpGet]
         public IActionResult ValuationPaymentInvoiceManage(int? id, int vId)
@@ -100,8 +85,10 @@ namespace EltizamValuation.Web.Controllers
             invoice = new ValuationInvoicePaymentModel();
 
             //Get basic info
-            ValReqHeaderInfo(vId); 
-             
+            ValReqHeaderInfo(vId);
+            invoice.ValuationRequestId = vId;
+
+
             HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
             APIRepository objapi = new(_cofiguration);
 
@@ -340,12 +327,12 @@ namespace EltizamValuation.Web.Controllers
             quotation = new ValuationQuatationListModel();
 
             //Get basic info
-            ValReqHeaderInfo(vId);  
+            ValReqHeaderInfo(vId);
+            quotation.ValuationRequestId = vId;
 
             if (id == null || id <= 0)
             {  
-                quotation.StatusId = 13;
-
+                quotation.StatusId = 13; 
                 FooterInfo(TableNameEnum.ValuationQuotation, _cofiguration, id);
                 return View(quotation);
             }
@@ -505,6 +492,7 @@ namespace EltizamValuation.Web.Controllers
 
             //Get basic info
             ValReqHeaderInfo(vId);
+            invoice.ValuationRequestId = vId;
 
             if (id == null || id <= 0)
             { 
@@ -633,20 +621,20 @@ namespace EltizamValuation.Web.Controllers
 
 
         [HttpPost]
-        [Route("ValuationRequest/ReviewerRequestStatus")]
-        public IActionResult ReviewerRequestStatus(int id, ValutionRequestForApproverModel appoveRequestModel)
+        [Route("ValuationRequest/UpdateRequestStatus")]
+        public IActionResult UpdateRequestStatus(int id, ValutionRequestStatusChangeModel appoveRequestModel)
         {
             try
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
-                ValutionRequestForApproverModel valuationRequestModelNew = new ValutionRequestForApproverModel();
+                ValutionRequestStatusChangeModel valuationRequestModelNew = new ValutionRequestStatusChangeModel();
                 valuationRequestModelNew.Id = id;
                 valuationRequestModelNew.StatusId = appoveRequestModel.StatusId;
                 valuationRequestModelNew.ApproverComment = appoveRequestModel.ApproverComment;
 
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ReviewRequestStatus, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpdateRequestStatus, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {

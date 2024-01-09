@@ -51,9 +51,10 @@ namespace Eltizam.Data.DataAccess.Helper
         public static string DateFormat2 = DateTime.Now.ToString("yyMMdd");
 
 
-        public static string ID_ValuationRequest = string.Format("VR{0}", DateFormat2);
+        public static string ID_ValuationRequest  = string.Format("VR{0}", DateFormat2);
         public static string ID_QuotationsRequest = string.Format("QT{0}", DateFormat2);
         public static string ID_InvoiceRequest    = string.Format("IN{0}", DateFormat2);
+        public static string ID_PaymentRequest    = string.Format("PY{0}", DateFormat2);
 
 
         public static string EmailSubject_Created = "Valuation request created";
