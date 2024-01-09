@@ -14,7 +14,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public int Id { get; set; }
         public int ValuationRequestId { get; set; }
         public string InvoiceNo { get; set; } = null!;
-        public string ReferenceNO { get; set; } = null!;
         public int TransactionModeId { get; set; }
         public DateTime? TransactionDate { get; set; }
         public decimal Amount { get; set; }
@@ -25,6 +24,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsDeleted { get; set; }
+        public string? ReferenceNo { get; set; }
 
         public virtual ValuationPaymentInvoice ValuationRequest { get; set; } = null!;
         public virtual ICollection<ValuationPaymentInvoice> InverseValuationRequest { get; set; }
