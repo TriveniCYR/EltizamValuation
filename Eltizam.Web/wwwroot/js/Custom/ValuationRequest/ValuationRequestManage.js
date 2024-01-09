@@ -394,34 +394,6 @@ function BindValuationRequestStatus() {
     BindDropdowns(GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId, RequestStatus, _rpname, _val);
 }
 
-function BindValuationAction() {
-    var ValReqId = parseInt($('#hdnId').val());
-    var RequestStatus = $("#StatusId");
-    var _val = $('#hdnStatusId').val();
-    var _rpname = "statusName";
-    var roleId = $("#hdnRoleId").val();
-
-    $.ajax({
-        type: Get,
-        url: BaseURL + GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId,
-        "datatype": "json",
-        success: function (response) {
-            $('#ValuationActions ul').html('');
-            $.each(response, function (index, object) {
-                //html = " <li style='color:" + object.colorCode + "; background-color:" + object.backGroundColor + "; border: 1px solid " + object.colorCode + ";' onclick='CheckValuationAction('" + + object.statusCode + "');'>" + object.statusName + "</li>";
-
-                $('#ValuationActions ul').append(' <li style="color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + object.statusCode + ');">'+object.statusName+'</li>');
-            })
-        },
-        failure: function (response) {
-            alert(response.responseText);
-        },
-        error: function (response) {
-            alert(response.responseText);
-            $("#loader").hide();
-        }
-    });
-}
 
 function CheckValuationAction(statusCode) {
     debugger
@@ -1283,6 +1255,37 @@ function updateHiddenInput() {
 
     $("#Valuationapprovalvalues").val(selectedValues.join(";"));
 }
+
+function BindValuationAction() {
+    var ValReqId = parseInt($('#hdnId').val());
+    var RequestStatus = $("#StatusId");
+    var _val = $('#hdnStatusId').val();
+    var _rpname = "statusName";
+    var roleId = $("#hdnRoleId").val();
+
+    $.ajax({
+        type: Get,
+        url: BaseURL + GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId,
+        "datatype": "json",
+        success: function (response) {
+            $('#ValuationActions ul').html('');
+           
+            $.each(response, function (index, object) {
+                var statusCodeString = "'" + object.statusCode + "'";
+               
+                $('#ValuationActions ul').append(' <li style="color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + statusCodeString + ');">' + object.statusName + '</li>');
+            })
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+            $("#loader").hide();
+        }
+    });
+}
+
 
 
 //#endregion Delete Invoice
