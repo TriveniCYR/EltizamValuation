@@ -13,7 +13,9 @@ namespace Eltizam.Business.Models
     {
         public int Id { get; set; }
         public int ValuationRequestId { get; set; }
+        public string? ReferenceNO { get; set; }
         public string InvoiceNo { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'TransactionMode' field is required.")]
         public int TransactionModeId { get; set; } 

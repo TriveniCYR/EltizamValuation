@@ -80,8 +80,8 @@ namespace Eltizam.Business.Core.Implementation
 
                     if (objInvoice != null)
                     {
-                        objInvoice.ReferenceNo = entityInvoice.ReferenceNo;
-                        objInvoice.ValuationRequestId = entityInvoice.ValuationRequestId;
+                        objInvoice.ReferenceNo = objInvoice.ReferenceNo;
+                        objInvoice.ValuationRequestId = objInvoice.ValuationRequestId;
                         objInvoice.TransactionModeId = entityInvoice.TransactionModeId;
                         objInvoice.TransactionStatusId = entityInvoice.TransactionStatusId;
                         objInvoice.Amount = entityInvoice.Amount;
@@ -115,7 +115,7 @@ namespace Eltizam.Business.Core.Implementation
 
                     var lastReq = _repository.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
 
-                    var id = string.Format("{0}-{1}", AppConstants.ID_PaymentRequest, entityInvoice.ValuationRequestId);
+                    var id = string.Format("{0}-{1}", AppConstants.ID_PaymentRequest, objInvoice.ValuationRequestId);
                     objInvoice.ReferenceNo = string.Format("{0}{1}", id, lastReq?.Id + 1);
 
                     objInvoice.CreatedDate = AppConstants.DateTime;
@@ -328,7 +328,7 @@ namespace Eltizam.Business.Core.Implementation
             {
                 new DbParameter("RequestId", requestId, SqlDbType.Int),
             };
-            var res = EltizamDBHelper.ExecuteMappedReader<ValuationInvoicePaymentModel>(ProcedureMetastore.usp_Invoice_GetInvoicePaymentByValuationRequestId,
+            var res = EltizamDBHelper.ExecuteMappedReader<ValuationInvoicePaymentModel>(ProcedureMetastore.usp_ValuationInvoice_SearchAllList,
                       DatabaseConnection.ConnString, CommandType.StoredProcedure, osqlParameter);
 
             return res;
