@@ -1,4 +1,5 @@
 ﻿using Eltizam.Resource.Resources;
+using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 
 namespace Eltizam.Business.Models
@@ -14,18 +15,24 @@ namespace Eltizam.Business.Models
         public DateTime ValuationDate { get; set; }
         
         public int? ValuationTimeFrame { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Client' field is required.")]
+        [Display(Name = "Client")]
         public int ClientId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'ClientType' field is required.")]
         public int ClientTypeId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'Property' field is required.")]
+        [Display(Name = "Property Name")]
         public int PropertyId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'Property Type' field is required.")]
+        [Display(Name = "PropertyType")]
         public int PropertyTypeId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'Property Sub Type' field is required.")]
+        [Display(Name = "PropertySubType")]
         public int PropertySubTypeId { get; set; }
         public string? PropertySubType { get; set; }
         public int? OwnershipTypeId { get; set; }

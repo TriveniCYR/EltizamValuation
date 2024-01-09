@@ -82,7 +82,7 @@ footer {
     margin-bottom: 0.2em !important;
 }
 
-mb-16 {
+.mb-16 {
     margin-bottom: 16px !important;
 }
 
@@ -605,7 +605,7 @@ main {
 }
 
 .actionItem ul li a {
-    font-size: 14px;
+    font-size: 16px;
     text-decoration: none;
     display: flex;
     color: var(--black);

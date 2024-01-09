@@ -281,7 +281,7 @@ namespace Eltizam.Business.Core.Implementation
                     var lastReq = _invoiceRepo.GetAll().OrderByDescending(a => a.Id).FirstOrDefault();
 
                     objIvoiceType = _mapperFactory.Get<ValuationInvoicePaymentModel, ValuationPaymentInvoice>(invoice);
-                    objIvoiceType.ReferenceNO = string.Format("{0}{1}", id, lastReq?.Id + 1);
+                    objIvoiceType.ReferenceNo = string.Format("{0}{1}", id, lastReq?.Id + 1);
                     //objIvoiceType.CreatedDate = AppConstants.DateTime;
                     //objIvoiceType.ModifiedDate = AppConstants.DateTime;
                     //objIvoiceType.ModifiedBy = invoice.ModifiedBy;
