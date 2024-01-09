@@ -956,10 +956,9 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                //entity.Property(e => e.Gender)
-                //    .HasMaxLength(1)
-                //    .IsUnicode(false)
-                //    .IsFixedLength();
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LastName)
                     .HasMaxLength(250)
@@ -1413,6 +1412,11 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.Note).IsUnicode(false);
 
+                entity.Property(e => e.ReferenceNo)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("ReferenceNO");
+
                 entity.Property(e => e.TransactionDate).HasColumnType("date");
 
                 entity.HasOne(d => d.ValuationRequest)
@@ -1432,17 +1436,17 @@ namespace Eltizam.Data.DataAccess.DataContext
 
                 entity.Property(e => e.Note).IsUnicode(false);
 
-                entity.HasOne(d => d.ValuationQuotation)
+                entity.HasOne(d => d.Invoice)
                     .WithMany(p => p.ValuationPaymentInvoiceMaps)
-                    .HasForeignKey(d => d.ValuationQuotationId)
+                    .HasForeignKey(d => d.InvoiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Valuation__Valua__4242D080");
+                    .HasConstraintName("FK__Valuation__Invoi__5B0E7E4A");
 
-                entity.HasOne(d => d.ValuationReceivedInvoice)
+                entity.HasOne(d => d.PaymentInvoice)
                     .WithMany(p => p.ValuationPaymentInvoiceMaps)
-                    .HasForeignKey(d => d.ValuationReceivedInvoiceId)
+                    .HasForeignKey(d => d.PaymentInvoiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Valuation__Valua__4336F4B9");
+                    .HasConstraintName("FK__Valuation__Payme__5A1A5A11");
             });
 
             modelBuilder.Entity<ValuationQuotation>(entity =>
@@ -1866,11 +1870,6 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.Gender)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.GenderName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -1887,10 +1886,6 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .IsUnicode(false);
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.Property(e => e.Password)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.ResourceType)
                     .HasMaxLength(50)

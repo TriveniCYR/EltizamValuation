@@ -9,14 +9,12 @@ namespace Eltizam.Data.DataAccess.Entity
         public string FirstName { get; set; } = null!;
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
-        public string? Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public int? DepartmentId { get; set; }
         public int? DesignationId { get; set; }
         public string? LicenseNo { get; set; }
         public int? CompanyId { get; set; }
-        public int? ResourceId { get; set; }
-        public string Password { get; set; } = null!;
+        public int? Password { get; set; }
         public bool? IsActive { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
@@ -37,9 +35,9 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? RoleName { get; set; }
         public int? IsApprover { get; set; }
         public int? IsValuer { get; set; }
-        public string? GenderName { get; set; }
         public string? Department { get; set; }
         public string? Designation { get; set; }
+        public string? Gender { get; set; }
         public string? ResourceType { get; set; }
         public string? ApproverLevel { get; set; }
     }

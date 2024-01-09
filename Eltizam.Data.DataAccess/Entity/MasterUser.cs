@@ -16,7 +16,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public string FirstName { get; set; } = null!;
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
-        //public string? Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public int? DepartmentId { get; set; }
         public int? DesignationId { get; set; }
@@ -41,6 +40,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public bool? IsDeleted { get; set; }
         public int? ApproverLevelId { get; set; }
         public int? GenderId { get; set; }
+        public string? Gender { get; set; }
 
         public virtual MasterDictionaryDetail? Department { get; set; }
         public virtual MasterDictionaryDetail? Designation { get; set; }

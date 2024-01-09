@@ -5,11 +5,6 @@ namespace Eltizam.Data.DataAccess.Entity
 {
     public partial class ValuationQuotation
     {
-        public ValuationQuotation()
-        {
-            ValuationPaymentInvoiceMaps = new HashSet<ValuationPaymentInvoiceMap>();
-        }
-
         public int Id { get; set; }
         public string ReferenceNo { get; set; } = null!;
         public int ValuationRequestId { get; set; }
@@ -28,6 +23,5 @@ namespace Eltizam.Data.DataAccess.Entity
         public bool? IsDeleted { get; set; }
 
         public virtual ValuationRequest ValuationRequest { get; set; } = null!;
-        public virtual ICollection<ValuationPaymentInvoiceMap> ValuationPaymentInvoiceMaps { get; set; }
     }
 }
