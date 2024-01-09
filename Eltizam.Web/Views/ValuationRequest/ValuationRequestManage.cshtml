@@ -1326,13 +1326,16 @@
             <div class="modal-body">
                 <div>
                     <!-- Table to display data -->
-                    <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
-                        <input type="hidden" id="hdnActionStatusCode" value="" />
-                    <div class="row" style="padding: 12px 60px">
-                        <label for="Comments" class="w-100">
-                            <p class="m-0">Action Comment<span class="text-danger"></span></p>
-                            @Html.TextBox("ActionComment");
-                        </label>
+                    <input type="hidden" id="hdnActionStatusId" value="" />
+                    <div class="inputSearchs">
+                        <form>
+                        <div class="row" style="padding: 12px 60px">
+                            <label for="Comments" class="w-100">
+                                <p class="m-0">Action Comment<span class="text-danger"></span></p>
+                                <input type="text" id="ActionComment" placeholder="Comment" />
+                            </label>
+                        </div>
+                        </form>
                     </div>
                     <div class=" w-100 text-right">
                         <div>
@@ -1421,6 +1424,8 @@
         var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
         var DeletePyamentInvoice = "@Eltizam.Web.Helpers.APIURLHelper.DeletePyamentInvoice";
         var DeleteAssesmentDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDocument";
+        var DeleteAssesmentDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDocument";
+        var SaveApproverAction = "@Eltizam.Web.Helpers.APIURLHelper.UpdateApproverAction";
         //#region Static Messae Init
         var EditLabel = "@SharedLocalizer["Edit"]";
 

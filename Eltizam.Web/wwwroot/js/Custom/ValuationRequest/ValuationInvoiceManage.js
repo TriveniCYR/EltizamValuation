@@ -485,25 +485,28 @@ function BindPaymentInvoiceList() {
                     if (isViewData == 0) {
                         if (object.isCompleted == 1) {
 
-                            html2 = object.id;
+                            html2 = '<input type="checkbox" value="' + object.id + '" class="invoiceCheckbox" checked="checked">';
                         }
                         else {
                             html2 = '<input type="checkbox" value="' + object.id + '" class="invoiceCheckbox">';
                         }
+
+                        var rowHtml = ' <tr id="' + object.id + '"><td>' + html2 + '</td><td><a href=' + url + '>' + object.referenceNO + '</a></td><td>' + object.invoiceNo + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+                            + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>';
+
+                        $('#InvoiceTable tbody').append(rowHtml);
                     }
                     else {
                         if (object.isCompleted == 1) {
 
-                            html2 = '<input type="checkbox" class="invoiceCheckbox" checked="checked"  disabled>';
-                        }
-                        else {
-                            html2 = '<input type="checkbox" value="' + object.id + '" class="invoiceCheckbox">';
+                            html2 = '<input type="checkbox" value="' + object.id + '" class="invoiceCheckbox" checked="checked">';
+
+                            var rowHtml = ' <tr id="' + object.id + '"><td>' + html2 + '</td><td><a href=' + url + '>' + object.referenceNO + '</a></td><td>' + object.invoiceNo + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
+                                + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>';
+
+                            $('#InvoiceTable tbody').append(rowHtml);
                         }
                     }
-                    var rowHtml = ' <tr id="' + object.id + '"><td>' + html2 + '</td><td><a href=' + url + '>' + object.referenceNO + '</a></td><td>' + object.invoiceNo + '</td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
-                        + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>';
-
-                    $('#InvoiceTable tbody').append(rowHtml);
                 });
 
                 $('#InvoiceTable tbody').on('change', '.invoiceCheckbox', function () {

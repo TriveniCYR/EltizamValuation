@@ -395,57 +395,6 @@ function BindValuationRequestStatus() {
 }
 
 
-function CheckValuationAction(statusCode) {
-    debugger
-    var actionStatus = statusCode;
-    if (actionStatus != "") {
-        $('#ValuationApproverAction').modal('show');
-        $('#hdnActionStatusCode').val(actionStatus);
-        //return false;
-    }
-    else {
-
-    }
-}
-
-function AssignApproverAction() {
-
-    var statusCode = $('#hdnActionStatusCode').val();
-    var comments = $('#ActionComment').val();
-    var createdBy = LogInUserId;
-    var requestId = $('#hdnId').val();
-
-    var modelReq = {
-        'RequestId': requestId,
-        'CreatedBy': createdBy,
-        'Comment': comments,
-        'StatusCode': statusCode
-    } 
-
-    $.ajax({
-        type: "POST",
-        url: BaseURL + AssignApproverUrl,
-        "datatype": "json",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify(modelReq),
-        success: function (response) {
-            toastr.success("Valuation action comment posted successfully.");
-            assingApproverToggle();
-            /*window.location.href = "/ValuationRequest/ValuationRequests";*/
-        },
-        failure: function (response) {
-            toastr.error("Error is occured.")
-        },
-        error: function (response) {
-            toastr.error(response)
-            $("#loader").hide();
-        }
-    });
-}
-
 function BindClientType() {
 
     var ClientType = $("#ClientTypeId");
@@ -1275,9 +1224,9 @@ function BindValuationAction() {
             $('#ValuationActions ul').html('');
            
             $.each(response, function (index, object) {
-                var statusCodeString = "'" + object.statusCode + "'";
+                //var statusCodeString = "'" + object.statusCode + "'";
                
-                $('#ValuationActions ul').append(' <li style="color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + statusCodeString + ');">' + object.statusName + '</li>');
+                $('#ValuationActions ul').append(' <li style="text-align: center; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + object.id + ');">' + object.statusName + '</li>');
             })
         },
         failure: function (response) {
@@ -1290,6 +1239,57 @@ function BindValuationAction() {
     });
 }
 
+
+function CheckValuationAction(statusId) {
+    debugger
+    if (statusId != "") {
+        $('#ValuationApproverAction').modal('show');
+        $('#hdnActionStatusId').val(statusId);
+        //return false;
+    }
+    else {
+
+    }
+}
+
+function AssignApproverAction() {
+
+    var statusId = $('#hdnActionStatusId').val();
+    var comment = $('#ActionComment').val();
+    var requestId = $('#hdnId').val();
+
+    var modelReq = {
+        Id: requestId,
+        StatusId: statusId,
+        //ApproverComment: approverComment,
+        Comment: comment,
+        LogInUserId: LogInUserId
+    };
+
+    $.ajax({
+        type: "POST",
+        url: BaseURL + UpdateRequestStatus,
+        "datatype": "json",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(modelReq),
+        success: function (response) {
+            toastr.success(SucessMsg);
+            setTimeout(function () {
+                window.location.href = "/ValuationRequest/ValuationRequestManage?id=" + requestId;
+            }, 1000);
+        },
+        failure: function (response) {
+            toastr.error("Error is occured.")
+        },
+        error: function (response) {
+            toastr.error(response)
+            $("#loader").hide();
+        }
+    });
+}
 
 
 //#endregion Delete Invoice

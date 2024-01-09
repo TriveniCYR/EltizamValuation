@@ -245,6 +245,7 @@ namespace Eltizam.Web.Helpers
         public static string GetSiteDescriptionList = "ValuationAssessment/GetSiteDescriptionList";        
         public static string GetValuationPDFData = "ValuationQuatation/GetValuationPDFData";
         public static string GetApproverLevel = "ValuationQuatation/GetApproverLevel";
+        public static string UpdateApproverAction = "ValuationRequest/ApproverActionComment";
         
         public static string DeleteDocument = "ValuationAssessment/DeleteDocument";
         public static string GetNotificationList = "Notification/GetNotificationList";
