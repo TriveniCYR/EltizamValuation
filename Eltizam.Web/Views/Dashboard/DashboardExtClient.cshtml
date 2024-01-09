@@ -6,6 +6,9 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     var _header = "Dashboard";
     ViewData["Title"] = _header;
+    var ModuleName = (string)ViewBag.ModuleName;
+    var RoleId = ViewBag.RoleId;
+
 }
 
 <main>
@@ -34,6 +37,8 @@
                                 To
                                 @Html.TextBoxFor(model => model.ToDate, new { @class = "formatted-date-input", id = "ToDate" })
                             </label>
+                            <input type="hidden" id="ModuleName" value="@ModuleName" />
+                            <input type="hidden" id="RoleId" value="@RoleId" />
                             <button type="button" onclick="submitFilterForm()" class="blueBtn">Search</button>
                             <button type="button" onclick="clearSearchFields()" class="blueBtn">Clear</button>
                         </div>
@@ -57,26 +62,9 @@
                         <div class="scroll-x">
                             <table class="dashboardTable latestRequestsTable table-striped">
                                 <thead>
-                                    <tr>
-                                        <th>Val Ref#</th>
-                                        <th>Property</th>
-                                        <th>Client</th>
-                                        <th>Status</th>
-                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                    <td>VR1234</td>
-                                    <td>PropertName</td>
-                                    <td>ClientName</td>
-                                    <td>StatusName</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VR240105</td>
-                                        <td>Tamuh Tower</td>
-                                        <td>ICICI Bank</td>
-                                        <td>Approved</td>
-                                    </tr>
+                                 
                                 </tbody>
                             </table>
                         </div>

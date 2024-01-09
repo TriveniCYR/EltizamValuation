@@ -1,14 +1,18 @@
 ﻿using Eltizam.Business.Core.Interface;
 using Eltizam.Business.Core.ModelMapper;
 using Eltizam.Business.Models;
+using Eltizam.Data.DataAccess.Core.Repositories;
 using Eltizam.Data.DataAccess.Core.UnitOfWork;
 using Eltizam.Data.DataAccess.Entity;
 using Eltizam.Data.DataAccess.Helper;
 using Eltizam.Utility;
 using Eltizam.Utility.Enums;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +29,7 @@ namespace Eltizam.Business.Core.Implementation
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
         private readonly string _dbConnection;
+        private IRepository<ValuationQuotation> _repository { get; set; }
         #endregion Properties
 
         #region Constructor
@@ -41,6 +46,7 @@ namespace Eltizam.Business.Core.Implementation
             _auditLogService = auditLogService;
 
             _dbConnection = DatabaseConnection.ConnString;
+            _repository = _unitOfWork.GetRepository<ValuationQuotation>();
         }
         #endregion Constructor
 
@@ -99,25 +105,44 @@ namespace Eltizam.Business.Core.Implementation
             return _dashboarddata;
         }
 
-        public async Task<DashboardChartModel> GetClientPieChartData()
+        public async Task<dynamic> GetClientPieChartData(DashboardFilterModel filterModel)
         {
-            DashboardChartModel model = new DashboardChartModel();
+            SqlParameter[] osqlParameter =
+            {
+                new SqlParameter("@ModuleName", filterModel.ModuleName),
+                new SqlParameter("@RoleId", filterModel.RoleId),
+                new SqlParameter("@ClientId", filterModel.ClientId),
+                new SqlParameter("@PropertyId", filterModel.PropertyId),
+                new SqlParameter("@FromDate", filterModel.FromDate),
+                new SqlParameter("@ToDate", filterModel.ToDate)
+            };
 
-            List<DashboardPieChartModel> piemodel = new List<DashboardPieChartModel>()
-                { 
-                new(){ X=0,Y=51.08,Label="New" },
-                new(){ X=0,Y=27.34,Label="Cancelled" }
-                };
+            DataSet dsmodel = await _repository.GetDataSetBySP("usp_Dashboard_GetChartsData", System.Data.CommandType.StoredProcedure, osqlParameter);
 
-            List<DashboardBarChartModel> barmodel = new List<DashboardBarChartModel>()
-                {
-                new(){ X=10,Y=71,indexLabel="New" },
-                new(){ X=20,Y=27,indexLabel="Cancelled" }
-                };
+            dynamic DashboardObjects = new ExpandoObject();
+            DashboardObjects.PieChart = dsmodel.Tables[0];
+            DashboardObjects.BarChart = dsmodel.Tables[1];
+            DashboardObjects.OtheDetails = dsmodel.Tables[2];
+            return DashboardObjects;
 
-            model.PieChartData = piemodel;
-            model.BarChartData = barmodel;
-            return model;
+
+            //DashboardChartModel model = new DashboardChartModel();
+
+            //List<DashboardPieChartModel> piemodel = new List<DashboardPieChartModel>()
+            //    { 
+            //    new(){ X=0,Y=51.08,PieLable="New" },
+            //    new(){ X=0,Y=27.34,Label="Cancelled" }
+            //    };
+
+            //List<DashboardBarChartModel> barmodel = new List<DashboardBarChartModel>()
+            //    {
+            //    new(){ X=10,Y=71,indexLabel="New" },
+            //    new(){ X=20,Y=27,indexLabel="Cancelled" }
+            //    };
+
+            //model.PieChartData = piemodel;
+            //model.BarChartData = barmodel;
+            //return model;
         }
             #endregion API Methods
         }

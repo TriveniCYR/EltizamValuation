@@ -4,7 +4,7 @@
     showLoader();
     initializeDashboard();
 });
-
+var ErrorMessage = 'Error Occured !'
 // Function to initialize the dashboard on page load
 function initializeDashboard() {
     var formDataObject = {
