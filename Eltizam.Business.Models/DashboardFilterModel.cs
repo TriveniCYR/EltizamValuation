@@ -8,8 +8,10 @@ namespace Eltizam.Business.Models
 {
     public class DashboardFilterModel
     {
-        public int PropertyId { get; set; }
-        public int ClientId { get; set; }
+        public string? ModuleName { get; set; }
+        public int? RoleId { get; set; }
+        public int? PropertyId { get; set; }
+        public int? ClientId { get; set; }
         public string? FromDate { get; set; }
         public string? ToDate { get; set; }
         public int? Pagesize { get; set; } = 5;

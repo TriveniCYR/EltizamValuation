@@ -76,13 +76,13 @@ namespace EltizamValuation.WebApi.Controllers
         }
 
 
-        [HttpGet]
-        [Route("GetClientPieChart/{id}")]
-        public async Task<IActionResult> GetClientPieChart(int id)
+        [HttpPost]
+        [Route("GetClientPieChart")]
+        public async Task<IActionResult> GetClientPieChart([FromBody] DashboardFilterModel model)
         {
             try
             {
-                var _data = await _dashboardService.GetClientPieChartData();
+                var _data = await _dashboardService.GetClientPieChartData(model);
 
                 if (_data != null)
                 {

@@ -72,7 +72,7 @@
                     <p>Invoice Details</p>
                     <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
                 </div>
-                <div class="scroll-x class=" inputSearchs p-0"">
+                <div class="scroll-x inputSearchs p-0">
                     <table id="InvoiceTable" class="table-striped">
                         <thead>
                             <tr>
@@ -91,7 +91,10 @@
                         </tbody>
                     </table>
                 </div>
-                <p>Payment</p>
+                   <div class="flex justify-between accordianDetails position-relative mb-16" onclick="accordianToggle(this)">
+                    <p>Payment Details</p>
+                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                </div>
                 <div class="paymentOption">
                     <div class="payTab mb-16">
                         @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
@@ -112,14 +115,14 @@
                     </div>
                    
 
-                   
+                  
                     <div id="pay1" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
                             <h5>Cash Payment Details</h5>
                         </div>
 
                        
-                        <div class="inputSearchs">
+                        <div class="inputSearchs inputSearchs p-0">
                             <div class="tabSection">
                                 <div class="flex mb-28">
                                     <label for="" class="w-50">
