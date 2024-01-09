@@ -56,7 +56,8 @@ function InitializeValutionRequestDataList() {
         {
             "data": "referenceNO", "name": "ReferenceNO", "render": function (data, type, row, meta) {
                 // Add a hyperlink to the ReferenceNO column
-               return '<a href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '&IsView=1" title="View">' + data + '</a>';
+                return '<a href="/ValuationRequest/ValuationRequestManage?id=' + row.id + '" title="Edit">' + data + '</a>';
+                
 
             }
         },
