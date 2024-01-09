@@ -917,17 +917,22 @@ $('#btnSaveApprove').on('click', function () {
     var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
     var _id = $("#Id").val();
 
-    var data = {
+    var request = {
         Id: _id,
         StatusId: $("#StatusId").val(),
-        ApproverComment: approverComment,
+        //ApproverComment: approverComment,
+        Comment: approverComment,
         LogInUserId: LogInUserId
     };
-    var ValutionRequestForApproverModel = data;
+
+    UpdateValuationStatus(request);
+});
+
+function UpdateValuationStatus(request) {
 
     $.ajax({
         type: "POST",
-        url: BaseURL + RequeStatusReview,
+        url: BaseURL + UpdateRequestStatus,
         "datatype": "json",
         headers: {
             'Accept': 'application/json',
@@ -948,12 +953,11 @@ $('#btnSaveApprove').on('click', function () {
             alert(response.responseText);
             $("#loader").hide();
         }
-    });
-});
- 
+    }); 
+}
 
-function BindQuatationList() {
-    debugger
+
+function BindQuatationList() { 
     let id = $('#hdnId').val();
     $.ajax({
         type: Get,

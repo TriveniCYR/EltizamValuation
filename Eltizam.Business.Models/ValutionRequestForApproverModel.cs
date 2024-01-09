@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Eltizam.Business.Models
 {
-    public class ValutionRequestForApproverModel : GlobalAuditFields
+    public class ValutionRequestStatusChangeModel : GlobalAuditFields
     {
         public int Id { get; set; }
-        public int StatusId { get; set; }
-        public int CreatedBy { get; set; }
-        public string ApproverComment { get; set; } 
+        public int StatusId { get; set; }  
+        public string? ApproverComment { get; set; }
+        public string? Comment { get; set; }
     }
 }

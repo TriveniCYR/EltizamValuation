@@ -621,20 +621,20 @@ namespace EltizamValuation.Web.Controllers
 
 
         [HttpPost]
-        [Route("ValuationRequest/ReviewerRequestStatus")]
-        public IActionResult ReviewerRequestStatus(int id, ValutionRequestForApproverModel appoveRequestModel)
+        [Route("ValuationRequest/UpdateRequestStatus")]
+        public IActionResult UpdateRequestStatus(int id, ValutionRequestStatusChangeModel appoveRequestModel)
         {
             try
             {
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
-                ValutionRequestForApproverModel valuationRequestModelNew = new ValutionRequestForApproverModel();
+                ValutionRequestStatusChangeModel valuationRequestModelNew = new ValutionRequestStatusChangeModel();
                 valuationRequestModelNew.Id = id;
                 valuationRequestModelNew.StatusId = appoveRequestModel.StatusId;
                 valuationRequestModelNew.ApproverComment = appoveRequestModel.ApproverComment;
 
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ReviewRequestStatus, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpdateRequestStatus, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationRequestModelNew))).Result;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
