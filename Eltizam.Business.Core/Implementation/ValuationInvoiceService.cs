@@ -254,58 +254,64 @@ namespace Eltizam.Business.Core.Implementation
 
         public async Task<DBOperation> UpsertInvoice(ValuationInvoicePaymentModel invoice)
         {
-
-            
-            ValuationPaymentInvoice objIvoiceType;
-
-            // Check if the entity has an ID greater than 0 (indicating an update).
-            if (invoice.Id > 0)
+            try
             {
-                // Get the existing entity from the repository.
-                objIvoiceType = _InvoiceMap.Get(invoice.Id);
 
-                // If the entity exists, update its invoice.
-                if (objIvoiceType != null)
+                ValuationPaymentInvoice objIvoiceType;
+
+                // Check if the entity has an ID greater than 0 (indicating an update).
+                if (invoice.Id > 0)
                 {
-                    objIvoiceType.InvoiceNo = invoice.InvoiceNo;
-                    objIvoiceType.Amount = invoice.Amount;
-                    objIvoiceType.Balance = invoice.Balance;
-                    objIvoiceType.Note = invoice.Note;
-                    objIvoiceType.TransactionModeId=invoice.TransactionModeId;
-                    objIvoiceType.TransactionDate = invoice.TransactionDate;
-                    objIvoiceType.ModifiedDate = AppConstants.DateTime;
-                    objIvoiceType.ModifiedBy = invoice.ModifiedBy;
+                    // Get the existing entity from the repository.
+                    objIvoiceType = _InvoiceMap.Get(invoice.Id);
 
-                    // Update the entity in the repository asynchronously.
-                    _InvoiceMap.UpdateAsync(objIvoiceType);
+                    // If the entity exists, update its invoice.
+                    if (objIvoiceType != null)
+                    {
+                        objIvoiceType.InvoiceNo = invoice.InvoiceNo;
+                        objIvoiceType.Amount = invoice.Amount;
+                        objIvoiceType.Balance = invoice.Balance;
+                        objIvoiceType.Note = invoice.Note;
+                        objIvoiceType.TransactionModeId = invoice.TransactionModeId;
+                        objIvoiceType.TransactionDate = invoice.TransactionDate;
+                        objIvoiceType.ModifiedDate = AppConstants.DateTime;
+                        objIvoiceType.ModifiedBy = invoice.ModifiedBy;
+
+                        // Update the entity in the repository asynchronously.
+                        _InvoiceMap.UpdateAsync(objIvoiceType);
+                    }
+                    else
+                    {
+                        // Return a not found operation if the entity does not exist.
+                        return DBOperation.NotFound;
+                    }
                 }
                 else
                 {
-                    // Return a not found operation if the entity does not exist.
-                    return DBOperation.NotFound;
+
+                    objIvoiceType = _mapperFactory.Get<ValuationInvoicePaymentModel, ValuationPaymentInvoice>(invoice);
+                    objIvoiceType.CreatedDate = AppConstants.DateTime;
+                    objIvoiceType.ModifiedDate = AppConstants.DateTime;
+                    objIvoiceType.ModifiedBy = invoice.ModifiedBy;
+                    objIvoiceType.CreatedBy = invoice.CreatedBy;
+
+                    // Insert the new entity into the repository asynchronously.
+                    _InvoiceMap.AddAsync(objIvoiceType);
                 }
+
+                // Save changes to the database asynchronously.
+                await _unitOfWork.SaveChangesAsync();
+
+                // Return an appropriate operation result.
+                if (objIvoiceType.Id == 0)
+                    return DBOperation.Error;
+
+                return DBOperation.Success;
             }
-            else
+            catch(Exception ex)
             {
-                
-                objIvoiceType = _mapperFactory.Get<ValuationInvoicePaymentModel, ValuationPaymentInvoice>(invoice);
-                objIvoiceType.CreatedDate = AppConstants.DateTime;
-                objIvoiceType.ModifiedDate = AppConstants.DateTime;
-                objIvoiceType.ModifiedBy = invoice.ModifiedBy;
-                objIvoiceType.CreatedBy = invoice.CreatedBy;
-
-                // Insert the new entity into the repository asynchronously.
-                _InvoiceMap.AddAsync(objIvoiceType);
+                throw ex;
             }
-
-            // Save changes to the database asynchronously.
-            await _unitOfWork.SaveChangesAsync();
-
-            // Return an appropriate operation result.
-            if (objIvoiceType.Id == 0)
-                return DBOperation.Error;
-
-            return DBOperation.Success;
         }
 
         public async Task<ValuationInvoicePaymentModel> PaymentInvoiceById(int id)

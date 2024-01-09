@@ -45,22 +45,7 @@ namespace EltizamValuation.Web.Controllers
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }
-
-        //[HttpGet]
-        //public IActionResult ValuationInvoices(int vId)
-        //{
-        //    ValuationInvoicePaymentModel invoices;
-
-        //    invoices = new ValuationInvoicePaymentModel();
-        //    invoices.ValuationRequestId = vId;
-
-        //    //Get basic info
-        //    ValReqHeaderInfo(vId);
-
-        //    ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
-        //    return View(invoices);
-        //}
-
+         
 
         [HttpGet]
         public IActionResult ValuationPaymentInvoiceManage(int? id, int vId)
@@ -100,8 +85,10 @@ namespace EltizamValuation.Web.Controllers
             invoice = new ValuationInvoicePaymentModel();
 
             //Get basic info
-            ValReqHeaderInfo(vId); 
-             
+            ValReqHeaderInfo(vId);
+            invoice.ValuationRequestId = vId;
+
+
             HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
             APIRepository objapi = new(_cofiguration);
 
@@ -340,7 +327,8 @@ namespace EltizamValuation.Web.Controllers
             quotation = new ValuationQuatationListModel();
 
             //Get basic info
-            ValReqHeaderInfo(vId);  
+            ValReqHeaderInfo(vId);
+            quotation.ValuationRequestId = vId;
 
             if (id == null || id <= 0)
             {  
@@ -505,6 +493,7 @@ namespace EltizamValuation.Web.Controllers
 
             //Get basic info
             ValReqHeaderInfo(vId);
+            invoice.ValuationRequestId = vId;
 
             if (id == null || id <= 0)
             { 
