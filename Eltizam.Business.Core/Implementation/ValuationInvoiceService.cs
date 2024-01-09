@@ -20,13 +20,11 @@ namespace Eltizam.Business.Core.Implementation
     {
         #region Properties
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapperFactory _mapperFactory;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+        private readonly IMapperFactory _mapperFactory; 
         private IRepository<ValuationInvoice> _repository;
         private IRepository<ValuationPaymentInvoice> _invoiceRepo;
         private IRepository<MasterDocument> _repositoryDocument { get; set; }
-        private readonly IHelper _helper;
-        private readonly int? _LoginUserId;
+        private readonly IHelper _helper; 
         private readonly IMasterNotificationService _notificationService;
         private readonly IRepository<MasterUser> _masteruserrepository;
         //private readonly IRepository<MasterDictionaryDetail> _masterdictionaryrepository;
@@ -42,11 +40,9 @@ namespace Eltizam.Business.Core.Implementation
             _repository = _unitOfWork.GetRepository<ValuationInvoice>();
             _repositoryDocument = _unitOfWork.GetRepository<MasterDocument>();
             _helper = helper;
-            _auditLogService = auditLogService;
-            _LoginUserId = _helper.GetLoggedInUser()?.UserId;
+            _auditLogService = auditLogService; 
             _notificationService = notificationService;
-            _masteruserrepository = _unitOfWork.GetRepository<MasterUser>();
-            //_masterdictionaryrepository = _unitOfWork.GetRepository<MasterDictionaryDetail>();
+            _masteruserrepository = _unitOfWork.GetRepository<MasterUser>(); 
             _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>();
             _invoiceRepo = _unitOfWork.GetRepository<ValuationPaymentInvoice>();
         }
