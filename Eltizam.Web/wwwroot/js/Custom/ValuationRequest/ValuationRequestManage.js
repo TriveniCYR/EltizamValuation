@@ -999,7 +999,7 @@ function BindPaymentInvoiceList() {
                     html += '</ul></div>';
 
                     $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
-                        + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                        + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
                 });
             }
         },
