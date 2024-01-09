@@ -189,7 +189,7 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<DBOperation> ReviewerRequestStatus(ValutionRequestForApproverModel model)
+        public async Task<DBOperation> UpdateRequestStatus(ValutionRequestStatusChangeModel model)
         {
             int? By = model.LogInUserId;
             var TableName = Enum.GetName(TableNameEnum.ValuationRequest);
@@ -234,17 +234,29 @@ namespace Eltizam.Business.Core.Implementation
                         valuationEntity.ApproverId = nxtapp?.ApproverId;
                     }
                     else
-                        valuationEntity.StatusId = model.StatusId;
-                    valuationEntity.ModifiedBy = By;
-                    valuationEntity.ApproverComment = model.ApproverComment;
+                        valuationEntity.StatusId = model.StatusId; 
+                    
+
+                    valuationEntity.ApproverComment = model.Comment;
+                    valuationEntity.ApproverUpdateDate = AppConstants.DateTime;
                 }
 
                 //Valuer status updates
                 else if (user != null && user.RoleId == (int)RoleEnum.Valuer)
                 {
                     valuationEntity.StatusId = model.StatusId;
-                    valuationEntity.ModifiedBy = By;
+                    valuationEntity.ValuerUpdateDate = AppConstants.DateTime;
+                    valuationEntity.ValuerComment = model.Comment; 
                 }
+
+                //Other roles
+                else
+                { 
+                    valuationEntity.StatusId = model.StatusId; 
+                }
+
+                valuationEntity.ModifiedBy = By;
+                valuationEntity.StatusComment = model.Comment;
 
                 _repository.UpdateAsync(valuationEntity);
                 await _unitOfWork.SaveChangesAsync();

@@ -171,10 +171,10 @@ namespace Eltizam.WebApi.Controllers
             }
         }
 
-        [HttpPost, Route("ReviewerRequestStatus")]
-        public async Task<IActionResult> ReviewerRequestStatus([FromBody] ValutionRequestForApproverModel model)
+        [HttpPost, Route("UpdateRequestStatus")]
+        public async Task<IActionResult> UpdateRequestStatus([FromBody] ValutionRequestStatusChangeModel model)
         {
-            DBOperation oResponse = await _valuationServices.ReviewerRequestStatus(model);
+            DBOperation oResponse = await _valuationServices.UpdateRequestStatus(model);
             if (oResponse == DBOperation.Success)
             {
                 return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
