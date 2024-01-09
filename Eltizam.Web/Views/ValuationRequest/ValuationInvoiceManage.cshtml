@@ -46,7 +46,7 @@
             {
                 vId = _valRegHeader.Id;
                 var clr = @_valRegHeader.ColorCode;
-                <div class="whiteBoxShadow m-0" id="valReqHeader">
+                <div class="whiteBoxShadow m-0 mb-16" id="valReqHeader">
                     <div class=" position-relative flex justify-between align-item-center" style="margin: 10px 10px 5px 15px;font-size: 16px;">
                         <label style="font-size:16px;">
                             Val. Ref# : @_valRegHeader.ReferenceNo
@@ -62,12 +62,17 @@
                         </label>
                     </div>
                 </div>
+               
             }
 
 
 
             <form asp-action="ValuationInvoiceManage" method="POST" enctype="multipart/form-data" id="invoice">
-                <div class="scroll-x">
+                <div class="flex justify-between accordianDetails position-relative mb-16" onclick="accordianToggle(this)">
+                    <p>Invoice Details</p>
+                    <img src="../assets/right-arrow.svg" alt="right-arrow" class="right-arrow-menu">
+                </div>
+                <div class="scroll-x class=" inputSearchs p-0"">
                     <table id="InvoiceTable" class="table-striped">
                         <thead>
                             <tr>
@@ -85,8 +90,9 @@
                         </tbody>
                     </table>
                 </div>
+                <p>Payment</p>
                 <div class="paymentOption">
-                    <div class="payTab">
+                    <div class="payTab mb-16">
                         @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                         @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
                         @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
@@ -103,9 +109,9 @@
                         <button class="payTabLink" type="button" onclick="payTab(event, 'pay3', 3)" id="@_id3">Credit Card</button>
                         <button class="payTabLink" type="button" onclick="payTab(event, 'pay4', 4)" id="@_id4">Net Banking</button>
                     </div>
+                   
 
-
-
+                   
                     <div id="pay1" class="payTabContent">
                         <div class="flex buttonArea justify-between ptrl-20">
                             <h5>Cash Payment Details</h5>
