@@ -163,7 +163,7 @@ namespace Eltizam.Business.Core.Implementation
                 var OldObjDepartment = objQuatation;
                 if (objQuatation != null)
                 {
-                    objQuatation.ReferenceNo = entityQuatation.ReferenceNo;
+                    objQuatation.ReferenceNo = objQuatation.ReferenceNo;
                     objQuatation.ValuationRequestId = entityQuatation.ValuationRequestId;
                     objQuatation.ValuationFee = (decimal)entityQuatation.ValuationFee;
                     objQuatation.Vat = (decimal)entityQuatation.Vat;
@@ -171,8 +171,8 @@ namespace Eltizam.Business.Core.Implementation
                     objQuatation.InstructorCharges = entityQuatation.InstructorCharges;
                     objQuatation.Discount = entityQuatation.Discount;
                     objQuatation.TotalFee = entityQuatation.TotalFee;
-                    objQuatation.StatusId = entityQuatation.StatusId;
-                    objQuatation.ModifiedDate = AppConstants.DateTime;
+                    objQuatation.StatusId = objQuatation.StatusId;
+                    //objQuatation.ModifiedDate = AppConstants.DateTime;
                     objQuatation.ModifiedBy = entityQuatation.ModifiedBy;
 
                     _repository.UpdateAsync(objQuatation);

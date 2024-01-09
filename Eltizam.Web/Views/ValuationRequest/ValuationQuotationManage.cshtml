@@ -64,7 +64,7 @@
                 <form asp-action="ValuationQuotationManage" autocomplete="off" asp-controller="ValuationRequest" method="post" enctype="multipart/form-data">
                     @Html.HiddenFor(model => model.Id, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.ValuationRequestId, new { @class = "control-label" })
-                    @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" })
+                    @* @Html.HiddenFor(model => model.ReferenceNo, new { @class = "control-label" }) *@
                     @Html.HiddenFor(model => model.StatusId, new { @class = "control-label" })
                     @Html.HiddenFor(model => model.ApproverIds, new { @class = "control-label" })
                     <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
