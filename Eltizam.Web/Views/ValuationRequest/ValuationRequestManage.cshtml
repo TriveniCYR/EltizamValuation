@@ -1,6 +1,7 @@
 ﻿@using Eltizam.Business.Models
 @using Eltizam.Utility.Models;
 @using Eltizam.Utility.Enums;
+@using Eltizam.Web.Helpers
 @using Microsoft.AspNetCore.Http
 @using Eltizam.Web.Controllers
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -63,6 +64,9 @@
     var Levels = Model.ValuationRequestApproverLevel;
     var distinctLevels = Levels?.Select(approverLevel => approverLevel.ApproverLevelId).Distinct();
     var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList();
+    
+    var _valRegHeader = (ValuationRequestDependencies)TempData[UserHelper.ValReqHeader];
+    var vId = (_valRegHeader != null) ? _valRegHeader.Id : 0;
 }
 
 <div id="PlaceHolderHere"></div>
@@ -80,22 +84,22 @@
 
         <div class="">
             <div class="profileTabSection inputSearchs p-0 ">
-                @if (Model.Id > 0)
+                @if (Model.Id > 0 && _valRegHeader != null)
                 {
-                    <div class="whiteBoxShadow m-0" id="footerAudit">
+                    <div class="whiteBoxShadow m-0" id="valReqHeader">
                         <div class=" position-relative flex justify-between align-item-center" style="margin: 10px 10px 5px 15px;font-size: 16px;">
                             <label style="font-size:16px;">
-                                Val. Ref# : @Model.ReferenceNo
+                                Val. Ref# : @_valRegHeader.ReferenceNo
                             </label>
                             <label style="font-size:16px;">
-                                Client : @Model.ClientName
+                                Client : @_valRegHeader.ClientName
                             </label>
                             <label style="font-size:16px;">
-                                Property : @Model.PropertyName
+                                Property : @_valRegHeader.PropertyName
                             </label>
                             <label style="font-size:16px;">
-                                Status : <label class="tableStatusBanner" style="color: @Model.ColorCode; background-color: @Model.BackGroundColor; border: 1px solid @Model.ColorCode;">
-                                    @Model.StatusName
+                                Status : <label class="tableStatusBanner" style="color: @_valRegHeader.ColorCode; background-color: @_valRegHeader.BackGroundColor; border: 1px solid @_valRegHeader.ColorCode;">
+                                    @_valRegHeader.StatusName
                                 </label>
                             </label>
 
@@ -269,12 +273,12 @@
                                             var dropdownId = $"ApproverLevelId_{lId}";
                                             var curList = Levels.Where(approver => approver.ApproverLevelId == lId).ToList();
                                             curList.Insert(0, new ValuationRequestApproverLevelModel()
-                    {
-                        ApproverLevelId = lId,
-                        ApproverLevel = level,
-                        ApproverId = 0,
-                        ApproverName = "--select--"
-                    });
+                                            {
+                                                ApproverLevelId = lId,
+                                                ApproverLevel = level,
+                                                ApproverId = 0,
+                                                ApproverName = "--select--"
+                                            });
 
                                             var ddSelected = Levels.FirstOrDefault(approver => approver.ApproverLevelId == lId && approver.IsSelected == 1)?.ApproverId.ToString();
 
@@ -282,10 +286,10 @@
                                             <label for="" class="bodyContent p-0 w-50">
                                                 @level
                                                 @Html.DropDownListFor(model => ddSelected, new SelectList(curList.Select(approver => new SelectListItem
-                                   {
-                                       Value = approver.ApproverId.ToString(),
-                                       Text = approver.ApproverName
-                                   }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
+                                                {
+                                                   Value = approver.ApproverId.ToString(),
+                                                   Text = approver.ApproverName
+                                                }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
                                             </label>
                                         }
                                     }
@@ -702,7 +706,7 @@
                             <h5>Quotations</h5>
                             @if (!isHideBtn)
                             {
-                                <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id&refNo=@Model.ReferenceNo">
+                                <a href="/ValuationRequest/ValuationQuotationManage?vId=@Model.Id">
                                     <button id="addNewQt" class="blueBtn" style="width:120px">
                                         <img src="../assets/plus.svg" alt="plus">
                                         Add New
@@ -739,7 +743,7 @@
                             <h5>Invoices</h5>
                             @if (!isHideBtn)
                             {
-                                <a href="/ValuationRequest/ValuationInvoices?vId=@Model.Id&refNo=@Model.ReferenceNo">
+                                <a href="/ValuationRequest/ValuationPaymentInvoiceManage?vId=@Model.Id">
                                     <button class="blueBtn" style="width:120px" id="addNewIn">
                                         <img src="../assets/plus.svg" alt="plus">
                                         Add New
@@ -757,7 +761,6 @@
                                     <th>#Invoice</th>
                                     <th>Transaction Date</th>
                                     <th>Payment Mode</th>
-                                    <th>Status</th>
                                     <th>Amount</th>
                                     <th>Created By</th>
                                     <th>Creation Date</th>

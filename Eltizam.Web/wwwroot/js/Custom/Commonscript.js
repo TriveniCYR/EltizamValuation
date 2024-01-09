@@ -16,7 +16,7 @@ var RoleEnum = {
     'Approver': 2,
     'Valuer': 3,
     'Admin': 4
-}; 
+};
 
 //API methods
 var Post = 'POST';
@@ -69,7 +69,7 @@ $(document).ready(function () {
     ApplyFlatPickerCalenderformat();
 
     // Assuming your elements have the class 'price'
-    const elements = document.getElementsByClassName('price'); 
+    const elements = document.getElementsByClassName('price');
     // Iterate through the elements and attach the event listener to each
     for (const element of elements) {
         element.addEventListener('input', function (event) {
@@ -111,7 +111,7 @@ $(document).ready(function () {
     }
 
     // Assuming your elements have the class 'valiadteint'
-    const intelements = document.getElementsByClassName('valiadteint'); 
+    const intelements = document.getElementsByClassName('valiadteint');
     // Iterate through the elements and attach the event listener to each
     for (const element of intelements) {
         element.addEventListener('input', function (event) {
@@ -132,7 +132,7 @@ $(document).ready(function () {
     ErrorDev.hide();
 
     readsideNavToggle();
-    
+
     makeFormReadOnly();
 
     //Toaster related things
@@ -169,11 +169,11 @@ $(document).ready(function () {
     }
 
     // Default close accordan
-    AccordianSettings(0); 
+    AccordianSettings(0);
 
     hideLoader();
 
-    Getactivenotifications(); 
+    Getactivenotifications();
 });
 
 function formatCurrencyInElements(className) {
@@ -204,7 +204,7 @@ function formatCurrencyInElements(className) {
     });
 }
 
-function Getactivenotifications() { 
+function Getactivenotifications() {
     var url = "?userId=" + LogInUserId + "&valId=" + 0;
     ajaxServiceMethod(BaseURL + notificationsCnt + url, 'GET', NotificationCountSuccess, GetnotificationsError);
 }
@@ -213,7 +213,7 @@ function GetnotificationsError(x, y, z) {
     toastr.error("Something failed for notification pull");
 }
 
-function NotificationCountSuccess(data) { 
+function NotificationCountSuccess(data) {
     document.getElementById('notificationcount').textContent = data;
 }
 
@@ -270,11 +270,11 @@ $(document)
 
 
 // ========== Start: Flatpicker Date format fixes ==========
-function ApplyFlatPickerCalenderformat() { 
+function ApplyFlatPickerCalenderformat() {
     flatpickr('.formatted-date-input', {
         dateFormat: flatDateformat,
     });
-     
+
     //$('.formatted-date-input').flatpickr({
     //    dateFormat: flatDateformat,
     //});
@@ -290,28 +290,28 @@ function ApplyFlatPickerCalenderformat() {
     });
 
     if (action === "Add") {
-        document.addEventListener('DOMContentLoaded', function () {
-            flatpickr('.formatted-date-input', {
-                dateFormat: flatDateformat,
-                defaultDate: 'today'
-            });
+        //document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('.formatted-date-input', {
+            dateFormat: flatDateformat,
+            defaultDate: 'today'
         });
+        //});
     }
 
     //document.addEventListener('DOMContentLoaded', function () { 
     //});
-} 
+}
 
 //Used to format footer dates
-function formatreadonlydate() { 
+function formatreadonlydate() {
     //var eln = elements === undefined ? '.formatted-td-date-input': elements;
     var tdElements = document.querySelectorAll('.formatted-td-date-input');
-    tdElements.forEach(function (e) { 
+    tdElements.forEach(function (e) {
         if (e.textContent !== undefined && e.textContent !== null && e.textContent !== "") {
             var originalDate = new Date(e.textContent);
 
             var datePart = originalDate.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-            var timePart = originalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }); 
+            var timePart = originalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
             var formattedDate = datePart.replace(/\s/g, '-') + ' ' + timePart;
             e.textContent = formattedDate;
         }
@@ -319,15 +319,15 @@ function formatreadonlydate() {
 }
 
 //Used to format page level dates
-function formatpagedates_asperpicker(e) { 
-    var tdElements = document.querySelectorAll('.formatted-date-input');   
+function formatpagedates_asperpicker(e) {
+    var tdElements = document.querySelectorAll('.formatted-date-input');
     tdElements.forEach(function (e) {
         var _val = e.defaultValue;
 
-        if (_val !== undefined && _val !== null && _val !== "" && _val !== "") {   
-            var array = _val.split('-');  
+        if (_val !== undefined && _val !== null && _val !== "" && _val !== "") {
+            var array = _val.split('-');
 
-            const month = getMonth(array[1]);  
+            const month = getMonth(array[1]);
             var formattedDate = array[0] + '-' + month + '-' + array[2];
 
             e.defaultValue = formattedDate;
@@ -336,12 +336,12 @@ function formatpagedates_asperpicker(e) {
     });
 }
 
-function getMonth(e) { 
+function getMonth(e) {
     var objDate = new Date();
     objDate.setDate(1);
-    objDate.setMonth(e - 1); 
+    objDate.setMonth(e - 1);
 
-    var locale = "en-us", month = objDate.toLocaleString(locale, { month: "short" }); 
+    var locale = "en-us", month = objDate.toLocaleString(locale, { month: "short" });
     return month;
 }
 
@@ -554,7 +554,7 @@ function profileMenu() {
     } else {
         x.style.display = "none";
     }
-} 
+}
 
 function showValuationActions() {
     var x = document.getElementById("ValuationActions");
@@ -563,11 +563,11 @@ function showValuationActions() {
     } else {
         x.style.display = "none";
     }
-} 
+}
 
 
 // ======== Start: Validation form things ============ 
-$(document).on('click', 'form button[type=submit]', function (e) { 
+$(document).on('click', 'form button[type=submit]', function (e) {
     showLoader();
 
     //Open Accordians
@@ -591,7 +591,7 @@ function ValidateTabAndPage() {
     }
 
     if (err !== "") {
-        FormattedError(err); 
+        FormattedError(err);
     }
 }
 
@@ -634,12 +634,12 @@ function accordianToggle(header) {
 
 // close/show accordian
 function AccordianSettings(show) {
-    $('.accordianDetails').each(function (i) { 
+    $('.accordianDetails').each(function (i) {
         const item = $(this)[0].nextElementSibling;
         //item.style.height = 0;
         item.style.display = show === 1 ? 'block' : 'none';
     });
-} 
+}
 
 // ======== End: accordian things ============
 
@@ -725,7 +725,7 @@ function scrollToTop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
- 
+
 
 
 //Remove parent dynamic created page
@@ -799,8 +799,8 @@ $('.searchable-dropdown').on('change', function () {
     var selectval = $(this).val();
     var valcntrl = $(this).parent().find('.field-validation-error');
 
-  //  console.log(val1);
-    if (selectval == 0 || selectval === "" || selectval === undefined) { 
+    //  console.log(val1);
+    if (selectval == 0 || selectval === "" || selectval === undefined) {
         valcntrl.show();
     } else {
         valcntrl.hide();

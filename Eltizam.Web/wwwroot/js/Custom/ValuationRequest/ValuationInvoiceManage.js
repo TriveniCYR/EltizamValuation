@@ -7,9 +7,7 @@ $(document).ready(function () {
         var id = $('#hdnId').val();
         GetInvoiceDetail(id);
     }
-    BindTransactionstatus();
-
-
+    BindTransactionstatus(); 
 });
 
 
@@ -362,6 +360,7 @@ function BindTransactionstatus() {
     var _payMode = $("#hdnTransactionModeId").val();
     var _rpname = "statusName";
     //BindDropdowns(transactionStatus + '/' + id, transactionStatusId, _rpname, _val);
+
     $.ajax({
         type: Get,
         url: BaseURL + transactionStatus + '/' + id,
@@ -502,6 +501,7 @@ if (action === "Add") {
 //        }
 //    });
 //}
+
 function BindPaymentInvoiceList() {
     let id = $('#hdnValuationRequestId').val();
     $.ajax({
@@ -509,12 +509,11 @@ function BindPaymentInvoiceList() {
         url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
         datatype: "json",
         success: function (response) {
-            if (response != null) {
-                debugger;
+            if (response != null) { 
                 $.each(response._object, function (index, object) {
                     var html = '';
                     var html2 = '';
-                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
+                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id + '&vId=' + id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                     html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     html += '</ul></div>';
@@ -526,7 +525,7 @@ function BindPaymentInvoiceList() {
                         html2 = '<input type="checkbox" value="' + object.id + '" class="invoiceCheckbox">';
                     }
                     var rowHtml = ' <tr id="' + object.id + '"><td>'+ html2 + '</td><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
-                        + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>';
+                        + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>';
 
                     $('#InvoiceTable tbody').append(rowHtml);
                 });

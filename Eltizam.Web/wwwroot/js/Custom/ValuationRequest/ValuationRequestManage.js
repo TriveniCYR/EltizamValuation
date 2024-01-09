@@ -1,4 +1,4 @@
-﻿ 
+﻿
 var docId = 0;
 var invoiceId = 0;
 
@@ -41,7 +41,7 @@ function redirectToValuationAssesment() {
 }
 document.getElementById("defaultOpen").click();
 
- 
+
 function toggleInput(answer) {
     const yesInput = document.getElementById('yesInput');
     const yesField = document.getElementById('yesField');
@@ -53,7 +53,7 @@ function toggleInput(answer) {
         yesInput.style.display = 'none';
         yesField.removeAttribute('required');
     }
-} 
+}
 
 // payemnt option JS here 
 function payTab(evt, payName) {
@@ -124,20 +124,20 @@ function ConfirmationDocument(id, isAction) {
 
 }
 
-function DeleteDocument() { 
+function DeleteDocument() {
     docId = $('#DeleteDocumentModel #ID').val()
     var by = LogInUserId;
     var action = $('#isAction').val();
 
-    if (isDeleteSite && action === 'isSite') { 
+    if (isDeleteSite && action === 'isSite') {
         ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by, Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
-    else if (isDeleteEvidence && action === 'isEvidence') { 
+    else if (isDeleteEvidence && action === 'isEvidence') {
         ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by, Delete, DeleteDocumentSuccess, DeleteDocumentError);
     }
-    else if (isDeleteAssesment && action === 'isAssesment') { 
+    else if (isDeleteAssesment && action === 'isAssesment') {
         ajaxServiceMethod(BaseURL + DeleteAssesmentDocument + "/" + docId + "?by=" + by, Delete, DeleteDocumentSuccess, DeleteDocumentError);
-    } 
+    }
     else {
         toastr.error(DeleteAccessDenied);
     }
@@ -159,12 +159,12 @@ function DeleteDocumentSuccess(data) {
         toastr.error('Error:' + e.message);
     }
 }
- 
+
 function DeleteDocumentError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
- 
+
 $(document).ready(function () {
 
     var roleId = document.getElementById('hdnRoleId').value;
@@ -294,20 +294,20 @@ $(document).ready(function () {
     } 
     */
 
-    
-    $("[id^='ReferenceNo']").attr("disabled", true); 
-        //Approvder settings
+
+    $("[id^='ReferenceNo']").attr("disabled", true);
+    //Approvder settings
     if (roleId === RoleEnum.Approver.toString()) {
-        $("#profile1 :input").attr("disabled", true); 
+        $("#profile1 :input").attr("disabled", true);
         $("#profile4 :input").attr("disabled", true);
         $("#profile5 :input").attr("disabled", true);
         $("#profile6 :input").attr("disabled", true);
-         
-        $('#ApproverComment').attr("disabled", false); 
+
+        $('#ApproverComment').attr("disabled", false);
     }
-        //Valuer settings
+    //Valuer settings
     else if (roleId === RoleEnum.Valuer.toString()) {
-        $("#profile1 :input").attr("disabled", true); 
+        $("#profile1 :input").attr("disabled", true);
     }
     //
     //else {
@@ -315,7 +315,7 @@ $(document).ready(function () {
     //}
 
     //common settings  
-    $('#StatusId').attr("disabled", false); 
+    $('#StatusId').attr("disabled", false);
     $("#profile1 [type='button']").attr("disabled", false);
     $("#profile1 [type='submit']").attr("disabled", false);
     $("#profile1 [type='hidden']").attr("disabled", false);
@@ -806,7 +806,7 @@ function BindAmenityDetail() {
     if ((PropertyTypeId == null || PropertyTypeId == "")) {
         alert("No id is passed");
         return false;
-    } 
+    }
 
     //BindDropdowns(OwnershipTypeList, OwnershipType, _rpname, _val);
     $.ajax({
@@ -857,8 +857,7 @@ function GetValuationMethodLists() {
     // var currentUserId = "@ViewBag.CurrentUserId";
 
     var description = "VALUATION_METHOD";
-    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, statusId, _rpname, _val);
-
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, statusId, _rpname, _val); 
 }
 
 
@@ -899,11 +898,10 @@ $('#btnSaveApprove').on('click', function () {
         }
     });
 });
-
-
-
+ 
 
 function BindQuatationList() {
+    debugger
     let id = $('#hdnId').val();
     $.ajax({
         type: Get,
@@ -914,7 +912,7 @@ function BindQuatationList() {
                 $.each(response, function (index, object) {
                     var html = '';
 
-                    var url = '/ValuationRequest/ValuationQuotationManage?id=' + object.id;
+                    var url = '/ValuationRequest/ValuationQuotationManage?id=' + object.id + '&vId=' + id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                     html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     if (view == 2) {
@@ -952,7 +950,8 @@ function BindInvoiceList() {
             if (response != null) {
                 $.each(response, function (index, object) {
                     var html = '';
-                    var url = '/ValuationRequest/ValuationInvoiceManage?id=' + object.id;
+
+                    var url = '/ValuationRequest/ValuationInvoiceManage?id=' + object.id + '&vId=' + id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                     html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     if (view == 2) {
@@ -964,7 +963,7 @@ function BindInvoiceList() {
                     html += '</ul></div>';
 
                     $('#PaymentTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.referenceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
-                        + '</td><td>' + object.transactionStatusName + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                                                    + '</td><td>' + object.transactionStatusName + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
                 });
             }
         },
@@ -985,11 +984,10 @@ function BindPaymentInvoiceList() {
         url: BaseURL + GetPaymentInvoiceById + '?requestId=' + id,
         "datatype": "json",
         success: function (response) {
-            if (response != null) {
-                debugger
+            if (response != null) { 
                 $.each(response._object, function (index, object) {
                     var html = '';
-                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id;
+                    var url = '/ValuationRequest/ValuationPaymentInvoiceManage?id=' + object.id + '&vId=' + id;
                     html += '<img src="../assets/dots-vertical.svg" alt="dots-vertical" class="activeDots" /> <div class="actionItem"><ul>'
                     html += '<li><a title="View" href=' + url + '><img src="../assets/view.svg" alt="view" />View</a></li>';
                     if (view == 2) {
@@ -1001,7 +999,7 @@ function BindPaymentInvoiceList() {
                     html += '</ul></div>';
 
                     $('#InvoiceTable tbody').append(' <tr id="' + object.id + '"><td><a href=' + url + '>' + object.invoiceNo + '</a></td><td>' + moment(object.transactionDate).format('DD-MMM-YYYY') + '</td><td>' + object.transactionMode
-                        + '</td><td>' + object.isDeleted + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
+                        + '</td><td class="formatting">' + object.amount + '</td><td>' + object.userName + '</td><td>' + moment(object.createdDate).format('DD-MMM-YYYY') + '</td><td>' + html + '</td></tr>');
                 });
             }
         },
@@ -1192,7 +1190,7 @@ function changeLinkvaluation() {
 }
 
 function updateHiddenInput() {
-    var selectedValues = []; 
+    var selectedValues = [];
     ["ApproverLevelId_2", "ApproverLevelId_3"].forEach(function (lId) {
         var dropdownId = "select[id^='" + lId + "']";
         var selectedValue = $(dropdownId).val();
@@ -1200,7 +1198,7 @@ function updateHiddenInput() {
         if (selectedValue) {
             var id = lId.match(/\d+/)[0];
             selectedValues.push(id + "," + selectedValue);
-        } 
+        }
     });
 
     $("#Valuationapprovalvalues").val(selectedValues.join(";"));

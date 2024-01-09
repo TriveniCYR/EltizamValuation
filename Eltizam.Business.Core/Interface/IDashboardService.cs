@@ -10,5 +10,6 @@ namespace Eltizam.Business.Core.Interface
     public interface IDashboardService
     {
         Task<DashboardDataModel> GetDashboardData(DashboardFilterModel model);
+        Task<DashboardChartModel> GetClientPieChartData();
     }
 }

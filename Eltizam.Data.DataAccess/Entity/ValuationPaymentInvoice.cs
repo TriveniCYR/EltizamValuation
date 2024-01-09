@@ -24,6 +24,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public bool? IsDeleted { get; set; }
+        public string? ReferenceNo { get; set; }
 
         public virtual ValuationPaymentInvoice ValuationRequest { get; set; } = null!;
         public virtual ICollection<ValuationPaymentInvoice> InverseValuationRequest { get; set; }

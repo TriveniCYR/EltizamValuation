@@ -99,6 +99,26 @@ namespace Eltizam.Business.Core.Implementation
             return _dashboarddata;
         }
 
-        #endregion API Methods
-    }
+        public async Task<DashboardChartModel> GetClientPieChartData()
+        {
+            DashboardChartModel model = new DashboardChartModel();
+
+            List<DashboardPieChartModel> piemodel = new List<DashboardPieChartModel>()
+                { 
+                new(){ X=0,Y=51.08,Label="New" },
+                new(){ X=0,Y=27.34,Label="Cancelled" }
+                };
+
+            List<DashboardBarChartModel> barmodel = new List<DashboardBarChartModel>()
+                {
+                new(){ X=10,Y=71,indexLabel="New" },
+                new(){ X=20,Y=27,indexLabel="Cancelled" }
+                };
+
+            model.PieChartData = piemodel;
+            model.BarChartData = barmodel;
+            return model;
+        }
+            #endregion API Methods
+        }
 }

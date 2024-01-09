@@ -69,6 +69,7 @@ namespace Eltizam.Web.Helpers
         #region Dashboard
 
         public static string DashboardDetails = "Dashboard/DashboardData";
+        public static string ClientPieChartURL = "Dashboard/GetClientPieChart";
 
         #endregion Dashboard
 
