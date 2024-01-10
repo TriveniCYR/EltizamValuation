@@ -1228,9 +1228,10 @@ function BindValuationAction() {
             $('#ValuationActions ul').html('');
            
             $.each(response, function (index, object) {
-                //var statusCodeString = "'" + object.statusCode + "'";
-               
-                $('#ValuationActions ul').append(' <li /*class="tableStatusBanner"*/ style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + object.id + ');"><span style="text-align:center;">' + object.statusName + '</span></li>');
+
+              //old  //$('#ValuationActions ul').append(' <li /*class="tableStatusBanner"*/ style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + object.id + ');"><span style="text-align:center;">' + object.statusName + '</span></li>');
+                $('#ValuationActions ul').append(' <li style="justify-content: center" onclick="CheckValuationAction(' + object.id + ');"><span class="tableStatusBanner" style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';">' + object.statusName + '</span></li>');
+
             })
         },
         failure: function (response) {
