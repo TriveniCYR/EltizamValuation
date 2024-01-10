@@ -15,9 +15,17 @@
     <div class="whiteBoxShadow">
         <div class="heading position-relative flex justify-between">
             <h3 class="dashboardTitle">@_header</h3>
+            <div class="hamburger">
+                <a class="greyBtn lineBtn formAbtn" asp-action="Dashboard">@_header</a>
+                <img src="../assets/right-arrow.svg" alt="hamburger-icon" />
+                <span>@ModuleName</span>
+                <input type="hidden" id="md" value="@ModuleName" />
+            </div>
         </div>
+
+
         <div class="bodyContent">
-            <div class="whiteBoxShadow">
+            <div class="">
                 <div class="inputSearchs">
                     <form id="dashboardFilterForm">
                         <div class="flex dashboardSearch" style="justify-content:initial">
@@ -82,7 +90,7 @@
                             <a href="#" id="openModalLinklatestRequestsTable">View More</a>
                         </div> *@
                         <div class="scroll-x">
-                            <table class="dashboardTable latestRequestsTable table-striped">
+                            <table class="dashboardTableExt table-striped">
                                 <thead>
                                 </thead>
                                 <tbody>
