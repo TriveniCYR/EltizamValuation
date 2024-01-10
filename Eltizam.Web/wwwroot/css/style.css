@@ -2169,7 +2169,7 @@ table.dashboardTableExt {
     margin: 10px 0 0;
 }
 
-.dashboardTableExt th, td {
+.dashboardTableExt th, dashboardTableExt td {
     /*background: none;
     color: var(--black);*/
     text-align: left;
