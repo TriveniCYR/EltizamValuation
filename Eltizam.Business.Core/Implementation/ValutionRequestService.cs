@@ -223,7 +223,7 @@ namespace Eltizam.Business.Core.Implementation
                         await _unitOfWork.SaveChangesAsync();
 
                         //Do Audit Log --AUDITLOG 
-                        await _auditLogService.CreateAuditLog<ValuationRequestApproverLevel>(AuditActionTypeEnum.Update, oldentity, ent, TableName, model.Id);
+                        //await _auditLogService.CreateAuditLog<ValuationRequestApproverLevel>(AuditActionTypeEnum.Update, oldentity, ent, TableName, model.Id);
                     }
 
                     //Get open approvals
@@ -237,7 +237,7 @@ namespace Eltizam.Business.Core.Implementation
                         valuationEntity.StatusId = model.StatusId; 
                     
 
-                    valuationEntity.ApproverComment = model.Comment;
+                    valuationEntity.ApproverComment = model.ApproverComment;
                     valuationEntity.ApproverUpdateDate = AppConstants.DateTime;
                 }
 
