@@ -825,7 +825,7 @@ table .userPic {
 }
 
 .inputSearchs {
-    padding: 20px;
+   /* padding: 20px;*/
 }
 
     /*.inputSearchs .flex + .flex {
@@ -2124,7 +2124,7 @@ div#amentiesdiv label {
 
 /* Dashboard css starts here */
 .dashboard-status {
-    padding: 0 20px;
+    /*padding: 0 20px;*/
     gap: 2%;
     justify-content: space-between;
     margin-bottom: 10px;
@@ -2166,7 +2166,7 @@ table.dashboardTable {
 .dashboardMapArea {
     display: grid;
     grid-template-columns: 30% 68%;
-    padding: 20px;
+   /* padding: 20px;*/
     grid-gap: 2%;
 }
 
