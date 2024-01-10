@@ -1,6 +1,7 @@
 ﻿
 var docId = 0;
 var invoiceId = 0;
+var isSaveBtn = 0;
 
 function profileTab(evt, cityName) {
     var i, tabcontent, tablinks;
@@ -866,10 +867,16 @@ $('#btnSaveApprove').on('click', function () {
     //var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
     var _id = $("#Id").val();
     var statusId = $("#StatusId").val();
-    
-    $('#ValuationApproverAction').modal('show');
-    return false;
-    
+    var oldStatusId = $('#hdnStatusId').val();
+    if (statusId != oldStatusId) {
+        $('#ValuationApproverAction').modal('show');
+        isSaveBtn = 1;
+        return false;
+
+    }
+    else {
+        return true;
+    }
     //var request = {
     //    Id: _id,
     //    StatusId: $("#StatusId").val(),
@@ -879,6 +886,21 @@ $('#btnSaveApprove').on('click', function () {
     //};
 
     //UpdateValuationStatus(request);
+});
+
+$('#btnSaveEdit').on('click', function () {
+
+    var statusId = $("#StatusId").val();
+    var oldStatusId = $('#hdnStatusId').val();
+    if (statusId != oldStatusId) {
+        $('#ValuationApproverAction').modal('show');
+        isSaveBtn = 1;
+        return false;
+
+    }
+    else {
+        return true;
+    }
 });
 
 function UpdateValuationStatus(request) {
@@ -1247,13 +1269,15 @@ function BindValuationAction() {
 
 function CheckValuationAction(statusId) {
     debugger
-    if (statusId != "") {
+    var oldStatusId = $('#hdnStatusId').val();
+    if (statusId != oldStatusId) {
         $('#ValuationApproverAction').modal('show');
         $('#hdnActionStatusId').val(statusId);
+        isSaveBtn = 0;
         //return false;
     }
     else {
-
+        toastr.error("Status already exist for this Request.");
     }
 }
 
@@ -1266,12 +1290,10 @@ function AssignApproverAction() {
     if (comment == "") {
         toastr.error("Please enter comment.");
         return false;
-    }
-    var roleId = document.getElementById('hdnRoleId').value;
-    if (roleId == 2 || roleId == 3) {
+    }    
+    if (isSaveBtn == 1) {
         statusId = $("#StatusId").val();
     }
-
     var modelReq = {
         Id: requestId,
         StatusId: statusId,
