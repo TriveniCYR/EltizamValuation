@@ -88,6 +88,8 @@ namespace Eltizam.Business.Core.Implementation
 
             if (_userEntity != null)
             {
+                _userEntity.PropertySubTypeId = _userEntity.PropertySubTypeId is null ? 0 : _userEntity.PropertySubTypeId;
+                _userEntity.FurnishedId = _userEntity.FurnishedId is null ? 0 : _userEntity.FurnishedId;
                 DbParameter[] osqlParameter =
                 {
                     new DbParameter("PropertyId", id, SqlDbType.Int),

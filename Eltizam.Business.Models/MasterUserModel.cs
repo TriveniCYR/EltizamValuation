@@ -32,8 +32,8 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
-        public int DesignationId { get; set; }
-        public int DepartmentId { get; set; }
+        public int? DesignationId { get; set; }
+        public int? DepartmentId { get; set; }
 
         [StringLength(50, MinimumLength = 8)]
         public string? LicenseNo { get; set; }
@@ -44,7 +44,7 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? CompanyName { get; set; }
 
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [Range(1, int.MaxValue, ErrorMessage = "The 'Resource' field is required.")]

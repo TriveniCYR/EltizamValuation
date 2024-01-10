@@ -153,7 +153,8 @@ namespace EltizamValuation.Web.Controllers
                     masterUser.uploadProfile = docs;
                     masterUser.File = null;
                 }
-
+                masterUser.DepartmentId = masterUser.DepartmentId == 0 ? null : masterUser.DepartmentId;
+                masterUser.DesignationId = masterUser.DesignationId == 0 ? null : masterUser.DesignationId;
                 masterUser.Address = null;
                 masterUser.Qualification = null;
 

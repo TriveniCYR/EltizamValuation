@@ -164,50 +164,27 @@ function BindPropertySub(id) {
 }
 
 function BindClient() {
-    //alert("hello");
-    
-    var Client = $("#ClientTypeId");
+    var ClientType = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
-    var _rpname = "clientType";
-
-    BindDropdowns(ClientTypeList, Client, _rpname, _val); 
+    var _rpname = "description";
+    var description = "CLIENT_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ClientType, _rpname, _val);
 }
+
 
 function BindOwnership() {
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
-    var _rpname = "ownershipType";
-
-    BindDropdowns(OwnershipTypeList, OwnershipType, _rpname, _val);
+    var _rpname = "description";
+    var description = "OWNERSHIP_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, OwnershipType, _rpname, _val);
 }
 
-function BindValuationFeeType() {  
+function BindValuationFeeType() {
     var ValuationFeeType = $("#ValuationFeeTypeId");
     var _val = $('#hdnValuationFeeType').val();
-    var _rpname = "valuationFeeType";
-
-    BindDropdowns(ValuationFeeTypeList, ValuationFeeType, _rpname, _val);
-
-    //$.ajax({
-    //    type: "POST",
-    //    url: $('#hdnBaseURL').val() + ValuationFeeTypeList,
-    //    "datatype": "json",
-    //    success: function (response) {
-    //        debugger;
-    //        ValuationFeeType.empty().append('<option selected="selected" value="0">Please select</option>');
-    //        for (var i = 0; i < response.data.length; i++) {
-    //            ValuationFeeType.append($("<option></option>").val(response.data[i].id).html(response.data[i].valuationFeeType));
-    //        }
-    //        if ($('#hdnValuationFeeType').val() != 0) {
-    //            ValuationFeeType.val($('#hdnValuationFeeType').val());
-    //        }
-    //    },
-    //    failure: function (response) {
-    //        alert(response.responseText);
-    //    },
-    //    error: function (response) {
-    //        alert(response.responseText);
-    //        $("#loader").hide();
-    //    }
-    //});
+    var _rpname = "description";
+    var description = "VALUATION_FEE_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ValuationFeeType, _rpname, _val);
+    //BindDropdowns(ValuationFeeTypeList, ValuationFeeType, _rpname, _val); 
 }
