@@ -2269,7 +2269,7 @@ table.multipleValueTable {
     bottom: 0;
     margin: auto;
     filter: brightness(0.3);
-    width: 12%;
+    width: 10%;
 }
 
 /*.checkboxBtn input[type="checkbox"]:checked ~ .amenitiesIcon {
