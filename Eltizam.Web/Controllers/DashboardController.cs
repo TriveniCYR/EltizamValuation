@@ -18,7 +18,7 @@ namespace EltizamValuation.Web.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult DashboardExtClient([FromQuery] string Module)
+        public IActionResult DashboardExt([FromQuery] string Module)
         {
             int roleId = _helper.GetLoggedInRoleId();
             ViewBag.ModuleName = Module;
