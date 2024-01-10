@@ -27,6 +27,7 @@ function BindPropertyNameDropdown() {
 
 function submitFilterForm() {
 	var formDataObject = {
+		LogInUserId: $("#LogInUserId").val() ?? 1,
 		RoleId: $('#RoleId').val(),
 		ModuleName: $('#ModuleName').val(),
 		PropertyId: $('#PropertyId').val(),
@@ -40,10 +41,6 @@ function submitFilterForm() {
 
 	var formDataJson = JSON.stringify(formDataObject);
 	ajaxServiceMethod(BaseURL + ClientPieChartURL, 'POST', GetChartDataSuccess, GetChartDataError, formDataJson);
-}
-
-function GetChartData() {
-	ajaxServiceMethod(BaseURL + ClientPieChartURL + "/1", 'GET', GetChartDataSuccess, GetChartDataError);
 }
 
 function GetChartDataSuccess(data) {
@@ -163,7 +160,7 @@ function BindPieChart(chartdata) {
 		exportEnabled: true,
 		animationEnabled: true,
 		title: {
-			text: "Pie Chart for Clinet"
+			text: ""
 		},
 		data: [{
 			type: "pie",
@@ -186,7 +183,7 @@ function BindBarChart(chartdata) {
 		exportEnabled: true,
 		theme: "light1", // "light1", "light2", "dark1", "dark2"
 		title: {
-			text: "Bar Chart for Client"
+			text: ""
 		},
 		axisY: {
 			includeZero: true
@@ -202,7 +199,7 @@ function BindBarChart(chartdata) {
 	});
 	chart.render();
 
-}
+}1
 
 function clearSearchFields() {
 	document.getElementById("dashboardFilterForm").reset();

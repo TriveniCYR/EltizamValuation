@@ -110,7 +110,7 @@ namespace Eltizam.Business.Core.Implementation
             SqlParameter[] osqlParameter =
             {
                 new SqlParameter("@ModuleName", filterModel.ModuleName),
-                new SqlParameter("@RoleId", filterModel.RoleId),
+                new SqlParameter("@LogInUserId", filterModel.LogInUserId),
                 new SqlParameter("@ClientId", filterModel.ClientId),
                 new SqlParameter("@PropertyId", filterModel.PropertyId),
                 new SqlParameter("@FromDate", filterModel.FromDate),
