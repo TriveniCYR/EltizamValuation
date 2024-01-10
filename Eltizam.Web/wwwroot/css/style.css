@@ -2163,6 +2163,21 @@ table.dashboardTable {
     text-align: left;
 }
 
+table.dashboardTableExt {
+    min-width: 100%;
+    box-shadow: none;
+    margin: 10px 0 0;
+}
+
+.dashboardTableExt th, td {
+    /*background: none;
+    color: var(--black);*/
+    text-align: left;
+    border: none;
+    padding: 2px;
+}
+ 
+
 .dashboardMapArea {
     display: grid;
     grid-template-columns: 30% 68%;
