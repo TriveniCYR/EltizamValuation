@@ -62,9 +62,9 @@
 
     // Get distinct levels
     var Levels = Model.ValuationRequestApproverLevel;
-    var distinctLevels = Levels?.Select(approverLevel => approverLevel.ApproverLevelId).Distinct();
+    var distinctLevels = Levels?.Where(a => a.ApproverLevelId != 1).Select(b => b.ApproverLevelId).Distinct();
     var LevelsApproved = Model.ValuationRequestApproverLevel?.Where(a => a.IsSelected != null).ToList();
-    
+
     var _valRegHeader = (ValuationRequestDependencies)TempData[UserHelper.ValReqHeader];
     var vId = (_valRegHeader != null) ? _valRegHeader.Id : 0;
 }
@@ -110,7 +110,7 @@
 
                                 <img src="/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" style="width: 2em;background-color: var(--blue);margin-left: 1em;">
                                 <div id="ValuationActions" class="actionItem" style="width: 95%;display: none;margin:1.2em 0em 0em 0em;">
-                                    <ul>                                        
+                                    <ul>
                                     </ul>
                                 </div>
                             </div>
@@ -251,10 +251,10 @@
                                             <label for="" class="bodyContent p-0 w-50">
                                                 @level
                                                 @Html.DropDownListFor(model => ddSelected, new SelectList(curList.Select(approver => new SelectListItem
-                                                {
+                                               {
                                                    Value = approver.ApproverId.ToString(),
                                                    Text = approver.ApproverName
-                                                }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
+                                               }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
                                             </label>
                                         }
                                     }
@@ -1329,16 +1329,15 @@
                     <input type="hidden" id="hdnActionStatusId" value="" />
                     <div class="inputSearchs">
                         <form>
-                        <div class="row" style="padding: 12px 30px">
-                            <label for="Comments" class="w-100">
-                                <p class="m-0"><span class="text-danger"></span></p>
-                                @* <input type="text" id="ActionComment" placeholder="Comment" class="w-100" /> *@
+                            <div class="row" style="padding: 12px 30px">
+                                <label for="Comments" class="w-100">
+                                    <p class="m-0"><span class="text-danger"></span></p>
+                                    @* <input type="text" id="ActionComment" placeholder="Comment" class="w-100" /> *@
                                     <textarea id="ActionComment" name="ActionComment" class="w-100" rows="4" cols="7"></textarea>
                                 </label>
-                        </div>
-                        <div class="row" style="padding: 12px 60px">
-
-                        </div>
+                            </div>
+                            <div class="row" style="padding: 12px 60px">
+                            </div>
                         </form>
                     </div>
                     <div class=" w-100 text-right">
@@ -1424,7 +1423,7 @@
         var ValuationRequestGetById = "@Eltizam.Web.Helpers.APIURLHelper.ValuationRequestGetById";
         var UpdateRequestStatus = "@Eltizam.Web.Helpers.APIURLHelper.UpdateRequestStatus";
         var GetSiteDescriptionList = "@Eltizam.Web.Helpers.APIURLHelper.GetSiteDescriptionList";
-         var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
+        var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
         var GetPaymentInvoiceById = "@Eltizam.Web.Helpers.APIURLHelper.GetPaymentInvoiceById";
         var DeletePyamentInvoice = "@Eltizam.Web.Helpers.APIURLHelper.DeletePyamentInvoice";
         var DeleteAssesmentDocument = "@Eltizam.Web.Helpers.APIURLHelper.DeleteDocument";

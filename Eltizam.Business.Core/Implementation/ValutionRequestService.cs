@@ -304,7 +304,7 @@ namespace Eltizam.Business.Core.Implementation
 
                 if (entityValuation.Id > 0)
                 {
-                    if (entityValuation.ValuationApprovalValues != null)
+                    //if (entityValuation.ValuationApprovalValues != null)
                     {
                         //var quotid = _valuationQuotationrepository.GetAll().Where(x => x.ValuationRequestId == entityValuation.Id).Select(x => x.Id).First();
                         await UpsertApproverLevels(entityValuation.Id, entityValuation.ValuationApprovalValues, entityValuation.ModifiedBy);
