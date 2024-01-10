@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Eltizam.Data.DataAccess.Entity
 {
-    public partial class VwValuationRequest
+    public partial class VwValuationRequestDetail
     {
         public int Id { get; set; }
         public string ReferenceNo { get; set; } = null!;
@@ -33,5 +33,17 @@ namespace Eltizam.Data.DataAccess.Entity
         public int? Group { get; set; }
         public string? ColorCode { get; set; }
         public string? BackGroundColor { get; set; }
+        public string? ClientType { get; set; }
+        public string? ClientName { get; set; }
+        public string? PropertyType { get; set; }
+        public string? PropertyName { get; set; }
+        public string? ValuationPurpose { get; set; }
+        public string? MethodOfValuation { get; set; }
+        public string? Requestor { get; set; }
+        public string? Valuer { get; set; }
+        public string? Approver { get; set; }
+        public int? PropertyTypeId { get; set; }
+        public string? PropertySubType { get; set; }
+        public int? PropertySubTypeId { get; set; }
     }
 }
