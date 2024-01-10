@@ -142,11 +142,11 @@ function BindPropertySub(id) {
 }
 
 function BindClient() { 
-    var Client = $("#ClientTypeId");
+    var ClientType = $("#ClientTypeId");
     var _val = $('#hdnClientType').val();
-    var _rpname = "clientType";
-
-    BindDropdowns(ClientTypeList, Client, _rpname, _val); 
+    var _rpname = "description";
+    var description = "CLIENT_TYPE";
+    BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ClientType, _rpname, _val); 
 }
 
 function BindOwnership() { 

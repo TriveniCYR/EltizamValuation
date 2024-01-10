@@ -18,7 +18,7 @@ namespace Eltizam.WebApi.Controllers
         #region Properties
         private readonly IValuationRequestService _valuationServices;
 
-        private readonly IResponseHandler<dynamic> _ObjectResponse; 
+        private readonly IResponseHandler<dynamic> _ObjectResponse;
         #endregion Properties
 
         #region Constructor
@@ -152,7 +152,7 @@ namespace Eltizam.WebApi.Controllers
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
             }
         }
-         
+
 
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
@@ -174,17 +174,24 @@ namespace Eltizam.WebApi.Controllers
         [HttpPost, Route("UpdateRequestStatus")]
         public async Task<IActionResult> UpdateRequestStatus([FromBody] ValutionRequestStatusChangeModel model)
         {
-            DBOperation oResponse = await _valuationServices.UpdateRequestStatus(model);
-            if (oResponse == DBOperation.Success)
+            try
             {
-                return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+                DBOperation oResponse = await _valuationServices.UpdateRequestStatus(model);
+                if (oResponse == DBOperation.Success)
+                {
+                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+                }
+                else
+                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
             }
-            else
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
         }
 
         [HttpPost, Route("UpsertApproverLevels")]
-        public async Task<IActionResult> UpsertApproverLevels(int ValReqId,int CreatedBy,int ValQuotId, string RequestData)
+        public async Task<IActionResult> UpsertApproverLevels(int ValReqId, int CreatedBy, int ValQuotId, string RequestData)
         {
             DBOperation oResponse = await _valuationServices.UpsertApproverLevels(ValReqId, RequestData, CreatedBy, ValQuotId);
             if (oResponse == DBOperation.Success)

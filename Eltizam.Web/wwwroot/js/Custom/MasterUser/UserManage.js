@@ -530,7 +530,7 @@ function isValidEmail(email) {
 }
 
 function isValidPhone(phone) {
-    var phonePattern = /^[0-9]{9,12}$/;
+    var phonePattern = /^[0-9]{5,12}$/;
     return phonePattern.test(phone);
 }
 
