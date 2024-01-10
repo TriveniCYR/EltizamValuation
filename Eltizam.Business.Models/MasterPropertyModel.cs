@@ -27,7 +27,7 @@ namespace Eltizam.Business.Models
         public string? AdditionalUnits { get; set; }
         //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         //[Range(1, int.MaxValue, ErrorMessage = "The 'Furnished' field is required.")]
-        public int FurnishedId { get; set; }
+        public int? FurnishedId { get; set; }
         [StringLength(250, MinimumLength = 1)]
         public string? ValuationPurpose { get; set; }
         //[StringLength(25, MinimumLength = 1)]

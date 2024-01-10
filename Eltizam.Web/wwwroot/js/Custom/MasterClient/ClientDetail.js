@@ -71,7 +71,7 @@ function BindDepartment() {
         var Department = $("#Contacts_" + i + "__DepartmentId");
         var _val = $('#hdnDeparment_' + i).val();
         var _rpname = "description";
-        var description = DictionaryDepartmentCode;
+        var description = "DEPARTMENT";
         BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Department, _rpname, _val);
         //BindDropdowns(DepartmentList, Department, _rpname, _val);
     }

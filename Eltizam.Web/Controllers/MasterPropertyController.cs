@@ -120,6 +120,9 @@ namespace EltizamValuation.Web.Controllers
                     masterProperty.CreatedBy = _helper.GetLoggedInUserId();
                 masterProperty.ModifiedBy = _helper.GetLoggedInUserId();
 
+                masterProperty.PropertySubTypeId = masterProperty.PropertySubTypeId == 0 ? null : masterProperty.PropertySubTypeId;
+                masterProperty.FurnishedId   = masterProperty.FurnishedId == 0 ? null : masterProperty.FurnishedId;
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
 
