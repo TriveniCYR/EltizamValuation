@@ -7,6 +7,10 @@
 var ErrorMessage = 'Error Occured !'
 // #region Get ClientType List
 
+//$(window).on('load', function () {
+//	$('.canvasjs-chart-credit').hide();
+//	alert('1');
+//});
 function BindClientNameDropdown() {
 	var Client = $("#ClientId");
 	var _val = 0;
@@ -41,6 +45,7 @@ function submitFilterForm() {
 
 	var formDataJson = JSON.stringify(formDataObject);
 	ajaxServiceMethod(BaseURL + ClientPieChartURL, 'POST', GetChartDataSuccess, GetChartDataError, formDataJson);
+	
 }
 
 function GetChartDataSuccess(data) {
@@ -57,12 +62,13 @@ function GetChartDataSuccess(data) {
 		BindPieChart(dataPoints);
 
 		if ($('#ModuleName').val() =='Client')
-			FillClientDetails(data._object.OtheDetails);
-		else if ($('#ModuleName').val() == 'Valuation')
-			FillValuationDetails(data._object.OtheDetails);
+			FillClientDetails(data._object.OtheDetails);	
 		else if ($('#ModuleName').val() == 'Property')
 			FillPropertyDetails(data._object.OtheDetails);
+		else //if ($('#ModuleName').val() == 'Valuation')
+			FillValuationDetails(data._object.OtheDetails);
 
+		
 	} catch (e) {
 		toastr.error('Error:' + e.message);
 	}
@@ -177,7 +183,7 @@ function BindPieChart(chartdata) {
 		}]
 	});
 	chart.render();
-
+	$('.canvasjs-chart-credit').hide();
 }
 
 function BindBarChart(chartdata) {
