@@ -110,17 +110,19 @@ function FillClientDetails(otherData) {
 }
 
 function FillValuationDetails(otherData) {
+	showLoader();
 	//RequestTable Start
 	var latestRequestsTablethead = $('.dashboardTableExt thead');
 	latestRequestsTablethead.empty(); // Clear existing rows
 	var throwHtml = '<tr><th>Val Ref#</th>  <th>Client Type</th> <th>Client Name</th>    <th>Property Type</th>  <th>Property Name</th> '+ 
-		'<th> Val Purpose</th>   <th>Val Date</th>  <th>Requestor</th>  <th>Approver</th>   <th>Valuer</th> <th>Status</th> </tr > ';
+		'<th>Val Date</th>  <th>Requestor</th>  <th>Approver</th>   <th>Valuer</th> <th>Quoted</th>  <th>Paid</th>   <th>Due</th> <th>Status</th> </tr > ';
 	latestRequestsTablethead.append(throwHtml);
 
 	var latestRequestsTableBody = $('.dashboardTableExt tbody');
 	latestRequestsTableBody.empty(); // Clear existing rows
 
 	if (otherData.length != 0) {
+		
 		otherData.forEach(function (request) {
 			var Active = request.isActive ? "Yes" : "No";
 
@@ -129,16 +131,21 @@ function FillValuationDetails(otherData) {
 				'<td>' + request.clientType + '</td>' +
 				'<td>' + request.clientName + '</td>' +
 				'<td>' + request.propertyType + '</td>' +
-				'<td>' + request.propertyName + '</td>' +
-				'<td>' + request.valuationPurpose + '</td>' +
+				'<td>' + request.propertyName + '</td>' + 
 				'<td>' + moment(request.valuationDate).format('DD-MMM-YYYY') + '</td>' +
 				'<td>' + request.requestor + '</td>' +
 				'<td>' + request.approver + '</td>' +
 				'<td>' + request.valuer + '</td>' +
+				'<td class="formatting">' + request.totalQuoted + '</td>' +
+				'<td class="formatting">' + request.totalPaid + '</td>' +
+				'<td class="formatting">' + request.totalDue + '</td>' +
 				'<td><label class="tableStatus" style="color: ' + request.colorCode + '; background-color: ' + request.backGroundColor + '; border: 1px solid ' + request.colorCode + ';">' + request.statusName + '</label></td>' +
 				'</tr>';
 			latestRequestsTableBody.append(rowHtml);
 		});
+
+		formatCurrencyInElements('formatting');
+		hideLoader();
 	}
 }
 

@@ -150,7 +150,7 @@ function submitFilterFormSuccess(data) {
     hideLoader();
     //TopQuotationDuesTable End
 
-    formatCurrencyInElements('formatting')
+    formatCurrencyInElements('formatting');
 }
 
 function submitFilterFormError(x, y, z) {

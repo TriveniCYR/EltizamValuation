@@ -2169,12 +2169,16 @@ table.dashboardTableExt {
     margin: 10px 0 0;
 }
 
-.dashboardTableExt th, dashboardTableExt td {
-    /*background: none;
-    color: var(--black);*/
+.dashboardTableExt th { 
     text-align: left;
     border: none;
-    padding: 2px;
+    padding: 10px;
+}
+
+.dashboardTableExt td {
+    text-align: left;
+    border: none;
+    padding: 10px;
 }
  
 
