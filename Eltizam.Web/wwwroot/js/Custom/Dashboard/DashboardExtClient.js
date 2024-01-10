@@ -78,12 +78,12 @@ function GetChartDataError(x, y, z) {
 }
 function FillClientDetails(otherData) {
 	//RequestTable Start
-	var latestRequestsTablethead = $('.latestRequestsTable thead');
+	var latestRequestsTablethead = $('.dashboardTableExt thead');
 	latestRequestsTablethead.empty(); // Clear existing rows
 	var throwHtml = '<tr><th>ID</th> <th>Client Name</th> <th>Client Type</th> <th>TRN Number</th> <th>TRN Expiry Date</th> <th>License Number</th> <th>Active</th></tr>';
 	latestRequestsTablethead.append(throwHtml);
 
-	var latestRequestsTableBody = $('.latestRequestsTable tbody');
+	var latestRequestsTableBody = $('.dashboardTableExt tbody');
 	latestRequestsTableBody.empty(); // Clear existing rows
 
 	if (otherData.length != 0) {
@@ -111,12 +111,12 @@ function FillClientDetails(otherData) {
 
 function FillValuationDetails(otherData) {
 	//RequestTable Start
-	var latestRequestsTablethead = $('.latestRequestsTable thead');
+	var latestRequestsTablethead = $('.dashboardTableExt thead');
 	latestRequestsTablethead.empty(); // Clear existing rows
 	var throwHtml = '<tr><th>Val Ref#</th><th>Property</th><th>Client</th><th>Status</th></tr>';
 	latestRequestsTablethead.append(throwHtml);
 
-	var latestRequestsTableBody = $('.latestRequestsTable tbody');
+	var latestRequestsTableBody = $('.dashboardTableExt tbody');
 	latestRequestsTableBody.empty(); // Clear existing rows
 
 	if (otherData.length != 0) {
@@ -136,12 +136,12 @@ function FillValuationDetails(otherData) {
 
 function FillPropertyDetails(otherData) {
 	//RequestTable Start
-	var latestRequestsTablethead = $('.latestRequestsTable thead');
+	var latestRequestsTablethead = $('.dashboardTableExt thead');
 	latestRequestsTablethead.empty(); // Clear existing rows
 	var throwHtml = '<tr><th>Id</th><th>Property Type</th><th>Property Name</th><th>Property SubType</th><th>Ownership Type</th><th>Active</th></tr>';
 	latestRequestsTablethead.append(throwHtml);
 
-	var latestRequestsTableBody = $('.latestRequestsTable tbody');
+	var latestRequestsTableBody = $('.dashboardTableExt tbody');
 	latestRequestsTableBody.empty(); // Clear existing rows
 
 	if (otherData.length != 0) {

@@ -303,7 +303,7 @@ $(document).ready(function () {
         $("#profile5 :input").attr("disabled", true);
         $("#profile6 :input").attr("disabled", true);
 
-        $('#ApproverComment').attr("disabled", false);
+        //$('#ApproverComment').attr("disabled", false);
     }
     //Valuer settings
     else if (roleId === RoleEnum.Valuer.toString()) {

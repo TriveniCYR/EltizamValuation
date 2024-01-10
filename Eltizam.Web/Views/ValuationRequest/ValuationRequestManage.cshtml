@@ -209,7 +209,7 @@
 
                                     <label for="" class="w-50 m-0" id="comment">
                                         Approver Comment
-                                        @Html.TextBoxFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
+                                        @Html.TextBoxFor(model => model.ApproverComment, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Review Comment"] })
                                         @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
