@@ -863,18 +863,22 @@ function GetValuationMethodLists() {
 
 
 $('#btnSaveApprove').on('click', function () {
-    var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
+    //var approverComment = $("#ApproverComment").val() === undefined ? "" : $("#ApproverComment").val();
     var _id = $("#Id").val();
+    var statusId = $("#StatusId").val();
+    
+    $('#ValuationApproverAction').modal('show');
+    return false;
+    
+    //var request = {
+    //    Id: _id,
+    //    StatusId: $("#StatusId").val(),
+    //    //ApproverComment: approverComment,
+    //    Comment: approverComment,
+    //    LogInUserId: LogInUserId
+    //};
 
-    var request = {
-        Id: _id,
-        StatusId: $("#StatusId").val(),
-        //ApproverComment: approverComment,
-        Comment: approverComment,
-        LogInUserId: LogInUserId
-    };
-
-    UpdateValuationStatus(request);
+    //UpdateValuationStatus(request);
 });
 
 function UpdateValuationStatus(request) {
@@ -1262,10 +1266,15 @@ function AssignApproverAction() {
         toastr.error("Please enter comment.");
         return false;
     }
+    var roleId = document.getElementById('hdnRoleId').value;
+    if (roleId == 2 || roleId == 3) {
+        statusId = $("#StatusId").val();
+    }
+
     var modelReq = {
         Id: requestId,
         StatusId: statusId,
-        //ApproverComment: approverComment,
+        ApproverComment: comment,
         Comment: comment,
         LogInUserId: LogInUserId
     };
