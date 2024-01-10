@@ -39,14 +39,14 @@ function BindCurrencyHome() {
     var currencyId = $("#HomeCurrencyId");
     var _val = $('#hdnHomeCurrencyId').val();
     var _rpname = "description";
-    var description = "CURRENCY";
+    var description = DictionaryCurrencyCode;
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, currencyId, _rpname, _val);
 }
 function BindCurrencyForeign() { 
     var currencyId = $("#ForeignCurrencyId");
     var _val = $('#hdnForeignCurrencyId').val();
     var _rpname = "description";
-    var description = "CURRENCY";
+    var description = DictionaryCurrencyCode;
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, currencyId, _rpname, _val);
 }
  

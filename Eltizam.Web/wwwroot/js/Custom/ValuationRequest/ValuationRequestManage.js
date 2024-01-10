@@ -400,7 +400,7 @@ function BindClientType() {
     var ClientType = $("#ClientTypeId");
     var _val = $('#hdnClientTypeId').val();
     var _rpname = "description";
-    var description = "CLIENT_TYPE";
+    var description = DictionaryClientTypeCode;
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, ClientType, _rpname, _val);
 }
 
@@ -474,7 +474,7 @@ function BindOwnership() {
     var OwnershipType = $("#OwnershipTypeId");
     var _val = $('#hdnOwnershipType').val();
     var _rpname = "description";
-    var description = "OWNERSHIP_TYPE";
+    var description = DictionaryOwnershipTypeCode;
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, OwnershipType, _rpname, _val);
 }
 
@@ -525,7 +525,7 @@ function BindUnitType() {
     var UnitType = $("#UnitTypeId");
     var _rpname = "description";
     var _val = $('#hdnUnitTypeId').val();
-    var description = 'UNIT_TYPE';
+    var description = DictionaryUnitTypeCode;
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, UnitType, _rpname, _val);
 }
 
@@ -533,7 +533,7 @@ function BindFurnished() {
     var Furnished = $("#FurnishedId");
     var _val = $('#hdnFurnishedId').val();
     var _rpname = "description";
-    var description = "PROPERTY_FURNISHED";
+    var description = DictionaryPropertyFurnishedCode;
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, Furnished, _rpname, _val);
 }
 
@@ -857,7 +857,7 @@ function GetValuationMethodLists() {
     //var description = "Valuation Method";
     // var currentUserId = "@ViewBag.CurrentUserId";
 
-    var description = "VALUATION_METHOD";
+    var description = DictionaryValuationMethodCode;
     BindDropdownsForDictionary(GetDictionaryWithSubDetails + '?code=' + description, statusId, _rpname, _val); 
 }
 

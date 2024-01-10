@@ -14,6 +14,7 @@ namespace Eltizam.Business.Models
         public int Id { get; set; }
         public int ValuationRequestId { get; set; }
         public string? ReferenceNO { get; set; }
+        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Special characters are not allowed in InvoiceNo")]
         public string InvoiceNo { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
@@ -24,7 +25,8 @@ namespace Eltizam.Business.Models
 
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime TransactionDate { get; set; }
-
+        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        [Range(1, int.MaxValue, ErrorMessage = "The 'Amount' field is required.")]
         public decimal Amount { get; set; }
         public decimal? Balance { get; set; }
         public string? Note { get; set; }

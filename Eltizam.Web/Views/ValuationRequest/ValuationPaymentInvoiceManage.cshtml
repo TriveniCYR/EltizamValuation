@@ -86,9 +86,10 @@
                                 @Html.TextBoxFor(model => model.InvoiceNo,  new { @class = "form-control " })
                                 @Html.ValidationMessageFor(model => model.InvoiceNo, "", new { @class = "text-danger" })
                             </label>
-                            <label for="Amount" class="w-50">
-                                Amount
-                                @Html.TextBoxFor(model => model.Amount,  new { @class = "form-control  " })
+                            <label for="" class="w-50">
+                               <p class="m-0">Amount<span class="text-danger">*</span></p>
+                                @Html.TextBoxFor(model => model.Amount,  new { @class = "form-control price formatting" })
+                                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
                             </label>
                         </div>
 
