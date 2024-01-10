@@ -91,9 +91,12 @@ function FillClientDetails(otherData) {
 				'<td>' + request.clientType + '</td>' +
 
 				'<td>' + request.trnNumber + '</td>' +
-				'<td>' + request.trnExpiryDate + '</td>' +
+				'<td>' + moment(request.trnExpiryDate).format('DD-MMM-YYYY') + '</td>'+
+
 				'<td>' + request.licenseNumber + '</td>' +
-				'<td>' + Active + '</td>' +
+				'<td>' + GetActiveFlagCss(Active) + '</td>' +
+			
+
 				'</tr>';
 			latestRequestsTableBody.append(rowHtml);
 		});
@@ -147,7 +150,7 @@ function FillPropertyDetails(otherData) {
 
 				'<td>' + request.propertySubType + '</td>' +
 				'<td>' + request.ownershipType + '</td>' +
-				'<td>' + Active + '</td>' +
+				'<td>' + GetActiveFlagCss( Active) + '</td>' +
 				'</tr>';
 			latestRequestsTableBody.append(rowHtml);
 		});

@@ -20,15 +20,34 @@
             <div class="whiteBoxShadow">
                 <div class="inputSearchs">
                     <form id="dashboardFilterForm">
-                        <div class="flex dashboardSearch">
-                            <label for="ClientTypeId">
-                                Client
-                                @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId", @class = "form-control searchable-dropdown" })
-                            </label>
-                            <label for="PropertyId">
-                                Property
-                                @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control searchable-dropdown" })
-                            </label>
+                        <div class="flex dashboardSearch" style="justify-content:initial">
+                            @if (ModuleName=="Client")
+                            {
+                                <label for="ClientTypeId">
+                                    Client
+                                    @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId", @class = "form-control searchable-dropdown" })
+                                </label>
+                            }
+                            else if(ModuleName == "Property")
+                            {
+                                <label for="PropertyId">
+                                    Property
+                                    @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control searchable-dropdown" })
+                                </label>
+                            }
+                            else
+                            {
+                                <label for="ClientTypeId">
+                                    Client
+                                    @Html.DropDownListFor(model => model.ClientId, new List<SelectListItem> { }, new { id = "ClientId", @class = "form-control searchable-dropdown" })
+                                </label>
+
+                                <label for="PropertyId">
+                                    Property
+                                    @Html.DropDownListFor(model => model.PropertyId, new List<SelectListItem> { }, new { id = "PropertyId",@class="form-control searchable-dropdown" })
+                                </label>
+                            }
+
                             <label for="" style="width: 15% !important">
                                 From
                                 @Html.TextBoxFor(model => model.FromDate, new { @class = "formatted-date-input", id = "FromDate" })
@@ -39,8 +58,11 @@
                             </label>
                             <input type="hidden" id="ModuleName" value="@ModuleName" />
                             <input type="hidden" id="RoleId" value="@RoleId" />
-                            <button type="button" onclick="submitFilterForm()" class="blueBtn">Search</button>
-                            <button type="button" onclick="clearSearchFields()" class="blueBtn">Clear</button>
+                            <div style="padding-left:10px;">
+                                <button type="button" onclick="submitFilterForm()" class="blueBtn">Search</button>
+                                <button type="button" onclick="clearSearchFields()" class="blueBtn">Clear</button>
+                            </div>
+                            
                         </div>
                     </form>
                 </div>
@@ -55,10 +77,10 @@
                 </div>
                 <div class="flex dashboard-status">
                     <div class="roundBorderBox w-100">
-                        <div class="flex justify-between">
+                        @* <div class="flex justify-between">
                             <h5>Latest Requests</h5>
                             <a href="#" id="openModalLinklatestRequestsTable">View More</a>
-                        </div>
+                        </div> *@
                         <div class="scroll-x">
                             <table class="dashboardTable latestRequestsTable table-striped">
                                 <thead>
