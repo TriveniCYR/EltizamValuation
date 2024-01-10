@@ -153,9 +153,9 @@ namespace EltizamValuation.Api.Controllers
         }
 
         [HttpPost, Route("ReviewerRequestStatus")]
-        public async Task<IActionResult> ReviewerRequestStatus([FromBody] ValutionRequestForApproverModel model)
+        public async Task<IActionResult> ReviewerRequestStatus([FromBody] ValutionRequestStatusChangeModel model)
         {
-            DBOperation oResponse = await _valutionServices.ReviewerRequestStatus(model);
+            DBOperation oResponse = await _valutionServices.UpdateRequestStatus(model);
             if (oResponse == DBOperation.Success)
             {
                 return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));

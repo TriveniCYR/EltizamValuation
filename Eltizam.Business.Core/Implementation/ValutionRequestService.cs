@@ -237,7 +237,7 @@ namespace Eltizam.Business.Core.Implementation
                         valuationEntity.StatusId = model.StatusId; 
                     
 
-                    valuationEntity.ApproverComment = model.Comment;
+                    valuationEntity.ApproverComment = model.ApproverComment;
                     valuationEntity.ApproverUpdateDate = AppConstants.DateTime;
                 }
 

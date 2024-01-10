@@ -40,6 +40,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public string? AssignRemark { get; set; }
         public bool? IsDeleted { get; set; }
         public string? StatusComment { get; set; }
+
         public virtual MasterUser? Approver { get; set; }
         public virtual MasterClient Client { get; set; } = null!;
         public virtual MasterProperty Property { get; set; } = null!;

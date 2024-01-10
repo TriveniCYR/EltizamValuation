@@ -10,6 +10,6 @@ namespace Eltizam.Data.DataAccess.Entity
         public long ValuationRequestId { get; set; }
         public DateTime CreatedDate { get; set; }
         public int CreatedBy { get; set; }
-        public string? StatusRemark { get; set; }
+        public string? StatusComment { get; set; }
     }
 }
