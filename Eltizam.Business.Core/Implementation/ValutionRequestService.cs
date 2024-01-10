@@ -303,13 +303,7 @@ namespace Eltizam.Business.Core.Implementation
                 ValuationRequest OldEntity = null;
 
                 if (entityValuation.Id > 0)
-                {
-                    //if (entityValuation.ValuationApprovalValues != null)
-                    {
-                        //var quotid = _valuationQuotationrepository.GetAll().Where(x => x.ValuationRequestId == entityValuation.Id).Select(x => x.Id).First();
-                        await UpsertApproverLevels(entityValuation.Id, entityValuation.ValuationApprovalValues, entityValuation.ModifiedBy);
-                    }
-
+                { 
                     OldEntity = _repository.GetNoTracking(entityValuation.Id);
                     objValuation = _repository.Get(entityValuation.Id);
 
@@ -331,6 +325,9 @@ namespace Eltizam.Business.Core.Implementation
                         _repository.UpdateAsync(objValuation);
                         await _unitOfWork.SaveChangesAsync();
 
+                        //if (entityValuation.ValuationApprovalValues != null) 
+                            await UpsertApproverLevels(entityValuation.Id, entityValuation.ValuationApprovalValues, entityValuation.ModifiedBy); 
+                        
                         try
                         {
                             var newstatusname = _statusrepository.GetAll().Where(x => x.Id == objValuation.StatusId).Select(x => x.Status).FirstOrDefault();
