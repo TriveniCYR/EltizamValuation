@@ -143,7 +143,10 @@ namespace Eltizam.Business.Core.Implementation
 
                     // Update the entity in the repository asynchronously.
                     _repository.UpdateAsync(type);
-                } 
+                    //Do Audit Log --AUDITLOGUSER
+                     await _auditLogService.CreateAuditLog<MasterPropertyType>(AuditActionTypeEnum.Update, OldEntity, type, MainTableName, MainTableKey);
+
+                }
             }
             else
             { 
@@ -162,7 +165,7 @@ namespace Eltizam.Business.Core.Implementation
             await _unitOfWork.SaveChangesAsync();
 
             //Do Audit Log --AUDITLOGUSER
-            await _auditLogService.CreateAuditLog<MasterPropertyType>(AuditActionTypeEnum.Update, OldEntity, type, MainTableName, MainTableKey);
+           // await _auditLogService.CreateAuditLog<MasterPropertyType>(AuditActionTypeEnum.Update, OldEntity, type, MainTableName, MainTableKey);
 
             // Return an appropriate operation result.
             if (type.Id == 0)
