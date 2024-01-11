@@ -8,6 +8,10 @@ $(document).ready(function () {
         GetInvoiceDetail(id);
     }
     BindTransactionstatus(); 
+    $('#CashAmount').prop('readonly', true);
+    $('#ChequeAmount').prop('readonly', true);
+    $('#CardAmount').prop('readonly', true);
+    $('#BankAmount').prop('readonly', true);
 });
 
 
