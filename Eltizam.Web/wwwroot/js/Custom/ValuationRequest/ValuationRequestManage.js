@@ -1093,7 +1093,7 @@ function DeleteQuotationByIdError(x, y, z) {
 function ConfirmationDeleteInvoice(id) {
     $('#DeleteInvoiceModel #Id').val(id);
 }
-function DeleteInvoice() {
+function DeletePayment() {
     invoiceId = $('#DeleteInvoiceModel #ID').val()
     var by = LogInUserId;
     if (isDeleteIn) {
