@@ -20,7 +20,6 @@ namespace Eltizam.Business.Models
         public string? Remarks { get; set; }
       
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, double.MaxValue)]
         public decimal? RateSqFt { get; set; }
         
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
