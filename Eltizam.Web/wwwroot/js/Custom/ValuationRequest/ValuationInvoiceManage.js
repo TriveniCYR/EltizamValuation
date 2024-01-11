@@ -535,25 +535,30 @@ function updateTotalAmount() {
         var amount = parseFloat(row.find('.formatting').text());
         sum += amount;
     });
+    var paymentId = $('#hdnId').val();
+    if (paymentId == 0) {
+        $('#CashAmount').val('');
+        $('#ChequeAmount').val('');
+        $('#CardAmount').val('');
+        $('#BankAmount').val('');
+        // Update the total amount textbox with the calculated sum
+        var modeId = $('#hdnTabId').val();
+        if (modeId == 1) {
+            $('#CashAmount').val(sum);
 
-    // Update the total amount textbox with the calculated sum
-    var modeId = $('#hdnTabId').val();
-    if (modeId == 1) {
-        $('#CashAmount').val(sum).prop('readonly', true);
+        }
 
-    }
+        else if (modeId == 2) {
+            $('#ChequeAmount').val(sum);
+        }
+        else if (modeId == 3) {
+            $('#CardAmount').val(sum);
 
-    else if (modeId == 2) {
-        $('#ChequeAmount').val(sum).prop('readonly', true);
-    }
-    else if (modeId == 3) {
-        $('#CardAmount').val(sum).prop('readonly', true);
+        }
+        else if (modeId == 4) {
+            $('#BankAmount').val(sum);
 
-    }
-    else if (modeId == 4)
-    {
-        $('#BankAmount').val(sum).prop('readonly', true);
-
+        }
     }
 }
 
