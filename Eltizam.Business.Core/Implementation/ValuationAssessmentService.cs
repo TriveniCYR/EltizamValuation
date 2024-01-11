@@ -166,6 +166,7 @@ namespace Eltizam.Business.Core.Implementation
                     comparable.Size = model.comparableEvidenceModel.Size;
                     comparable.Remarks = model.comparableEvidenceModel.Remarks;
                     comparable.Price = model.comparableEvidenceModel.Price;
+                    comparable.RateSqFt = model.comparableEvidenceModel.RateSqFt;
 
                     comparable.ModifiedBy = model.comparableEvidenceModel.ModifiedBy;
 
