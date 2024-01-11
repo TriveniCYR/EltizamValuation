@@ -68,7 +68,7 @@ services.AddApplicationServices();
 
 services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 //services.AddScoped<IExceptionService, ExceptionService>(); 
-//services.AddScoped<UnitOfWork>();
+//services.AddScoped<UnitOfWork>();  
 services.AddScoped(typeof(IResponseHandler<>), typeof(ResponseHandler<>));
 
 // services.AddInfrastructureServices(Configuration);
