@@ -868,14 +868,17 @@ $('#btnSaveApprove').on('click', function () {
     var _id = $("#Id").val();
     var statusId = $("#StatusId").val();
     var oldStatusId = $('#hdnStatusId').val();
-    if (statusId != oldStatusId) {
-        $('#ValuationApproverAction').modal('show');
-        isSaveBtn = 1;
-        return false;
+    var requestId = $('#hdnId').val();
+    if (requestId > 0) {
+        if (statusId != oldStatusId) {
+            $('#ValuationApproverAction').modal('show');
+            isSaveBtn = 1;
+            return false;
 
-    }
-    else {
-        return true;
+        }
+        else {
+            return true;
+        }
     }
     //var request = {
     //    Id: _id,
@@ -892,14 +895,17 @@ $('#btnSaveEdit').on('click', function () {
 
     var statusId = $("#StatusId").val();
     var oldStatusId = $('#hdnStatusId').val();
-    if (statusId != oldStatusId) {
-        $('#ValuationApproverAction').modal('show');
-        isSaveBtn = 1;
-        return false;
+    var requestId = $('#hdnId').val();
+    if (requestId > 0) {
+        if (statusId != oldStatusId) {
+            $('#ValuationApproverAction').modal('show');
+            isSaveBtn = 1;
+            return false;
 
-    }
-    else {
-        return true;
+        }
+        else {
+            return true;
+        }
     }
 });
 
@@ -1270,14 +1276,17 @@ function BindValuationAction() {
 function CheckValuationAction(statusId) {
     debugger
     var oldStatusId = $('#hdnStatusId').val();
-    if (statusId != oldStatusId) {
-        $('#ValuationApproverAction').modal('show');
-        $('#hdnActionStatusId').val(statusId);
-        isSaveBtn = 0;
-        //return false;
-    }
-    else {
-        toastr.error("Status already exist for this Request.");
+    var requestId = $('#hdnId').val();
+    if (requestId > 0) {
+        if (statusId != oldStatusId) {
+            $('#ValuationApproverAction').modal('show');
+            $('#hdnActionStatusId').val(statusId);
+            isSaveBtn = 0;
+            //return false;
+        }
+        else {
+            toastr.error("Status already exist for this Request.");
+        }
     }
 }
 
