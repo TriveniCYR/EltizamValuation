@@ -134,7 +134,7 @@
                                     <label for="" class="w-50">
                                         <p class="m-0">Amount<span class="text-danger">*</span></p>
                                         @*  <input type="text" id="Amount" placeholder="enter the amount" class=" price formatting"> *@
-                                        @Html.EditorFor(model => model.CashAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount" } })
+                                        @Html.EditorFor(model => model.CashAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount",@disabled = "disabled" } })
                                         @* @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                     </label>
                                 </div>
@@ -164,7 +164,7 @@
                                     <label for="" class="w-50">
                                         <p class="m-0">Amount<span class="text-danger">*</span></p>
                                         @*  <input type="text" id="Amount" placeholder="enter the amount" class=" price formatting"> *@
-                                        @Html.EditorFor(model => model.ChequeAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount" } })
+                                        @Html.EditorFor(model => model.ChequeAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount",@disabled = "disabled" } })
                                         @* @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                     </label>
                                 </div>
@@ -215,7 +215,7 @@
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Amount<span class="text-danger">*</span></p>
-                                        @Html.EditorFor(model => model.CardAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount" } })
+                                        @Html.EditorFor(model => model.CardAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount",@disabled = "disabled" } })
                                         @* @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                     </label>
                                 </div>
@@ -274,7 +274,7 @@
                                     </label>
                                     <label for="" class="w-50">
                                         <p class="m-0">Amount<span class="text-danger">*</span></p>
-                                        @Html.EditorFor(model => model.BankAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount" } })
+                                        @Html.EditorFor(model => model.BankAmount, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control  formatting price", @placeholder = "enter amount",@disabled = "disabled" } })
                                         @* @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" }) *@
                                     </label>
                                 </div>
