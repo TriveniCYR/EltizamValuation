@@ -76,11 +76,11 @@ function GetChartDataSuccess(data) {
 function GetChartDataError(x, y, z) {
 	toastr.error(ErrorMessage);
 }
-function FillClientDetails(otherData) {
+function FillClientDetails(otherData) { 
 	//RequestTable Start
 	var latestRequestsTablethead = $('.dashboardTableExt thead');
 	latestRequestsTablethead.empty(); // Clear existing rows
-	var throwHtml = '<tr><th>ID</th> <th>Client Name</th> <th>Client Type</th> <th>TRN Number</th> <th>TRN Expiry Date</th> <th>License Number</th> <th>Active</th></tr>';
+	var throwHtml = '<tr><th>ID</th> <th>Client Name</th> <th>Client Type</th> <th>TRN Number</th> <th>TRN Expiry Date</th> <th>License Number</th> <th>Total Valuations</th> <th>Active</th></tr>';
 	latestRequestsTablethead.append(throwHtml);
 
 	var latestRequestsTableBody = $('.dashboardTableExt tbody');
@@ -100,6 +100,7 @@ function FillClientDetails(otherData) {
 				'<td>' + moment(request.trnExpiryDate).format('DD-MMM-YYYY') + '</td>'+
 
 				'<td>' + request.licenseNumber + '</td>' +
+				'<td>' + request.totalValCount + '</td>' +
 				'<td>' + GetActiveFlagCss(Active) + '</td>' +
 			
 
@@ -153,7 +154,7 @@ function FillPropertyDetails(otherData) {
 	//RequestTable Start
 	var latestRequestsTablethead = $('.dashboardTableExt thead');
 	latestRequestsTablethead.empty(); // Clear existing rows
-	var throwHtml = '<tr><th>Id</th><th>Property Type</th><th>Property Name</th><th>Property SubType</th><th>Ownership Type</th><th>Active</th></tr>';
+	var throwHtml = '<tr><th>Id</th><th>Property Type</th><th>Property Name</th><th>Property SubType</th><th>Ownership Type</th> <th>Total Valuations</th>  <th>Active</th></tr>';
 	latestRequestsTablethead.append(throwHtml);
 
 	var latestRequestsTableBody = $('.dashboardTableExt tbody');
@@ -171,10 +172,13 @@ function FillPropertyDetails(otherData) {
 
 				'<td>' + request.propertySubType + '</td>' +
 				'<td>' + request.ownershipType + '</td>' +
+				'<td>' + request.totalValCount + '</td>' +
 				'<td>' + GetActiveFlagCss( Active) + '</td>' +
 				'</tr>';
 			latestRequestsTableBody.append(rowHtml);
 		});
+
+		//StaticDataTable('#dashboardTableExtCommon');
 	}
 }
 
