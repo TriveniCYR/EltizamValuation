@@ -25,8 +25,8 @@ namespace Eltizam.Business.Core.Implementation
 
         private IRepository<MasterUser> _userrepo { get; set; }
         private IRepository<ValuationRequest> _repository { get; set; }
-        private IRepository<SiteDescription> _siterepository { get; set; }
-        private IRepository<ComparableEvidence> _evidencerepository { get; set; }
+        private IRepository<ValuationSiteDescription> _siterepository { get; set; }
+        private IRepository<ValuationComparableEvidence> _evidencerepository { get; set; }
         private IRepository<ValuationAssesment> _assesmenterepository { get; set; }
         private IRepository<MasterValuationStatus> _statusrepository { get; set; }
         private IRepository<ValuationRequestApproverLevel> _valuationRequestApproverLevel { get; set; }
@@ -44,8 +44,8 @@ namespace Eltizam.Business.Core.Implementation
             _mapperFactory = mapperFactory;
             _statusrepository = _unitOfWork.GetRepository<MasterValuationStatus>();
             _repository = _unitOfWork.GetRepository<ValuationRequest>();
-            _siterepository = _unitOfWork.GetRepository<SiteDescription>();
-            _evidencerepository = _unitOfWork.GetRepository<ComparableEvidence>();
+            _siterepository = _unitOfWork.GetRepository<ValuationSiteDescription>();
+            _evidencerepository = _unitOfWork.GetRepository<ValuationComparableEvidence>();
             _assesmenterepository = _unitOfWork.GetRepository<ValuationAssesment>();
             _configuration = configuration;
             _helper = helper;
@@ -437,7 +437,7 @@ namespace Eltizam.Business.Core.Implementation
                     _ValuationEntity.ColorCode = res.ColorCode;
                     _ValuationEntity.BackGroundColor = res.BackGroundColor;
 
-                    siteDescription = _mapperFactory.Get<SiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
+                    siteDescription = _mapperFactory.Get<ValuationSiteDescription, SiteDescriptionModel>(_siterepository.Get(x => x.ValuationRequestId == id));
 
                     //Get approver level data
                     approvellevel = await GetApproverLevel(id);
@@ -462,7 +462,7 @@ namespace Eltizam.Business.Core.Implementation
 
 
                     //comprable
-                    compevidence = _mapperFactory.Get<ComparableEvidence, ComparableEvidenceModel>(_evidencerepository.Get(x => x.RequestId == id));
+                    compevidence = _mapperFactory.Get<ValuationComparableEvidence, ComparableEvidenceModel>(_evidencerepository.Get(x => x.RequestId == id));
 
                     if (compevidence != null)
                     {
