@@ -154,7 +154,7 @@
 
                             <input type="hidden" id="hdnId" value="@(Model == null ? 0 : Model.Id)" />
                             <input type="hidden" id="hdnReferenceNo" value="@(Model == null ? 0 : Model.ReferenceNo)" />
-                            <input type="hidden" id="hdnStatusId" value="@(_md == "Add" ? 3 : (Model == null ? 0 : Model.StatusId))" />
+                            <input type="hidden" id="hdnStatusId" value="@(_md == "Add" ? 1 : (Model == null ? 0 : Model.StatusId))" />
                             <input type="hidden" id="hdnClientId" value="@(Model == null ? 0 : Model.ClientId)" />
                             <input type="hidden" id="hdnApproverId" value="@(Model == null ? 0 : Model.ApproverId)" />
                             <input type="hidden" id="hdnValuationModeId" value="@(Model == null ? 0 : Model.ValuationModeId)" />
