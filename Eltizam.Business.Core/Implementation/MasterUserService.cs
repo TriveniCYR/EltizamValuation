@@ -95,7 +95,7 @@
                         objUser.ResourceId = entityUser.ResourceId;
                         objUser.IsActive = entityUser.IsActive;
                         objUser.RoleId = entityUser.RoleId;
-                        objUser.ApproverLevelId = entityUser.ApproverLevelId;
+                        objUser.ApproverLevelId = entityUser.RoleId == (int)RoleEnum.Approver ? entityUser.ApproverLevelId : null;
                         objUser.Email = entityUser.Email;
                         objUser.ModifiedBy = entityUser.ModifiedBy;
 
