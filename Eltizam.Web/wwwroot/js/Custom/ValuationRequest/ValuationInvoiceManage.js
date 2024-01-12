@@ -536,8 +536,8 @@ function updateTotalAmount() {
     var sum = 0;
     checkedCheckboxes.each(function () {
         var row = $(this).closest('tr');
-        var amount = parseFloat(row.find('.formatting').text());
-        sum += amount;
+        var amt = row.find('.formatting').text().replace(',', '');
+        sum += parseFloat(amt);  
     });
     var paymentId = $('#hdnId').val();
     if (paymentId == 0) {
