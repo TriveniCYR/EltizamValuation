@@ -66,7 +66,9 @@ function InitializeDataList() {
             "data": "valuationFeeType", "name": "Valuation Fee Type"
         },
         {
-            "data": "totalValuationFees", "name": "Total Valuation Fees"
+            "data": "totalValuationFees", "name": "Total Valuation Fees", "render": function (data, type, row, meta) {
+                return '<span class="formatting">' + data + '</span>';
+            }
         },
         //{
         //    "data": "fixedvaluationFees", "name": "FixedvaluationFees"
@@ -90,7 +92,11 @@ function InitializeDataList() {
         }
     ];
 
-    IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
+    var dataTable = IntializingDataTable(tableId, setDefaultOrder, ajaxObject, columnObject);
+
+    dataTable.on('init.dt', function () {
+        formatCurrencyInElements('formatting');
+    });
 }
 
 

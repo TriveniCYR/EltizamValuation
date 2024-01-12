@@ -517,7 +517,7 @@ function BindCountryIsd() {
 // ======== IsActive list page color ============
 function GetActiveFlagCss(data) {
     var dd = "";
-    if (data === 1 || data === true || data.toLowerCase() === 'yes') {
+    if (data !== undefined && (data === 1 || data === true || data.toString().toLowerCase() === 'yes')) {
         dd = "<span class='tableStatus green'>Yes</span>";
     } else {
         dd = "<span class='tableStatus red'>No</span>";
