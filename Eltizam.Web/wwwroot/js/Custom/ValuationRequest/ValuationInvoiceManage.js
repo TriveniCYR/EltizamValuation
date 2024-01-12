@@ -512,7 +512,7 @@ function BindPaymentInvoiceList() {
                         }
                     }
                 });
-
+                formatCurrencyInElements('formatting');
                 $('#InvoiceTable tbody').on('change', '.invoiceCheckbox', function () {
                     updateTotalAmount();
                 });
