@@ -235,7 +235,14 @@ namespace EltizamValuation.Web.Controllers
                     if ((roleId == (int)RoleEnum.Valuer && data._object.ValuerId != userId) ||
                         (roleId == (int)RoleEnum.Approver && data._object.ApproverId != userId))
                     {
-                        return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                        if(data._object.ApproverId != userId)
+                        {
+                            return RedirectToAction(nameof(ValuationRequests));
+                        }
+                        else
+                        {
+                            return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                        }
                     }
 
                     //Get basic info
