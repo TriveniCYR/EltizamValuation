@@ -54,6 +54,7 @@
                         <span class="forgetPassword">
                             <a asp-controller="Account" asp-action="ForgetPassword" style="color: var(--blue); font-size:medium;">Forget password?</a>
                         </span>
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                     </div>
                 </label> 
 
