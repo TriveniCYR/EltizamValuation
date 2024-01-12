@@ -34,6 +34,7 @@
 
     var objPermssionIn = (RolePermissionModel)ViewBag.InvoiceAccess;
     var isAddIn = objPermssionIn.Add ? 1 : 0;
+    var ispAddIn = objPermssionIn.Add ? 1 : 0;
     var isEditIn = objPermssionIn.Edit ? 1 : 0;
     var isViewIn = objPermssionIn.View ? 1 : 0;
     var isDeleteIn = objPermssionIn.Delete ? 1 : 0;
@@ -147,6 +148,7 @@
                             <input type="hidden" id="isAddPermQuotation" value="@isAddQt" />
                             <input type="hidden" id="isEditPermQuotation" value="@isEditQt" />
                             <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
+                            <input type="hidden" id="isAddPermInvoicep" value="@ispAddIn" />
                             <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
                             <input type="hidden" id="isApprovePerm" value="@isApprove" />
 
@@ -743,7 +745,7 @@
                             @if (!isHideBtn)
                             {
                                 <a href="/ValuationRequest/ValuationInvoiceManage?vId=@Model.Id">
-                                    <button class="blueBtn" style="width:120px" id="addNewIn">
+                                    <button class="blueBtn" style="width:120px" id="addNewInp">
                                         <img src="../assets/plus.svg" alt="plus">
                                         Add New
                                     </button>

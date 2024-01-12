@@ -50,6 +50,7 @@ var IsAddPermQt = ($("#isAddPermQuotation").val() === "1" || $("#isAddPermQuotat
 var IsEditPermQt = ($("#isEditPermQuotation").val() === "1" || $("#isEditPermQuotation").val() === 1);
 
 var IsAddPermIn = ($("#isAddPermInvoice").val() === "1" || $("#isAddPermInvoice").val() === 1);
+var IspAddPermIn = ($("#isAddPermInvoicep").val() === "1" || $("#isAddPermInvoicep").val() === 1);
 var IsEditPermIn = ($("#isEditPermInvoice").val() === "1" || $("#isEditPermInvoice").val() === 1);
 
 var IsApprovePerem = ($("#isApprovePerm").val() === "1" || $("#isApprovePerm").val() === 1);
@@ -163,6 +164,9 @@ $(document).ready(function () {
 
     if (IsAddPermIn === false) {
         $("#addNewIn").remove();
+    }
+    if (IspAddPermIn === false) {
+        $("#addNewInp").remove();
     }
     if (IsEditPermIn === false) {
         $("#btnSaveEditIn").remove();
