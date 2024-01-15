@@ -40,7 +40,7 @@ namespace Eltizam.Data.DataAccess.Entity
         public bool? IsDeleted { get; set; }
         public int? ApproverLevelId { get; set; }
         public int? GenderId { get; set; }
-        public string? Gender { get; set; }
+        //public string? Gender { get; set; }
 
         public virtual MasterDictionaryDetail? Department { get; set; }
         public virtual MasterDictionaryDetail? Designation { get; set; }

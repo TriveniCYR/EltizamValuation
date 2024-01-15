@@ -963,9 +963,9 @@ namespace Eltizam.Data.DataAccess.DataContext
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Gender)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                //entity.Property(e => e.Gender)
+                //    .HasMaxLength(10)
+                //    .IsUnicode(false);
 
                 entity.Property(e => e.LastName)
                     .HasMaxLength(250)
