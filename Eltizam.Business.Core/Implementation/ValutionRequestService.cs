@@ -490,7 +490,7 @@ namespace Eltizam.Business.Core.Implementation
 
                         DbParameter[] osqlParameter4 =
                         {
-                        new DbParameter(AppConstants.TableKeyId, compevidence.Id, SqlDbType.Int),
+                        new DbParameter(AppConstants.TableKeyId, assement.Id, SqlDbType.Int),
                         new DbParameter(AppConstants.TableName,  assesmenttableName, SqlDbType.VarChar),
                     };
 

@@ -167,6 +167,7 @@ namespace Eltizam.Business.Core.Implementation
                     comparable.Remarks = model.comparableEvidenceModel.Remarks;
                     comparable.Price = model.comparableEvidenceModel.Price;
                     comparable.RateSqFt = model.comparableEvidenceModel.RateSqFt;
+                    comparable.AddtionalComments = model.comparableEvidenceModel.AddtionalComments;
 
                     comparable.ModifiedBy = model.comparableEvidenceModel.ModifiedBy;
 
@@ -283,6 +284,7 @@ namespace Eltizam.Business.Core.Implementation
                 //        await _unitOfWork.SaveChangesAsync();
                 //    }
                 //}
+               
             }
 
 
