@@ -20,7 +20,7 @@ namespace Eltizam.Business.Core.Interface
         Task<List<MasterResourceTypeModel>> GetResourceTypeList();
         Task<List<MasterApproverLevelModel>> GetApproverLevelList();
         Task<List<MasterRoleModel>> GetRoleList();
-        Task<List<MasterUserListModel>> GetApproverList(int id, string roleName);
+        Task<List<MasterUserListModel>> GetApproverList(int id, string? roleName);
         Task<DBOperation> Delete(int id);
         Task<DBOperation> ChangePassword(ChangePasswordModel changePasswordModel);
         Task<GlobalAuditFields?> GetGlobalAuditFields(int TableKeyId, string TableName);
