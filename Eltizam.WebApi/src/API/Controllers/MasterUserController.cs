@@ -66,7 +66,7 @@ namespace Eltizam.WebApi.Controllers
             catch (Exception ex)
             {
                 await _ExceptionService.LogException(ex);
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
        
@@ -85,7 +85,7 @@ namespace Eltizam.WebApi.Controllers
             catch (Exception ex)
             {
                 await _ExceptionService.LogException(ex);
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Eltizam.WebApi.Controllers
             catch (Exception ex)
             {
                 await _ExceptionService.LogException(ex);
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Eltizam.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -133,7 +133,7 @@ namespace Eltizam.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -146,7 +146,7 @@ namespace Eltizam.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -164,7 +164,7 @@ namespace Eltizam.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -177,7 +177,7 @@ namespace Eltizam.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -191,7 +191,7 @@ namespace Eltizam.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -206,7 +206,7 @@ namespace Eltizam.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -224,7 +224,7 @@ namespace Eltizam.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
 
@@ -241,7 +241,7 @@ namespace Eltizam.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, ex.InnerException?.Message);
             }
         }
         #endregion API Methods
