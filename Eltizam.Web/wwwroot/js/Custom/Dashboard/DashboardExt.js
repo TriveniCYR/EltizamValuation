@@ -1,4 +1,5 @@
 ﻿var pageNum = 1;
+var isSeachBtn = 0;
 $(document).ready(function () {
 	BindClientNameDropdown();
 	BindPropertyNameDropdown();
@@ -30,6 +31,11 @@ function BindPropertyNameDropdown() {
 	BindDropdowns(AllProperty + '/' + propertytypeid + '/' + subpropertytypeid + '/' + ownershiptypeid, property, _rpname, _val);
 }
 
+function submitFilterData() {
+	isSeachBtn = 1;
+	pageNum = 1;
+	submitFilterForm(1);
+}
 function submitFilterForm(_pageNum) {
 	// Get the values of FromDate and ToDate
 	var fromDateValue = $('#FromDate').val();
@@ -94,6 +100,9 @@ function FillClientDetails(otherData) {
 	latestRequestsTablethead.append(throwHtml);
 
 	var latestRequestsTableBody = $('.dashboardTableExt tbody');
+	if (isSeachBtn == 1) {
+		latestRequestsTableBody.empty();
+	}
 	//latestRequestsTableBody.empty(); // Clear existing rows
 
 	if (otherData.length != 0) {
@@ -131,7 +140,9 @@ function FillValuationDetails(otherData) {
 
 	var latestRequestsTableBody = $('.dashboardTableExt tbody');
 	//latestRequestsTableBody.empty(); // Clear existing rows
-
+	if (isSeachBtn == 1) {
+		latestRequestsTableBody.empty();
+	}
 	if (otherData.length != 0) {
 		
 		otherData.forEach(function (request) {
@@ -169,7 +180,9 @@ function FillPropertyDetails(otherData) {
 
 	var latestRequestsTableBody = $('.dashboardTableExt tbody');
 	//latestRequestsTableBody.empty(); // Clear existing rows
-
+	if (isSeachBtn == 1) {
+		latestRequestsTableBody.empty();
+	}
 	if (otherData.length != 0) {
 		otherData.forEach(function (request) {
 			var Active = request.isActive ? "Yes" : "No";
@@ -243,10 +256,11 @@ function clearSearchFields() {
 	document.getElementById("dashboardFilterForm").reset();
 	$('#ClientId').val(0).trigger('change');
 	$('#PropertyId').val(0).trigger('change');
-	initializeDashboard();
+	submitFilterData();
 }
 
 function showMoreToggle() {
+	isSeachBtn = 0;
 	pageNum = pageNum + 1;
 	submitFilterForm(pageNum);
 }
