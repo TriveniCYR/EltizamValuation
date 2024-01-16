@@ -823,5 +823,14 @@ $('.searchable-dropdown').on('blur', function () {
     }
 });
 
+function isDateValid(fromDate, toDate) {
+    // Compare the dates
+    if (toDate < fromDate) {
+         toastr.error("To date cannot be less than From date");
+         return false;
+    }
+    return true;
+}
+
 
 // ======== End:  SSearchable drop down Validation ============

@@ -114,7 +114,8 @@ namespace Eltizam.Business.Core.Implementation
                 new SqlParameter("@ClientId", filterModel.ClientId),
                 new SqlParameter("@PropertyId", filterModel.PropertyId),
                 new SqlParameter("@FromDate", filterModel.FromDate),
-                new SqlParameter("@ToDate", filterModel.ToDate)
+                new SqlParameter("@ToDate", filterModel.ToDate),
+                new SqlParameter("@CurrentPageNumber", filterModel._pageNum)
             };
 
             DataSet dsmodel = await _repository.GetDataSetBySP("usp_Dashboard_GetChartsData", System.Data.CommandType.StoredProcedure, osqlParameter);
