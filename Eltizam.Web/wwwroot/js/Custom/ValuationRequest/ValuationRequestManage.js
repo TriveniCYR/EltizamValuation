@@ -870,6 +870,10 @@ $('#btnSaveApprove').on('click', function () {
     var oldStatusId = $('#hdnStatusId').val();
     var requestId = $('#hdnId').val();
     if (requestId > 0) {
+        if (statusId == "0" || statusId == "") {
+            toastr.error("Please select valuation status");
+            return false;
+        }
         if (statusId != oldStatusId) {
             $('#ValuationApproverAction').modal('show');
             isSaveBtn = 1;
@@ -897,6 +901,10 @@ $('#btnSaveEdit').on('click', function () {
     var oldStatusId = $('#hdnStatusId').val();
     var requestId = $('#hdnId').val();
     if (requestId > 0) {
+        if (statusId == "0" || statusId == "") {
+            toastr.error("Please select valuation status");
+            return false;
+        }
         if (statusId != oldStatusId) {
             $('#ValuationApproverAction').modal('show');
             isSaveBtn = 1;
