@@ -1,8 +1,9 @@
-﻿$(document).ready(function () {
+﻿var pageNum = 1;
+$(document).ready(function () {
 	BindClientNameDropdown();
 	BindPropertyNameDropdown();
 	BindBarChart();
-	submitFilterForm();
+	submitFilterForm(pageNum);
 });
 var ErrorMessage = 'Error Occured !'
 // #region Get ClientType List
@@ -29,7 +30,15 @@ function BindPropertyNameDropdown() {
 	BindDropdowns(AllProperty + '/' + propertytypeid + '/' + subpropertytypeid + '/' + ownershiptypeid, property, _rpname, _val);
 }
 
-function submitFilterForm() {
+function submitFilterForm(_pageNum) {
+	// Get the values of FromDate and ToDate
+	var fromDateValue = $('#FromDate').val();
+	var toDateValue = $('#ToDate').val();
+
+	// Check date validity
+	if (!isDateValid(fromDateValue, toDateValue)) {
+		return; // Do not proceed further if validation fails
+	}
 	var formDataObject = {
 		LogInUserId: $("#LogInUserId").val() ?? 1,
 		RoleId: $('#RoleId').val(),
@@ -39,6 +48,7 @@ function submitFilterForm() {
 		FromDate: $('#FromDate').val() == "" ? "" : flatpickr.formatDate(new Date($('#FromDate').val()), 'Y-m-d'),
 		ToDate: $('#ToDate').val() == "" ? "" : flatpickr.formatDate(new Date($('#ToDate').val()), 'Y-m-d'),
 		LogInUserId: LogInUserId,
+		_pageNum: _pageNum,
 		TabId: 0
 	};
 	showLoader();
@@ -84,7 +94,7 @@ function FillClientDetails(otherData) {
 	latestRequestsTablethead.append(throwHtml);
 
 	var latestRequestsTableBody = $('.dashboardTableExt tbody');
-	latestRequestsTableBody.empty(); // Clear existing rows
+	//latestRequestsTableBody.empty(); // Clear existing rows
 
 	if (otherData.length != 0) {
 		otherData.forEach(function (request) {
@@ -120,7 +130,7 @@ function FillValuationDetails(otherData) {
 	latestRequestsTablethead.append(throwHtml);
 
 	var latestRequestsTableBody = $('.dashboardTableExt tbody');
-	latestRequestsTableBody.empty(); // Clear existing rows
+	//latestRequestsTableBody.empty(); // Clear existing rows
 
 	if (otherData.length != 0) {
 		
@@ -158,7 +168,7 @@ function FillPropertyDetails(otherData) {
 	latestRequestsTablethead.append(throwHtml);
 
 	var latestRequestsTableBody = $('.dashboardTableExt tbody');
-	latestRequestsTableBody.empty(); // Clear existing rows
+	//latestRequestsTableBody.empty(); // Clear existing rows
 
 	if (otherData.length != 0) {
 		otherData.forEach(function (request) {
@@ -234,4 +244,9 @@ function clearSearchFields() {
 	$('#ClientId').val(0).trigger('change');
 	$('#PropertyId').val(0).trigger('change');
 	initializeDashboard();
+}
+
+function showMoreToggle() {
+	pageNum = pageNum + 1;
+	submitFilterForm(pageNum);
 }

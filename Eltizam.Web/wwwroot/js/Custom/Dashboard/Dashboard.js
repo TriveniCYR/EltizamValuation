@@ -39,6 +39,14 @@ function BindPropertyNameDropdown() {
 }
 
 function submitFilterForm() {
+    // Get the values of FromDate and ToDate
+    var fromDateValue = $('#FromDate').val();
+    var toDateValue = $('#ToDate').val();
+
+    // Check date validity
+    if (!isDateValid(fromDateValue, toDateValue)) {
+        return; // Do not proceed further if validation fails
+    }
     var formDataObject = {
         PropertyId: $('#PropertyId').val(),
         ClientId: $('#ClientId').val(),
