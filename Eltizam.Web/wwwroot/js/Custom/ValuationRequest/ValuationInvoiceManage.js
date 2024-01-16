@@ -100,11 +100,12 @@ function SaveInvoice() {
     if (modeId == '1') {
         let transactionStatusId = $("#CashTransactionStatusId").val();
         let amouont = $("#CashAmount").val();
+        amouont = amouont == '' ? 0 : parseFloat(amouont.replace(',', '')); 
         let transactionDate = $("#CashTransactionDate").val();
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             ErrMsg += "Select Transaction.";
         }
-        else if (amouont == '') {
+        else if (amouont == '' || amouont == '0') {
             ErrMsg += "Enter Amount.";
         }
         else if (transactionDate == '') {
@@ -123,6 +124,7 @@ function SaveInvoice() {
     else if (modeId == '2') {
         let transactionStatusId = $("#ChequeTransactionStatusId").val();
         let amouont = $("#ChequeAmount").val();
+        amouont = amouont == '' ? 0 : parseFloat(amouont.replace(',', '')); 
         let transactionDate = $("#ChequeTransactionDate").val();
         let chequeNumber = $("#CheckNumer").val();
         let chequeBankName = $("#CheckBankName").val();
@@ -132,7 +134,7 @@ function SaveInvoice() {
             ErrMsg += "Select Transaction.";
             hideLoader();
         }
-        else if (amouont == '') {
+        else if (amouont == '' || amouont == '0') {
             ErrMsg += "Enter Amount.";
         }
         else if (transactionDate == '') {
@@ -152,6 +154,7 @@ function SaveInvoice() {
     else if (modeId == '3') {
         let transactionStatusId = $("#CardTransactionStatusId").val();
         let amouont = $("#CardAmount").val();
+        amouont = amouont == '' ? 0 : parseFloat(amouont.replace(',', '')); 
         let transactionDate = $("#CardTransactionDate").val();
         let transactionId = $("#CardTransactionId").val();
         let creditCardNumber = $("#CardNumber").val();
@@ -160,7 +163,7 @@ function SaveInvoice() {
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             ErrMsg += "Select Transaction.";
         }
-        else if (amouont == '') {
+        else if (amouont == '' || amouont == '0') {
             ErrMsg += "Enter Transaction Date.";
         }
         else if (transactionDate == '') {
@@ -183,6 +186,7 @@ function SaveInvoice() {
     else if (modeId == '4') {
         let transactionStatusId = $("#BankTransactionStatusId").val();
         let amouont = $("#BankAmount").val();
+        amouont = amouont == '' ? 0 : parseFloat(amouont.replace(',', '')); 
         let transactionDate = $("#BankTransactionDate").val();
         let transactionId = $("#BankTransactionId").val();
         let bankName = $("#AccountBankName").val();
@@ -190,7 +194,7 @@ function SaveInvoice() {
         if (transactionStatusId === undefined || isNaN(parseInt(transactionStatusId)) || transactionStatusId == '0') {
             ErrMsg += "Select Transaction.";
         }
-        else if (amouont == '') {
+        else if (amouont == '' || amouont == '0') {
             ErrMsg += "Enter Transaction Date.";
         }
         else if (transactionDate == '') {
@@ -221,6 +225,7 @@ function SaveInvoice() {
         ids = ids.replace(/(^[,\s]+)|([,\s]+$)/g, '');
         if (ids.length == 0) {
             toastr.error("Please select atleast one invoice to payment.");
+            hideLoader();
             return false;
         } 
         $("#InvoiceIds").val(ids);
