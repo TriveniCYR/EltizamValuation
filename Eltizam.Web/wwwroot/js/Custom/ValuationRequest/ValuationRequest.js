@@ -174,7 +174,7 @@ function AssignRequest() {
 
 
      
-    if (approverId === undefined || isNaN(parseInt(approverId))) {
+    if (approverId === "0" || approverId === "" || approverId === undefined || isNaN(parseInt(approverId))) {
         toastr.error("Please select approver.");
         return false;
     }

@@ -82,7 +82,7 @@
                         
                         <div class="flex">
                             <label for="InvoiceNo" class="w-50">
-                                <p class="m-0">Invoice #<span class="text-danger">*</span></p>
+                                <p class="m-0">Invoice Number<span class="text-danger">*</span></p>
                                 @Html.TextBoxFor(model => model.InvoiceNo,  new { @class = "form-control " })
                                 @Html.ValidationMessageFor(model => model.InvoiceNo, "", new { @class = "text-danger" })
                             </label>
