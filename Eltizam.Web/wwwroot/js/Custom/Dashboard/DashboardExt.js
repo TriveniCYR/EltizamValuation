@@ -250,7 +250,7 @@ function BindBarChart(chartdata) {
 	});
 	chart.render();
 
-}1
+}
 
 function clearSearchFields() {
 	document.getElementById("dashboardFilterForm").reset();

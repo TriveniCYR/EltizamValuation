@@ -1,0 +1,12 @@
+3
+*D:\EltizamLive\Eltizam.Resource\Account.csutf-8C
+:D:\EltizamLive\Eltizam.Resource\EltizamResourceRegister.csutf-82
+)D:\EltizamLive\Eltizam.Resource\Errors.csutf-82
+)D:\EltizamLive\Eltizam.Resource\Master.csutf-8G
+<D:\EltizamLive\Eltizam.Resource\Resources\Master.Designer.csutf-8G
+<D:\EltizamLive\Eltizam.Resource\Resources\Shared.Designer.csutf-8K
+@D:\EltizamLive\Eltizam.Resource\Resources\Validation.Designer.csutf-82
+)D:\EltizamLive\Eltizam.Resource\Shared.csutf-8^
+SD:\EltizamLive\Eltizam.Resource\obj\Debug\net6.0\Eltizam.Resource.GlobalUsings.g.csutf-8j
+_D:\EltizamLive\Eltizam.Resource\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.csutf-8\
+QD:\EltizamLive\Eltizam.Resource\obj\Debug\net6.0\Eltizam.Resource.AssemblyInfo.csutf-8

@@ -1,0 +1,1041 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Compiler",
+        "version": "4.7.0.0",
+        "fileVersion": "4.7.0-3.23465.3 (b5c9211b)",
+        "semanticVersion": "4.7.0",
+        "language": "en-US"
+      },
+      "results": [
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/Account.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 22,
+                  "endLine": 14,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchDetailViewModel.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 22,
+                  "endLine": 19,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchDetailViewModel.cs",
+                "region": {
+                  "startLine": 20,
+                  "startColumn": 22,
+                  "endLine": 20,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchDetailViewModel.cs",
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 22,
+                  "endLine": 28,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchDetailViewModel.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 22,
+                  "endLine": 29,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchDetailViewModel.cs",
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 22,
+                  "endLine": 30,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/Branch.cs",
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 22,
+                  "endLine": 16,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/Branch.cs",
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 22,
+                  "endLine": 17,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/Branch.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 22,
+                  "endLine": 25,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/Branch.cs",
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 22,
+                  "endLine": 26,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/Branch.cs",
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 22,
+                  "endLine": 27,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchViewModel.cs",
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 22,
+                  "endLine": 17,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchViewModel.cs",
+                "region": {
+                  "startLine": 18,
+                  "startColumn": 22,
+                  "endLine": 18,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchViewModel.cs",
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 22,
+                  "endLine": 23,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchViewModel.cs",
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 22,
+                  "endLine": 24,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/BranchViewModel.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 22,
+                  "endLine": 25,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/RefreshToken.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 22,
+                  "endLine": 14,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 22,
+                  "endLine": 13,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 22,
+                  "endLine": 24,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 22,
+                  "endLine": 27,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 22,
+                  "endLine": 28,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 22,
+                  "endLine": 30,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 22,
+                  "endLine": 31,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 22,
+                  "endLine": 32,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 22,
+                  "endLine": 33,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 22,
+                  "endLine": 34,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 22,
+                  "endLine": 37,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 38,
+                  "startColumn": 22,
+                  "endLine": 38,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 22,
+                  "endLine": 39,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 22,
+                  "endLine": 40,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 22,
+                  "endLine": 42,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserDetailViewModel.cs",
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 22,
+                  "endLine": 43,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserViewModel.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 22,
+                  "endLine": 14,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/ViewModel/UserViewModel.cs",
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 22,
+                  "endLine": 23,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/RefreshToken.cs",
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 22,
+                  "endLine": 10,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 22,
+                  "endLine": 15,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 22,
+                  "endLine": 26,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 22,
+                  "endLine": 29,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 30,
+                  "startColumn": 22,
+                  "endLine": 30,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 22,
+                  "endLine": 32,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 22,
+                  "endLine": 34,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 22,
+                  "endLine": 35,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 36,
+                  "startColumn": 22,
+                  "endLine": 36,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 22,
+                  "endLine": 37,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 22,
+                  "endLine": 40,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 22,
+                  "endLine": 41,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 22,
+                  "endLine": 42,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8632",
+          "level": "warning",
+          "message": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/EltizamLive/Eltizam.WebApi/src/Core/ValuationWeb.Domain/Entities/User.cs",
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 22,
+                  "endLine": 43,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CS8632": {
+          "id": "CS8632",
+          "shortDescription": "The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8632)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

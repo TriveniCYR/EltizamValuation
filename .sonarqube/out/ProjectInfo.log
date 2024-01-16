@@ -1,0 +1,34 @@
+Product projects
+---------------------------------------
+D:\EltizamLive\Eltizam.Resource\Eltizam.Resource.csproj
+D:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\ValuationWeb.Domain.csproj
+D:\EltizamLive\Eltizam.WebApi\src\API\EltizamValuation.WebApi.csproj
+D:\EltizamLive\Eltizam.Business.Models\Eltizam.Business.Models.csproj
+D:\EltizamLive\Eltizam.Utility\Eltizam.Utility.csproj
+D:\EltizamLive\Eltizam.Data.DataAccess\Eltizam.Data.DataAccess.csproj
+D:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Application\ValuationWeb.Application.csproj
+D:\EltizamLive\Eltizam.Business.Core\Eltizam.Business.Core.csproj
+D:\EltizamLive\Eltizam.Api\EltizamValuation.Api.csproj
+D:\EltizamLive\Eltizam.Web\EltizamValuation.Web.csproj
+D:\EltizamLive\Eltizam.WebApi\src\Infrastructure\ValuationWeb.Persistence.csproj
+
+
+Test projects
+---------------------------------------
+
+
+Invalid projects
+---------------------------------------
+{none}
+
+
+Skipped projects
+---------------------------------------
+{none}
+
+
+Excluded projects
+---------------------------------------
+{none}
+
+
