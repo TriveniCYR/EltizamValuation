@@ -20,13 +20,18 @@ namespace Eltizam.Business.Models
         public decimal? ChequeAmount { get; set; }
         public decimal? CardAmount { get; set; }
         public decimal? BankAmount { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? CheckNumer { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? CheckBankName { get; set; }
         public DateTime? CheckDate { get; set; }
         public string? CardNumber { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? CardBankName { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? CardHolderName { get; set; }
         public DateTime? ExpireDate { get; set; }
+        [StringLength(250, MinimumLength = 1)]
         public string? AccountBankName { get; set; }
         public string? AccountHolderName { get; set; }
         public DateTime? TransactionDate { get; set; }
@@ -35,7 +40,9 @@ namespace Eltizam.Business.Models
         public DateTime? CardTransactionDate { get; set; }
         public DateTime? BankTransactionDate { get; set; }
         public string? TransactionId { get; set; }
+        [StringLength(100, MinimumLength = 1)]
         public string? CardTransactionId { get; set; }
+        [StringLength(100, MinimumLength = 1)]
         public string? BankTransactionId { get; set; }
         public DateTime? ChequeRecievedDate { get; set; }
         public string? Note { get; set; }
