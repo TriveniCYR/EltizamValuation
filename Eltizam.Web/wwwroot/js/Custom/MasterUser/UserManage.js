@@ -616,12 +616,15 @@ document.addEventListener('DOMContentLoaded', function () {
 //    }); 
 //});
 
-function validateDate(selectedDate, instance) {
+function validateDate(selectedDate) {
     var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (selectedDate > today) {
+    var selected = new Date(selectedDate);
+    if (selected > today) {
         toastr.error("future Dates are not allowed");
-        instance.setDate('today');
+        flatpickr('#DateOfBirth', {
+            dateFormat: flatDateformat,
+            defaultDate: 'today'
+        });
     }
 }
  

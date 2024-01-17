@@ -76,7 +76,8 @@ function getPDF(id) {
     var url1 = "/ValuationRequest/ValuationData/" + id;
     $.get(url1, function (content1) {
         var w = window.open();
-        w.document.open();
+        //w.document.open();
+        w.document.open;
         w.document.write(content1);
         if (w.document.getElementById("loading-wrapper") != null)
             w.document.getElementById("loading-wrapper").remove();

@@ -125,7 +125,7 @@
                                     </label>
                                     <label for="DateOfBirth">
                                         <p class="m-0">Date of Birth<span class="text-danger">*</span></p>
-                                        <input type="text" id="DateOfBirth" class="formatted-date-input" name="DateOfBirth" asp-for="DateOfBirth" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                        <input type="text" id="DateOfBirth" class="formatted-date-input" name="DateOfBirth" asp-for="DateOfBirth" onchange="validateDate(this.value)">
                                         @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
