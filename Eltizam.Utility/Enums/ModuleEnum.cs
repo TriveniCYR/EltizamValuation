@@ -141,7 +141,7 @@ namespace Eltizam.Utility.Enums
     public enum ValuationStatusEnum
     {
         [Description("Completed")]
-        Completed = 16,
+        Completed = 11,
         [Description("Valuation Created")]
         ValuationCreated = 10
     }
