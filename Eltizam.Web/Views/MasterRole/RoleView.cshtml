@@ -14,11 +14,12 @@
     string jsVersion = @Configuration.GetSection("StaticJS")["version"];
     string[] Approve_Modules = { "PIDF", "IPD", "Finance", "Management HOD" };
     string[] Delete_Modules = { "User Management", "Role Management", "Master Management", "Project" };
+    var mode = "view";
 }
-<div id="SaveRoleModel">
+<div id="SaveRoleModel"> 
 
-    <form asp-action="ManageRole">
-        <input type="hidden" asp-for="Id" />
+    <form asp-action="ManageRole"> 
+
         <div class="content-header">
             <div class="container-fluid d-flex justify-content-between">
                 <h3>View Role</h3>
@@ -30,7 +31,9 @@
                     <div class="form-group required">
                         @Html.LabelFor(model => model.RoleName, new { @class = "control-label" }) <br/>    
                         @Html.DisplayFor(model => model.RoleName, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control checkbox-checked", @placeholder = @MasterLocalizer["RoleName"] } })
-                        
+                       
+                        <input type="hidden" asp-for="Id" value="@Model.Id" />
+                        <input type="hidden" value="@mode" id="pageMode" /> 
                     </div>
                 </div>
                 <div class="w-50">

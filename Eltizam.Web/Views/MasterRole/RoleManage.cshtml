@@ -18,6 +18,8 @@
     var objPermssion = (RolePermissionModel)ViewBag.Access;
     var isAdd = objPermssion.Add ? 1 : 0;
     var isEdit = objPermssion.Edit ? 1 : 0;
+
+    var md = ViewBag.IsView == 1 ? "view" : "";
 }
 
 <div id="PlaceHolderHere"></div>
@@ -38,6 +40,8 @@
                     <input type="hidden" id="isAddPerm" value="@isAdd" />
                     <input type="hidden" id="isEditPerm" value="@isEdit" />
                     @Html.HiddenFor(m => m.Id)
+                    <input type="hidden" value="@md" id="pageMode" />
+
                     <div>
                         <div class="flex">
                             <div class="w-50">

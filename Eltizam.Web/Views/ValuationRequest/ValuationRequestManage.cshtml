@@ -1222,7 +1222,7 @@
 
                             </div>
                         </div>
-                        @if (!isHideBtn)
+                        @if (!isHideBtn && (Model.StatusId == (int)ValuationStatusEnum.Completed || Model.StatusId == (int)ValuationStatusEnum.ValuationCreated))
                         {
                             <div class="text-right buttonArea bodyContent plr-0">
                                 <button type="reset" onclick="getPDF(@(Model == null ? 0 : Model.Id))" class="blueBtn mr-12" id="btngetPDF">Generate PDF</button>

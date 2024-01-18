@@ -138,6 +138,13 @@ namespace Eltizam.Utility.Enums
         ValuationRequestApproverLevel = 20, 
     }
 
+    public enum ValuationStatusEnum
+    {
+        [Description("Completed")]
+        Completed = 16,
+        [Description("Valuation Created")]
+        ValuationCreated = 10
+    }
 
     /// <summary>
     /// Enum helper class to get details

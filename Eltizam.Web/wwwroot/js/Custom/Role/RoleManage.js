@@ -1,7 +1,14 @@
 ﻿$(document).ready(function () {
     // SetupRoleTable();
     $("[id^=MasterModules][type=checkbox]").change();
+
+    //page mode fixes and css changes
+    var md = $("#pageMode").val();
+    if (md === "view") {
+        $("[type=checkbox]").attr("disabled", true).removeAttr('style');
+    }
 });
+
 
 $('#chkView').change(function () {
     $.each($("input[name*='RoleModulePermission.View']"), function (index, item) {
@@ -94,6 +101,8 @@ function CheckForOtherNonViewCheckBox(strPartialId) {
             flag = true;
         }
     });
+
+    
     if (flag == false) {
         $('#' + strPartialId + 'View').attr("disabled", false);
     }
