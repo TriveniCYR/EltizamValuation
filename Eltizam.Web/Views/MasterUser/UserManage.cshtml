@@ -85,12 +85,12 @@
                                                 <span class="text-danger" id="sizeError" style="display: none; position: relative;top: 46px;font-size: 16px;line-height: 20px;">Image size should not exceed 2 MB.</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <label for="IsActive" class="w-50">
+                                    </div>                                    
+                                    <label for="Status" class="w-50">
                                         Status
-                                        <input class='input-switch' type="checkbox" asp-for="IsActive" />
-                                        <label class="label-switch" for="IsActive"></label>
-                                        <span class="info-text"></span>
+                                        <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" asp-for="@Model.IsActive" required />
+                                        <label class="label-switch" for="addLocation"></label>
+                                        <span class="info-text" style="top:-20px;"></span>
                                     </label>
                                 </div>
                                 <div class="flex">
@@ -125,7 +125,7 @@
                                     </label>
                                     <label for="DateOfBirth">
                                         <p class="m-0">Date of Birth<span class="text-danger">*</span></p>
-                                        <input type="text" id="DateOfBirth" class="formatted-date-input" name="DateOfBirth" asp-for="DateOfBirth" min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                        <input type="text" id="DateOfBirth" class="formatted-date-input" name="DateOfBirth" asp-for="DateOfBirth" onchange="validateDate(this.value)">
                                         @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -258,7 +258,7 @@
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].PinNo, "", new { @class = "text-danger" })
                                                 </label>
                                                 <label for="Email">
-                                                    <p class="m-0">Email<span class="text-danger">*</span></p>
+                                                    <p class="m-0">Email</p>
                                                     @Html.TextBoxFor(model => model.Addresses[i].Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].Email, "", new { @class = "text-danger" })
                                                 </label>

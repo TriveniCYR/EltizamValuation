@@ -202,7 +202,7 @@
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].PinNo, "", new { @class = "text-danger" })
                                                 </label>
                                                 <label for="Email">
-                                                    <p class="m-0">Email<span class="text-danger">*</span></p>
+                                                    <p class="m-0">Email</p>
                                                     @Html.TextBoxFor(model => model.Addresses[i].Email, new {@autocomplete = "off", @class = "form-control checkbox-checked",  @placeholder = @SharedLocalizer["Email"] })
                                                     @Html.ValidationMessageFor(model => model.Addresses[i].Email, "", new { @class = "text-danger" })
                                                 </label>

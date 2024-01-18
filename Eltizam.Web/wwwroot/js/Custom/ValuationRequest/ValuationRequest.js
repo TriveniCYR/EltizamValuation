@@ -5,6 +5,13 @@ $(document).ready(function () {
 
 //Load data into table
 function InitializeValutionRequestDataList() { 
+    var fromDateValue = $('#FromDate').val();
+    var toDateValue = $('#ToDate').val();
+
+    // Check date validity
+    if (!isDateValid(fromDateValue, toDateValue)) {
+        return; // Do not proceed further if validation fails
+    }
     var tbl = $("#ValuationRequestTable");
     if (tbl.find('tbody tr').length > 0)
         tbl.dataTable().fnDestroy(); 
@@ -174,7 +181,7 @@ function AssignRequest() {
 
 
      
-    if (approverId === undefined || isNaN(parseInt(approverId))) {
+    if (approverId === "0" || approverId === "" || approverId === undefined || isNaN(parseInt(approverId))) {
         toastr.error("Please select approver.");
         return false;
     }

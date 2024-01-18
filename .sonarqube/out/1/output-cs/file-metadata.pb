@@ -1,0 +1,17 @@
+]
+TD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\Common\AuditableEntity.csutf-8W
+ND:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\Entities\Account.csutf-8^
+UD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\Entities\AppMasterValue.csutf-8V
+MD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\Entities\Branch.csutf-8W
+ND:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\Entities\Message.csutf-8\
+SD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\Entities\RefreshToken.csutf-8T
+KD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\Entities\User.csutf-8`
+WD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\ViewModel\ApplicationUser.csutf-8f
+]D:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\ViewModel\BranchDetailViewModel.csutf-8`
+WD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\ViewModel\BranchViewModel.csutf-8]
+TD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\ViewModel\RefreshToken.csutf-8d
+[D:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\ViewModel\UserDetailViewModel.csutf-8^
+UD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\ViewModel\UserViewModel.csutf-8|
+qD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\obj\Debug\net6.0\ValuationWeb.Domain.GlobalUsings.g.csutf-8…
+zD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.csutf-8z
+oD:\EltizamLive\Eltizam.WebApi\src\Core\ValuationWeb.Domain\obj\Debug\net6.0\ValuationWeb.Domain.AssemblyInfo.csutf-8

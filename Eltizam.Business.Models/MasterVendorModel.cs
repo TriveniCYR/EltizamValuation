@@ -21,6 +21,7 @@ namespace Eltizam.Business.Models
         public string? CompanyName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "EstimationDate")]
         public DateTime? EstimattionDate { get; set; }
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         [StringLength(250, MinimumLength = 1)]

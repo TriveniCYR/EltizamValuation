@@ -1,0 +1,14 @@
+﻿D:\EltizamLive\Eltizam.Resource\Account.cs
+D:\EltizamLive\Eltizam.Resource\EltizamResourceRegister.cs
+D:\EltizamLive\Eltizam.Resource\Errors.cs
+D:\EltizamLive\Eltizam.Resource\Master.cs
+D:\EltizamLive\Eltizam.Resource\Resources\Master.Designer.cs
+D:\EltizamLive\Eltizam.Resource\Resources\Shared.Designer.cs
+D:\EltizamLive\Eltizam.Resource\Resources\Validation.Designer.cs
+D:\EltizamLive\Eltizam.Resource\Shared.cs
+D:\EltizamLive\Eltizam.Resource\Resources\Account.resx
+D:\EltizamLive\Eltizam.Resource\Resources\Errors.resx
+D:\EltizamLive\Eltizam.Resource\Resources\Master.resx
+D:\EltizamLive\Eltizam.Resource\Resources\Shared.resx
+D:\EltizamLive\Eltizam.Resource\Resources\Validation.resx
+D:\EltizamLive\Eltizam.Resource\Properties\launchSettings.json

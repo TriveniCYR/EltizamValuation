@@ -52,12 +52,12 @@
                                 <p class="m-0">Property Type Name<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.PropertyTypeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown", @onchange = "BindPropertySub(this.options[this.selectedIndex].value)"})
                                 @Html.ValidationMessageFor(model => model.PropertyTypeId, "", new { @class = "text-danger" })
-                            </label>                            
-                            <label for="IsActive" class="w-50">
+                            </label>
+                            <label for="Status" class="w-50">
                                 Status
-                                <input class='input-switch' type="checkbox" asp-for="IsActive" />
-                                <label class="label-switch" for="IsActive"></label>
-                                <span class="info-text"></span>
+                                <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" asp-for="@Model.IsActive" required />
+                                <label class="label-switch" for="addLocation"></label>
+                                <span class="info-text" style="top:-20px;"></span>
                             </label>
                         </div>
                         <div class="flex">
@@ -81,7 +81,7 @@
                             </label>
                             <label for="CarpetAreaInSqFt" class="w-50">
                                 <p class="m-0">Carpet Area (Sq.Ft)<span class="text-danger">*</span></p>
-                                @Html.EditorFor(model => model.CarpetAreaInSqFt, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" } })
+                                @Html.EditorFor(model => model.CarpetAreaInSqFt, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control valiadteint" } })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqFt, "", new { @class = "text-danger" })
                             </label>
 
@@ -90,7 +90,7 @@
                         <div class="flex">
                             <label for="CarpetAreaInSqMtr" class="w-50">
                                 <p class="m-0">Carpet Area (Sq.Meter)<span class="text-danger">*</span></p>
-                                @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control" } })
+                                @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control valiadteint" } })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqMtr, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">

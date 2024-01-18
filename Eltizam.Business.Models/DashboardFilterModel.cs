@@ -17,5 +17,6 @@ namespace Eltizam.Business.Models
         public int? Pagesize { get; set; } = 5;
         public int? LogInUserId { get; set; }
         public int? TabId { get; set; } = 0;
+        public int? _pageNum { get; set; } = 0;
     }
 }

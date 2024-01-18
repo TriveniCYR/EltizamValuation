@@ -79,9 +79,9 @@
                                     </div>
                                     <label for="IsActive" class="w-50">
                                         Status
-                                        <input class='input-switch' type="checkbox" asp-for="IsActive" />
-                                        <label class="label-switch" for="IsActive"></label>
-                                        <span class="info-text"></span>
+                                        <input type="checkbox" id="addLocation" class="input-switch" name="IsActive" asp-for="@Model.IsActive" required />
+                                        <label class="label-switch" for="addLocation"></label>
+                                        <span class="info-text" style="top:-20px;"></span>
                                     </label>
                                 </div>
                                 <div class="flex">

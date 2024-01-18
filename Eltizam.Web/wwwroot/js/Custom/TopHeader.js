@@ -44,6 +44,7 @@ function PosttopHeader() {
                 }
             } else {
                 toastr.success('Password changed successfully!'); 
+                $('#popup-addRole-overlay #closePopup').trigger('click');
             }
         },
         error: function (xhr) {

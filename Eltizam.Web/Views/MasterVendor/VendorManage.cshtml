@@ -76,9 +76,9 @@
                                     </div>
                                     <label for="Status" class="w-50" style="margin-top: 50px">
                                         Status
-                                        <input class='input-switch' type="checkbox" asp-for="Status" />
-                                        <label class="label-switch" for="Status"></label>
-                                        <span class="info-text"></span>
+                                        <input type="checkbox" id="addLocation" class="input-switch" name="Status" asp-for="@Model.Status" required />
+                                        <label class="label-switch" for="addLocation"></label>
+                                        <span class="info-text" style="top:-20px;"></span>
                                     </label>
                                 </div>
                                 <div class="flex">
@@ -94,7 +94,7 @@
                                     </label>
                                 </div>
                                 <div class="flex">
-                                    <label for="EstimattionDate">
+                                    <label for="EstimationDate">
                                         <p class="m-0">Estimation Date<span class="text-danger">*</span></p>
                                         <input type="text" id="EstimattionDate" class="formatted-date-input" name="EstimattionDate" asp-for="EstimattionDate">
                                         @Html.ValidationMessageFor(model => model.EstimattionDate, "", new { @class = "text-danger" })

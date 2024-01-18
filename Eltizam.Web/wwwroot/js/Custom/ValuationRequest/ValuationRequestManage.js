@@ -76,7 +76,8 @@ function getPDF(id) {
     var url1 = "/ValuationRequest/ValuationData/" + id;
     $.get(url1, function (content1) {
         var w = window.open();
-        w.document.open();
+        //w.document.open();
+        w.document.open;
         w.document.write(content1);
         if (w.document.getElementById("loading-wrapper") != null)
             w.document.getElementById("loading-wrapper").remove();
@@ -870,6 +871,10 @@ $('#btnSaveApprove').on('click', function () {
     var oldStatusId = $('#hdnStatusId').val();
     var requestId = $('#hdnId').val();
     if (requestId > 0) {
+        if (statusId == "0" || statusId == "") {
+            toastr.error("Please select valuation status");
+            return false;
+        }
         if (statusId != oldStatusId) {
             $('#ValuationApproverAction').modal('show');
             isSaveBtn = 1;
@@ -897,6 +902,10 @@ $('#btnSaveEdit').on('click', function () {
     var oldStatusId = $('#hdnStatusId').val();
     var requestId = $('#hdnId').val();
     if (requestId > 0) {
+        if (statusId == "0" || statusId == "") {
+            toastr.error("Please select valuation status");
+            return false;
+        }
         if (statusId != oldStatusId) {
             $('#ValuationApproverAction').modal('show');
             isSaveBtn = 1;
