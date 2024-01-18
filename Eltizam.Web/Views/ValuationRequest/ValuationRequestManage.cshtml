@@ -1222,10 +1222,13 @@
 
                             </div>
                         </div>
-                        @if (!isHideBtn && (Model.StatusId == (int)ValuationStatusEnum.Completed || Model.StatusId == (int)ValuationStatusEnum.ValuationCreated))
+                        @if (!isHideBtn)
                         {
                             <div class="text-right buttonArea bodyContent plr-0">
-                                <button type="reset" onclick="getPDF(@(Model == null ? 0 : Model.Id))" class="blueBtn mr-12" id="btngetPDF">Generate PDF</button>
+                                @if(Model.StatusId == (int)ValuationStatusEnum.Completed || Model.StatusId == (int)ValuationStatusEnum.ValuationCreated)
+                                {
+                                    <button type="reset" onclick="getPDF(@(Model == null ? 0 : Model.Id))" class="blueBtn mr-12" id="btngetPDF">Generate PDF</button>
+                                }
                                 <button type="submit" class="blueBtn mr-12">Save</button>
                             </div>
                         }
