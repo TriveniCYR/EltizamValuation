@@ -25,7 +25,7 @@ namespace Eltizam.Business.Models
         [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? Zone { get; set; }
         [StringLength(250, MinimumLength = 1)]
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
         public string? BuildingProject { get; set; }
         [StringLength(20, MinimumLength = 1)]
         public string? Latitude { get; set; }
