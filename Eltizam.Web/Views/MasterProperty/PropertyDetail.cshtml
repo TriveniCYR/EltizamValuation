@@ -223,47 +223,48 @@
                                             </label>
                                         </div>
                                         <div class="flex">
-                                            <label for="address2">
+                                           @* <label for="address2">
                                                 Building Projects
                                                 @Html.TextBoxFor(model => model.PropertyDetail.BuildingProject, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Zone"] })
 
-                                            </label>
+                                            </label>*@
                                             <label for="address2">
                                                 Latitude
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Latitude, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Latitude"] })
 
                                             </label>
-                                        </div>
-                                        <div class="flex">
                                             <label for="address2">
                                                 Longitude
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Longitude, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Longitude"] })
 
                                             </label>
+                                        </div>
+                                        <div class="flex">
+                                          
                                             <label for="">
                                                 <p class="m-0">Address<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Address1, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Address1"] })
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Address1, "", new { @disabled = htmlAttributes, @class = "text-danger" })
                                             </label>
-                                        </div>
-                                        <div class="flex">
                                             <label for="">
                                                 Address (2)
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Address2, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Address2"] })
 
                                             </label>
+                                        </div>
+                                        <div class="flex">
+                                          
                                             <label for="zip">
                                                 Zip / PO Box
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Pincode, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Pincode"] })
                                             </label>
-                                        </div>
-                                        <div class="flex">
                                             <label for="landmark">
                                                 Landmark
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Landmark, new { @disabled = htmlAttributes, @class = "form-control", @placeholder = @SharedLocalizer["Landmark"] })
 
                                             </label>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
