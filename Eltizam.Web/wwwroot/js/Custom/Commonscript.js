@@ -61,6 +61,7 @@ var userid = parseInt($("#userid").val(), 10);
 
 $(document).ready(function () {
     formatCurrencyInElements('formatting');
+    formatAreaInElements('formattingarea');
 
     //Apply format related things
     formatreadonlydate();
@@ -99,6 +100,47 @@ $(document).ready(function () {
             const decimalParts = inputValue.split('.');
             if (decimalParts.length > 1) {
                 decimalParts[1] = decimalParts[1].slice(0, 6);
+                inputValue = decimalParts.join('.');
+            }
+
+            // Check if the length exceeds the limit (20 digits before + 1 decimal point + 6 digits after)
+            if (inputValue.length > 27) {
+                inputValue = inputValue.slice(0, 27);
+            }
+
+            event.target.value = inputValue;
+        });
+    }
+
+    const elementareamap = document.getElementsByClassName('areamap');
+    // Iterate through the elements and attach the event listener to each
+    for (const element of elementareamap) {
+        element.addEventListener('input', function (event) {
+            let inputValue = event.target.value;
+
+            // Check for multiple decimal points and allow only one
+            if (inputValue.indexOf('.') !== inputValue.lastIndexOf('.')) {
+                const lastDotIndex = inputValue.lastIndexOf('.');
+                inputValue = inputValue.slice(0, lastDotIndex) + inputValue.slice(lastDotIndex + 1);
+            }
+
+            // Remove non-numeric characters, except for the decimal point
+            inputValue = inputValue.replace(/[^0-9.]/g, '');
+
+            // Remove leading zeros
+            inputValue = inputValue.replace(/^0+/g, '0');
+
+            // Limit to 20 digits before the decimal point
+            const parts = inputValue.split('.');
+            if (parts.length > 1) {
+                parts[0] = parts[0].slice(0, 20);
+                inputValue = parts.join('.');
+            }
+
+            // Limit to 6 decimal places
+            const decimalParts = inputValue.split('.');
+            if (decimalParts.length > 1) {
+                decimalParts[1] = decimalParts[1].slice(0, 2);
                 inputValue = decimalParts.join('.');
             }
 
@@ -190,6 +232,33 @@ function formatCurrencyInElements(className) {
                 const numericValue = parseFloat(inputText.replace(/[^\d.]/g, ''));
                 if (!isNaN(numericValue)) {
                     inputElement.value = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 6 });
+                }
+            };
+            formatInput(element);
+
+            element.addEventListener('blur', function () {
+                formatInput(this);
+            });
+        } else {
+            const elementText = element.textContent;
+            const hasNegativeSign = elementText.includes('-');
+            const numericValue = parseFloat(elementText.replace(/[^\d.]/g, ''));
+            if (!isNaN(numericValue)) {
+                element.textContent = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 2 });
+            }
+        }
+    });
+}
+function formatAreaInElements(className) {
+    const elements = document.querySelectorAll(`.${className}`);
+    elements.forEach(function (element) {
+        if (element.tagName === 'INPUT') {
+            const formatInput = (inputElement) => {
+                const inputText = inputElement.value;
+                const hasNegativeSign = inputText.includes('-');
+                const numericValue = parseFloat(inputText.replace(/[^\d.]/g, ''));
+                if (!isNaN(numericValue)) {
+                    inputElement.value = (hasNegativeSign ? '-' : '') + accounting.formatMoney((numericValue), { symbol: '', precision: 2 });
                 }
             };
             formatInput(element);

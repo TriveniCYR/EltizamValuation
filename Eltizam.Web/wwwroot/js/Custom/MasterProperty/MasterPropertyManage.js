@@ -18,7 +18,52 @@ function profileTab(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click(); 
+$('#BuildUpAreaSqFt').keypress(function (e) {
+    if ($('#BuildUpAreaSqFt').val() == '' && (e.which == 48 || e.charCode == 46)) {
+        return false;
+    }
+    else {
+        if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+            var keypress = e.keyCode || e.which || e.charCode;
+            var key = String.fromCharCode(keypress);
+            var regEx = /^[0-9]{0,15}(.[0-9]{0,2})?$/;
 
+            var txt = $(this).val() + key;
+            if (!regEx.test(txt)) {
+                if (keypress != 8) {
+                    e.preventDefault();
+                } else {
+                }
+            }
+        }
+        else {
+            e.preventDefault();
+        }
+    }
+});
+$('#BuildUpAreaSqMtr').keypress(function (e) {
+    if ($('#BuildUpAreaSqMtr').val() == '' && (e.which == 48 || e.charCode == 46)) {
+        return false;
+    }
+    else {
+        if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+            var keypress = e.keyCode || e.which || e.charCode;
+            var key = String.fromCharCode(keypress);
+            var regEx = /^[0-9]{0,15}(.[0-9]{0,2})?$/;
+
+            var txt = $(this).val() + key;
+            if (!regEx.test(txt)) {
+                if (keypress != 8) {
+                    e.preventDefault();
+                } else {
+                }
+            }
+        }
+        else {
+            e.preventDefault();
+        }
+    }
+});
 $(document).ready(function () {
     if ($("#hdnPropertyType").val() != 0) {
         BindPropertySub($("#hdnPropertyType").val());

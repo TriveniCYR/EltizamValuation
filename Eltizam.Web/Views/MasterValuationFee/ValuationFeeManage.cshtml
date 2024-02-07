@@ -81,7 +81,7 @@
                             </label>
                             <label for="CarpetAreaInSqFt" class="w-50">
                                 <p class="m-0">Carpet Area (Sq.Ft)<span class="text-danger">*</span></p>
-                                @Html.EditorFor(model => model.CarpetAreaInSqFt, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control valiadteint" } })
+                                @Html.EditorFor(model => model.CarpetAreaInSqFt, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control areamap formattingarea" } })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqFt, "", new { @class = "text-danger" })
                             </label>
 
@@ -90,7 +90,7 @@
                         <div class="flex">
                             <label for="CarpetAreaInSqMtr" class="w-50">
                                 <p class="m-0">Carpet Area (Sq.Meter)<span class="text-danger">*</span></p>
-                                @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control valiadteint" } })
+                                @Html.EditorFor(model => model.CarpetAreaInSqMtr, new { htmlAttributes = new { @autocomplete = "off", @class = "form-control areamap formattingarea" } })
                                 @Html.ValidationMessageFor(model => model.CarpetAreaInSqMtr, "", new { @class = "text-danger" })
                             </label>
                             <label for="" class="w-50">
@@ -225,6 +225,53 @@
                         var keypress = e.keyCode || e.which || e.charCode;
                         var key = String.fromCharCode(keypress);
                         var regEx = /^[0-9]{0,12}(.[0-9]{0,6})?$/;
+
+                        var txt = $(this).val() + key;
+                        if (!regEx.test(txt)) {
+                            if (keypress != 8) {
+                                e.preventDefault();
+                            } else {
+                            }
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                }
+            });
+            $('#CarpetAreaInSqFt').keypress(function (e) {
+                if ($('#CarpetAreaInSqFt').val() == '' && (e.which == 48 || e.charCode == 46)) {
+                    return false;
+                }
+                else {
+                    if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+                        var keypress = e.keyCode || e.which || e.charCode;
+                        var key = String.fromCharCode(keypress);
+                        var regEx = /^[0-9]{0,15}(.[0-9]{0,2})?$/;
+
+                        var txt = $(this).val() + key;
+                        if (!regEx.test(txt)) {
+                            if (keypress != 8) {
+                                e.preventDefault();
+                            } else {
+                            }
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            $('#CarpetAreaInSqMtr').keypress(function (e) {
+                if ($('#CarpetAreaInSqMtr').val() == '' && (e.which == 48 || e.charCode == 46)) {
+                    return false;
+                }
+                else {
+                    if ((e.charCode >= 48 && e.charCode <= 57) || e.charCode == 46) {
+                        var keypress = e.keyCode || e.which || e.charCode;
+                        var key = String.fromCharCode(keypress);
+                        var regEx = /^[0-9]{0,15}(.[0-9]{0,2})?$/;
 
                         var txt = $(this).val() + key;
                         if (!regEx.test(txt)) {
