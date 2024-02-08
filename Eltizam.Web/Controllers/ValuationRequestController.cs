@@ -45,7 +45,7 @@ namespace EltizamValuation.Web.Controllers
             ViewBag.CurrentUserId = _helper.GetLoggedInUserId();
             return View();
         }
-         
+
 
         [HttpGet]
         public IActionResult ValuationPaymentInvoiceManage(int? id, int vId)
@@ -111,7 +111,7 @@ namespace EltizamValuation.Web.Controllers
 
                     ////Get Footer info
                     FooterInfo(TableNameEnum.ValuationInvoice, _cofiguration, id, true);
-                   
+
                     return View("ValuationPaymentInvoiceManage", data._object);
                 }
                 return NotFound();
@@ -125,8 +125,8 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 //Check permissions for Get
-                var action = id == null ? PermissionEnum.Edit : PermissionEnum.Add; 
-               
+                var action = id == null ? PermissionEnum.Edit : PermissionEnum.Add;
+
                 if (invoice.Id == 0)
                     invoice.CreatedBy = _helper.GetLoggedInUserId();
                 invoice.ModifiedBy = _helper.GetLoggedInUserId();
@@ -202,7 +202,7 @@ namespace EltizamValuation.Web.Controllers
             //Get Footer info
             var vw = IsView == 1;
             ViewBag.IsView = IsView;
-            FooterInfo(TableNameEnum.ValuationRequest, _cofiguration, id, vw); 
+            FooterInfo(TableNameEnum.ValuationRequest, _cofiguration, id, vw);
 
             //Get module wise permissions
             ViewBag.Access = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationRequest);
@@ -211,46 +211,47 @@ namespace EltizamValuation.Web.Controllers
             ViewBag.SiteDescription = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.SiteDescription);
             ViewBag.ComparableEvidences = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ComparableEvidences);
             ViewBag.ValuationAssessement = GetRoleAccessValuations(ModulePermissionEnum.ValuationRequest, roleId, SubModuleEnum.ValuationAssessement);
+            ViewBag.CurrentUserId = userId;
+
+            //Get details by Id
+            var _id = id ?? 0;
+            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+            APIRepository objapi = new(_cofiguration);
+            HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationRequestGetById + "/" + _id, HttpMethod.Get, token).Result;
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestModel>>(jsonResponse);
+
+                _ValuationEntity = data?._object;
+            }
 
             if (id == null || id <= 0)
-            {
-                ViewBag.CurrentUserId = userId;
-
+            { 
                 //valuationRequestModel = new ValuationRequestModel(); 
                 return View("ValuationRequestManage", _ValuationEntity);
             }
             else
             {
-                ViewBag.CurrentUserId = userId;
-                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);
-                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationRequestGetById + "/" + id, HttpMethod.Get, token).Result;
-
-                if (responseMessage.IsSuccessStatusCode)
+                //Give access of only requestes which they beed assigned for
+                if ((roleId == (int)RoleEnum.Valuer && _ValuationEntity?.ValuerId != userId) ||
+                    (roleId == (int)RoleEnum.Approver && _ValuationEntity?.ApproverId != userId))
                 {
-                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                    var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationRequestModel>>(jsonResponse);
-
-                    //Give access of only requestes which they beed assigned for
-                    if ((roleId == (int)RoleEnum.Valuer && data._object.ValuerId != userId) ||
-                        (roleId == (int)RoleEnum.Approver && data._object.ApproverId != userId))
+                    if (_ValuationEntity?.ApproverId != userId)
                     {
-                        if(data._object.ApproverId != userId)
-                        {
-                            return RedirectToAction(nameof(ValuationRequests));
-                        }
-                        else
-                        {
-                            return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
-                        }
+                        return RedirectToAction(nameof(ValuationRequests));
                     }
-
-                    //Get basic info
-                    ValReqHeaderInfo(id.Value);
-
-                    return View(data._object);
+                    else
+                    {
+                        return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                    }
                 }
-                return NotFound();
+
+                //Get basic info
+                ValReqHeaderInfo(id.Value); 
+
+                return View(_ValuationEntity);
             }
         }
 
@@ -267,9 +268,9 @@ namespace EltizamValuation.Web.Controllers
 
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-                APIRepository objapi = new(_cofiguration);   
+                APIRepository objapi = new(_cofiguration);
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(request))).Result;
-                 
+
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -280,7 +281,7 @@ namespace EltizamValuation.Web.Controllers
                         return RedirectToAction(nameof(ValuationRequests));
                     else
                         return Redirect($"/ValuationRequest/ValuationRequestManage?id={request.Id}");
-                } 
+                }
                 else
                     TempData[UserHelper.ErrorMessage] = AppConstants.ActionFailed;
             }
@@ -338,8 +339,8 @@ namespace EltizamValuation.Web.Controllers
             quotation.ValuationRequestId = vId;
 
             if (id == null || id <= 0)
-            {  
-                quotation.StatusId = 13; 
+            {
+                quotation.StatusId = 13;
                 FooterInfo(TableNameEnum.ValuationQuotation, _cofiguration, id);
                 return View(quotation);
             }
@@ -495,14 +496,14 @@ namespace EltizamValuation.Web.Controllers
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
             }
 
-            invoice = new ValuationInvoiceListModel(); 
+            invoice = new ValuationInvoiceListModel();
 
             //Get basic info
             ValReqHeaderInfo(vId);
             invoice.ValuationRequestId = vId;
 
             if (id == null || id <= 0)
-            { 
+            {
                 //Get Footer info
                 FooterInfo(TableNameEnum.ValuationInvoice, _cofiguration, id);
                 return View(invoice);
@@ -534,7 +535,7 @@ namespace EltizamValuation.Web.Controllers
             try
             {
                 //Check permissions for Get
-                var action = id == null ? PermissionEnum.Add : PermissionEnum.View; 
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
                 int roleId = _helper.GetLoggedInRoleId();
 
                 if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))

@@ -124,8 +124,26 @@ namespace Eltizam.WebApi.Controllers
             try
             {
                 var oValuationEntity = await _valuationServices.GetById(id);
-                if (oValuationEntity != null && oValuationEntity.Id > 0)
+                if (oValuationEntity != null)
                     return _ObjectResponse.Create(oValuationEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
+
+        [HttpGet, Route("GetApproverLevel")]
+        public async Task<IActionResult> GetApproverLevel(int? ValReqId, decimal? Amount = null)
+        {
+            try
+            {
+                var levels = await _valuationServices.GetApproverLevel(ValReqId, Amount);
+
+                if (levels != null)
+                    return _ObjectResponse.Create(levels, (Int32)HttpStatusCode.OK);
                 else
                     return _ObjectResponse.Create(null, (Int32)HttpStatusCode.BadRequest, AppConstants.NoRecordFound);
             }

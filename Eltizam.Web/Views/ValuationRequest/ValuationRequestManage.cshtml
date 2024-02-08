@@ -110,7 +110,7 @@
                                 </label>
 
                                 <img src="/assets/arrow-down.svg" alt="arrow-down" class="cursor-pointer visible-in-web" style="width: 2em;background-color: var(--blue);margin-left: 1em;">
-                                <div id="ValuationActions" class="actionItem" style="width: 95%;display: none;margin:1.2em 0em 0em 0em;">
+                                <div id="ValuationActions" class="actionItem" style="width: 95%;display: none;margin:1.2em 0em 0em 0em;border:solid 1px var(--blue);">
                                     <ul>
                                     </ul>
                                 </div>
@@ -246,12 +246,12 @@
                                             var dropdownId = $"ApproverLevelId_{lId}";
                                             var curList = Levels.Where(approver => approver.ApproverLevelId == lId).ToList();
                                             curList.Insert(0, new ValuationRequestApproverLevelModel()
-                    {
-                        ApproverLevelId = lId,
-                        ApproverLevel = level,
-                        ApproverId = 0,
-                        ApproverName = "--select--"
-                    });
+                                            {
+                                                ApproverLevelId = lId,
+                                                ApproverLevel = level,
+                                                ApproverId = 0,
+                                                ApproverName = "--select--"
+                                            });
 
                                             var ddSelected = Levels.FirstOrDefault(approver => approver.ApproverLevelId == lId && approver.IsSelected == 1)?.ApproverId.ToString();
 
@@ -259,10 +259,10 @@
                                             <label for="" class="bodyContent p-0 w-50">
                                                 @level
                                                 @Html.DropDownListFor(model => ddSelected, new SelectList(curList.Select(approver => new SelectListItem
-                                        {
-                                        Value = approver.ApproverId.ToString(),
-                                        Text = approver.ApproverName
-                                        }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
+                                                {
+                                                    Value = approver.ApproverId.ToString(),
+                                                    Text = approver.ApproverName
+                                                }), "Value", "Text"), new { @class = "form-control searchable-dropdown", @id = dropdownId, @onchange = "updateHiddenInput()" })
                                             </label>
                                         }
                                     }
@@ -281,7 +281,7 @@
 
 
                             @* Added by YReddy for approval level history *@
-                            @if (LevelsApproved != null && LevelsApproved.Count > 0)
+                            @if (LevelsApproved != null && LevelsApproved.Count > 0 && Model.Id > 0)
                             {
                                 <div class="roundBorderBox ptrl-20">
                                     <div class="flex justify-between accordianDetails position-relative" onclick="accordianToggle(this)">
@@ -699,7 +699,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (Model.ValuationDocument.Documents != null && Model.ValuationDocument.Documents.Any())
+                                                            @if (Model.ValuationDocument != null && Model.ValuationDocument.Documents != null && Model.ValuationDocument.Documents.Any())
                                                             {
                                                                 @foreach (var docs in Model.ValuationDocument.Documents)
                                                                 {

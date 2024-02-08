@@ -19,5 +19,6 @@ namespace Eltizam.Business.Core.Interface
         Task<ValuationRequestDependencies> GetValuationRequestInfo(int Id);
         Task<DBOperation> ValuationDocument(ValuationDocumentModel model);
 
+        Task<List<ValuationRequestApproverLevelModel>> GetApproverLevel(int? ValReqId, decimal? Amount = null);
     }
 }
