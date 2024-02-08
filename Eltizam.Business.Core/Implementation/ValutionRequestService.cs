@@ -30,6 +30,7 @@ namespace Eltizam.Business.Core.Implementation
         private IRepository<ValuationAssesment> _assesmenterepository { get; set; }
         private IRepository<MasterValuationStatus> _statusrepository { get; set; }
         private IRepository<ValuationRequestApproverLevel> _valuationRequestApproverLevel { get; set; }
+        private readonly IFileUploadService _fileUploadService;
         private readonly IAuditLogService _auditLogService;
         private readonly IHelper _helper;
 
@@ -38,7 +39,7 @@ namespace Eltizam.Business.Core.Implementation
         #endregion Properties
 
         #region Constructor
-        public ValuationRequestService(IAuditLogService auditLogService, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration configuration, IMasterNotificationService notificationService)
+        public ValuationRequestService(IAuditLogService auditLogService, IUnitOfWork unitOfWork, IMapperFactory mapperFactory, IHelper helper, IConfiguration configuration, IMasterNotificationService notificationService,IFileUploadService fileUploadService)
         {
             _unitOfWork = unitOfWork;
             _mapperFactory = mapperFactory;
@@ -53,6 +54,7 @@ namespace Eltizam.Business.Core.Implementation
             _auditLogService = auditLogService;
             _valuationRequestApproverLevel = _unitOfWork.GetRepository<ValuationRequestApproverLevel>();
             _userrepo = _unitOfWork.GetRepository<MasterUser>();
+            _fileUploadService = fileUploadService;
         }
         #endregion Constructor
 
@@ -396,6 +398,7 @@ namespace Eltizam.Business.Core.Implementation
         {
             try
             {
+                var valuationtableName = Enum.GetName(TableNameEnum.ValuationRequest);
                 var sitetableName = Enum.GetName(TableNameEnum.SiteDescription);
                 var evidencetableName = Enum.GetName(TableNameEnum.Comparable_Evidence);
                 var assesmenttableName = Enum.GetName(TableNameEnum.Valuation_Assessement);
@@ -408,6 +411,7 @@ namespace Eltizam.Business.Core.Implementation
                 var approvellevel = new List<ValuationRequestApproverLevelModel>();
                 _ValuationEntity = _mapperFactory.Get<ValuationRequest, ValuationRequestModel>(await _repository.GetAsync(id));
                 _ValuationEntity.ValuationAssesment = new ValuationAssesmentActionModel();
+                _ValuationEntity.ValuationDocument = new ValuationDocumentModel();
                 _ValuationEntity.ValuationAssesment.SiteDescription = new SiteDescriptionModel();
                 _ValuationEntity.ValuationAssesment.comparableEvidenceModel = new ComparableEvidenceModel();
                 _ValuationEntity.ValuationAssesment.valuationAssessementModel = new ValuationAssessementModel();
@@ -443,6 +447,22 @@ namespace Eltizam.Business.Core.Implementation
                     approvellevel = await GetApproverLevel(id);
                     _ValuationEntity.ValuationRequestApproverLevel = approvellevel;
 
+                    if(id > 0)
+                    {
+                        _ValuationEntity.ValuationDocument.ValuationRequestId = id;
+                        DbParameter[] osqlParametr =
+                        {
+                            new DbParameter(AppConstants.TableKeyId, id, SqlDbType.Int),
+                            new DbParameter(AppConstants.TableName,  valuationtableName, SqlDbType.VarChar),
+                        };
+
+                        var valuationDocument = EltizamDBHelper.ExecuteMappedReader<MasterDocumentModel>(ProcedureMetastore.usp_Document_GetDocumentByTableKeyId,
+                                           DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, osqlParametr);
+                        if (valuationDocument.Count > 0)
+                        {
+                            _ValuationEntity.ValuationDocument.Documents = valuationDocument;
+                        }
+                    }
 
                     if (siteDescription != null)
                     {
@@ -602,6 +622,12 @@ namespace Eltizam.Business.Core.Implementation
             {
                 return DBOperation.NotFound;
             }
+            return DBOperation.Success;
+        }
+
+        public async Task<DBOperation> ValuationDocument(ValuationDocumentModel model)
+        {
+            await _fileUploadService.UploadFilesAsync(model.ValuationRequestId, Enum.GetName(TableNameEnum.ValuationRequest), model.uploadDocument, model.CreatedBy);
             return DBOperation.Success;
         }
     }
