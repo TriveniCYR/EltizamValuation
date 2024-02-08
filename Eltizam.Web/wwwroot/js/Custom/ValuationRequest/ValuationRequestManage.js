@@ -1253,6 +1253,7 @@ function updateHiddenInput() {
 }
 
 function BindValuationAction() {
+    debugger
     var ValReqId = parseInt($('#hdnId').val());
     var RequestStatus = $("#StatusId");
     var _val = $('#hdnStatusId').val();
@@ -1261,7 +1262,7 @@ function BindValuationAction() {
 
     $.ajax({
         type: Get,
-        url: BaseURL + GetAllValuationRequestStatus + '/' + roleId + '?action=' + action + '&ValReqId=' + ValReqId,
+        url: BaseURL + GetAllValuationRequestStatus + '/' + roleId + '?action=va_' + action + '&ValReqId=' + ValReqId,
         "datatype": "json",
         success: function (response) {
             $('#ValuationActions ul').html('');
