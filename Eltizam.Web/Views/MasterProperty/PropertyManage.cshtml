@@ -119,7 +119,7 @@
                                             Built Up Area (Sq.Ft)
                                             <span class="text-danger">*</span>
                                         </p>
-                                        @Html.TextBoxFor(model => model.BuildUpAreaSqFt, new { @class = "form-control price", @placeholder = @SharedLocalizer["Area in Sq Ft"] })
+                                        @Html.TextBoxFor(model => model.BuildUpAreaSqFt, new { @class = "form-control areamap formattingarea", @placeholder = @SharedLocalizer["Area in Sq Ft"] })
                                         @Html.ValidationMessageFor(model => model.BuildUpAreaSqFt, "", new { @class = "text-danger" })
                                     </label>
                                 </div>
@@ -129,7 +129,7 @@
                                             Built up Area (Sq.Meter)
                                             <span class="text-danger">*</span>
                                         </p>
-                                        @Html.TextBoxFor(model => model.BuildUpAreaSqMtr, new { @class = "form-control price", @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
+                                        @Html.TextBoxFor(model => model.BuildUpAreaSqMtr, new { @class = "form-control areamap formattingarea", @placeholder = @SharedLocalizer["Area in Sq Mtr"] })
                                         @Html.ValidationMessageFor(model => model.BuildUpAreaSqMtr, "", new { @class = "text-danger" })
                                     </label>
                                     <label for="">
