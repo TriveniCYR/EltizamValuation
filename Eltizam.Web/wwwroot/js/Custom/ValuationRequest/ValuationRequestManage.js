@@ -1269,8 +1269,9 @@ function BindValuationAction() {
            
             $.each(response, function (index, object) {
 
+              $('#ValuationActions ul').append(' <li style="text-align:center; display: block;" onclick="CheckValuationAction(' + object.id + ');"><span style="text-align:center;">' + object.statusName + '</span></li>');
               //old  //$('#ValuationActions ul').append(' <li /*class="tableStatusBanner"*/ style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + object.id + ');"><span style="text-align:center;">' + object.statusName + '</span></li>');
-                $('#ValuationActions ul').append(' <li style="justify-content: center" onclick="CheckValuationAction(' + object.id + ');"><span class="tableStatusBanner" style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';">' + object.statusName + '</span></li>');
+                //$('#ValuationActions ul').append(' <li style="justify-content: center" onclick="CheckValuationAction(' + object.id + ');"><span class="tableStatusBanner" style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';">' + object.statusName + '</span></li>');
 
             })
         },
@@ -1348,5 +1349,14 @@ function AssignApproverAction() {
     });
 }
 
-
+$('#btnValDocument').on('click', function () {
+    var fp = $("#ValuationDocument_Document_Files");
+    var lg = fp[0].files.length;
+    if (lg > 0) {
+        return true
+    }
+    else {
+        return false;
+    }
+});
 //#endregion Delete Invoice

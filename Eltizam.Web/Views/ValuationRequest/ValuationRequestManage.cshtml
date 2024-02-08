@@ -196,11 +196,14 @@
                                 </div>
 
                                 <div class="flex  mb-28">
-                                    <label for="" class="w-50">
-                                        <p class="m-0">Valuation Status<span class="text-danger">*</span></p>
-                                        @Html.DropDownListFor(model => model.StatusId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
-                                        @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
-                                    </label>
+                                    @if(Model.Id > 0)
+                                    {
+                                        <label for="" class="w-50">
+                                            <p class="m-0">Valuation Status<span class="text-danger">*</span></p>
+                                            @Html.DropDownListFor(model => model.StatusId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown" })
+                                            @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
+                                        </label>
+                                    }
 
                                     <label for="" class="w-50 m-0">
                                         <p class="m-0">Valuation Date<span class="text-danger">*</span></p>
@@ -732,7 +735,7 @@
                             </div>
                         </div>
                         <div class="text-right buttonArea bodyContent plr-0">
-                            <button type="submit" class="blueBtn mr-12">Save</button>
+                            <button type="submit" id="btnValDocument" class="blueBtn mr-12">Save</button>
                         </div>
                     </div>
             </form>

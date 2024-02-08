@@ -265,7 +265,10 @@ namespace EltizamValuation.Web.Controllers
                 if (request.Id == 0)
                     request.CreatedBy = _helper.GetLoggedInUserId();
                 request.ModifiedBy = _helper.GetLoggedInUserId();
-
+                if(request.Id == 0)
+                {
+                    request.StateId = 1;
+                }
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
