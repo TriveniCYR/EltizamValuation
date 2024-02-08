@@ -18,8 +18,8 @@ namespace Eltizam.Business.Models
         [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Special characters are not allowed in InvoiceNo")]
         public string InvoiceNo { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
-        [Range(1, int.MaxValue, ErrorMessage = "The 'TransactionMode' field is required.")]
+        //[Required(ErrorMessageResourceType = typeof(Validation), ErrorMessageResourceName = "Required")]
+        //[Range(1, int.MaxValue, ErrorMessage = "The 'TransactionMode' field is required.")]
         public int? TransactionModeId { get; set; } 
         public string? TransactionMode { get; set; } 
         public string? UserName { get; set; }
