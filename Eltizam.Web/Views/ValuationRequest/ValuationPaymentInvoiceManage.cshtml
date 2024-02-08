@@ -63,12 +63,12 @@
                         @Html.HiddenFor(model=>model.ValuationRequestId)
 
                         <div class="flex">
-                            <label for="" class="w-50">
+                           @*  <label for="" class="w-50">
                                 <p class="m-0">Transaction Mode<span class="text-danger">*</span></p>
                                 @Html.DropDownListFor(model => model.TransactionModeId, new List<SelectListItem> { }, new { @class = "form-control searchable-dropdown"})
                                 @Html.ValidationMessageFor(model => model.TransactionModeId, "", new { @class = "text-danger" })
 
-                            </label>
+                            </label> *@
 
                             <label for="TransactionDate">
                                 <p class="m-0">

@@ -261,7 +261,7 @@ namespace Eltizam.Business.Core.Implementation
                         objIvoiceType.Amount = invoice.Amount;
                         objIvoiceType.Balance = invoice.Balance;
                         objIvoiceType.Note = invoice.Note;
-                        objIvoiceType.TransactionModeId = invoice.TransactionModeId;
+                        //objIvoiceType.TransactionModeId = invoice.TransactionModeId;
                         objIvoiceType.TransactionDate = invoice.TransactionDate;
                         //objIvoiceType.ModifiedDate = AppConstants.DateTime;
                         objIvoiceType.ModifiedBy = invoice.ModifiedBy;

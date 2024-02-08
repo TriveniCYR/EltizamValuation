@@ -131,9 +131,13 @@
                     }
                     <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')" id="tab_2">Quotations</button>
                     <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')" id="tab_3">Invoices/Payments</button>
-                    <button class="tablinks" style="display: @displayStyleSite " onclick="profileTab(event, 'profile4')" id="tab_4">Site Description</button>
-                    <button class="tablinks" style="display: @displayStyleevidence" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
-                    <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
+                    @if(Model.StatusId >7)
+                    {
+                       <button class="tablinks" style="display: @displayStyleSite " onclick="profileTab(event, 'profile4')" id="tab_4">Site Description</button>
+                        <button class="tablinks" style="display: @displayStyleevidence" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
+                        <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
+                    }
+                   
                 </div>
 
                 <div id="profile1" class="tabcontent p-0">

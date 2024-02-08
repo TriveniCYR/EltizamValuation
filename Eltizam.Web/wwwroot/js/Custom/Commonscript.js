@@ -518,12 +518,16 @@ function BindCountryIsd() {
 function GetActiveFlagCss(data) {
     var dd = "";
     if (data !== undefined && (data === 1 || data === true || data.toString().toLowerCase() === 'yes')) {
-        dd = "<span class='tableStatus green'>Yes</span>";
+        dd = "<span class='tableStatus green'><i class='fas fa-check' style='color: green;'></i></span>";
     } else {
-        dd = "<span class='tableStatus red'>No</span>";
+        dd = "<span class='tableStatus red'><i class='fas fa-times' style='color: red;'></i></span>";
     }
     return dd;
 }
+
+
+
+
 function GetIdLinkCss(url, id) {
     var dd = "<a class='userPic' href='" + url + id + "'>" + id + "</a>";
     return dd;
