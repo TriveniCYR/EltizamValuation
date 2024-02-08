@@ -91,6 +91,7 @@ namespace Eltizam.Business.Models
 
         public List<MasterAmenityListModel>? AmenityList { get; set; }
         public MasterPropertyDetailModel? PropertyDetail { get; set; } 
+        public ValuationDocumentModel? ValuationDocument { get; set; }
         public ValuationAssesmentActionModel? ValuationAssesment { get; set; }
         public List<ValuationRequestApproverLevelModel>? ValuationRequestApproverLevel { get; set; } 
         public DocumentFilesModel? Document { get; set; }

@@ -213,5 +213,17 @@ namespace Eltizam.WebApi.Controllers
             else
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
         }
+
+        [HttpPost, Route("ValuationDocument")]
+        public async Task<IActionResult> ValuationDocument([FromBody] ValuationDocumentModel model)
+        {
+            DBOperation oResponse = await _valuationServices.ValuationDocument(model);
+            if (oResponse == DBOperation.Success)
+            {
+                return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
+            }
+            else
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+        }
     }
 }

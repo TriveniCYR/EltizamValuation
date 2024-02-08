@@ -760,6 +760,49 @@ namespace EltizamValuation.Web.Controllers
             return Redirect($"/ValuationRequest/ValuationRequestManage?id={valuationAssesment.SiteDescription.ValuationRequestId}");
         }
 
+        [HttpPost]
+        [Route("ValuationRequest/ValuationDocumentUpload")]
+        public IActionResult ValuationDocumentUpload(int id, ValuationDocumentModel valuationDocument)
+        {
+            try
+            {
+                //Check permissions for Get
+                var action = id == null ? PermissionEnum.Add : PermissionEnum.Edit;
+                var requestId = id;
+                valuationDocument.ValuationRequestId = requestId;
+                if (valuationDocument.Document != null && valuationDocument.Document.Files != null)
+                {
+                    List<MasterDocumentModel> docs = _helper.FileUpload(valuationDocument.Document);
+                    valuationDocument.uploadDocument = docs;
+                    valuationDocument.Document = null;
+                }
+                int roleId = _helper.GetLoggedInRoleId();
+
+                if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
+                    return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
+                valuationDocument.CreatedBy = _helper.GetLoggedInUserId();
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationDocument, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(valuationDocument))).Result;
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    TempData[UserHelper.SuccessMessage] = Convert.ToString(_stringLocalizerShared["RecordInsertUpdate"]);
+                }
+                else
+                    TempData[UserHelper.ErrorMessage] = Convert.ToString(responseMessage.Content.ReadAsStringAsync().Result);
+
+            }
+            catch (Exception e)
+            {
+                _helper.LogExceptions(e);
+                TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
+            }
+            //return RedirectToAction("ValuationRequests");
+            return Redirect($"/ValuationRequest/ValuationRequestManage?id={valuationDocument.ValuationRequestId}");
+        }
         [HttpGet]
         public IActionResult DeleteSiteDescriptionDocument(int id, string? fileName)
         {

@@ -14,5 +14,6 @@
         public static string TransactionMode = "TRANSACTION_MODE";
         public static string ValuationType = "VALUATION_TYPE";
         public static string Currency = "CURRENCY";
+        public static string ValuationFeeType = "VALUATION_FEE_TYPE";
     }
 }

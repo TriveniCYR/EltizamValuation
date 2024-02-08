@@ -230,49 +230,48 @@
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Zone, "", new { @class = "text-danger" })
                                             </label>
                                         </div>
-                                        <div class="flex">
-                                            <label for="address2">
-                                                <p class="m-0">Building Projects<span class="text-danger">*</span></p>
-                                                @Html.TextBoxFor(model => model.PropertyDetail.BuildingProject, new { @class = "form-control", @placeholder = @SharedLocalizer["Zone"] })
-                                                @Html.ValidationMessageFor(model => model.PropertyDetail.BuildingProject, "", new { @class = "text-danger" })
-
-                                            </label>
+                                        <div class="flex">                                            
                                             <label for="address2">
                                                 Latitude
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Latitude, new { @class = "form-control", @placeholder = @SharedLocalizer["Latitude"] })
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Latitude, "", new { @class = "text-danger" })
                                             </label>
-                                        </div>
-                                        <div class="flex">
                                             <label for="address2">
                                                 Longitude
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Longitude, new { @class = "form-control", @placeholder = @SharedLocalizer["Longitude"] })
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Longitude, "", new { @class = "text-danger" })
                                             </label>
+                                        </div>
+                                        <div class="flex">                                           
                                             <label for="">
                                                 <p class="m-0">Address<span class="text-danger">*</span></p>
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Address1, new { @class = "form-control", @placeholder = @SharedLocalizer["Address1"] })
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Address1, "", new { @class = "text-danger" })
                                             </label>
-                                        </div>
-                                        <div class="flex">
                                             <label for="">
                                                 Address (2)
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Address2, new { @class = "form-control", @placeholder = @SharedLocalizer["Address2"] })
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Address2, "", new { @class = "text-danger" })
                                             </label>
+                                        </div>
+                                        <div class="flex">                                           
                                             <label for="address2">
                                                 Zip / PO Box
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Pincode, new { @class = "form-control", @placeholder = @SharedLocalizer["Pincode"] })
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Pincode, "", new { @class = "text-danger" })
                                             </label>
-                                        </div>
-                                        <div class="flex">
-                                            <label for="address2">
+                                             <label for="address2">
                                                 Landmark
                                                 @Html.TextBoxFor(model => model.PropertyDetail.Landmark, new { @class = "form-control", @placeholder = @SharedLocalizer["Landmark"] })
                                                 @Html.ValidationMessageFor(model => model.PropertyDetail.Landmark, "", new { @class = "text-danger" })
                                             </label>
+                                        </div>
+                                        <div class="flex">  
+                                          @*  <label class="d-none" for="address2">
+                                                <p class="m-0">Building Projects<span class="text-danger">*</span></p>
+                                                @Html.TextBoxFor(model => model.PropertyDetail.BuildingProject, new { @class = "form-control", @placeholder = @SharedLocalizer["Zone"] })
+                                                @Html.ValidationMessageFor(model => model.PropertyDetail.BuildingProject, "", new { @class = "text-danger" })
+                                            </label>*@
                                         </div>
                                     </div>
                                 </div>
