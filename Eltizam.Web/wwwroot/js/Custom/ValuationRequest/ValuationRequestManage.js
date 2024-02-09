@@ -1262,7 +1262,7 @@ function BindValuationAction() {
 
     $.ajax({
         type: Get,
-        url: BaseURL + GetAllValuationRequestStatus + '/' + roleId + '?action=va_' + action + '&ValReqId=' + ValReqId,
+        url: BaseURL + GetAllValuationRequestStatus + '/' + roleId + '?action=vraction&ValReqId=' + ValReqId,
         "datatype": "json",
         success: function (response) {
             $('#ValuationActions ul').html('');
