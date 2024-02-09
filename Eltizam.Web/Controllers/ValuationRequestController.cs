@@ -284,7 +284,7 @@ namespace EltizamValuation.Web.Controllers
 
                 //Check edit permission
                 if (!string.IsNullOrWhiteSpace(CheckUserEditable(id, roleId))) 
-                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={request.Id}&IsView=1"); 
+                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={request.Id}"); 
 
 
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
