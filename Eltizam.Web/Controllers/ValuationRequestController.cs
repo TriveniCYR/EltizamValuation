@@ -8,6 +8,7 @@ using Eltizam.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.Data;
 
 namespace EltizamValuation.Web.Controllers
@@ -192,15 +193,11 @@ namespace EltizamValuation.Web.Controllers
             //var action =id == null? PermissionEnum.Add:true? PermissionEnum.Edit: PermissionEnum.View;
             int roleId = _helper.GetLoggedInRoleId();
             int userId = _helper.GetLoggedInUserId();
-            if(id > 0)
-            {
-                var isEditable = CheckUserEditable(id, roleId);
-                if(isEditable != null && isEditable != "")
-                {
-                    //TempData[UserHelper.ErrorMessage] = "Date of Birth can not be future date.";
-                    IsView = 1;
-                }
-            }
+           
+            //Check edit permission
+            if (!string.IsNullOrWhiteSpace(CheckUserEditable(id, roleId)))
+                return Redirect($"/ValuationRequest/ValuationRequestManage?id={id}&IsView=1");
+
             //Check permissions for Get
             var action = IsView == 1 ? PermissionEnum.View : (id == null ? PermissionEnum.Add : PermissionEnum.Edit);
 
@@ -277,16 +274,14 @@ namespace EltizamValuation.Web.Controllers
                 {
                     request.StatusId = 1;
                 }
+                
                 int roleId = _helper.GetLoggedInRoleId();
-                if (id > 0)
-                {
-                    var isEditable = CheckUserEditable(id, roleId);
-                    if (isEditable != null && isEditable != "")
-                    {
-                        TempData[UserHelper.ErrorMessage] = isEditable;
-                        return Redirect($"/ValuationRequest/ValuationRequestManage?id={request.Id}");
-                    }
-                }
+
+                //Check edit permission
+                if (!string.IsNullOrWhiteSpace(CheckUserEditable(id, roleId))) 
+                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={request.Id}&IsView=1"); 
+
+
                 HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
                 APIRepository objapi = new(_cofiguration);
                 HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.UpsertValuationRequest, HttpMethod.Post, token, new StringContent(JsonConvert.SerializeObject(request))).Result;
@@ -643,8 +638,7 @@ namespace EltizamValuation.Web.Controllers
                 _helper.LogExceptions(e);
                 TempData[UserHelper.ErrorMessage] = Convert.ToString(e.StackTrace);
             }
-            return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterInvoice.ValuationRequestId}");
-            //return RedirectToAction("ValuationRequestManage"); 
+            return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterInvoice.ValuationRequestId}"); 
         }
 
 
@@ -931,22 +925,34 @@ namespace EltizamValuation.Web.Controllers
         //            return "Unknown";
         //    }
         //}
-        private string CheckUserEditable(int? id, int? roleId)
+
+        private string CheckUserEditable(int? id, int roleId)
         {
-            HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
-            APIRepository objapi = new(_cofiguration);
-            HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationEditable + "?ValReqId=" + id+"&RoleId="+roleId, HttpMethod.Get, token).Result;
-            var data1="";
-            if (responseMessage.IsSuccessStatusCode)
+            string? msg = null;
+            ViewBag.IsEditAllowed = 1;
+
+            if (id > 0)
             {
-                string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
-                var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationEditableModel>>(jsonResponse);
+                HttpContext.Request.Cookies.TryGetValue(UserHelper.EltizamToken, out string token);
+                APIRepository objapi = new(_cofiguration);
+                HttpResponseMessage responseMessage = objapi.APICommunication(APIURLHelper.ValuationEditable + "?ValReqId=" + id + "&RoleId=" + roleId, HttpMethod.Get, token).Result;
 
-                data1 = data?._object.EditError;
 
-                return data1;
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    string jsonResponse = responseMessage.Content.ReadAsStringAsync().Result;
+                    var data = JsonConvert.DeserializeObject<APIResponseEntity<ValuationEditableModel>>(jsonResponse);
+
+                    msg = data?._object.EditError;
+                    if (!string.IsNullOrWhiteSpace(msg))
+                    {
+                        TempData[UserHelper.ErrorMessage] = msg;
+                        ViewBag.IsEditAllowed = 0;
+                    }
+                }
             }
-            return data1;
+
+            return msg;
         }
     }
 }

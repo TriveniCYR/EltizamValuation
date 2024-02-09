@@ -17,6 +17,7 @@
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
     var isView = ViewData["Title"] = _md + _header;
+    var ipa = ViewBag.IsEditAllowed;
 
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
     var isDelete = objPermssion.Delete ? 1 : 0;
