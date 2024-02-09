@@ -2431,3 +2431,7 @@ a {
     border: 0.5px solid white;
     margin: 0;
 }
+
+#ValuationActions ul li:hover span {
+    color: white;
+}

@@ -203,7 +203,7 @@ namespace EltizamValuation.Web.Controllers
             }
             //return Redirect($"/ValuationRequest/ValuationRequestManage?id={id}&IsView=1");
 
-            //Check permissions for Get
+                //Check permissions for Get
             var action = IsView == 1 ? PermissionEnum.View : (id == null ? PermissionEnum.Add : PermissionEnum.Edit);
 
             if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
