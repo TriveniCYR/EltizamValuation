@@ -193,12 +193,13 @@ namespace EltizamValuation.Web.Controllers
             //var action =id == null? PermissionEnum.Add:true? PermissionEnum.Edit: PermissionEnum.View;
             int roleId = _helper.GetLoggedInRoleId();
             int userId = _helper.GetLoggedInUserId();
-           
+
             //Check edit permission
             if (!string.IsNullOrWhiteSpace(CheckUserEditable(id, roleId)))
-                return Redirect($"/ValuationRequest/ValuationRequestManage?id={id}&IsView=1");
+                IsView = 1;
+                //return Redirect($"/ValuationRequest/ValuationRequestManage?id={id}&IsView=1");
 
-            //Check permissions for Get
+                //Check permissions for Get
             var action = IsView == 1 ? PermissionEnum.View : (id == null ? PermissionEnum.Add : PermissionEnum.Edit);
 
             if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))

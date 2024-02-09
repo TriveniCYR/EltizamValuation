@@ -17,47 +17,47 @@
     var _header = " Valuation Request";
     var _md = Model.Id > 0 ? "Edit" : "Add";
     var isView = ViewData["Title"] = _md + _header;
-    var ipa = ViewBag.IsEditAllowed;
+    var ipa = ViewBag.IsEditAllowed==0 ? false:true;
 
     var objPermssion = (RolePermissionModel)ViewBag.Access; // TODO: Return the list for Request, Quoation & Invoice
-    var isDelete = objPermssion.Delete ? 1 : 0;
-    var isAdd = objPermssion.Add ? 1 : 0;
-    var isEdit = objPermssion.Edit ? 1 : 0;
-    var isApprove = objPermssion.Approve ? 1 : 0;
+    var isDelete = objPermssion.Delete  && ipa ? 1 : 0;
+    var isAdd = objPermssion.Add  && ipa ? 1 : 0;
+    var isEdit = objPermssion.Edit  && ipa ? 1 : 0;
+    var isApprove = objPermssion.Approve && ipa ? 1 : 0;
     var roleId = objPermssion.RoleId;
     var subModuleId = objPermssion.SubModuleId;
 
     var objPermssionQt = (RolePermissionModel)ViewBag.QuotationAccess;
-    var isAddQt = objPermssionQt.Add ? 1 : 0;
-    var isEditQt = objPermssionQt.Edit ? 1 : 0;
-    var isViewQt = objPermssionQt.View ? 1 : 0;
-    var isDeleteQt = objPermssionQt.Delete ? 1 : 0;
+    var isAddQt = objPermssionQt.Add  && ipa ? 1 : 0;
+    var isEditQt = objPermssionQt.Edit  && ipa ? 1 : 0;
+    var isViewQt = objPermssionQt.View   && ipa? 1 : 0;
+    var isDeleteQt = objPermssionQt.Delete   && ipa? 1 : 0;
 
     var objPermssionIn = (RolePermissionModel)ViewBag.InvoiceAccess;
-    var isAddIn = objPermssionIn.Add ? 1 : 0;
-    var ispAddIn = objPermssionIn.Add ? 1 : 0;
-    var isEditIn = objPermssionIn.Edit ? 1 : 0;
-    var isViewIn = objPermssionIn.View ? 1 : 0;
-    var isDeleteIn = objPermssionIn.Delete ? 1 : 0;
+    var isAddIn = objPermssionIn.Add  && ipa ? 1 : 0;
+    var ispAddIn = objPermssionIn.Add  && ipa ? 1 : 0;
+    var isEditIn = objPermssionIn.Edit  && ipa ? 1 : 0;
+    var isViewIn = objPermssionIn.View  && ipa ? 1 : 0;
+    var isDeleteIn = objPermssionIn.Delete  && ipa ? 1 : 0;
 
     var objPermssionSite = (RolePermissionModel)ViewBag.SiteDescription;
-    var isAddSite = objPermssionSite.Add ? 1 : 0;
-    var isEditSite = objPermssionSite.Edit ? 1 : 0;
-    var isViewSite = objPermssionSite.View ? 1 : 0;
-    var isDeleteSite = objPermssionSite.Delete ? 1 : 0;
+    var isAddSite = objPermssionSite.  Add && ipa? 1 : 0;
+    var isEditSite = objPermssionSite.Edit && ipa ? 1 : 0;
+    var isViewSite = objPermssionSite.View  && ipa ? 1 : 0;
+    var isDeleteSite = objPermssionSite.Delete   && ipa ? 1 : 0;
 
 
     var objPermssionevidence = (RolePermissionModel)ViewBag.ComparableEvidences;
-    var isAddEvidence = objPermssionevidence.Add ? 1 : 0;
-    var isEditEvidence = objPermssionevidence.Edit ? 1 : 0;
-    var isViewEvidence = objPermssionevidence.View ? 1 : 0;
-    var isDeleteEvidence = objPermssionevidence.Delete ? 1 : 0;
+    var isAddEvidence = objPermssionevidence.Add  && ipa ? 1 : 0;
+    var isEditEvidence = objPermssionevidence.Edit  && ipa ? 1 : 0;
+    var isViewEvidence = objPermssionevidence.View  && ipa ? 1 : 0;
+    var isDeleteEvidence = objPermssionevidence.Delete  && ipa ? 1 : 0;
 
     var objPermssionAssesment = (RolePermissionModel)ViewBag.ValuationAssessement;
-    var isAddAssesment = objPermssionAssesment.Add ? 1 : 0;
-    var isEditAssesment = objPermssionAssesment.Edit ? 1 : 0;
-    var isViewAssesment = objPermssionAssesment.View ? 1 : 0;
-    var isDeleteAssesment = objPermssionAssesment.Delete ? 1 : 0;
+    var isAddAssesment = objPermssionAssesment.Add  && ipa ? 1 : 0;
+    var isEditAssesment = objPermssionAssesment.Edit  && ipa ? 1 : 0;
+    var isViewAssesment = objPermssionAssesment.View   && ipa? 1 : 0;
+    var isDeleteAssesment = objPermssionAssesment.Delete && ipa ? 1 : 0;
 
     var htmlAttributes = true;
     var isHideBtn = ViewBag.PageViewMode == 1;
@@ -659,6 +659,7 @@
                                         </button>
                                     }
                                 }
+
                             </div>
                         </form>
                     </div>
