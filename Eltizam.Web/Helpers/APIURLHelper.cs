@@ -253,6 +253,7 @@ namespace Eltizam.Web.Helpers
         public static string GetNotificationCount = "Notification/GetNotificationCount";
         public static string UpdateNotification = "Notification/UpdateNotificationReadBy";
         public static string GetAllStatusHistory = "ValuationRequestStatus/GetAllStatusHistory";
+        public static string ValuationEditable = "ValuationRequest/ValuationEditable";
         public static string UpsertInvoice = "ValuationInvoice/UpsertInvoice";
         public static string GetPaymentInvoiceById = "ValuationInvoice/GetPaymentInvoiceById";
         public static string PaymentInvoiceById = "ValuationInvoice/PaymentInvoiceById";

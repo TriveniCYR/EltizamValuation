@@ -81,6 +81,7 @@ namespace Eltizam.Business.Models
         public static string usp_ValuationInvoice_SearchAllList = "usp_ValuationInvoice_SearchAllList";
         public static string usp_ValuationPayment_UpsertInvoicesMap = "usp_ValuationPayment_UpsertInvoicesMap";
         public static string usp_ValuationRequest_PerformActions = "usp_ValuationRequest_PerformActions";
+        public static string usp_ValuationRequest_IsEditable = "usp_ValuationRequest_IsEditable";
 
 
 

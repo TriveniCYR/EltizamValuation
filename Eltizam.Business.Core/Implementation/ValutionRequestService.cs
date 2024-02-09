@@ -640,5 +640,26 @@ namespace Eltizam.Business.Core.Implementation
             await _fileUploadService.UploadFilesAsync(model.ValuationRequestId, Enum.GetName(TableNameEnum.ValuationRequest), model.uploadDocument, model.CreatedBy);
             return DBOperation.Success;
         }
+
+        public async Task<ValuationEditableModel> ValuationEditable(int ValReqId, int RoleId)
+        {
+            try
+            {
+                DbParameter[] prm =
+                {
+                    new DbParameter("RoleId", RoleId, SqlDbType.Int),
+                    new DbParameter("ValReqId", ValReqId, SqlDbType.Int)
+                };
+
+                var data = EltizamDBHelper.ExecuteSingleMappedReader<ValuationEditableModel>(ProcedureMetastore.usp_ValuationRequest_IsEditable, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);
+
+                // Return a success operation indicating successful deletion.
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

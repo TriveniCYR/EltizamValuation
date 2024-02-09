@@ -1169,23 +1169,31 @@ function DeletePaymentInvoiceByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-document.getElementById('tab_4').addEventListener('click', function () {
+//document.getElementById('tab_4').addEventListener('click', function () {
+//    // Create an alert or call your desired function when the button is clicked
+//    changeLinksite();
+//});
+//// Add a click event listener to the button
+//document.getElementById('tab_5').addEventListener('click', function () {
+//    // Create an alert when the button is clicked
+//    changeLinkevidence();
+//});
+//document.getElementById('tab_6').addEventListener('click', function () {
+//    // Create an alert when the button is clicked
+//    changeLinkassesment();
+//});
+$('#tab_4').on('click', function () {
     // Create an alert or call your desired function when the button is clicked
     changeLinksite();
 });
-
-
-// Add a click event listener to the button
-document.getElementById('tab_5').addEventListener('click', function () {
-    // Create an alert when the button is clicked
+$('#tab_5').on('click', function () {
+    // Create an alert or call your desired function when the button is clicked
     changeLinkevidence();
 });
-document.getElementById('tab_6').addEventListener('click', function () {
-    // Create an alert when the button is clicked
+$('#tab_6').on('click', function () {
+    // Create an alert or call your desired function when the button is clicked
     changeLinkassesment();
 });
-
-
 
 // Assuming some event triggers this change
 
@@ -1269,8 +1277,9 @@ function BindValuationAction() {
            
             $.each(response, function (index, object) {
 
+              $('#ValuationActions ul').append(' <li style="text-align:center; display: block;" onclick="CheckValuationAction(' + object.id + ');"><span style="text-align:center;">' + object.statusName + '</span></li>');
               //old  //$('#ValuationActions ul').append(' <li /*class="tableStatusBanner"*/ style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';" onclick="CheckValuationAction(' + object.id + ');"><span style="text-align:center;">' + object.statusName + '</span></li>');
-                $('#ValuationActions ul').append(' <li style="justify-content: center" onclick="CheckValuationAction(' + object.id + ');"><span class="tableStatusBanner" style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';">' + object.statusName + '</span></li>');
+                //$('#ValuationActions ul').append(' <li style="justify-content: center" onclick="CheckValuationAction(' + object.id + ');"><span class="tableStatusBanner" style="text-align:center; display: block; margin: 0 10px; color:' + object.colorCode + '; background-color:' + object.backGroundColor + '; border: 1px solid ' + object.colorCode + ';">' + object.statusName + '</span></li>');
 
             })
         },
@@ -1348,5 +1357,14 @@ function AssignApproverAction() {
     });
 }
 
-
+$('#btnValDocument').on('click', function () {
+    var fp = $("#ValuationDocument_Document_Files");
+    var lg = fp[0].files.length;
+    if (lg > 0) {
+        return true
+    }
+    else {
+        return false;
+    }
+});
 //#endregion Delete Invoice

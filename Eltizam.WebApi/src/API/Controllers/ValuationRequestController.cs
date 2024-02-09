@@ -243,5 +243,22 @@ namespace Eltizam.WebApi.Controllers
             else
                 return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
         }
+
+        [HttpGet, Route("ValuationEditable")]
+        public async Task<IActionResult> ValuationEditable(int ValReqId, int RoleId)
+        {
+            try
+            {
+                var oValuationEntity = await _valuationServices.ValuationEditable(ValReqId, RoleId);
+                if (oValuationEntity != null && oValuationEntity.EditError != null)
+                    return _ObjectResponse.Create(oValuationEntity, (Int32)HttpStatusCode.OK);
+                else
+                    return _ObjectResponse.Create(oValuationEntity, (Int32)HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return _ObjectResponse.Create(false, (Int32)HttpStatusCode.InternalServerError, Convert.ToString(ex.StackTrace));
+            }
+        }
     }
 }
