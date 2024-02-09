@@ -5,6 +5,7 @@ using Eltizam.Utility.Enums;
 using Eltizam.Utility.Utility;
 using Eltizam.Web.Controllers;
 using Eltizam.Web.Helpers;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
@@ -189,14 +190,18 @@ namespace EltizamValuation.Web.Controllers
             _ValuationEntity.ValuationAssesment.SiteDescription = new SiteDescriptionModel();
             _ValuationEntity.ValuationAssesment.comparableEvidenceModel = new ComparableEvidenceModel();
             _ValuationEntity.ValuationAssesment.valuationAssessementModel = new ValuationAssessementModel();
-
+            IsView = (IsView == null || IsView == 0) ? 0 : 1;
             //var action =id == null? PermissionEnum.Add:true? PermissionEnum.Edit: PermissionEnum.View;
             int roleId = _helper.GetLoggedInRoleId();
             int userId = _helper.GetLoggedInUserId();
-           
-            //Check edit permission
-            if (!string.IsNullOrWhiteSpace(CheckUserEditable(id, roleId)))
-                return Redirect($"/ValuationRequest/ValuationRequestManage?id={id}&IsView=1");
+
+            if(IsView==0)
+            {
+                //Check edit permission
+                if (!string.IsNullOrWhiteSpace(CheckUserEditable(id, roleId)))
+                    IsView = 1;
+            }
+            //return Redirect($"/ValuationRequest/ValuationRequestManage?id={id}&IsView=1");
 
             //Check permissions for Get
             var action = IsView == 1 ? PermissionEnum.View : (id == null ? PermissionEnum.Add : PermissionEnum.Edit);
@@ -319,7 +324,11 @@ namespace EltizamValuation.Web.Controllers
 
 
             int roleId = _helper.GetLoggedInRoleId();
-
+            if (id == 0)
+            {
+                if (!string.IsNullOrWhiteSpace(CheckUserEditable(vId, roleId)))
+                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={vId}");
+            }
             if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
@@ -414,6 +423,9 @@ namespace EltizamValuation.Web.Controllers
 
                 int roleId = _helper.GetLoggedInRoleId();
 
+                if (!string.IsNullOrWhiteSpace(CheckUserEditable(masterQuotation.ValuationRequestId, roleId)))
+                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterQuotation.ValuationRequestId}");
+
                 if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
@@ -485,7 +497,11 @@ namespace EltizamValuation.Web.Controllers
             var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
 
             int roleId = _helper.GetLoggedInRoleId();
-
+            if (id == 0)
+            {
+                if (!string.IsNullOrWhiteSpace(CheckUserEditable(vId, roleId)))
+                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={vId}");
+            }
             if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
                 return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
 
@@ -552,6 +568,9 @@ namespace EltizamValuation.Web.Controllers
                 //Check permissions for Get
                 var action = id == null ? PermissionEnum.Add : PermissionEnum.View;
                 int roleId = _helper.GetLoggedInRoleId();
+
+                if (!string.IsNullOrWhiteSpace(CheckUserEditable(masterInvoice.ValuationRequestId, roleId)))
+                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={masterInvoice.ValuationRequestId}");
 
                 if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
@@ -712,6 +731,9 @@ namespace EltizamValuation.Web.Controllers
                     valuationAssesment.valuationAssessementModel.Document = null;
                 }
                 int roleId = _helper.GetLoggedInRoleId();
+
+                if (!string.IsNullOrWhiteSpace(CheckUserEditable(requestId, roleId)))
+                    return Redirect($"/ValuationRequest/ValuationRequestManage?id={requestId}");
 
                 if (!CheckRoleAccess(ModulePermissionEnum.ValuationRequest, action, roleId))
                     return RedirectToAction(AppConstants.AccessRestriction, AppConstants.Home);
