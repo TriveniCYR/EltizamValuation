@@ -122,7 +122,6 @@
 
                 <div class="tab flex flex-start m-0 ptrl-20">
                     <button class="tablinks" onclick="profileTab(event, 'profile1')" id="defaultOpen">Valuation Details</button>
-                    <button class="tablinks" onclick="profileTab(event, 'profile11')" id="tab_11">Valuation Document</button>
                     @{
                         var displayStyleDoc = (objPermssionQt.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                         var displayStyleQt = (objPermssionQt.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
@@ -130,7 +129,8 @@
                         var displayStyleSite = (objPermssionSite.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                         var displayStyleevidence = (objPermssionevidence.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
                         var displayStyleAssesment = (objPermssionAssesment.View == false) ? "none" : (_md.Equals("Add") == false) ? "block" : "none";
-                    }
+                    }                    
+                    <button class="tablinks" style="display: @displayStyleDoc" onclick="profileTab(event, 'profile11')" id="tab_11">Valuation Document</button>
                     <button class="tablinks" style="display: @displayStyleQt" onclick="profileTab(event, 'profile2')" id="tab_2">Quotations</button>
                     <button class="tablinks" style="display: @displayStyleIn" onclick="profileTab(event, 'profile3')" id="tab_3">Invoices/Payments</button>
                     @if(Model.StatusId >7)

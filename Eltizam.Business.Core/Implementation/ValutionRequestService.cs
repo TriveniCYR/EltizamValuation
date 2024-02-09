@@ -641,20 +641,20 @@ namespace Eltizam.Business.Core.Implementation
             return DBOperation.Success;
         }
 
-        public async Task<DBOperation> ValuationEditable(int? ValReqId, int? RoleId)
+        public async Task<ValuationEditableModel> ValuationEditable(int ValReqId, int RoleId)
         {
             try
             {
                 DbParameter[] prm =
                 {
-                    new DbParameter("RoleId", ValReqId, SqlDbType.Int),
+                    new DbParameter("RoleId", RoleId, SqlDbType.Int),
                     new DbParameter("ValReqId", ValReqId, SqlDbType.Int)
                 };
 
-                EltizamDBHelper.ExecuteNonQuery(ProcedureMetastore.usp_ValuationRequest_IsEditable, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);
+                var data = EltizamDBHelper.ExecuteSingleMappedReader<ValuationEditableModel>(ProcedureMetastore.usp_ValuationRequest_IsEditable, DatabaseConnection.ConnString, System.Data.CommandType.StoredProcedure, prm);
 
                 // Return a success operation indicating successful deletion.
-                return DBOperation.Success;
+                return data;
             }
             catch (Exception ex)
             {

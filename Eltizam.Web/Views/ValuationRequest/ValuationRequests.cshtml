@@ -42,6 +42,7 @@
                 <input type="hidden" id="isEditPermQuotation" value="@isEditQt" />
                 <input type="hidden" id="isAddPermInvoice" value="@isAddIn" />
                 <input type="hidden" id="isEditPermInvoice" value="@isEditIn" />
+                <input type="hidden" id="hdnRoleId" value=@roleId />
                     <form asp-action="ValuationRequestManage" asp-controller="ValuationRequest" method="GET">
                     <button class="flex align-item-center blueBtn mr-12" id="addNew">
                             <img src="~/assets/plus.svg" alt="plus"> Add New
@@ -277,6 +278,7 @@
         var RecordDelete = "@SharedLocalizer["RecordDelete"]";
         var StatusMessage = '@TempData["StatusMessage"]';
         var GetAllStatusHistory = "@Eltizam.Web.Helpers.APIURLHelper.GetAllStatusHistory";
+        var CheckValuationEditable = "@Eltizam.Web.Helpers.APIURLHelper.ValuationEditable";
 
 
         var AssignApproverUrl = "@Eltizam.Web.Helpers.APIURLHelper.AssignApprover"

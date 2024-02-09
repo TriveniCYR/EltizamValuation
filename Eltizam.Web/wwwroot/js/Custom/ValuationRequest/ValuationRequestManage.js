@@ -1169,23 +1169,31 @@ function DeletePaymentInvoiceByIdError(x, y, z) {
     toastr.error(ErrorMessage);
 }
 
-document.getElementById('tab_4').addEventListener('click', function () {
+//document.getElementById('tab_4').addEventListener('click', function () {
+//    // Create an alert or call your desired function when the button is clicked
+//    changeLinksite();
+//});
+//// Add a click event listener to the button
+//document.getElementById('tab_5').addEventListener('click', function () {
+//    // Create an alert when the button is clicked
+//    changeLinkevidence();
+//});
+//document.getElementById('tab_6').addEventListener('click', function () {
+//    // Create an alert when the button is clicked
+//    changeLinkassesment();
+//});
+$('#tab_4').on('click', function () {
     // Create an alert or call your desired function when the button is clicked
     changeLinksite();
 });
-
-
-// Add a click event listener to the button
-document.getElementById('tab_5').addEventListener('click', function () {
-    // Create an alert when the button is clicked
+$('#tab_5').on('click', function () {
+    // Create an alert or call your desired function when the button is clicked
     changeLinkevidence();
 });
-document.getElementById('tab_6').addEventListener('click', function () {
-    // Create an alert when the button is clicked
+$('#tab_6').on('click', function () {
+    // Create an alert or call your desired function when the button is clicked
     changeLinkassesment();
 });
-
-
 
 // Assuming some event triggers this change
 

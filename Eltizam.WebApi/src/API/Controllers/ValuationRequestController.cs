@@ -245,17 +245,15 @@ namespace Eltizam.WebApi.Controllers
         }
 
         [HttpGet, Route("ValuationEditable")]
-        public async Task<IActionResult> ValuationEditable(int? ValReqId, int? RoleId)
+        public async Task<IActionResult> ValuationEditable(int ValReqId, int RoleId)
         {
             try
             {
-                DBOperation oResponse = await _valuationServices.ValuationEditable(ValReqId, RoleId);
-                if (oResponse == DBOperation.Success)
-                {
-                    return _ObjectResponse.Create(true, (Int32)HttpStatusCode.OK, (AppConstants.InsertSuccess));
-                }
+                var oValuationEntity = await _valuationServices.ValuationEditable(ValReqId, RoleId);
+                if (oValuationEntity != null && oValuationEntity.EditError != null)
+                    return _ObjectResponse.Create(oValuationEntity, (Int32)HttpStatusCode.OK);
                 else
-                    return _ObjectResponse.Create(false, (Int32)HttpStatusCode.BadRequest, (oResponse == DBOperation.NotFound ? AppConstants.NoRecordFound : AppConstants.BadRequest));
+                    return _ObjectResponse.Create(oValuationEntity, (Int32)HttpStatusCode.OK);
             }
             catch (Exception ex)
             {
