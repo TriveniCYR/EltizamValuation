@@ -254,8 +254,8 @@ namespace Eltizam.Business.Core.Implementation
                 strHtml = strHtml.Replace("[Discount]", objQuatation.Discount.ToString());
                 strHtml = strHtml.Replace("[TotalevaluationFees]", objQuatation.TotalFee.ToString());
 
-                var notificationModel = _notificationService.GetValuationNotificationData(RecepientActionEnum.QuaotationCreation, objQuatation.ValuationRequestId);
-                notificationModel.Subject = EnumHelper.GetDescription(RecepientActionEnum.QuaotationCreation);
+                var notificationModel = _notificationService.GetValuationNotificationData(RecepientActionEnum.QuotationCreation, objQuatation.ValuationRequestId);
+                notificationModel.Subject = EnumHelper.GetDescription(RecepientActionEnum.QuotationCreation);
                 notificationModel.Body = strHtml;
 
                 await _notificationService.SendEmail(notificationModel);

@@ -138,7 +138,7 @@
                     {
                        <button class="tablinks" style="display: @displayStyleSite " onclick="profileTab(event, 'profile4')" id="tab_4">Site Description</button>
                         <button class="tablinks" style="display: @displayStyleevidence" onclick="profileTab(event, 'profile5')" id="tab_5">Comparable Evidences</button>
-                        <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessement</button>
+                        <button class="tablinks" style="display: @displayStyleAssesment" onclick="profileTab(event, 'profile6')" id="tab_6">Valuation Assessment</button>
                     }
                    
                 </div>
@@ -1189,7 +1189,7 @@
                         </div>
                         </div> *@
                     </div>
-                    <h5 class="ptrl-20">Valuation Evidences</h5>
+                    <h5 class="ptrl-20">Valuation Assessment</h5>
                     <div class="inputSearchs">
                         @Html.HiddenFor(model => model.ValuationAssesment.valuationAssessementModel.RequestId, new { @value = "Model.Id" })
                         <div class="flex">
@@ -1222,7 +1222,7 @@
                         </div>
                         <div class="flex">
                             <label>
-                                Insuarance
+                                    Insurance
                                 <span class="flex yesNoToggle">
                                     @Html.RadioButtonFor(model => model.ValuationAssesment.valuationAssessementModel.Insuarance, true, new { onclick = "toggleInput('yes')" })
                                     <span>Yes</span>  &nbsp; &nbsp;

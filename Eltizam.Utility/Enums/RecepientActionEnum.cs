@@ -8,8 +8,8 @@ namespace Eltizam.Utility.Enums
         ValuationCreated = 1,
         [Description("Valuation Status Changed")]
         ValuationStatusChanged = 2,
-        [Description("Quaotation Created")]
-        QuaotationCreation = 3,
+        [Description("Quotation Created")]
+        QuotationCreation = 3,
         [Description("Invoice Created")]
         InvoiceCreation = 4,       
     }
